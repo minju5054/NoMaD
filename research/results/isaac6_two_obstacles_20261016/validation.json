@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "execution_git_sha": "bdd0970c1f9ab988f68dc83fbb04fd5b2967ee10",
+  "execution_git_clean": true,
+  "venv_gpu_tests": {
+    "passed": 25,
+    "skipped": 0,
+    "warnings": 1,
+    "seconds": 2.09
+  },
+  "isaac_python_geometry_controller_tests": {
+    "passed": 16
+  },
+  "legacy_single_obstacle_report_regression": "PASS, offline only",
+  "previous_raw_files_hashes_unchanged": 10,
+  "previous_mp4_hash_unchanged": true,
+  "official_model_controller_worker_and_old_scenarios_unchanged": true,
+  "actual_geometry_and_execution_validation": {
+    "status": "PASS",
+    "trajectory_rows": 4321,
+    "applied_events": 237,
+    "controller_refreshes": 540,
+    "max_pose_integration_error": 2.6645352591003757e-15,
+    "controller_matches_original": true,
+    "normalization_matches_preflight": true,
+    "selected_waypoints_unmodified": true,
+    "history_order_verified": true,
+    "goal_entry_from_world_pose": true,
+    "obstacle_count": 2,
+    "obstacles": {
+      "StaticObstacle1": {
+        "swept_intervals_verified": 4321,
+        "planning_diagnostics_verified": 237,
+        "stop_at_first_detected_interval": null,
+        "contact_stop_runtime_status": "NOT_EXERCISED_no_contact",
+        "avoidance_success_criteria_verified": true,
+        "first_inference_ms": 263.286621,
+        "inference_median_ms": 29.600865,
+        "inference_p95_ms": 32.457951599999994,
+        "minimum_predicted_sample0_polyline_clearance_m": 0.06006880670390646,
+        "predicted_sample0_overlap_count": 0
+      },
+      "StaticObstacle2": {
+        "swept_intervals_verified": 4321,
+        "planning_diagnostics_verified": 237,
+        "stop_at_first_detected_interval": null,
+        "contact_stop_runtime_status": "NOT_EXERCISED_no_contact",
+        "avoidance_success_criteria_verified": true,
+        "first_inference_ms": 263.286621,
+        "inference_median_ms": 29.600865,
+        "inference_p95_ms": 32.457951599999994,
+        "minimum_predicted_sample0_polyline_clearance_m": 0.04501522910646455,
+        "predicted_sample0_overlap_count": 0
+      }
+    },
+    "swept_intervals_verified": 4321,
+    "planning_diagnostics_verified": 237,
+    "stop_at_first_detected_interval": null,
+    "contact_stop_runtime_status": "NOT_EXERCISED_no_contact",
+    "avoidance_success_criteria_verified": true,
+    "minimum_predicted_sample0_polyline_clearance_m": 0.04501522910646455,
+    "predicted_sample0_overlap_count": 0,
+    "first_inference_ms": 263.286621,
+    "inference_median_ms": 29.600865,
+    "inference_p95_ms": 32.457951599999994
+  },
+  "limitations": [
+    "Kinematic geometry, no PhysX collision",
+    "No contact occurred; runtime collision-stop branch not exercised",
+    "Single fixed scenario; no general success rate or isolated size/distance effect",
+    "GUI/MP4 replays recorded execution; no further model inference"
+  ]
+}

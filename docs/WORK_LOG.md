@@ -141,3 +141,16 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 - `research/nomad_isaac/open_scene.sh`를 추가해 해당 GUI child에만 library/Python/venv 환경을 분리했다. 기존 Isaac launcher/opener를 그대로 사용하고, 문서의 static/animated scene 명령 둘 다 수정했다. 새 GUI/replay framework나 package 설치는 없다.
 - 실제 CUDA 12.6/ROS 환경을 가진 parent에서 launcher를 실행해 14:13:21 KST에 animation scene open 성공 및 Error 0개를 확인했다. Process maps에서 Isaac 내부 torch/cuSPARSE/nvJitLink 로딩 확인. Parent 환경 및 scene hash 불변, shell syntax/missing-file guard 통과. 검증용 GUI만 정상 종료했고 새 inference/navigation은 실행하지 않았다.
 - 검증 기록은 `research/results/isaac6_static_obstacle_20261016/gui_environment_fix.json`, raw log는 `../artifacts/isaac6/gui_environment_fix_01/`에 저장했다. 시스템/driver/CUDA/Isaac/.venv/원본 기록 변경 없이 source/docs/작은 결과만 현재 연구 branch에 commit/push한다.
+
+## 두 장애물 및 증가한 시작 거리
+
+2026-10-16. 사용자가 장애물 2개, 서로 다른 크기·위치, 더 먼 첫 장애물 및 GUI 표시를 요청했다. 단일 장애물 제안은 이 후속 요청으로 대체했다. 기준 `45b6026`에서 `research/isaac6-two-obstacles` branch를 생성했다.
+
+1. 시작 `(0,0,0)`, 장애물 1 중심 `(1.5,0)`/크기 `(0.4,0.5,0.8)` m, 장애물 2 중심 `(3.0,0.35)`/크기 `(0.5,0.6,1.0)` m, 목표 `(4.5,0,0)`, timeout 60 simulation s를 실행 전에 고정했다. 첫 앞면까지 거리는 0.60→1.30 m, footprint gap은 0.48→1.18 m가 됐다. Seed/model/controller/속도/주기/tolerance/clearance는 유지했다.
+2. 기존 단일 AABB monitor를 각 장애물에 적용하고 per-obstacle 및 aggregate logs를 추가했다. 어느 장애물이라도 contact이면 중단하며 controller에 장애물 geometry를 입력하지 않는다. 초기 goal 거리의 기록 상수만 실제 값으로 수정했다. 영상의 off-grid 종료 pose 보존과 GUI yaw의 동등한 unwrapped 표시도 추가했다.
+3. 실제 host GPU tests **25 passed, 0 skipped**, 2.09 s; 기존 Isaac Python adapter/geometry **16개 통과**. 최초 sandbox socket 검사는 permission 제한으로 실패했고 host에서 통과했다. 코드를 **`bdd0970c1f9ab988f68dc83fbb04fd5b2967ee10`**으로 commit한 clean 상태에서 `two_obstacles_01` 한 번을 실행했다. 기술적 중단/조건 조정/성능 재시도 없음.
+4. 두 장애물을 모두 왼쪽으로 통과했고 geometric overlap/corridor 침범은 없었다. 최소 swept clearance 하한은 각각 **0.10384044/0.12270646 m**로 0.02 m 기준 만족. Goal에는 **0.66305456 m**까지 접근했지만 0.30 m tolerance에 진입하지 못하고 돌아와 60 s timeout으로 종료했다. 전체 navigation 성공은 FAIL이다.
+5. 237 inference, 540 controller refreshes, 4,321 actual pose rows를 검증했다. 두 장애물의 swept/planning records와 aggregate 판정, 원본 controller/normalization/selected point/history 일치를 확인했다. 최대 pose 재적분 오차 2.6645e−15, predicted sample-0 overlap 0회. Runtime contact-stop은 실제 접촉이 없어 NOT EXERCISED다. 기존 단일 보고서도 offline regression 통과. 보고서에는 기존 시스템 matplotlib를 사용하고 설치를 바꾸지 않았다.
+6. `two_obstacles_video_01`에 1,441-frame/24 fps/60.041667 s MP4 및 native GUI animation을 생성했다. 모두 기록 pose 기반 사후 렌더링이며 새 navigation은 아니다. MP4 전체 decode, USD 4,321 poses/101 original prims 보존 검사 통과. GUI `--play` 옵션은 기존 timeline의 반복 재생만 수행한다.
+7. GUI를 실제 열고 Error 0개/playing=true를 확인했다. 재생 t=2.013888889 s의 agent pose가 원본 145번 row와 최대 1.61e−15 차이로 일치했다. 기존 환경 분리를 유지해 Isaac nvJitLink 로드도 확인했다. 사용자가 볼 수 있도록 GUI를 열어 두었다.
+8. 이전 raw files 10개와 MP4 hash, 공식 model/controller/worker와 이전 scenario가 그대로임을 확인했다. 상세 문서는 [ISAAC6_TWO_OBSTACLES.md](ISAAC6_TWO_OBSTACLES.md), 작은 결과는 `research/results/isaac6_two_obstacles_20261016/`다. Source/tests/docs/작은 JSON/SVG만 새 연구 branch에 commit/push하며 raw/video/USD/cache는 Git에서 제외한다.

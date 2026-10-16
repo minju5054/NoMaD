@@ -10,8 +10,10 @@ scene="${1:-$artifact_root/static_obstacle_video_02/recorded_motion_gui.usda}"
 opener="$isaac_root/extscache/omni.usd-1.16.0+f9bf0dda.lx64.r.cp312/scripts/open_stage.py"
 portable_root="$artifact_root/gui_obstacle_check_02/portable"
 
-if [[ $# -gt 1 ]]; then
-    echo "Usage: bash $0 [existing_scene.usda]" >&2
+if [[ $# -eq 2 && "$2" == --play ]]; then
+    opener="$repo_root/research/nomad_isaac/play_recorded.py"
+elif [[ $# -gt 1 ]]; then
+    echo "Usage: bash $0 [existing_scene.usda [--play]]" >&2
     exit 2
 fi
 for required_file in "$isaac_root/isaac-sim.sh" "$opener" "$scene"; do

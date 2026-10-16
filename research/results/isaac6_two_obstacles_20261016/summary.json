@@ -1,0 +1,362 @@
+{
+  "integration_success": true,
+  "goal_entry": false,
+  "termination_reason": "simulation_timeout",
+  "minimum_goal_distance_m": 0.663054557800859,
+  "final_goal_distance_m": 3.9442866615762116,
+  "initial_goal_distance_m": 4.5,
+  "final_pose": [
+    0.5772303014512155,
+    0.4114306270022816,
+    -2.9419405798725435
+  ],
+  "simulation_duration_s": 60.0,
+  "navigation_wall_seconds": 20.723123252,
+  "distance_travelled_m": 11.844438756688925,
+  "inference_count": 237,
+  "applied_waypoints": 237,
+  "scenario": {
+    "name": "two_static_obstacles_farther_start",
+    "start_pose": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "goal_pose": [
+      4.5,
+      0.0,
+      0.0
+    ],
+    "goal_tolerance_m": 0.3,
+    "timeout_sim_s": 60.0,
+    "timeout_navigation_wall_s": 180.0,
+    "timeout_process_wall_s": 600.0,
+    "integration_hz": 72,
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "controller_dt_s": 0.25,
+    "max_v": 0.2,
+    "max_w": 0.4,
+    "seed": 101,
+    "context_size": 3,
+    "num_samples": 8,
+    "selected_sample": 0,
+    "selected_waypoint_index": 2,
+    "camera": {
+      "width": 320,
+      "height": 240,
+      "height_m": 0.5,
+      "horizontal_fov_deg": 90.0,
+      "focal_length_mm": 18.0,
+      "horizontal_aperture_mm": 36.0,
+      "vertical_aperture_mm": 27.0
+    },
+    "corridor": {
+      "xmin": -2.0,
+      "xmax": 6.0,
+      "half_width": 1.5,
+      "height": 2.6
+    },
+    "boundary_stop_margin_m": 0.1,
+    "synchronous": true,
+    "smoothing": false,
+    "waypoint_modification": false,
+    "agent_radius_m": 0.12,
+    "required_clearance_m": 0.02,
+    "obstacles": [
+      {
+        "id": "StaticObstacle1",
+        "center_xy_m": [
+          1.5,
+          0.0
+        ],
+        "size_xyz_m": [
+          0.4,
+          0.5,
+          0.8
+        ],
+        "color_rgb": [
+          0.04,
+          0.65,
+          0.04
+        ]
+      },
+      {
+        "id": "StaticObstacle2",
+        "center_xy_m": [
+          3.0,
+          0.35
+        ],
+        "size_xyz_m": [
+          0.5,
+          0.6,
+          1.0
+        ],
+        "color_rgb": [
+          0.04,
+          0.65,
+          0.04
+        ]
+      }
+    ]
+  },
+  "inference_median_ms": 29.600865,
+  "all_outputs_finite": true,
+  "simulation_paused_during_inference": true,
+  "frame_and_rgb_check": {
+    "status": "PASS",
+    "rgb_shape": [
+      240,
+      320,
+      3
+    ],
+    "rgb_dtype": "uint8",
+    "forward_world": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "up_world": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "right_world": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "red_left_pixels": 5327,
+    "red_mean_pixel_x": 35.99023840810963,
+    "blue_right_pixels": 5385,
+    "blue_mean_pixel_x": 283.24252553389044,
+    "goal_start_mean_abs_pixel_difference": 51.87828559027778,
+    "python": "3.12.13 (tags/v3.12.13-dirty:3bb231a, Apr 22 2026, 14:10:08) [GCC 11.4.0]",
+    "executable": "/home/gpuadmin/isaacsim/kit/python/bin/python3",
+    "numpy": "2.3.1",
+    "obstacle_green_pixels": 6583,
+    "obstacles_actual_world_aabb": {
+      "StaticObstacle1": [
+        [
+          1.3,
+          -0.25,
+          0.0
+        ],
+        [
+          1.7,
+          0.25,
+          0.8
+        ]
+      ],
+      "StaticObstacle2": [
+        [
+          2.75,
+          0.04999999999999999,
+          0.0
+        ],
+        [
+          3.25,
+          0.6499999999999999,
+          1.0
+        ]
+      ]
+    }
+  },
+  "raw_model_output_directory": "model/raw",
+  "derived_trajectory_directory": "model/derived",
+  "obstacle_evaluation": {
+    "category": "no_collision_goal_failure",
+    "avoidance_success": false,
+    "geometric_overlap": false,
+    "first_contact": null,
+    "safety_margin_met": true,
+    "minimum_swept_clearance_lower_m": 0.10384043954840719,
+    "minimum_swept_clearance_upper_m": 0.10384152431146179,
+    "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+    "corridor_containment_certified": true,
+    "passage": {
+      "StaticObstacle1": {
+        "side": "left_positive_y",
+        "simulation_time_s": 11.11111111111111,
+        "pose": [
+          1.8203574890461294,
+          0.8973786063510013,
+          0.36064147566454363
+        ]
+      },
+      "StaticObstacle2": {
+        "side": "left_positive_y",
+        "simulation_time_s": 19.13888888888889,
+        "pose": [
+          3.371604190999277,
+          1.0464870427487853,
+          -0.3393747707893252
+        ]
+      }
+    },
+    "collision_detection_period_s": 0.013888888888888888,
+    "obstacles": {
+      "StaticObstacle1": {
+        "category": "no_collision_goal_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "minimum_swept_clearance_lower_m": 0.10384043954840719,
+        "minimum_swept_clearance_upper_m": 0.10384152431146179,
+        "safety_margin_met": true,
+        "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+        "corridor_containment_certified": true,
+        "passage": {
+          "side": "left_positive_y",
+          "simulation_time_s": 11.11111111111111,
+          "pose": [
+            1.8203574890461294,
+            0.8973786063510013,
+            0.36064147566454363
+          ]
+        },
+        "collision_detection_period_s": 0.013888888888888888
+      },
+      "StaticObstacle2": {
+        "category": "no_collision_goal_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "minimum_swept_clearance_lower_m": 0.12270646452160615,
+        "minimum_swept_clearance_upper_m": 0.12270703351174442,
+        "safety_margin_met": true,
+        "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+        "corridor_containment_certified": true,
+        "passage": {
+          "side": "left_positive_y",
+          "simulation_time_s": 19.13888888888889,
+          "pose": [
+            3.371604190999277,
+            1.0464870427487853,
+            -0.3393747707893252
+          ]
+        },
+        "collision_detection_period_s": 0.013888888888888888
+      }
+    }
+  },
+  "run_directory": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/two_obstacles_01",
+  "provenance": {
+    "time_kst": "2026-10-16T14:39:32.084679+09:00",
+    "isaac_root": "/home/gpuadmin/isaacsim",
+    "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "git_sha": "bdd0970c1f9ab988f68dc83fbb04fd5b2967ee10",
+    "git_status": "",
+    "source_sha256": {
+      "research/nomad_isaac/launch.py": "117ab50b6269f0746903d650f954812dfcd68dbbc43808d75da60c4757aa27d5",
+      "research/nomad_isaac/worker.py": "8d7be452fd681bcba7b796d9402a3e090bab248ec3744bf188ffca8c218ef00d",
+      "research/nomad_isaac/__init__.py": "e43f84caae01e4374d780cc3edadfc04688426d00a867530c6b85dc1601b852d",
+      "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+      "research/nomad_isaac/report.py": "56222b118798ec5f58995e7c2cd16c85f2c35db20a4879937ba33eee4f7a31e4",
+      "research/nomad_isaac/simulator.py": "06bc2370e8bcd7b32bca68a625cf6ced108f8aac0dbf86a5952083415e15a5a0",
+      "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+      "research/nomad_isaac/render_recorded.py": "41eadebb3635212c930df988d866209108bad42fa5f5ba099b04af273d53a077",
+      "research/nomad_isaac/two_obstacles_scenario.json": "9299b1f83e6aaab77f9edf0e703addb011cd7d043993d4affa562165b1de4539",
+      "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631"
+    },
+    "prepare_only": false,
+    "launcher_python": "/home/gpuadmin/Workspace/NoMaD/.venv/bin/python",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti, 595.99.02, 16311 MiB"
+  },
+  "nomad_environment": {
+    "python": "3.11.16 (main, Sep  1 2026, 14:18:37) [Clang 22.1.3 ]",
+    "executable": "/home/gpuadmin/Workspace/NoMaD/.venv/bin/python",
+    "torch": "2.7.0+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "numpy": "1.26.4",
+    "torchvision": "0.22.0+cu128",
+    "diffusers": "0.11.1",
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "config": {
+      "context_size": 3,
+      "image_size": [
+        96,
+        96
+      ],
+      "num_diffusion_iters": 10,
+      "len_traj_pred": 8
+    }
+  },
+  "validation": {
+    "status": "PASS",
+    "trajectory_rows": 4321,
+    "applied_events": 237,
+    "controller_refreshes": 540,
+    "max_pose_integration_error": 2.6645352591003757e-15,
+    "controller_matches_original": true,
+    "normalization_matches_preflight": true,
+    "selected_waypoints_unmodified": true,
+    "history_order_verified": true,
+    "goal_entry_from_world_pose": true,
+    "obstacle_count": 2,
+    "obstacles": {
+      "StaticObstacle1": {
+        "swept_intervals_verified": 4321,
+        "planning_diagnostics_verified": 237,
+        "stop_at_first_detected_interval": null,
+        "contact_stop_runtime_status": "NOT_EXERCISED_no_contact",
+        "avoidance_success_criteria_verified": true,
+        "first_inference_ms": 263.286621,
+        "inference_median_ms": 29.600865,
+        "inference_p95_ms": 32.457951599999994,
+        "minimum_predicted_sample0_polyline_clearance_m": 0.06006880670390646,
+        "predicted_sample0_overlap_count": 0
+      },
+      "StaticObstacle2": {
+        "swept_intervals_verified": 4321,
+        "planning_diagnostics_verified": 237,
+        "stop_at_first_detected_interval": null,
+        "contact_stop_runtime_status": "NOT_EXERCISED_no_contact",
+        "avoidance_success_criteria_verified": true,
+        "first_inference_ms": 263.286621,
+        "inference_median_ms": 29.600865,
+        "inference_p95_ms": 32.457951599999994,
+        "minimum_predicted_sample0_polyline_clearance_m": 0.04501522910646455,
+        "predicted_sample0_overlap_count": 0
+      }
+    },
+    "swept_intervals_verified": 4321,
+    "planning_diagnostics_verified": 237,
+    "stop_at_first_detected_interval": null,
+    "contact_stop_runtime_status": "NOT_EXERCISED_no_contact",
+    "avoidance_success_criteria_verified": true,
+    "minimum_predicted_sample0_polyline_clearance_m": 0.04501522910646455,
+    "predicted_sample0_overlap_count": 0,
+    "first_inference_ms": 263.286621,
+    "inference_median_ms": 29.600865,
+    "inference_p95_ms": 32.457951599999994
+  },
+  "failure_analysis": {
+    "category": "no_collision_goal_failure",
+    "adapter_fault_detected": false,
+    "scope": "Single fixed policy/controller run; planning polylines are separate from executed kinematic motion; no PhysX or general success-rate claim."
+  },
+  "raw_file_sha256": {
+    "agent_trajectory.csv": "7eef5146d6f267713854de10f4c525536beac30073d206c8f15cc227460ec247",
+    "events.jsonl": "16d911c1df20d0838c8ab10b44a3c587e56202755fe51e6fcdf380397eca1b17",
+    "controller.jsonl": "6b6b71eaeafa2f35064a3bbb21c43382d94ab91f04c6a79bc7672d3ed57b3f5b",
+    "goal.png": "0656e8bd3d66494936e2667347724550d4cc0dcb68d725487e46fe01e2540f19",
+    "observation_start.png": "644246c983e0310eee3ad40a585a874211c84479bbb7f49534e93ffc6cc5f5e3",
+    "observation_final.png": "c3e30578e8726ff2300fb7a7186abb369d028342f2f302285777a88acb7f37a5",
+    "clearance.jsonl": "91f2453edbc4f452cbb32d4deb11c14de904ffbf8d8edb2e5414ce260c114c00",
+    "planning.jsonl": "f2f59289cdd50d4fb36a45c3cea7f33ffdc2a8e1e20685231467a49cb2240e21",
+    "obstacle_geometry.json": "fe828e29d61f414905de5dfa9acba01bee2d29417b4adc9fb61bdc51910b5780",
+    "scene.usda": "a6edde68f01428d4ac9736bf7e4f354990710ee926f674b62a427cd069c7d1c0"
+  }
+}
