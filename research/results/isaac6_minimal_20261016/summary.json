@@ -1,0 +1,174 @@
+{
+  "integration_success": true,
+  "goal_entry": true,
+  "termination_reason": "goal_entry",
+  "minimum_goal_distance_m": 0.2999052545353116,
+  "final_goal_distance_m": 0.2999052545353116,
+  "initial_goal_distance_m": 1.5,
+  "final_pose": [
+    1.2078296844607634,
+    0.0676732474142698,
+    0.1360954405442154
+  ],
+  "simulation_duration_s": 6.833333333333333,
+  "navigation_wall_seconds": 2.274563826,
+  "distance_travelled_m": 1.2111110596862615,
+  "inference_count": 25,
+  "applied_waypoints": 25,
+  "scenario": {
+    "name": "obstacle_free_corridor_single_fixed_goal",
+    "start_pose": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "goal_pose": [
+      1.5,
+      0.0,
+      0.0
+    ],
+    "goal_tolerance_m": 0.3,
+    "timeout_sim_s": 30.0,
+    "timeout_navigation_wall_s": 180.0,
+    "timeout_process_wall_s": 600.0,
+    "integration_hz": 72,
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "controller_dt_s": 0.25,
+    "max_v": 0.2,
+    "max_w": 0.4,
+    "seed": 101,
+    "context_size": 3,
+    "num_samples": 8,
+    "selected_sample": 0,
+    "selected_waypoint_index": 2,
+    "camera": {
+      "width": 320,
+      "height": 240,
+      "height_m": 0.5,
+      "horizontal_fov_deg": 90.0,
+      "focal_length_mm": 18.0,
+      "horizontal_aperture_mm": 36.0,
+      "vertical_aperture_mm": 27.0
+    },
+    "corridor": {
+      "xmin": -2.0,
+      "xmax": 6.0,
+      "half_width": 1.5,
+      "height": 2.6
+    },
+    "boundary_stop_margin_m": 0.1,
+    "synchronous": true,
+    "smoothing": false,
+    "waypoint_modification": false
+  },
+  "inference_median_ms": 28.86933,
+  "all_outputs_finite": true,
+  "simulation_paused_during_inference": true,
+  "frame_and_rgb_check": {
+    "status": "PASS",
+    "rgb_shape": [
+      240,
+      320,
+      3
+    ],
+    "rgb_dtype": "uint8",
+    "forward_world": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "up_world": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "right_world": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "red_left_pixels": 5366,
+    "red_mean_pixel_x": 35.851472232575475,
+    "blue_right_pixels": 5327,
+    "blue_mean_pixel_x": 283.023840810963,
+    "goal_start_mean_abs_pixel_difference": 19.801449652777777,
+    "python": "3.12.13 (tags/v3.12.13-dirty:3bb231a, Apr 22 2026, 14:10:08) [GCC 11.4.0]",
+    "executable": "/home/gpuadmin/isaacsim/kit/python/bin/python3",
+    "numpy": "2.3.1"
+  },
+  "raw_model_output_directory": "model/raw",
+  "derived_trajectory_directory": "model/derived",
+  "run_directory": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/navigation_02",
+  "provenance": {
+    "time_kst": "2026-10-16T12:42:33.126227+09:00",
+    "isaac_root": "/home/gpuadmin/isaacsim",
+    "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "git_sha": "5cda940ed0fa07137e1549ce165560b757475ca5",
+    "git_status": "?? docs/ISAAC6_MINIMAL_NAVIGATION.md\n",
+    "source_sha256": {
+      "research/nomad_isaac/launch.py": "94695c23172849c665b5fb6598d408dcd63211b361da288eaa4b3775eaec4c4c",
+      "research/nomad_isaac/worker.py": "8d7be452fd681bcba7b796d9402a3e090bab248ec3744bf188ffca8c218ef00d",
+      "research/nomad_isaac/__init__.py": "e43f84caae01e4374d780cc3edadfc04688426d00a867530c6b85dc1601b852d",
+      "research/nomad_isaac/common.py": "93bb08401fb7975712e2b9e799382cfbb8694c095baeae5e90b3e6f5b117614b",
+      "research/nomad_isaac/report.py": "09ae09e1bddae1291d60bd09966a742f16e08d27bb7ead2392d83df1adea9a0d",
+      "research/nomad_isaac/simulator.py": "911a41a73e57fa557e9c314b36eba7c382c176ddcc81cf87bb6318afc68447b7",
+      "research/nomad_isaac/scenario.json": "787c61772b56de24c45225703a914ac61eb9505b2fcbd2beae4c83aa4771833f",
+      "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631"
+    },
+    "prepare_only": false,
+    "launcher_python": "/home/gpuadmin/Workspace/NoMaD/.venv/bin/python",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti, 595.99.02, 16311 MiB"
+  },
+  "nomad_environment": {
+    "python": "3.11.16 (main, Sep  1 2026, 14:18:37) [Clang 22.1.3 ]",
+    "executable": "/home/gpuadmin/Workspace/NoMaD/.venv/bin/python",
+    "torch": "2.7.0+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "numpy": "1.26.4",
+    "torchvision": "0.22.0+cu128",
+    "diffusers": "0.11.1",
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "config": {
+      "context_size": 3,
+      "image_size": [
+        96,
+        96
+      ],
+      "num_diffusion_iters": 10,
+      "len_traj_pred": 8
+    }
+  },
+  "validation": {
+    "status": "PASS",
+    "trajectory_rows": 493,
+    "applied_events": 25,
+    "controller_refreshes": 62,
+    "max_pose_integration_error": 4.996003610813204e-16,
+    "controller_matches_original": true,
+    "normalization_matches_preflight": true,
+    "selected_waypoints_unmodified": true,
+    "history_order_verified": true,
+    "goal_entry_from_world_pose": true
+  },
+  "failure_analysis": null,
+  "raw_file_sha256": {
+    "agent_trajectory.csv": "79f3966d993248db3cbdb3c44b9644838bb205d4f9e4d043327f9ee0da97a229",
+    "events.jsonl": "1043b675a33218bf0e5a5b74925576328c2c1af1e8bc4484449ce229a9dd73a1",
+    "controller.jsonl": "c716c9268d125ababe33ef96646b28dd3d34a1966d4d81364846b5106c2f002b",
+    "goal.png": "5a4e3815ed5b2b5c277ef3962bca731a3682405716741de60567703fab1c2cd9",
+    "observation_start.png": "54b8062377686618d94532a8725e2dfee5a909fcfd463d4c7060c517fb201e9b",
+    "observation_final.png": "f8121734c28dcfbd422b9888483a05a1f5e7b8b623b55148876cd0b096a8ec1d"
+  }
+}

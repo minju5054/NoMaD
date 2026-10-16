@@ -1,0 +1,51 @@
+{
+  "pytest": {
+    "passed": 14,
+    "skipped": 0,
+    "warnings": 1,
+    "duration_seconds": 2.11,
+    "runtime": "workspace Python 3.11.16 / NumPy 1.26.4 / actual CUDA"
+  },
+  "isaac_adapter_checks": {
+    "passed": 5,
+    "runtime": "existing Isaac Python 3.12.13 / NumPy 2.3.1",
+    "method": "runpy loads test_isaac_adapter.py; directly invokes each test function, no renderer/navigation"
+  },
+  "post_run_validation": "summary.json validation; no additional inference",
+  "inference_count": 25,
+  "first_inference_ms": 355.544339,
+  "all_inference_median_ms": 28.86933,
+  "remaining_inference_median_ms": 28.859877,
+  "remaining_inference_p95_ms": 30.4870465,
+  "latency_scope": "native.infer plus CUDA synchronize; existing concurrent Isaac process; not a separate benchmark",
+  "application_sim_delay_min_s": 0.0,
+  "application_sim_delay_max_s": 0.08333333333333326,
+  "controller_v_min_max_m_s": [
+    0.0,
+    0.2
+  ],
+  "controller_w_min_max_rad_s": [
+    -0.08249560976661167,
+    0.1979077615441339
+  ],
+  "selected_point_x_min_max_m": [
+    0.09324315190315247,
+    0.18610532581806183
+  ],
+  "selected_point_y_min_max_m": [
+    -0.003730523632839322,
+    0.007144117262214422
+  ],
+  "unique_history_stack_hashes": 25,
+  "fixed_goal_hash_count": 1,
+  "aborted_attempt": {
+    "path": "../artifacts/isaac6/navigation_01",
+    "stage": "first controller application assertion",
+    "last_sim_time_s": 0.7777777777777777,
+    "applied_waypoints": 0,
+    "movement_m": 0,
+    "cause": "NumPy 2 float32 scalar promotion; fixed by ROS-style Python float list, no value change"
+  },
+  "official_train_deployment_source_diff": "empty against dca79815b704e5aa9c6bdc3082351f9e3b2848c2",
+  "preflight_wrapper_source_diff": "empty against 517ab41eb4a1a0e1927c1e62753172714f1c8507"
+}

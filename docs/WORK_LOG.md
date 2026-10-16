@@ -1,5 +1,7 @@
 # 실행 기록과 최종 판정
 
+아래 기존 절은 offline preflight 완료 당시의 기록이다. 이후 승인된 Isaac Sim 작업과 현재 remote/검증 상태는 마지막 **Isaac Sim 6 최소 navigation 추가 기록** 절을 따른다.
+
 작업일: 2026-10-16, Asia/Seoul. 범위: 공식 repository/독립 환경/checkpoint/native offline inference/측정. NoMaD 학습, 모델 개선, Isaac Sim 실행, robot control, obstacle avoidance 평가, OLD/FRESH reconciliation, graph optimization은 수행하지 않았다.
 
 ## 공식 repository에서 확인한 사실
@@ -85,3 +87,19 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 | NoMaD 재학습/모델 개선 | NOT RUN, 이번 범위 아님 |
 
 다음 integration 단계로 진행할 수 있다. 다만 camera FOV/intrinsics 및 색순서, observation capture rate와 history stride, simulation/render/control clock 및 pose 동기화, camera/base/world 좌표 변환, deployment 0.05 scale의 대상 로봇 적합성, inference 결과의 실행 시간/heading 정의, Isaac Sim 환경과 독립 inference process의 통신 및 GPU memory 공존은 아직 확인해야 한다. 기존 Isaac Sim 설정을 변경하거나 simulator를 실행해 이 항목을 검증하지 않았다.
+
+## Isaac Sim 6 최소 navigation 추가 기록
+
+작업일: 2026-10-16, Asia/Seoul. 사용자 후속 승인 범위는 장애물 없는 복도의 단일 bounded closed-loop 주행이다. 상세 결과·재실행 명령·제한은 [ISAAC6_MINIMAL_NAVIGATION.md](ISAAC6_MINIMAL_NAVIGATION.md)에 기록한다.
+
+1. 실제 Git repository는 workspace 아래 `visualnav-transformer/`였다. 기존 branch `research/nomad-preflight`, clean HEAD `517ab41eb4a1a0e1927c1e62753172714f1c8507`, 설정 문서/native wrapper/공식 navigate/controller를 확인하고 별도 `research/isaac6-minimal-navigation` branch를 만들었다. `origin`은 이미 사용자 fork `https://github.com/minju5054/NoMaD.git`, `upstream`은 공식 저장소였다. 이름/remote를 임의 변경하지 않았다. `gh repo view`에서 사용자 fork와 현재 `ADMIN` 권한을 확인했다.
+2. 기존 Isaac `/home/gpuadmin/isaacsim`의 VERSION은 `6.0.1-rc.7+release.42383.32955d8d.gl`, bundled Python은 3.12.13/NumPy 2.3.1이었다. NoMaD의 기존 `.venv` Python 3.11.16/NumPy 1.26.4/torch 2.7.0+cu128/diffusers 0.11.1을 유지했다. Package/system/driver/Isaac 설정 설치·업그레이드 없음. Process별 환경, runtime cache와 log를 분리했다.
+3. 별도 Python process + local Unix socket adapter, actual RTX camera/goal capture, SE(2) kinematic pose update, 원본 AST controller 호출을 추가했다. 시작 `(0,0,0)`, 목표 `(1.5,0,0)`, tolerance 0.30 m, simulation timeout 30 s를 실행 전에 고정했다. dt 1/72 s, observation 4 Hz, controller refresh 9 Hz/계산 DT 0.25 s, sample 0/point index 2, 8 samples/8 XY points/10 DDPM steps를 사용했다.
+4. Static render gate 01/02는 empty RGB로 실패했다. Camera/renderer adapter의 process-only 설정과 render-product 유지 후 gate 03에서 RGB/색상/좌표 검사가 통과했다. 이 단계에서는 모델 inference나 navigation을 실행하지 않았다. 실패/경고 로그는 보존했다.
+5. 초기 코드 `2761d9a`에서 host tests 13개가 통과했다. 하지만 `navigation_01`의 첫 GPU inference 이후, 이동 전 controller 범위 assertion이 실패했다. NumPy 2에서 float32 clip 결과가 `0.20000000298`이 되는 scalar 차이를 두 환경에서 기록된 point로 확인했다. 원본 ROS와 같은 Python float list로 전달하도록 adapter만 고쳤다. Point 값/원본 수식/실험 조건 변경 없음. 실제 이동 0, 적용 waypoint 0인 중단 시도를 성공으로 세지 않는다.
+6. 회귀 검사 추가 후 `.venv` GPU/IPC tests **14 passed, 0 skipped**, 2.11 s. 기존 Isaac Python에서도 adapter 5개 검사를 직접 실행해 통과했다. 수정한 실행 source는 `5cda940ed0fa07137e1549ce165560b757475ca5`로 commit했다. 실행 당시 미추적 파일은 작성 중인 보고서뿐이었고 각 source hash도 저장했다.
+7. `../artifacts/isaac6/navigation_02/`에 동일 조건으로 단일 bounded closed-loop 실행 완료. **실제 RGB→NoMaD→원본 controller→agent 이동 성공, goal entry 성공.** 25회 GPU inference/25 waypoint 적용, 1.211111 m 이동, t=6.833333 simulation s에서 goal 거리 **0.299905 m**로 0.30 m tolerance에 진입했다. 최종 pose는 `(1.2078296845, 0.0676732474, 0.1360954405)`다. Navigation wall time 2.274564 s는 startup을 제외하며, wall clock에 맞춰 simulation을 sleep하지 않는다.
+8. 저장 결과를 재분석했다. 493 actual USD pose rows/62 controller refreshes/25 applied events에서 normalization/cumsum/scaling/selected point/원본 controller exact equality, history 순서와 주기, inference 대기 중 clock 정지, observation/application 순서, world pose 기반 goal entry를 검증했다. 최대 SE(2) 재적분 차이 4.9960e−16. 실제 출력 `(8,8,2)` float32 finite. World XY 그림 한 장과 작은 summary/validation을 `research/results/isaac6_minimal_20261016/`에 저장했다. 추가 성능 주행 없음.
+9. `git diff`로 공식 `train/`, `deployment/`가 upstream SHA와 동일하고 기존 `research/nomad_preflight/`가 preflight commit과 동일함을 확인했다. Raw outputs, checkpoint, `.venv`, 외부 dependency, renderer caches, 기존 preflight 결과는 Git에 넣거나 덮어쓰지 않았다. 신규 code/tests/docs/small result만 commit하고 확인된 사용자 origin에 일반 push한다. Force push/history rewrite 없음.
+
+현재 판정: 최소 synchronous navigation integration **PASS**, 단일 근거리 goal entry **PASS**. 다음 제한된 장애물 실험을 준비할 수 있으나 footprint/collision/clearance와 고정 평가 기준을 별도로 정의해야 한다. 원본 topomap navigation, 장애물 회피 성능/성공률, 비동기 실행·OLD/FRESH handoff, reconciliation/graph optimization, robot dynamics, 모델 학습은 **NOT RUN**이다. 이 결과의 yaw/time은 agent 실행 기록이며 NoMaD의 intrinsic timestamp나 yaw가 아니다.
