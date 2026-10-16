@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "synthetic_audit_tests": {
+    "passed": 7,
+    "seconds": 0.07,
+    "scope": "No inference, GPU or simulator; only test_handoff_audit.py"
+  },
+  "all_97_nearest_connectors_safe": true,
+  "all_97_chosen_entries_at_first_native_point": true,
+  "maximum_boundary_connector_angle_deg": 13.499497240509037,
+  "maximum_connector_tangent_angle_deg": 18.786477952280656,
+  "input_hashes_rechecked_after_review": true,
+  "main_first_pair": [
+    0,
+    1
+  ],
+  "main_last_pair": [
+    96,
+    97
+  ],
+  "cutoff_exclusion_note": "Prediction 98 observed at 25.25 s, first applied at 25.333333333 s; pair 97->98 is excluded.",
+  "invalid_heading_ledger_source": "Unique world polylines in local pair_details.json; same frozen 0.02 m rule, derived_heading_rad=null",
+  "insufficient_pairs": [
+    [
+      94,
+      95
+    ],
+    [
+      95,
+      96
+    ],
+    [
+      96,
+      97
+    ]
+  ],
+  "full_pair_details_local": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/handoff_audit_01/pair_details.json",
+  "full_pair_details_sha256": "3b8c435d48749947f368326f4fcb650741e9e8364701415435636f972ca1359e",
+  "audit_retries": 0,
+  "parameter_or_rule_changes_after_results": 0,
+  "candidate_figures": 0,
+  "candidate_figure_note": "No qualified candidate; no noncandidate was promoted for visualization."
+}

@@ -154,3 +154,16 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 6. `two_obstacles_video_01`에 1,441-frame/24 fps/60.041667 s MP4 및 native GUI animation을 생성했다. 모두 기록 pose 기반 사후 렌더링이며 새 navigation은 아니다. MP4 전체 decode, USD 4,321 poses/101 original prims 보존 검사 통과. GUI `--play` 옵션은 기존 timeline의 반복 재생만 수행한다.
 7. GUI를 실제 열고 Error 0개/playing=true를 확인했다. 재생 t=2.013888889 s의 agent pose가 원본 145번 row와 최대 1.61e−15 차이로 일치했다. 기존 환경 분리를 유지해 Isaac nvJitLink 로드도 확인했다. 사용자가 볼 수 있도록 GUI를 열어 두었다.
 8. 이전 raw files 10개와 MP4 hash, 공식 model/controller/worker와 이전 scenario가 그대로임을 확인했다. 상세 문서는 [ISAAC6_TWO_OBSTACLES.md](ISAAC6_TWO_OBSTACLES.md), 작은 결과는 `research/results/isaac6_two_obstacles_20261016/`다. Source/tests/docs/작은 JSON/SVG만 새 연구 branch에 commit/push하며 raw/video/USD/cache는 Git에서 제외한다.
+
+## Successive OLD/FRESH geometric handoff audit
+
+2026-10-16. 사용자 요청에 따라 기준 `49f865cb4148fedef6c15be1e9739d5e53ba151b`에서 별도 `research/old-fresh-geometric-audit` branch를 생성했다. 저장된 `two_obstacles_01`만 분석했다.
+
+1. 로그 schema와 기존 source를 확인하고 pair metric 계산 **전에** protocol/threshold를 `0f41d5e`에 commit했다. Observation anchor 유지, 실제 application pose B, 공통 forward station 및 arclength 대응, 짧은 segment heading invalid, early-prefix entry와 rotate/straight/rotate 연결, 5개 분류 및 후보 선택 규칙을 고정했다. 큰 RMSE만으로 후보를 만들지 않는다.
+2. NumPy/stdlib 기반 offline audit와 synthetic checks 7개를 추가했다. Tests **7 passed**, 0.07 s. NoMaD/Isaac import나 GPU 실행은 없다. 분석 코드는 `6de5bc6`의 clean 상태에서 실행했고 성공했다. 분석 재시도/결과 후 기준 변경 없음.
+3. Raw/derived 237쌍 존재 및 연속 ID를 확인했다. 주 분석 98 predictions(ID 0..97)의 raw→derived/scaling/selected point, observation→world/planning, 원본 controller 및 pose 적분 검증 통과. 사용한 205개 입력의 분석 전후 hash 불변, 기존 pose/scenario hash 및 source 10개 hash 일치. 실행 당시 개별 NPZ/events/controller/planning hash가 없어 이번 hash는 새 baseline이며 과거 무결성 증명으로 과장하지 않았다.
+4. 최초 goal 최근접 t=25.25 s까지 적용된 주 분석은 **97 pair**, 이후 139 pair는 후보에서 제외했다. **94 ALREADY_CONSISTENT / 3 INSUFFICIENT_EVIDENCE / 나머지 0**. 3개(94→95, 95→96, 96→97)는 goal 부근 tail의 forward projection이 되접혀 자동 correspondence가 불충분했다. 짧은 segment 14개는 derived heading=null로 기록했다.
+5. 유효 94 pair의 equal-progress spatial RMSE median/p95/max **0.01318/0.03543/0.05895 m**, heading RMS **7.09/19.19/31.07°**. 97개 모두 FRESH 및 nearest connector가 안전했고 B→entry 최대 거리 0.06656 m, yaw 차이 최대 11.12°. FRESH 최소 clearance 0.14585 m, connector 최소 0.22144 m. Safe FRESH에서 연결 문제가 입증된 pair **0개**, 후보 그림 0개다.
+6. Synchronous inference 중 simulation 경과는 0 s다. 수신 후 controller tick까지 실제 최대 지연 0.083333 s/translation 0.0166667 m만 기록했다. 최대 |Δw|=0.61258 rad/s인 60→61도 실제 다음 switch까지 안전했다. 이를 Graph 필요성이나 목표 실패 원인으로 단정하지 않았다.
+7. 최종 판정 **NO_QUALIFIED_CANDIDATE**. 서로 다른 initial/DDPM seed와 observation 변화는 분리하지 못한다. 비동기 reconciliation 필요성, oracle correspondence, Graph 우월성은 미입증이다. 새 inference/navigation/sampling/optimization/video는 모두 0회다.
+8. 상세 [보고서](OLD_FRESH_HANDOFF_AUDIT.md), source/tests 및 작은 CSV/JSON만 Git에 포함한다. 전체 세부 수치는 `../artifacts/isaac6/handoff_audit_01/`에 보존했다. 원본 model/controller/geometry/coordinate/environment/실험 데이터는 변경하지 않았다.
