@@ -58,7 +58,9 @@ def verify_obstacle_run(run, summary, trajectory, pose, times):
             np.testing.assert_allclose(p[key], actual[key], rtol=0, atol=1e-11)
     timings = [json.loads(x)["inference_ms"] for x in (run / "model/inference.jsonl").read_text().splitlines()]
     return plans, {"swept_intervals_verified": len(records), "planning_diagnostics_verified": len(plans),
-                   "stop_at_first_detected_interval": True, "avoidance_success_criteria_verified": True,
+                   "stop_at_first_detected_interval": True if evaluation["first_contact"] is not None else None,
+                   "contact_stop_runtime_status": "observed" if evaluation["first_contact"] is not None else "NOT_EXERCISED_no_contact",
+                   "avoidance_success_criteria_verified": True,
                    "first_inference_ms": timings[0], "inference_median_ms": float(np.median(timings)),
                    "inference_p95_ms": float(np.percentile(timings, 95)),
                    "minimum_predicted_sample0_polyline_clearance_m": min(p["polyline_clearance_m"] for p in plans),
@@ -145,9 +147,10 @@ def main():
         lower, upper = obstacle_bounds(summary["scenario"])
         ax.add_patch(Rectangle(lower, *(upper-lower), facecolor="#31a354", edgecolor="#14532d", label="Static obstacle"))
         ax.add_patch(Circle(pose[-1, :2], summary["scenario"]["agent_radius_m"], fill=False, edgecolor="#1b5e9c", label="Final footprint (r=0.12 m)"))
-        last = plans[-1]
-        predicted = np.vstack([np.asarray(last["observation_pose"])[:2], last["world_xy_m"]])
-        ax.plot(predicted[:,0], predicted[:,1], "--", color="#ce7b13", linewidth=1.5, label="Last sample 0 (prediction only)")
+        diagnostic = min(plans, key=lambda p: p["polyline_clearance_m"])
+        predicted = np.vstack([np.asarray(diagnostic["observation_pose"])[:2], diagnostic["world_xy_m"]])
+        ax.plot(predicted[:,0], predicted[:,1], "--", color="#ce7b13", linewidth=1.5,
+                label=f"Sample 0 at {diagnostic['observation_sim_s']:.2f}s (prediction only)")
     ax.axhline(width, color=".4", linewidth=1); ax.axhline(-width, color=".4", linewidth=1)
     ax.set(xlabel="World X [m]", ylabel="World Y [m]", aspect="equal",
            xlim=(min(-.4, pose[:, 0].min()-.3), max(2., pose[:, 0].max()+.3)), ylim=(-1.65, 1.65),

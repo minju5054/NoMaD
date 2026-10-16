@@ -1,0 +1,245 @@
+{
+  "integration_success": true,
+  "goal_entry": false,
+  "termination_reason": "simulation_timeout",
+  "minimum_goal_distance_m": 0.46889351527479645,
+  "final_goal_distance_m": 3.6067267620453185,
+  "initial_goal_distance_m": 1.5,
+  "final_pose": [
+    5.10590760449602,
+    0.07686536210599801,
+    -1.6567289193664383
+  ],
+  "simulation_duration_s": 30.0,
+  "navigation_wall_seconds": 9.81450195,
+  "distance_travelled_m": 5.721878228986146,
+  "inference_count": 117,
+  "applied_waypoints": 117,
+  "scenario": {
+    "name": "single_static_obstacle_fixed_goal",
+    "start_pose": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "goal_pose": [
+      1.5,
+      0.0,
+      0.0
+    ],
+    "goal_tolerance_m": 0.3,
+    "timeout_sim_s": 30.0,
+    "timeout_navigation_wall_s": 180.0,
+    "timeout_process_wall_s": 600.0,
+    "integration_hz": 72,
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "controller_dt_s": 0.25,
+    "max_v": 0.2,
+    "max_w": 0.4,
+    "seed": 101,
+    "context_size": 3,
+    "num_samples": 8,
+    "selected_sample": 0,
+    "selected_waypoint_index": 2,
+    "camera": {
+      "width": 320,
+      "height": 240,
+      "height_m": 0.5,
+      "horizontal_fov_deg": 90.0,
+      "focal_length_mm": 18.0,
+      "horizontal_aperture_mm": 36.0,
+      "vertical_aperture_mm": 27.0
+    },
+    "corridor": {
+      "xmin": -2.0,
+      "xmax": 6.0,
+      "half_width": 1.5,
+      "height": 2.6
+    },
+    "boundary_stop_margin_m": 0.1,
+    "synchronous": true,
+    "smoothing": false,
+    "waypoint_modification": false,
+    "obstacle": {
+      "center_xy_m": [
+        0.75,
+        0.0
+      ],
+      "size_xyz_m": [
+        0.3,
+        0.4,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    "agent_radius_m": 0.12,
+    "required_clearance_m": 0.02
+  },
+  "inference_median_ms": 29.131028,
+  "all_outputs_finite": true,
+  "simulation_paused_during_inference": true,
+  "frame_and_rgb_check": {
+    "status": "PASS",
+    "rgb_shape": [
+      240,
+      320,
+      3
+    ],
+    "rgb_dtype": "uint8",
+    "forward_world": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "up_world": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "right_world": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "red_left_pixels": 5376,
+    "red_mean_pixel_x": 35.81547619047619,
+    "blue_right_pixels": 5345,
+    "blue_mean_pixel_x": 283.08643592142187,
+    "goal_start_mean_abs_pixel_difference": 35.841059027777774,
+    "python": "3.12.13 (tags/v3.12.13-dirty:3bb231a, Apr 22 2026, 14:10:08) [GCC 11.4.0]",
+    "executable": "/home/gpuadmin/isaacsim/kit/python/bin/python3",
+    "numpy": "2.3.1",
+    "obstacle_green_pixels": 21445,
+    "obstacle_actual_world_aabb": [
+      [
+        0.6,
+        -0.2,
+        0.0
+      ],
+      [
+        0.9,
+        0.2,
+        0.8
+      ]
+    ]
+  },
+  "raw_model_output_directory": "model/raw",
+  "derived_trajectory_directory": "model/derived",
+  "obstacle_evaluation": {
+    "category": "no_collision_goal_failure",
+    "avoidance_success": false,
+    "geometric_overlap": false,
+    "first_contact": null,
+    "minimum_swept_clearance_lower_m": 0.07519548891712804,
+    "minimum_swept_clearance_upper_m": 0.07519877584875007,
+    "safety_margin_met": true,
+    "minimum_corridor_clearance_lower_m": 0.6919456151047917,
+    "corridor_containment_certified": true,
+    "passage": {
+      "side": "left_positive_y",
+      "simulation_time_s": 7.319444444444444,
+      "pose": [
+        1.0215358734864866,
+        0.4958056511283838,
+        -0.02229141087416586
+      ]
+    },
+    "collision_detection_period_s": 0.013888888888888888
+  },
+  "run_directory": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_01",
+  "provenance": {
+    "time_kst": "2026-10-16T13:23:59.275804+09:00",
+    "isaac_root": "/home/gpuadmin/isaacsim",
+    "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "git_sha": "fe030579cecd9051f22655bc8fccc003be6775d4",
+    "git_status": "",
+    "source_sha256": {
+      "research/nomad_isaac/launch.py": "117ab50b6269f0746903d650f954812dfcd68dbbc43808d75da60c4757aa27d5",
+      "research/nomad_isaac/worker.py": "8d7be452fd681bcba7b796d9402a3e090bab248ec3744bf188ffca8c218ef00d",
+      "research/nomad_isaac/__init__.py": "e43f84caae01e4374d780cc3edadfc04688426d00a867530c6b85dc1601b852d",
+      "research/nomad_isaac/common.py": "1ef609a09d5126145939ac6ada0ef0a038caabc151beb61d768a5c3ab00c099c",
+      "research/nomad_isaac/report.py": "f61225a2cc0a4e9763356ea1290d60e2d53fa0dfbc105f09cf702f76ec148142",
+      "research/nomad_isaac/simulator.py": "6d95110b48f1feb38257be130ef20a353d25d196e8c8e4e973225b7f382bcac4",
+      "research/nomad_isaac/clearance.py": "538f79484991178a066e42f2d026a11d3ff39700bfad3934addd75573ab55995",
+      "research/nomad_isaac/obstacle_scenario.json": "08bd12188a75ee7af16b503b71e09d06951007e5a8f9a331a9ebd1ad6b884a95",
+      "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631"
+    },
+    "prepare_only": false,
+    "launcher_python": "/home/gpuadmin/Workspace/NoMaD/.venv/bin/python",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti, 595.99.02, 16311 MiB"
+  },
+  "nomad_environment": {
+    "python": "3.11.16 (main, Sep  1 2026, 14:18:37) [Clang 22.1.3 ]",
+    "executable": "/home/gpuadmin/Workspace/NoMaD/.venv/bin/python",
+    "torch": "2.7.0+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "numpy": "1.26.4",
+    "torchvision": "0.22.0+cu128",
+    "diffusers": "0.11.1",
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "config": {
+      "context_size": 3,
+      "image_size": [
+        96,
+        96
+      ],
+      "num_diffusion_iters": 10,
+      "len_traj_pred": 8
+    }
+  },
+  "validation": {
+    "status": "PASS",
+    "trajectory_rows": 2161,
+    "applied_events": 117,
+    "controller_refreshes": 270,
+    "max_pose_integration_error": 1.7763568394002505e-15,
+    "controller_matches_original": true,
+    "normalization_matches_preflight": true,
+    "selected_waypoints_unmodified": true,
+    "history_order_verified": true,
+    "goal_entry_from_world_pose": true,
+    "swept_intervals_verified": 2161,
+    "planning_diagnostics_verified": 117,
+    "stop_at_first_detected_interval": null,
+    "contact_stop_runtime_status": "NOT_EXERCISED_no_contact",
+    "avoidance_success_criteria_verified": true,
+    "first_inference_ms": 324.573283,
+    "inference_median_ms": 29.131028,
+    "inference_p95_ms": 32.8878816,
+    "minimum_predicted_sample0_polyline_clearance_m": -0.07051042142350328,
+    "predicted_sample0_overlap_count": 3
+  },
+  "failure_analysis": {
+    "category": "no_collision_goal_failure",
+    "adapter_fault_detected": false,
+    "scope": "Single fixed policy/controller run; planning polylines are separate from executed kinematic motion; no PhysX or general success-rate claim."
+  },
+  "raw_file_sha256": {
+    "agent_trajectory.csv": "47350ad744f0f8498f278400bb7490a92d2d4cc6d5e662121f9d6cc1cef99b79",
+    "events.jsonl": "775260f1389c1cc75e5abedf5d5875c46e67e7b01d8d63be3d7e8002a2ea3196",
+    "controller.jsonl": "218c37c9d7bf7e1ef1a06cd0b2b300b411a493750e5a0a7e2cc6992b3006fcda",
+    "goal.png": "8aba242668367673beb4972a04eeda1303a101882548c70253edbab2d186f2bd",
+    "observation_start.png": "73196769cab7361dcc3fc804f68a4d17e48da990061871937b58dc96b4c70be8",
+    "observation_final.png": "fbc4e4f8a5992dd53c9224d6df1926e77cc32ac585f344444130599b65ca04e0",
+    "clearance.jsonl": "2defc43b1e615b3f0429f9644b9508710520912e1a695c9bdace893b097ee4d7",
+    "planning.jsonl": "8ab462211e7b5a6aff824674e259965dc588abd17d7919b644b262ed54d6a059",
+    "obstacle_geometry.json": "39e7f148df81f7a238e64045a7479ae5df7f1da80cc8d28cb18243c85d856273",
+    "scene.usda": "d178e30865f433bb06694596ba62cc14e691821c3c4c88149ef5b578015236cf"
+  }
+}

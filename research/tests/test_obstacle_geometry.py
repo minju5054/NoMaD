@@ -1,10 +1,11 @@
 import json
 from pathlib import Path
+import tempfile
 
 import numpy as np
 
 from nomad_isaac.common import SCENARIO_PATH, integrate_se2, read_scenario
-from nomad_isaac.clearance import (first_contact_bracket, obstacle_bounds, planning_diagnostic,
+from nomad_isaac.clearance import (ObstacleMonitor, first_contact_bracket, obstacle_bounds, planning_diagnostic,
                                   point_clearance, segment_clearance, swept_clearance)
 
 
@@ -68,3 +69,23 @@ def test_planning_polyline_uses_observation_frame_and_full_sample():
     result = planning_diagnostic(local, [0, 0, np.pi/2], config)
     np.testing.assert_allclose(np.array(result["world_xy_m"])[:, 0], 0, atol=1e-14)
     assert result["polyline_clearance_m"] > 0
+
+
+def test_goal_entry_alone_never_passes_unsafe_geometry():
+    config = read_scenario(SCENARIO_PATH.with_name("obstacle_scenario.json"))
+    cases = [(.35, True, "avoidance_and_goal_success", False),
+             (.33, True, "collision_or_safety_margin_failure", False),
+             (.31, True, "collision_or_safety_margin_failure", True),
+             (.35, False, "no_collision_goal_failure", False)]
+    for y, goal_entry, category, overlap in cases:
+        with tempfile.TemporaryDirectory(prefix="nomad-geometry-test-") as directory:
+            monitor = ObstacleMonitor(config, Path(directory))
+            pose = [.75, y, 0.]
+            monitor.observe_interval(pose, pose, 0., 0., 0., 0.)
+            result = monitor.finish(goal_entry)
+            assert result["category"] == category
+            assert result["geometric_overlap"] == overlap
+            assert result["avoidance_success"] == (category == "avoidance_and_goal_success")
+            if overlap:
+                assert monitor.stop_reason == "geometric_collision"
+                assert result["first_contact"] is not None

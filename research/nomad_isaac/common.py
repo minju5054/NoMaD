@@ -95,3 +95,17 @@ def write_json(path, value):
     with Path(path).open("x") as f:
         json.dump(value, f, indent=2)
         f.write("\n")
+
+
+def export_view_scene(source_path, destination_path):
+    """Export identical /World data without transient capture graphs; no replay."""
+    from pxr import Sdf, Usd
+    if Path(destination_path).exists():
+        raise FileExistsError(destination_path)
+    source = Usd.Stage.Open(str(source_path))
+    target = Usd.Stage.CreateInMemory()
+    assert Sdf.CopySpec(source.GetRootLayer(), "/World", target.GetRootLayer(), "/World")
+    target.SetDefaultPrim(target.GetPrimAtPath("/World"))
+    for key in ["upAxis", "metersPerUnit"]:
+        target.SetMetadata(key, source.GetMetadata(key))
+    assert target.Export(str(destination_path))

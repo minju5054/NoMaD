@@ -1,6 +1,6 @@
 # 실행 기록과 최종 판정
 
-아래 기존 절은 offline preflight 완료 당시의 기록이다. 이후 승인된 Isaac Sim 작업과 현재 remote/검증 상태는 마지막 **Isaac Sim 6 최소 navigation 추가 기록** 절을 따른다.
+아래 기존 절은 offline preflight 완료 당시의 기록이다. 이후 승인된 Isaac Sim 작업과 현재 remote/검증 상태는 하단의 날짜별 추가 기록을 따른다.
 
 작업일: 2026-10-16, Asia/Seoul. 범위: 공식 repository/독립 환경/checkpoint/native offline inference/측정. NoMaD 학습, 모델 개선, Isaac Sim 실행, robot control, obstacle avoidance 평가, OLD/FRESH reconciliation, graph optimization은 수행하지 않았다.
 
@@ -103,3 +103,19 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 9. `git diff`로 공식 `train/`, `deployment/`가 upstream SHA와 동일하고 기존 `research/nomad_preflight/`가 preflight commit과 동일함을 확인했다. Raw outputs, checkpoint, `.venv`, 외부 dependency, renderer caches, 기존 preflight 결과는 Git에 넣거나 덮어쓰지 않았다. 신규 code/tests/docs/small result만 commit하고 확인된 사용자 origin에 일반 push한다. Force push/history rewrite 없음.
 
 현재 판정: 최소 synchronous navigation integration **PASS**, 단일 근거리 goal entry **PASS**. 다음 제한된 장애물 실험을 준비할 수 있으나 footprint/collision/clearance와 고정 평가 기준을 별도로 정의해야 한다. 원본 topomap navigation, 장애물 회피 성능/성공률, 비동기 실행·OLD/FRESH handoff, reconciliation/graph optimization, robot dynamics, 모델 학습은 **NOT RUN**이다. 이 결과의 yaw/time은 agent 실행 기록이며 NoMaD의 intrinsic timestamp나 yaw가 아니다.
+
+## Isaac Sim 6 정적 장애물 추가 기록
+
+2026-10-16. 상세 보고서는 [ISAAC6_STATIC_OBSTACLE.md](ISAAC6_STATIC_OBSTACLE.md)다. 기준 `35c435e3eb19471c8f678ae8387d6c641bcf7623`의 clean tree에서 별도 `research/isaac6-static-obstacle` branch를 생성했다.
+
+1. 기존 설정을 유지하고 별도 scenario에 중심 `(0.75,0)` m, 크기 `(0.30,0.40,0.80)` m의 녹색 box, 반경 0.12 m footprint, clearance 0.02 m를 고정했다. 원본 모델/worker/controller/normalization/선택 point/seed/속도/tolerance 변경 없음. Geometry는 NoMaD에 입력하지 않고 실제 RGB에만 렌더링했다.
+2. 매 72 Hz 이동 구간에 chord/AABB 거리와 unicycle arc sagitta를 이용한 보수적 swept clearance를 추가했다. Goal entry만으로 unsafe 경로를 성공 처리하지 않는다. Clearance는 계측/종료에만 쓰며 회피 controller 또는 waypoint 보정에 사용하지 않는다. Sample 0 전체 polyline의 clearance는 별도 planning diagnostic으로 저장한다.
+3. 개발 중 두 unit assertion(부동소수점 경계 및 upper-bound 해석)을 바로잡았고, 실행 전 tests 19개와 Isaac Python 검사 10개가 통과했다. 코드와 scenario를 `fe030579cecd9051f22655bc8fccc003be6775d4`로 commit한 후 clean tree에서 단일 `static_obstacle_01`을 실행했다. 기존 장애물 없는 실험은 재실행하지 않았다.
+4. **결과는 충돌 없이 목표 도달 실패.** t=7.319444 s에 장애물 왼쪽(+Y)으로 footprint가 통과했다. 최소 swept clearance 하한 0.07519549 m, 상한 0.07519878 m로 0.02 m 기준 만족. Geometric overlap 및 corridor 침범 없음. 하지만 최소 goal 거리 0.46889352 m로 tolerance 0.30 m에 진입하지 못해 t=30 s simulation timeout으로 종료했다. 실행 중 기술적 중단이나 조건 변경/성능 재시도 없음.
+5. 117 inference/117 waypoint 적용, 2161 pose records, 270 controller refreshes를 저장하고 재검증했다. 정상 RGB/좌표/원본 controller exact equality와 output finite/shape를 확인했다. 모델 전체 sample 0 polyline은 3회 footprint overlap을 예측했지만 index 2까지의 prefix와 실제 경로는 안전했다. 가까운 goal의 왼쪽 약 0.47 m를 지나 계속 전진한 실패를 기록했으며 camera/domain/topomap 생략의 원인 분리 실험은 하지 않았다. 실제 contact가 없어 runtime collision-stop branch는 **NOT EXERCISED**로 명시했다.
+6. 최종 tests는 goal/safety 분류 회귀 검사 포함 **20 passed, 0 skipped**, 2.10 s. 기존 Isaac Python의 adapter/기하 검사 **11개 통과**. 원본 NoMaD source와 baseline worker/scenario의 Git diff는 비어 있다. 시스템/가상환경/Isaac 패키지 설치 변경 없음.
+7. Raw/derived 결과는 `../artifacts/isaac6/static_obstacle_01/`에 보존하고 작은 summary/validation/World XY 그림 한 장은 `research/results/isaac6_static_obstacle_20261016/`에 저장했다. 기존 결과를 덮어쓰지 않았다. 실제 overlap이 없으므로 최초 발생 위치는 null/해당 없음이다.
+8. 기존 설치의 `isaac-sim.sh`와 이미 포함된 `omni.usd/.../scripts/open_stage.py`로 GUI scene 표시를 확인했다. Raw USD의 runtime capture graph가 GUI에서 반복 오류를 내어 raw를 보존하고 `/World`만 복사한 `scene_gui.usda`를 추가했다. World prim 98개와 모든 attribute/relationship 일치를 검사했다. 최종 GUI는 해당 파일의 실제 open 성공 및 Error 0개를 확인했다. 정적 scene 표시만 하며 recorded trajectory replay 프로그램을 구현하지 않았다. GUI 검증 동안 NoMaD inference/navigation은 실행하지 않았다.
+9. 사용자 `minju5054/NoMaD`의 ADMIN 권한과 기존 origin을 확인했다. 관련 코드/tests/docs/작은 결과만 새 연구 branch에 commit하고 일반 push한다. Checkpoint, raw/derived NPZ, USD, RGB, caches, 기존 preflight 결과는 Git에서 제외한다. Force push/history rewrite 없음.
+
+최종 판정: 기술적 실행/계측 PASS, obstacle clearance와 corridor 조건 PASS, goal entry FAIL, **통합 장애물 navigation 성공 FAIL**. 일반적인 obstacle navigation 성공률, 물리 충돌, async/OLD-FRESH/graph optimization은 미검증이다. 결과를 성공으로 바꾸기 위한 추가 실험이나 모델 튜닝은 수행하지 않았다.

@@ -40,7 +40,7 @@ import omni.replicator.core as rep
 from pxr import Gf, UsdGeom, UsdLux, UsdShade, Sdf
 
 from nomad_isaac.common import (SCENARIO_PATH, integrate_se2, original_controller,
-                                read_scenario, receive_packet, send_packet, write_json)
+                                read_scenario, receive_packet, send_packet, write_json, export_view_scene)
 from nomad_isaac.clearance import ObstacleMonitor, obstacle_bounds
 
 
@@ -178,6 +178,8 @@ def main():
         render_check["obstacle_actual_world_aabb"] = [list(bounds.GetMin()), list(bounds.GetMax())]
     write_json(out / "render_check.json", render_check)
     stage.Export(str(out / "scene.usda"))
+    if "obstacle" in config:
+        export_view_scene(out / "scene.usda", out / "scene_gui.usda")
     if args.prepare_only:
         print("RENDER_GATE_PASS", flush=True)
         return
