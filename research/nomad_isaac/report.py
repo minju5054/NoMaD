@@ -86,7 +86,10 @@ def main():
            xlim=(min(-.4, pose[:, 0].min()-.3), max(2., pose[:, 0].max()+.3)), ylim=(-1.65, 1.65),
            title=f"NoMaD + Isaac Sim 6 | goal entry: {summary['goal_entry']}\nMinimum goal distance: {distances.min():.3f} m")
     ax.grid(alpha=.2); ax.legend(loc="upper left", fontsize=8)
-    fig.savefig(args.output / "world_xy.svg")
+    svg_path = args.output / "world_xy.svg"
+    fig.savefig(svg_path)
+    # Matplotlib adds trailing spaces inside multiline SVG paths; keep Git clean.
+    svg_path.write_text("\n".join(line.rstrip() for line in svg_path.read_text().splitlines()) + "\n")
     plt.close(fig)
     print(json.dumps({"goal_entry": summary["goal_entry"], "termination": summary["termination_reason"],
                       "minimum_distance_m": float(distances.min()), "validation": report["validation"]}, indent=2))
