@@ -211,3 +211,15 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 3. 95 inference/receive, 94 switch, 1,771 poses. 마지막 ID 94는 수신 후 다음 controller tick 전에 목표 진입해 미적용 상태로 보존했다. Warm median/p95 29.187/31.903 ms, 이후 94/94 inference 동안 OLD 실제 이동. RTF 0.999995888, pacing p95/max 0.154592/1.198826 ms. Async/soft real-time PASS; timeout 0회/NOT_EXERCISED, busy skip 1회.
 4. Summary 생성 후 0.965 s에 GUI animation 저장. 원본 pose 전체/101 prim 보존과 9 cm footprint 검사 통과. 기존 GUI native replay playing=true, row 145 pose 일치, startup Error 0개 확인. 추가 inference/navigation/MP4 없음.
 5. 모든 raw/derived/PD/pose/timing/clearance offline 검증 PASS. 이전 run 주요 208개 및 sync baseline 484개 hash 보존. 기존 source 및 환경은 변경하지 않고 새 scenario·작은 JSON·문서만 commit/push한다. 단일 run의 성공을 일반적인 성능 또는 Graph 필요성으로 확대하지 않는다.
+
+## 성공한 async run의 OLD/FRESH Graph 필요성 audit
+
+2026-10-16. 새 사용자 요청에 따라 기준 `929a9dc`에서 `research/isaac6-async-handoff-audit`를 생성했다. 중단된 폭 2.0 m 실험 결과는 별도 `research/isaac6-async-wall-width20`의 `0683639`에 보존했으며 이번 분석에는 사용하지 않았다. [상세 보고서](ASYNC_OLD_FRESH_HANDOFF_AUDIT.md).
+
+1. 성공한 `async_wide_wall_01`의 저장 데이터만 분석했다. Fixed-goal adapter 유지, 새 Topomap/navigation/inference/latency/Graph/영상 없음. 기존 correspondence/entry/classify 및 thresholds를 유지하고 async scope/clock 규칙을 metric 계산 전 `dc6c69d`에 고정했다. 분석 코드는 `1c34d6f` clean 상태에서 실행했다.
+2. 95 predictions, 94 실제 적용 중 initialization ID 0을 제외한 **93 handoff**를 복원했다. 수신됐지만 미적용된 ID 94는 별도 제외. 각 path는 자신의 observation pose에 고정하고 B는 실제 switch pose로 사용했다.
+3. 분류는 **consistent 85 / staging 1 / unsafe FRESH 1 / potential reconciliation 0 / insufficient 6**. 유효 correspondence 87개, classifiable 93.55%. 최종 **NO_QUALIFIED_CANDIDATE**. 후보 0개라 그림도 생략했다.
+4. Equal-progress position RMSE median/p95/max 0.01356/0.04510/0.05745 m, tangent heading RMS 6.62/19.78/22.38°. Observation pose→switch OLD 이동 0.02778/0.03611/0.04444 m, robot yaw 절댓값 1.15/3.84/5.09°. Controller local-point world 의미와 observation-anchored point의 거리 median/max 0.02774/0.04492 m를 별도 측정했다.
+5. 두 번째 장애물 접근·통과 24개 모두 consistent. 모든 nearest connectors가 안전했고 실제 93개 실행 구간도 안전했다. Prediction 29는 tail 6→7만 unsafe인 반면 prefix와 실행은 안전했다. Pair 83→84는 1.15 mm 연결의 큰 bearing 때문에 staging으로 분류됐지만 연결과 실제 실행 모두 안전했다. 6개 invalid correspondence는 판정을 보류했다.
+6. 기존 7+새 최소 3 tests, **10 passed/0.08 s**. 95 raw/derived/원본 PD/pose/timing/clearance 재검증 및 기존 async report 93행 교차 검증 PASS. 과거 203개 input hash 일치, 분석 전후 205개 hash 불변, 실행 source 17개 보존. Source/작은 CSV·JSON/docs만 commit/push한다.
+7. 현재 성공 baseline에서 해결해야 할 연결 실패는 발견하지 못한 negative evidence다. Graph 필요성·성능·우월성은 미입증. 더 큰 OLD 이동 조건의 문제 존재성을 조사하려면 후속 controlled latency 실험을 검토할 수 있으나 이번 작업에서는 실행하지 않는다.
