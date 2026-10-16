@@ -1,0 +1,470 @@
+{
+  "async_reproduction": "PASS",
+  "real_time_pacing_pass": true,
+  "inference_clock_mapping_pass": true,
+  "switch_tick_mismatch_ids": [],
+  "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_two_obstacles_01",
+  "execution_git_sha": "cef336f6143a36c6e85559213aacfae02b46020b",
+  "execution_git_status": "",
+  "requests": 31,
+  "received": 31,
+  "switches": 31,
+  "control_refreshes": 77,
+  "pose_rows": 610,
+  "initial_stop_pose_error": 0.0,
+  "warm_inference_ms": {
+    "n": 30,
+    "median": 29.0203275,
+    "p95": 30.882277600000002,
+    "min": 27.619593,
+    "max": 31.996467
+  },
+  "cold_inference_ms": 258.752098,
+  "timing": {
+    "observation_to_ready_wall_s": {
+      "n": 31,
+      "median": 0.06816691,
+      "p95": 0.1305122555,
+      "min": 0.064194306,
+      "max": 0.300287509
+    },
+    "observation_to_switch_wall_s": {
+      "n": 31,
+      "median": 0.138530377,
+      "p95": 0.194272123,
+      "min": 0.083013753,
+      "max": 0.360999376
+    },
+    "observation_to_switch_sim_s": {
+      "n": 31,
+      "median": 0.13888888888888884,
+      "p95": 0.20138888888888928,
+      "min": 0.08333333333333304,
+      "max": 0.36111111111111116
+    },
+    "rgb_available_to_ready_wall_s": {
+      "n": 31,
+      "median": 0.031240234,
+      "p95": 0.0335929195,
+      "min": 0.029680592,
+      "max": 0.265333024
+    },
+    "rgb_available_to_switch_wall_s": {
+      "n": 31,
+      "median": 0.073203811,
+      "p95": 0.129538304,
+      "min": 0.042662098,
+      "max": 0.326044891
+    },
+    "ready_to_received_wall_s": {
+      "n": 31,
+      "median": 0.002058965,
+      "p95": 0.002486275,
+      "min": 0.001829668,
+      "max": 0.018428321
+    },
+    "received_to_switch_wall_s": {
+      "n": 31,
+      "median": 0.040221626,
+      "p95": 0.0964392665,
+      "min": 0.009592196,
+      "max": 0.096952875
+    },
+    "render_s": {
+      "n": 31,
+      "median": 0.036888261,
+      "p95": 0.095079635,
+      "min": 0.031301171,
+      "max": 0.103007296
+    },
+    "request_delay_wall_s": {
+      "n": 31,
+      "median": 0.037146504,
+      "p95": 0.095406097,
+      "min": 0.031543002,
+      "max": 0.103258225
+    },
+    "dispatch_to_infer_start_wall_s": {
+      "n": 31,
+      "median": 0.001855567,
+      "p95": 0.002248722,
+      "min": 0.001740398,
+      "max": 0.006332943
+    },
+    "pose_age_at_capture_start_s": {
+      "n": 31,
+      "median": 0.001074609,
+      "p95": 0.0146320435,
+      "min": 0.000369564,
+      "max": 0.014743306
+    },
+    "switch_translation_from_observation_m": {
+      "n": 31,
+      "median": 0.02117308159561248,
+      "p95": 0.036103263400353275,
+      "min": 0.0,
+      "max": 0.03610921084967241
+    },
+    "switch_abs_yaw_from_observation_rad": {
+      "n": 31,
+      "median": 0.033333333333333215,
+      "p95": 0.07222222222222197,
+      "min": 0.0,
+      "max": 0.07222222222222197
+    }
+  },
+  "old_motion_full_intervals_only": {
+    "distance_m": {
+      "n": 30,
+      "median": 0.002777777777777778,
+      "p95": 0.005555555555555556,
+      "min": 0.00015049924453099567,
+      "max": 0.005555555555555556
+    },
+    "abs_net_yaw_rad": {
+      "n": 30,
+      "median": 0.004699524533061217,
+      "p95": 0.011111111111111072,
+      "min": 0.00036062049513407857,
+      "max": 0.011111111111111072
+    },
+    "nonzero_request_count": 30,
+    "nonzero_request_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "meaning": "Sum of complete executed intervals inside GPU inference wall window, valid previous commands only; excludes first inference"
+  },
+  "pacing": {
+    "absolute_pose_error_s": {
+      "n": 610,
+      "median": 9.885427777800437e-05,
+      "p95": 0.000152993866666673,
+      "min": 4.9297222222133286e-05,
+      "max": 0.001225274000000276
+    },
+    "real_time_factor": 0.9999886643649513,
+    "late_more_than_one_tick": 0,
+    "inference_clock_mapping_abs_error_s": {
+      "n": 31,
+      "median": 1.215703077478078e-05,
+      "p95": 0.00012365194425511053,
+      "min": 3.367747913492203e-07,
+      "max": 0.00048012843355950754
+    },
+    "actual_pose_interval_wall_s": {
+      "n": 609,
+      "median": 0.013888796999999897,
+      "p95": 0.013940513800000187,
+      "min": 0.012770544999999522,
+      "max": 0.01500780100000032
+    },
+    "actual_control_interval_wall_s": {
+      "n": 76,
+      "median": 0.111115886,
+      "p95": 0.11195134825,
+      "min": 0.109848168,
+      "max": 0.112294192
+    }
+  },
+  "timeout": {
+    "episodes": 0,
+    "expired_control_ticks": 0,
+    "runtime_status": "NOT_EXERCISED_no_natural_timeout",
+    "synthetic_exact_timeout": "PASS"
+  },
+  "busy_observation_skips": 0,
+  "missed_capture_slots": 0,
+  "capture_count": 35,
+  "terminal_unapplied_requests": [],
+  "goal_entry": false,
+  "minimum_goal_distance_m": 3.3219537132794383,
+  "termination_reason": "geometric_collision",
+  "simulation_duration_s": 8.458333333333334,
+  "navigation_wall_seconds": 8.458429215,
+  "obstacle_evaluation": {
+    "category": "collision_or_safety_margin_failure",
+    "avoidance_success": false,
+    "geometric_overlap": true,
+    "first_contact": {
+      "obstacle_id": "StaticObstacle1",
+      "interval_start_s": 8.444444444444445,
+      "detected_sim_s": 8.458333333333334,
+      "detected_pose": [
+        1.1800604731323763,
+        -0.11566335250642715,
+        -0.6965041199793758
+      ],
+      "lower_m": -6.240214448154288e-05,
+      "upper_m": -6.0473132376226424e-05,
+      "bound_width_m": 1.929012105316452e-06,
+      "pieces": 1,
+      "witness_offset_s": 0.013888888888888888,
+      "witness_pose": [
+        1.1800604731323763,
+        -0.11566335250642715,
+        -0.6965041199793758
+      ],
+      "geometric_overlap": true,
+      "offset_bracket_s": [
+        0.013494739428602366,
+        0.013494739431836125
+      ],
+      "pose_at_bracket_end": [
+        1.179999999554805,
+        -0.1156127847480958,
+        -0.6963464601965548
+      ],
+      "meaning": "earliest possible contact within conservative spatial bound; not PhysX contact"
+    },
+    "safety_margin_met": false,
+    "minimum_swept_clearance_lower_m": -6.240214448154288e-05,
+    "minimum_swept_clearance_upper_m": -6.0473132376226424e-05,
+    "minimum_corridor_clearance_lower_m": 1.2643347184814673,
+    "corridor_containment_certified": true,
+    "passage": {
+      "StaticObstacle1": null,
+      "StaticObstacle2": null
+    },
+    "collision_detection_period_s": 0.013888888888888888,
+    "obstacles": {
+      "StaticObstacle1": {
+        "category": "collision_or_safety_margin_failure",
+        "avoidance_success": false,
+        "geometric_overlap": true,
+        "first_contact": {
+          "interval_start_s": 8.444444444444445,
+          "detected_sim_s": 8.458333333333334,
+          "detected_pose": [
+            1.1800604731323763,
+            -0.11566335250642715,
+            -0.6965041199793758
+          ],
+          "lower_m": -6.240214448154288e-05,
+          "upper_m": -6.0473132376226424e-05,
+          "bound_width_m": 1.929012105316452e-06,
+          "pieces": 1,
+          "witness_offset_s": 0.013888888888888888,
+          "witness_pose": [
+            1.1800604731323763,
+            -0.11566335250642715,
+            -0.6965041199793758
+          ],
+          "geometric_overlap": true,
+          "offset_bracket_s": [
+            0.013494739428602366,
+            0.013494739431836125
+          ],
+          "pose_at_bracket_end": [
+            1.179999999554805,
+            -0.1156127847480958,
+            -0.6963464601965548
+          ],
+          "meaning": "earliest possible contact within conservative spatial bound; not PhysX contact"
+        },
+        "minimum_swept_clearance_lower_m": -6.240214448154288e-05,
+        "minimum_swept_clearance_upper_m": -6.0473132376226424e-05,
+        "safety_margin_met": false,
+        "minimum_corridor_clearance_lower_m": 1.2643347184814673,
+        "corridor_containment_certified": true,
+        "passage": null,
+        "collision_detection_period_s": 0.013888888888888888
+      },
+      "StaticObstacle2": {
+        "category": "no_collision_goal_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "minimum_swept_clearance_lower_m": 1.4586539753524292,
+        "minimum_swept_clearance_upper_m": 1.4586559043645346,
+        "safety_margin_met": true,
+        "minimum_corridor_clearance_lower_m": 1.2643347184814673,
+        "corridor_containment_certified": true,
+        "passage": null,
+        "collision_detection_period_s": 0.013888888888888888
+      }
+    }
+  },
+  "validation": {
+    "status": "PASS",
+    "max_pose_integration_error": 0.0,
+    "normalization_cumsum_metric_selection": "exact",
+    "controller_matches_original": true,
+    "observation_world_anchor_matches_planning": true,
+    "checkpoint_coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "previous_baseline_hashes_unchanged": 484,
+    "swept_clearance_recomputed": {
+      "StaticObstacle1": -6.240214448154288e-05,
+      "StaticObstacle2": 1.4586539753524292
+    }
+  },
+  "synchronous_baseline": {
+    "requests": 237,
+    "warm_inference_ms": {
+      "n": 236,
+      "median": 29.593555000000002,
+      "p95": 32.385771000000005,
+      "min": 26.787421,
+      "max": 38.074266
+    },
+    "observation_timestamp_note": "Legacy t_obs is assigned AFTER RGB capture; async t_obs is capture start. Compare RGB-available delays for aligned host-time semantics.",
+    "observation_to_ready_wall_s": {
+      "n": 237,
+      "median": 0.031329202,
+      "p95": 0.04031339219999999,
+      "min": 0.028117582,
+      "max": 0.278530249
+    },
+    "observation_to_switch_wall_s": {
+      "n": 237,
+      "median": 0.036237818,
+      "p95": 0.0440222328,
+      "min": 0.031247566,
+      "max": 0.300208629
+    },
+    "observation_to_switch_sim_s": {
+      "n": 237,
+      "median": 0.027777777777778567,
+      "p95": 0.08333333333333215,
+      "min": 0.0,
+      "max": 0.08333333333333326
+    },
+    "old_motion_during_inference_m": 0.0,
+    "old_yaw_during_inference_rad": 0.0,
+    "switch_translation_from_observation_m": {
+      "n": 237,
+      "median": 0.005555555552120141,
+      "p95": 0.01666665237267041,
+      "min": 0.0,
+      "max": 0.016666666480823905
+    },
+    "switch_abs_yaw_from_observation_rad": {
+      "n": 237,
+      "median": 0.0046657494361608265,
+      "p95": 0.030832758812175207,
+      "min": 0.0,
+      "max": 0.03333333333333366
+    },
+    "goal_entry": false,
+    "minimum_goal_distance_m": 0.663054557800859,
+    "obstacle_evaluation": {
+      "category": "no_collision_goal_failure",
+      "avoidance_success": false,
+      "geometric_overlap": false,
+      "first_contact": null,
+      "safety_margin_met": true,
+      "minimum_swept_clearance_lower_m": 0.10384043954840719,
+      "minimum_swept_clearance_upper_m": 0.10384152431146179,
+      "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+      "corridor_containment_certified": true,
+      "passage": {
+        "StaticObstacle1": {
+          "side": "left_positive_y",
+          "simulation_time_s": 11.11111111111111,
+          "pose": [
+            1.8203574890461294,
+            0.8973786063510013,
+            0.36064147566454363
+          ]
+        },
+        "StaticObstacle2": {
+          "side": "left_positive_y",
+          "simulation_time_s": 19.13888888888889,
+          "pose": [
+            3.371604190999277,
+            1.0464870427487853,
+            -0.3393747707893252
+          ]
+        }
+      },
+      "collision_detection_period_s": 0.013888888888888888,
+      "obstacles": {
+        "StaticObstacle1": {
+          "category": "no_collision_goal_failure",
+          "avoidance_success": false,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.10384043954840719,
+          "minimum_swept_clearance_upper_m": 0.10384152431146179,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "left_positive_y",
+            "simulation_time_s": 11.11111111111111,
+            "pose": [
+              1.8203574890461294,
+              0.8973786063510013,
+              0.36064147566454363
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        },
+        "StaticObstacle2": {
+          "category": "no_collision_goal_failure",
+          "avoidance_success": false,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.12270646452160615,
+          "minimum_swept_clearance_upper_m": 0.12270703351174442,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "left_positive_y",
+            "simulation_time_s": 19.13888888888889,
+            "pose": [
+              3.371604190999277,
+              1.0464870427487853,
+              -0.3393747707893252
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Canonical SE2 executed at 72 Hz; USD camera holds 4 Hz capture snapshots, not independent PhysX dynamics",
+    "Timing mapping interpolates existing wall/simulation samples; direct OLD evidence uses only complete measured intervals",
+    "One scenario/run; changed observation/seed association prevents causal attribution to asynchrony alone",
+    "No native waypoint yaw/timestamps, no topomap, graph, correspondence, artificial latency, video or GUI added"
+  ]
+}

@@ -167,3 +167,17 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 6. Synchronous inference 중 simulation 경과는 0 s다. 수신 후 controller tick까지 실제 최대 지연 0.083333 s/translation 0.0166667 m만 기록했다. 최대 |Δw|=0.61258 rad/s인 60→61도 실제 다음 switch까지 안전했다. 이를 Graph 필요성이나 목표 실패 원인으로 단정하지 않았다.
 7. 최종 판정 **NO_QUALIFIED_CANDIDATE**. 서로 다른 initial/DDPM seed와 observation 변화는 분리하지 못한다. 비동기 reconciliation 필요성, oracle correspondence, Graph 우월성은 미입증이다. 새 inference/navigation/sampling/optimization/video는 모두 0회다.
 8. 상세 [보고서](OLD_FRESH_HANDOFF_AUDIT.md), source/tests 및 작은 CSV/JSON만 Git에 포함한다. 전체 세부 수치는 `../artifacts/isaac6/handoff_audit_01/`에 보존했다. 원본 model/controller/geometry/coordinate/environment/실험 데이터는 변경하지 않았다.
+
+## Isaac Sim 6 asynchronous action execution
+
+2026-10-16. 기준 `622d99fae814b5a1b6cb7a262ebf835e14bc36df`에서 `research/isaac6-async-execution` branch를 생성했다. 상세 [ISAAC6_ASYNC_EXECUTION.md](ISAAC6_ASYNC_EXECUTION.md).
+
+1. 공식 navigate/PD/ROSData source를 확인했다. Nominal planning 4 Hz, controller 9 Hz, received age <1 s만 유효하며 처음/timeout에는 zero velocity다. 새 protocol과 soft real-time 기준을 실행 전에 `0cd69f7`에 commit했다.
+2. Main RTX capture, 한 개 outstanding request만 처리하는 IPC thread, 72 Hz canonical SE(2) execution thread를 분리했다. USD camera는 촬영 pose snapshot을 표시하며 실제 kinematic 상태와 clock은 rendering/inference 동안 계속 진행한다. Native PhysX/72 Hz USD dynamics라는 주장은 하지 않는다. Worker에는 timing metadata만 추가하고 inference 계산/원본 controller/좌표/clearance 함수는 보존했다.
+3. Synthetic tests **5 passed**, 0.06 s: 공식 ROSData와 정확한 timeout 경계 비교, 첫 수신 전 정지/OLD 계속 이동, 다음 controller tick 전환, single outstanding ordering, 72/9 Hz clock/integration. 코드를 **`cef336f6143a36c6e85559213aacfae02b46020b`**에 commit한 clean 상태에서 `async_two_obstacles_01` 주행 **한 번**을 실행했다.
+4. 실제 GPU inference 31회, receive/switch 각 31회, control refresh 77회, pose 610개. 첫 적용 t=1.111111 s까지 정지했다. 이후 **30개 inference 모두 유효 OLD의 실제 nonzero pose intervals**가 있었고, next controller tick 적용 오류 0회였다. Timeout 0회/실제 expiry branch NOT_EXERCISED, busy skip 0/missed capture slot 0이다. 강제 지연을 넣지 않았다.
+5. Warm inference median/p95 **29.020/30.882 ms**, capture-start→ready **68.167/130.512 ms**, capture-start→switch **138.530/194.272 ms**. Inference 안에 완전히 포함된 실제 OLD tick 이동 거리 median/max **0.002778/0.005556 m**, yaw 절댓값 median/max **0.004700/0.011111 rad**. Observation 대비 switch translation median/max **0.021173/0.036109 m**, yaw **0.033333/0.072222 rad**.
+6. 8.458333 simulation s / 8.458429 wall s, RTF **0.999988664**. Pose pacing error p95/max **0.15299/1.22527 ms**, inference duration wall↔sim mapping 오차 p95 **0.12365 ms**. 사전 real-time 기준 모두 통과. Mapping은 기록된 두 clock의 보간 비교이고 OLD 직접 증거는 보간 없는 실제 ticks다.
+7. Navigation은 **첫 장애물 geometric collision으로 실패**했다. t=8.458333 s, pose `(1.18006047,-0.11566335,-0.69650412)`, goal 최소 거리 3.32195 m, clearance 하한 −0.000062402 m. 최초 contact 검출 후 추가 integration 없이 중단했다. NoMaD prediction 29의 selected point 자체에도 overlap이 있었고 30은 safety margin 미달이었다. Navigation 실패를 이유로 재시도/scene·seed·controller tuning하지 않았다.
+8. 원본 normalization/cumsum/metric/sample/PD command, observation anchor 및 모든 pose 적분/clearance를 검증했다. Coverage 100%, 실제 출력 전부 `(8,8,2)` float32 finite. 실행 source 14개 hash와 기존 baseline 484개 hash 보존. 기존 baseline t_obs는 capture 후여서 offline 보고서 v2에 RGB-available 기준의 공통 비교를 추가했다. 최초 offline report도 보존했으며 추가 주행/기준 변경은 아니다.
+9. 판정은 **async execution/soft real-time PASS, navigation safety/goal FAIL**. 실제 timeout, 장시간 busy, 60초 지속 pacing은 미검증이다. 원본 ROS/topomap/PhysX, Graph/correspondence/latency injection/benchmark/MP4/GUI는 구현·실행하지 않았다. 새 source/tests/docs/작은 JSON/CSV만 commit/push하고 raw/derived 및 환경은 보존한다.
