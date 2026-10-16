@@ -181,3 +181,13 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 7. Navigation은 **첫 장애물 geometric collision으로 실패**했다. t=8.458333 s, pose `(1.18006047,-0.11566335,-0.69650412)`, goal 최소 거리 3.32195 m, clearance 하한 −0.000062402 m. 최초 contact 검출 후 추가 integration 없이 중단했다. NoMaD prediction 29의 selected point 자체에도 overlap이 있었고 30은 safety margin 미달이었다. Navigation 실패를 이유로 재시도/scene·seed·controller tuning하지 않았다.
 8. 원본 normalization/cumsum/metric/sample/PD command, observation anchor 및 모든 pose 적분/clearance를 검증했다. Coverage 100%, 실제 출력 전부 `(8,8,2)` float32 finite. 실행 source 14개 hash와 기존 baseline 484개 hash 보존. 기존 baseline t_obs는 capture 후여서 offline 보고서 v2에 RGB-available 기준의 공통 비교를 추가했다. 최초 offline report도 보존했으며 추가 주행/기준 변경은 아니다.
 9. 판정은 **async execution/soft real-time PASS, navigation safety/goal FAIL**. 실제 timeout, 장시간 busy, 60초 지속 pacing은 미검증이다. 원본 ROS/topomap/PhysX, Graph/correspondence/latency injection/benchmark/MP4/GUI는 구현·실행하지 않았다. 새 source/tests/docs/작은 JSON/CSV만 commit/push하고 raw/derived 및 환경은 보존한다.
+
+## Async footprint 반경 9 cm 재실행 및 GUI 저장
+
+2026-10-16. 사용자 후속 요청에 따라 `b0ab3d2`에서 `research/isaac6-async-radius09`를 생성했다. 이전 12 cm async 기록을 GUI로 보여준 후, 새 반경으로 주행하고 GUI를 즉시 저장하라는 요청을 수행했다. 상세 [ISAAC6_ASYNC_RADIUS09.md](ISAAC6_ASYNC_RADIUS09.md).
+
+1. 새 scenario에서 radius만 0.12→0.09 m로 변경하고 나머지 모델·장애물·seed schedule·controller·async runtime·안전 및 timeout 기준을 유지했다. 설정과 native GUI-only exporter를 실행 전 `c8fcf516d2dd35c59bfb408d88f1347ec43d4b01`에 commit했다. 기존 source 및 raw는 보존했다.
+2. 새 정상 주행 1회, 기술적/성능 재시도 0회. 147 inference, 2,718 poses, 37.736111 simulation s를 기록했다. 장애물 두 개를 왼쪽으로 통과했으며 최소 clearance는 0.256990/0.328163 m, obstacle overlap 없음. 목표에는 0.650837 m까지 접근했지만 미도달했고 복도 끝 footprint 침범으로 즉시 중단했다. 전체 navigation FAIL.
+3. Warm GPU median/p95 29.183/30.990 ms, OLD 이동 median/max 0.002778/0.005556 m, 이후 146개 inference 모두 OLD nonzero 이동. RTF 0.999997428, pacing p95/max 0.154665/1.396211 ms. Async/soft real-time PASS. Timeout 0회, busy observation skip 1회, missed slot 0회.
+4. 주행 summary 생성 후 0.962 s에 GUI USD를 저장했다. 모든 2,718 pose와 기존 101 prim을 검증했고 source 보존 및 9 cm 표시를 확인했다. 기존 Isaac GUI에서 반복 재생을 열어 playing=true, 원본 row 145 pose 일치, startup Error 0개 확인. GUI는 저장된 실제 주행 재생이며 추가 navigation/MP4는 없다.
+5. Synthetic tests 5 passed/0.06 s, 전체 raw/derived/PD/pose/timing/clearance offline 검증 PASS. 이전 async raw 주요 83개와 sync 484개 hash 불변. 초기 RGB hash 및 timing이 다른 단일 run이므로 경로 변화를 radius만의 효과로 주장하지 않는다. source·작은 JSON·문서만 commit/push하고 USD/raw/cache는 Git에 넣지 않는다.
