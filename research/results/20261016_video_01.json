@@ -1,0 +1,948 @@
+{
+  "status": "PASS",
+  "time_kst": "2026-10-16T10:55:57.872949+09:00",
+  "upstream_sha": "dca79815b704e5aa9c6bdc3082351f9e3b2848c2",
+  "diffusion_policy_sha": "548a52bbb105518058e27bf34dcf90bf6f73681a",
+  "checkpoint": {
+    "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/checkpoints/nomad.pth",
+    "bytes": 76473631,
+    "sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "source_folder": "https://drive.google.com/drive/folders/1a9yWR2iooXFAqjQHetz263--4_2FFggg",
+    "file_id": "1YJhkkMJAYOiKNyCaelbS_alpUpAJsOUb",
+    "coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    }
+  },
+  "environment": {
+    "python": "3.11.16",
+    "torch": "2.7.0+cu128",
+    "torch_cuda_runtime": "12.8",
+    "cudnn": 90701,
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "capability": [
+      12,
+      0
+    ],
+    "arch_list": [
+      "sm_75",
+      "sm_80",
+      "sm_86",
+      "sm_90",
+      "sm_100",
+      "sm_120",
+      "compute_120"
+    ],
+    "cuda_kernel_check": "PASS",
+    "packages": {
+      "torchvision": "0.22.0+cu128",
+      "numpy": "1.26.4",
+      "Pillow": "10.4.0",
+      "diffusers": "0.11.1",
+      "huggingface-hub": "0.25.2",
+      "efficientnet-pytorch": "0.7.1",
+      "einops": "0.6.1"
+    },
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": false,
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "deterministic_algorithms": false,
+    "cpu_threads": 8,
+    "nvidia_smi": "NVIDIA GeForce RTX 5060 Ti, 595.99.02, 16311 MiB"
+  },
+  "inputs": [
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/obs_0.png",
+      "sha256": "a73215237f81b5a5c53b1ef261306617eabf25541164bcc4587ee42f9497e334"
+    },
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/obs_1.png",
+      "sha256": "1109eca4e3e4df0fce5b2a9f7a8fde883738f9c88e0b57f76c590aa853fa57bd"
+    },
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/obs_2.png",
+      "sha256": "bb23310059bf7ee31358e4546814dd92fe9fb20ebcb42b70e93788348de392f0"
+    },
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/obs_3.png",
+      "sha256": "c090be8f74897b337282e21af4c951043a0b26204e7e7c2215626f0215dd99b0"
+    },
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/goal.png",
+      "sha256": "d90933a06d7ad6a9cb3cfc7fde3e707844e60b54a6d7f99ec89ce74164f42b0f"
+    },
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/alternate_0.png",
+      "sha256": "d65a0604057769b84f4a7d795bf74dbf6439e599067fd02368555c65db3d25e1"
+    },
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/alternate_1.png",
+      "sha256": "5dbf0a38dd699a316890a477a1b8bf090f1f92dcc46ca9f80554493faaeaff45"
+    },
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/alternate_2.png",
+      "sha256": "9625fa004bc6518e338f60cd8a21793703e3c05e5a98a265027de3d4f6026934"
+    },
+    {
+      "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/inputs/video_sequence/alternate_3.png",
+      "sha256": "697caad5ce37f06deee55901a64182f08763f0c995eff66979c54a1d4fc917c6"
+    }
+  ],
+  "configuration": {
+    "model": {
+      "project_name": "nomad",
+      "run_name": "nomad",
+      "use_wandb": true,
+      "train": true,
+      "batch_size": 256,
+      "epochs": 100,
+      "gpu_ids": [
+        0
+      ],
+      "num_workers": 12,
+      "lr": "1e-4",
+      "optimizer": "adamw",
+      "clipping": false,
+      "max_norm": 1.0,
+      "scheduler": "cosine",
+      "warmup": true,
+      "warmup_epochs": 4,
+      "cyclic_period": 10,
+      "plateau_patience": 3,
+      "plateau_factor": 0.5,
+      "seed": 0,
+      "model_type": "nomad",
+      "vision_encoder": "nomad_vint",
+      "encoding_size": 256,
+      "obs_encoder": "efficientnet-b0",
+      "attn_unet": false,
+      "cond_predict_scale": false,
+      "mha_num_attention_heads": 4,
+      "mha_num_attention_layers": 4,
+      "mha_ff_dim_factor": 4,
+      "down_dims": [
+        64,
+        128,
+        256
+      ],
+      "num_diffusion_iters": 10,
+      "goal_mask_prob": 0.5,
+      "normalize": true,
+      "context_type": "temporal",
+      "context_size": 3,
+      "alpha": "1e-4",
+      "distance": {
+        "min_dist_cat": 0,
+        "max_dist_cat": 20
+      },
+      "action": {
+        "min_dist_cat": 3,
+        "max_dist_cat": 20
+      },
+      "len_traj_pred": 8,
+      "learn_angle": false,
+      "image_size": [
+        96,
+        96
+      ],
+      "datasets": {
+        "recon": {
+          "data_folder": "/home/<username>/nomad_dataset/recon",
+          "train": "/home/<username>/data_splits/recon/train/",
+          "test": "/home/<username>/data_splits/recon/test/",
+          "end_slack": 3,
+          "goals_per_obs": 1,
+          "negative_mining": true
+        },
+        "go_stanford": {
+          "data_folder": "/home/<username>/nomad_dataset/go_stanford_cropped",
+          "train": "/home/<username>/data_splits/go_stanford/train/",
+          "test": "/home/<username>/data_splits/go_stanford/test/",
+          "end_slack": 0,
+          "goals_per_obs": 2,
+          "negative_mining": true
+        },
+        "cory_hall": {
+          "data_folder": "/home/<username>/nomad_dataset/cory_hall/",
+          "train": "/home/<username>/data_splits/cory_hall/train/",
+          "test": "/home/<username>/data_splits/cory_hall/test/",
+          "end_slack": 3,
+          "goals_per_obs": 1,
+          "negative_mining": true
+        },
+        "tartan_drive": {
+          "data_folder": "/home/<username>/nomad_dataset/tartan_drive/",
+          "train": "/home/<username>/data_splits/tartan_drive/train/",
+          "test": "/home/<username>/data_splits/tartan_drive/test/",
+          "end_slack": 3,
+          "goals_per_obs": 1,
+          "negative_mining": true
+        },
+        "sacson": {
+          "data_folder": "/home/<username>/nomad_dataset/sacson/",
+          "train": "/home/<username>/data_splits/sacson/train/",
+          "test": "/home/<username>/data_splits/sacson/test/",
+          "end_slack": 3,
+          "goals_per_obs": 1,
+          "negative_mining": true
+        }
+      },
+      "print_log_freq": 100,
+      "image_log_freq": 1000,
+      "num_images_log": 8,
+      "pairwise_test_freq": 0,
+      "eval_fraction": 0.25,
+      "wandb_log_freq": 10,
+      "eval_freq": 1
+    },
+    "num_samples": 8,
+    "timesteps": [
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "scheduler": {
+      "num_train_timesteps": 10,
+      "beta_start": 0.0001,
+      "beta_end": 0.02,
+      "beta_schedule": "squaredcos_cap_v2",
+      "trained_betas": null,
+      "variance_type": "fixed_small",
+      "clip_sample": true,
+      "prediction_type": "epsilon"
+    },
+    "initial_noise_seed": 101,
+    "ddpm_seed": 202,
+    "different_seed": [
+      303,
+      404
+    ],
+    "fixed_initial_only_ddpm_seed": 405
+  },
+  "measurements": {
+    "load_seconds": 0.16929027700098231,
+    "cold_inference_ms": 189.55902400193736,
+    "warmup_runs": 5,
+    "warm_runs": 30,
+    "warm_median_ms": 25.475657486822456,
+    "warm_p95_ms": 28.804903806303624,
+    "warm_ms": [
+      25.7734099868685,
+      25.350883952341974,
+      25.26991901686415,
+      25.405648979358375,
+      25.331696961075068,
+      25.465031969361007,
+      25.320516026113182,
+      25.653450982645154,
+      25.100054976064712,
+      25.688579014968127,
+      25.630808027926832,
+      25.39682196220383,
+      25.403394014574587,
+      25.18583898199722,
+      25.424484978429973,
+      25.4213489824906,
+      25.250182021409273,
+      25.116897013504058,
+      25.486283004283905,
+      25.621801964007318,
+      25.34300897968933,
+      26.183423004113138,
+      25.94612998655066,
+      25.532230967655778,
+      25.7058420102112,
+      25.566826981958002,
+      29.259041999466717,
+      28.249846014659852,
+      30.379149015061557,
+      26.597521966323256
+    ],
+    "baseline_allocated_bytes": 85377536,
+    "cold_peak_allocated_bytes": 180028928,
+    "warm_peak_allocated_bytes": 181142016,
+    "warm_peak_reserved_bytes": 201326592,
+    "timing_scope": "First/warm infer: PIL preprocessing, H2D, encoder, distance, 10 DDPM steps, official CPU normalization/cumsum, metric scaling, CUDA synchronization. Excludes imports, CUDA initialization, weights/image disk IO and initial noise creation."
+  },
+  "tensor_shapes": {
+    "goal_conditioned": {
+      "observation": {
+        "shape": [
+          1,
+          12,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "goal": {
+        "shape": [
+          1,
+          3,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "condition": {
+        "shape": [
+          1,
+          256
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "distance": {
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "initial_noise": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "normalized_diffusion": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "cumulative": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "metric": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "selected_waypoint": {
+        "shape": [
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      }
+    },
+    "fixed_noise_repeat": {
+      "observation": {
+        "shape": [
+          1,
+          12,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "goal": {
+        "shape": [
+          1,
+          3,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "condition": {
+        "shape": [
+          1,
+          256
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "distance": {
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "initial_noise": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "normalized_diffusion": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "cumulative": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "metric": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "selected_waypoint": {
+        "shape": [
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      }
+    },
+    "different_seed": {
+      "observation": {
+        "shape": [
+          1,
+          12,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "goal": {
+        "shape": [
+          1,
+          3,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "condition": {
+        "shape": [
+          1,
+          256
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "distance": {
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "initial_noise": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "normalized_diffusion": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "cumulative": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "metric": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "selected_waypoint": {
+        "shape": [
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      }
+    },
+    "fixed_initial_only": {
+      "observation": {
+        "shape": [
+          1,
+          12,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "goal": {
+        "shape": [
+          1,
+          3,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "condition": {
+        "shape": [
+          1,
+          256
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "distance": {
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "initial_noise": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "normalized_diffusion": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "cumulative": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "metric": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "selected_waypoint": {
+        "shape": [
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      }
+    },
+    "goal_free": {
+      "observation": {
+        "shape": [
+          1,
+          12,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "goal": {
+        "shape": [
+          1,
+          3,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "condition": {
+        "shape": [
+          1,
+          256
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "distance": {
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "initial_noise": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "normalized_diffusion": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "cumulative": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "metric": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "selected_waypoint": {
+        "shape": [
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      }
+    },
+    "goal_free_changed_goal": {
+      "observation": {
+        "shape": [
+          1,
+          12,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "goal": {
+        "shape": [
+          1,
+          3,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "condition": {
+        "shape": [
+          1,
+          256
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "distance": {
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "initial_noise": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "normalized_diffusion": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "cumulative": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "metric": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "selected_waypoint": {
+        "shape": [
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      }
+    },
+    "different_observations": {
+      "observation": {
+        "shape": [
+          1,
+          12,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "goal": {
+        "shape": [
+          1,
+          3,
+          96,
+          96
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "condition": {
+        "shape": [
+          1,
+          256
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "distance": {
+        "shape": [
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "initial_noise": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "normalized_diffusion": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "cumulative": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "metric": {
+        "shape": [
+          8,
+          8,
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      },
+      "selected_waypoint": {
+        "shape": [
+          2
+        ],
+        "dtype": "torch.float32",
+        "device": "cuda:0",
+        "finite": true
+      }
+    }
+  },
+  "fixed_all_noise_reproducibility": {
+    "bitwise_equal": true,
+    "max_abs": 0.0,
+    "mean_abs": 0.0
+  },
+  "different_seed_difference": {
+    "bitwise_equal": false,
+    "max_abs": 0.13055261969566345,
+    "mean_abs": 0.026558056473731995
+  },
+  "fixed_initial_noise_only_difference": {
+    "bitwise_equal": false,
+    "max_abs": 0.1736111044883728,
+    "mean_abs": 0.034401919692754745
+  },
+  "goal_free_changed_goal_difference": {
+    "bitwise_equal": true,
+    "max_abs": 0.0,
+    "mean_abs": 0.0
+  },
+  "different_observations_difference": {
+    "bitwise_equal": false,
+    "max_abs": 0.15913088619709015,
+    "mean_abs": 0.045234888792037964
+  },
+  "sample0_selected_waypoint_m": [
+    0.16022811830043793,
+    0.02488255500793457
+  ],
+  "limitations": [
+    "One selected goal, no topomap search or robot/controller execution",
+    "No obstacle avoidance or success-rate evaluation",
+    "No native yaw or intrinsic timestamps",
+    "Same-device repeatability only; no cross-version/hardware claim"
+  ]
+}

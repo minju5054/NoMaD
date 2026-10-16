@@ -1,0 +1,39 @@
+{
+  "time_kst": "2026-10-16T11:01:55.148196+09:00",
+  "canonical_run": "20261016_preflight_02",
+  "auxiliary_video_run": "20261016_video_01",
+  "pytest": {
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 1,
+    "seconds": 1.93,
+    "log": "/home/gpuadmin/Workspace/NoMaD/artifacts/setup/gpu-tests-final.log"
+  },
+  "pip_check": "PASS: 49 installed packages compatible",
+  "upstream_train_deployment_diff": "EMPTY",
+  "diffusion_policy_status": "CLEAN",
+  "checks": [
+    "official source and scheduler SHA-256",
+    "RGB preprocessing/channel history",
+    "normalization and cumulative sum known values",
+    "negative checkpoint coverage cases",
+    "10-step scheduler contract",
+    "actual official checkpoint coverage and sm_120 CUDA matmul",
+    "GPU internal encoder/decoder shapes, finite values, fixed-all-noise repeatability",
+    "original AST diffusion loop exact equality and NumPy metric waypoint equality",
+    "encoder and distance original grad-scope exact equality",
+    "goal-free mask invariance"
+  ],
+  "early_run_01": "INVALIDATED_FOR_NATIVE_PARITY; raw retained; see companion INVALIDATED.json",
+  "not_run": [
+    "historical Python 3.8/CUDA 10/11 comparison",
+    "ROS/topomap/controller execution",
+    "Isaac Sim 6 integration",
+    "navigation/obstacle avoidance evaluation",
+    "OLD/FRESH reconciliation",
+    "SE(2) graph optimization",
+    "training"
+  ],
+  "push": "NOT_RUN: only official upstream origin; no user-owned remote configured"
+}

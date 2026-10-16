@@ -1,0 +1,12 @@
+# Install torch/torchvision first from https://download.pytorch.org/whl/cu128
+torch==2.7.0+cu128
+torchvision==0.22.0+cu128
+numpy==1.26.4
+Pillow==10.4.0
+diffusers==0.11.1
+# diffusers 0.11.1 imports cached_download, removed in huggingface-hub 0.26.
+huggingface-hub==0.25.2
+efficientnet-pytorch==0.7.1
+einops==0.6.1
+PyYAML==6.0.2
+pytest==8.3.5
