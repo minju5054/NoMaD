@@ -18,7 +18,7 @@
 | `POTENTIAL_RECONCILIATION_CASE` | **0** |
 | `INSUFFICIENT_EVIDENCE` | **6** |
 
-최대 3개를 선정할 qualified candidate가 **없으므로 candidate 그림도 생성하지 않았다**. 6개를 임의로 consistent로 간주하지 않았다: 26→27, 27→28은 B-forward station 비단조, 79→80부터 82→83은 짧은 segment로 유효 tangent 비율이 80% 미만이다.
+최대 3개를 선정할 qualified candidate가 **없으므로 candidate 그림도 생성하지 않았다**. 이후 사용자가 요청한 장애물 부근의 설명용 그림은 아래에 별도로 추가했으며 candidate 판정은 바꾸지 않았다. 6개를 임의로 consistent로 간주하지 않았다: 26→27, 27→28은 B-forward station 비단조, 79→80부터 82→83은 짧은 segment로 유효 tangent 비율이 80% 미만이다.
 
 ## 주요 측정
 
@@ -60,6 +60,31 @@ Robot motion은 저장된 72 Hz incoming command와 pose intervals를 합한 값
 | 이탈 76..85 | 10 (correspondence 유효 6) | 0.00851 / 0.01708 / 0.01840 | 4.97 / 9.80 / 10.76 |
 
 접근·통과에서 변화가 가장 컸던 **53→54**도 RMSE 0.05108 m, heading RMS 19.53°, Δw 0.28219 rad/s였지만 connector **0.37512 m**, 실제 실행 **0.35481 m** clearance로 안전했다. 두 번째 장애물에 대한 FRESH full-path 최소 clearance는 접근 **0.04398 m**, 통과 **0.08224 m**; prefix는 각각 **0.07977/0.08224 m**다. 실제 접근·통과 최소 clearance는 **0.08284 m**다. 이탈 구간은 consistent 5, staging 1, insufficient 4이며 candidate는 0이다.
+
+## 장애물 부근 OLD/FRESH 시각화
+
+![장애물 부근의 네 OLD/FRESH pair](../research/results/isaac6_async_handoff_20261016/obstacle_handoffs.svg)
+
+사용자 후속 요청에 따라 저장된 audit의 실제 pair 네 개를 설명용으로 표시했다. **Reconciliation 후보가 아니며**, 그림을 위한 사후 선택이다. 첫 장애물 접근 IDs 18..27, 통과 28..40, 두 번째 접근 52..62에서는 유효 correspondence의 position RMSE가 가장 큰 pair를 선택했다. 두 번째 통과 63..75에서는 다음 switch까지 실제 실행 clearance가 가장 작은 pair를 선택했다. 이 마지막 선택은 사후 주행 결과를 사용하지만 기존 correspondence/entry/분류를 다시 고르거나 변경하지 않는다.
+
+| Panel / pair | 위치 | Position RMSE | FRESH 전체 최소 clearance | 실제 다음 handoff까지 최소 clearance |
+|---|---|---:|---:|---:|
+| A / 18→19 | 첫 장애물 접근 | 5.12 cm | 27.18 cm | 44.27 cm |
+| B / 28→29 | 첫 장애물 통과 | 3.74 cm | **−0.70 cm** | **26.79 cm** |
+| C / 53→54 | 두 번째 장애물 접근 | 5.11 cm | 15.31 cm | 35.48 cm |
+| D / 62→63 | 두 번째 장애물 통과 | 0.43 cm | 8.22 cm | 8.29 cm |
+
+주황/파랑은 각자의 **observation pose**에 고정한 OLD/FRESH sample 0이다. 별표는 index 2, 사각형과 화살표는 observation pose/yaw, 검은 B와 원은 실제 switch pose와 반경 9 cm footprint다. 보라색 entry/점선은 **미실행 offline connector**, 청록색은 해당 switch부터 다음 switch까지 실제 pose 기록, 회색 점선은 전체 주행의 참고 경로다. 같은 point index를 correspondence로 연결하지 않았다. 확대 패널은 장애물 일부를 잘라 표시하며 위 전체도에 전체 XY geometry가 있다.
+
+B의 빨간 원/선은 예측 tail의 footprint overlap이며 실제 agent 충돌이 아니다. FRESH index 2까지 prefix도 25.14 cm로 안전했다. A/C의 약 5 cm revision과 B의 unsafe tail을 안전한 FRESH의 연결 실패로 해석하지 않는다. **`NO_QUALIFIED_CANDIDATE` 유지**.
+
+[그림 코드](../research/nomad_isaac/plot_async_handoffs.py), [선택·검증 manifest](../research/results/isaac6_async_handoff_20261016/plot_manifest.json). PNG/SVG 원본은 `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_handoff_plots_03/`에 저장했다. Plot 생성 전후 run 205개 및 audit/그림 입력 5개 hash 불변, 표시한 모든 OLD/FRESH의 derived→observation-world 좌표 및 B/실행 구간 시점 대조 통과. 새 navigation/inference/Graph 실행은 없다.
+
+재생성은 기존 시스템 NumPy/Matplotlib로 수행하며 새 출력 디렉터리가 필요하다:
+
+```bash
+MPLCONFIGDIR=/tmp/nomad-handoff-mpl PYTHONPATH=research python3 -m nomad_isaac.plot_async_handoffs --output /tmp/nomad-handoff-figure
+```
 
 ## 검증·보존 및 다음 단계
 

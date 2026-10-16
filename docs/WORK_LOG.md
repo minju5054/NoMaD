@@ -223,3 +223,12 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 5. 두 번째 장애물 접근·통과 24개 모두 consistent. 모든 nearest connectors가 안전했고 실제 93개 실행 구간도 안전했다. Prediction 29는 tail 6→7만 unsafe인 반면 prefix와 실행은 안전했다. Pair 83→84는 1.15 mm 연결의 큰 bearing 때문에 staging으로 분류됐지만 연결과 실제 실행 모두 안전했다. 6개 invalid correspondence는 판정을 보류했다.
 6. 기존 7+새 최소 3 tests, **10 passed/0.08 s**. 95 raw/derived/원본 PD/pose/timing/clearance 재검증 및 기존 async report 93행 교차 검증 PASS. 과거 203개 input hash 일치, 분석 전후 205개 hash 불변, 실행 source 17개 보존. Source/작은 CSV·JSON/docs만 commit/push한다.
 7. 현재 성공 baseline에서 해결해야 할 연결 실패는 발견하지 못한 negative evidence다. Graph 필요성·성능·우월성은 미입증. 더 큰 OLD 이동 조건의 문제 존재성을 조사하려면 후속 controlled latency 실험을 검토할 수 있으나 이번 작업에서는 실행하지 않는다.
+
+## 장애물 부근 OLD/FRESH pair 그림
+
+2026-10-16. 사용자 후속 요청으로 위 audit의 저장 데이터를 시각화했다. 모델/주행/분류를 변경하지 않았다.
+
+1. 첫 장애물 접근/통과와 두 번째 접근에서 각 구간 최대 유효 spatial RMSE인 18→19, 28→29, 53→54를 선택했다. 두 번째 통과에서는 실제 다음 switch까지 clearance가 가장 작은 62→63을 선택했다. 사후 설명용 선정이며 qualified candidate나 새로운 correspondence가 아니다.
+2. 전체 주행 위치도 및 4개 확대 패널에 observation-anchored OLD/FRESH, index 2, observation/switch pose, 9 cm footprint, 기존 entry와 미실행 connector, 실제 다음 handoff까지 실행 구간을 표시했다. 28→29의 tail overlap은 실제 충돌과 분리했다. 기존 `NO_QUALIFIED_CANDIDATE` 유지.
+3. Plot 전후 원본 run 205개 및 audit/plot 입력 5개 hash 불변, 표시 좌표의 derived NPZ→world 변환 및 실제 B/구간 시각 대조 통과. 첫 그림의 caption 간격을 수정한 최종 PNG/SVG는 `../artifacts/isaac6/async_handoff_plots_03/`에 보존했다. 새 inference/navigation/Graph/영상 0회, 환경 변경 없음.
+4. 작은 SVG/manifest, plot source와 [보고서](ASYNC_OLD_FRESH_HANDOFF_AUDIT.md)만 Git에 추가한다. PNG와 기존 raw는 Git에서 제외한다.

@@ -1,0 +1,115 @@
+{
+  "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wide_wall_01",
+  "source_audit": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_handoff_audit_01",
+  "panels": [
+    {
+      "panel": "A",
+      "old_id": 18,
+      "fresh_id": 19,
+      "class": "ALREADY_CONSISTENT",
+      "region_fresh_ids": [
+        18,
+        27
+      ],
+      "selection_metric": "progress_spatial_rmse_m",
+      "selection_extremum": "max",
+      "switch_sim_s": 5.888888888888889,
+      "executed_interval_end_sim_s": 6.111111111111111,
+      "metrics": {
+        "progress_spatial_rmse_m": 0.05123113609086753,
+        "progress_heading_rms_deg": 22.379583195107067,
+        "fresh_full_clearance_m": 0.27175052832138624,
+        "fresh_prefix_clearance_m": 0.39267435549131047,
+        "connector_clearance_m": 0.45035359800680386,
+        "applied_interval_clearance_m": 0.44269605911286863
+      }
+    },
+    {
+      "panel": "B",
+      "old_id": 28,
+      "fresh_id": 29,
+      "class": "UNSAFE_FRESH",
+      "region_fresh_ids": [
+        28,
+        40
+      ],
+      "selection_metric": "progress_spatial_rmse_m",
+      "selection_extremum": "max",
+      "switch_sim_s": 8.333333333333334,
+      "executed_interval_end_sim_s": 8.666666666666666,
+      "metrics": {
+        "progress_spatial_rmse_m": 0.03742291189333619,
+        "progress_heading_rms_deg": 22.377445365917485,
+        "fresh_full_clearance_m": -0.007031109827615095,
+        "fresh_prefix_clearance_m": 0.2513945777856116,
+        "connector_clearance_m": 0.27919169200727656,
+        "applied_interval_clearance_m": 0.2678993989148658
+      }
+    },
+    {
+      "panel": "C",
+      "old_id": 53,
+      "fresh_id": 54,
+      "class": "ALREADY_CONSISTENT",
+      "region_fresh_ids": [
+        52,
+        62
+      ],
+      "selection_metric": "progress_spatial_rmse_m",
+      "selection_extremum": "max",
+      "switch_sim_s": 14.666666666666666,
+      "executed_interval_end_sim_s": 14.88888888888889,
+      "metrics": {
+        "progress_spatial_rmse_m": 0.05108274675038148,
+        "progress_heading_rms_deg": 19.530146099210445,
+        "fresh_full_clearance_m": 0.15307722601297397,
+        "fresh_prefix_clearance_m": 0.27895386250132903,
+        "connector_clearance_m": 0.37511559657296634,
+        "applied_interval_clearance_m": 0.3548075040504552
+      }
+    },
+    {
+      "panel": "D",
+      "old_id": 62,
+      "fresh_id": 63,
+      "class": "ALREADY_CONSISTENT",
+      "region_fresh_ids": [
+        63,
+        75
+      ],
+      "selection_metric": "applied_interval_clearance_m",
+      "selection_extremum": "min",
+      "switch_sim_s": 16.88888888888889,
+      "executed_interval_end_sim_s": 17.11111111111111,
+      "metrics": {
+        "progress_spatial_rmse_m": 0.0043035084364238686,
+        "progress_heading_rms_deg": 3.7641853421766864,
+        "fresh_full_clearance_m": 0.08223699146821331,
+        "fresh_prefix_clearance_m": 0.08223699146821331,
+        "connector_clearance_m": 0.08211607698664691,
+        "applied_interval_clearance_m": 0.0828929432455712
+      }
+    }
+  ],
+  "purpose": "Retrospective illustration; no new correspondence or candidate selection",
+  "world_anchor": "Each prediction's observation pose; never switch pose",
+  "unchanged_verdict": "NO_QUALIFIED_CANDIDATE",
+  "checks": {
+    "all_run_hashes_unchanged": 205,
+    "plot_input_hashes_unchanged": true,
+    "observation_world_coordinates_match": true,
+    "switch_pose_and_interval_match": true
+  },
+  "input_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_handoff_audit_01/pair_details.json": "701466a1a54a87e41bf635e481a016d85f5a4b98d8382d39b70538317e97e0fd",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_handoff_audit_01/pairs.csv": "ba107538b27e2b6cf6df7550ac31b5e8feb987c4d4d6ba65601d036ff44c9fe8",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_handoff_audit_01/summary.json": "dce5c6b9ba658baa0a5a2bfb9e149ea5a6626ec92d057a009d7b7d72a180b1f7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wide_wall_01/scenario.json": "1d405719e23dd41e6859341cf6ab4c65aaf825bbe89afd431c31a3086a0a87d6",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wide_wall_01/agent_trajectory.csv": "d5830aedd8e1f23e1205752a7159d87262bd56a06f907706fd0addede03a6813"
+  },
+  "plot_source_sha256": "348ea4078d038466f39c1d82cb8b7c0c76f373af67a1ec1ddeca4dd532480dd1",
+  "output_sha256": {
+    "obstacle_handoffs.png": "4636458e9cefc4aa2640c5f4b0aab4f5975f4485c58af2ee47291857734e250b",
+    "obstacle_handoffs.svg": "97e637122d0824690b0339067d1b0af275ae082f76d1cb69eb2da9d75707079a"
+  }
+}
