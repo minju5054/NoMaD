@@ -25,6 +25,17 @@ def test_frame_and_unicycle():
     np.testing.assert_allclose(local_to_world([[1, 0], [0, 1]], np.array([2, 3, np.pi/2])), [[2, 4], [1, 3]], atol=1e-14)
 
 
+def test_controller_ros_float_conversion():
+    # Recorded first point from the aborted run. NumPy 2 preserves float32 in
+    # clip and produces 0.20000000298 for ndarray input; ROS gives Python floats.
+    point = np.array([0.10866975784301758, 0.0016813994152471423], dtype=np.float32)
+    ros_data = point.tolist()
+    np.testing.assert_array_equal(np.array(ros_data, dtype=np.float32), point)
+    v, w = original_controller()(ros_data)
+    assert float(v) == .2 and abs(float(w)) <= .4
+    np.testing.assert_array_equal([v, w], [.2, np.arctan(ros_data[1] / ros_data[0]) / .25])
+
+
 def test_ipc_and_history_round_trip():
     left, right = socket.socketpair()
     try:

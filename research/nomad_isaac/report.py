@@ -49,7 +49,7 @@ def main():
             np.testing.assert_array_equal(cumulative * .05, derived["metric"])
             np.testing.assert_array_equal(derived["metric"][0, 2], derived["selected_waypoint"])
             np.testing.assert_array_equal(derived["selected_waypoint"], event["selected_waypoint_m"])
-            np.testing.assert_array_equal(oracle(derived["selected_waypoint"]), [event["v_m_s"], event["w_rad_s"]])
+            np.testing.assert_array_equal(oracle(derived["selected_waypoint"].tolist()), [event["v_m_s"], event["w_rad_s"]])
         np.testing.assert_allclose(np.diff(event["history_sim_s"]), .25, atol=1e-12)
         assert event["received_sim_s"] == event["observation_sim_s"]
         assert 0 <= event["application_sim_s"] - event["observation_sim_s"] < 1/9 + 1e-12

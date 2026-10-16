@@ -1,6 +1,7 @@
 """NoMaD GPU worker, launched with the existing Python 3.11 .venv."""
 import argparse
 import hashlib
+from importlib.metadata import version
 import json
 from pathlib import Path
 import socket
@@ -29,6 +30,7 @@ def main():
     write_json(args.output / "environment.json", {
         "python": sys.version, "executable": sys.executable, "torch": torch.__version__,
         "cuda": torch.version.cuda, "gpu": torch.cuda.get_device_name(),
+        "numpy": np.__version__, "torchvision": version("torchvision"), "diffusers": version("diffusers"),
         "checkpoint_sha256": sha256_file(args.checkpoint), "coverage": coverage,
         "config": {k: CONFIG[k] for k in ["context_size", "image_size", "num_diffusion_iters", "len_traj_pred"]}})
     with socket.socket(socket.AF_UNIX) as listener, (args.output / "inference.jsonl").open("x") as log:

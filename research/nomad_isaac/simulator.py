@@ -156,7 +156,7 @@ def main():
                     "red_left_pixels": len(red_x), "red_mean_pixel_x": float(red_x.mean()),
                     "blue_right_pixels": len(blue_x), "blue_mean_pixel_x": float(blue_x.mean()),
                     "goal_start_mean_abs_pixel_difference": float(np.abs(goal.astype(float) - rgb_float).mean()),
-                    "python": sys.version, "executable": sys.executable}
+                    "python": sys.version, "executable": sys.executable, "numpy": np.__version__}
     write_json(out / "render_check.json", render_check)
     stage.Export(str(out / "scene.usda"))
     if args.prepare_only:
@@ -231,7 +231,9 @@ def main():
                                "received_sim_s": sim_time, "selected_waypoint_m": waypoint.tolist()}
             if tick % control_ticks == 0:
                 if waypoint is not None:
-                    v, w = map(float, controller(waypoint))
+                    # ROS Float32MultiArray.data supplies Python floats. Preserve
+                    # those exact point values and scalar promotion under NumPy 2.
+                    v, w = map(float, controller(waypoint.tolist()))
                     assert 0 <= v <= .2 and abs(w) <= .4 and np.isfinite([v, w]).all()
                     if request_id != applied_id:
                         applied_id = request_id
