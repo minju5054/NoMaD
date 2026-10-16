@@ -132,3 +132,12 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 6. 상세 내용은 [ISAAC6_STATIC_OBSTACLE.md](ISAAC6_STATIC_OBSTACLE.md), 작은 검증 기록은 `research/results/isaac6_static_obstacle_20261016/video.json`이다. Video/PNG/USD/cache는 Git에 넣지 않는다. Source/docs/작은 JSON만 현재 research branch에 commit하고 사용자 origin에 일반 push한다. 기존 model/controller와 raw 실행 기록, 시스템 및 Isaac 설치를 변경하지 않았다.
 
 주행 결과는 그대로 **왼쪽 안전 통과, 최소 clearance 7.52 cm, 목표 도달 실패**다. 영상 때문에 성공 판정을 바꾸거나 추가 성능 실험을 하지 않았다.
+
+## GUI 명령의 CUDA library 충돌 수정
+
+2026-10-16. 사용자가 제공한 `__nvJitLinkCreate_12_8` 오류를 실제 `kit_20261016_140832.log`에서 확인했다. 이전 GUI 검증 process에서는 Python/CUDA 환경을 제거했지만 전달한 직접 실행 명령에는 그 처리가 누락되어 있었다.
+
+- 상속된 `LD_LIBRARY_PATH`에 `/usr/local/cuda/lib64`가 있고 실제 target은 CUDA 12.6이었다. `ldd/readelf`로 Isaac cuSPARSE가 12.6 nvJitLink를 먼저 선택하여 필요한 12.8 심볼을 찾지 못함을 확인했다. 환경을 제거하면 Isaac bundled nvJitLink의 올바른 심볼이 선택된다. PyTorch 안내는 deprecation manager가 모든 `ImportError`에 출력하는 공통 메시지였다.
+- `research/nomad_isaac/open_scene.sh`를 추가해 해당 GUI child에만 library/Python/venv 환경을 분리했다. 기존 Isaac launcher/opener를 그대로 사용하고, 문서의 static/animated scene 명령 둘 다 수정했다. 새 GUI/replay framework나 package 설치는 없다.
+- 실제 CUDA 12.6/ROS 환경을 가진 parent에서 launcher를 실행해 14:13:21 KST에 animation scene open 성공 및 Error 0개를 확인했다. Process maps에서 Isaac 내부 torch/cuSPARSE/nvJitLink 로딩 확인. Parent 환경 및 scene hash 불변, shell syntax/missing-file guard 통과. 검증용 GUI만 정상 종료했고 새 inference/navigation은 실행하지 않았다.
+- 검증 기록은 `research/results/isaac6_static_obstacle_20261016/gui_environment_fix.json`, raw log는 `../artifacts/isaac6/gui_environment_fix_01/`에 저장했다. 시스템/driver/CUDA/Isaac/.venv/원본 기록 변경 없이 source/docs/작은 결과만 현재 연구 branch에 commit/push한다.

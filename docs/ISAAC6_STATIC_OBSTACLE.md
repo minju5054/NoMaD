@@ -98,10 +98,10 @@ Raw run: `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_01/`. 
 
 기존 GUI로 `scene_gui.usda`를 실제 열고 창 제목과 Kit log의 `opened successfully`를 확인했다(13:35:37 KST). 최종 확인 log의 Error는 0개였다. 초기 GUI의 기본 ROS bridge 자동 시작은 process 옵션으로 비활성화했다. 기존 Isaac/ROS 설치나 설정 파일은 수정하지 않았다. 검증 전후 기록된 raw 파일 SHA-256도 동일했다. GUI 검증 3회는 scene 표시만 확인했으며 모델 inference/navigation 실험이 아니다.
 
-아래 한 줄은 실제 검증한 기존 GUI launcher/설치된 opener 및 생성된 절대 USD 경로를 사용한다. `--exec`는 [설치된 Kit help 및 공식 CLI 문서](https://docs.omniverse.nvidia.com/kit/docs/carbonite/latest/docs/Kernel/CommandLineOptions.html)와 대조했고, startup/renderer 옵션은 설치된 Isaac source와 실제 실행으로 확인했다. Portable root는 이번 작업의 GUI 검증 cache 경로이며 이미 존재한다. 이 명령은 당시 정적 scene을 여는 명령이다.
+아래 한 줄은 후속 CUDA library 충돌 수정이 반영된 launcher를 통해 기존 GUI/설치된 opener 및 생성된 절대 USD 경로를 사용한다. `--exec`는 [설치된 Kit help 및 공식 CLI 문서](https://docs.omniverse.nvidia.com/kit/docs/carbonite/latest/docs/Kernel/CommandLineOptions.html)와 대조했고, startup/renderer 옵션은 설치된 Isaac source와 실제 실행으로 확인했다. Portable root는 이번 작업의 GUI 검증 cache 경로이며 이미 존재한다. 이 명령은 당시 정적 scene을 여는 명령이다.
 
 ```bash
-/home/gpuadmin/isaacsim/isaac-sim.sh --no-ros-env --/app/settings/persistent=false --/isaac/startup/create_new_stage=false --/isaac/startup/ros_bridge_extension="" --/rtx/hydra/supportMultiTickRate=false --portable-root /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/gui_obstacle_check_02/portable --exec "/home/gpuadmin/isaacsim/extscache/omni.usd-1.16.0+f9bf0dda.lx64.r.cp312/scripts/open_stage.py /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_01/scene_gui.usda"
+bash /home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/open_scene.sh /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_01/scene_gui.usda
 ```
 
 남은 uncertainty: 다른 scene/seed의 일반적인 장애물 회피·goal 성공률, full 8-point chunk의 안전성, 물리 접촉/robot dynamics, 비동기 waypoint 적용, OLD/FRESH reconciliation과 graph optimization은 미검증이다. 이번 결과를 완전한 obstacle navigation 성공으로 간주하지 않는다. 추가 실험·모델 튜닝은 수행하지 않았다.
@@ -125,8 +125,20 @@ Raw run: `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_01/`. 
 
 영상 생성 뒤 관찰 camera를 기본으로 여는 Kit의 기존 `cameraSettings:boundCamera` metadata만 더한 **`recorded_motion_gui.usda`**를 새 파일로 저장했다. 원래 animation/MP4는 보존했다. 같은 metadata export를 renderer의 마지막 부분에도 추가했다. 실제 실행한 renderer snapshot은 영상 폴더의 `render_recorded_source.py`이며 이 마지막 GUI metadata export가 추가되기 전 버전이다.
 
-아래 명령으로 기존 GUI에서 `recorded_motion_gui.usda`를 열어 **opened successfully / Error 0개**를 확인했다. Camera는 OverviewCamera이며 native timeline의 **Play**로 기록 animation을 볼 수 있다. GUI Play 버튼의 수동 조작 자체는 이번 검증에 포함하지 않았고, 모든 animation time sample의 pose 일치 및 MP4 전체 재생 가능성을 별도로 확인했다. GUI 표시는 실험 재실행이나 실제 controller 제어가 아니다.
+환경 변수를 분리한 process에서 기존 GUI로 `recorded_motion_gui.usda`를 열어 **opened successfully / Error 0개**를 확인했다. 최초 안내 명령은 그 환경 분리 처리가 누락되어 아래와 같이 launcher 명령으로 정정했다. Camera는 OverviewCamera이며 native timeline의 **Play**로 기록 animation을 볼 수 있다. GUI Play 버튼의 수동 조작 자체는 이번 검증에 포함하지 않았고, 모든 animation time sample의 pose 일치 및 MP4 전체 재생 가능성을 별도로 확인했다. GUI 표시는 실험 재실행이나 실제 controller 제어가 아니다.
 
 ```bash
-/home/gpuadmin/isaacsim/isaac-sim.sh --no-ros-env --/app/settings/persistent=false --/isaac/startup/create_new_stage=false --/isaac/startup/ros_bridge_extension="" --/rtx/hydra/supportMultiTickRate=false --portable-root /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/gui_obstacle_check_02/portable --exec "/home/gpuadmin/isaacsim/extscache/omni.usd-1.16.0+f9bf0dda.lx64.r.cp312/scripts/open_stage.py /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_video_02/recorded_motion_gui.usda"
+bash /home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/open_scene.sh
 ```
+
+## GUI 실행 시 CUDA library 충돌 수정
+
+사용자가 최초 안내 명령을 그대로 실행한 `kit_20261016_140832.log`에서 `libcusparse.so.12: undefined symbol: __nvJitLinkCreate_12_8`로 종료됐다. 당시 GUI 검증은 Python launcher에서 환경을 분리했으나, 사용자에게 제공한 한 줄 명령에는 그 처리가 누락됐다. 설치 문제로 처리하지 않고 안내와 launcher를 수정했다.
+
+실제 원인은 상속된 `LD_LIBRARY_PATH`의 `/usr/local/cuda/lib64`였다. 이 symlink는 **CUDA 12.6**을 가리켰다. `ldd`는 Isaac에 포함된 cuSPARSE가 이 경로의 `libnvJitLink.so.12`를 먼저 선택함을 보였다. `readelf`로 해당 library에 `__nvJitLinkCreate_12_6`만 있고 필요한 `__nvJitLinkCreate_12_8`은 없음을 확인했다. Isaac 내부 `nvidia/nvjitlink/lib/libnvJitLink.so.12`에는 12.8 심볼이 있고, `LD_LIBRARY_PATH`를 제거하면 cuSPARSE의 기존 RUNPATH를 통해 그 library가 선택된다. 이 의존 관계는 [NVIDIA cuSPARSE 문서](https://docs.nvidia.com/cuda/archive/12.6.2/pdf/CUSPARSE_Library.pdf)의 nvJitLink 설명과도 일치한다.
+
+`isaacsim.core.deprecation_manager/api.py`는 `ModuleNotFoundError`뿐 아니라 `ImportError`에도 동일한 PyTorch 설치 안내를 출력한다. 이번에는 이미 존재하는 bundled torch의 동적 library import가 실패한 것이므로 torch/CUDA/driver를 설치·업그레이드하지 않았다.
+
+[open_scene.sh](../research/nomad_isaac/open_scene.sh)는 **자식 GUI process에만** `LD_LIBRARY_PATH`, `LD_PRELOAD`, `PYTHONPATH`, `PYTHONHOME`, `VIRTUAL_ENV`를 제거한 뒤 기존 Isaac launcher를 실행한다. `--no-ros-env`는 ROS 자동 설정만 생략하며 이미 상속된 library 경로를 지우지 않기 때문에 환경 분리가 별도로 필요하다. 현재 shell, `.bashrc`, 시스템 CUDA, Isaac 설치, NoMaD `.venv`는 변경하지 않는다. 기본 scene은 recorded animation이고 optional 인자로 기존 USD 경로 하나를 지정할 수 있다.
+
+실제 검증: 기존 CUDA 12.6/ROS 환경을 parent에서 그대로 상속하고 **새 launcher 자체만** 실행했다. 2026-10-16 14:13:21 KST에 scene open 성공, GUI log Error **0개**를 확인했다. `/proc/<pid>/maps`에서 Isaac 내부 `libtorch_python.so`, cuSPARSE, nvJitLink가 로드되고 `/usr/local/cuda`의 nvJitLink는 로드되지 않았음을 확인했다. Parent 환경과 scene SHA-256이 유지됐으며, shell syntax와 잘못된 입력 경로의 종료 동작도 확인했다. 검증 후 이번에 시작한 GUI process만 종료했다. 새 navigation은 0회다. [작은 검증 기록](../research/results/isaac6_static_obstacle_20261016/gui_environment_fix.json), 전체 log는 `../artifacts/isaac6/gui_environment_fix_01/`에 보관한다.

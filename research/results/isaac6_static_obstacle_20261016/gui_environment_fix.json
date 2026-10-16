@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "command": [
+    "bash",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/open_scene.sh"
+  ],
+  "inherited_environment": {
+    "LD_LIBRARY_PATH": "/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib:/usr/local/cuda/lib64:",
+    "LD_PRELOAD": null,
+    "PYTHONPATH": "/opt/ros/jazzy/lib/python3.12/site-packages",
+    "PYTHONHOME": null,
+    "VIRTUAL_ENV": null
+  },
+  "removed_for_child": [
+    "LD_LIBRARY_PATH",
+    "LD_PRELOAD",
+    "PYTHONPATH",
+    "PYTHONHOME",
+    "VIRTUAL_ENV"
+  ],
+  "parent_environment_unchanged": true,
+  "loaded_libraries": [
+    "/home/gpuadmin/isaacsim/extsDeprecated/omni.isaac.ml_archive/pip_prebundle/nvidia/cusparse/lib/libcusparse.so.12",
+    "/home/gpuadmin/isaacsim/extsDeprecated/omni.isaac.ml_archive/pip_prebundle/nvidia/nvjitlink/lib/libnvJitLink.so.12",
+    "/home/gpuadmin/isaacsim/extsDeprecated/omni.isaac.ml_archive/pip_prebundle/torch/lib/libtorch_python.so"
+  ],
+  "kit_log": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/gui_obstacle_check_02/portable/logs/Kit/Isaac-Sim Full/6.0/kit_20261016_141308.log",
+  "open_confirmation": [
+    "2026-10-16T05:13:21Z [12,623ms] [Info] [omni.usd] /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_video_02/recorded_motion_gui.usda opened successfully in 0.00 seconds"
+  ],
+  "error_count": 0,
+  "scene_sha256": "4131435a844363cc054ab96fbaad35dbf85741f0739fd1df79c8f23a03743521",
+  "scene_unchanged": true,
+  "script_sha256": "f1a3566b1feb88a4ab87c529e8565fbd8a5687b4e6aabaebcc2a2ea6298b2454",
+  "new_navigation_runs": 0,
+  "installation_changes": false,
+  "root_cause": {
+    "inherited_library_directory": "/usr/local/cuda/lib64",
+    "real_cuda_directory": "/usr/local/cuda-12.6",
+    "missing_symbol_in_system_nvjitlink": "__nvJitLinkCreate_12_8",
+    "bundled_nvjitlink_has_required_symbol": true,
+    "previous_published_command_omitted_process_environment_isolation": true
+  },
+  "checks": {
+    "bash_syntax": "PASS",
+    "missing_file_guard": "PASS",
+    "actual_gui_open": "PASS",
+    "expected_nvjitlink_loaded_from_process_maps": "PASS",
+    "no_gui_errors": "PASS",
+    "parent_environment_and_scene_preserved": "PASS"
+  }
+}
