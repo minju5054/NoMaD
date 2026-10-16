@@ -119,3 +119,16 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 9. 사용자 `minju5054/NoMaD`의 ADMIN 권한과 기존 origin을 확인했다. 관련 코드/tests/docs/작은 결과만 새 연구 branch에 commit하고 일반 push한다. Checkpoint, raw/derived NPZ, USD, RGB, caches, 기존 preflight 결과는 Git에서 제외한다. Force push/history rewrite 없음.
 
 최종 판정: 기술적 실행/계측 PASS, obstacle clearance와 corridor 조건 PASS, goal entry FAIL, **통합 장애물 navigation 성공 FAIL**. 일반적인 obstacle navigation 성공률, 물리 충돌, async/OLD-FRESH/graph optimization은 미검증이다. 결과를 성공으로 바꾸기 위한 추가 실험이나 모델 튜닝은 수행하지 않았다.
+
+## 주행 영상 후속 요청
+
+2026-10-16. 사용자가 정적 scene이 아닌 agent의 실제 주행 영상을 요청했다. `bab1109209891ea06f843806dbd755c9c6725ba3`의 clean `research/isaac6-static-obstacle`에서 영상 후처리를 추가했다.
+
+1. 원래 실험에는 연속 녹화가 없어, 실제 `static_obstacle_01/agent_trajectory.csv`를 기존 Isaac RTX renderer로 재생했다. 당시 촬영본이 아닌 **실제 실행 pose의 사후 렌더링**임을 영상과 문서에 명시했다. 새 NoMaD inference/controller/navigation은 0회다.
+2. 원래 agent는 mesh가 없으므로 반경 0.12 m 파란 footprint와 흰 heading 표시를 붙이고, orange goal tolerance와 executed trail, 관찰 camera를 추가했다. 주행 입력이나 모델은 변경하지 않았다. 첫 관찰 camera에서는 장애물에 agent가 가려져 반대편 +Y camera에서 다시 렌더링했다. 두 rendering 산출물은 모두 보존했으며 navigation 재시도는 아니다.
+3. 최종 `../artifacts/isaac6/static_obstacle_video_02/nomad_static_obstacle.mp4`: 1280×720 H.264, 24 fps, 721 frames, 30.041667 s, 24,404,436 bytes. 72 Hz 원본 pose를 매 3번째 선택해 t=0…30 s 전체를 1배 simulation time으로 보여준다. 원래 wall time을 재현하지 않는다. 설치된 `omni.videoencoding`을 사용해 package 설치 없이 생성했다.
+4. MP4 721 frames 전체 decode, 모든 frame/CSV pose exact equality, source SHA-256 보존, 실제 renderer snapshot hash 일치를 확인했다. Native USD animation 2,161 pose의 최대 절대 오차 4.44e−16. 원래 98개 World prim/default attribute 643개/relationship 72개 보존. 영상 시작/회피/goal 근접/최종 frame을 시각 확인했다.
+5. 별도 `recorded_motion.usda`에 실제 실행 pose를 time samples로 넣었다. 이후 native camera metadata만 더한 `recorded_motion_gui.usda`를 별도 저장하고 기존 GUI로 실제 open 성공 및 Error 0개를 확인했다. GUI Play 버튼 수동 조작은 미검증이며 animation 수치 및 MP4 decode는 검증했다. Renderer 마지막 부분에도 동일 GUI metadata export를 추가했으며 영상 실행 당시 source snapshot과 구분했다.
+6. 상세 내용은 [ISAAC6_STATIC_OBSTACLE.md](ISAAC6_STATIC_OBSTACLE.md), 작은 검증 기록은 `research/results/isaac6_static_obstacle_20261016/video.json`이다. Video/PNG/USD/cache는 Git에 넣지 않는다. Source/docs/작은 JSON만 현재 research branch에 commit하고 사용자 origin에 일반 push한다. 기존 model/controller와 raw 실행 기록, 시스템 및 Isaac 설치를 변경하지 않았다.
+
+주행 결과는 그대로 **왼쪽 안전 통과, 최소 clearance 7.52 cm, 목표 도달 실패**다. 영상 때문에 성공 판정을 바꾸거나 추가 성능 실험을 하지 않았다.

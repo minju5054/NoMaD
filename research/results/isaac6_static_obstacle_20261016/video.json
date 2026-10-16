@@ -1,0 +1,133 @@
+{
+  "manifest": {
+    "kind": "posthoc_isaac_rtx_render_of_recorded_executed_poses",
+    "not_contemporaneous_video": true,
+    "new_inference_count": 0,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_01",
+    "source_sha256": {
+      "scene_gui.usda": "659acf26db5d816c68391f1872d7f0140e222cb7e8420e3800ce6971db0439ba",
+      "agent_trajectory.csv": "47350ad744f0f8498f278400bb7490a92d2d4cc6d5e662121f9d6cc1cef99b79",
+      "summary.json": "9375d1742d31b478a33a9a8d9d31f150da35db9389dbb9fcab2a930077ad82bb",
+      "scenario.json": "08bd12188a75ee7af16b503b71e09d06951007e5a8f9a331a9ebd1ad6b884a95"
+    },
+    "renderer_script_sha256": "b680e140c5c78b44218873926473d7fb356f74ea54f6e625d3915f9bad7be47d",
+    "git_sha_before_video_change": "bab1109209891ea06f843806dbd755c9c6725ba3",
+    "video": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_video_02/nomad_static_obstacle.mp4",
+    "video_sha256": "b9b018418d84adb60576f0a9e7694c5840be5b8e34596082396a84b403512b5c",
+    "video_bytes": 24404436,
+    "fps": 24,
+    "resolution": [
+      1280,
+      720
+    ],
+    "frame_count": 721,
+    "source_pose_count": 2161,
+    "source_pose_stride": 3,
+    "simulation_time_range_s": [
+      0.0,
+      30.0
+    ],
+    "encoded_duration_s": 30.041666666666668,
+    "timing_note": "Includes final t=30 frame for one frame duration; 1x simulation time, not original wall time.",
+    "max_rendered_pose_absolute_error": 4.440892098500626e-16,
+    "added_visuals": [
+      "blue 0.12 m radius footprint",
+      "white heading arrow",
+      "orange 0.30 m goal ring",
+      "cyan executed trail",
+      "overview camera",
+      "text overlays"
+    ],
+    "scene_geometry_and_original_camera_preserved": true,
+    "overview_camera_eye_world_m": [
+      2.5,
+      2.0,
+      8.0
+    ],
+    "raw_inputs_unchanged": true,
+    "render_wall_s": 60.30675942200469,
+    "animated_usd": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_video_02/recorded_motion.usda",
+    "animated_usd_sha256": "3014fa2cdbe28216aee3c6bd394ff0e0fbae391a45754be12a85c655b76bbb05",
+    "result": {
+      "goal_entry": false,
+      "obstacle_evaluation": {
+        "category": "no_collision_goal_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "minimum_swept_clearance_lower_m": 0.07519548891712804,
+        "minimum_swept_clearance_upper_m": 0.07519877584875007,
+        "safety_margin_met": true,
+        "minimum_corridor_clearance_lower_m": 0.6919456151047917,
+        "corridor_containment_certified": true,
+        "passage": {
+          "side": "left_positive_y",
+          "simulation_time_s": 7.319444444444444,
+          "pose": [
+            1.0215358734864866,
+            0.4958056511283838,
+            -0.02229141087416586
+          ]
+        },
+        "collision_detection_period_s": 0.013888888888888888
+      }
+    }
+  },
+  "video_validation": {
+    "status": "PASS",
+    "all_frames_decoded": 721,
+    "codec": "h264",
+    "resolution": [
+      1280,
+      720
+    ],
+    "fps": 24.0,
+    "duration_s": 30.041666666666668,
+    "distinct_decoded_frames": 721,
+    "all_frame_pose_rows_exactly_match_original": true,
+    "initial_final_pose_included": true,
+    "source_hashes_unchanged": true,
+    "executed_renderer_source_snapshot_hash_matches": true,
+    "png_vs_decoded_video_mean_absolute_rgb_errors": {
+      "0": 1.4385753038194444,
+      "120": 1.3601609519675926,
+      "240": 1.3723741319444445,
+      "360": 1.3920066550925927,
+      "480": 1.4100148292824075,
+      "600": 1.431451099537037,
+      "720": 1.4450025318287036
+    },
+    "video_sha256": "b9b018418d84adb60576f0a9e7694c5840be5b8e34596082396a84b403512b5c",
+    "video_bytes": 24404436
+  },
+  "usd_validation": {
+    "status": "PASS",
+    "animated_pose_count": 2161,
+    "maximum_pose_absolute_error": 4.440892098500626e-16,
+    "original_world_prims_unchanged": 98,
+    "original_default_attributes_equal": 643,
+    "original_relationships_equal": 72,
+    "transient_render_graphs_absent": true,
+    "gui_camera_metadata": "/World/ReplayVisuals/OverviewCamera",
+    "gui_usd": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_video_02/recorded_motion_gui.usda",
+    "gui_usd_sha256": "4131435a844363cc054ab96fbaad35dbf85741f0739fd1df79c8f23a03743521",
+    "animated_source_unchanged": true,
+    "note": "GUI camera metadata applied after video render; original animated USD and MP4 preserved."
+  },
+  "gui_open_validation": {
+    "status": "PASS",
+    "log": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/gui_obstacle_check_02/portable/logs/Kit/Isaac-Sim Full/6.0/kit_20261016_140225.log",
+    "open_confirmation": [
+      "2026-10-16T05:02:38Z [12,839ms] [Info] [omni.usd] /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_video_02/recorded_motion_gui.usda opened successfully in 0.00 seconds"
+    ],
+    "error_count": 0,
+    "play_button_interaction_tested": false,
+    "note": "GUI open checked; all 2161 animation transforms separately checked numerically. No new navigation."
+  },
+  "installed_video_encoder": "omni.videoencoding 0.2.1; H.264 NVENC",
+  "visual_review": "Decoded start, 5 s, 10 s and final frames reviewed; overview from +Y keeps passing agent visible.",
+  "navigation_runs_added": 0,
+  "render_attempts": 2,
+  "render_attempt_note": "First viewpoint occluded agent behind obstacle. Second changed overview camera only. Both preserved.",
+  "final_source_difference_from_render_snapshot": "Added export of separate GUI USD with native boundCamera metadata after video generation; same USD operations applied and verified separately. MP4 and animated source preserved."
+}

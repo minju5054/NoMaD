@@ -92,16 +92,41 @@ Raw run: `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_01/`. 
 
 실행 환경은 기존 Isaac `6.0.1-rc.7+release.42383.32955d8d.gl`, Python 3.12.13/NumPy 2.3.1과 별도 `.venv` Python 3.11.16/NumPy 1.26.4/torch 2.7.0+cu128/diffusers 0.11.1, RTX 5060 Ti/driver 595.99.02다. Checkpoint SHA-256은 `70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333`; coverage 645/645, parameter 100%다. Cold renderer 준비 중 기존과 같은 transient step error가 있었지만 RGB gate 이후 전체 주행과 정상 종료가 완료됐다. 중단된 navigation 시도는 없다.
 
-GUI는 기존 설치의 `isaac-sim.sh`와 **이미 설치된** `omni.usd/.../scripts/open_stage.py`를 사용한다. 새로운 viewer/replay 프로그램은 작성하지 않았다. 생성된 USD는 시작 pose의 **정적 scene**이며 recorded trajectory animation을 포함하지 않는다. GUI의 Play 버튼으로 이번 NoMaD 주행이 재생되지 않는다.
+이 단계의 GUI 확인은 기존 설치의 `isaac-sim.sh`와 **이미 설치된** `omni.usd/.../scripts/open_stage.py`를 사용했다. 당시 새로운 viewer/replay 프로그램은 작성하지 않았다. `scene_gui.usda`는 시작 pose의 **정적 scene**이며 recorded trajectory animation을 포함하지 않는다. 이 파일의 Play 버튼으로 이번 NoMaD 주행이 재생되지 않는다. 이후 사용자의 주행 영상 요청에 따른 별도 산출물은 아래 절에 기록한다.
 
 원본 `scene.usda`는 inference용 `/Render`와 `/Orchestrator` 그래프도 포함하여 GUI에서는 반복 `OgnSdOnNewFrame` 오류를 냈다. 원본을 덮어쓰지 않고 `/World`만 복사한 **`scene_gui.usda`**를 후처리로 저장했다. 원본과 보기용 파일의 **98개 World prim, 모든 attribute 및 relationship이 동일**함을 검사했다. Camera, geometry, material, light, 시작 pose가 모두 보존된다. 이후 실행에도 같은 정적 USD를 저장하도록 기존 export 부분만 확장했으며 이번 navigation을 재실행하지 않았다.
 
 기존 GUI로 `scene_gui.usda`를 실제 열고 창 제목과 Kit log의 `opened successfully`를 확인했다(13:35:37 KST). 최종 확인 log의 Error는 0개였다. 초기 GUI의 기본 ROS bridge 자동 시작은 process 옵션으로 비활성화했다. 기존 Isaac/ROS 설치나 설정 파일은 수정하지 않았다. 검증 전후 기록된 raw 파일 SHA-256도 동일했다. GUI 검증 3회는 scene 표시만 확인했으며 모델 inference/navigation 실험이 아니다.
 
-아래 한 줄은 실제 검증한 기존 GUI launcher/설치된 opener 및 생성된 절대 USD 경로를 사용한다. `--exec`는 [설치된 Kit help 및 공식 CLI 문서](https://docs.omniverse.nvidia.com/kit/docs/carbonite/latest/docs/Kernel/CommandLineOptions.html)와 대조했고, startup/renderer 옵션은 설치된 Isaac source와 실제 실행으로 확인했다. Portable root는 이번 작업의 GUI 검증 cache 경로이며 이미 존재한다. 새 viewer나 replay 구현은 없다.
+아래 한 줄은 실제 검증한 기존 GUI launcher/설치된 opener 및 생성된 절대 USD 경로를 사용한다. `--exec`는 [설치된 Kit help 및 공식 CLI 문서](https://docs.omniverse.nvidia.com/kit/docs/carbonite/latest/docs/Kernel/CommandLineOptions.html)와 대조했고, startup/renderer 옵션은 설치된 Isaac source와 실제 실행으로 확인했다. Portable root는 이번 작업의 GUI 검증 cache 경로이며 이미 존재한다. 이 명령은 당시 정적 scene을 여는 명령이다.
 
 ```bash
 /home/gpuadmin/isaacsim/isaac-sim.sh --no-ros-env --/app/settings/persistent=false --/isaac/startup/create_new_stage=false --/isaac/startup/ros_bridge_extension="" --/rtx/hydra/supportMultiTickRate=false --portable-root /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/gui_obstacle_check_02/portable --exec "/home/gpuadmin/isaacsim/extscache/omni.usd-1.16.0+f9bf0dda.lx64.r.cp312/scripts/open_stage.py /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_01/scene_gui.usda"
 ```
 
 남은 uncertainty: 다른 scene/seed의 일반적인 장애물 회피·goal 성공률, full 8-point chunk의 안전성, 물리 접촉/robot dynamics, 비동기 waypoint 적용, OLD/FRESH reconciliation과 graph optimization은 미검증이다. 이번 결과를 완전한 obstacle navigation 성공으로 간주하지 않는다. 추가 실험·모델 튜닝은 수행하지 않았다.
+
+## 후속 요청: 실제 실행 기록을 보여주는 영상
+
+사용자는 정적 scene 대신 **agent가 움직이며 장애물을 회피하는 영상**을 요청했다. 원래 단일 실험에서는 연속 동영상이 저장되지 않았으므로, [render_recorded.py](../research/nomad_isaac/render_recorded.py)로 실제 실행 pose CSV를 기존 Isaac Sim 6 RTX renderer에서 다시 렌더링했다. **당시 실시간 녹화본이 아닌, 기록된 실제 실행의 시각적 재생 영상**이다. 새 NoMaD inference, controller 실행, navigation 또는 성능 재시도는 없다.
+
+- 최종 MP4: `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_video_02/nomad_static_obstacle.mp4`
+- 원본 입력: `static_obstacle_01/scene_gui.usda`, `agent_trajectory.csv`, `scenario.json`, `summary.json`. 해당 입력은 변경하지 않았다.
+- 1280×720, H.264, 24 fps. 72 Hz의 2,161개 실제 pose 중 매 3번째를 선택한 721 frames이며 위치/heading을 보간하거나 경로를 수정하지 않았다. t=0…30 s를 포함하므로 마지막 frame 표시까지 encoded duration은 30.041667 s다.
+- 재생 속도는 **simulation time 기준 1배**다. 원래 navigation wall time 9.8145 s를 그대로 재현한 영상이 아니다. 동기식 inference 대기 시간도 추가하지 않았다.
+- 파란 원반은 반경 0.12 m의 agent footprint, 흰 화살표는 실행 yaw, 녹색 box는 기존 장애물, 주황 원은 실제 goal tolerance 0.30 m, 하늘색 선은 그 시점까지의 실행 기록이다. 원래 agent는 mesh 없는 Xform이었다. 이 표시와 관찰용 camera, 자막은 영상에만 추가한 시각 보조이며 실제 NoMaD 입력이나 주행에 사용하지 않았다.
+- 처음 만든 `static_obstacle_video_01`도 보존했다. 장애물 뒤에 agent가 가려져 관찰 camera의 Y 위치만 −2→+2 m로 바꿔 `video_02`를 렌더링했다. 두 영상의 pose/seed/모델/주행 결과는 같다. 설치된 `omni.videoencoding`을 사용했으며 ffmpeg나 새 Python package를 설치하지 않았다.
+
+영상은 **왼쪽 통과, 최소 clearance 7.52 cm, goal 미도달**이라는 실제 결과 전체를 보여준다. Goal 성공처럼 편집하지 않았다. MP4 및 frame별 source row mapping, renderer source snapshot, PNG previews, source/video SHA-256과 검증 기록은 `static_obstacle_video_02/`에 보관한다. Git에는 renderer, 문서와 작은 검증 JSON만 추가한다.
+
+동일 pose 2,161개를 USD time samples로 넣은 `recorded_motion.usda`도 별도로 저장했다. 이 파일은 기존 Isaac GUI의 native timeline으로 재생할 수 있는 **기록 animation**이며, NoMaD를 다시 실행하는 scene이 아니다. GUI에서는 전체 기록 경로를 고정 표시하고 MP4는 진행한 경로만 표시한다. 기존 `scene_gui.usda`는 그대로 정적 scene이다.
+
+검증: **MP4 721 frames 모두 정상 decode**, H.264/24 fps/1280×720 확인. 모든 video frame의 source CSV row와 `(x,y,yaw,time)`이 정확히 일치했다. USD animation의 2,161 pose 모두 원본과 비교해 최대 절대 오차 **4.44×10⁻¹⁶**이었다. 원래 World prim 98개, default attributes 643개, relationships 72개가 그대로 보존됐고 기존 camera/obstacle/corridor geometry를 수정하지 않았다. 시작·회피 구간·goal 근접 구간·마지막 frame을 시각 확인했다. [작은 영상 검증 기록](../research/results/isaac6_static_obstacle_20261016/video.json)에 실제 hash/파일 크기/검증 결과를 기록했다.
+
+영상 생성 뒤 관찰 camera를 기본으로 여는 Kit의 기존 `cameraSettings:boundCamera` metadata만 더한 **`recorded_motion_gui.usda`**를 새 파일로 저장했다. 원래 animation/MP4는 보존했다. 같은 metadata export를 renderer의 마지막 부분에도 추가했다. 실제 실행한 renderer snapshot은 영상 폴더의 `render_recorded_source.py`이며 이 마지막 GUI metadata export가 추가되기 전 버전이다.
+
+아래 명령으로 기존 GUI에서 `recorded_motion_gui.usda`를 열어 **opened successfully / Error 0개**를 확인했다. Camera는 OverviewCamera이며 native timeline의 **Play**로 기록 animation을 볼 수 있다. GUI Play 버튼의 수동 조작 자체는 이번 검증에 포함하지 않았고, 모든 animation time sample의 pose 일치 및 MP4 전체 재생 가능성을 별도로 확인했다. GUI 표시는 실험 재실행이나 실제 controller 제어가 아니다.
+
+```bash
+/home/gpuadmin/isaacsim/isaac-sim.sh --no-ros-env --/app/settings/persistent=false --/isaac/startup/create_new_stage=false --/isaac/startup/ros_bridge_extension="" --/rtx/hydra/supportMultiTickRate=false --portable-root /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/gui_obstacle_check_02/portable --exec "/home/gpuadmin/isaacsim/extscache/omni.usd-1.16.0+f9bf0dda.lx64.r.cp312/scripts/open_stage.py /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/static_obstacle_video_02/recorded_motion_gui.usda"
+```
