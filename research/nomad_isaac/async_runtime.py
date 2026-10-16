@@ -1,0 +1,221 @@
+"""Paced kinematic execution, independent of RTX capture and GPU socket waits."""
+from collections import deque
+import csv
+import hashlib
+import json
+from pathlib import Path
+import socket
+import threading
+import time
+import traceback
+
+import numpy as np
+from PIL import Image
+
+from .async_core import AsyncClient, WaypointExecution, deadline_ns
+from .clearance import MultiObstacleMonitor
+from .common import write_json
+
+
+def append(stream, record):
+    stream.write(json.dumps(record)+"\n")
+    stream.flush()
+
+
+class ExecutionThread:
+    def __init__(self, config, out):
+        self.config, self.out = config, out
+        self.core = WaypointExecution(config["start_pose"], config["integration_hz"], config["controller_hz"])
+        self.lock = threading.Lock()
+        self.done, self.started, self.cancel = threading.Event(), threading.Event(), threading.Event()
+        self.state = {"pose": self.core.pose.tolist(), "sim_s": 0., "monotonic_ns": 0, "tick": 0,
+                      "applied_id": -1, "command_valid": False}
+        self.error = None
+        self.reason = "simulation_timeout"
+        self.goal_entry = False
+        self.minimum_distance = float(np.linalg.norm(self.core.pose[:2]-config["goal_pose"][:2]))
+        self.initial_distance = self.minimum_distance
+        self.distance = 0.
+        self.events, self.received = [], []
+        self.monitor = MultiObstacleMonitor(config, out)
+
+    def snapshot(self):
+        with self.lock:
+            return {**self.state, "pose": list(self.state["pose"])}
+
+    def accept(self, result, sim_time, terminal=False):
+        metadata, arrays = result
+        assert arrays["metric"].shape == arrays["normalized_diffusion"].shape == (8, 8, 2)
+        assert all(np.isfinite(a).all() for a in arrays.values())
+        np.testing.assert_array_equal(arrays["selected_waypoint"], arrays["metric"][0, 2])
+        row = {**metadata, "latched_sim_s": sim_time, "latched_monotonic_ns": time.monotonic_ns(),
+               "selected_waypoint_m": arrays["selected_waypoint"].tolist(), "terminal_unapplied": terminal}
+        self.received.append(row)
+        append(self.rf, row)
+        self.monitor.plan(row["id"], arrays["metric"], row)
+        if not terminal:
+            self.core.receive(row, arrays["selected_waypoint"])
+
+    def start(self, client):
+        self.client = client
+        self.epoch_ns = time.monotonic_ns()
+        self.thread = threading.Thread(target=self.run, name="kinematic-72hz", daemon=True)
+        self.thread.start()
+        self.started.wait(5)
+        assert self.started.is_set()
+
+    def run(self):
+        c = self.config
+        hz = c["integration_hz"]
+        self.rf = (self.out/"received.jsonl").open("x")
+        try:
+            with (self.out/"agent_trajectory.csv").open("x") as pf, (self.out/"controller.jsonl").open("x") as cf, \
+                 (self.out/"events.jsonl").open("x") as ef:
+                writer = csv.writer(pf)
+                writer.writerow(["simulation_time_s", "x_m", "y_m", "yaw_rad", "v_m_s", "w_rad_s", "goal_distance_m",
+                                 "monotonic_ns", "tick", "deadline_monotonic_ns", "pacing_error_s", "incoming_waypoint_id", "incoming_command_valid"])
+                for tick in range(round(c["timeout_sim_s"]*hz)+1):
+                    deadline = deadline_ns(self.epoch_ns, tick, hz)
+                    remaining = (deadline-time.monotonic_ns())/1e9
+                    if remaining > 0:
+                        self.cancel.wait(remaining)  # Only 1x pacing; never inference latency injection.
+                    if self.cancel.is_set():
+                        self.reason = "technical_cancel"; break
+                    previous = self.core.pose.copy()
+                    incoming_v, incoming_w = self.core.v, self.core.w
+                    incoming_id, incoming_valid = self.core.applied_id, self.core.command_valid
+                    if tick:
+                        self.core.integrate()
+                    now = time.monotonic_ns()
+                    pose = self.core.pose.copy()
+                    sim_time = tick/hz
+                    distance = float(np.linalg.norm(pose[:2]-c["goal_pose"][:2]))
+                    self.minimum_distance = min(self.minimum_distance, distance)
+                    self.distance += float(np.linalg.norm(pose[:2]-previous[:2]))
+                    with self.lock:
+                        self.state = {"pose": pose.tolist(), "sim_s": sim_time, "monotonic_ns": now, "tick": tick,
+                                      "applied_id": incoming_id, "command_valid": incoming_valid}
+                    writer.writerow([sim_time, *pose, incoming_v, incoming_w, distance, now, tick, deadline,
+                                     (now-deadline)/1e9, incoming_id, incoming_valid])
+                    pf.flush()
+                    self.started.set()
+                    self.monitor.observe_interval(previous, pose, incoming_v, incoming_w,
+                                                  (tick-1)/hz if tick else 0., 1/hz if tick else 0.)
+                    if self.monitor.stop_reason:
+                        self.reason = self.monitor.stop_reason; break
+                    if distance <= c["goal_tolerance_m"]:
+                        self.goal_entry = True; self.reason = "goal_entry"; break
+                    if (now-self.epoch_ns)/1e9 > c["timeout_navigation_wall_s"]:
+                        self.reason = "navigation_wall_timeout"; break
+                    if tick == round(c["timeout_sim_s"]*hz):
+                        break
+                    result = self.client.poll()
+                    if result is not None:
+                        self.accept(result, sim_time)
+                    refresh, switch = self.core.control(tick, time.monotonic_ns())
+                    if refresh:
+                        append(cf, refresh)
+                    if switch:
+                        append(ef, switch); self.events.append(switch)
+                    with self.lock:
+                        self.state["applied_id"] = self.core.applied_id
+                        self.state["command_valid"] = self.core.command_valid
+        except BaseException as exc:
+            self.error = exc
+            (self.out/"async_thread_failure.txt").write_text(traceback.format_exc())
+        finally:
+            self.started.set()
+            self.done.set()
+
+
+def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, render_check):
+    protocol = json.loads(Path(__file__).with_name("async_protocol.json").read_text())
+    write_json(out/"async_protocol.json", protocol)
+    engine = ExecutionThread(config, out)
+    history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
+    observation_id = request_id = 0
+    busy_skips = missed_slots = 0
+    with socket.socket(socket.AF_UNIX) as connection, (out/"observations.jsonl").open("x") as obs_log, \
+         (out/"requests.jsonl").open("x") as req_log:
+        connection.settimeout(60)
+        connection.connect(socket_path)
+        client = AsyncClient(connection, engine.snapshot)
+        engine.start(client)
+        slot = 0
+        try:
+            while not engine.done.is_set():
+                target = deadline_ns(engine.epoch_ns, slot, config["observation_hz"])
+                remaining = (target-time.monotonic_ns())/1e9
+                if remaining > 0 and engine.done.wait(remaining):
+                    break
+                snap = engine.snapshot()
+                if engine.done.is_set():
+                    break
+                set_pose(snap["pose"])
+                np.testing.assert_allclose(get_pose(), snap["pose"], atol=1e-10, rtol=0)
+                capture_start = time.monotonic_ns()
+                rgb = capture(snap["sim_s"])
+                capture_end = time.monotonic_ns()
+                np.testing.assert_allclose(get_pose(), snap["pose"], atol=1e-10, rtol=0)
+                digest = hashlib.sha256(rgb.tobytes()).hexdigest()
+                history.append(rgb); times.append(snap["sim_s"]); hashes.append(digest); frame_ids.append(observation_id)
+                record = {"observation_id": observation_id, "slot": slot, "scheduled_monotonic_ns": target,
+                          "observation_sim_s": snap["sim_s"], "observation_monotonic_ns": capture_start,
+                          "observation_pose": snap["pose"], "pose_sample_monotonic_ns": snap["monotonic_ns"],
+                          "capture_end_monotonic_ns": capture_end, "render_ms": (capture_end-capture_start)/1e6,
+                          "frame_sha256": digest}
+                if len(history) == 4 and not engine.done.is_set():
+                    request = {**record, "kind": "infer", "id": request_id, "seed": config["seed"]+2*request_id,
+                               "history_sim_s": list(times), "history_frame_sha256": list(hashes),
+                               "history_observation_ids": list(frame_ids), "old_id_at_observation": snap["applied_id"],
+                               "old_valid_at_observation": snap["command_valid"], "request_submit_monotonic_ns": time.monotonic_ns()}
+                    submitted = client.submit(request, history=np.stack(history), goal=goal)
+                    record["status"] = "submitted" if submitted else "busy_history_only"
+                    if submitted:
+                        record["request_id"] = request_id
+                        append(req_log, request); request_id += 1
+                    else:
+                        busy_skips += 1
+                else:
+                    record["status"] = "history_warmup" if len(history)<4 else "terminal_history_only"
+                append(obs_log, record)
+                if slot % (5*config["observation_hz"]) == 0:
+                    Image.fromarray(rgb).save(out/f"observation_{observation_id:04d}.png")
+                observation_id += 1
+                slot += 1
+                elapsed = (time.monotonic_ns()-engine.epoch_ns)/1e9
+                next_available = int(np.ceil(elapsed*config["observation_hz"]))
+                if next_available > slot:
+                    append(obs_log, {"status": "missed_capture_slots", "first_slot": slot,
+                                     "count": next_available-slot, "monotonic_ns": time.monotonic_ns()})
+                    missed_slots += next_available-slot
+                    slot = next_available
+            engine.thread.join(5)
+            if engine.error:
+                raise RuntimeError("Kinematic execution thread failed") from engine.error
+            leftover = client.close()
+            if leftover is not None:
+                engine.accept(leftover, engine.snapshot()["sim_s"], terminal=True)
+        finally:
+            engine.cancel.set()
+            engine.thread.join(5)
+            engine.rf.close()
+        state = engine.snapshot()
+        set_pose(state["pose"])
+        Image.fromarray(capture(state["sim_s"])).save(out/"observation_final.png")
+    obstacle_result = engine.monitor.finish(engine.goal_entry)
+    summary = {"integration_success": bool(engine.events) and engine.distance > 0,
+               "execution_mode": "asynchronous_realtime_kinematic", "scenario": config,
+               "epoch_monotonic_ns": engine.epoch_ns, "simulation_duration_s": state["sim_s"],
+               "navigation_wall_seconds": (state["monotonic_ns"]-engine.epoch_ns)/1e9,
+               "goal_entry": engine.goal_entry, "termination_reason": engine.reason,
+               "minimum_goal_distance_m": engine.minimum_distance, "initial_goal_distance_m": engine.initial_distance,
+               "final_pose": state["pose"], "final_goal_distance_m": float(np.linalg.norm(np.array(state["pose"][:2])-config["goal_pose"][:2])),
+               "distance_travelled_m": engine.distance, "inference_count": request_id, "received_count": len(engine.received),
+               "applied_waypoints": len(engine.events), "busy_observation_skips": busy_skips, "missed_capture_slots": missed_slots,
+               "waypoint_timeout_episodes": len(engine.core.expired_ids), "simulation_paused_during_inference": False,
+               "all_outputs_finite": True, "frame_and_rgb_check": render_check, "obstacle_evaluation": obstacle_result,
+               "raw_model_output_directory": "model/raw", "derived_trajectory_directory": "model/derived",
+               "note": "Pacing and concurrent OLD movement require offline validation; this file alone is not a realtime PASS."}
+    write_json(out/"summary.json", summary)
+    print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

@@ -18,6 +18,7 @@ def main():
     parser.add_argument("--isaac-root", type=Path, default=Path("/home/gpuadmin/isaacsim"))
     parser.add_argument("--prepare-only", action="store_true", help="Render/frame gate only; no inference or movement")
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
+    parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -32,7 +33,7 @@ def main():
         "isaac_version": version, "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "git_status": subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True),
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
-        "prepare_only": args.prepare_only, "launcher_python": sys.executable,
+        "prepare_only": args.prepare_only, "asynchronous": args.asynchronous, "launcher_python": sys.executable,
         "gpu": subprocess.check_output(["nvidia-smi", "--query-gpu=name,driver_version,memory.total", "--format=csv,noheader"], text=True).strip()})
     worker = None
     simulator = None
@@ -68,6 +69,8 @@ def main():
             command = [str(isaac / "python.sh"), str(Path(__file__).with_name("simulator.py")),
                        "--output", str(out), "--scenario", str(scenario_path), "--portable-root", str(out / "portable")]
             command += ["--prepare-only"] if args.prepare_only else ["--socket", str(socket_path)]
+            if args.asynchronous:
+                command.append("--asynchronous")
             simulator = subprocess.Popen(command, cwd=ROOT, env=env, stdout=sim_log, stderr=subprocess.STDOUT, start_new_session=True)
             print(f"Isaac PID {simulator.pid}; logs: {out}", flush=True)
             code = simulator.wait(timeout=read_scenario(scenario_path)["timeout_process_wall_s"])

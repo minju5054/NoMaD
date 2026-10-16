@@ -15,6 +15,7 @@ parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--socket")
 parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
+parser.add_argument("--asynchronous", action="store_true")
 args, _ = parser.parse_known_args()
 out = args.output.resolve()
 runtime = out / "isaac_runtime"
@@ -109,6 +110,8 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    if args.asynchronous:
+        config = {**config, "synchronous": False}
     obstacles = configured_obstacles(config)
     write_json(out / "scenario.json", config)
     rep.orchestrator.set_capture_on_play(False)
@@ -190,6 +193,10 @@ def main():
     if args.prepare_only:
         print("RENDER_GATE_PASS", flush=True)
         return
+
+    if args.asynchronous:
+        from nomad_isaac.async_runtime import run_async
+        return run_async(config, out, args.socket, goal, capture, set_pose, get_pose, render_check)
 
     controller = original_controller()
     history = deque(maxlen=4)

@@ -60,6 +60,7 @@ def main():
                 assert all(bool(torch.isfinite(value).all()) for value in result.values())
                 arrays = {k: result[k].cpu().numpy() for k in
                           ["normalized_diffusion", "cumulative", "metric", "selected_waypoint"]}
+                host_output_ready_ns = time.monotonic_ns()
                 # No predicted point is adjusted, averaged, smoothed, or selected again.
                 with (args.output / "raw" / f"{identifier:04d}.npz").open("xb") as f:
                     np.savez_compressed(f, initial_noise=noise.cpu().numpy(), normalized_diffusion=arrays["normalized_diffusion"])
@@ -67,6 +68,9 @@ def main():
                     np.savez_compressed(f, **{k: v for k, v in arrays.items() if k != "normalized_diffusion"})
                 response = {"id": identifier, "seed": seed, "ddpm_seed": seed + 1,
                             "inference_start_monotonic_ns": start_ns, "inference_end_monotonic_ns": finish_ns,
+                            "ready_monotonic_ns": finish_ns,
+                            "host_output_ready_monotonic_ns": host_output_ready_ns,
+                            "persistence_end_monotonic_ns": time.monotonic_ns(),
                             "inference_ms": (finish_ns - start_ns) / 1e6,
                             "history_sha256": hashlib.sha256(history.tobytes()).hexdigest(),
                             "goal_sha256": hashlib.sha256(goal.tobytes()).hexdigest(), "finite": True}
