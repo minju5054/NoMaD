@@ -12,14 +12,16 @@ import numpy as np
 
 from nomad_isaac.common import integrate_se2, original_controller, sha256_file, write_json
 from nomad_isaac.clearance import (corridor_clearance, obstacle_bounds, planning_diagnostic,
-                                  swept_clearance, first_contact_bracket)
+                                  swept_clearance, first_contact_bracket, configured_obstacles,
+                                  single_obstacle_config)
 
 
-def verify_obstacle_run(run, summary, trajectory, pose, times):
+def verify_obstacle_run(run, summary, trajectory, pose, times, geometry_run=None):
+    logs = geometry_run or run
     config = summary["scenario"]
     lower, upper = obstacle_bounds(config)
     radius = config["agent_radius_m"]
-    records = [json.loads(x) for x in (run / "clearance.jsonl").read_text().splitlines()]
+    records = [json.loads(x) for x in (logs / "clearance.jsonl").read_text().splitlines()]
     assert len(records) == len(pose)
     for i, row in enumerate(records):
         previous = pose[max(0, i-1)]
@@ -49,7 +51,7 @@ def verify_obstacle_run(run, summary, trajectory, pose, times):
         r = records[-1]
         bracket = first_contact_bracket(r["start_pose"], r["v"], r["w"], r["end_sim_s"]-r["start_sim_s"], lower, upper, radius)
         np.testing.assert_allclose(evaluation["first_contact"]["pose_at_bracket_end"], bracket["pose_at_bracket_end"], atol=1e-8, rtol=0)
-    plans = [json.loads(x) for x in (run / "planning.jsonl").read_text().splitlines()]
+    plans = [json.loads(x) for x in (logs / "planning.jsonl").read_text().splitlines()]
     assert len(plans) == summary["inference_count"]
     for p in plans:
         with np.load(run / "model/derived" / f"{p['id']:04d}.npz") as data:
@@ -65,6 +67,54 @@ def verify_obstacle_run(run, summary, trajectory, pose, times):
                    "inference_p95_ms": float(np.percentile(timings, 95)),
                    "minimum_predicted_sample0_polyline_clearance_m": min(p["polyline_clearance_m"] for p in plans),
                    "predicted_sample0_overlap_count": sum(p["polyline_clearance_m"] <= 0 for p in plans)}
+
+
+def verify_multiple_obstacles(run, summary, trajectory, pose, times):
+    evaluation = summary["obstacle_evaluation"]
+    boxes = configured_obstacles(summary["scenario"])
+    per_obstacle, child_plans = {}, {}
+    aggregate = [json.loads(x) for x in (run / "clearance.jsonl").read_text().splitlines()]
+    assert len(aggregate) == len(pose)
+    for box in boxes:
+        key = box["id"]
+        child_summary = {**summary, "scenario": single_obstacle_config(summary["scenario"], box),
+                         "obstacle_evaluation": evaluation["obstacles"][key]}
+        directory = run / "obstacles" / key
+        child_plans[key], per_obstacle[key] = verify_obstacle_run(run, child_summary, trajectory, pose, times, directory)
+        rows = [json.loads(x) for x in (directory / "clearance.jsonl").read_text().splitlines()]
+        assert all(row == aggregate[i]["obstacles"][key] for i, row in enumerate(rows))
+    children = list(evaluation["obstacles"].values())
+    for name in ["minimum_swept_clearance_lower_m", "minimum_swept_clearance_upper_m", "minimum_corridor_clearance_lower_m"]:
+        assert evaluation[name] == min(child[name] for child in children)
+    for name in ["safety_margin_met", "corridor_containment_certified", "avoidance_success"]:
+        assert evaluation[name] == all(child[name] for child in children)
+    assert evaluation["geometric_overlap"] == any(child["geometric_overlap"] for child in children)
+    contacts = [{"obstacle_id": key, **value["first_contact"]} for key, value in evaluation["obstacles"].items()
+                if value["first_contact"] is not None]
+    expected_first = min(contacts, key=lambda c: c["interval_start_s"]+c["offset_bracket_s"][0]) if contacts else None
+    assert evaluation["first_contact"] == expected_first
+    plans = [json.loads(x) for x in (run / "planning.jsonl").read_text().splitlines()]
+    assert len(plans) == summary["inference_count"]
+    for i, plan in enumerate(plans):
+        assert plan["obstacles"] == {key: values[i] for key, values in child_plans.items()}
+        for field in ["polyline_clearance_m", "through_selected_index_2_clearance_m", "selected_point_clearance_m"]:
+            assert plan[field] == min(values[i][field] for values in child_plans.values())
+    for i, row in enumerate(aggregate):
+        for field in ["lower_m", "upper_m", "corridor_lower_m"]:
+            assert row[field] == min(c[field] for c in row["obstacles"].values())
+        assert row["geometric_overlap"] == any(c["geometric_overlap"] for c in row["obstacles"].values())
+        if row["lower_m"] <= 0 or row["corridor_lower_m"] <= 0:
+            assert i == len(aggregate)-1
+    first_checks = next(iter(per_obstacle.values()))
+    checks = {"obstacle_count": len(boxes), "obstacles": per_obstacle,
+              "swept_intervals_verified": len(aggregate), "planning_diagnostics_verified": len(plans),
+              "stop_at_first_detected_interval": True if contacts else None,
+              "contact_stop_runtime_status": "observed" if contacts else "NOT_EXERCISED_no_contact",
+              "avoidance_success_criteria_verified": True,
+              "minimum_predicted_sample0_polyline_clearance_m": min(p["polyline_clearance_m"] for p in plans),
+              "predicted_sample0_overlap_count": sum(p["polyline_clearance_m"] <= 0 for p in plans)}
+    checks.update({k: first_checks[k] for k in ["first_inference_ms", "inference_median_ms", "inference_p95_ms"]})
+    return plans, checks
 
 
 def main():
@@ -90,6 +140,7 @@ def main():
     tolerance = summary["scenario"]["goal_tolerance_m"]
     assert bool(np.any(distances <= tolerance)) == summary["goal_entry"]
     assert abs(float(distances.min()) - summary["minimum_goal_distance_m"]) < 1e-10
+    assert abs(float(distances[0]) - summary["initial_goal_distance_m"]) < 1e-10
     oracle = original_controller()
     for event in events:
         identifier = event["id"]
@@ -128,7 +179,8 @@ def main():
               "raw_file_sha256": {p: sha256_file(args.run / p) for p in
                                   ["agent_trajectory.csv", "events.jsonl", "controller.jsonl", "goal.png", "observation_start.png", "observation_final.png"]}}
     if "obstacle_evaluation" in summary:
-        plans, checks = verify_obstacle_run(args.run, summary, trajectory, pose, times)
+        verify = verify_multiple_obstacles if "obstacles" in summary["scenario"] else verify_obstacle_run
+        plans, checks = verify(args.run, summary, trajectory, pose, times)
         report["validation"].update(checks)
         report["failure_analysis"] = None if summary["obstacle_evaluation"]["avoidance_success"] else {
             "category": summary["obstacle_evaluation"]["category"], "adapter_fault_detected": False,
@@ -144,8 +196,9 @@ def main():
     ax.add_patch(Circle(goal[:2], tolerance, color="#b24625", alpha=.13, label="Goal tolerance (0.30 m)"))
     width = summary["scenario"]["corridor"]["half_width"]
     if "obstacle_evaluation" in summary:
-        lower, upper = obstacle_bounds(summary["scenario"])
-        ax.add_patch(Rectangle(lower, *(upper-lower), facecolor="#31a354", edgecolor="#14532d", label="Static obstacle"))
+        for index, obstacle in enumerate(configured_obstacles(summary["scenario"]), 1):
+            lower, upper = obstacle_bounds(single_obstacle_config(summary["scenario"], obstacle))
+            ax.add_patch(Rectangle(lower, *(upper-lower), facecolor="#31a354", edgecolor="#14532d", label=f"Obstacle {index}"))
         ax.add_patch(Circle(pose[-1, :2], summary["scenario"]["agent_radius_m"], fill=False, edgecolor="#1b5e9c", label="Final footprint (r=0.12 m)"))
         diagnostic = min(plans, key=lambda p: p["polyline_clearance_m"])
         predicted = np.vstack([np.asarray(diagnostic["observation_pose"])[:2], diagnostic["world_xy_m"]])
@@ -153,7 +206,7 @@ def main():
                 label=f"Sample 0 at {diagnostic['observation_sim_s']:.2f}s (prediction only)")
     ax.axhline(width, color=".4", linewidth=1); ax.axhline(-width, color=".4", linewidth=1)
     ax.set(xlabel="World X [m]", ylabel="World Y [m]", aspect="equal",
-           xlim=(min(-.4, pose[:, 0].min()-.3), max(2., pose[:, 0].max()+.3)), ylim=(-1.65, 1.65),
+           xlim=(min(-.4, pose[:, 0].min()-.3), max(2., goal[0]+tolerance+.2, pose[:, 0].max()+.3)), ylim=(-1.65, 1.65),
            title=f"NoMaD + Isaac Sim 6 | goal entry: {summary['goal_entry']}\nMinimum goal distance: {distances.min():.3f} m")
     ax.grid(alpha=.2); ax.legend(loc="upper left", fontsize=8)
     if "obstacle_evaluation" in summary:

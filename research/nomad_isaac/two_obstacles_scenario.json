@@ -1,0 +1,85 @@
+{
+  "name": "two_static_obstacles_farther_start",
+  "start_pose": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "goal_pose": [
+    4.5,
+    0.0,
+    0.0
+  ],
+  "goal_tolerance_m": 0.3,
+  "timeout_sim_s": 60.0,
+  "timeout_navigation_wall_s": 180.0,
+  "timeout_process_wall_s": 600.0,
+  "integration_hz": 72,
+  "observation_hz": 4,
+  "controller_hz": 9,
+  "controller_dt_s": 0.25,
+  "max_v": 0.2,
+  "max_w": 0.4,
+  "seed": 101,
+  "context_size": 3,
+  "num_samples": 8,
+  "selected_sample": 0,
+  "selected_waypoint_index": 2,
+  "camera": {
+    "width": 320,
+    "height": 240,
+    "height_m": 0.5,
+    "horizontal_fov_deg": 90.0,
+    "focal_length_mm": 18.0,
+    "horizontal_aperture_mm": 36.0,
+    "vertical_aperture_mm": 27.0
+  },
+  "corridor": {
+    "xmin": -2.0,
+    "xmax": 6.0,
+    "half_width": 1.5,
+    "height": 2.6
+  },
+  "boundary_stop_margin_m": 0.1,
+  "synchronous": true,
+  "smoothing": false,
+  "waypoint_modification": false,
+  "agent_radius_m": 0.12,
+  "required_clearance_m": 0.02,
+  "obstacles": [
+    {
+      "id": "StaticObstacle1",
+      "center_xy_m": [
+        1.5,
+        0.0
+      ],
+      "size_xyz_m": [
+        0.4,
+        0.5,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "StaticObstacle2",
+      "center_xy_m": [
+        3.0,
+        0.35
+      ],
+      "size_xyz_m": [
+        0.5,
+        0.6,
+        1.0
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    }
+  ]
+}

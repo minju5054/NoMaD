@@ -41,7 +41,8 @@ from pxr import Gf, UsdGeom, UsdLux, UsdShade, Sdf
 
 from nomad_isaac.common import (SCENARIO_PATH, integrate_se2, original_controller,
                                 read_scenario, receive_packet, send_packet, write_json, export_view_scene)
-from nomad_isaac.clearance import ObstacleMonitor, obstacle_bounds
+from nomad_isaac.clearance import (ObstacleMonitor, MultiObstacleMonitor, obstacle_bounds,
+                                  configured_obstacles, single_obstacle_config)
 
 
 def build_scene(config):
@@ -82,9 +83,8 @@ def build_scene(config):
             box(f"Panel{i}_{'L' if side == 1 else 'R'}", (x, side * 1.498, 1.15),
                 (.65, .004, 1.7), color)
     box("EndDoor", (5.998, .15, 1.1), (.004, .9, 2.2), (.32, .22, .13))
-    if "obstacle" in config:
-        obstacle = config["obstacle"]
-        box("StaticObstacle", (*obstacle["center_xy_m"], obstacle["size_xyz_m"][2]/2),
+    for obstacle in configured_obstacles(config):
+        box(obstacle["id"], (*obstacle["center_xy_m"], obstacle["size_xyz_m"][2]/2),
             obstacle["size_xyz_m"], obstacle["color_rgb"], double_scale=True)
     dome = UsdLux.DomeLight.Define(stage, "/World/Light")
     dome.CreateIntensityAttr(1000.)
@@ -109,6 +109,7 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    obstacles = configured_obstacles(config)
     write_json(out / "scenario.json", config)
     rep.orchestrator.set_capture_on_play(False)
     stage, agent, translate, rotate, camera, annotator, product = build_scene(config)
@@ -166,19 +167,25 @@ def main():
                     "blue_right_pixels": len(blue_x), "blue_mean_pixel_x": float(blue_x.mean()),
                     "goal_start_mean_abs_pixel_difference": float(np.abs(goal.astype(float) - rgb_float).mean()),
                     "python": sys.version, "executable": sys.executable, "numpy": np.__version__}
-    if "obstacle" in config:
+    if obstacles:
         green = (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 0]) & (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 2])
         assert int(green.sum()) > 100, "Obstacle must be visible in actual starting RGB before inference"
-        bounds = UsdGeom.BBoxCache(0, [UsdGeom.Tokens.default_]).ComputeWorldBound(
-            stage.GetPrimAtPath("/World/StaticObstacle")).ComputeAlignedRange()
-        lower, upper = obstacle_bounds(config)
-        np.testing.assert_allclose(np.array(bounds.GetMin())[:2], lower, rtol=0, atol=1e-12)
-        np.testing.assert_allclose(np.array(bounds.GetMax())[:2], upper, rtol=0, atol=1e-12)
+        actual_bounds = {}
+        for obstacle in obstacles:
+            bounds = UsdGeom.BBoxCache(0, [UsdGeom.Tokens.default_]).ComputeWorldBound(
+                stage.GetPrimAtPath("/World/" + obstacle["id"])).ComputeAlignedRange()
+            lower, upper = obstacle_bounds(single_obstacle_config(config, obstacle))
+            np.testing.assert_allclose(np.array(bounds.GetMin()), [*lower, 0], rtol=0, atol=1e-12)
+            np.testing.assert_allclose(np.array(bounds.GetMax()), [*upper, obstacle["size_xyz_m"][2]], rtol=0, atol=1e-12)
+            actual_bounds[obstacle["id"]] = [list(bounds.GetMin()), list(bounds.GetMax())]
         render_check["obstacle_green_pixels"] = int(green.sum())
-        render_check["obstacle_actual_world_aabb"] = [list(bounds.GetMin()), list(bounds.GetMax())]
+        if "obstacles" in config:
+            render_check["obstacles_actual_world_aabb"] = actual_bounds
+        else:
+            render_check["obstacle_actual_world_aabb"] = actual_bounds["StaticObstacle"]
     write_json(out / "render_check.json", render_check)
     stage.Export(str(out / "scene.usda"))
-    if "obstacle" in config:
+    if obstacles:
         export_view_scene(out / "scene.usda", out / "scene_gui.usda")
     if args.prepare_only:
         print("RENDER_GATE_PASS", flush=True)
@@ -194,6 +201,7 @@ def main():
     steps = int(config["timeout_sim_s"] * config["integration_hz"])
     begin_ns = time.monotonic_ns()
     minimum_distance = float(np.linalg.norm(pose[:2] - goal_pose[:2]))
+    initial_distance = minimum_distance
     waypoint = None
     v = w = 0.
     request_id = -1
@@ -202,7 +210,8 @@ def main():
     entry = False
     distance_travelled = 0.
     summaries = []
-    monitor = ObstacleMonitor(config, out) if "obstacle" in config else None
+    monitor = (MultiObstacleMonitor(config, out) if "obstacles" in config else
+               ObstacleMonitor(config, out) if "obstacle" in config else None)
     with socket.socket(socket.AF_UNIX) as connection, (out / "agent_trajectory.csv").open("x") as tf, \
             (out / "events.jsonl").open("x") as ef, (out / "controller.jsonl").open("x") as cf:
         connection.settimeout(30.)
@@ -284,7 +293,7 @@ def main():
         assert receive_packet(connection)[0]["kind"] == "stopped"
     summary = {"integration_success": len(summaries) > 0 and distance_travelled > 0,
                "goal_entry": entry, "termination_reason": reason, "minimum_goal_distance_m": minimum_distance,
-               "final_goal_distance_m": distance, "initial_goal_distance_m": 1.5,
+               "final_goal_distance_m": distance, "initial_goal_distance_m": initial_distance,
                "final_pose": pose.tolist(), "simulation_duration_s": sim_time,
                "navigation_wall_seconds": (time.monotonic_ns() - begin_ns) / 1e9,
                "distance_travelled_m": distance_travelled, "inference_count": request_id + 1,

@@ -1,9 +1,29 @@
 """Passive geometric measurement only: never changes a waypoint or command."""
 import json
 import math
+import re
 import numpy as np
 
 from .common import integrate_se2, local_to_world, write_json
+
+
+def configured_obstacles(config):
+    """Accept the original single box or an explicitly named list of boxes."""
+    assert not ("obstacle" in config and "obstacles" in config)
+    boxes = config.get("obstacles", [{"id": "StaticObstacle", **config["obstacle"]}]
+                       if "obstacle" in config else [])
+    ids = [box["id"] for box in boxes]
+    assert len(ids) == len(set(ids))
+    for box in boxes:
+        assert re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", box["id"])
+        assert np.shape(box["center_xy_m"]) == (2,) and np.isfinite(box["center_xy_m"]).all()
+        assert np.shape(box["size_xyz_m"]) == (3,)
+        assert np.isfinite(box["size_xyz_m"]).all() and np.all(np.array(box["size_xyz_m"]) > 0)
+    return boxes
+
+
+def single_obstacle_config(config, box):
+    return {**{k: v for k, v in config.items() if k != "obstacles"}, "obstacle": box}
 
 
 def obstacle_bounds(config):
@@ -152,16 +172,20 @@ class ObstacleMonitor:
         if self.crossing is None and start[0] < far_x <= end[0]:
             side = "left_positive_y" if end[1] > self.upper[1] else "right_negative_y" if end[1] < self.lower[1] else "center"
             self.crossing = {"side": side, "simulation_time_s": time_start + duration, "pose": list(end)}
-        self.log.write(json.dumps({"start_sim_s": time_start, "end_sim_s": time_start+duration,
-                                  "start_pose": list(start), "end_pose": list(end), "v": v, "w": w,
-                                  "corridor_lower_m": corridor_gap, **gap}) + "\n")
+        record = {"start_sim_s": time_start, "end_sim_s": time_start+duration,
+                  "start_pose": list(start), "end_pose": list(end), "v": v, "w": w,
+                  "corridor_lower_m": corridor_gap, **gap}
+        self.log.write(json.dumps(record) + "\n")
         self.log.flush()
+        return record
 
     def plan(self, identifier, metric, request):
         diagnostic = planning_diagnostic(metric[0], request["observation_pose"], self.config)
-        self.plans.write(json.dumps({"id": identifier, "observation_sim_s": request["observation_sim_s"],
-                                    "observation_pose": request["observation_pose"], **diagnostic}) + "\n")
+        record = {"id": identifier, "observation_sim_s": request["observation_sim_s"],
+                  "observation_pose": request["observation_pose"], **diagnostic}
+        self.plans.write(json.dumps(record) + "\n")
         self.plans.flush()
+        return record
 
     def finish(self, goal_entry):
         self.log.close(); self.plans.close()
@@ -174,3 +198,68 @@ class ObstacleMonitor:
                 "safety_margin_met": bool(self.margin_met), "minimum_corridor_clearance_lower_m": self.corridor_minimum,
                 "corridor_containment_certified": self.corridor_minimum > 0,
                 "passage": self.crossing, "collision_detection_period_s": 1/self.config["integration_hz"]}
+
+
+class MultiObstacleMonitor:
+    """Reuse the unchanged single-box geometry for every box; stop on any contact."""
+    def __init__(self, config, out):
+        self.config = config
+        self.monitors = {}
+        boxes = configured_obstacles(config)
+        assert boxes
+        for box in boxes:
+            directory = out / "obstacles" / box["id"]
+            directory.mkdir(parents=True, exist_ok=False)
+            self.monitors[box["id"]] = ObstacleMonitor(single_obstacle_config(config, box), directory)
+        self.log = (out / "clearance.jsonl").open("x")
+        self.plans = (out / "planning.jsonl").open("x")
+        self.stop_reason = None
+        write_json(out / "obstacle_geometry.json", {
+            "obstacles": [{**box, "aabb_min_xy_m": self.monitors[box["id"]].lower.tolist(),
+                           "aabb_max_xy_m": self.monitors[box["id"]].upper.tolist()} for box in boxes],
+            "agent_radius_m": config["agent_radius_m"], "required_clearance_m": config["required_clearance_m"],
+            "collision": "geometry only; no PhysX"})
+
+    def observe_interval(self, start, end, v, w, time_start, duration):
+        records = {key: monitor.observe_interval(start, end, v, w, time_start, duration)
+                   for key, monitor in self.monitors.items()}
+        reasons = [monitor.stop_reason for monitor in self.monitors.values()]
+        self.stop_reason = next((r for r in ["geometric_collision", "conservative_contact_stop", "corridor_footprint_stop"]
+                                 if r in reasons), None)
+        record = {"start_sim_s": time_start, "end_sim_s": time_start+duration,
+                  "lower_m": min(r["lower_m"] for r in records.values()),
+                  "upper_m": min(r["upper_m"] for r in records.values()),
+                  "geometric_overlap": any(r["geometric_overlap"] for r in records.values()),
+                  "corridor_lower_m": min(r["corridor_lower_m"] for r in records.values()), "obstacles": records}
+        self.log.write(json.dumps(record) + "\n"); self.log.flush()
+        return record
+
+    def plan(self, identifier, metric, request):
+        records = {key: monitor.plan(identifier, metric, request) for key, monitor in self.monitors.items()}
+        first = next(iter(records.values()))
+        aggregate = {key: first[key] for key in ["id", "observation_sim_s", "observation_pose", "world_xy_m", "sample", "meaning"]}
+        for key in ["polyline_clearance_m", "through_selected_index_2_clearance_m", "selected_point_clearance_m"]:
+            aggregate[key] = min(r[key] for r in records.values())
+        aggregate["obstacles"] = records
+        self.plans.write(json.dumps(aggregate) + "\n"); self.plans.flush()
+        return aggregate
+
+    def finish(self, goal_entry):
+        self.log.close(); self.plans.close()
+        results = {key: monitor.finish(goal_entry) for key, monitor in self.monitors.items()}
+        contacts = [{"obstacle_id": key, **r["first_contact"]} for key, r in results.items() if r["first_contact"] is not None]
+        first_contact = min(contacts, key=lambda c: c["interval_start_s"] + c["offset_bracket_s"][0]) if contacts else None
+        margin = all(r["safety_margin_met"] for r in results.values())
+        corridor = all(r["corridor_containment_certified"] for r in results.values())
+        compliant = margin and corridor and first_contact is None
+        category = ("avoidance_and_goal_success" if goal_entry and compliant else
+                    "collision_or_safety_margin_failure" if not compliant else "no_collision_goal_failure")
+        return {"category": category, "avoidance_success": bool(goal_entry and compliant),
+                "geometric_overlap": any(r["geometric_overlap"] for r in results.values()),
+                "first_contact": first_contact, "safety_margin_met": margin,
+                "minimum_swept_clearance_lower_m": min(r["minimum_swept_clearance_lower_m"] for r in results.values()),
+                "minimum_swept_clearance_upper_m": min(r["minimum_swept_clearance_upper_m"] for r in results.values()),
+                "minimum_corridor_clearance_lower_m": min(r["minimum_corridor_clearance_lower_m"] for r in results.values()),
+                "corridor_containment_certified": corridor,
+                "passage": {key: r["passage"] for key, r in results.items()},
+                "collision_detection_period_s": 1/self.config["integration_hz"], "obstacles": results}

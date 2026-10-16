@@ -97,6 +97,15 @@ def write_json(path, value):
         f.write("\n")
 
 
+def replay_frame_indices(pose_count, integration_hz, fps=24):
+    """Take exact recorded rows; retain an early-stop final row at the next video slot."""
+    assert pose_count > 0 and integration_hz % fps == 0
+    indices = list(range(0, pose_count, integration_hz // fps))
+    if indices[-1] != pose_count-1:
+        indices.append(pose_count-1)
+    return indices
+
+
 def export_view_scene(source_path, destination_path):
     """Export identical /World data without transient capture graphs; no replay."""
     from pxr import Sdf, Usd

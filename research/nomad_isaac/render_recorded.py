@@ -12,6 +12,7 @@ import math
 from pathlib import Path
 import subprocess
 import time
+from nomad_isaac.common import replay_frame_indices
 
 
 def digest(path):
@@ -37,8 +38,7 @@ result = json.loads((source / "summary.json").read_text())
 hz, fps, width, height = config["integration_hz"], 24, 1280, 720
 assert hz % fps == 0
 stride = hz // fps
-assert (len(rows) - 1) % stride == 0
-indices = list(range(0, len(rows), stride))
+indices = replay_frame_indices(len(rows), hz, fps)
 for index, row in enumerate(rows):
     assert abs(float(row["simulation_time_s"]) - index / hz) < 1e-10
 
@@ -174,7 +174,9 @@ def main():
                 origin = transform.ExtractTranslation()
                 forward = transform.TransformDir(Gf.Vec3d(1, 0, 0))
                 actual = np.array([origin[0], origin[1], math.atan2(forward[1], forward[0])])
-                error = float(np.max(np.abs(actual - pose)))
+                difference = actual - pose
+                difference[2] = (difference[2] + np.pi) % (2*np.pi) - np.pi
+                error = float(np.max(np.abs(difference)))
                 maximum_pose_error = max(error, maximum_pose_error)
                 assert error < 1e-10, (index, error)
                 assert rgba[:, :, :3].std() > 10
@@ -209,9 +211,10 @@ def main():
     # Export only World: transient Replicator graphs do not belong in the GUI scene.
     translate.Set(Gf.Vec3d(0, 0, 0))
     rotate.Set(0.)
+    unwrapped_yaw = np.unwrap([float(row["yaw_rad"]) for row in rows])
     for index, row in enumerate(rows):
         translate.Set(Gf.Vec3d(float(row["x_m"]), float(row["y_m"]), 0), Usd.TimeCode(index))
-        rotate.Set(math.degrees(float(row["yaw_rad"])), Usd.TimeCode(index))
+        rotate.Set(math.degrees(float(unwrapped_yaw[index])), Usd.TimeCode(index))
     stage.SetStartTimeCode(0)
     stage.SetEndTimeCode(len(rows)-1)
     stage.SetFramesPerSecond(fps)
@@ -242,7 +245,9 @@ def main():
         "source_pose_count": len(rows), "source_pose_stride": stride,
         "simulation_time_range_s": [0., float(rows[-1]["simulation_time_s"])],
         "encoded_duration_s": len(indices)/fps,
-        "timing_note": "Includes final t=30 frame for one frame duration; 1x simulation time, not original wall time.",
+        "timing_note": "Exact source rows at 1x simulation time, not wall time. An off-grid final row occupies the next 24 fps slot, then holds for one frame.",
+        "final_frame_timestamp_offset_s": (len(indices)-1)/fps-float(rows[-1]["simulation_time_s"]),
+        "gui_yaw_representation": "Unwrapped equivalent yaw avoids interpolation across +/-pi; all recorded rotations preserved.",
         "max_rendered_pose_absolute_error": maximum_pose_error,
         "added_visuals": ["blue 0.12 m radius footprint", "white heading arrow", "orange 0.30 m goal ring", "cyan executed trail", "overview camera", "text overlays"],
         "scene_geometry_and_original_camera_preserved": True,
