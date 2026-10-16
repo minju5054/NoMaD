@@ -1,0 +1,119 @@
+{
+  "execution_commit": "fb9bf2253044be477873aa113a19899f479af248",
+  "execution_tree_clean": true,
+  "source_provenance_verified": true,
+  "scenario_delta": {
+    "obstacles[1].center_xy_m": [
+      [
+        3.0,
+        1.2
+      ],
+      [
+        3.0,
+        0.75
+      ]
+    ],
+    "obstacles[1].size_xyz_m": [
+      [
+        0.5,
+        0.6,
+        1.0
+      ],
+      [
+        0.5,
+        1.5,
+        1.0
+      ]
+    ]
+  },
+  "previous_run_hashes_unchanged": 208,
+  "model_controller_runtime_clearance_gui_exporter_unchanged": true,
+  "normal_runs": 1,
+  "technical_retries": 0,
+  "navigation_retries": 0,
+  "expected_left_then_right_observed": true,
+  "passage": {
+    "StaticObstacle1": {
+      "side": "left_positive_y",
+      "simulation_time_s": 11.319444444444445,
+      "pose": [
+        1.7912724308735348,
+        0.3856529187123945,
+        -0.8020235847093597
+      ]
+    },
+    "StaticObstacle2": {
+      "side": "right_negative_y",
+      "simulation_time_s": 20.13888888888889,
+      "pose": [
+        3.3412120371466805,
+        -0.21348675213475918,
+        0.15039287017310254
+      ]
+    }
+  },
+  "crossing_slab_diagnostic": {
+    "StaticObstacle1": {
+      "expanded_x_slab_m": [
+        1.21,
+        1.79
+      ],
+      "executed_center_y_range_m": [
+        0.38764591270510923,
+        0.619594598267575
+      ],
+      "pose_samples": 230
+    },
+    "StaticObstacle2": {
+      "expanded_x_slab_m": [
+        2.66,
+        3.34
+      ],
+      "executed_center_y_range_m": [
+        -0.2402796386512953,
+        -0.1542615362133625
+      ],
+      "pose_samples": 249
+    }
+  },
+  "terminal_unapplied_results": {
+    "94": {
+      "received_sim_s": 24.569444444444443,
+      "received_monotonic_ns": 350104284572683,
+      "last_controller_tick_monotonic_ns": 350104270595196
+    }
+  },
+  "gui_manifest": {
+    "kind": "native_gui_replay_of_recorded_execution",
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wide_wall_01",
+    "source_sha256": {
+      "scene_gui.usda": "1b9bf7d7a16ba3f22222ef86af1f1a1e6e3cc6c2d48310be4ea6223b7b110943",
+      "agent_trajectory.csv": "d5830aedd8e1f23e1205752a7159d87262bd56a06f907706fd0addede03a6813",
+      "scenario.json": "1d405719e23dd41e6859341cf6ab4c65aaf825bbe89afd431c31a3086a0a87d6",
+      "summary.json": "5effa8b823ff394d3513858d0495d8566e2dffdbf8f8bbb2f5eb835520dffa03",
+      "provenance.json": "47e1b0b4ab43172afa645760084956c5eecae084bad60b16c6b53c5ca7495194"
+    },
+    "new_inference_count": 0,
+    "new_navigation_count": 0,
+    "source_pose_count": 1771,
+    "time_codes_per_second": 72,
+    "simulation_duration_s": 24.583333333333332,
+    "max_pose_error": 4.440892098500626e-16,
+    "original_prims_preserved": 101,
+    "raw_inputs_unchanged": true,
+    "scene": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wide_wall_gui_01/recorded_motion_gui.usda",
+    "scene_sha256": "4d6c949268e8d9107ee3db024bf4fb8894d9ec0ae4d4241ff9f237139baf5343",
+    "existing_visual_source": "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/render_recorded.py",
+    "visual_source_sha256": "41eadebb3635212c930df988d866209108bad42fa5f5ba099b04af273d53a077",
+    "export_script_sha256": "f27c6e078735dee2113335bfa6b2c3f8cec38249b5f12b892ec7aacbc9657488",
+    "source_commit": "fb9bf2253044be477873aa113a19899f479af248",
+    "export_git_sha": "fb9bf2253044be477873aa113a19899f479af248",
+    "agent_radius_m": 0.09,
+    "recorded_outcome": {
+      "termination_reason": "goal_entry",
+      "goal_entry": true
+    },
+    "note": "All 72 Hz poses retained; full cyan executed trail is a static visual aid. Native timeline loops at simulation time; not a new live navigation run."
+  },
+  "gui_export_delay_after_summary_file_s": 0.9653563499450684
+}

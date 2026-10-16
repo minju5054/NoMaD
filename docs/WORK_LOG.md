@@ -201,3 +201,13 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 3. 92 GPU inference/receive/switch, 1,726 poses. Warm median/p95 30.233/33.046 ms, 이후 91/91 inference 중 OLD 이동. RTF 0.999994371, pacing p95/max 0.153655/4.958789 ms. Async/soft real-time PASS, timeout 0회/NOT_EXERCISED, busy skip 1회.
 4. 주행 summary 후 0.978 s에 GUI animation 저장. 모든 pose/101 prim 보존 검증, native GUI 재생 및 row 145 pose 일치/Error 0개 확인. 저장된 실제 기록의 반복 재생이며 추가 navigation/MP4가 아니다.
 5. 기존 offline validator와 실제 USD geometry 검사 통과. 이전 9 cm run 주요 321개 및 synchronous 484개 hash 보존. 원본 model/controller/runtime/clearance/exporter 및 환경 변경 없음. 한 scenario의 성공을 일반적 성능이나 Graph 필요성으로 확대하지 않는다. 새 scenario·작은 JSON·문서만 commit/push한다.
+
+## 두 번째 벽 부착 장애물의 Y 폭 1.5 m 확대
+
+2026-10-16. 사용자 요청으로 두 번째 장애물을 0.5×1.5×1.0 m로 확대했다. 기준 `54cac31`, branch `research/isaac6-async-wide-wall`. [상세 보고서](ISAAC6_ASYNC_WIDE_WALL.md).
+
+1. 왼쪽 벽 부착을 유지하려고 두 번째 중심 Y를 1.20→0.75 m, 폭 Y를 0.6→1.5 m로 변경했다. 다른 scenario 값은 그대로다. 실제 USD AABB `[2.75,0,0]..[3.25,1.5,1]`, left gap=0 m를 확인했다. 실행 전에 `fb9bf2253044be477873aa113a19899f479af248`에 고정했고 clean tree에서 정상 주행 1회만 수행했다.
+2. 첫 장애물 왼쪽 t=11.319444 s, 두 번째 오른쪽 t=20.138889 s 통과. 최소 swept clearance 0.069630/0.082836 m, 충돌·corridor 침범 없이 t=24.583333 s에 거리 0.297708 m로 goal entry. 기대한 방향 및 안전/목표 PASS. 재시도/회피 logic/model/controller 변경 없음.
+3. 95 inference/receive, 94 switch, 1,771 poses. 마지막 ID 94는 수신 후 다음 controller tick 전에 목표 진입해 미적용 상태로 보존했다. Warm median/p95 29.187/31.903 ms, 이후 94/94 inference 동안 OLD 실제 이동. RTF 0.999995888, pacing p95/max 0.154592/1.198826 ms. Async/soft real-time PASS; timeout 0회/NOT_EXERCISED, busy skip 1회.
+4. Summary 생성 후 0.965 s에 GUI animation 저장. 원본 pose 전체/101 prim 보존과 9 cm footprint 검사 통과. 기존 GUI native replay playing=true, row 145 pose 일치, startup Error 0개 확인. 추가 inference/navigation/MP4 없음.
+5. 모든 raw/derived/PD/pose/timing/clearance offline 검증 PASS. 이전 run 주요 208개 및 sync baseline 484개 hash 보존. 기존 source 및 환경은 변경하지 않고 새 scenario·작은 JSON·문서만 commit/push한다. 단일 run의 성공을 일반적인 성능 또는 Graph 필요성으로 확대하지 않는다.
