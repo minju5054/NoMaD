@@ -14,6 +14,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--socket")
 parser.add_argument("--prepare-only", action="store_true")
+parser.add_argument("--scenario", type=Path)
 args, _ = parser.parse_known_args()
 out = args.output.resolve()
 runtime = out / "isaac_runtime"
@@ -40,6 +41,7 @@ from pxr import Gf, UsdGeom, UsdLux, UsdShade, Sdf
 
 from nomad_isaac.common import (SCENARIO_PATH, integrate_se2, original_controller,
                                 read_scenario, receive_packet, send_packet, write_json)
+from nomad_isaac.clearance import ObstacleMonitor, obstacle_bounds
 
 
 def build_scene(config):
@@ -49,11 +51,14 @@ def build_scene(config):
     world = UsdGeom.Xform.Define(stage, "/World")
     stage.SetDefaultPrim(world.GetPrim())
 
-    def box(name, xyz, scale, color):
+    def box(name, xyz, scale, color, double_scale=False):
         prim = UsdGeom.Cube.Define(stage, "/World/" + name)
         prim.CreateSizeAttr(1.0)
         prim.AddTranslateOp().Set(Gf.Vec3d(*xyz))
-        prim.AddScaleOp().Set(Gf.Vec3f(*scale))
+        if double_scale:
+            prim.AddScaleOp(precision=UsdGeom.XformOp.PrecisionDouble).Set(Gf.Vec3d(*scale))
+        else:
+            prim.AddScaleOp().Set(Gf.Vec3f(*scale))
         material = UsdShade.Material.Define(stage, "/World/Materials/" + name)
         shader = UsdShade.Shader.Define(stage, material.GetPath().AppendChild("Shader"))
         shader.CreateIdAttr("UsdPreviewSurface")
@@ -77,6 +82,10 @@ def build_scene(config):
             box(f"Panel{i}_{'L' if side == 1 else 'R'}", (x, side * 1.498, 1.15),
                 (.65, .004, 1.7), color)
     box("EndDoor", (5.998, .15, 1.1), (.004, .9, 2.2), (.32, .22, .13))
+    if "obstacle" in config:
+        obstacle = config["obstacle"]
+        box("StaticObstacle", (*obstacle["center_xy_m"], obstacle["size_xyz_m"][2]/2),
+            obstacle["size_xyz_m"], obstacle["color_rgb"], double_scale=True)
     dome = UsdLux.DomeLight.Define(stage, "/World/Light")
     dome.CreateIntensityAttr(1000.)
     agent = UsdGeom.Xform.Define(stage, "/World/Agent")
@@ -99,7 +108,7 @@ def build_scene(config):
 
 
 def main():
-    config = read_scenario()
+    config = read_scenario(args.scenario or SCENARIO_PATH)
     write_json(out / "scenario.json", config)
     rep.orchestrator.set_capture_on_play(False)
     stage, agent, translate, rotate, camera, annotator, product = build_scene(config)
@@ -157,6 +166,16 @@ def main():
                     "blue_right_pixels": len(blue_x), "blue_mean_pixel_x": float(blue_x.mean()),
                     "goal_start_mean_abs_pixel_difference": float(np.abs(goal.astype(float) - rgb_float).mean()),
                     "python": sys.version, "executable": sys.executable, "numpy": np.__version__}
+    if "obstacle" in config:
+        green = (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 0]) & (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 2])
+        assert int(green.sum()) > 100, "Obstacle must be visible in actual starting RGB before inference"
+        bounds = UsdGeom.BBoxCache(0, [UsdGeom.Tokens.default_]).ComputeWorldBound(
+            stage.GetPrimAtPath("/World/StaticObstacle")).ComputeAlignedRange()
+        lower, upper = obstacle_bounds(config)
+        np.testing.assert_allclose(np.array(bounds.GetMin())[:2], lower, rtol=0, atol=1e-12)
+        np.testing.assert_allclose(np.array(bounds.GetMax())[:2], upper, rtol=0, atol=1e-12)
+        render_check["obstacle_green_pixels"] = int(green.sum())
+        render_check["obstacle_actual_world_aabb"] = [list(bounds.GetMin()), list(bounds.GetMax())]
     write_json(out / "render_check.json", render_check)
     stage.Export(str(out / "scene.usda"))
     if args.prepare_only:
@@ -181,6 +200,7 @@ def main():
     entry = False
     distance_travelled = 0.
     summaries = []
+    monitor = ObstacleMonitor(config, out) if "obstacle" in config else None
     with socket.socket(socket.AF_UNIX) as connection, (out / "agent_trajectory.csv").open("x") as tf, \
             (out / "events.jsonl").open("x") as ef, (out / "controller.jsonl").open("x") as cf:
         connection.settimeout(30.)
@@ -194,6 +214,13 @@ def main():
             distance = float(np.linalg.norm(actual_pose[:2] - goal_pose[:2]))
             minimum_distance = min(minimum_distance, distance)
             writer.writerow([sim_time, *actual_pose, v, w, distance, time.monotonic_ns()])
+            if monitor is not None:
+                monitor.observe_interval(previous if tick else actual_pose, actual_pose, v, w,
+                                         sim_time-dt if tick else 0., dt if tick else 0.)
+                if monitor.stop_reason is not None:
+                    reason = monitor.stop_reason
+                    entry = distance <= config["goal_tolerance_m"]
+                    break  # Terminal measurement only: no avoidance or replacement command.
             if distance <= config["goal_tolerance_m"]:
                 reason = "goal_entry"; entry = True; break
             if time.monotonic_ns() - begin_ns > config["timeout_navigation_wall_s"] * 1e9:
@@ -229,6 +256,8 @@ def main():
                     assert abs(timeline.get_current_time() - sim_time) < 1e-6
                     pending = {**request, **response, "received_monotonic_ns": time.monotonic_ns(),
                                "received_sim_s": sim_time, "selected_waypoint_m": waypoint.tolist()}
+                    if monitor is not None:
+                        monitor.plan(request_id, arrays["metric"], request)
             if tick % control_ticks == 0:
                 if waypoint is not None:
                     # ROS Float32MultiArray.data supplies Python floats. Preserve
@@ -262,6 +291,8 @@ def main():
                "all_outputs_finite": True, "simulation_paused_during_inference": True,
                "frame_and_rgb_check": render_check,
                "raw_model_output_directory": "model/raw", "derived_trajectory_directory": "model/derived"}
+    if monitor is not None:
+        summary["obstacle_evaluation"] = monitor.finish(entry)
     write_json(out / "summary.json", summary)
     print("NAVIGATION_RESULT " + json.dumps(summary), flush=True)
 

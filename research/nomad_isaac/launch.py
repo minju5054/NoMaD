@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--isaac-root", type=Path, default=Path("/home/gpuadmin/isaacsim"))
     parser.add_argument("--prepare-only", action="store_true", help="Render/frame gate only; no inference or movement")
+    parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -24,7 +25,8 @@ def main():
     version = (isaac / "VERSION").read_text().strip()
     if not version.startswith("6."):
         raise RuntimeError(f"Expected existing Isaac Sim 6, got {version}")
-    sources = list(Path(__file__).parent.glob("*.py")) + [SCENARIO_PATH, ROOT / "research/nomad_preflight/native.py"]
+    scenario_path = args.scenario.resolve()
+    sources = list(Path(__file__).parent.glob("*.py")) + [scenario_path, ROOT / "research/nomad_preflight/native.py"]
     write_json(out / "provenance.json", {
         "time_kst": datetime.now(ZoneInfo("Asia/Seoul")).isoformat(), "isaac_root": str(isaac),
         "isaac_version": version, "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
@@ -64,11 +66,11 @@ def main():
                 env[key] = str(out / folder)
                 Path(env[key]).mkdir()
             command = [str(isaac / "python.sh"), str(Path(__file__).with_name("simulator.py")),
-                       "--output", str(out), "--portable-root", str(out / "portable")]
+                       "--output", str(out), "--scenario", str(scenario_path), "--portable-root", str(out / "portable")]
             command += ["--prepare-only"] if args.prepare_only else ["--socket", str(socket_path)]
             simulator = subprocess.Popen(command, cwd=ROOT, env=env, stdout=sim_log, stderr=subprocess.STDOUT, start_new_session=True)
             print(f"Isaac PID {simulator.pid}; logs: {out}", flush=True)
-            code = simulator.wait(timeout=read_scenario()["timeout_process_wall_s"])
+            code = simulator.wait(timeout=read_scenario(scenario_path)["timeout_process_wall_s"])
             expected = "render_check.json" if args.prepare_only else "summary.json"
             if code != 0 or not (out / expected).exists() or (out / "FAILED.txt").exists():
                 raise RuntimeError(f"Isaac adapter did not complete (exit {code}); see {out}")

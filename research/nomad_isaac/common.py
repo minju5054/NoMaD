@@ -14,8 +14,8 @@ ROOT = Path(__file__).resolve().parents[2]
 SCENARIO_PATH = Path(__file__).with_name("scenario.json")
 
 
-def read_scenario():
-    return json.loads(SCENARIO_PATH.read_text())
+def read_scenario(path=SCENARIO_PATH):
+    return json.loads(Path(path).read_text())
 
 
 def original_controller():
