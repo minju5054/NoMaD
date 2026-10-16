@@ -191,3 +191,13 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 3. Warm GPU median/p95 29.183/30.990 ms, OLD 이동 median/max 0.002778/0.005556 m, 이후 146개 inference 모두 OLD nonzero 이동. RTF 0.999997428, pacing p95/max 0.154665/1.396211 ms. Async/soft real-time PASS. Timeout 0회, busy observation skip 1회, missed slot 0회.
 4. 주행 summary 생성 후 0.962 s에 GUI USD를 저장했다. 모든 2,718 pose와 기존 101 prim을 검증했고 source 보존 및 9 cm 표시를 확인했다. 기존 Isaac GUI에서 반복 재생을 열어 playing=true, 원본 row 145 pose 일치, startup Error 0개 확인. GUI는 저장된 실제 주행 재생이며 추가 navigation/MP4는 없다.
 5. Synthetic tests 5 passed/0.06 s, 전체 raw/derived/PD/pose/timing/clearance offline 검증 PASS. 이전 async raw 주요 83개와 sync 484개 hash 불변. 초기 RGB hash 및 timing이 다른 단일 run이므로 경로 변화를 radius만의 효과로 주장하지 않는다. source·작은 JSON·문서만 commit/push하고 USD/raw/cache는 Git에 넣지 않는다.
+
+## 두 번째 장애물을 왼쪽 벽에 붙인 async 실행
+
+2026-10-16. 사용자 기대 시나리오인 첫 장애물 왼쪽/두 번째 오른쪽 통과를 조사했다. 기준 `12c8fc3`, branch `research/isaac6-async-wall-obstacle`. [상세 보고서](ISAAC6_ASYNC_LEFT_WALL.md).
+
+1. Footprint 반경 9 cm 및 기존 모든 실행 조건을 유지하고 두 번째 장애물 중심 Y만 0.35→1.20 m로 변경했다. 크기 0.5×0.6×1.0 m, +Y 면 1.5 m가 왼쪽 벽에 닿아 gap=0 m다. 설정을 주행 전에 `b6ecb8449de29f4ce5b89d16cb5e369134c500e4`에 commit했다. 회피 방향을 강제하는 logic은 추가하지 않았다.
+2. 정상 주행 1회, 기술적/성능 재시도 0회. 첫 장애물 왼쪽 t=10.958333 s, 두 번째 오른쪽 t=18.777778 s 통과. 최소 swept clearance 0.101514/0.429708 m, overlap/corridor 침범 없음. t=23.958333 s에 거리 0.299932 m로 goal tolerance 진입. 기대한 순서와 navigation 안전 조건 모두 PASS.
+3. 92 GPU inference/receive/switch, 1,726 poses. Warm median/p95 30.233/33.046 ms, 이후 91/91 inference 중 OLD 이동. RTF 0.999994371, pacing p95/max 0.153655/4.958789 ms. Async/soft real-time PASS, timeout 0회/NOT_EXERCISED, busy skip 1회.
+4. 주행 summary 후 0.978 s에 GUI animation 저장. 모든 pose/101 prim 보존 검증, native GUI 재생 및 row 145 pose 일치/Error 0개 확인. 저장된 실제 기록의 반복 재생이며 추가 navigation/MP4가 아니다.
+5. 기존 offline validator와 실제 USD geometry 검사 통과. 이전 9 cm run 주요 321개 및 synchronous 484개 hash 보존. 원본 model/controller/runtime/clearance/exporter 및 환경 변경 없음. 한 scenario의 성공을 일반적 성능이나 Graph 필요성으로 확대하지 않는다. 새 scenario·작은 JSON·문서만 commit/push한다.

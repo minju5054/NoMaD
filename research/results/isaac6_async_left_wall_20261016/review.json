@@ -1,0 +1,101 @@
+{
+  "execution_commit": "b6ecb8449de29f4ce5b89d16cb5e369134c500e4",
+  "execution_tree_clean": true,
+  "source_provenance_verified": true,
+  "scenario_delta": {
+    "obstacles[1].center_xy_m": [
+      [
+        3.0,
+        0.35
+      ],
+      [
+        3.0,
+        1.2
+      ]
+    ]
+  },
+  "previous_run_hashes_unchanged": 321,
+  "model_controller_runtime_clearance_gui_exporter_unchanged": true,
+  "normal_runs": 1,
+  "technical_retries": 0,
+  "navigation_retries": 0,
+  "expected_left_then_right_observed": true,
+  "passage": {
+    "StaticObstacle1": {
+      "side": "left_positive_y",
+      "simulation_time_s": 10.958333333333334,
+      "pose": [
+        1.791994260895749,
+        0.4216371634248558,
+        -0.3182018945149472
+      ]
+    },
+    "StaticObstacle2": {
+      "side": "right_negative_y",
+      "simulation_time_s": 18.77777777777778,
+      "pose": [
+        3.342399988188208,
+        0.38149432549127077,
+        -0.020880484661326193
+      ]
+    }
+  },
+  "crossing_slab_diagnostic": {
+    "StaticObstacle1": {
+      "expanded_x_slab_m": [
+        1.21,
+        1.79
+      ],
+      "executed_center_y_range_m": [
+        0.422503986885926,
+        0.5485208851187335
+      ],
+      "pose_samples": 215
+    },
+    "StaticObstacle2": {
+      "expanded_x_slab_m": [
+        2.66,
+        3.34
+      ],
+      "executed_center_y_range_m": [
+        0.3538009602356758,
+        0.38163778332082415
+      ],
+      "pose_samples": 245
+    }
+  },
+  "note": "left/right are relative to each obstacle (+Y/-Y sides), not the sign of world Y; obstacle 2 right passage remains at positive world Y. Slab samples supplement the certified swept-clearance validation.",
+  "gui_manifest": {
+    "kind": "native_gui_replay_of_recorded_execution",
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wall_obstacle_01",
+    "source_sha256": {
+      "scene_gui.usda": "5210f5cb265c520da000d59b73b8c1d7713f26da766735ec6a6354f21b51e2e9",
+      "agent_trajectory.csv": "c80de74fc86444ff3fdc2c6457e3756e89e76b197b261b5b18b8ca8feb0da8be",
+      "scenario.json": "3a8d9c23f4366c7df79166b3e7b7ca8b8cabfa53fb4330f6aefec56e13ebf1f1",
+      "summary.json": "fb9a275772a5b751c8f71b193f3442c1c710534f294b8214ced5be8bc3baa3b3",
+      "provenance.json": "aa18891fb9f1c30c7e6cc61a665185db00e70fc78b0bac440ccc9c269551122d"
+    },
+    "new_inference_count": 0,
+    "new_navigation_count": 0,
+    "source_pose_count": 1726,
+    "time_codes_per_second": 72,
+    "simulation_duration_s": 23.958333333333332,
+    "max_pose_error": 4.440892098500626e-16,
+    "original_prims_preserved": 101,
+    "raw_inputs_unchanged": true,
+    "scene": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wall_obstacle_gui_01/recorded_motion_gui.usda",
+    "scene_sha256": "669307784a523e0d712dd7900ea50a36533108a560fc34f19730ca2be9c01fc7",
+    "existing_visual_source": "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/render_recorded.py",
+    "visual_source_sha256": "41eadebb3635212c930df988d866209108bad42fa5f5ba099b04af273d53a077",
+    "export_script_sha256": "f27c6e078735dee2113335bfa6b2c3f8cec38249b5f12b892ec7aacbc9657488",
+    "source_commit": "b6ecb8449de29f4ce5b89d16cb5e369134c500e4",
+    "export_git_sha": "b6ecb8449de29f4ce5b89d16cb5e369134c500e4",
+    "agent_radius_m": 0.09,
+    "recorded_outcome": {
+      "termination_reason": "goal_entry",
+      "goal_entry": true
+    },
+    "note": "All 72 Hz poses retained; full cyan executed trail is a static visual aid. Native timeline loops at simulation time; not a new live navigation run."
+  },
+  "gui_export_delay_after_summary_file_s": 0.9775140285491943
+}
