@@ -9,6 +9,7 @@ from pathlib import Path
 import socket
 import sys
 import time
+import threading
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--output", type=Path, required=True)
@@ -91,10 +92,11 @@ def build_scene(config):
             obstacle["size_xyz_m"], obstacle["color_rgb"], double_scale=True)
     if "dynamic_obstacle" in config:
         dynamic = config["dynamic_obstacle"]
-        box(dynamic["id"], (*dynamic["center_xy_m"], dynamic["size_xyz_m"][2]/2),
+        box(dynamic["id"], (*dynamic.get("center_xy_m", [0., 0.]), dynamic["size_xyz_m"][2]/2),
             dynamic["size_xyz_m"], dynamic["color_rgb"], double_scale=True)
         prim = stage.GetPrimAtPath("/World/"+dynamic["id"])
-        rep.functional.modify.semantics(prim, {"class": "DynamicObstacle"}, mode="add")
+        if "placement" not in dynamic:
+            rep.functional.modify.semantics(prim, {"class": "DynamicObstacle"}, mode="add")
         stage.SetTimeCodesPerSecond(config["integration_hz"])
         stage.SetFramesPerSecond(config["integration_hz"])
         stage.SetStartTimeCode(0)
@@ -102,7 +104,8 @@ def build_scene(config):
         visibility = UsdGeom.Imageable(prim).CreateVisibilityAttr()
         visibility.Set(UsdGeom.Tokens.invisible)
         visibility.Set(UsdGeom.Tokens.invisible, Usd.TimeCode(0))
-        visibility.Set(UsdGeom.Tokens.inherited, Usd.TimeCode(dynamic["spawn_tick"]))
+        if "placement" not in dynamic:
+            visibility.Set(UsdGeom.Tokens.inherited, Usd.TimeCode(dynamic["spawn_tick"]))
     dome = UsdLux.DomeLight.Define(stage, "/World/Light")
     dome.CreateIntensityAttr(1000.)
     agent = UsdGeom.Xform.Define(stage, "/World/Agent")
@@ -138,11 +141,40 @@ def main():
     timeline = omni.timeline.get_timeline_interface()
     timeline.pause()
     dynamic_annotator = None
+    adaptive = "placement" in config.get("dynamic_obstacle", {})
+    resolved_dynamic = None
+    main_thread_id = threading.get_ident()
     if "dynamic_obstacle" in config:
         from nomad_isaac.sudden_obstacle import active_at_tick
         dynamic_prim = stage.GetPrimAtPath("/World/"+config["dynamic_obstacle"]["id"])
-        dynamic_annotator = rep.AnnotatorRegistry.get_annotator("instance_segmentation_fast", device="cpu")
-        dynamic_annotator.attach([product])
+        if not adaptive:
+            dynamic_annotator = rep.AnnotatorRegistry.get_annotator("instance_segmentation_fast", device="cpu")
+            dynamic_annotator.attach([product])
+
+    def sync_dynamic(snapshot):
+        nonlocal resolved_dynamic
+        assert threading.get_ident() == main_thread_id
+        box = snapshot.get("resolved_dynamic_obstacle")
+        if snapshot["tick"] >= config["dynamic_obstacle"]["spawn_tick"]:
+            assert snapshot.get("dynamic_placement_status") != "PENDING"
+        if box is None:
+            return
+        if resolved_dynamic is not None:
+            assert box == resolved_dynamic
+            return
+        translate_box = next(op for op in UsdGeom.Xformable(dynamic_prim).GetOrderedXformOps()
+                             if op.GetOpType() == UsdGeom.XformOp.TypeTranslate)
+        translate_box.Set(Gf.Vec3d(*box["center_xy_m"], box["size_xyz_m"][2]/2))
+        UsdGeom.Imageable(dynamic_prim).GetVisibilityAttr().Set(UsdGeom.Tokens.inherited, Usd.TimeCode(box["spawn_tick"]))
+        bounds = UsdGeom.BBoxCache(box["spawn_tick"], [UsdGeom.Tokens.default_]).ComputeWorldBound(dynamic_prim).ComputeAlignedRange()
+        lower, upper = obstacle_bounds(single_obstacle_config(config, box))
+        np.testing.assert_allclose(bounds.GetMin(), [*lower, 0.], atol=1e-12, rtol=0)
+        np.testing.assert_allclose(bounds.GetMax(), [*upper, box["size_xyz_m"][2]], atol=1e-12, rtol=0)
+        resolved_dynamic = dict(box)
+        write_json(out/"dynamic_render_update.json", {"obstacle": box, "snapshot_tick": snapshot["tick"],
+            "snapshot_sim_s": snapshot["sim_s"], "applied_host_ns": time.monotonic_ns(),
+            "visibility_source_tick": box["spawn_tick"], "thread": "main",
+            "usd_aabb": [list(bounds.GetMin()), list(bounds.GetMax())]})
 
     def set_pose(pose):
         translate.Set(Gf.Vec3d(float(pose[0]), float(pose[1]), 0))
@@ -190,7 +222,25 @@ def main():
                 "mask_sha256": hashlib.sha256(mask.tobytes()).hexdigest(),
                 "masked_rgb_median": np.median(pixels, axis=0).tolist() if len(pixels) else None}
             capture.dynamic_mask = mask
+        elif adaptive:
+            from nomad_isaac.old_rollout_placement import magenta_mask
+            tick = round(sim_time*config["integration_hz"])
+            active = resolved_dynamic is not None and active_at_tick(config, tick)
+            visibility = UsdGeom.Imageable(dynamic_prim).ComputeVisibility(Usd.TimeCode(tick))
+            assert (visibility == UsdGeom.Tokens.inherited) == active
+            mask = magenta_mask(rgb)
+            if not active:
+                assert not mask.any(), "Magenta obstacle must be absent before activation"
+            capture.dynamic_metadata = {"capture_tick": tick, "active": active,
+                "usd_visibility": str(visibility), "center_xy_m": resolved_dynamic["center_xy_m"] if resolved_dynamic else None,
+                "evidence_mode": "RGB_MAGENTA", "magenta_pixels": int(mask.sum()),
+                "visible": active and int(mask.sum()) >= config["dynamic_obstacle"]["minimum_visible_pixels"],
+                "mask_sha256": hashlib.sha256(mask.tobytes()).hexdigest()}
+            capture.dynamic_mask = mask
         return rgb
+
+    if adaptive:
+        capture.sync_dynamic = sync_dynamic
 
     goal_pose = np.array(config["goal_pose"])
     pose = np.array(config["start_pose"])
@@ -227,6 +277,9 @@ def main():
         np.testing.assert_allclose(bounds.GetMin(), [*lower, 0.], atol=1e-12, rtol=0)
         np.testing.assert_allclose(bounds.GetMax(), [*upper, dynamic_box["size_xyz_m"][2]], atol=1e-12, rtol=0)
         render_check["dynamic_active_aabb"] = [list(bounds.GetMin()), list(bounds.GetMax())]
+    elif adaptive:
+        render_check["dynamic_initial"] = capture.dynamic_metadata
+        render_check["dynamic_placement"] = "Pending tick 970; hidden placeholder is not collision geometry"
     if obstacles:
         green = (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 0]) & (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 2])
         assert int(green.sum()) > 100, "Obstacle must be visible in actual starting RGB before inference"
@@ -253,9 +306,13 @@ def main():
 
     if args.asynchronous:
         from nomad_isaac.async_runtime import run_async
-        return run_async(config, out, args.socket, goal, capture, set_pose, get_pose, render_check,
-                         controlled_delivery_delay=args.controlled_delivery_delay,
-                         uniform_delivery_delay_s=args.uniform_delivery_delay_s)
+        result = run_async(config, out, args.socket, goal, capture, set_pose, get_pose, render_check,
+                           controlled_delivery_delay=args.controlled_delivery_delay,
+                           uniform_delivery_delay_s=args.uniform_delivery_delay_s)
+        if adaptive:
+            stage.Export(str(out/"scene_resolved.usda"))
+            export_view_scene(out/"scene_resolved.usda", out/"scene_resolved_gui.usda")
+        return result
 
     controller = original_controller()
     history = deque(maxlen=4)

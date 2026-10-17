@@ -96,20 +96,26 @@ class ExecutionThread:
                     distance = float(np.linalg.norm(pose[:2]-c["goal_pose"][:2]))
                     self.minimum_distance = min(self.minimum_distance, distance)
                     self.distance += float(np.linalg.norm(pose[:2]-previous[:2]))
-                    with self.lock:
-                        self.state = {"pose": pose.tolist(), "sim_s": sim_time, "monotonic_ns": now, "tick": tick,
-                                      "applied_id": incoming_id, "command_valid": incoming_valid}
                     writer.writerow([sim_time, *pose, incoming_v, incoming_w, distance, now, tick, deadline,
                                      (now-deadline)/1e9, incoming_id, incoming_valid])
                     pf.flush()
-                    self.started.set()
                     self.monitor.observe_interval(previous, pose, incoming_v, incoming_w,
                                                   (tick-1)/hz if tick else 0., 1/hz if tick else 0.)
                     dynamic_stop = None
                     if self.dynamic is not None:
+                        old_received_ns = self.received[incoming_id]["received_monotonic_ns"] if incoming_id >= 0 else None
                         self.dynamic.observe_tick(tick, previous, pose, incoming_v, incoming_w,
-                                                  incoming_id, incoming_valid, now)
+                                                  incoming_id, incoming_valid, now, old_received_ns)
                         dynamic_stop = self.dynamic.stop_reason
+                    # Publish this tick only after its placement is resolved. Never hold
+                    # the snapshot lock during placement, rendering, or inference.
+                    with self.lock:
+                        self.state = {"pose": pose.tolist(), "sim_s": sim_time, "monotonic_ns": now, "tick": tick,
+                                      "applied_id": incoming_id, "command_valid": incoming_valid}
+                        if self.dynamic is not None and self.dynamic.adaptive:
+                            self.state.update({"resolved_dynamic_obstacle": self.dynamic.obstacle,
+                                "dynamic_placement_status": self.dynamic.placement["status"] if self.dynamic.placement else "PENDING"})
+                    self.started.set()
                     if self.monitor.stop_reason or dynamic_stop:
                         self.reason = self.monitor.stop_reason or dynamic_stop; break
                     if distance <= c["goal_tolerance_m"]:
@@ -187,6 +193,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                     break
                 set_pose(snap["pose"])
                 np.testing.assert_allclose(get_pose(), snap["pose"], atol=1e-10, rtol=0)
+                if hasattr(capture, "sync_dynamic"):
+                    capture.sync_dynamic(snap)
                 capture_start = time.monotonic_ns()
                 rgb = capture(snap["sim_s"])
                 capture_end = time.monotonic_ns()
@@ -247,6 +255,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
             engine.rf.close()
         state = engine.snapshot()
         set_pose(state["pose"])
+        if hasattr(capture, "sync_dynamic"):
+            capture.sync_dynamic(state)
         Image.fromarray(capture(state["sim_s"])).save(out/"observation_final.png")
     obstacle_result = engine.monitor.finish(engine.goal_entry)
     dynamic_result = engine.dynamic.finish(engine.goal_entry) if engine.dynamic is not None else None

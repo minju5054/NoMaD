@@ -16,9 +16,9 @@ from .common import ROOT, local_to_world, sha256_file, write_json
 from .handoff_audit import path_safety, correspondence, boundary_entries, classify
 
 
-def analyze(run, output, rgb_visibility_recovery=False):
+def analyze(run, output, rgb_visibility_recovery=False, preservation_manifest=None):
     output.mkdir(parents=True, exist_ok=False)
-    preserved = json.loads((run.parent/"sudden_obstacle_preservation_01.json").read_text())
+    preserved = json.loads((preservation_manifest or run.parent/"sudden_obstacle_preservation_01.json").read_text())
     assert all(sha256_file(Path(p)) == h for p, h in preserved.items())
     inputs = sorted(p for p in run.rglob("*") if p.is_file() and
                     (p.parent == run or p.parent.name in ("dynamic", "observations", "raw", "derived", "model"))
@@ -31,7 +31,9 @@ def analyze(run, output, rgb_visibility_recovery=False):
     for name, digest in provenance["source_sha256"].items():
         contents = subprocess.check_output(["git", "show", f"{provenance['git_sha']}:{name}"], cwd=ROOT)
         assert hashlib.sha256(contents).hexdigest() == digest
-    dynamic = config["dynamic_obstacle"]; spawn_tick = dynamic["spawn_tick"]; hz = config["integration_hz"]
+    adaptive = "placement" in config["dynamic_obstacle"]
+    dynamic = raw["dynamic_obstacle"]["spawn"]["obstacle"] if adaptive else config["dynamic_obstacle"]
+    spawn_tick = dynamic["spawn_tick"]; hz = config["integration_hz"]
     runtime = validate(run, run.parent/"two_obstacles_01", output/"runtime_validation")
     requests, received, events, observations = [rows(run/name) for name in
         ("requests.jsonl", "received.jsonl", "events.jsonl", "observations.jsonl")]
@@ -73,16 +75,20 @@ def analyze(run, output, rgb_visibility_recovery=False):
         assert d["capture_tick"] == tick and d["active"] == (tick >= spawn_tick)
         assert hashlib.sha256(image.tobytes()).hexdigest() == o["frame_sha256"]
         assert hashlib.sha256(mask.tobytes()).hexdigest() == d["mask_sha256"]
-        assert int(mask.sum()) == d["instance_pixels"]
+        assert int(mask.sum()) == d["magenta_pixels" if adaptive else "instance_pixels"]
         assert d["visible"] == (int(mask.sum()) >= dynamic["minimum_visible_pixels"])
         if not d["active"]: assert not mask.any()
         rgb = image.astype(float)
         # Same predeclared magenta rule; apply to saved RGB, not the empty instance mask.
         rgb_mask = ((rgb[:, :, 0] > 1.5*rgb[:, :, 1]) & (rgb[:, :, 2] > 1.5*rgb[:, :, 1]) &
                     (rgb[:, :, 0] > 40) & (rgb[:, :, 2] > 40))
+        if adaptive:
+            assert d["evidence_mode"] == "RGB_MAGENTA"
+            np.testing.assert_array_equal(mask, rgb_mask)
+            if d["active"]: assert d["center_xy_m"] == dynamic["center_xy_m"]
         resized = np.array(Image.fromarray(rgb_mask.astype(np.uint8)*255).resize((96, 96), Image.Resampling.NEAREST))
         rgb_evidence_rows.append({"observation_id": o["observation_id"], "simulation_time_s": o["observation_sim_s"],
-            "active": d["active"], "recorded_instance_pixels": d["instance_pixels"],
+            "active": d["active"], "recorded_instance_pixels": d.get("instance_pixels"),
             "rgb_magenta_pixels": int(rgb_mask.sum()), "resized_96_mask_pixels": int(np.count_nonzero(resized)),
             "rgb_file": o["rgb_file"], "frame_sha256": o["frame_sha256"]})
         image_arrays[o["observation_id"]] = image
@@ -201,7 +207,7 @@ def analyze(run, output, rgb_visibility_recovery=False):
         "fresh_controller_vw": [event["v_m_s"], event["w_rad_s"]] if event else None,
         "first_visible_observation": first_visible, "fresh_history_ids": fresh["history_observation_ids"] if fresh else None,
         "visible_history_ids": [i for i in fresh["history_observation_ids"] if i in visible_ids] if fresh else [],
-        "visibility_selection_source": "OFFLINE_RGB_RECOVERY" if rgb_visibility_recovery else "RECORDED_INSTANCE_MASK",
+        "visibility_selection_source": "OFFLINE_RGB_RECOVERY" if rgb_visibility_recovery else "RECORDED_RGB_MAGENTA" if adaptive else "RECORDED_INSTANCE_MASK",
         "rgb_visibility_evidence": rgb_evidence_rows,
         "old_observation_pose": old["observation_pose"] if old else None,
         "fresh_observation_pose": fresh["observation_pose"] if fresh else None,
@@ -222,7 +228,7 @@ def analyze(run, output, rgb_visibility_recovery=False):
                         "Appearance keyed to logical simulation timestamp; RGB sampled at 4 Hz",
                         "Paths observation-anchored; no native yaw or waypoint time", "Safe polyline is not a guarantee of original PD execution",
                         "Instance path matching recorded zero IDs; RGB recovery is an explicit offline instrumentation correction, not a successful instance-mask gate"
-                        if rgb_visibility_recovery else "Instance-mask gate used without RGB recovery"]}
+                        if rgb_visibility_recovery else "Predeclared RGB magenta gate; instance annotator not used" if adaptive else "Instance-mask gate used without RGB recovery"]}
     with (output/"predictions.csv").open("x") as f:
         writer = csv.DictWriter(f, fieldnames=list(prediction_rows[0]), lineterminator="\n")
         writer.writeheader(); writer.writerows(prediction_rows)

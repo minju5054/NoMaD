@@ -302,3 +302,10 @@ Plot 입력 472개 hash 불변, 시작/종료 pose·72 Hz 시각·goal metric �
 2026-10-18. 후속 사용자 요청으로 출발부터 목표 진입까지 전체 실제 pose를 기존 Isaac renderer로 재생했다. MP4 1280×720/H.264/24 fps, 810 frames/33.75 s에 t=0…33.680555556 s 및 마지막 실제 pose를 보존했다. 새 navigation/inference 0회. 원래 DynamicObstacle visibility time samples를 유지하고 숨김→출현 전환을 전체 overhead RGB로 검증했다. 원래 inference instance mask 실패와 별도다.
 
 전체 video decode/mapping, GUI 2,426 pose(최대 오차 6.66e−16), 원래 104 prim의 attributes/relationships/time samples 보존을 확인했다. GUI 자동 재생 `playing=true`, 실제 sample pose 일치, startup Error 0개를 확인하고 창을 열어 두었다. Renderer 최초 RGB 준비 전 step 오류 5개는 로그에 보존했다. 기존 698/new 565 input hashes 유지. 파일은 `../artifacts/isaac6/sudden_obstacle_video_01/`, [상세 재생 설명](SUDDEN_OBSTACLE_PILOT.md#후속-요청-출발부터-목표-도달까지-전체-주행). Renderer의 scenario 기반 자막/반경과 dynamic visibility 확인, 작은 video validation JSON 및 문서만 Git에 추가한다.
+
+
+## Actual OLD rollout obstacle — 실행 전
+
+2026-10-18. 사용자 요청으로 `9792056`에서 `research/isaac6-old-rollout-obstacle` 생성. [Protocol](OLD_ROLLOUT_OBSTACLE_PROTOCOL.md)/새 scenario를 `84118c3`에 실행 전 고정했다. Tick 970의 실제 applied OLD pose/command/receive-based remaining timeout만 사용하며 arc length [.42,.45,.48] m의 최초 유효 후보를 선택한다. 최초 .55 s 동안 .02 m margin, 현재 footprint .10 m clearance, 남은 timeout 안의 counterfactual collision, FOV/LOS/static/corridor 및 빈 side strip을 요구한다. No valid placement면 중단하며 navigation 1회/재시도 없음.
+
+동일 resolved geometry를 execution snapshot과 main-thread USD update에 사용하고 RGB magenta 검출을 사전 gate로 정했다. 기존 instance mask 기능은 수정하지 않았다. Synthetic exact arc/timeout/infeasible/RGB와 pending result가 있어도 실제 applied OLD를 사용하는 thread snapshot 검증 및 기존 async/geometric tests **35 passed (0.20 s)**. 이전 1,266개 input hashes, 원본 train/deployment 및 보호 source 9개 불변. 과거 저장 pose를 이용한 배치 함수의 offline 예시는 계산 약 1.23 ms였으며 새 주행 결과나 배치 보장이 아니다. 실제 run은 `../artifacts/isaac6/old_rollout_obstacle_01/`에 한 번만 실행한다. 추가 latency/Graph/Topomap/영상/GUI 없음.
