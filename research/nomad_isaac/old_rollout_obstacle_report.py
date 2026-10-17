@@ -1,5 +1,6 @@
 """Offline audit of the one actual-OLD placement pilot. No navigation or inference."""
 import argparse
+import csv
 import json
 from pathlib import Path
 
@@ -97,6 +98,43 @@ def report(run, output, preservation):
                   "Native predictions and held-command arc are different; predictions have no native yaw/time",
                   "Different observation histories and diffusion seeds confound causal obstacle-response claims",
                   "First visible FRESH retained even if unsafe; no tuning, Graph, Topomap, or new controller"]}
+    # Explain the eventual outcome without attributing later commands to the
+    # first FRESH or replacing it with a retrospectively favorable prediction.
+    trace = np.genfromtxt(run/"agent_trajectory.csv", delimiter=",", names=True, dtype=None, encoding="utf-8")
+    dynamic_rows = rows(run/"dynamic/clearance.jsonl")
+    events = rows(run/"events.jsonl")
+    predictions = {int(r["id"]): r for r in csv.DictReader((output/"handoff/predictions.csv").open())}
+    applied_segments = []
+    spawn_tick = spawn["tick"]; hz = config["integration_hz"]
+    for i, e in enumerate(events):
+        if e["id"] < old_id: continue
+        start = max(spawn_tick, round(e["application_sim_s"]*hz))
+        end = round(events[i+1]["application_sim_s"]*hz) if i+1 < len(events) else len(trace)-1
+        if end <= start: continue
+        indices = list(range(start+1, end+1))
+        assert set(map(int, trace["incoming_waypoint_id"][indices])) == {e["id"]}
+        checks = [dynamic_rows[j-spawn_tick] for j in indices]
+        p = predictions[e["id"]]
+        applied_segments.append({"id": e["id"], "start_sim_s": start/hz, "end_sim_s": end/hz,
+            "v_m_s": e["v_m_s"], "w_rad_s": e["w_rad_s"],
+            "native_dynamic_full_m": float(p["dynamic_only_full_obstacle_clearance_m"]),
+            "native_dynamic_prefix_m": float(p["dynamic_only_prefix_obstacle_clearance_m"]),
+            "executed_dynamic_clearance_lower_m": min(c["lower_m"] for c in checks),
+            "executed_dynamic_overlap": any(c["geometric_overlap"] for c in checks)})
+    unsafe = next((r for r in dynamic_rows if r["lower_m"] < config["required_clearance_m"]), None)
+    first_contact = raw["dynamic_obstacle"]["evaluation"]["first_contact"]
+    contact_tick = round(first_contact["detected_sim_s"]*hz) if first_contact else None
+    collision_wall = int(trace["monotonic_ns"][contact_tick]) if contact_tick is not None else None
+    result["later_execution"] = {"applied_segments": applied_segments,
+        "first_safety_margin_breach": None if unsafe is None else {
+            "interval_end_sim_s": unsafe["end_sim_s"], "clearance_lower_m": unsafe["lower_m"],
+            "command_id": int(trace["incoming_waypoint_id"][round(unsafe["end_sim_s"]*hz)])},
+        "collision_command_id": int(trace["incoming_waypoint_id"][contact_tick]) if contact_tick is not None else None,
+        "gpu_requests_in_progress_at_collision": [r["id"] for r in received if collision_wall and
+            r["inference_start_monotonic_ns"] <= collision_wall < r["ready_monotonic_ns"]],
+        "terminal_unapplied_ids": [r["id"] for r in received if r["terminal_unapplied"]],
+        "first_contact": first_contact,
+        "scope": "Later commands and pending FRESH are separate from the spawn OLD / first-visible FRESH pair"}
     plot(result, config, run, output)
     assert all(sha256_file(Path(p)) == h for p, h in preserved.items())
     hashes = json.loads((output/"handoff/input_hashes.json").read_text())
@@ -134,6 +172,9 @@ def plot(result, config, run, output):
             ax.plot(*fresh.T,"o-",c="#2167b1",ms=3,lw=2,zorder=4)
             ax.scatter(*fresh[2],marker="s",c="#2167b1",s=45,zorder=5)
         ax.plot(*rollout.T,"--",c="#d32f3d",lw=3,zorder=6)
+        ax.add_patch(Circle(rollout[-1],config["agent_radius_m"],fc="#d32f3d",alpha=.12,
+                            ec="#d32f3d",ls="--",zorder=3))
+        ax.scatter(*xy[-1],marker="x",c="#343b42",s=45,zorder=9)
         ax.scatter(*audit["spawn"]["pose"][:2],marker="^",s=70,c="#d32f3d",zorder=8)
         if audit["fresh_applied"]:
             b=audit["boundary_pose"][:2]
@@ -153,6 +194,14 @@ def plot(result, config, run, output):
     lo=points.min(0)-.25;hi=points.max(0)+.25;span=max(hi-lo);mid=(lo+hi)/2
     axes[1].set(xlim=(mid[0]-span/2,mid[0]+span/2),ylim=(mid[1]-span/2,mid[1]+span/2))
     axes[1].set_title(f"Spawn OLD {audit['old_id']} / first visible FRESH {audit['fresh_id']}",loc="left",fontsize=11)
+    axes[1].annotate("Counterfactual OLD footprint\nat remaining timeout", rollout[-1],
+                     (mid[0]+.06,mid[1]+span*.31),fontsize=8,color="#bc2338",
+                     arrowprops={"arrowstyle":"->","color":"#bc2338","lw":.8})
+    collision_id=result["later_execution"]["collision_command_id"]
+    if collision_id is not None:
+        axes[1].annotate(f"Actual collision\nunder later command {collision_id}",xy[-1],
+                        (lo[0]+.04,mid[1]-.18),fontsize=8,color="#343b42",
+                        arrowprops={"arrowstyle":"->","color":"#343b42","lw":.8})
     handles=[Line2D([],[],c="#737b83",label="Actual executed center path"),
              Line2D([],[],c="#d32f3d",ls="--",lw=3,label="OLD held-command rollout (until timeout)"),
              Line2D([],[],c="#c27608",marker="o",label="Native OLD (observation anchored)"),
@@ -160,7 +209,7 @@ def plot(result, config, run, output):
              Line2D([],[],c="#d32f3d",marker="^",ls="none",label="Actual spawn pose"),
              Line2D([],[],c="black",marker="D",ls="none",label="Actual switch B / 9 cm footprint")]
     fig.suptitle("Actual OLD rollout obstacle pilot",fontsize=17,weight="bold",y=.97)
-    fig.text(.5,.91,f"{result['classification']}  |  {result['graph_verdict']}",ha="center",fontsize=11)
+    fig.text(.5,.91,f"{result['classification']}  |  Graph evidence: {result['graph_verdict']}",ha="center",fontsize=11)
     fig.legend(handles=handles,ncol=3,loc="lower center",bbox_to_anchor=(.5,.065),fontsize=8.5,frameon=False)
     fig.text(.5,.025,"Dashed red is counterfactual, not executed motion. Squares: selected index 2. Dotted connector is an offline diagnostic; no Graph or smoothing.",ha="center",fontsize=8)
     fig.savefig(output/"old_rollout_handoff.png",dpi=180,facecolor="white")

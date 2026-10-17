@@ -1,0 +1,39 @@
+{
+  "execution_git_sha": "9dd129ddc97d3856827cd92be442da5539e090f7",
+  "execution_git_clean": true,
+  "protocol_commit": "84118c3",
+  "navigation_runs": 1,
+  "navigation_retries": 0,
+  "postrun_new_inference_count": 0,
+  "protected_source_sha256": {
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/worker.py": "2cc6a0bc56245dd05b8c2eeed6543cd8e27bcd5e9bd6665bdae73e53db2449a8",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "research/nomad_isaac/two_obstacles_wide_wall_scenario.json": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "research/nomad_isaac/handoff_audit.py": "48135820bdcbce3c7b0b70d55eb895c954feb623a4ffe30ff8eb1f269e785fef",
+    "research/nomad_isaac/async_handoff_protocol.json": "17fc5d9b1312650de83355407c1f12536062cc13f2eaafb36da8effac658d2cc"
+  },
+  "official_train_deployment_unchanged": true,
+  "static_scenario_settings_unchanged": true,
+  "prior_inputs_preserved": 1266,
+  "new_run_inputs_preserved": 257,
+  "postrun_source_change_only": [
+    "research/nomad_isaac/old_rollout_obstacle_report.py"
+  ],
+  "placement_recomputed": "PASS",
+  "render_monitor_geometry_agreement": "PASS",
+  "all_worker_rgb_history_hashes": "PASS",
+  "minimally_required_synthetic_tests": "35 passed / 0.20 s",
+  "runtime_validation": "PASS",
+  "timeout_natural_validation": "NOT_EXERCISED_no_natural_timeout",
+  "analysis_audits_preserved": [
+    "old_rollout_obstacle_audit_01",
+    "old_rollout_obstacle_audit_02"
+  ],
+  "figure_review": "PASS: recorded path, timeout-clipped counterfactual OLD, native OLD/FRESH, dynamic/static boxes, B, entry and later collision distinguished",
+  "renderer_startup_step_errors": 5,
+  "renderer_startup_error_scope": "Before navigation RGB capture; preserved simulator.log. No run retry."
+}
