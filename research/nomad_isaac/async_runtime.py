@@ -128,7 +128,10 @@ class ExecutionThread:
             self.done.set()
 
 
-def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, render_check, controlled_delivery_delay=False):
+def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, render_check,
+              controlled_delivery_delay=False, uniform_delivery_delay_s=None):
+    if controlled_delivery_delay and uniform_delivery_delay_s is not None:
+        raise ValueError("Single-trigger and uniform delivery delays are mutually exclusive")
     protocol = json.loads(Path(__file__).with_name("async_protocol.json").read_text())
     delay = None
     if controlled_delivery_delay:
@@ -137,6 +140,15 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         write_json(out/"delivery_delay_protocol.json", delay_protocol)
         delay = SingleDeliveryDelay(delay_protocol)
         protocol["post_inference_result_delivery_delay_s"] = delay_protocol["additional_delivery_delay_s"]
+        protocol["waypoint_timeout_clock"] = "host_monotonic_since_controller_side_result_release"
+    elif uniform_delivery_delay_s is not None:
+        from .delivery_delay import UniformDeliveryDelay
+        delay_protocol = json.loads(Path(__file__).with_name("uniform_latency_protocol.json").read_text())
+        assert uniform_delivery_delay_s in delay_protocol["conditions_delay_s"].values()
+        delay_protocol = {**delay_protocol, "mode": "uniform", "configured_additional_s": uniform_delivery_delay_s}
+        write_json(out/"delivery_delay_protocol.json", delay_protocol)
+        delay = UniformDeliveryDelay(delay_protocol)
+        protocol["post_inference_result_delivery_delay_s"] = uniform_delivery_delay_s
         protocol["waypoint_timeout_clock"] = "host_monotonic_since_controller_side_result_release"
     write_json(out/"async_protocol.json", protocol)
     engine = ExecutionThread(config, out)
@@ -225,7 +237,10 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                "all_outputs_finite": True, "frame_and_rgb_check": render_check, "obstacle_evaluation": obstacle_result,
                "raw_model_output_directory": "model/raw", "derived_trajectory_directory": "model/derived",
                "note": "Pacing and concurrent OLD movement require offline validation; this file alone is not a realtime PASS."}
-    if delay is not None:
+    if uniform_delivery_delay_s is not None:
+        summary["delivery_delay"] = {"mode": "uniform", "accepted_count": delay.accepted_count,
+                                     "configured_additional_s": uniform_delivery_delay_s}
+    elif delay is not None:
         summary["delivery_delay"] = {"triggered_id": delay.triggered_id,
                                      "status": "TRIGGERED" if delay.triggered_id is not None else "NOT_TRIGGERED",
                                      "configured_additional_s": delay.protocol["additional_delivery_delay_s"]}

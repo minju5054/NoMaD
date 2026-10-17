@@ -1,5 +1,6 @@
 """One observation-triggered post-inference hold, used only by the IPC thread."""
 import time
+import math
 
 
 class SingleDeliveryDelay:
@@ -27,3 +28,20 @@ class SingleDeliveryDelay:
             if remaining_ns <= 0:
                 return deadline
             self.wait(remaining_ns / 1e9)
+
+
+class UniformDeliveryDelay(SingleDeliveryDelay):
+    """Reuse the same IPC deadline for every accepted result, including ID 0."""
+    def __init__(self, protocol, clock_ns=None, wait=None):
+        delay = protocol["configured_additional_s"]
+        assert math.isfinite(delay) and delay >= 0
+        self.protocol = protocol
+        self.clock_ns = clock_ns or time.monotonic_ns
+        self.wait = wait or time.sleep
+        self.accepted_count = 0
+
+    def annotate_accepted_request(self, metadata):
+        metadata["delivery_delay_mode"] = "uniform"
+        metadata["delivery_delay_triggered"] = True
+        metadata["additional_delivery_delay_s"] = self.protocol["configured_additional_s"]
+        self.accepted_count += 1

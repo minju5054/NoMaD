@@ -252,3 +252,11 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 4. Goal entry true, 26.222222 s, goal 거리 0.298718 m. 첫 왼쪽/둘째 오른쪽 통과, 전체 최소 swept clearance 0.080234 m, 충돌/corridor 침범 없음. Warm GPU median/p95 30.147740/31.740886 ms, RTF 0.999996588, pacing p95/max 0.153885/1.442259 ms. Async/controlled-delivery/soft real-time PASS.
 5. 기존 validator의 99 raw/derived/PD/pose/clock/clearance 검증 통과. Baseline 205개 및 새 run 분석 입력 226개 hash 보존, 별도 raw-record 수치 검토 통과. Startup shader compile/renderer-step 오류 5개는 RGB gate 통과 이전이며 navigation clock과 구분했다. 기존 환경 변경 없음.
 6. 같은 prediction의 두 boundary와 전체 장애물을 보여주는 비교 그림 한 장을 보존했다. 최초 close-up에 장애물이 보이지 않아 figure layout에 전체 위치도만 추가했으며 수치/threshold는 그대로다. Baseline/start/goal image hash 차이와 같은 run 내 B0 counterfactual 한계를 명시했다. 두 번째 장애물에 대한 FRESH clearance 약 54 cm 및 B_delay overlap 10.07 cm의 제한 때문에 좁은 통로·다른 latency로 일반화하지 않는다. 추가 실험/Graph/영상/GUI는 수행하지 않았다.
+
+## Full-run uniform latency sweep — 실행 전
+
+2026-10-17. 사용자 요청으로 `6eedeeb`에서 `research/isaac6-uniform-latency`를 생성했다. [Protocol](UNIFORM_LATENCY_PROTOCOL.md)을 `3f55d28`에 실행 전에 고정했다.
+
+1. D0는 `async_wide_wall_01`을 재사용하고 D250/D500/D750 각 1회, 고정 순서로 실행한다. 모든 accepted result(초기 및 terminal-unapplied 포함)에 IPC packet 수신 후 동일 d를 적용한다. 기존 single-trigger class의 AST가 변하지 않았고 기존 core/controller/model/scene/checkpoint/좌표/clearance/seed schedule을 유지했다.
+2. 새 uniform 정책과 deadline/timeout/OLD window 분리 및 기존 async/geometric tests **30 passed (0.09 s)**. D0 93개 handoff를 새 offline 분석으로 재계산해 이전 class 및 position/heading mismatch median/p95/max가 일치했다. 실패 run과 unapplied result도 분석하며 실제 OLD 위험과 geometric class를 별도 기록한다.
+3. Baseline 205개 + 직전 controlled run 226개, 총 **431개** input hash를 실행 전 확인·보존했다. 새 결과는 별도 raw/audit 폴더에 저장하며 원본을 덮어쓰지 않는다. 추가 figure/GUI/영상/Graph/Topomap은 만들지 않는다.

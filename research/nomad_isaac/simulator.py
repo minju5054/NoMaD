@@ -17,6 +17,7 @@ parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
 parser.add_argument("--controlled-delivery-delay", action="store_true")
+parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75])
 args, _ = parser.parse_known_args()
 out = args.output.resolve()
 runtime = out / "isaac_runtime"
@@ -198,7 +199,8 @@ def main():
     if args.asynchronous:
         from nomad_isaac.async_runtime import run_async
         return run_async(config, out, args.socket, goal, capture, set_pose, get_pose, render_check,
-                         controlled_delivery_delay=args.controlled_delivery_delay)
+                         controlled_delivery_delay=args.controlled_delivery_delay,
+                         uniform_delivery_delay_s=args.uniform_delivery_delay_s)
 
     controller = original_controller()
     history = deque(maxlen=4)
