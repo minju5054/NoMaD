@@ -136,6 +136,9 @@ def main():
     timeline = omni.timeline.get_timeline_interface()
     timeline.pause()
     stage.SetTimeCodesPerSecond(hz)
+    dynamic = config.get("dynamic_obstacle")
+    dynamic_prim = UsdGeom.Imageable(stage.GetPrimAtPath("/World/"+dynamic["id"])) if dynamic else None
+    dynamic_frames = []
 
     font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     title_font = ImageFont.truetype(font_path, 27)
@@ -144,13 +147,14 @@ def main():
     encoder = get_video_encoding_interface()
     carb.settings.get_settings().set("/exts/omni.videoencoding/bitrate", 8_000_000)
     carb.settings.get_settings().set("/exts/omni.videoencoding/iframeinterval", fps)
-    video = out / "nomad_static_obstacle.mp4"
+    video = out / ("nomad_sudden_obstacle.mp4" if dynamic else "nomad_static_obstacle.mp4")
     assert encoder.start_encoding(str(video), float(fps), len(indices), False)
     maximum_pose_error = 0.
     try:
         with (out / "frame_mapping.csv").open("x", newline="") as stream:
             writer = csv.writer(stream)
-            writer.writerow(["video_frame", "source_pose_row", "simulation_time_s", "x_m", "y_m", "yaw_rad"])
+            writer.writerow(["video_frame", "source_pose_row", "simulation_time_s", "x_m", "y_m", "yaw_rad",
+                             "dynamic_active", "dynamic_magenta_pixels"])
             for frame, index in enumerate(indices):
                 row = rows[index]
                 sim_time = float(row["simulation_time_s"])
@@ -180,28 +184,44 @@ def main():
                 maximum_pose_error = max(error, maximum_pose_error)
                 assert error < 1e-10, (index, error)
                 assert rgba[:, :, :3].std() > 10
+                active, pixels = None, None
+                if dynamic:
+                    active = index >= dynamic["spawn_tick"]
+                    visible = dynamic_prim.ComputeVisibility(Usd.TimeCode(index)) == UsdGeom.Tokens.inherited
+                    assert visible == active
+                    rgb = rgba[:, :, :3].astype(float)
+                    pixels = int(((rgb[:, :, 0] > 1.5*rgb[:, :, 1]) & (rgb[:, :, 2] > 1.5*rgb[:, :, 1]) &
+                                  (rgb[:, :, 0] > 40) & (rgb[:, :, 2] > 40)).sum())
+                    dynamic_frames.append({"frame": frame, "pose_row": index, "sim_s": sim_time,
+                                           "active": active, "rgb_magenta_pixels": pixels})
 
                 image = Image.fromarray(rgba).convert("RGBA")
                 draw = ImageDraw.Draw(image)
                 draw.rectangle((0, 0, width, 87), fill=(17, 24, 36, 255))
-                draw.text((24, 10), "NoMaD | Isaac Sim 6 | Static obstacle", font=title_font, fill="white")
+                title = "Sudden obstacle" if dynamic else "Static obstacle"
+                draw.text((24, 10), "NoMaD | Isaac Sim 6 | "+title, font=title_font, fill="white")
                 draw.text((24, 51), "Recorded execution replay  |  1x simulation time  |  No new navigation run", font=small, fill=(190, 207, 224))
                 draw.text((1035, 21), f"t = {sim_time:05.2f} s", font=title_font, fill="white")
                 draw.rectangle((0, 622, width, height), fill=(17, 24, 36, 255))
-                for x, color, label in [(24, (50, 140, 255), "Agent / 0.12 m radius"),
-                                        (335, (80, 210, 65), "Obstacle"),
-                                        (525, (255, 155, 40), "Goal / 0.30 m tolerance")]:
+                labels = [(24, (50, 140, 255), f"Agent / {config['agent_radius_m']:.2f} m radius"),
+                          (320, (80, 210, 65), "Static obstacles"),
+                          (570, (255, 155, 40), f"Goal / {radius:.2f} m tolerance")]
+                if dynamic:
+                    labels.append((960, (205, 60, 190), "New: ACTIVE" if active else "New: hidden"))
+                for x, color, label in labels:
                     draw.ellipse((x, 638, x+14, 652), fill=color)
                     draw.text((x+25, 632), label, font=font, fill="white")
-                draw.text((920, 632), f"Goal distance: {float(row['goal_distance_m']):.3f} m", font=font, fill="white")
                 clearance = result["obstacle_evaluation"]["minimum_swept_clearance_lower_m"]
+                if dynamic:
+                    clearance = min(clearance, result["dynamic_obstacle"]["evaluation"]["minimum_swept_clearance_lower_m"])
                 outcome = "goal reached" if result["goal_entry"] else "goal NOT reached"
                 contact = "collision" if result["obstacle_evaluation"]["geometric_overlap"] else "no collision"
                 draw.text((24, 673), f"Recorded result: {contact}; min clearance {100*clearance:.2f} cm; {outcome}.", font=small, fill=(255, 205, 126))
                 draw.text((945, 673), f"v {float(row['v_m_s']):.2f} m/s | w {float(row['w_rad_s']):+.2f} rad/s", font=small, fill=(190, 207, 224))
                 assert encoder.encode_next_frame_from_buffer(np.asarray(image), width, height), frame
-                writer.writerow([frame, index, sim_time, *pose.tolist()])
-                if frame % (fps * 5) == 0 or frame == len(indices)-1:
+                writer.writerow([frame, index, sim_time, *pose.tolist(), active, pixels])
+                near_spawn = dynamic and dynamic["spawn_tick"]-stride <= index <= dynamic["spawn_tick"]+stride
+                if frame % (fps * 5) == 0 or frame == len(indices)-1 or near_spawn:
                     image.save(out / f"preview_{frame:04d}.png")
                     print(f"VIDEO_FRAME {frame}/{len(indices)-1} simulation={sim_time:.3f}s", flush=True)
     finally:
@@ -249,7 +269,7 @@ def main():
         "final_frame_timestamp_offset_s": (len(indices)-1)/fps-float(rows[-1]["simulation_time_s"]),
         "gui_yaw_representation": "Unwrapped equivalent yaw avoids interpolation across +/-pi; all recorded rotations preserved.",
         "max_rendered_pose_absolute_error": maximum_pose_error,
-        "added_visuals": ["blue 0.12 m radius footprint", "white heading arrow", "orange 0.30 m goal ring", "cyan executed trail", "overview camera", "text overlays"],
+        "added_visuals": [f"blue {config['agent_radius_m']} m radius footprint", "white heading arrow", f"orange {radius} m goal ring", "cyan executed trail", "overview camera", "text overlays"],
         "scene_geometry_and_original_camera_preserved": True,
         "overview_camera_eye_world_m": [2.5, 2., 8.],
         "raw_inputs_unchanged": True, "render_wall_s": time.monotonic()-started,
@@ -257,6 +277,18 @@ def main():
         "gui_usd": str(gui_ready), "gui_usd_sha256": digest(gui_ready),
         "result": {"goal_entry": result["goal_entry"], "obstacle_evaluation": result["obstacle_evaluation"]},
     }
+    if dynamic:
+        before_spawn = [f for f in dynamic_frames if not f["active"]]
+        after_spawn = [f for f in dynamic_frames if f["active"]]
+        assert before_spawn and after_spawn
+        assert max(f["rgb_magenta_pixels"] for f in before_spawn) == 0
+        assert min(f["rgb_magenta_pixels"] for f in after_spawn) >= dynamic["minimum_visible_pixels"]
+        manifest["dynamic_visibility"] = {
+            "source_spawn_tick": dynamic["spawn_tick"], "source_spawn_sim_s": dynamic["spawn_tick"]/hz,
+            "last_hidden_frame": before_spawn[-1], "first_active_frame": after_spawn[0],
+            "all_before_rgb_absent": True, "all_after_rgb_visible": True,
+            "usd_visibility_matches_source_tick": True,
+            "note": "24 fps MP4 samples the 72 Hz source; USD animation keeps the exact activation tick."}
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print("VIDEO_COMPLETE " + str(video), flush=True)
 

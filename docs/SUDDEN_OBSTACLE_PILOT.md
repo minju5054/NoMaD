@@ -78,3 +78,21 @@ OLD/FRESH noise/DDPM seeds는 **199/200 → 201/202**로 다르다. Observation/
 PYTHONPATH=research python3 -m nomad_isaac.sudden_obstacle_report --run ../artifacts/isaac6/sudden_obstacle_01 --output ../artifacts/isaac6/sudden_obstacle_audit_review --rgb-visibility-recovery
 PYTHONPATH=research python3 -m nomad_isaac.plot_sudden_obstacle --audit ../artifacts/isaac6/sudden_obstacle_audit_review --output ../artifacts/isaac6/sudden_obstacle_plot_review
 ```
+
+## 후속 요청: 출발부터 목표 도달까지 전체 주행
+
+2026-10-18. 사용자 요청으로 기존 Isaac renderer에서 **실제 저장 pose의 전체 구간 t=0…33.680555556 s**를 재생하는 MP4와 native GUI animation을 만들었다. 새 navigation/inference는 0회이며, 실험 당시 실시간 촬영본이 아닌 기록 기반 재렌더링이다.
+
+- MP4: `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/sudden_obstacle_video_01/nomad_sudden_obstacle.mp4`
+- GUI: 같은 디렉터리의 `recorded_motion_gui.usda`. 기존 Isaac GUI에서 열고 자동 반복 재생을 확인했으며 창을 열어 두었다.
+- H.264, 1280×720, 24 fps, **810 frames / 33.75 s**, 26,754,946 bytes. 72 Hz 기록에서 매 3번째 pose와 마지막 실제 goal-entry pose를 사용한다. 마지막 pose의 video slot offset은 +.027777778 s이고 한 frame 표시 시간을 포함한다. 경로 보간·smoothing은 없다.
+- DynamicObstacle은 원본 USD visibility time samples를 유지한다. GUI는 정확한 tick 970을 보존하며 MP4에서 마지막 hidden frame은 t=13.458333333 s, 최초 visible frame은 t=13.5 s다. 출현 전 모든 overhead RGB에서 magenta pixels 0, 이후 모든 frame에서 검출됨을 확인했다. 이는 **새 overhead 재렌더링 검증**이며 원래 inference instance-mask 계측 실패를 수정하거나 대체하지 않는다.
+- 파란 9 cm footprint·흰 방향 화살표·주황 goal ring·하늘색 기록 경로는 보기용이다. MP4는 진행한 경로만, GUI는 전체 경로를 고정 표시한다. 끝에서 시작으로 돌아가는 것은 저장 기록의 반복 재생이다.
+
+전체 MP4 decode와 frame→source row mapping을 검증했다. GUI의 **2,426개 pose** 최대 오차 6.66e−16, 원래 **104 prim / 682 attributes / 76 relationships 및 visibility time samples** 보존. 실제 GUI `playing=true`와 t=2.013888889 s의 원본 pose 일치, startup Error 0개를 확인했다. Renderer 준비 중 첫 RGB 이전 step 오류 5개는 로그에 보존했으며 렌더링은 exit 0으로 완료했다. 시작·출현 전후·최종 목표 진입 화면을 확인했고 기존 698개 및 새 run 565개 input hash가 유지됐다. [영상/GUI 검증 JSON](../research/results/isaac6_sudden_obstacle_20261017/video.json).
+
+다시 GUI 전체 재생을 열려면:
+
+```bash
+bash /home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/open_scene.sh /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/sudden_obstacle_video_01/recorded_motion_gui.usda --play
+```

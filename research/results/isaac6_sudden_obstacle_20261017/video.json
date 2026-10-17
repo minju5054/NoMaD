@@ -1,0 +1,221 @@
+{
+  "manifest.json": {
+    "kind": "posthoc_isaac_rtx_render_of_recorded_executed_poses",
+    "not_contemporaneous_video": true,
+    "new_inference_count": 0,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/sudden_obstacle_01",
+    "source_sha256": {
+      "scene_gui.usda": "649f5c83e5108239b4661b0498c67bedc142c3475cc821fe7dd55815516af83b",
+      "agent_trajectory.csv": "df52c3c16ee2fdf4b8bec8ed30513015928e319e1e63b11ffdd5f1b6a068f767",
+      "summary.json": "f0eab8bc253020b6b2b33fda62e1dc7a1899d141a9e65d03f7459c175686772a",
+      "scenario.json": "1a2fb3420ea49bc0ad84fb52ebeab06b6ad31e7244ad1d465af068047a798172"
+    },
+    "renderer_script_sha256": "5a54147a9bb87827a11048ddd1195c575a93b3aef29f82166f7937b790f1f078",
+    "git_sha_before_video_change": "dd367d5591810970ff2474511f86bdb3217780f7",
+    "video": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/sudden_obstacle_video_01/nomad_sudden_obstacle.mp4",
+    "video_sha256": "a09ac9953ca9f83459446873453c3fa763276c3b535193e160a15387304addc2",
+    "video_bytes": 26754946,
+    "fps": 24,
+    "resolution": [
+      1280,
+      720
+    ],
+    "frame_count": 810,
+    "source_pose_count": 2426,
+    "source_pose_stride": 3,
+    "simulation_time_range_s": [
+      0.0,
+      33.68055555555556
+    ],
+    "encoded_duration_s": 33.75,
+    "timing_note": "Exact source rows at 1x simulation time, not wall time. An off-grid final row occupies the next 24 fps slot, then holds for one frame.",
+    "final_frame_timestamp_offset_s": 0.027777777777778567,
+    "gui_yaw_representation": "Unwrapped equivalent yaw avoids interpolation across +/-pi; all recorded rotations preserved.",
+    "max_rendered_pose_absolute_error": 8.881784197001252e-16,
+    "added_visuals": [
+      "blue 0.09 m radius footprint",
+      "white heading arrow",
+      "orange 0.3 m goal ring",
+      "cyan executed trail",
+      "overview camera",
+      "text overlays"
+    ],
+    "scene_geometry_and_original_camera_preserved": true,
+    "overview_camera_eye_world_m": [
+      2.5,
+      2.0,
+      8.0
+    ],
+    "raw_inputs_unchanged": true,
+    "render_wall_s": 179.58421814901521,
+    "animated_usd": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/sudden_obstacle_video_01/recorded_motion.usda",
+    "animated_usd_sha256": "43114615db0c44d816f700184247fe5f1a07d23dbc9db0df2c22ac177024c20e",
+    "gui_usd": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/sudden_obstacle_video_01/recorded_motion_gui.usda",
+    "gui_usd_sha256": "d8715f3a80ab1485f8ea44404e2b1a94bd80a86c835cb76408be078d80cc5f28",
+    "result": {
+      "goal_entry": true,
+      "obstacle_evaluation": {
+        "category": "avoidance_and_goal_success",
+        "avoidance_success": true,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "safety_margin_met": true,
+        "minimum_swept_clearance_lower_m": 0.0735082569350981,
+        "minimum_swept_clearance_upper_m": 0.07350999807820785,
+        "minimum_corridor_clearance_lower_m": 0.013217019018370841,
+        "corridor_containment_certified": true,
+        "passage": {
+          "StaticObstacle1": {
+            "side": "left_positive_y",
+            "simulation_time_s": 11.375,
+            "pose": [
+              1.7915941013276697,
+              0.3932951385247218,
+              -0.8273220561836645
+            ]
+          },
+          "StaticObstacle2": {
+            "side": "right_negative_y",
+            "simulation_time_s": 27.88888888888889,
+            "pose": [
+              3.341044478050741,
+              -0.8328270964199757,
+              0.8693280325190429
+            ]
+          }
+        },
+        "collision_detection_period_s": 0.013888888888888888,
+        "obstacles": {
+          "StaticObstacle1": {
+            "category": "avoidance_and_goal_success",
+            "avoidance_success": true,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.0735082569350981,
+            "minimum_swept_clearance_upper_m": 0.07350999807820785,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": 0.013217019018370841,
+            "corridor_containment_certified": true,
+            "passage": {
+              "side": "left_positive_y",
+              "simulation_time_s": 11.375,
+              "pose": [
+                1.7915941013276697,
+                0.3932951385247218,
+                -0.8273220561836645
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          },
+          "StaticObstacle2": {
+            "category": "avoidance_and_goal_success",
+            "avoidance_success": true,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.5661220736678471,
+            "minimum_swept_clearance_upper_m": 0.5661220807254304,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": 0.013217019018370841,
+            "corridor_containment_certified": true,
+            "passage": {
+              "side": "right_negative_y",
+              "simulation_time_s": 27.88888888888889,
+              "pose": [
+                3.341044478050741,
+                -0.8328270964199757,
+                0.8693280325190429
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          }
+        }
+      }
+    },
+    "dynamic_visibility": {
+      "source_spawn_tick": 970,
+      "source_spawn_sim_s": 13.472222222222221,
+      "last_hidden_frame": {
+        "frame": 323,
+        "pose_row": 969,
+        "sim_s": 13.458333333333334,
+        "active": false,
+        "rgb_magenta_pixels": 0
+      },
+      "first_active_frame": {
+        "frame": 324,
+        "pose_row": 972,
+        "sim_s": 13.5,
+        "active": true,
+        "rgb_magenta_pixels": 3098
+      },
+      "all_before_rgb_absent": true,
+      "all_after_rgb_visible": true,
+      "usd_visibility_matches_source_tick": true,
+      "note": "24 fps MP4 samples the 72 Hz source; USD animation keeps the exact activation tick."
+    }
+  },
+  "geometry_validation.json": {
+    "video_frame_mapping": "PASS",
+    "frames": 810,
+    "source_poses": 2426,
+    "all_gui_poses_max_error": 6.661338147750939e-16,
+    "original_prims": 104,
+    "original_attributes": 682,
+    "original_relationships": 76,
+    "original_time_samples_preserved": true,
+    "dynamic_exact_tick_visibility": "PASS",
+    "final_goal_distance_m": 0.2982520700113948,
+    "source_run_hashes_preserved": 565,
+    "previous_hashes_preserved": 698,
+    "new_navigation_count": 0,
+    "new_inference_count": 0
+  },
+  "decode_validation.json": {
+    "decode": "PASS",
+    "decoded_frames": 810,
+    "fps": 24.0,
+    "resolution": [
+      1280.0,
+      720.0
+    ],
+    "codec": "avc1",
+    "encoded_duration_s": 33.75,
+    "video_bytes": 26754946,
+    "first_sim_s": 0,
+    "last_sim_s": 33.68055555555556
+  },
+  "gui_validation.json": {
+    "started": {
+      "scene": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/sudden_obstacle_video_01/recorded_motion_gui.usda",
+      "camera": "/World/ReplayVisuals/OverviewCamera",
+      "duration_s": 33.68055555555556,
+      "time_codes_per_second": 72.0,
+      "looping": true,
+      "new_inference_count": 0
+    },
+    "observed_sample": {
+      "playing": true,
+      "simulation_time_s": 2.013888888888884,
+      "pose": [
+        0.1789169935164121,
+        0.02165177429435662,
+        0.2431466847559961
+      ]
+    },
+    "source_pose_row": 145,
+    "max_sample_error": 1.887379141862766e-15,
+    "startup_error_count": 0,
+    "scene_hash_unchanged": true,
+    "note": "Native recorded playback left open; final time and all pose samples verified offline."
+  },
+  "visual_review": {
+    "frames": [
+      0,
+      323,
+      324,
+      809
+    ],
+    "result": "Start, hidden/new obstacle transition and final goal-entry pose visible",
+    "render_startup_step_errors_before_first_rgb": 5
+  }
+}

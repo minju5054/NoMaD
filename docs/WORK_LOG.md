@@ -296,3 +296,9 @@ Plot 입력 472개 hash 불변, 시작/종료 pose·72 Hz 시각·goal metric �
 5. Goal entry 33.680555556 s, min goal .298252070 m. Static 1/2/dynamic minimum swept clearance .073508257/.566122074/.180577735 m, overlap/corridor 침범 없음. Corridor clearance .013217019 m는 containment를 만족하나 .02 m wall margin을 주장하지 않는다. Warm GPU median/p95 29.689112/31.502001 ms, pacing p95/max .152915/1.384874 ms, RTF .999996807. Request/receive/switch 131/131/131, busy skip 1, miss 0, timeout 0(자연 timeout 미검증), 기존 async 검증 PASS.
 6. Baseline과 실제 spawn pose가 9.47 cm/−32.63° 달라 OLD 위험이 재현되지 않았다. Actual obstacle center bearing 53.26°로 왼쪽 RGB에 부분 출현했다. Noise/DDPM seed 199/200→201/202 차이도 존재해 안전한 FRESH의 생성이나 revision을 장애물 반응만의 효과로 주장하지 않는다. Graph가 해결할 후보는 없었다.
 7. 기존 698/new 565 input hashes 보존, 공식 train/deployment 및 보호 source 9개 불변. 원래 mask audit와 첫 RGB 복구 float32 JSON export 실패 기록을 보존하고 최종 offline audit를 별도 폴더에 생성했다. Source·작은 CSV/JSON·원본 RGB를 포함한 비교 SVG 한 장을 추가했다. Runtime 계측 실패는 그대로 공개하며 추가 navigation/inference/Graph/Topomap/영상/환경 변경 없음.
+
+## Sudden obstacle — 전체 주행 재생 요청
+
+2026-10-18. 후속 사용자 요청으로 출발부터 목표 진입까지 전체 실제 pose를 기존 Isaac renderer로 재생했다. MP4 1280×720/H.264/24 fps, 810 frames/33.75 s에 t=0…33.680555556 s 및 마지막 실제 pose를 보존했다. 새 navigation/inference 0회. 원래 DynamicObstacle visibility time samples를 유지하고 숨김→출현 전환을 전체 overhead RGB로 검증했다. 원래 inference instance mask 실패와 별도다.
+
+전체 video decode/mapping, GUI 2,426 pose(최대 오차 6.66e−16), 원래 104 prim의 attributes/relationships/time samples 보존을 확인했다. GUI 자동 재생 `playing=true`, 실제 sample pose 일치, startup Error 0개를 확인하고 창을 열어 두었다. Renderer 최초 RGB 준비 전 step 오류 5개는 로그에 보존했다. 기존 698/new 565 input hashes 유지. 파일은 `../artifacts/isaac6/sudden_obstacle_video_01/`, [상세 재생 설명](SUDDEN_OBSTACLE_PILOT.md#후속-요청-출발부터-목표-도달까지-전체-주행). Renderer의 scenario 기반 자막/반경과 dynamic visibility 확인, 작은 video validation JSON 및 문서만 Git에 추가한다.
