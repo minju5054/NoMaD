@@ -38,6 +38,10 @@ class ExecutionThread:
         self.distance = 0.
         self.events, self.received = [], []
         self.monitor = MultiObstacleMonitor(config, out)
+        self.dynamic = None
+        if "dynamic_obstacle" in config:
+            from .sudden_obstacle import SuddenObstacleMonitor
+            self.dynamic = SuddenObstacleMonitor(config, out)
 
     def snapshot(self):
         with self.lock:
@@ -101,8 +105,13 @@ class ExecutionThread:
                     self.started.set()
                     self.monitor.observe_interval(previous, pose, incoming_v, incoming_w,
                                                   (tick-1)/hz if tick else 0., 1/hz if tick else 0.)
-                    if self.monitor.stop_reason:
-                        self.reason = self.monitor.stop_reason; break
+                    dynamic_stop = None
+                    if self.dynamic is not None:
+                        self.dynamic.observe_tick(tick, previous, pose, incoming_v, incoming_w,
+                                                  incoming_id, incoming_valid, now)
+                        dynamic_stop = self.dynamic.stop_reason
+                    if self.monitor.stop_reason or dynamic_stop:
+                        self.reason = self.monitor.stop_reason or dynamic_stop; break
                     if distance <= c["goal_tolerance_m"]:
                         self.goal_entry = True; self.reason = "goal_entry"; break
                     if (now-self.epoch_ns)/1e9 > c["timeout_navigation_wall_s"]:
@@ -132,6 +141,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
               controlled_delivery_delay=False, uniform_delivery_delay_s=None):
     if controlled_delivery_delay and uniform_delivery_delay_s is not None:
         raise ValueError("Single-trigger and uniform delivery delays are mutually exclusive")
+    if "dynamic_obstacle" in config and (controlled_delivery_delay or uniform_delivery_delay_s not in (None, 0.)):
+        raise ValueError("Sudden-obstacle pilot requires zero additional latency")
     protocol = json.loads(Path(__file__).with_name("async_protocol.json").read_text())
     delay = None
     if controlled_delivery_delay:
@@ -153,6 +164,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     write_json(out/"async_protocol.json", protocol)
     engine = ExecutionThread(config, out)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
+    dynamic_history = deque(maxlen=4)
+    if engine.dynamic is not None:
+        (out/"observations").mkdir(exist_ok=False)
     observation_id = request_id = 0
     busy_skips = missed_slots = 0
     with socket.socket(socket.AF_UNIX) as connection, (out/"observations.jsonl").open("x") as obs_log, \
@@ -184,11 +198,19 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                           "observation_pose": snap["pose"], "pose_sample_monotonic_ns": snap["monotonic_ns"],
                           "capture_end_monotonic_ns": capture_end, "render_ms": (capture_end-capture_start)/1e6,
                           "frame_sha256": digest}
+                if engine.dynamic is not None:
+                    diagnostic = dict(capture.dynamic_metadata)
+                    assert diagnostic["capture_tick"] == snap["tick"]
+                    record.update({"dynamic": diagnostic, "rgb_file": f"observations/{observation_id:04d}.png",
+                                   "dynamic_mask_file": f"observations/{observation_id:04d}_mask.png"})
+                    dynamic_history.append(diagnostic)
                 if len(history) == 4 and not engine.done.is_set():
                     request = {**record, "kind": "infer", "id": request_id, "seed": config["seed"]+2*request_id,
                                "history_sim_s": list(times), "history_frame_sha256": list(hashes),
                                "history_observation_ids": list(frame_ids), "old_id_at_observation": snap["applied_id"],
                                "old_valid_at_observation": snap["command_valid"], "request_submit_monotonic_ns": time.monotonic_ns()}
+                    if engine.dynamic is not None:
+                        request["history_dynamic"] = list(dynamic_history)
                     submitted = client.submit(request, history=np.stack(history), goal=goal)
                     record["status"] = "submitted" if submitted else "busy_history_only"
                     if submitted:
@@ -198,6 +220,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                         busy_skips += 1
                 else:
                     record["status"] = "history_warmup" if len(history)<4 else "terminal_history_only"
+                if engine.dynamic is not None:
+                    Image.fromarray(rgb).save(out/record["rgb_file"])
+                    Image.fromarray(capture.dynamic_mask.astype(np.uint8)*255).save(out/record["dynamic_mask_file"])
                 append(obs_log, record)
                 if slot % (5*config["observation_hz"]) == 0:
                     Image.fromarray(rgb).save(out/f"observation_{observation_id:04d}.png")
@@ -224,6 +249,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         set_pose(state["pose"])
         Image.fromarray(capture(state["sim_s"])).save(out/"observation_final.png")
     obstacle_result = engine.monitor.finish(engine.goal_entry)
+    dynamic_result = engine.dynamic.finish(engine.goal_entry) if engine.dynamic is not None else None
     summary = {"integration_success": bool(engine.events) and engine.distance > 0,
                "execution_mode": "asynchronous_realtime_kinematic", "scenario": config,
                "epoch_monotonic_ns": engine.epoch_ns, "simulation_duration_s": state["sim_s"],
@@ -237,6 +263,11 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                "all_outputs_finite": True, "frame_and_rgb_check": render_check, "obstacle_evaluation": obstacle_result,
                "raw_model_output_directory": "model/raw", "derived_trajectory_directory": "model/derived",
                "note": "Pacing and concurrent OLD movement require offline validation; this file alone is not a realtime PASS."}
+    if dynamic_result is not None:
+        summary["dynamic_obstacle"] = dynamic_result
+        summary["obstacle_evaluation_scope"] = "Original static obstacles only; dynamic evaluation is separate"
+        summary["combined_avoidance_success"] = bool(obstacle_result["avoidance_success"] and
+            dynamic_result["status"] == "SPAWNED" and dynamic_result["evaluation"]["avoidance_success"])
     if uniform_delivery_delay_s is not None:
         summary["delivery_delay"] = {"mode": "uniform", "accepted_count": delay.accepted_count,
                                      "configured_additional_s": uniform_delivery_delay_s}

@@ -40,7 +40,7 @@ from PIL import Image
 import omni.usd
 import omni.timeline
 import omni.replicator.core as rep
-from pxr import Gf, UsdGeom, UsdLux, UsdShade, Sdf
+from pxr import Gf, Usd, UsdGeom, UsdLux, UsdShade, Sdf
 
 from nomad_isaac.common import (SCENARIO_PATH, integrate_se2, original_controller,
                                 read_scenario, receive_packet, send_packet, write_json, export_view_scene)
@@ -89,6 +89,20 @@ def build_scene(config):
     for obstacle in configured_obstacles(config):
         box(obstacle["id"], (*obstacle["center_xy_m"], obstacle["size_xyz_m"][2]/2),
             obstacle["size_xyz_m"], obstacle["color_rgb"], double_scale=True)
+    if "dynamic_obstacle" in config:
+        dynamic = config["dynamic_obstacle"]
+        box(dynamic["id"], (*dynamic["center_xy_m"], dynamic["size_xyz_m"][2]/2),
+            dynamic["size_xyz_m"], dynamic["color_rgb"], double_scale=True)
+        prim = stage.GetPrimAtPath("/World/"+dynamic["id"])
+        rep.functional.modify.semantics(prim, {"class": "DynamicObstacle"}, mode="add")
+        stage.SetTimeCodesPerSecond(config["integration_hz"])
+        stage.SetFramesPerSecond(config["integration_hz"])
+        stage.SetStartTimeCode(0)
+        stage.SetEndTimeCode(config["timeout_sim_s"]*config["integration_hz"])
+        visibility = UsdGeom.Imageable(prim).CreateVisibilityAttr()
+        visibility.Set(UsdGeom.Tokens.invisible)
+        visibility.Set(UsdGeom.Tokens.invisible, Usd.TimeCode(0))
+        visibility.Set(UsdGeom.Tokens.inherited, Usd.TimeCode(dynamic["spawn_tick"]))
     dome = UsdLux.DomeLight.Define(stage, "/World/Light")
     dome.CreateIntensityAttr(1000.)
     agent = UsdGeom.Xform.Define(stage, "/World/Agent")
@@ -112,6 +126,9 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    if "dynamic_obstacle" in config and (not args.asynchronous or args.controlled_delivery_delay or
+                                         args.uniform_delivery_delay_s not in (None, 0.)):
+        raise ValueError("Sudden obstacle requires asynchronous execution with zero additional delay")
     if args.asynchronous:
         config = {**config, "synchronous": False}
     obstacles = configured_obstacles(config)
@@ -120,6 +137,12 @@ def main():
     stage, agent, translate, rotate, camera, annotator, product = build_scene(config)
     timeline = omni.timeline.get_timeline_interface()
     timeline.pause()
+    dynamic_annotator = None
+    if "dynamic_obstacle" in config:
+        from nomad_isaac.sudden_obstacle import active_at_tick
+        dynamic_prim = stage.GetPrimAtPath("/World/"+config["dynamic_obstacle"]["id"])
+        dynamic_annotator = rep.AnnotatorRegistry.get_annotator("instance_segmentation_fast", device="cpu")
+        dynamic_annotator.attach([product])
 
     def set_pose(pose):
         translate.Set(Gf.Vec3d(float(pose[0]), float(pose[1]), 0))
@@ -137,12 +160,36 @@ def main():
         for _ in range(20):
             rep.orchestrator.step(rt_subframes=4, delta_time=0.0, pause_timeline=True)
             array = np.asarray(annotator.get_data())
-            if array.shape == (240, 320, 4):
+            segmentation = dynamic_annotator.get_data() if dynamic_annotator is not None else None
+            segmentation_valid = (dynamic_annotator is None or
+                isinstance(segmentation, dict) and np.shape(segmentation.get("data")) == (240, 320))
+            if array.shape == (240, 320, 4) and segmentation_valid:
                 break
         assert array.shape == (240, 320, 4) and array.dtype == np.uint8, (array.shape, array.dtype)
         rgb = np.ascontiguousarray(array[:, :, :3])  # RGB annotator is RGBA, never BGR.
         assert rgb.std() > 5 and rgb.max() > 50, "Invalid/dark rendered camera"
         assert abs(timeline.get_current_time() - sim_time) < 1e-6
+        if dynamic_annotator is not None:
+            assert segmentation_valid
+            tick = round(sim_time*config["integration_hz"])
+            assert abs(tick/config["integration_hz"]-sim_time) < 1e-10
+            active = active_at_tick(config, tick)
+            visibility = UsdGeom.Imageable(dynamic_prim).ComputeVisibility(Usd.TimeCode(tick))
+            assert (visibility == UsdGeom.Tokens.inherited) == active
+            labels = segmentation["info"]["idToLabels"]
+            ids = [int(key) for key, path in labels.items() if str(path) == str(dynamic_prim.GetPath())]
+            mask = np.isin(np.asarray(segmentation["data"]), ids)
+            if not active:
+                assert not mask.any(), "Dynamic obstacle rendered before spawn timestamp"
+            pixels = rgb[mask].astype(float)
+            magenta = ((pixels[:, 0] > 1.5*pixels[:, 1]) & (pixels[:, 2] > 1.5*pixels[:, 1]) &
+                       (pixels[:, 0] > 40) & (pixels[:, 2] > 40))
+            capture.dynamic_metadata = {"capture_tick": tick, "active": active, "usd_visibility": str(visibility),
+                "instance_ids": ids, "instance_pixels": int(mask.sum()), "magenta_pixels": int(magenta.sum()),
+                "visible": int(mask.sum()) >= config["dynamic_obstacle"]["minimum_visible_pixels"],
+                "mask_sha256": hashlib.sha256(mask.tobytes()).hexdigest(),
+                "masked_rgb_median": np.median(pixels, axis=0).tolist() if len(pixels) else None}
+            capture.dynamic_mask = mask
         return rgb
 
     goal_pose = np.array(config["goal_pose"])
@@ -172,6 +219,14 @@ def main():
                     "blue_right_pixels": len(blue_x), "blue_mean_pixel_x": float(blue_x.mean()),
                     "goal_start_mean_abs_pixel_difference": float(np.abs(goal.astype(float) - rgb_float).mean()),
                     "python": sys.version, "executable": sys.executable, "numpy": np.__version__}
+    if dynamic_annotator is not None:
+        render_check["dynamic_initial"] = capture.dynamic_metadata
+        dynamic_box = config["dynamic_obstacle"]
+        bounds = UsdGeom.BBoxCache(config["dynamic_obstacle"]["spawn_tick"], [UsdGeom.Tokens.default_]).ComputeWorldBound(dynamic_prim).ComputeAlignedRange()
+        lower, upper = obstacle_bounds(single_obstacle_config(config, dynamic_box))
+        np.testing.assert_allclose(bounds.GetMin(), [*lower, 0.], atol=1e-12, rtol=0)
+        np.testing.assert_allclose(bounds.GetMax(), [*upper, dynamic_box["size_xyz_m"][2]], atol=1e-12, rtol=0)
+        render_check["dynamic_active_aabb"] = [list(bounds.GetMin()), list(bounds.GetMax())]
     if obstacles:
         green = (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 0]) & (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 2])
         assert int(green.sum()) > 100, "Obstacle must be visible in actual starting RGB before inference"

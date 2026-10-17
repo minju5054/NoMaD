@@ -277,3 +277,9 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 사용자 후속 요청으로 D0/D250/D500/D750의 기존 world pose를 각각 PNG/SVG로 그리고, 동일 축의 2×2 비교 그림을 추가했다. 실제 경로·방향·장애물·목표·종료 pose와 9 cm footprint를 표시했다. D250은 아래쪽, D500/D750은 위쪽 corridor footprint 침범이며 D0의 목표 진입과 구분된다. 새 navigation/inference 0회, smoothing 및 기존 판정 변경 없음.
 
 Plot 입력 472개 hash 불변, 시작/종료 pose·72 Hz 시각·goal metric 대조 PASS. 5개 PNG의 layout을 확인했다. 재생성 source, SVG/manifest 및 문서만 추가하며 PNG는 `../artifacts/isaac6/uniform_navigation_plots_01/`에 보존한다. [그림 링크](UNIFORM_LATENCY_SWEEP.md#후속-요청-각-조건의-실제-주행-그래프).
+
+## Sudden obstacle pilot — 실행 전
+
+사용자 요청으로 `8e157a7`에서 `research/isaac6-sudden-obstacle`을 만들었다. [Protocol](SUDDEN_OBSTACLE_PROTOCOL.md)과 새 scenario를 실제 실행 전에 `b2155f0`에 고정했다. 중심 `(2.45,-.18)` m, 크기 `(.35,.35,.8)` m, spawn tick 970 / 13.472222222 s, 추가 delivery latency 0 ms, navigation 1회/재시도 없음.
+
+기준 성공 run의 spawn pose clearance .127289 m, OLD 49의 새 장애물 full/prefix clearance −.09/.037442 m를 선정 근거로 보존했다. USD time-sampled visibility와 integer-tick collision gate를 추가했으며 첫 active tick의 zero-duration 검사/이전 interval 소급 제외/다음 full swept 검사 및 기존 async/geometry tests **30 passed (0.15 s)**. 원본 controller/model/core/clearance와 정적 scenario 불변, 기존 698개 입력 hash 보존. RGB·instance mask를 observation별 저장하고 최초 visible FRESH의 실제 worker history hash와 대조한다. 결과에 따라 위치·크기·seed를 바꾸지 않는다.
