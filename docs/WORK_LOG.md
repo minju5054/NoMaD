@@ -271,3 +271,9 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 4. 실제 handoff 수 93/44/21/16, 유효 correspondence 87/24/4/1. Qualified candidate 전부 0개. 새 조건의 classifiable fraction은 59.09/19.05/6.25%로 기존 90% negative-verdict 기준에 못 미쳐 **INSUFFICIENT_EVIDENCE**. D0만 기존 **NO_QUALIFIED_CANDIDATE** 유지. 가능한 entry는 모두 안전한 staging connector가 하나 이상 있었으며 큰 RMSE/방향 변화만으로 Graph 후보를 만들지 않았다.
 5. D250 FRESH 23/28은 tail unsafe이나 prefix/실제 실행은 안전했다. 마지막 적용 ID 44/21/16의 실제 PD 실행은 corridor를 침범했지만 correspondence/prefix heading이 무효라 candidate 판정 보류. D500 pending ID 22는 GPU inference 중 OLD 21이 위험해졌고 FRESH도 corridor unsafe. D750 pending ID 17은 안전한 prediction이나 delivery hold 중 OLD 16이 corridor를 침범했다. 두 pending 결과에 실제 switch B를 만들지 않고 OLD_EXECUTION_RISK로 별도 보존했다.
 6. 이전 431개 입력 hash와 새 251개 audit 입력 hash 보존, 보호 source 11개 및 checkpoint 불변. Source/문서/약 349 KB의 작은 CSV·JSON만 추적하고 raw는 별도 artifacts에 유지한다. D0와 새 run 간 RGB/seed-observation 대응 차이 및 단일 시행의 인과 해석 한계를 명시했다. Graph/Topomap/추가 주행·시각화·영상·GUI·환경 변경 없음.
+
+## Uniform latency 주행 결과 그래프
+
+사용자 후속 요청으로 D0/D250/D500/D750의 기존 world pose를 각각 PNG/SVG로 그리고, 동일 축의 2×2 비교 그림을 추가했다. 실제 경로·방향·장애물·목표·종료 pose와 9 cm footprint를 표시했다. D250은 아래쪽, D500/D750은 위쪽 corridor footprint 침범이며 D0의 목표 진입과 구분된다. 새 navigation/inference 0회, smoothing 및 기존 판정 변경 없음.
+
+Plot 입력 472개 hash 불변, 시작/종료 pose·72 Hz 시각·goal metric 대조 PASS. 5개 PNG의 layout을 확인했다. 재생성 source, SVG/manifest 및 문서만 추가하며 PNG는 `../artifacts/isaac6/uniform_navigation_plots_01/`에 보존한다. [그림 링크](UNIFORM_LATENCY_SWEEP.md#후속-요청-각-조건의-실제-주행-그래프).

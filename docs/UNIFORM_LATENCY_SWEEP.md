@@ -101,6 +101,12 @@ D500/D750의 마지막 interval은 각각 직전 FRESH의 실행이면서 다음
 
 실측 OLD 이동·switch offset 증가, correspondence 가용성 감소, 원본 RAW navigation의 corridor 실패, D750의 timeout/hold 중 OLD 위험은 확인했다. 하지만 검사 가능한 entry는 모두 단순 geometric staging으로 연결 가능했고, 실패 지점은 유효 correspondence/heading 또는 실제 switch가 부족하다. **Graph 비교에 바로 사용할 qualified handoff는 확보하지 못했다. 최종 `INSUFFICIENT_EVIDENCE`; D0의 제한된 negative evidence만 `NO_QUALIFIED_CANDIDATE`로 유지한다.**
 
-각 조건은 1회뿐이며 D0는 과거 코드/관측 시점의 참고 baseline이다. RGB/start/goal 렌더 hash 및 seed와 observation의 대응이 run마다 달라질 수 있다. 전체 성능 차이를 지연만의 paired causal effect나 일반적인 성능 곡선으로 주장하지 않는다. D750 mismatch 통계는 단 1개 유효 pair이므로 감소/증가 추세 판단에 쓸 수 없다. Staging/Graph closed-loop 성능·우월성, Topomap navigation 및 비관측 미래 구간은 미검증이다. 추가 실험·Graph·figure·GUI·영상은 수행하지 않았다.
+각 조건은 1회뿐이며 D0는 과거 코드/관측 시점의 참고 baseline이다. RGB/start/goal 렌더 hash 및 seed와 observation의 대응이 run마다 달라질 수 있다. 전체 성능 차이를 지연만의 paired causal effect나 일반적인 성능 곡선으로 주장하지 않는다. D750 mismatch 통계는 단 1개 유효 pair이므로 감소/증가 추세 판단에 쓸 수 없다. Staging/Graph closed-loop 성능·우월성, Topomap navigation 및 비관측 미래 구간은 미검증이다. 최초 sweep 단계에서는 추가 실험·Graph·figure·GUI·영상을 수행하지 않았다.
 
 Raw는 `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/uniform_d{250,500,750}_01/`, offline audit는 `uniform_audit_d{0,250,500,750}_01/`, 집계는 `uniform_sweep_report_01/`에 별도 보존했다. 큰 raw/NPZ/환경/cache는 Git에서 제외한다. [전체 비교 CSV](../research/results/isaac6_uniform_latency_20261017/comparison.csv), [수치 summary](../research/results/isaac6_uniform_latency_20261017/summary.json), 각 조건의 `pairs.csv`/`timing.csv`/input hash와 검증 JSON만 작은 결과로 추적한다.
+
+## 후속 요청: 각 조건의 실제 주행 그래프
+
+사용자의 추가 요청으로 저장된 72 Hz world pose만 사용해 [4조건 비교 그림](../research/results/isaac6_uniform_latency_20261017/plots/uniform_navigation_comparison.svg) 및 개별 [D0](../research/results/isaac6_uniform_latency_20261017/plots/D0_world_xy.svg), [D250](../research/results/isaac6_uniform_latency_20261017/plots/D250_world_xy.svg), [D500](../research/results/isaac6_uniform_latency_20261017/plots/D500_world_xy.svg), [D750](../research/results/isaac6_uniform_latency_20261017/plots/D750_world_xy.svg)를 생성했다. 동일 축 범위에서 실제 경로·진행 방향·장애물·start/goal·최종 9 cm footprint를 표시한다. 점선은 벽에서 agent radius를 뺀 중심 한계이며 장애물 safety margin과 다르다. Native prediction이나 가상 connector는 표시하지 않는다.
+
+새 navigation/inference 0회, 결과 및 판정 변경 없음. Plot 입력 472개 hash를 생성 전후 대조하고 start/end pose, 72 Hz 시간 간격, goal entry와 최소 goal 거리를 기존 summary와 확인했다. 개별 4장과 비교 1장의 PNG/SVG를 육안 확인했다. PNG는 `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/uniform_navigation_plots_01/`에, 작은 SVG 및 [manifest](../research/results/isaac6_uniform_latency_20261017/plots/manifest.json)는 Git에 보존한다.
