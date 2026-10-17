@@ -1,0 +1,68 @@
+{
+  "scope": "CPU preprocessing and saved-data verification; no navigation or inference",
+  "official_preprocessing_shape": [
+    1,
+    12,
+    96,
+    96
+  ],
+  "preprocessed_history_magenta_pixels": [
+    0,
+    0,
+    0,
+    2491
+  ],
+  "fresh_id": 50,
+  "history_observation_ids": [
+    51,
+    52,
+    53,
+    54
+  ],
+  "history_sim_s": [
+    12.75,
+    12.98611111111111,
+    13.25,
+    13.5
+  ],
+  "history_sha256": "1cf9fb517c053a53ad55c876276d374ae5c350601022b456472e51b52d5406b2",
+  "raw_rgb_and_actual_worker_history_hash_match": true,
+  "old_seed": [
+    199,
+    200
+  ],
+  "fresh_seed": [
+    201,
+    202
+  ],
+  "spawn_relative_obstacle_forward_left_m": [
+    0.30762717039526805,
+    0.4120489496302312
+  ],
+  "spawn_obstacle_center_bearing_deg": 53.25574722371493,
+  "spawn_translation_difference_from_selection_baseline_m": 0.09470149688180174,
+  "spawn_signed_yaw_difference_from_selection_baseline_deg": -32.62516829503775,
+  "first_fresh_observation_to_ready_wall_ms": 84.624903,
+  "first_fresh_observation_to_switch_wall_ms": 166.34885,
+  "first_fresh_gpu_ms": 29.589732,
+  "protected_sources_unchanged": [
+    "research/nomad_isaac/async_core.py",
+    "research/nomad_isaac/worker.py",
+    "research/nomad_isaac/common.py",
+    "research/nomad_isaac/clearance.py",
+    "research/nomad_preflight/native.py",
+    "deployment/src/pd_controller.py",
+    "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+    "research/nomad_isaac/handoff_audit.py",
+    "research/nomad_isaac/async_handoff_protocol.json"
+  ],
+  "official_train_and_deployment_diff_empty": true,
+  "prior_input_hashes_verified": 698,
+  "new_run_input_hashes_verified": 565,
+  "manual_rgb_review": "RGB 53 has no magenta object; RGB 54 shows the magenta box along the left edge",
+  "instance_mask_verification": "FAILED_all_zero; raw label mapping unavailable",
+  "figure_visual_review": "One comparison figure: equal XY scales, actual points, B, entry and original RGB; no clipped content",
+  "raw_data_modified": false,
+  "navigation_runs": 1,
+  "retry_count": 0
+}

@@ -283,3 +283,16 @@ Plot 입력 472개 hash 불변, 시작/종료 pose·72 Hz 시각·goal metric �
 사용자 요청으로 `8e157a7`에서 `research/isaac6-sudden-obstacle`을 만들었다. [Protocol](SUDDEN_OBSTACLE_PROTOCOL.md)과 새 scenario를 실제 실행 전에 `b2155f0`에 고정했다. 중심 `(2.45,-.18)` m, 크기 `(.35,.35,.8)` m, spawn tick 970 / 13.472222222 s, 추가 delivery latency 0 ms, navigation 1회/재시도 없음.
 
 기준 성공 run의 spawn pose clearance .127289 m, OLD 49의 새 장애물 full/prefix clearance −.09/.037442 m를 선정 근거로 보존했다. USD time-sampled visibility와 integer-tick collision gate를 추가했으며 첫 active tick의 zero-duration 검사/이전 interval 소급 제외/다음 full swept 검사 및 기존 async/geometry tests **30 passed (0.15 s)**. 원본 controller/model/core/clearance와 정적 scenario 불변, 기존 698개 입력 hash 보존. RGB·instance mask를 observation별 저장하고 최초 visible FRESH의 실제 worker history hash와 대조한다. 결과에 따라 위치·크기·seed를 바꾸지 않는다.
+
+
+## Sudden obstacle pilot — 단일 실행 결과
+
+2026-10-17~18 KST. [상세 결과](SUDDEN_OBSTACLE_PILOT.md). Clean runtime `4dbea71`, navigation **1회**, 재시도/geometry·seed 조정 0회. 추가 delivery latency 0 ms.
+
+1. Tick 970 / 13.472222222 sim s에 중심 `(2.45,-.18)` m, 크기 `(.35,.35,.8)` m 장애물이 활성화됐다. 실제 spawn pose `(1.977326927,.022482045,-1.334215243 rad)`, footprint clearance .208938993 m. 이전 970 rows에서 collision 비활성, 이후 1,456개 swept 검사를 재계산했다.
+2. Instance mask는 모든 135 frames에서 0 / 빈 ID를 기록해 **계측 FAILED**. Label mapping 원본 미보존으로 정확한 원인은 확정하지 않았다. 주행을 반복하지 않고 원본 RGB 53/54를 직접 확인했으며 기존 magenta 식을 전체 RGB에 적용하는 offline 복구를 명시했다. 출현 전 54개 RGB 모두 0 pixels, 첫 visible RGB 54 / 13.5 s에서 20,602 pixels. Raw mask와 metadata는 그대로 보존했다.
+3. 최초 visible FRESH **50**, history [51,52,53,54] / [12.75,12.986111111,13.25,13.5] s. 전체 131 worker input hash 일치. 원본 CPU preprocessing의 마지막 frame에 2,491 pixels가 남으며 최초 3 frames는 0. OLD **49**, 실제 FRESH switch 13.666666667 s, B `(1.986426397,-.015327282,-1.335025651 rad)`. FRESH 관측/적용 근거는 RGB로 확인했으며 mask gate PASS로 바꾸지 않았다.
+4. OLD/FRESH 새 장애물 full clearance .101933001/.171541004 m, prefix .161912916/.171541004 m. **OLD_SAFE_FRESH_SAFE**. 출현→switch의 실제 OLD 이동 .038888889 m, yaw −.046433°, dynamic clearance .198573583 m. 실제 FRESH 다음 switch까지 .189413022 m로 안전했다. Position RMSE .073165248 m / tangent heading RMS 28.158651°지만 B→entry .034522079 m, tangent 차이 2.674131°, connector clearance .188255291 m, 16/16 entries 안전. **ALREADY_CONSISTENT / NO_QUALIFIED_CANDIDATE**.
+5. Goal entry 33.680555556 s, min goal .298252070 m. Static 1/2/dynamic minimum swept clearance .073508257/.566122074/.180577735 m, overlap/corridor 침범 없음. Corridor clearance .013217019 m는 containment를 만족하나 .02 m wall margin을 주장하지 않는다. Warm GPU median/p95 29.689112/31.502001 ms, pacing p95/max .152915/1.384874 ms, RTF .999996807. Request/receive/switch 131/131/131, busy skip 1, miss 0, timeout 0(자연 timeout 미검증), 기존 async 검증 PASS.
+6. Baseline과 실제 spawn pose가 9.47 cm/−32.63° 달라 OLD 위험이 재현되지 않았다. Actual obstacle center bearing 53.26°로 왼쪽 RGB에 부분 출현했다. Noise/DDPM seed 199/200→201/202 차이도 존재해 안전한 FRESH의 생성이나 revision을 장애물 반응만의 효과로 주장하지 않는다. Graph가 해결할 후보는 없었다.
+7. 기존 698/new 565 input hashes 보존, 공식 train/deployment 및 보호 source 9개 불변. 원래 mask audit와 첫 RGB 복구 float32 JSON export 실패 기록을 보존하고 최종 offline audit를 별도 폴더에 생성했다. Source·작은 CSV/JSON·원본 RGB를 포함한 비교 SVG 한 장을 추가했다. Runtime 계측 실패는 그대로 공개하며 추가 navigation/inference/Graph/Topomap/영상/환경 변경 없음.

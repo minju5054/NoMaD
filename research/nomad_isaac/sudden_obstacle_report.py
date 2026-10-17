@@ -16,7 +16,7 @@ from .common import ROOT, local_to_world, sha256_file, write_json
 from .handoff_audit import path_safety, correspondence, boundary_entries, classify
 
 
-def analyze(run, output):
+def analyze(run, output, rgb_visibility_recovery=False):
     output.mkdir(parents=True, exist_ok=False)
     preserved = json.loads((run.parent/"sudden_obstacle_preservation_01.json").read_text())
     assert all(sha256_file(Path(p)) == h for p, h in preserved.items())
@@ -65,7 +65,7 @@ def analyze(run, output):
                                    config["corridor"], config["agent_radius_m"])
             assert abs(c-static[i]["corridor_lower_m"]) < 1e-11
 
-    image_arrays = {}
+    image_arrays, rgb_evidence_rows = {}, []
     for o in observations:
         image = np.array(Image.open(run/o["rgb_file"]).convert("RGB"))
         mask = np.array(Image.open(run/o["dynamic_mask_file"])) > 0
@@ -76,14 +76,30 @@ def analyze(run, output):
         assert int(mask.sum()) == d["instance_pixels"]
         assert d["visible"] == (int(mask.sum()) >= dynamic["minimum_visible_pixels"])
         if not d["active"]: assert not mask.any()
+        rgb = image.astype(float)
+        # Same predeclared magenta rule; apply to saved RGB, not the empty instance mask.
+        rgb_mask = ((rgb[:, :, 0] > 1.5*rgb[:, :, 1]) & (rgb[:, :, 2] > 1.5*rgb[:, :, 1]) &
+                    (rgb[:, :, 0] > 40) & (rgb[:, :, 2] > 40))
+        resized = np.array(Image.fromarray(rgb_mask.astype(np.uint8)*255).resize((96, 96), Image.Resampling.NEAREST))
+        rgb_evidence_rows.append({"observation_id": o["observation_id"], "simulation_time_s": o["observation_sim_s"],
+            "active": d["active"], "recorded_instance_pixels": d["instance_pixels"],
+            "rgb_magenta_pixels": int(rgb_mask.sum()), "resized_96_mask_pixels": int(np.count_nonzero(resized)),
+            "rgb_file": o["rgb_file"], "frame_sha256": o["frame_sha256"]})
         image_arrays[o["observation_id"]] = image
     for q, worker in zip(requests, workers):
         ids = q["history_observation_ids"]
         assert q["history_dynamic"] == [obs[i]["dynamic"] for i in ids]
         history = np.stack([image_arrays[i] for i in ids])
         assert hashlib.sha256(history.tobytes()).hexdigest() == worker["history_sha256"]
-    visible = [o for o in observations if o["dynamic"]["visible"]]
-    fresh_requests = [r for r in received if any(d["visible"] for d in r["history_dynamic"])]
+    if rgb_visibility_recovery:
+        assert all(o["dynamic"]["instance_pixels"] == 0 for o in observations)
+        assert max(r["rgb_magenta_pixels"] for r in rgb_evidence_rows if not r["active"]) == 0
+        visible_ids = {r["observation_id"] for r in rgb_evidence_rows if r["active"] and
+                       r["rgb_magenta_pixels"] >= dynamic["minimum_visible_pixels"]}
+    else:
+        visible_ids = {o["observation_id"] for o in observations if o["dynamic"]["visible"]}
+    visible = [o for o in observations if o["observation_id"] in visible_ids]
+    fresh_requests = [r for r in received if visible_ids.intersection(r["history_observation_ids"])]
     first_visible = visible[0] if visible else None
     fresh = fresh_requests[0] if fresh_requests else None
     spawn = raw["dynamic_obstacle"]["spawn"]
@@ -105,7 +121,7 @@ def analyze(run, output):
                       ("origin_prefix", np.vstack([r["observation_pose"][:2], world[:3]])))}
                      for scope, scenario in (("dynamic_only", solo), ("all_obstacles", both))}
         prediction_rows.append({"id": j, "observation_sim_s": r["observation_sim_s"], "applied": j in by_event,
-            "includes_visible_dynamic": any(d["visible"] for d in r["history_dynamic"]),
+            "includes_visible_dynamic": bool(visible_ids.intersection(r["history_observation_ids"])),
             **{f"{scope}_{part}_{key}": value for scope, parts in checks[j].items() for part, result in parts.items()
                for key, value in result.items() if key in ("safe", "obstacle_clearance_m", "corridor_clearance_m")}})
 
@@ -145,7 +161,7 @@ def analyze(run, output):
         entry = boundary_entries(worlds[fresh["id"]], boundary, both, protocol)
         label = classify(checks[fresh["id"]]["all_obstacles"]["full"], overlap, entry, protocol)
         geometry = {"classification": label, "overlap": overlap, "entry": entry,
-                    "selected_point_semantics": selected_point_semantics(locals_[fresh["id"]][2], fresh["observation_pose"], boundary)}
+                    "selected_point_semantics": selected_point_semantics(locals_[fresh["id"]][2].tolist(), fresh["observation_pose"], boundary)}
     prediction_case = "INSUFFICIENT_EVIDENCE"
     if old and fresh:
         old_safe = checks[old["id"]]["dynamic_only"]["full"]["safe"]
@@ -153,7 +169,8 @@ def analyze(run, output):
         prediction_case = ("OLD_SAFE_FRESH_SAFE" if old_safe and fresh_safe else
                            "OLD_UNSAFE_FRESH_SAFE" if fresh_safe else
                            "OLD_UNSAFE_FRESH_UNSAFE" if not old_safe else "OLD_SAFE_FRESH_UNSAFE")
-    rgb_evidence = bool(first_visible and first_visible["dynamic"]["magenta_pixels"] >= dynamic["minimum_visible_pixels"])
+    rgb_evidence = bool(first_visible and (rgb_visibility_recovery or
+        first_visible["dynamic"]["magenta_pixels"] >= dynamic["minimum_visible_pixels"]))
     verdict = "INSUFFICIENT_EVIDENCE"
     if geometry and rgb_evidence and runtime["async_reproduction"] == "PASS":
         if geometry["classification"] == "POTENTIAL_RECONCILIATION_CASE" and waiting["safe"]:
@@ -183,7 +200,9 @@ def analyze(run, output):
         "fresh_selected_waypoint_m": fresh["selected_waypoint_m"] if fresh else None,
         "fresh_controller_vw": [event["v_m_s"], event["w_rad_s"]] if event else None,
         "first_visible_observation": first_visible, "fresh_history_ids": fresh["history_observation_ids"] if fresh else None,
-        "visible_history_ids": [i for i in fresh["history_observation_ids"] if obs[i]["dynamic"]["visible"]] if fresh else [],
+        "visible_history_ids": [i for i in fresh["history_observation_ids"] if i in visible_ids] if fresh else [],
+        "visibility_selection_source": "OFFLINE_RGB_RECOVERY" if rgb_visibility_recovery else "RECORDED_INSTANCE_MASK",
+        "rgb_visibility_evidence": rgb_evidence_rows,
         "old_observation_pose": old["observation_pose"] if old else None,
         "fresh_observation_pose": fresh["observation_pose"] if fresh else None,
         "old_world_xy_m": worlds[old["id"]].tolist() if old else None,
@@ -195,12 +214,15 @@ def analyze(run, output):
         "post_visible_safe_prefix_prediction_ids": [r["id"] for r in prediction_rows if r["includes_visible_dynamic"] and r["all_obstacles_prefix_safe"]],
         "navigation": {k:raw[k] for k in ("goal_entry", "termination_reason", "simulation_duration_s", "minimum_goal_distance_m", "final_pose", "dynamic_obstacle", "obstacle_evaluation", "combined_avoidance_success")},
         "runtime": {k:runtime[k] for k in ("async_reproduction", "pacing", "warm_inference_ms", "timeout", "requests", "received", "switches", "busy_observation_skips", "missed_capture_slots")},
-        "validation": {"all_rgb_history_worker_hashes": "PASS", "visibility_evidence": "PASS" if rgb_evidence else "INSUFFICIENT_EVIDENCE",
+        "validation": {"all_rgb_history_worker_hashes": "PASS",
+            "visibility_evidence": ("RGB_CONFIRMED_MASK_CHANNEL_FAILED" if rgb_visibility_recovery else "PASS") if rgb_evidence else "INSUFFICIENT_EVIDENCE",
             "inactive_before_spawn_and_zero_duration_activation": "PASS", "dynamic_and_corridor_clearance_recomputed": "PASS",
             "input_count": len(hashes), "preserved_previous_inputs": len(preserved)},
         "limitations": ["Fixed-goal adapter; single pilot; no counterfactual execution or Graph",
                         "Appearance keyed to logical simulation timestamp; RGB sampled at 4 Hz",
-                        "Paths observation-anchored; no native yaw or waypoint time", "Safe polyline is not a guarantee of original PD execution"]}
+                        "Paths observation-anchored; no native yaw or waypoint time", "Safe polyline is not a guarantee of original PD execution",
+                        "Instance path matching recorded zero IDs; RGB recovery is an explicit offline instrumentation correction, not a successful instance-mask gate"
+                        if rgb_visibility_recovery else "Instance-mask gate used without RGB recovery"]}
     with (output/"predictions.csv").open("x") as f:
         writer = csv.DictWriter(f, fieldnames=list(prediction_rows[0]), lineterminator="\n")
         writer.writeheader(); writer.writerows(prediction_rows)
@@ -215,4 +237,5 @@ def analyze(run, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", type=Path, required=True); parser.add_argument("--output", type=Path, required=True)
-    args = parser.parse_args(); analyze(args.run.resolve(), args.output.resolve())
+    parser.add_argument("--rgb-visibility-recovery", action="store_true", help="Preserve failed masks; use predeclared magenta rule on saved RGB only")
+    args = parser.parse_args(); analyze(args.run.resolve(), args.output.resolve(), args.rgb_visibility_recovery)

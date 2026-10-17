@@ -1,0 +1,544 @@
+{
+  "async_reproduction": "PASS",
+  "real_time_pacing_pass": true,
+  "inference_clock_mapping_pass": true,
+  "switch_tick_mismatch_ids": [],
+  "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/sudden_obstacle_01",
+  "execution_git_sha": "4dbea71978954cbad06ec2de6b710c2b9a66b60b",
+  "execution_git_status": "",
+  "requests": 131,
+  "received": 131,
+  "switches": 131,
+  "control_refreshes": 304,
+  "pose_rows": 2426,
+  "initial_stop_pose_error": 0.0,
+  "warm_inference_ms": {
+    "n": 130,
+    "median": 29.6891115,
+    "p95": 31.5020009,
+    "min": 28.042915,
+    "max": 34.760956
+  },
+  "cold_inference_ms": 274.843132,
+  "timing": {
+    "observation_to_ready_wall_s": {
+      "n": 131,
+      "median": 0.085799588,
+      "p95": 0.09057860300000001,
+      "min": 0.079947732,
+      "max": 0.338374144
+    },
+    "observation_to_switch_wall_s": {
+      "n": 131,
+      "median": 0.165611942,
+      "p95": 0.19419095800000002,
+      "min": 0.083645951,
+      "max": 0.362315188
+    },
+    "observation_to_switch_sim_s": {
+      "n": 131,
+      "median": 0.1666666666666643,
+      "p95": 0.20833333333333215,
+      "min": 0.09722222222222321,
+      "max": 0.375
+    },
+    "rgb_available_to_ready_wall_s": {
+      "n": 131,
+      "median": 0.032255958,
+      "p95": 0.034116725,
+      "min": 0.030523026,
+      "max": 0.281196357
+    },
+    "rgb_available_to_switch_wall_s": {
+      "n": 131,
+      "median": 0.109308758,
+      "p95": 0.142324273,
+      "min": 0.034221245,
+      "max": 0.305137401
+    },
+    "ready_to_received_wall_s": {
+      "n": 131,
+      "median": 0.002104222,
+      "p95": 0.0027388955,
+      "min": 0.001863212,
+      "max": 0.021022936
+    },
+    "received_to_switch_wall_s": {
+      "n": 131,
+      "median": 0.071412737,
+      "p95": 0.1074806425,
+      "min": 0.001351533,
+      "max": 0.110346781
+    },
+    "render_s": {
+      "n": 131,
+      "median": 0.053431335,
+      "p95": 0.057002016,
+      "min": 0.049424706,
+      "max": 0.114890206
+    },
+    "request_delay_wall_s": {
+      "n": 131,
+      "median": 0.05368481,
+      "p95": 0.057268956,
+      "min": 0.049670065,
+      "max": 0.115248821
+    },
+    "dispatch_to_infer_start_wall_s": {
+      "n": 131,
+      "median": 0.002189275,
+      "p95": 0.0027936755,
+      "min": 0.001819318,
+      "max": 0.006072789
+    },
+    "pose_age_at_capture_start_s": {
+      "n": 131,
+      "median": 0.000959133,
+      "p95": 0.014795101500000001,
+      "min": 0.000771224,
+      "max": 0.015356575
+    },
+    "switch_translation_from_observation_m": {
+      "n": 131,
+      "median": 0.03055531533730693,
+      "p95": 0.04165461138601914,
+      "min": 0.0,
+      "max": 0.04998490626101376
+    },
+    "switch_abs_yaw_from_observation_rad": {
+      "n": 131,
+      "median": 0.035212311845247424,
+      "p95": 0.0777777777777775,
+      "min": 0.0,
+      "max": 0.08512138937048075
+    }
+  },
+  "old_motion_full_intervals_only": {
+    "distance_m": {
+      "n": 130,
+      "median": 0.002777777777777778,
+      "p95": 0.005555555555555556,
+      "min": 0.0012792261938254037,
+      "max": 0.005555555555555556
+    },
+    "abs_net_yaw_rad": {
+      "n": 130,
+      "median": 0.0036279486352042145,
+      "p95": 0.011111111111111072,
+      "min": 2.07221220271947e-05,
+      "max": 0.011111111111111072
+    },
+    "nonzero_request_count": 130,
+    "nonzero_request_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130
+    ],
+    "meaning": "Sum of complete executed intervals inside GPU inference wall window, valid previous commands only; excludes first inference"
+  },
+  "pacing": {
+    "absolute_pose_error_s": {
+      "n": 2426,
+      "median": 0.00010072594444388017,
+      "p95": 0.00015291455555743738,
+      "min": 2.3613999999838597e-05,
+      "max": 0.0013848739999993143
+    },
+    "real_time_factor": 0.9999968069380308,
+    "late_more_than_one_tick": 0,
+    "inference_clock_mapping_abs_error_s": {
+      "n": 131,
+      "median": 1.8928369274005125e-05,
+      "p95": 0.00011913635199785506,
+      "min": 5.427217121267702e-07,
+      "max": 0.0002460005272161142
+    },
+    "actual_pose_interval_wall_s": {
+      "n": 2425,
+      "median": 0.013888167999997592,
+      "p95": 0.013949579000001221,
+      "min": 0.012605596000000219,
+      "max": 0.015172982999999363
+    },
+    "actual_control_interval_wall_s": {
+      "n": 303,
+      "median": 0.111108747,
+      "p95": 0.1121552406,
+      "min": 0.109041287,
+      "max": 0.112880164
+    }
+  },
+  "timeout": {
+    "episodes": 0,
+    "expired_control_ticks": 0,
+    "runtime_status": "NOT_EXERCISED_no_natural_timeout",
+    "synthetic_exact_timeout": "PASS"
+  },
+  "busy_observation_skips": 1,
+  "missed_capture_slots": 0,
+  "capture_count": 135,
+  "terminal_unapplied_requests": [],
+  "goal_entry": true,
+  "minimum_goal_distance_m": 0.2982520700113948,
+  "termination_reason": "goal_entry",
+  "simulation_duration_s": 33.68055555555556,
+  "navigation_wall_seconds": 33.6806631,
+  "obstacle_evaluation": {
+    "category": "avoidance_and_goal_success",
+    "avoidance_success": true,
+    "geometric_overlap": false,
+    "first_contact": null,
+    "safety_margin_met": true,
+    "minimum_swept_clearance_lower_m": 0.0735082569350981,
+    "minimum_swept_clearance_upper_m": 0.07350999807820785,
+    "minimum_corridor_clearance_lower_m": 0.013217019018370841,
+    "corridor_containment_certified": true,
+    "passage": {
+      "StaticObstacle1": {
+        "side": "left_positive_y",
+        "simulation_time_s": 11.375,
+        "pose": [
+          1.7915941013276697,
+          0.3932951385247218,
+          -0.8273220561836645
+        ]
+      },
+      "StaticObstacle2": {
+        "side": "right_negative_y",
+        "simulation_time_s": 27.88888888888889,
+        "pose": [
+          3.341044478050741,
+          -0.8328270964199757,
+          0.8693280325190429
+        ]
+      }
+    },
+    "collision_detection_period_s": 0.013888888888888888,
+    "obstacles": {
+      "StaticObstacle1": {
+        "category": "avoidance_and_goal_success",
+        "avoidance_success": true,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "minimum_swept_clearance_lower_m": 0.0735082569350981,
+        "minimum_swept_clearance_upper_m": 0.07350999807820785,
+        "safety_margin_met": true,
+        "minimum_corridor_clearance_lower_m": 0.013217019018370841,
+        "corridor_containment_certified": true,
+        "passage": {
+          "side": "left_positive_y",
+          "simulation_time_s": 11.375,
+          "pose": [
+            1.7915941013276697,
+            0.3932951385247218,
+            -0.8273220561836645
+          ]
+        },
+        "collision_detection_period_s": 0.013888888888888888
+      },
+      "StaticObstacle2": {
+        "category": "avoidance_and_goal_success",
+        "avoidance_success": true,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "minimum_swept_clearance_lower_m": 0.5661220736678471,
+        "minimum_swept_clearance_upper_m": 0.5661220807254304,
+        "safety_margin_met": true,
+        "minimum_corridor_clearance_lower_m": 0.013217019018370841,
+        "corridor_containment_certified": true,
+        "passage": {
+          "side": "right_negative_y",
+          "simulation_time_s": 27.88888888888889,
+          "pose": [
+            3.341044478050741,
+            -0.8328270964199757,
+            0.8693280325190429
+          ]
+        },
+        "collision_detection_period_s": 0.013888888888888888
+      }
+    }
+  },
+  "validation": {
+    "status": "PASS",
+    "max_pose_integration_error": 0.0,
+    "normalization_cumsum_metric_selection": "exact",
+    "controller_matches_original": true,
+    "observation_world_anchor_matches_planning": true,
+    "checkpoint_coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "previous_baseline_hashes_unchanged": 484,
+    "swept_clearance_recomputed": {
+      "StaticObstacle1": 0.0735082569350981,
+      "StaticObstacle2": 0.5661220736678472
+    }
+  },
+  "synchronous_baseline": {
+    "requests": 237,
+    "warm_inference_ms": {
+      "n": 236,
+      "median": 29.593555000000002,
+      "p95": 32.385771000000005,
+      "min": 26.787421,
+      "max": 38.074266
+    },
+    "observation_timestamp_note": "Legacy t_obs is assigned AFTER RGB capture; async t_obs is capture start. Compare RGB-available delays for aligned host-time semantics.",
+    "observation_to_ready_wall_s": {
+      "n": 237,
+      "median": 0.031329202,
+      "p95": 0.04031339219999999,
+      "min": 0.028117582,
+      "max": 0.278530249
+    },
+    "observation_to_switch_wall_s": {
+      "n": 237,
+      "median": 0.036237818,
+      "p95": 0.0440222328,
+      "min": 0.031247566,
+      "max": 0.300208629
+    },
+    "observation_to_switch_sim_s": {
+      "n": 237,
+      "median": 0.027777777777778567,
+      "p95": 0.08333333333333215,
+      "min": 0.0,
+      "max": 0.08333333333333326
+    },
+    "old_motion_during_inference_m": 0.0,
+    "old_yaw_during_inference_rad": 0.0,
+    "switch_translation_from_observation_m": {
+      "n": 237,
+      "median": 0.005555555552120141,
+      "p95": 0.01666665237267041,
+      "min": 0.0,
+      "max": 0.016666666480823905
+    },
+    "switch_abs_yaw_from_observation_rad": {
+      "n": 237,
+      "median": 0.0046657494361608265,
+      "p95": 0.030832758812175207,
+      "min": 0.0,
+      "max": 0.03333333333333366
+    },
+    "goal_entry": false,
+    "minimum_goal_distance_m": 0.663054557800859,
+    "obstacle_evaluation": {
+      "category": "no_collision_goal_failure",
+      "avoidance_success": false,
+      "geometric_overlap": false,
+      "first_contact": null,
+      "safety_margin_met": true,
+      "minimum_swept_clearance_lower_m": 0.10384043954840719,
+      "minimum_swept_clearance_upper_m": 0.10384152431146179,
+      "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+      "corridor_containment_certified": true,
+      "passage": {
+        "StaticObstacle1": {
+          "side": "left_positive_y",
+          "simulation_time_s": 11.11111111111111,
+          "pose": [
+            1.8203574890461294,
+            0.8973786063510013,
+            0.36064147566454363
+          ]
+        },
+        "StaticObstacle2": {
+          "side": "left_positive_y",
+          "simulation_time_s": 19.13888888888889,
+          "pose": [
+            3.371604190999277,
+            1.0464870427487853,
+            -0.3393747707893252
+          ]
+        }
+      },
+      "collision_detection_period_s": 0.013888888888888888,
+      "obstacles": {
+        "StaticObstacle1": {
+          "category": "no_collision_goal_failure",
+          "avoidance_success": false,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.10384043954840719,
+          "minimum_swept_clearance_upper_m": 0.10384152431146179,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "left_positive_y",
+            "simulation_time_s": 11.11111111111111,
+            "pose": [
+              1.8203574890461294,
+              0.8973786063510013,
+              0.36064147566454363
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        },
+        "StaticObstacle2": {
+          "category": "no_collision_goal_failure",
+          "avoidance_success": false,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.12270646452160615,
+          "minimum_swept_clearance_upper_m": 0.12270703351174442,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.21711240818329774,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "left_positive_y",
+            "simulation_time_s": 19.13888888888889,
+            "pose": [
+              3.371604190999277,
+              1.0464870427487853,
+              -0.3393747707893252
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Canonical SE2 executed at 72 Hz; USD camera holds 4 Hz capture snapshots, not independent PhysX dynamics",
+    "Timing mapping interpolates existing wall/simulation samples; direct OLD evidence uses only complete measured intervals",
+    "One scenario/run; changed observation/seed association prevents causal attribution to asynchrony alone",
+    "No native waypoint yaw/timestamps, topomap, graph, video or GUI in this validator",
+    "No artificial latency injected"
+  ]
+}

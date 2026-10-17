@@ -23,3 +23,9 @@ OLD는 spawn 직전 적용 중인 prediction, FRESH는 새 장애물이 보이�
 Dynamic-only와 모든 장애물 full 8-point/prefix 0→1→2 clearance를 따로 계산한다. Actual OLD 구간은 spawn부터 최초 FRESH switch/종료까지로 하되 intervening command ID를 명시한다. Actual FRESH 구간은 switch부터 다음 switch/종료까지다. 기존 clearance, correspondence, entry 및 `async_handoff_protocol.json` thresholds를 유지한다. .02 m obstacle safety margin, corridor containment >0, heading segment >=.02 m, common overlap >=.10 m를 바꾸지 않는다.
 
 OLD prediction 위험+안전한 FRESH / 양쪽 위험 / 양쪽 안전 / 실제 OLD 실행 충돌 / FRESH 관측·적용 근거 부족을 분리한다. Safe FRESH가 있어도 B→entry 단순 staging이 안전하면 Graph 후보로 만들지 않는다. 실제 충돌, 미실행 predicted tail, 미실행 connector 위험을 분리한다. 최초 FRESH 이후 안전한 FRESH의 존재 여부는 저장 결과만 추가 집계한다. 유효 pair가 있으면 비교 그림 한 장만 만든다. Graph/Topomap/새 controller/smoothing/영상은 구현하지 않는다.
+
+## 실행 후 계측 제한 및 offline 복구
+
+단일 실행에서 instance path matching이 모든 frame에 대해 빈 ID 목록/0 mask를 기록했다. 그러나 원본 RGB 54번(t=13.5 s)에 magenta 장애물이 직접 보인다. Instance label 원본 mapping을 저장하지 않아 빈 matching의 정확한 원인은 이번 기록만으로 확정할 수 없다. Mask gate는 실패로 남기고 첫 mask 기반 audit도 `sudden_obstacle_audit_01`에 보존한다. Runtime mask 계측을 고쳤다고 주장하거나 navigation을 다시 실행하지 않는다.
+
+최초 FRESH의 RGB 입력 확인만 별도 offline 분석으로 복구한다. 기존 magenta 식 `R>1.5G, B>1.5G, R>40, B>40` 및 20 pixels 기준을 그대로 전체 RGB에 적용한다. 모든 spawn 이전 RGB의 검출 수가 0이어야 하고, 최초 검출 이미지를 직접 확인한다. 기존 raw RGB/0 mask/metadata는 수정하지 않는다. Worker의 실제 4-frame input hash 대조는 그대로 수행한다. 이 복구는 명시적인 계측 방법 변경이며 instance-mask PASS와 구분한다. Geometry/correspondence/안전성/Graph thresholds 및 최초 visible accepted-request 선정 순서는 바꾸지 않는다.
