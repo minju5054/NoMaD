@@ -260,3 +260,14 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 1. D0는 `async_wide_wall_01`을 재사용하고 D250/D500/D750 각 1회, 고정 순서로 실행한다. 모든 accepted result(초기 및 terminal-unapplied 포함)에 IPC packet 수신 후 동일 d를 적용한다. 기존 single-trigger class의 AST가 변하지 않았고 기존 core/controller/model/scene/checkpoint/좌표/clearance/seed schedule을 유지했다.
 2. 새 uniform 정책과 deadline/timeout/OLD window 분리 및 기존 async/geometric tests **30 passed (0.09 s)**. D0 93개 handoff를 새 offline 분석으로 재계산해 이전 class 및 position/heading mismatch median/p95/max가 일치했다. 실패 run과 unapplied result도 분석하며 실제 OLD 위험과 geometric class를 별도 기록한다.
 3. Baseline 205개 + 직전 controlled run 226개, 총 **431개** input hash를 실행 전 확인·보존했다. 새 결과는 별도 raw/audit 폴더에 저장하며 원본을 덮어쓰지 않는다. 추가 figure/GUI/영상/Graph/Topomap은 만들지 않는다.
+
+## Full-run uniform latency sweep — 실제 결과
+
+2026-10-17. [상세 보고서](UNIFORM_LATENCY_SWEEP.md). Clean runtime `25bed71995c406be270441854bd1c4a7c32af394`에서 D250/D500/D750 각 1회, 재시도 없이 완료했다. 모든 process exit 0, D0 navigation 재실행 없음.
+
+1. 모든 accepted result 45/45, 23/23, 18/18에 동일 전달 지연 적용을 확인했다. 실측 packet→release median 250.075/500.074/750.072 ms, warm GPU median/p95 30.129/31.938, 30.544/32.188, 30.150/33.486 ms. 실제 GPU delay와 post-inference delivery delay를 구분했다.
+2. 새 3개 run 모두 corridor footprint 침범으로 goal 실패, 종료 23.18056/17.30556/18.31944 sim s. 최소 goal 거리 2.47177/2.62027/2.43429 m. 장애물 overlap/2 cm margin 위반은 0회이며 corridor 실패와 구분했다. 첫 장애물 왼쪽 통과, 둘째 통과 전 중단. D0의 성공 결과를 보존했다.
+3. 실제 handoff OLD 이동 median은 D0/D250/D500/D750 .02778/.08056/.12500/.18333 m, yaw median 1.15/8.28/12.09/20.69°. 모든 soft real-time/clock/output/controller/pose 검증 PASS. 새 run pacing p95 <.156 ms, max <1.575 ms. D750은 1초 timeout 2회와 실제 zero-motion intervals를 확인했고 나머지는 자연 timeout 없음.
+4. 실제 handoff 수 93/44/21/16, 유효 correspondence 87/24/4/1. Qualified candidate 전부 0개. 새 조건의 classifiable fraction은 59.09/19.05/6.25%로 기존 90% negative-verdict 기준에 못 미쳐 **INSUFFICIENT_EVIDENCE**. D0만 기존 **NO_QUALIFIED_CANDIDATE** 유지. 가능한 entry는 모두 안전한 staging connector가 하나 이상 있었으며 큰 RMSE/방향 변화만으로 Graph 후보를 만들지 않았다.
+5. D250 FRESH 23/28은 tail unsafe이나 prefix/실제 실행은 안전했다. 마지막 적용 ID 44/21/16의 실제 PD 실행은 corridor를 침범했지만 correspondence/prefix heading이 무효라 candidate 판정 보류. D500 pending ID 22는 GPU inference 중 OLD 21이 위험해졌고 FRESH도 corridor unsafe. D750 pending ID 17은 안전한 prediction이나 delivery hold 중 OLD 16이 corridor를 침범했다. 두 pending 결과에 실제 switch B를 만들지 않고 OLD_EXECUTION_RISK로 별도 보존했다.
+6. 이전 431개 입력 hash와 새 251개 audit 입력 hash 보존, 보호 source 11개 및 checkpoint 불변. Source/문서/약 349 KB의 작은 CSV·JSON만 추적하고 raw는 별도 artifacts에 유지한다. D0와 새 run 간 RGB/seed-observation 대응 차이 및 단일 시행의 인과 해석 한계를 명시했다. Graph/Topomap/추가 주행·시각화·영상·GUI·환경 변경 없음.

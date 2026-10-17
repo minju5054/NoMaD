@@ -1,0 +1,1414 @@
+{
+  "D0": {
+    "condition": "D0",
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wide_wall_01",
+    "configured_delay_s": 0.0,
+    "execution_status": "COMPLETED",
+    "execution_git_sha": "fb9bf2253044be477873aa113a19899f479af248",
+    "verdict": "NO_QUALIFIED_CANDIDATE",
+    "actual_handoffs": 93,
+    "initialization_id": 0,
+    "received_without_switch_ids": [
+      94
+    ],
+    "classes": {
+      "OLD_EXECUTION_RISK": 0,
+      "UNSAFE_FRESH": 1,
+      "ALREADY_CONSISTENT": 85,
+      "STAGING_SUFFICIENT": 1,
+      "POTENTIAL_RECONCILIATION_CASE": 0,
+      "INSUFFICIENT_EVIDENCE": 6
+    },
+    "geometric_classes": {
+      "UNSAFE_FRESH": 1,
+      "ALREADY_CONSISTENT": 85,
+      "STAGING_SUFFICIENT": 1,
+      "POTENTIAL_RECONCILIATION_CASE": 0,
+      "INSUFFICIENT_EVIDENCE": 6
+    },
+    "valid_correspondence": 87,
+    "classifiable_fraction": 0.9354838709677419,
+    "invalid_correspondence_reasons": {
+      "nonmonotone_forward_station": 2,
+      "short_segment_heading": 4
+    },
+    "candidate_fresh_ids": [],
+    "metrics": {
+      "progress_spatial_rmse_m": {
+        "n": 87,
+        "median": 0.013562491989219638,
+        "p95": 0.04509566391050341,
+        "min": 0.0008125055777700549,
+        "max": 0.05745372579613847
+      },
+      "progress_heading_rms_deg": {
+        "n": 87,
+        "median": 6.617481497929297,
+        "p95": 19.779275478077572,
+        "min": 1.0243960759831403,
+        "max": 22.379583195107067
+      },
+      "progress_lateral_rms_m": {
+        "n": 87,
+        "median": 0.013500157337301066,
+        "p95": 0.04343117272252021,
+        "min": 0.0008118712624471097,
+        "max": 0.05385477499879911
+      },
+      "progress_longitudinal_rms_m": {
+        "n": 87,
+        "median": 0.0014436028755386084,
+        "p95": 0.012900936406406868,
+        "min": 3.2099332080077546e-05,
+        "max": 0.02105776557245671
+      },
+      "switch_translation_m": {
+        "n": 93,
+        "median": 0.027774976411961215,
+        "p95": 0.036110745751335896,
+        "min": 0.016665895072444942,
+        "max": 0.044444444234894666
+      },
+      "switch_abs_yaw_deg": {
+        "n": 93,
+        "median": 1.1500667878067399,
+        "p95": 3.8362563521053668,
+        "min": 0.0010436171840680765,
+        "max": 5.092958178940632
+      },
+      "old_wait_distance_m": {
+        "n": 93,
+        "median": 0.02777777777777778,
+        "p95": 0.03611111111111111,
+        "min": 0.016666666666666666,
+        "max": 0.044444444444444446
+      },
+      "old_wait_abs_yaw_deg": {
+        "n": 93,
+        "median": 1.1500667878067399,
+        "p95": 3.8362563521053668,
+        "min": 0.0010436171840680765,
+        "max": 5.092958178940632
+      },
+      "boundary_entry_distance_m": {
+        "n": 93,
+        "median": 0.029469233473318524,
+        "p95": 0.04484400399219394,
+        "min": 0.0011456698674962961,
+        "max": 0.04865626394711564
+      },
+      "boundary_tangent_deg": {
+        "n": 93,
+        "median": 1.5043096724753615,
+        "p95": 6.28415062322234,
+        "min": 0.01955182599781585,
+        "max": 16.48030741422273
+      },
+      "boundary_connector_deg": {
+        "n": 93,
+        "median": 3.3738792109799713,
+        "p95": 14.421615630434543,
+        "min": 0.006055953803437814,
+        "max": 94.17746237262904
+      },
+      "connector_clearance_m": {
+        "n": 93,
+        "median": 0.28517546194432986,
+        "p95": 0.910470558507324,
+        "min": 0.07164804798210694,
+        "max": 1.1438021484932597
+      },
+      "actual_fresh_clearance_m": {
+        "n": 93,
+        "median": 0.27515522716741553,
+        "p95": 0.8862623189679879,
+        "min": 0.06962950693052558,
+        "max": 1.0992574059808584
+      },
+      "controller_point_anchor_offset_m": {
+        "n": 93,
+        "median": 0.02773808267199255,
+        "p95": 0.03710852936890654,
+        "min": 0.0166584545548931,
+        "max": 0.04491778256283701
+      }
+    },
+    "timing": {
+      "packet_to_release_s": {
+        "n": 95,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "delivery_deadline_overshoot_s": {
+        "n": 0
+      },
+      "observation_to_ready_s": {
+        "n": 95,
+        "median": 0.067488995,
+        "p95": 0.1277268778,
+        "min": 0.063755135,
+        "max": 0.329759365
+      },
+      "observation_to_release_s": {
+        "n": 95,
+        "median": 0.069631986,
+        "p95": 0.1296254921,
+        "min": 0.065812746,
+        "max": 0.346624501
+      },
+      "observation_to_switch_s": {
+        "n": 94,
+        "median": 0.138282865,
+        "p95": 0.17611276579999985,
+        "min": 0.082478555,
+        "max": 0.360984334
+      },
+      "old_wait_distance_m": {
+        "n": 94,
+        "median": 0.02777777777777778,
+        "p95": 0.03611111111111111,
+        "min": 0.016666666666666666,
+        "max": 0.044444444444444446
+      },
+      "old_wait_abs_yaw_deg": {
+        "n": 94,
+        "median": 1.1434017584843228,
+        "p95": 3.8341891373678805,
+        "min": 0.0010436171840680765,
+        "max": 5.092958178940632
+      },
+      "old_delivery_hold_distance_m": {
+        "n": 94,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "old_gpu_distance_m": {
+        "n": 94,
+        "median": 0.002777777777777778,
+        "p95": 0.005555555555555556,
+        "min": 0.002777777777777778,
+        "max": 0.005555555555555556
+      }
+    },
+    "warm_inference_ms": {
+      "n": 94,
+      "median": 29.186994499999997,
+      "p95": 31.903354800000002,
+      "min": 27.570501,
+      "max": 32.879417
+    },
+    "cold_inference_ms": 278.535776,
+    "requests": 95,
+    "received": 95,
+    "switches": 94,
+    "busy_observation_skips": 1,
+    "missed_capture_slots": 0,
+    "timeout": {
+      "episodes": 0,
+      "expired_control_ticks": 0,
+      "runtime_status": "NOT_EXERCISED_no_natural_timeout",
+      "synthetic_exact_timeout": "PASS"
+    },
+    "pacing": {
+      "absolute_pose_error_s": {
+        "n": 1771,
+        "median": 9.887111110984392e-05,
+        "p95": 0.00015459233333370292,
+        "min": 4.232244444324351e-05,
+        "max": 0.001198825999999542
+      },
+      "real_time_factor": 0.9999958881796189,
+      "late_more_than_one_tick": 0,
+      "inference_clock_mapping_abs_error_s": {
+        "n": 95,
+        "median": 1.4598323997052493e-05,
+        "p95": 6.759912636574228e-05,
+        "min": 1.17334975596739e-07,
+        "max": 0.0002741865926721848
+      },
+      "actual_pose_interval_wall_s": {
+        "n": 1770,
+        "median": 0.013888733500001083,
+        "p95": 0.013941535949999816,
+        "min": 0.012797587999999749,
+        "max": 0.014988727000000424
+      },
+      "actual_control_interval_wall_s": {
+        "n": 221,
+        "median": 0.111111504,
+        "p95": 0.112105494,
+        "min": 0.109553819,
+        "max": 0.112429815
+      }
+    },
+    "async_reproduction": "PASS",
+    "real_time_pacing_pass": true,
+    "inference_clock_mapping_pass": true,
+    "navigation": {
+      "goal_entry": true,
+      "minimum_goal_distance_m": 0.2977081165557891,
+      "simulation_duration_s": 24.583333333333332,
+      "termination_reason": "goal_entry",
+      "final_pose": [
+        4.221781759812051,
+        -0.10594684275576986,
+        0.14987467539205834
+      ],
+      "obstacle_evaluation": {
+        "category": "avoidance_and_goal_success",
+        "avoidance_success": true,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "safety_margin_met": true,
+        "minimum_swept_clearance_lower_m": 0.06962950693052558,
+        "minimum_swept_clearance_upper_m": 0.06962989795204655,
+        "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+        "corridor_containment_certified": true,
+        "passage": {
+          "StaticObstacle1": {
+            "side": "left_positive_y",
+            "simulation_time_s": 11.319444444444445,
+            "pose": [
+              1.7912724308735348,
+              0.3856529187123945,
+              -0.8020235847093597
+            ]
+          },
+          "StaticObstacle2": {
+            "side": "right_negative_y",
+            "simulation_time_s": 20.13888888888889,
+            "pose": [
+              3.3412120371466805,
+              -0.21348675213475918,
+              0.15039287017310254
+            ]
+          }
+        },
+        "collision_detection_period_s": 0.013888888888888888,
+        "obstacles": {
+          "StaticObstacle1": {
+            "category": "avoidance_and_goal_success",
+            "avoidance_success": true,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.06962950693052558,
+            "minimum_swept_clearance_upper_m": 0.06962989795204655,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+            "corridor_containment_certified": true,
+            "passage": {
+              "side": "left_positive_y",
+              "simulation_time_s": 11.319444444444445,
+              "pose": [
+                1.7912724308735348,
+                0.3856529187123945,
+                -0.8020235847093597
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          },
+          "StaticObstacle2": {
+            "category": "avoidance_and_goal_success",
+            "avoidance_success": true,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.08283605541433607,
+            "minimum_swept_clearance_upper_m": 0.08283605545192366,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+            "corridor_containment_certified": true,
+            "passage": {
+              "side": "right_negative_y",
+              "simulation_time_s": 20.13888888888889,
+              "pose": [
+                3.3412120371466805,
+                -0.21348675213475918,
+                0.15039287017310254
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          }
+        }
+      }
+    },
+    "old_risk_applied_fresh_ids": [],
+    "old_risk_unapplied_fresh_ids": [],
+    "unsafe_fresh_prediction_ids": [
+      29
+    ],
+    "unsafe_fresh_actual_execution_ids": [],
+    "uniform_delay_verification": "LEGACY_BASELINE_NO_INJECTION",
+    "validation": {
+      "raw_outputs_and_original_controller": "PASS",
+      "max_pose_integration_error": 0.0,
+      "baseline_files_preserved": 431,
+      "new_run_inputs_preserved": 216,
+      "scenario_and_checkpoint_unchanged": true,
+      "historical_execution_source_hashes_verified": true,
+      "all_corridor_intervals_recomputed": true,
+      "switch_tick_mismatch_ids": []
+    },
+    "limitations": [
+      "D0 is a historical reference, not a paired causal no-delay trial",
+      "One run per condition; RGB, sampling association and accepted request rate can differ",
+      "Legacy D0 packet and release alias its received timestamp; no separate hold instrumentation",
+      "All paths are observation-anchored; no native yaw or waypoint times",
+      "Geometric connector safety is offline and is not executed by original PD"
+    ]
+  },
+  "D250": {
+    "condition": "D250",
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/uniform_d250_01",
+    "configured_delay_s": 0.25,
+    "execution_status": "COMPLETED",
+    "execution_git_sha": "25bed71995c406be270441854bd1c4a7c32af394",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "actual_handoffs": 44,
+    "initialization_id": 0,
+    "received_without_switch_ids": [],
+    "classes": {
+      "OLD_EXECUTION_RISK": 0,
+      "UNSAFE_FRESH": 2,
+      "ALREADY_CONSISTENT": 0,
+      "STAGING_SUFFICIENT": 24,
+      "POTENTIAL_RECONCILIATION_CASE": 0,
+      "INSUFFICIENT_EVIDENCE": 18
+    },
+    "geometric_classes": {
+      "UNSAFE_FRESH": 2,
+      "ALREADY_CONSISTENT": 0,
+      "STAGING_SUFFICIENT": 24,
+      "POTENTIAL_RECONCILIATION_CASE": 0,
+      "INSUFFICIENT_EVIDENCE": 18
+    },
+    "valid_correspondence": 24,
+    "classifiable_fraction": 0.5909090909090909,
+    "invalid_correspondence_reasons": {
+      "nonmonotone_forward_station": 20
+    },
+    "candidate_fresh_ids": [],
+    "metrics": {
+      "progress_spatial_rmse_m": {
+        "n": 24,
+        "median": 0.03526012909106563,
+        "p95": 0.08132195415890474,
+        "min": 0.0048805520130625,
+        "max": 0.08503235467686841
+      },
+      "progress_heading_rms_deg": {
+        "n": 24,
+        "median": 12.199434564122049,
+        "p95": 38.247439730944436,
+        "min": 2.745230264453948,
+        "max": 38.58191721776162
+      },
+      "progress_lateral_rms_m": {
+        "n": 24,
+        "median": 0.03433841272645663,
+        "p95": 0.06827355470673811,
+        "min": 0.004864156340873644,
+        "max": 0.07783624615453454
+      },
+      "progress_longitudinal_rms_m": {
+        "n": 24,
+        "median": 0.005103690975950559,
+        "p95": 0.04101111670632155,
+        "min": 0.0003997137022259077,
+        "max": 0.045345878992651224
+      },
+      "switch_translation_m": {
+        "n": 44,
+        "median": 0.08047798265274136,
+        "p95": 0.08610637933174602,
+        "min": 0.03755008536103106,
+        "max": 0.09443807778622927
+      },
+      "switch_abs_yaw_deg": {
+        "n": 44,
+        "median": 8.276057040778529,
+        "p95": 9.549296585513687,
+        "min": 0.04609462445771204,
+        "max": 10.822536130248844
+      },
+      "old_wait_distance_m": {
+        "n": 44,
+        "median": 0.08055555555555557,
+        "p95": 0.08611111111111114,
+        "min": 0.037582749086949564,
+        "max": 0.09444444444444446
+      },
+      "old_wait_abs_yaw_deg": {
+        "n": 44,
+        "median": 8.276057040778529,
+        "p95": 9.549296585513687,
+        "min": 0.04609462445771204,
+        "max": 10.822536130248844
+      },
+      "boundary_entry_distance_m": {
+        "n": 40,
+        "median": 0.006064009818681582,
+        "p95": 0.023820164133498474,
+        "min": 0.0007923163122922313,
+        "max": 0.03317100034868017
+      },
+      "boundary_tangent_deg": {
+        "n": 40,
+        "median": 4.822339322183019,
+        "p95": 29.960344327093303,
+        "min": 0.022321936497574073,
+        "max": 41.42464077674305
+      },
+      "boundary_connector_deg": {
+        "n": 40,
+        "median": 93.75389430496145,
+        "p95": 120.13442179328271,
+        "min": 76.48173595186475,
+        "max": 133.1009042036195
+      },
+      "connector_clearance_m": {
+        "n": 40,
+        "median": 0.3913475127173947,
+        "p95": 0.9734457598144619,
+        "min": 0.10615382342703739,
+        "max": 1.1214323997900322
+      },
+      "actual_fresh_clearance_m": {
+        "n": 44,
+        "median": 0.4029272629892061,
+        "p95": 1.0101694933743024,
+        "min": 0.10491659897078749,
+        "max": 1.0646474726554465
+      },
+      "controller_point_anchor_offset_m": {
+        "n": 44,
+        "median": 0.07791557718865832,
+        "p95": 0.08821497548398204,
+        "min": 0.03367116689411466,
+        "max": 0.09716190340611428
+      }
+    },
+    "timing": {
+      "packet_to_release_s": {
+        "n": 45,
+        "median": 0.25007486,
+        "p95": 0.2500978632,
+        "min": 0.250050254,
+        "max": 0.250102875
+      },
+      "delivery_deadline_overshoot_s": {
+        "n": 45,
+        "median": 7.486000000000992e-05,
+        "p95": 9.786319999999236e-05,
+        "min": 5.025400000002733e-05,
+        "max": 0.00010287500000000227
+      },
+      "observation_to_ready_s": {
+        "n": 45,
+        "median": 0.069356436,
+        "p95": 0.13148281879999998,
+        "min": 0.066641914,
+        "max": 0.316113378
+      },
+      "observation_to_release_s": {
+        "n": 45,
+        "median": 0.321667967,
+        "p95": 0.383687126,
+        "min": 0.319040107,
+        "max": 0.584730873
+      },
+      "observation_to_switch_s": {
+        "n": 45,
+        "median": 0.415720681,
+        "p95": 0.46053928079999984,
+        "min": 0.360090794,
+        "max": 0.694381363
+      },
+      "old_wait_distance_m": {
+        "n": 44,
+        "median": 0.08055555555555557,
+        "p95": 0.08611111111111114,
+        "min": 0.037582749086949564,
+        "max": 0.09444444444444446
+      },
+      "old_wait_abs_yaw_deg": {
+        "n": 44,
+        "median": 8.276057040778529,
+        "p95": 9.549296585513687,
+        "min": 0.04609462445771204,
+        "max": 10.822536130248844
+      },
+      "old_delivery_hold_distance_m": {
+        "n": 44,
+        "median": 0.04722222222222222,
+        "p95": 0.04958333333333333,
+        "min": 0.021452563400897712,
+        "max": 0.049999999999999996
+      },
+      "old_gpu_distance_m": {
+        "n": 44,
+        "median": 0.005555555555555556,
+        "p95": 0.005555555555555556,
+        "min": 0.0014454903494980598,
+        "max": 0.005555555555555556
+      }
+    },
+    "warm_inference_ms": {
+      "n": 44,
+      "median": 30.129427,
+      "p95": 31.9381198,
+      "min": 28.816334,
+      "max": 32.960708
+    },
+    "cold_inference_ms": 266.73215,
+    "requests": 45,
+    "received": 45,
+    "switches": 45,
+    "busy_observation_skips": 45,
+    "missed_capture_slots": 0,
+    "timeout": {
+      "episodes": 0,
+      "expired_control_ticks": 0,
+      "runtime_status": "NOT_EXERCISED_no_natural_timeout",
+      "synthetic_exact_timeout": "PASS"
+    },
+    "pacing": {
+      "absolute_pose_error_s": {
+        "n": 1670,
+        "median": 0.00010024311111211937,
+        "p95": 0.00015439402777831513,
+        "min": 5.268688888904194e-05,
+        "max": 0.0015740829999995043
+      },
+      "real_time_factor": 0.9999942392806397,
+      "late_more_than_one_tick": 0,
+      "inference_clock_mapping_abs_error_s": {
+        "n": 45,
+        "median": 1.8611437315570883e-05,
+        "p95": 0.0002892250326963163,
+        "min": 1.3771006923957163e-06,
+        "max": 0.0005853409059588116
+      },
+      "actual_pose_interval_wall_s": {
+        "n": 1669,
+        "median": 0.013888345999999885,
+        "p95": 0.013938065999999694,
+        "min": 0.012421358000000993,
+        "max": 0.015317530999999107
+      },
+      "actual_control_interval_wall_s": {
+        "n": 208,
+        "median": 0.111125202,
+        "p95": 0.1121340587,
+        "min": 0.1090908,
+        "max": 0.112902479
+      }
+    },
+    "async_reproduction": "PASS",
+    "real_time_pacing_pass": true,
+    "inference_clock_mapping_pass": true,
+    "navigation": {
+      "goal_entry": false,
+      "minimum_goal_distance_m": 2.471771788255331,
+      "simulation_duration_s": 23.180555555555557,
+      "termination_reason": "corridor_footprint_stop",
+      "final_pose": [
+        1.7741382824213199,
+        -1.4101508575145472,
+        -0.5987218973808046
+      ],
+      "obstacle_evaluation": {
+        "category": "collision_or_safety_margin_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "safety_margin_met": true,
+        "minimum_swept_clearance_lower_m": 0.10491659897078749,
+        "minimum_swept_clearance_upper_m": 0.10491796584191493,
+        "minimum_corridor_clearance_lower_m": -0.00015261253662104986,
+        "corridor_containment_certified": false,
+        "passage": {
+          "StaticObstacle1": {
+            "side": "left_positive_y",
+            "simulation_time_s": 12.125,
+            "pose": [
+              1.7900693405015577,
+              0.4398782737789172,
+              -0.7971852521576488
+            ]
+          },
+          "StaticObstacle2": null
+        },
+        "collision_detection_period_s": 0.013888888888888888,
+        "obstacles": {
+          "StaticObstacle1": {
+            "category": "collision_or_safety_margin_failure",
+            "avoidance_success": false,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.10491659897078749,
+            "minimum_swept_clearance_upper_m": 0.10491796584191493,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": -0.00015261253662104986,
+            "corridor_containment_certified": false,
+            "passage": {
+              "side": "left_positive_y",
+              "simulation_time_s": 12.125,
+              "pose": [
+                1.7900693405015577,
+                0.4398782737789172,
+                -0.7971852521576488
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          },
+          "StaticObstacle2": {
+            "category": "collision_or_safety_margin_failure",
+            "avoidance_success": false,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.6481740684680977,
+            "minimum_swept_clearance_upper_m": 0.6481744753889224,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": -0.00015261253662104986,
+            "corridor_containment_certified": false,
+            "passage": null,
+            "collision_detection_period_s": 0.013888888888888888
+          }
+        }
+      }
+    },
+    "old_risk_applied_fresh_ids": [],
+    "old_risk_unapplied_fresh_ids": [],
+    "unsafe_fresh_prediction_ids": [
+      23,
+      28
+    ],
+    "unsafe_fresh_actual_execution_ids": [
+      44
+    ],
+    "uniform_delay_verification": "ALL_ACCEPTED_RESULTS_VERIFIED",
+    "validation": {
+      "raw_outputs_and_original_controller": "PASS",
+      "max_pose_integration_error": 0.0,
+      "baseline_files_preserved": 431,
+      "new_run_inputs_preserved": 117,
+      "scenario_and_checkpoint_unchanged": true,
+      "historical_execution_source_hashes_verified": true,
+      "all_corridor_intervals_recomputed": true,
+      "switch_tick_mismatch_ids": []
+    },
+    "limitations": [
+      "D0 is a historical reference, not a paired causal no-delay trial",
+      "One run per condition; RGB, sampling association and accepted request rate can differ",
+      "Legacy D0 packet and release alias its received timestamp; no separate hold instrumentation",
+      "All paths are observation-anchored; no native yaw or waypoint times",
+      "Geometric connector safety is offline and is not executed by original PD"
+    ]
+  },
+  "D500": {
+    "condition": "D500",
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/uniform_d500_01",
+    "configured_delay_s": 0.5,
+    "execution_status": "COMPLETED",
+    "execution_git_sha": "25bed71995c406be270441854bd1c4a7c32af394",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "actual_handoffs": 21,
+    "initialization_id": 0,
+    "received_without_switch_ids": [
+      22
+    ],
+    "classes": {
+      "OLD_EXECUTION_RISK": 0,
+      "UNSAFE_FRESH": 0,
+      "ALREADY_CONSISTENT": 0,
+      "STAGING_SUFFICIENT": 4,
+      "POTENTIAL_RECONCILIATION_CASE": 0,
+      "INSUFFICIENT_EVIDENCE": 17
+    },
+    "geometric_classes": {
+      "UNSAFE_FRESH": 0,
+      "ALREADY_CONSISTENT": 0,
+      "STAGING_SUFFICIENT": 4,
+      "POTENTIAL_RECONCILIATION_CASE": 0,
+      "INSUFFICIENT_EVIDENCE": 17
+    },
+    "valid_correspondence": 4,
+    "classifiable_fraction": 0.19047619047619047,
+    "invalid_correspondence_reasons": {
+      "short_common_overlap": 5,
+      "nonmonotone_forward_station": 12
+    },
+    "candidate_fresh_ids": [],
+    "metrics": {
+      "progress_spatial_rmse_m": {
+        "n": 4,
+        "median": 0.05486176191283557,
+        "p95": 0.0979061884442445,
+        "min": 0.020262241551307323,
+        "max": 0.10021657144480714
+      },
+      "progress_heading_rms_deg": {
+        "n": 4,
+        "median": 13.910664507486587,
+        "p95": 31.5929598376572,
+        "min": 7.0764562878774635,
+        "max": 33.765485633327856
+      },
+      "progress_lateral_rms_m": {
+        "n": 4,
+        "median": 0.050565138571299566,
+        "p95": 0.08788266305034742,
+        "min": 0.02017640239207872,
+        "max": 0.08971215062401025
+      },
+      "progress_longitudinal_rms_m": {
+        "n": 4,
+        "median": 0.021173367103715698,
+        "p95": 0.04312951702270342,
+        "min": 0.0018631208217517593,
+        "max": 0.0446664440331557
+      },
+      "switch_translation_m": {
+        "n": 21,
+        "median": 0.12489292196942862,
+        "p95": 0.138442788737115,
+        "min": 0.024358645245437877,
+        "max": 0.13887366405306142
+      },
+      "switch_abs_yaw_deg": {
+        "n": 21,
+        "median": 12.0898747769476,
+        "p95": 15.597184423005688,
+        "min": 1.2052772675037347,
+        "max": 15.915494309189478
+      },
+      "old_wait_distance_m": {
+        "n": 21,
+        "median": 0.12500000000000003,
+        "p95": 0.13888888888888887,
+        "min": 0.024419397115707397,
+        "max": 0.1388888888888889
+      },
+      "old_wait_abs_yaw_deg": {
+        "n": 21,
+        "median": 12.0898747769476,
+        "p95": 15.597184423005688,
+        "min": 1.2052772675037347,
+        "max": 15.915494309189478
+      },
+      "boundary_entry_distance_m": {
+        "n": 16,
+        "median": 0.012933016704132149,
+        "p95": 0.0490359307717428,
+        "min": 0.006575108077905898,
+        "max": 0.07549991443919438
+      },
+      "boundary_tangent_deg": {
+        "n": 16,
+        "median": 14.202590796657608,
+        "p95": 32.19673144960616,
+        "min": 4.471403320613451,
+        "max": 38.78190408783677
+      },
+      "boundary_connector_deg": {
+        "n": 16,
+        "median": 104.20259079665772,
+        "p95": 170.0720955359463,
+        "min": 78.16281474032041,
+        "max": 178.0898117407899
+      },
+      "connector_clearance_m": {
+        "n": 16,
+        "median": 0.6064296227324805,
+        "p95": 0.9651049912686983,
+        "min": 0.49054335427918794,
+        "max": 1.0773853249115757
+      },
+      "actual_fresh_clearance_m": {
+        "n": 21,
+        "median": 0.5567538754234502,
+        "p95": 0.7872688100863712,
+        "min": 0.3753912340112516,
+        "max": 0.9276779671436635
+      },
+      "controller_point_anchor_offset_m": {
+        "n": 21,
+        "median": 0.1257043570549293,
+        "p95": 0.14397110755497072,
+        "min": 0.02347239821802775,
+        "max": 0.15029083237633736
+      }
+    },
+    "timing": {
+      "packet_to_release_s": {
+        "n": 23,
+        "median": 0.500073921,
+        "p95": 0.5000876639,
+        "min": 0.500042364,
+        "max": 0.500189736
+      },
+      "delivery_deadline_overshoot_s": {
+        "n": 23,
+        "median": 7.392100000003232e-05,
+        "p95": 8.766390000000122e-05,
+        "min": 4.2364000000016944e-05,
+        "max": 0.00018973600000005142
+      },
+      "observation_to_ready_s": {
+        "n": 23,
+        "median": 0.069029107,
+        "p95": 0.1343695607,
+        "min": 0.066514341,
+        "max": 0.321226699
+      },
+      "observation_to_release_s": {
+        "n": 23,
+        "median": 0.571473604,
+        "p95": 0.6364402193,
+        "min": 0.568677038,
+        "max": 0.83922654
+      },
+      "observation_to_switch_s": {
+        "n": 22,
+        "median": 0.6380805359999999,
+        "p95": 0.6940905633,
+        "min": 0.583250469,
+        "max": 0.916827708
+      },
+      "old_wait_distance_m": {
+        "n": 22,
+        "median": 0.12361111111111114,
+        "p95": 0.13874999999999998,
+        "min": 0.005632656315962473,
+        "max": 0.1388888888888889
+      },
+      "old_wait_abs_yaw_deg": {
+        "n": 22,
+        "median": 11.90067598168779,
+        "p95": 15.581268928696499,
+        "min": 1.2052772675037347,
+        "max": 15.915494309189478
+      },
+      "old_delivery_hold_distance_m": {
+        "n": 22,
+        "median": 0.09722222222222224,
+        "p95": 0.09722222222222224,
+        "min": 0.0,
+        "max": 0.10000000000000002
+      },
+      "old_gpu_distance_m": {
+        "n": 22,
+        "median": 0.002777777777777778,
+        "p95": 0.005555555555555556,
+        "min": 0.0,
+        "max": 0.005555555555555556
+      }
+    },
+    "warm_inference_ms": {
+      "n": 22,
+      "median": 30.543759,
+      "p95": 32.18811855,
+      "min": 28.681567,
+      "max": 33.191739
+    },
+    "cold_inference_ms": 278.606633,
+    "requests": 23,
+    "received": 23,
+    "switches": 22,
+    "busy_observation_skips": 44,
+    "missed_capture_slots": 0,
+    "timeout": {
+      "episodes": 0,
+      "expired_control_ticks": 0,
+      "runtime_status": "NOT_EXERCISED_no_natural_timeout",
+      "synthetic_exact_timeout": "PASS"
+    },
+    "pacing": {
+      "absolute_pose_error_s": {
+        "n": 1247,
+        "median": 9.991611111104248e-05,
+        "p95": 0.0001519660555564073,
+        "min": 3.702066666733117e-05,
+        "max": 0.0014458479999994722
+      },
+      "real_time_factor": 0.9999960496977881,
+      "late_more_than_one_tick": 0,
+      "inference_clock_mapping_abs_error_s": {
+        "n": 22,
+        "median": 1.0851687218652734e-05,
+        "p95": 4.1414306858333916e-05,
+        "min": 2.2612991775611269e-07,
+        "max": 4.689196139516169e-05
+      },
+      "actual_pose_interval_wall_s": {
+        "n": 1246,
+        "median": 0.01388830449999956,
+        "p95": 0.013938105000000478,
+        "min": 0.01250068900000123,
+        "max": 0.015246716000000049
+      },
+      "actual_control_interval_wall_s": {
+        "n": 155,
+        "median": 0.111094878,
+        "p95": 0.1122244397,
+        "min": 0.109025111,
+        "max": 0.113141865
+      }
+    },
+    "async_reproduction": "PASS",
+    "real_time_pacing_pass": true,
+    "inference_clock_mapping_pass": true,
+    "navigation": {
+      "goal_entry": false,
+      "minimum_goal_distance_m": 2.620268586169267,
+      "simulation_duration_s": 17.305555555555557,
+      "termination_reason": "corridor_footprint_stop",
+      "final_pose": [
+        2.2846077880966558,
+        1.4105195998879207,
+        1.2727699439175613
+      ],
+      "obstacle_evaluation": {
+        "category": "collision_or_safety_margin_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "safety_margin_met": true,
+        "minimum_swept_clearance_lower_m": 0.3753912340112516,
+        "minimum_swept_clearance_upper_m": 0.37539221190334426,
+        "minimum_corridor_clearance_lower_m": -0.0005205777800134794,
+        "corridor_containment_certified": false,
+        "passage": {
+          "StaticObstacle1": {
+            "side": "left_positive_y",
+            "simulation_time_s": 12.63888888888889,
+            "pose": [
+              1.7913287477654298,
+              1.0825898826489246,
+              0.5304668880443106
+            ]
+          },
+          "StaticObstacle2": null
+        },
+        "collision_detection_period_s": 0.013888888888888888,
+        "obstacles": {
+          "StaticObstacle1": {
+            "category": "collision_or_safety_margin_failure",
+            "avoidance_success": false,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.48826932700192943,
+            "minimum_swept_clearance_upper_m": 0.48826942721590305,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": -0.0005205777800134794,
+            "corridor_containment_certified": false,
+            "passage": {
+              "side": "left_positive_y",
+              "simulation_time_s": 12.63888888888889,
+              "pose": [
+                1.7913287477654298,
+                1.0825898826489246,
+                0.5304668880443106
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          },
+          "StaticObstacle2": {
+            "category": "collision_or_safety_margin_failure",
+            "avoidance_success": false,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.3753912340112516,
+            "minimum_swept_clearance_upper_m": 0.37539221190334426,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": -0.0005205777800134794,
+            "corridor_containment_certified": false,
+            "passage": null,
+            "collision_detection_period_s": 0.013888888888888888
+          }
+        }
+      }
+    },
+    "old_risk_applied_fresh_ids": [],
+    "old_risk_unapplied_fresh_ids": [
+      22
+    ],
+    "unsafe_fresh_prediction_ids": [],
+    "unsafe_fresh_actual_execution_ids": [
+      21
+    ],
+    "uniform_delay_verification": "ALL_ACCEPTED_RESULTS_VERIFIED",
+    "validation": {
+      "raw_outputs_and_original_controller": "PASS",
+      "max_pose_integration_error": 0.0,
+      "baseline_files_preserved": 431,
+      "new_run_inputs_preserved": 72,
+      "scenario_and_checkpoint_unchanged": true,
+      "historical_execution_source_hashes_verified": true,
+      "all_corridor_intervals_recomputed": true,
+      "switch_tick_mismatch_ids": []
+    },
+    "limitations": [
+      "D0 is a historical reference, not a paired causal no-delay trial",
+      "One run per condition; RGB, sampling association and accepted request rate can differ",
+      "Legacy D0 packet and release alias its received timestamp; no separate hold instrumentation",
+      "All paths are observation-anchored; no native yaw or waypoint times",
+      "Geometric connector safety is offline and is not executed by original PD"
+    ]
+  },
+  "D750": {
+    "condition": "D750",
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/uniform_d750_01",
+    "configured_delay_s": 0.75,
+    "execution_status": "COMPLETED",
+    "execution_git_sha": "25bed71995c406be270441854bd1c4a7c32af394",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "actual_handoffs": 16,
+    "initialization_id": 0,
+    "received_without_switch_ids": [
+      17
+    ],
+    "classes": {
+      "OLD_EXECUTION_RISK": 0,
+      "UNSAFE_FRESH": 0,
+      "ALREADY_CONSISTENT": 0,
+      "STAGING_SUFFICIENT": 1,
+      "POTENTIAL_RECONCILIATION_CASE": 0,
+      "INSUFFICIENT_EVIDENCE": 15
+    },
+    "geometric_classes": {
+      "UNSAFE_FRESH": 0,
+      "ALREADY_CONSISTENT": 0,
+      "STAGING_SUFFICIENT": 1,
+      "POTENTIAL_RECONCILIATION_CASE": 0,
+      "INSUFFICIENT_EVIDENCE": 15
+    },
+    "valid_correspondence": 1,
+    "classifiable_fraction": 0.0625,
+    "invalid_correspondence_reasons": {
+      "short_common_overlap": 7,
+      "nonmonotone_forward_station": 8
+    },
+    "candidate_fresh_ids": [],
+    "metrics": {
+      "progress_spatial_rmse_m": {
+        "n": 1,
+        "median": 0.046700803815310936,
+        "p95": 0.046700803815310936,
+        "min": 0.046700803815310936,
+        "max": 0.046700803815310936
+      },
+      "progress_heading_rms_deg": {
+        "n": 1,
+        "median": 17.07353363450579,
+        "p95": 17.07353363450579,
+        "min": 17.07353363450579,
+        "max": 17.07353363450579
+      },
+      "progress_lateral_rms_m": {
+        "n": 1,
+        "median": 0.04638558714161353,
+        "p95": 0.04638558714161353,
+        "min": 0.04638558714161353,
+        "max": 0.04638558714161353
+      },
+      "progress_longitudinal_rms_m": {
+        "n": 1,
+        "median": 0.005416860947443453,
+        "p95": 0.005416860947443453,
+        "min": 0.005416860947443453,
+        "max": 0.005416860947443453
+      },
+      "switch_translation_m": {
+        "n": 16,
+        "median": 0.1823080517208583,
+        "p95": 0.18503857114567648,
+        "min": 0.04631892606075933,
+        "max": 0.1850385711456776
+      },
+      "switch_abs_yaw_deg": {
+        "n": 16,
+        "median": 20.69014260194632,
+        "p95": 21.3267623743139,
+        "min": 3.561591560341817,
+        "max": 21.3267623743139
+      },
+      "old_wait_distance_m": {
+        "n": 16,
+        "median": 0.18333333333333332,
+        "p95": 0.1861111111111111,
+        "min": 0.04634399743129809,
+        "max": 0.1861111111111111
+      },
+      "old_wait_abs_yaw_deg": {
+        "n": 16,
+        "median": 20.69014260194632,
+        "p95": 21.3267623743139,
+        "min": 3.561591560341817,
+        "max": 21.3267623743139
+      },
+      "boundary_entry_distance_m": {
+        "n": 13,
+        "median": 0.05346106074137879,
+        "p95": 0.12192341236458996,
+        "min": 0.01301141794712124,
+        "max": 0.1286248127474868
+      },
+      "boundary_tangent_deg": {
+        "n": 13,
+        "median": 21.686712373889698,
+        "p95": 45.99544300820121,
+        "min": 2.615859167999547,
+        "max": 52.83914316438716
+      },
+      "boundary_connector_deg": {
+        "n": 13,
+        "median": 139.7619473107845,
+        "p95": 177.20825425036725,
+        "min": 104.64541883746506,
+        "max": 178.93083322663384
+      },
+      "connector_clearance_m": {
+        "n": 13,
+        "median": 0.6322981072541752,
+        "p95": 0.9402576752649329,
+        "min": 0.4770198679175308,
+        "max": 1.056518864351035
+      },
+      "actual_fresh_clearance_m": {
+        "n": 16,
+        "median": 0.5776983104050437,
+        "p95": 0.7529791713188831,
+        "min": 0.14422279200293983,
+        "max": 0.8627498888451146
+      },
+      "controller_point_anchor_offset_m": {
+        "n": 16,
+        "median": 0.1834364887162361,
+        "p95": 0.20086373806030977,
+        "min": 0.0473266133351264,
+        "max": 0.20234496709532143
+      }
+    },
+    "timing": {
+      "packet_to_release_s": {
+        "n": 18,
+        "median": 0.7500716735,
+        "p95": 0.75010086965,
+        "min": 0.750027942,
+        "max": 0.750104738
+      },
+      "delivery_deadline_overshoot_s": {
+        "n": 18,
+        "median": 7.16735000000357e-05,
+        "p95": 0.0001008696500000239,
+        "min": 2.794200000000302e-05,
+        "max": 0.00010473799999999311
+      },
+      "observation_to_ready_s": {
+        "n": 18,
+        "median": 0.0708807355,
+        "p95": 0.21268012684999985,
+        "min": 0.067122314,
+        "max": 0.313255934
+      },
+      "observation_to_release_s": {
+        "n": 18,
+        "median": 0.8230106185,
+        "p95": 0.9674017619999998,
+        "min": 0.819689046,
+        "max": 1.081638311
+      },
+      "observation_to_switch_s": {
+        "n": 17,
+        "median": 0.916141,
+        "p95": 1.0498109072,
+        "min": 0.915654591,
+        "max": 1.13901654
+      },
+      "old_wait_distance_m": {
+        "n": 17,
+        "median": 0.18333333333333332,
+        "p95": 0.1861111111111111,
+        "min": 0.04634399743129809,
+        "max": 0.1861111111111111
+      },
+      "old_wait_abs_yaw_deg": {
+        "n": 17,
+        "median": 20.37183271576253,
+        "p95": 21.3267623743139,
+        "min": 3.561591560341817,
+        "max": 21.3267623743139
+      },
+      "old_delivery_hold_distance_m": {
+        "n": 17,
+        "median": 0.14722222222222217,
+        "p95": 0.14722222222222217,
+        "min": 0.03721563430089091,
+        "max": 0.14722222222222217
+      },
+      "old_gpu_distance_m": {
+        "n": 17,
+        "median": 0.002777777777777778,
+        "p95": 0.005555555555555556,
+        "min": 0.0,
+        "max": 0.005555555555555556
+      }
+    },
+    "warm_inference_ms": {
+      "n": 17,
+      "median": 30.150284,
+      "p95": 33.4856762,
+      "min": 28.785318,
+      "max": 35.646593
+    },
+    "cold_inference_ms": 268.402976,
+    "requests": 18,
+    "received": 18,
+    "switches": 17,
+    "busy_observation_skips": 53,
+    "missed_capture_slots": 0,
+    "timeout": {
+      "episodes": 2,
+      "expired_control_ticks": 2,
+      "runtime_status": "EXERCISED",
+      "synthetic_exact_timeout": "PASS"
+    },
+    "pacing": {
+      "absolute_pose_error_s": {
+        "n": 1320,
+        "median": 9.933350000035368e-05,
+        "p95": 0.00015515080555532633,
+        "min": 5.2798888889427076e-05,
+        "max": 0.0014890510000000745
+      },
+      "real_time_factor": 0.9999952710276702,
+      "late_more_than_one_tick": 0,
+      "inference_clock_mapping_abs_error_s": {
+        "n": 18,
+        "median": 1.5727854828472e-05,
+        "p95": 0.00016641930120703447,
+        "min": 1.6007543042692585e-06,
+        "max": 0.0004616043329359193
+      },
+      "actual_pose_interval_wall_s": {
+        "n": 1319,
+        "median": 0.013888472999999735,
+        "p95": 0.013946536999999593,
+        "min": 0.012501674999999324,
+        "max": 0.015287142000000031
+      },
+      "actual_control_interval_wall_s": {
+        "n": 164,
+        "median": 0.111113726,
+        "p95": 0.11224500445,
+        "min": 0.102706606,
+        "max": 0.118417137
+      }
+    },
+    "async_reproduction": "PASS",
+    "real_time_pacing_pass": true,
+    "inference_clock_mapping_pass": true,
+    "navigation": {
+      "goal_entry": false,
+      "minimum_goal_distance_m": 2.434285724675499,
+      "simulation_duration_s": 18.319444444444443,
+      "termination_reason": "corridor_footprint_stop",
+      "final_pose": [
+        2.515775396987732,
+        1.4101771924689916,
+        0.10865109679031626
+      ],
+      "obstacle_evaluation": {
+        "category": "collision_or_safety_margin_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "safety_margin_met": true,
+        "minimum_swept_clearance_lower_m": 0.14422279200293983,
+        "minimum_swept_clearance_upper_m": 0.1442246030122679,
+        "minimum_corridor_clearance_lower_m": -0.00017900347831969866,
+        "corridor_containment_certified": false,
+        "passage": {
+          "StaticObstacle1": {
+            "side": "left_positive_y",
+            "simulation_time_s": 13.48611111111111,
+            "pose": [
+              1.7901097377706279,
+              1.0785263212538052,
+              0.29909025393060773
+            ]
+          },
+          "StaticObstacle2": null
+        },
+        "collision_detection_period_s": 0.013888888888888888,
+        "obstacles": {
+          "StaticObstacle1": {
+            "category": "collision_or_safety_margin_failure",
+            "avoidance_success": false,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.5140538032048342,
+            "minimum_swept_clearance_upper_m": 0.5140557322169395,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": -0.00017900347831969866,
+            "corridor_containment_certified": false,
+            "passage": {
+              "side": "left_positive_y",
+              "simulation_time_s": 13.48611111111111,
+              "pose": [
+                1.7901097377706279,
+                1.0785263212538052,
+                0.29909025393060773
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          },
+          "StaticObstacle2": {
+            "category": "collision_or_safety_margin_failure",
+            "avoidance_success": false,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.14422279200293983,
+            "minimum_swept_clearance_upper_m": 0.1442246030122679,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": -0.00017900347831969866,
+            "corridor_containment_certified": false,
+            "passage": null,
+            "collision_detection_period_s": 0.013888888888888888
+          }
+        }
+      }
+    },
+    "old_risk_applied_fresh_ids": [],
+    "old_risk_unapplied_fresh_ids": [
+      17
+    ],
+    "unsafe_fresh_prediction_ids": [],
+    "unsafe_fresh_actual_execution_ids": [
+      16
+    ],
+    "uniform_delay_verification": "ALL_ACCEPTED_RESULTS_VERIFIED",
+    "validation": {
+      "raw_outputs_and_original_controller": "PASS",
+      "max_pose_integration_error": 0.0,
+      "baseline_files_preserved": 431,
+      "new_run_inputs_preserved": 62,
+      "scenario_and_checkpoint_unchanged": true,
+      "historical_execution_source_hashes_verified": true,
+      "all_corridor_intervals_recomputed": true,
+      "switch_tick_mismatch_ids": []
+    },
+    "limitations": [
+      "D0 is a historical reference, not a paired causal no-delay trial",
+      "One run per condition; RGB, sampling association and accepted request rate can differ",
+      "Legacy D0 packet and release alias its received timestamp; no separate hold instrumentation",
+      "All paths are observation-anchored; no native yaw or waypoint times",
+      "Geometric connector safety is offline and is not executed by original PD"
+    ]
+  }
+}

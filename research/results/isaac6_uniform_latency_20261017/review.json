@@ -1,0 +1,218 @@
+{
+  "status": "PASS",
+  "verdict": "INSUFFICIENT_EVIDENCE",
+  "qualified_candidate_count": 0,
+  "conditions": {
+    "D0": {
+      "accepted_results": 95,
+      "all_accepted_delays_verified": false,
+      "uniform_hold_ms": {
+        "n": 95,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "single_outstanding_and_seed_schedule_verified": true,
+      "initial_pose_stationary": true,
+      "every_actual_switch_on_first_latched_controller_tick": true,
+      "busy_and_missed_counts_recounted": true,
+      "timeout_zero_motion_verified": [],
+      "terminal": [
+        {
+          "id": 94,
+          "actual_switch": null,
+          "navigation_end_host_elapsed_s": 24.583434416,
+          "end_phase": "other",
+          "timeline_host_elapsed_s": {
+            "observation_monotonic_ns": 24.50085474,
+            "inference_start_monotonic_ns": 24.539675877,
+            "ready_monotonic_ns": 24.568278762
+          }
+        }
+      ],
+      "entry_valid": 93,
+      "valid_entry_without_safe_connector": 0,
+      "render_ms": {
+        "median": 35.707997,
+        "p95": 95.1442314
+      },
+      "goal_png_sha256": "34b21b933672e0eab5e1e06d189cce651d34c9139c663333b317e880b5fd7fe6",
+      "start_png_sha256": "daf7c2fc8e5b6d345e8c7a9b00de27943338aca72dd28281b9b459a25b068e48",
+      "input_hash_count": 216
+    },
+    "D250": {
+      "accepted_results": 45,
+      "all_accepted_delays_verified": true,
+      "uniform_hold_ms": {
+        "n": 45,
+        "median": 250.07486,
+        "p95": 250.0978632,
+        "min": 250.05025400000002,
+        "max": 250.102875
+      },
+      "single_outstanding_and_seed_schedule_verified": true,
+      "initial_pose_stationary": true,
+      "every_actual_switch_on_first_latched_controller_tick": true,
+      "busy_and_missed_counts_recounted": true,
+      "timeout_zero_motion_verified": [],
+      "terminal": [],
+      "entry_valid": 40,
+      "valid_entry_without_safe_connector": 0,
+      "render_ms": {
+        "median": 36.646117,
+        "p95": 41.83884499999999
+      },
+      "goal_png_sha256": "a2048af8e62fa1d917761ea72ad0a08e24fa8997ffedf55efa6f239e66fcb27f",
+      "start_png_sha256": "0174782efddca9de7d51df2d95b8e8fdde4b6e4f35e6fac91934da9e56c87d31",
+      "input_hash_count": 117
+    },
+    "D500": {
+      "accepted_results": 23,
+      "all_accepted_delays_verified": true,
+      "uniform_hold_ms": {
+        "n": 23,
+        "median": 500.07392100000004,
+        "p95": 500.08766390000005,
+        "min": 500.042364,
+        "max": 500.18973600000004
+      },
+      "single_outstanding_and_seed_schedule_verified": true,
+      "initial_pose_stationary": true,
+      "every_actual_switch_on_first_latched_controller_tick": true,
+      "busy_and_missed_counts_recounted": true,
+      "timeout_zero_motion_verified": [],
+      "terminal": [
+        {
+          "id": 22,
+          "actual_switch": null,
+          "navigation_end_host_elapsed_s": 17.305623918,
+          "end_phase": "during_gpu_inference",
+          "timeline_host_elapsed_s": {
+            "observation_monotonic_ns": 17.251105741,
+            "inference_start_monotonic_ns": 17.292272437,
+            "ready_monotonic_ns": 17.321300425,
+            "packet_received_monotonic_ns": 17.33122028,
+            "release_monotonic_ns": 17.831299096
+          }
+        }
+      ],
+      "entry_valid": 16,
+      "valid_entry_without_safe_connector": 0,
+      "render_ms": {
+        "median": 36.608594,
+        "p95": 97.59895825
+      },
+      "goal_png_sha256": "0f5a8daddd289ba80334b893eefb0e25b2f6b5cbd07e056e247ba8a8d1fdcb33",
+      "start_png_sha256": "366d190a4c80bb5d18d183e5eacba2c43fc011ea8bb03ad891e0caeb54a9b4f0",
+      "input_hash_count": 72
+    },
+    "D750": {
+      "accepted_results": 18,
+      "all_accepted_delays_verified": true,
+      "uniform_hold_ms": {
+        "n": 18,
+        "median": 750.0716735000001,
+        "p95": 750.10086965,
+        "min": 750.027942,
+        "max": 750.104738
+      },
+      "single_outstanding_and_seed_schedule_verified": true,
+      "initial_pose_stationary": true,
+      "every_actual_switch_on_first_latched_controller_tick": true,
+      "busy_and_missed_counts_recounted": true,
+      "timeout_zero_motion_verified": [
+        {
+          "simulation_time_s": 3.6666666666666665,
+          "monotonic_ns": 458655193267616,
+          "waypoint_id": 1,
+          "latest_received_id": 1,
+          "waypoint_age_wall_s": 1.032653014,
+          "valid": false,
+          "status": "expired",
+          "new_timeout": true,
+          "v_m_s": 0.0,
+          "w_rad_s": 0.0
+        },
+        {
+          "simulation_time_s": 12.666666666666666,
+          "monotonic_ns": 458664193334145,
+          "waypoint_id": 10,
+          "latest_received_id": 10,
+          "waypoint_age_wall_s": 1.096470763,
+          "valid": false,
+          "status": "expired",
+          "new_timeout": true,
+          "v_m_s": 0.0,
+          "w_rad_s": 0.0
+        }
+      ],
+      "terminal": [
+        {
+          "id": 17,
+          "actual_switch": null,
+          "navigation_end_host_elapsed_s": 18.319531077,
+          "end_phase": "during_delivery_hold",
+          "timeline_host_elapsed_s": {
+            "observation_monotonic_ns": 17.751310218,
+            "inference_start_monotonic_ns": 17.810474348,
+            "ready_monotonic_ns": 17.846120941,
+            "packet_received_monotonic_ns": 17.848667791,
+            "release_monotonic_ns": 18.598739157
+          }
+        }
+      ],
+      "entry_valid": 13,
+      "valid_entry_without_safe_connector": 0,
+      "render_ms": {
+        "median": 37.2780055,
+        "p95": 98.55032659999999
+      },
+      "goal_png_sha256": "8517433405b0085f4bb5675b7990dbc474e23c742b3e2e841b97a163f68d02b2",
+      "start_png_sha256": "e1293155a12dd4834b83a7d74b01d86a2dcd6fdb7d3b4cf8c9327e6ab653a2ac",
+      "input_hash_count": 62
+    }
+  },
+  "preserved_previous_input_count": 431,
+  "protected_sources_unchanged": [
+    "research/nomad_isaac/async_core.py",
+    "research/nomad_isaac/worker.py",
+    "research/nomad_isaac/common.py",
+    "research/nomad_isaac/clearance.py",
+    "research/nomad_preflight/native.py",
+    "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+    "deployment/src/pd_controller.py",
+    "deployment/src/navigate.py",
+    "deployment/src/ros_data.py",
+    "research/nomad_isaac/handoff_audit.py",
+    "research/nomad_isaac/async_handoff_protocol.json"
+  ],
+  "execution_attempts": [
+    {
+      "condition": "D250",
+      "configured_delay_s": 0.25,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/uniform_d250_01",
+      "start_monotonic_ns": 458245747578907,
+      "end_monotonic_ns": 458391616297759,
+      "exit_code": 0
+    },
+    {
+      "condition": "D500",
+      "configured_delay_s": 0.5,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/uniform_d500_01",
+      "start_monotonic_ns": 458391616383803,
+      "end_monotonic_ns": 458531752795614,
+      "exit_code": 0
+    },
+    {
+      "condition": "D750",
+      "configured_delay_s": 0.75,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/uniform_d750_01",
+      "start_monotonic_ns": 458531752941072,
+      "end_monotonic_ns": 458670842907858,
+      "exit_code": 0
+    }
+  ],
+  "tests": "30 passed / 0.09 s",
+  "interpretation": "No qualified candidate. All delayed runs fail navigation; insufficient valid correspondence prevents a strong negative graph-necessity verdict. D0 is historical, not paired causal."
+}
