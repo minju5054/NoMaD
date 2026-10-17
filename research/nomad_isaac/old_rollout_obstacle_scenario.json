@@ -1,0 +1,127 @@
+{
+  "name": "sudden_obstacle_on_actual_old_rollout",
+  "start_pose": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "goal_pose": [
+    4.5,
+    0.0,
+    0.0
+  ],
+  "goal_tolerance_m": 0.3,
+  "timeout_sim_s": 60.0,
+  "timeout_navigation_wall_s": 180.0,
+  "timeout_process_wall_s": 600.0,
+  "integration_hz": 72,
+  "observation_hz": 4,
+  "controller_hz": 9,
+  "controller_dt_s": 0.25,
+  "max_v": 0.2,
+  "max_w": 0.4,
+  "seed": 101,
+  "context_size": 3,
+  "num_samples": 8,
+  "selected_sample": 0,
+  "selected_waypoint_index": 2,
+  "camera": {
+    "width": 320,
+    "height": 240,
+    "height_m": 0.5,
+    "horizontal_fov_deg": 90.0,
+    "focal_length_mm": 18.0,
+    "horizontal_aperture_mm": 36.0,
+    "vertical_aperture_mm": 27.0
+  },
+  "corridor": {
+    "xmin": -2.0,
+    "xmax": 6.0,
+    "half_width": 1.5,
+    "height": 2.6
+  },
+  "boundary_stop_margin_m": 0.1,
+  "synchronous": true,
+  "smoothing": false,
+  "waypoint_modification": false,
+  "agent_radius_m": 0.09,
+  "required_clearance_m": 0.02,
+  "obstacles": [
+    {
+      "id": "StaticObstacle1",
+      "center_xy_m": [
+        1.5,
+        0.0
+      ],
+      "size_xyz_m": [
+        0.4,
+        0.5,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "StaticObstacle2",
+      "center_xy_m": [
+        3.0,
+        0.75
+      ],
+      "size_xyz_m": [
+        0.5,
+        1.5,
+        1.0
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    }
+  ],
+  "dynamic_obstacle": {
+    "id": "DynamicObstacle",
+    "size_xyz_m": [
+      0.35,
+      0.35,
+      0.8
+    ],
+    "color_rgb": [
+      0.65,
+      0.04,
+      0.65
+    ],
+    "spawn_tick": 970,
+    "minimum_visible_pixels": 20,
+    "placement": {
+      "mode": "actual_old_constant_command",
+      "lookahead_arc_lengths_m": [
+        0.42,
+        0.45,
+        0.48
+      ],
+      "minimum_speed_m_s": 0.05,
+      "maximum_center_lookahead_s": 3.0,
+      "minimum_spawn_clearance_m": 0.1,
+      "reaction_budget_s": 0.55,
+      "reaction_budget_components_s": {
+        "next_observation": 0.25,
+        "capture": 0.1,
+        "gpu_and_ipc": 0.08,
+        "controller_tick": 0.1111111111111111,
+        "reserve": 0.008888888888888932
+      },
+      "maximum_center_bearing_deg": 35.0,
+      "minimum_box_separation_m": 0.02,
+      "bypass_strip_width_m": 0.22,
+      "bypass_strip_end_extension_m": 0.11,
+      "visibility_evidence": "RGB_MAGENTA",
+      "magenta_rule": "R>1.5G and B>1.5G and R>40 and B>40",
+      "on_no_valid_candidate": "PLACEMENT_INFEASIBLE_stop_without_spawn",
+      "contact_before_old_timeout_required": true
+    }
+  }
+}
