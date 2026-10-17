@@ -31,7 +31,28 @@ def draw_comparison(details, config, pose, start, stop, output):
     all_xy = np.vstack([old, fresh, b0[:2], bd[:2]])
     xmin, xmax = all_xy[:,0].min()-.18, all_xy[:,0].max()+.22
     ymin, ymax = min(all_xy[:,1].min()-.22, -.15), max(all_xy[:,1].max()+.23, .15)
-    fig, axes = plt.subplots(1, 2, figsize=(13.5, 6.7))
+    fig, panels = plt.subplots(1, 3, figsize=(16.5, 7.0), gridspec_kw={"width_ratios":[1.5,1,1]})
+    overview, axes = panels[0], panels[1:]
+    for box in configured_obstacles(config):
+        lo, hi = obstacle_bounds(single_obstacle_config(config, box))
+        overview.add_patch(Rectangle(lo, *(hi-lo), facecolor="#badfb0", edgecolor="#428342"))
+        overview.text(*box["center_xy_m"], box["id"].replace("StaticObstacle", "Obstacle "),
+                      ha="center", va="center", fontsize=8)
+    overview.axhline(config["corridor"]["half_width"],color="#666666",lw=1.5)
+    overview.plot(*pose[:,:2].T,color="#a0a0a0",lw=1.5)
+    overview.plot(*pose[start:stop+1,:2].T,color="#087f7f",lw=3.5)
+    overview.plot(*old.T,color="#cd7d12",lw=1.8)
+    overview.plot(*fresh.T,color="#2165d6",lw=1.8)
+    overview.scatter(*b0[:2],marker="x",color="black",s=40,zorder=8)
+    overview.scatter(*bd[:2],marker="+",color="#ad287f",s=70,zorder=8)
+    overview.scatter(*config["start_pose"][:2],color="black",s=20)
+    overview.scatter(*config["goal_pose"][:2],color="#087f7f",marker="*",s=90)
+    overview.text(-.05,.15,"Start",fontsize=9)
+    overview.text(4.3,.18,"Goal",fontsize=9)
+    overview.add_patch(Rectangle((xmin,ymin),xmax-xmin,ymax-ymin,fill=False,ec="#777777",ls="--",lw=1))
+    overview.set(xlim=(-.25,4.85),ylim=(-.65,1.62),xlabel="World x (m)",ylabel="World y (m)")
+    overview.set_aspect("equal",adjustable="box");overview.grid(alpha=.18)
+    overview.set_title("Actual route and obstacle geometry\nDashed box: boundary comparison zoom",fontsize=11,pad=13)
     for ax, name in zip(axes, ("B0", "B_delay")):
         boundary = details[name]; b = np.array(boundary["pose"])
         for box in configured_obstacles(config):
@@ -72,9 +93,9 @@ def draw_comparison(details, config, pose, start, stop, output):
     fig.legend(handles=handles, loc="lower center", bbox_to_anchor=(.5,.075), ncol=3, frameon=False, fontsize=9)
     fig.suptitle(f"One delayed handoff: OLD {details['old_id']} → FRESH {details['fresh_id']}", fontsize=17, y=.98)
     fig.text(.05,.91,"Same saved predictions and observation anchors; B0 is not a simulated no-delay rollout.", fontsize=10)
-    fig.text(.05,.025,"Stars: selected index 2. Squares/arrows: observation poses. Circle: 9 cm footprint. Green: obstacle (cropped zoom).\n"
-             "Obstacle 2 extends to the left wall at world y = 1.5 m. Connectors are offline diagnostics, not executed PD paths.", fontsize=9)
-    fig.subplots_adjust(top=.80,bottom=.29,wspace=.24)
+    fig.text(.05,.025,"Stars: selected index 2. Squares/arrows: observation poses. Circle: 9 cm footprint. Green: actual obstacle geometry in overview.\n"
+             "The obstacle-free close-ups expose the handoff geometry. Connectors are offline diagnostics, not executed PD paths.", fontsize=9)
+    fig.subplots_adjust(top=.80,bottom=.29,wspace=.34)
     for ext in ("png","svg"):
         fig.savefig(output/f"boundary_comparison.{ext}",dpi=180,metadata={"Date":None} if ext=="svg" else None)
     plt.close(fig)

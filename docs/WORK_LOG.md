@@ -241,3 +241,14 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 2. Scene/model/checkpoint/native inference/원본 PD/coordinate/clearance 및 기존 scenario를 변경하지 않았다. 전달 옵션과 packet/release clock만 추가했다. OLD timeout은 유지하며 FRESH의 controller-side receive clock은 release 시각이다. 72 Hz 실행 thread는 hold를 기다리지 않는다.
 3. Trigger inclusive boundaries/one-shot, monotonic deadline early wake, busy skip/queue isolation, OLD timeout/FRESH release, B0 first-tick 선택 및 기존 async/geometric tests 합계 **21 passed (0.09 s)**. 구문 검사/whitespace 검사 통과. 기존 baseline 205개 파일 hash 일치 및 pre-run preservation manifest를 별도로 저장했다.
 4. 새 정상 navigation은 `../artifacts/isaac6/controlled_latency_01/`에 한 번만 실행한다. 기존 baseline 재실행, sweep, Graph, 영상/GUI 생성은 하지 않는다. 결과는 종료 후 추가한다.
+
+## Controlled latency handoff — 단일 실행 결과
+
+2026-10-17. [상세 보고서](CONTROLLED_LATENCY_HANDOFF.md). Clean runtime commit `1487acd`, 정상 navigation 1회/재시도 0회.
+
+1. 최초 조건 만족 FRESH **54**, OLD **53**, observation pose `(2.105113842, -0.123311859, -1.085187329 rad)`, t_sim 14.5 s. 물리적 packet 수신 후 전달 지연 실측 **500.072776 ms**, 해당 GPU inference **29.559979 ms**. 지연은 한 번만 주입됐다.
+2. B0 t=14.666666667 s, B_delay t=15.111111111 s. 사이의 32개 유효 OLD intervals에서 **0.088888889 m / +3.281076°** 추가 실행. Host switch 증가량 0.444725807 s는 9 Hz tick 위상을 반영한다. Hold 중 OLD timeout 0회, busy skip 2개(전체 3개), miss 0개. 모든 next-tick switch/pose 기록 일치.
+3. B0 **ALREADY_CONSISTENT**, B_delay **STAGING_SUFFICIENT**. Entry 거리 0.000583→0.021058 m, connector clearance 0.330987→0.361717 m, 양쪽 entry 10/10 안전. B_delay에서 entry가 뒤쪽에 남아 bearing 168.30°지만 기존 제자리 회전+직선 staging family로 안전 연결 가능. FRESH full/prefix clearance 0.331248 m, OLD/FRESH 실제 구간 0.321651/0.376355 m 안전. **NO_QUALIFIED_CANDIDATE**.
+4. Goal entry true, 26.222222 s, goal 거리 0.298718 m. 첫 왼쪽/둘째 오른쪽 통과, 전체 최소 swept clearance 0.080234 m, 충돌/corridor 침범 없음. Warm GPU median/p95 30.147740/31.740886 ms, RTF 0.999996588, pacing p95/max 0.153885/1.442259 ms. Async/controlled-delivery/soft real-time PASS.
+5. 기존 validator의 99 raw/derived/PD/pose/clock/clearance 검증 통과. Baseline 205개 및 새 run 분석 입력 226개 hash 보존, 별도 raw-record 수치 검토 통과. Startup shader compile/renderer-step 오류 5개는 RGB gate 통과 이전이며 navigation clock과 구분했다. 기존 환경 변경 없음.
+6. 같은 prediction의 두 boundary와 전체 장애물을 보여주는 비교 그림 한 장을 보존했다. 최초 close-up에 장애물이 보이지 않아 figure layout에 전체 위치도만 추가했으며 수치/threshold는 그대로다. Baseline/start/goal image hash 차이와 같은 run 내 B0 counterfactual 한계를 명시했다. 두 번째 장애물에 대한 FRESH clearance 약 54 cm 및 B_delay overlap 10.07 cm의 제한 때문에 좁은 통로·다른 latency로 일반화하지 않는다. 추가 실험/Graph/영상/GUI는 수행하지 않았다.

@@ -1,0 +1,615 @@
+{
+  "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/controlled_latency_01",
+  "baseline_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wide_wall_01",
+  "execution_commit": "1487acd950badb45604720d9741a20778c33edae",
+  "protocol": {
+    "base_commit": "671ea9732125be10d38b04d31d5ad03fe1723e85",
+    "baseline_run": "async_wide_wall_01",
+    "scenario_file": "two_obstacles_wide_wall_scenario.json",
+    "additional_delivery_delay_s": 0.5,
+    "maximum_injections": 1,
+    "observation_world_x_inclusive_m": [
+      2.1,
+      2.4
+    ],
+    "require_old_valid_at_observation": true,
+    "require_old_applied_id_nonnegative": true,
+    "trigger": "first accepted inference request satisfying observation snapshot conditions; skipped busy observations cannot consume trigger",
+    "delay_location": "IPC thread after complete packet receive, before result queue publication",
+    "delay_clock": "host monotonic deadline = packet_receive + 500000000 ns",
+    "timeout_clock": "one second since result release to controller-side inbox; OLD clock never reset by pending FRESH",
+    "B0": "pose at first recorded controller refresh at or after packet receive; require OLD valid there, otherwise insufficient evidence",
+    "B_delay": "pose at first actual application of triggered FRESH; null if never applied",
+    "world_anchor": "each prediction's own saved observation pose",
+    "geometry_protocol": "async_handoff_protocol.json; all numeric thresholds unchanged",
+    "old_execution_risk": "observed OLD swept clearance below 0.02 m or corridor clearance <= 0 from packet receive through delayed switch or termination; boundary-straddling integration intervals conservatively included",
+    "classification_precedence": "OLD_EXECUTION_RISK takes precedence, while both geometric classifications and FRESH full/prefix safety remain separate",
+    "not_triggered": "NOT_TRIGGERED; no automatic retry",
+    "unapplied": "preserve received FRESH and report no actual delayed handoff; never manufacture switch pose",
+    "runs": 1,
+    "latency_sweep": false,
+    "graph_optimization": false,
+    "video_or_gui": false
+  },
+  "trigger_status": "TRIGGERED",
+  "classification": "STAGING_SUFFICIENT",
+  "verdict": "NO_QUALIFIED_CANDIDATE",
+  "runtime": {
+    "async_reproduction": "PASS",
+    "real_time_pacing_pass": true,
+    "inference_clock_mapping_pass": true,
+    "warm_inference_ms": {
+      "n": 98,
+      "median": 30.14774,
+      "p95": 31.740886,
+      "min": 28.415158,
+      "max": 33.099891
+    },
+    "requests": 99,
+    "switches": 99,
+    "timeout": {
+      "episodes": 0,
+      "expired_control_ticks": 0,
+      "runtime_status": "NOT_EXERCISED_no_natural_timeout",
+      "synthetic_exact_timeout": "PASS"
+    },
+    "pacing": {
+      "absolute_pose_error_s": {
+        "n": 1889,
+        "median": 0.00010100544444391346,
+        "p95": 0.00015388544444441265,
+        "min": 5.134388888894392e-05,
+        "max": 0.0014422590000000568
+      },
+      "real_time_factor": 0.999996587609102,
+      "late_more_than_one_tick": 0,
+      "inference_clock_mapping_abs_error_s": {
+        "n": 99,
+        "median": 1.6021414128847278e-05,
+        "p95": 6.333027753411294e-05,
+        "min": 2.8339026598989125e-07,
+        "max": 0.00033021855605003606
+      },
+      "actual_pose_interval_wall_s": {
+        "n": 1888,
+        "median": 0.01388848900000017,
+        "p95": 0.013938765049999535,
+        "min": 0.01258424800000002,
+        "max": 0.015226199999999857
+      },
+      "actual_control_interval_wall_s": {
+        "n": 235,
+        "median": 0.11109726,
+        "p95": 0.1122618307,
+        "min": 0.109391388,
+        "max": 0.112691683
+      }
+    },
+    "busy_observation_skips": 3,
+    "missed_capture_slots": 0
+  },
+  "navigation": {
+    "baseline": {
+      "goal_entry": true,
+      "termination_reason": "goal_entry",
+      "simulation_duration_s": 24.583333333333332,
+      "minimum_goal_distance_m": 0.2977081165557891,
+      "obstacle_evaluation": {
+        "category": "avoidance_and_goal_success",
+        "avoidance_success": true,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "safety_margin_met": true,
+        "minimum_swept_clearance_lower_m": 0.06962950693052558,
+        "minimum_swept_clearance_upper_m": 0.06962989795204655,
+        "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+        "corridor_containment_certified": true,
+        "passage": {
+          "StaticObstacle1": {
+            "side": "left_positive_y",
+            "simulation_time_s": 11.319444444444445,
+            "pose": [
+              1.7912724308735348,
+              0.3856529187123945,
+              -0.8020235847093597
+            ]
+          },
+          "StaticObstacle2": {
+            "side": "right_negative_y",
+            "simulation_time_s": 20.13888888888889,
+            "pose": [
+              3.3412120371466805,
+              -0.21348675213475918,
+              0.15039287017310254
+            ]
+          }
+        },
+        "collision_detection_period_s": 0.013888888888888888,
+        "obstacles": {
+          "StaticObstacle1": {
+            "category": "avoidance_and_goal_success",
+            "avoidance_success": true,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.06962950693052558,
+            "minimum_swept_clearance_upper_m": 0.06962989795204655,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+            "corridor_containment_certified": true,
+            "passage": {
+              "side": "left_positive_y",
+              "simulation_time_s": 11.319444444444445,
+              "pose": [
+                1.7912724308735348,
+                0.3856529187123945,
+                -0.8020235847093597
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          },
+          "StaticObstacle2": {
+            "category": "avoidance_and_goal_success",
+            "avoidance_success": true,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.08283605541433607,
+            "minimum_swept_clearance_upper_m": 0.08283605545192366,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+            "corridor_containment_certified": true,
+            "passage": {
+              "side": "right_negative_y",
+              "simulation_time_s": 20.13888888888889,
+              "pose": [
+                3.3412120371466805,
+                -0.21348675213475918,
+                0.15039287017310254
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          }
+        }
+      }
+    },
+    "delayed": {
+      "goal_entry": true,
+      "termination_reason": "goal_entry",
+      "simulation_duration_s": 26.22222222222222,
+      "minimum_goal_distance_m": 0.29871780165437656,
+      "obstacle_evaluation": {
+        "category": "avoidance_and_goal_success",
+        "avoidance_success": true,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "safety_margin_met": true,
+        "minimum_swept_clearance_lower_m": 0.0802341376574117,
+        "minimum_swept_clearance_upper_m": 0.08023422247846726,
+        "minimum_corridor_clearance_lower_m": 0.7995102552059217,
+        "corridor_containment_certified": true,
+        "passage": {
+          "StaticObstacle1": {
+            "side": "left_positive_y",
+            "simulation_time_s": 11.430555555555555,
+            "pose": [
+              1.7918462609758048,
+              0.4001458726040453,
+              -0.8046351194880685
+            ]
+          },
+          "StaticObstacle2": {
+            "side": "right_negative_y",
+            "simulation_time_s": 21.625,
+            "pose": [
+              3.3419677755450667,
+              -0.32629053169295774,
+              0.32945569564977806
+            ]
+          }
+        },
+        "collision_detection_period_s": 0.013888888888888888,
+        "obstacles": {
+          "StaticObstacle1": {
+            "category": "avoidance_and_goal_success",
+            "avoidance_success": true,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.0802341376574117,
+            "minimum_swept_clearance_upper_m": 0.08023422247846726,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": 0.7995102552059217,
+            "corridor_containment_certified": true,
+            "passage": {
+              "side": "left_positive_y",
+              "simulation_time_s": 11.430555555555555,
+              "pose": [
+                1.7918462609758048,
+                0.4001458726040453,
+                -0.8046351194880685
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          },
+          "StaticObstacle2": {
+            "category": "avoidance_and_goal_success",
+            "avoidance_success": true,
+            "geometric_overlap": false,
+            "first_contact": null,
+            "minimum_swept_clearance_lower_m": 0.2485899781550539,
+            "minimum_swept_clearance_upper_m": 0.248591170814666,
+            "safety_margin_met": true,
+            "minimum_corridor_clearance_lower_m": 0.7995102552059217,
+            "corridor_containment_certified": true,
+            "passage": {
+              "side": "right_negative_y",
+              "simulation_time_s": 21.625,
+              "pose": [
+                3.3419677755450667,
+                -0.32629053169295774,
+                0.32945569564977806
+              ]
+            },
+            "collision_detection_period_s": 0.013888888888888888
+          }
+        }
+      }
+    }
+  },
+  "validation": {
+    "baseline_hashes_unchanged": 205,
+    "original_sources_unchanged": [
+      "research/nomad_isaac/worker.py",
+      "research/nomad_isaac/common.py",
+      "research/nomad_isaac/clearance.py",
+      "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+      "research/nomad_preflight/native.py",
+      "deployment/src/pd_controller.py",
+      "deployment/src/navigate.py",
+      "deployment/src/ros_data.py",
+      "research/nomad_isaac/handoff_audit.py",
+      "research/nomad_isaac/async_handoff_protocol.json"
+    ],
+    "scenario_unchanged": true,
+    "checkpoint_unchanged": true,
+    "model_controller_pose_output_validation": "PASS",
+    "first_eligible_request_triggered_once": true,
+    "physical_packet_release_clocks_verified": true,
+    "B0_has_valid_old": true,
+    "release_to_next_controller_tick_exact": true,
+    "new_run_input_hashes_unchanged": 226
+  },
+  "limitations": [
+    "One fixed-goal run; RGB and diffusion sampling differences prevent whole-run causal attribution",
+    "B0 is an actual OLD pose at a counterfactual delivery tick, not a no-delay FRESH rollout",
+    "Same predictions stay observation-anchored; boundary-relative overlap may change between B0 and B_delay",
+    "Finite automatic entry/connector diagnostics do not establish Graph performance or superiority"
+  ],
+  "trigger": {
+    "fresh_id": 54,
+    "old_id": 53,
+    "observation_pose": [
+      2.1051138416770647,
+      -0.12331185891940531,
+      -1.085187329254345
+    ],
+    "t_obs_sim_s": 14.5,
+    "clocks_host_monotonic_ns": {
+      "observation_monotonic_ns": 433756915906190,
+      "ready_monotonic_ns": 433756983378720,
+      "packet_received_monotonic_ns": 433756985336520,
+      "release_deadline_monotonic_ns": 433757485336520,
+      "release_monotonic_ns": 433757485409296
+    },
+    "t_switch_monotonic_ns": 433757526618892,
+    "configured_delay_s": 0.5,
+    "measured_packet_to_release_s": 0.500072776,
+    "deadline_overshoot_s": 7.2776e-05,
+    "gpu_inference_ms": 29.559979,
+    "observation_to_ready_s": 0.06747253,
+    "busy_skips_during_hold": 2,
+    "timeout_refreshes_during_hold": 0,
+    "actually_applied": true,
+    "observation_to_switch_s": 0.610712702
+  },
+  "old_execution_during_hold_through_switch": {
+    "interval_count": 39,
+    "start_sim_s": 14.569444444444445,
+    "end_sim_s": 15.11111111111111,
+    "obstacles": {
+      "StaticObstacle1": 0.32165068469595903,
+      "StaticObstacle2": 0.5369795242513264
+    },
+    "minimum_clearance_m": 0.32165068469595903,
+    "corridor_clearance_m": 1.1809517434342813,
+    "safe": true,
+    "incoming_waypoint_ids": [
+      53
+    ],
+    "invalid_intervals": 0
+  },
+  "fresh_actual_execution_to_next_switch": {
+    "interval_count": 16,
+    "start_sim_s": 15.11111111111111,
+    "end_sim_s": 15.333333333333334,
+    "obstacles": {
+      "StaticObstacle1": 0.37635497059066964,
+      "StaticObstacle2": 0.5303135708152904
+    },
+    "minimum_clearance_m": 0.37635497059066964,
+    "corridor_clearance_m": 1.1432889740582768,
+    "safe": true,
+    "incoming_waypoint_ids": [
+      54
+    ],
+    "invalid_intervals": 0
+  },
+  "boundaries": {
+    "B0": {
+      "pose": [
+        2.1209874005608236,
+        -0.15262224172660066,
+        -1.063712736554641
+      ],
+      "sim_s": 14.666666666666666,
+      "control_monotonic_ns": 433757081893085,
+      "pose_monotonic_ns": 433757081620828,
+      "overlap": {
+        "valid": true,
+        "reason": "ok",
+        "common_forward_overlap_m": 0.1882032266108338,
+        "common_arclength_m": 0.1888817935022776,
+        "station_samples": 20,
+        "station_heading_invalid_samples": 2,
+        "progress_samples": 20,
+        "progress_heading_invalid_samples": 2,
+        "heading_valid_fraction": 0.9,
+        "station_lateral_rms_m": 0.01600126035168165,
+        "station_lateral_max_abs_m": 0.033645210215970375,
+        "station_heading_rms_deg": 10.438650476363009,
+        "progress_spatial_rmse_m": 0.015979795239102573,
+        "progress_longitudinal_rms_m": 0.002002533174304212,
+        "progress_lateral_rms_m": 0.012947535663483747,
+        "progress_longitudinal_mean_m": -0.0013291940585581216,
+        "progress_lateral_mean_m": -0.009996461350776661,
+        "progress_heading_rms_deg": 10.438650476363009,
+        "progress_heading_max_abs_deg": 16.65359511191896
+      },
+      "entry": {
+        "valid": true,
+        "candidate_count": 10,
+        "safe_count": 10,
+        "nearest": {
+          "xy_m": [
+            2.121247892720234,
+            -0.1531440309642566
+          ],
+          "segment_index": 0,
+          "progress_m": 0.0,
+          "distance_m": 0.0005831982284334466,
+          "tangent_rad": -1.08906843945728,
+          "boundary_tangent_deg": 1.4527747629088255,
+          "boundary_connector_deg": 2.5240633950126328,
+          "connector_tangent_deg": 1.0712886321038073,
+          "obstacle_clearance_m": 0.33098740056082365,
+          "obstacles": {
+            "StaticObstacle1": 0.33098740056082365,
+            "StaticObstacle2": 0.5571339170749185
+          },
+          "corridor_clearance_m": 1.2568559690357433,
+          "safe": true
+        },
+        "chosen": {
+          "xy_m": [
+            2.121247892720234,
+            -0.1531440309642566
+          ],
+          "segment_index": 0,
+          "progress_m": 0.0,
+          "distance_m": 0.0005831982284334466,
+          "tangent_rad": -1.08906843945728,
+          "boundary_tangent_deg": 1.4527747629088255,
+          "boundary_connector_deg": 2.5240633950126328,
+          "connector_tangent_deg": 1.0712886321038073,
+          "obstacle_clearance_m": 0.33098740056082365,
+          "obstacles": {
+            "StaticObstacle1": 0.33098740056082365,
+            "StaticObstacle2": 0.5571339170749185
+          },
+          "corridor_clearance_m": 1.2568559690357433,
+          "safe": true
+        },
+        "best_connector_clearance_m": 0.33098740056082365,
+        "invalid_prefix_segments": 0
+      },
+      "class": "ALREADY_CONSISTENT"
+    },
+    "B_delay": {
+      "pose": [
+        2.166355173227344,
+        -0.22904763519344332,
+        -1.0064471560220971
+      ],
+      "sim_s": 15.11111111111111,
+      "control_monotonic_ns": 433757526618892,
+      "pose_monotonic_ns": 433757526088554,
+      "overlap": {
+        "valid": true,
+        "reason": "ok",
+        "common_forward_overlap_m": 0.10070474073424124,
+        "common_arclength_m": 0.10131672191826264,
+        "station_samples": 12,
+        "station_heading_invalid_samples": 2,
+        "progress_samples": 12,
+        "progress_heading_invalid_samples": 2,
+        "heading_valid_fraction": 0.8333333333333334,
+        "station_lateral_rms_m": 0.021394627476531664,
+        "station_lateral_max_abs_m": 0.03387245358624857,
+        "station_heading_rms_deg": 13.336271264526134,
+        "progress_spatial_rmse_m": 0.021359346086653835,
+        "progress_longitudinal_rms_m": 0.0023220980965615867,
+        "progress_lateral_rms_m": 0.01829447660890023,
+        "progress_longitudinal_mean_m": -0.0019379649778261039,
+        "progress_lateral_mean_m": -0.017256039463471814,
+        "progress_heading_rms_deg": 13.677407344805639,
+        "progress_heading_max_abs_deg": 16.65359511191896
+      },
+      "entry": {
+        "valid": true,
+        "candidate_count": 10,
+        "safe_count": 10,
+        "nearest": {
+          "xy_m": [
+            2.151717330958579,
+            -0.21390890224830095
+          ],
+          "segment_index": 1,
+          "progress_m": 0.06798713030113739,
+          "distance_m": 0.02105819701374221,
+          "tangent_rad": -1.1250866684301435,
+          "boundary_tangent_deg": 6.797543344471032,
+          "boundary_connector_deg": 168.29854344703503,
+          "connector_tangent_deg": 161.501000102564,
+          "obstacle_clearance_m": 0.36171733095857894,
+          "obstacles": {
+            "StaticObstacle1": 0.36171733095857894,
+            "StaticObstacle2": 0.5369801456236015
+          },
+          "corridor_clearance_m": 1.1809523648065565,
+          "safe": true
+        },
+        "chosen": {
+          "xy_m": [
+            2.151717330958579,
+            -0.21390890224830095
+          ],
+          "segment_index": 1,
+          "progress_m": 0.06798713030113739,
+          "distance_m": 0.02105819701374221,
+          "tangent_rad": -1.1250866684301435,
+          "boundary_tangent_deg": 6.797543344471032,
+          "boundary_connector_deg": 168.29854344703503,
+          "connector_tangent_deg": 161.501000102564,
+          "obstacle_clearance_m": 0.36171733095857894,
+          "obstacles": {
+            "StaticObstacle1": 0.36171733095857894,
+            "StaticObstacle2": 0.5369801456236015
+          },
+          "corridor_clearance_m": 1.1809523648065565,
+          "safe": true
+        },
+        "best_connector_clearance_m": 0.36171733095857894,
+        "invalid_prefix_segments": 0
+      },
+      "class": "STAGING_SUFFICIENT"
+    }
+  },
+  "paths": {
+    "old": {
+      "native_full": {
+        "obstacle_clearance_m": 0.3157447795058307,
+        "obstacles": {
+          "StaticObstacle1": 0.3157447795058307,
+          "StaticObstacle2": 0.5155380824833868
+        },
+        "corridor_clearance_m": 1.101415366943965,
+        "safe": true
+      },
+      "native_prefix": {
+        "obstacle_clearance_m": 0.3157447795058307,
+        "obstacles": {
+          "StaticObstacle1": 0.3157447795058307,
+          "StaticObstacle2": 0.542692254542343
+        },
+        "corridor_clearance_m": 1.2072018978672223,
+        "safe": true
+      },
+      "origin_full": {
+        "obstacle_clearance_m": 0.2911121608483148,
+        "obstacles": {
+          "StaticObstacle1": 0.2911121608483148,
+          "StaticObstacle2": 0.5155380824833868
+        },
+        "corridor_clearance_m": 1.101415366943965,
+        "safe": true
+      },
+      "origin_prefix": {
+        "obstacle_clearance_m": 0.2911121608483148,
+        "obstacles": {
+          "StaticObstacle1": 0.2911121608483148,
+          "StaticObstacle2": 0.542692254542343
+        },
+        "corridor_clearance_m": 1.2072018978672223,
+        "safe": true
+      }
+    },
+    "fresh": {
+      "native_full": {
+        "obstacle_clearance_m": 0.33124789272023414,
+        "obstacles": {
+          "StaticObstacle1": 0.33124789272023414,
+          "StaticObstacle2": 0.5442055601670036
+        },
+        "corridor_clearance_m": 1.0269201671357375,
+        "safe": true
+      },
+      "native_prefix": {
+        "obstacle_clearance_m": 0.33124789272023414,
+        "obstacles": {
+          "StaticObstacle1": 0.33124789272023414,
+          "StaticObstacle2": 0.545373252928072
+        },
+        "corridor_clearance_m": 1.196091097751699,
+        "safe": true
+      },
+      "origin_full": {
+        "obstacle_clearance_m": 0.3151138416770648,
+        "obstacles": {
+          "StaticObstacle1": 0.3151138416770648,
+          "StaticObstacle2": 0.5442055601670036
+        },
+        "corridor_clearance_m": 1.0269201671357375,
+        "safe": true
+      },
+      "origin_prefix": {
+        "obstacle_clearance_m": 0.3151138416770648,
+        "obstacles": {
+          "StaticObstacle1": 0.3151138416770648,
+          "StaticObstacle2": 0.545373252928072
+        },
+        "corridor_clearance_m": 1.196091097751699,
+        "safe": true
+      }
+    }
+  },
+  "additional_old_motion_B0_to_B_delay": {
+    "interval_count": 32,
+    "distance_m": 0.08888888888888889,
+    "signed_yaw_rad": 0.057265580532543936,
+    "abs_net_yaw_rad": 0.057265580532543936,
+    "absolute_turn_rad": 0.057265580532543936,
+    "world_pose_delta": [
+      0.045367772666520256,
+      -0.07642539346684266,
+      0.057265580532543936
+    ],
+    "net_translation_m": 0.08887674365818528,
+    "control_tick_delay_increase_wall_s": 0.444725807,
+    "control_tick_delay_increase_sim_s": 0.44444444444444464
+  },
+  "old_B0_to_B_delay_safety": {
+    "interval_count": 32,
+    "start_sim_s": 14.666666666666666,
+    "end_sim_s": 15.11111111111111,
+    "obstacles": {
+      "StaticObstacle1": 0.3309867791885486,
+      "StaticObstacle2": 0.5369795242513264
+    },
+    "minimum_clearance_m": 0.3309867791885486,
+    "corridor_clearance_m": 1.1809517434342813,
+    "safe": true,
+    "incoming_waypoint_ids": [
+      53
+    ],
+    "invalid_intervals": 0
+  },
+  "controlled_delivery_reproduction": "PASS"
+}
