@@ -128,8 +128,16 @@ class ExecutionThread:
             self.done.set()
 
 
-def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, render_check):
+def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, render_check, controlled_delivery_delay=False):
     protocol = json.loads(Path(__file__).with_name("async_protocol.json").read_text())
+    delay = None
+    if controlled_delivery_delay:
+        from .delivery_delay import SingleDeliveryDelay
+        delay_protocol = json.loads(Path(__file__).with_name("controlled_latency_protocol.json").read_text())
+        write_json(out/"delivery_delay_protocol.json", delay_protocol)
+        delay = SingleDeliveryDelay(delay_protocol)
+        protocol["post_inference_result_delivery_delay_s"] = delay_protocol["additional_delivery_delay_s"]
+        protocol["waypoint_timeout_clock"] = "host_monotonic_since_controller_side_result_release"
     write_json(out/"async_protocol.json", protocol)
     engine = ExecutionThread(config, out)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
@@ -139,7 +147,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
          (out/"requests.jsonl").open("x") as req_log:
         connection.settimeout(60)
         connection.connect(socket_path)
-        client = AsyncClient(connection, engine.snapshot)
+        client = AsyncClient(connection, engine.snapshot, delivery_delay=delay)
         engine.start(client)
         slot = 0
         try:
@@ -217,5 +225,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                "all_outputs_finite": True, "frame_and_rgb_check": render_check, "obstacle_evaluation": obstacle_result,
                "raw_model_output_directory": "model/raw", "derived_trajectory_directory": "model/derived",
                "note": "Pacing and concurrent OLD movement require offline validation; this file alone is not a realtime PASS."}
+    if delay is not None:
+        summary["delivery_delay"] = {"triggered_id": delay.triggered_id,
+                                     "status": "TRIGGERED" if delay.triggered_id is not None else "NOT_TRIGGERED",
+                                     "configured_additional_s": delay.protocol["additional_delivery_delay_s"]}
     write_json(out/"summary.json", summary)
     print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

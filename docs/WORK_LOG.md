@@ -232,3 +232,12 @@ checkpoint와 raw input/output은 기존 파일을 덮어쓰지 않는 경로/�
 2. 전체 주행 위치도 및 4개 확대 패널에 observation-anchored OLD/FRESH, index 2, observation/switch pose, 9 cm footprint, 기존 entry와 미실행 connector, 실제 다음 handoff까지 실행 구간을 표시했다. 28→29의 tail overlap은 실제 충돌과 분리했다. 기존 `NO_QUALIFIED_CANDIDATE` 유지.
 3. Plot 전후 원본 run 205개 및 audit/plot 입력 5개 hash 불변, 표시 좌표의 derived NPZ→world 변환 및 실제 B/구간 시각 대조 통과. 첫 그림의 caption 간격을 수정한 최종 PNG/SVG는 `../artifacts/isaac6/async_handoff_plots_03/`에 보존했다. 새 inference/navigation/Graph/영상 0회, 환경 변경 없음.
 4. 작은 SVG/manifest, plot source와 [보고서](ASYNC_OLD_FRESH_HANDOFF_AUDIT.md)만 Git에 추가한다. PNG와 기존 raw는 Git에서 제외한다.
+
+## Controlled latency handoff — 실행 준비
+
+2026-10-17. 사용자 요청으로 기준 `671ea9732125be10d38b04d31d5ad03fe1723e85`에서 `research/isaac6-controlled-latency`를 생성했다.
+
+1. Observation X [2.1, 2.4] m + 유효 OLD + 최초 accepted request에 한해 physical packet 수신 후 0.5 s를 IPC thread에서 지연한다. B0/B_delay 정의, 기존 geometric thresholds 및 OLD_EXECUTION_RISK 우선 분류를 실행 전에 [protocol](CONTROLLED_LATENCY_PROTOCOL.md), commit `131bb3e`에 고정했다.
+2. Scene/model/checkpoint/native inference/원본 PD/coordinate/clearance 및 기존 scenario를 변경하지 않았다. 전달 옵션과 packet/release clock만 추가했다. OLD timeout은 유지하며 FRESH의 controller-side receive clock은 release 시각이다. 72 Hz 실행 thread는 hold를 기다리지 않는다.
+3. Trigger inclusive boundaries/one-shot, monotonic deadline early wake, busy skip/queue isolation, OLD timeout/FRESH release, B0 first-tick 선택 및 기존 async/geometric tests 합계 **21 passed (0.09 s)**. 구문 검사/whitespace 검사 통과. 기존 baseline 205개 파일 hash 일치 및 pre-run preservation manifest를 별도로 저장했다.
+4. 새 정상 navigation은 `../artifacts/isaac6/controlled_latency_01/`에 한 번만 실행한다. 기존 baseline 재실행, sweep, Graph, 영상/GUI 생성은 하지 않는다. 결과는 종료 후 추가한다.

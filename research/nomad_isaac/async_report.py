@@ -252,7 +252,9 @@ def validate(run, baseline, out):
             "limitations":["Canonical SE2 executed at 72 Hz; USD camera holds 4 Hz capture snapshots, not independent PhysX dynamics",
                 "Timing mapping interpolates existing wall/simulation samples; direct OLD evidence uses only complete measured intervals",
                 "One scenario/run; changed observation/seed association prevents causal attribution to asynchrony alone",
-                "No native waypoint yaw/timestamps, no topomap, graph, correspondence, artificial latency, video or GUI added"]}
+                "No native waypoint yaw/timestamps, topomap, graph, video or GUI in this validator",
+                "Controlled post-inference delivery delay enabled; received means controller-side release"
+                if "delivery_delay" in summary else "No artificial latency injected"]}
     names=list(dict.fromkeys(k for r in timing for k in r))
     with (out/"request_timing.csv").open("x") as f:
         writer=csv.DictWriter(f,fieldnames=names);writer.writeheader();writer.writerows(timing)

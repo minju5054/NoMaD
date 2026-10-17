@@ -19,7 +19,10 @@ def main():
     parser.add_argument("--prepare-only", action="store_true", help="Render/frame gate only; no inference or movement")
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
+    parser.add_argument("--controlled-delivery-delay", action="store_true", help="Single predeclared 0.5 s IPC result hold")
     args = parser.parse_args()
+    if args.controlled_delivery_delay and (not args.asynchronous or args.prepare_only):
+        parser.error("Controlled delivery delay requires asynchronous navigation")
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
     isaac = args.isaac_root.resolve()
@@ -28,12 +31,15 @@ def main():
         raise RuntimeError(f"Expected existing Isaac Sim 6, got {version}")
     scenario_path = args.scenario.resolve()
     sources = list(Path(__file__).parent.glob("*.py")) + [scenario_path, ROOT / "research/nomad_preflight/native.py"]
+    if args.controlled_delivery_delay:
+        sources += [Path(__file__).with_name("controlled_latency_protocol.json")]
     write_json(out / "provenance.json", {
         "time_kst": datetime.now(ZoneInfo("Asia/Seoul")).isoformat(), "isaac_root": str(isaac),
         "isaac_version": version, "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "git_status": subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True),
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
-        "prepare_only": args.prepare_only, "asynchronous": args.asynchronous, "launcher_python": sys.executable,
+        "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
+        "controlled_delivery_delay": args.controlled_delivery_delay, "launcher_python": sys.executable,
         "gpu": subprocess.check_output(["nvidia-smi", "--query-gpu=name,driver_version,memory.total", "--format=csv,noheader"], text=True).strip()})
     worker = None
     simulator = None
@@ -71,6 +77,8 @@ def main():
             command += ["--prepare-only"] if args.prepare_only else ["--socket", str(socket_path)]
             if args.asynchronous:
                 command.append("--asynchronous")
+            if args.controlled_delivery_delay:
+                command.append("--controlled-delivery-delay")
             simulator = subprocess.Popen(command, cwd=ROOT, env=env, stdout=sim_log, stderr=subprocess.STDOUT, start_new_session=True)
             print(f"Isaac PID {simulator.pid}; logs: {out}", flush=True)
             code = simulator.wait(timeout=read_scenario(scenario_path)["timeout_process_wall_s"])

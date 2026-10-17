@@ -66,8 +66,9 @@ class AsyncClient:
     Busy lasts until the result is consumed, so pending requests + unread results
     are bounded by one. Stop drains a final result without applying it.
     """
-    def __init__(self, connection, snapshot):
+    def __init__(self, connection, snapshot, delivery_delay=None):
         self.connection, self.snapshot = connection, snapshot
+        self.delivery_delay = delivery_delay
         self.jobs, self.results = queue.Queue(maxsize=1), queue.Queue(maxsize=1)
         self.lock = threading.Lock()
         self.busy = False
@@ -82,6 +83,8 @@ class AsyncClient:
                 return False
             if metadata["id"] != self.last_submitted_id+1:
                 raise ValueError("Request IDs must be consecutive")
+            if self.delivery_delay is not None:
+                self.delivery_delay.annotate_accepted_request(metadata)
             self.last_submitted_id = metadata["id"]
             self.busy = True
             self.jobs.put_nowait((dict(metadata), arrays))
@@ -107,6 +110,20 @@ class AsyncClient:
                 record = {**metadata, **response, "request_send_end_monotonic_ns": send_end,
                           "received_monotonic_ns": received, "received_sim_s": snap["sim_s"],
                           "agent_pose_at_receive": snap["pose"], "received_pose_sample_monotonic_ns": snap["monotonic_ns"]}
+                if self.delivery_delay is not None:
+                    deadline = self.delivery_delay.hold_until_deadline(metadata, received)
+                    released_snap = self.snapshot()
+                    record.update({"packet_received_monotonic_ns": received,
+                                   "packet_received_sim_s": snap["sim_s"],
+                                   "agent_pose_at_packet_receive": snap["pose"],
+                                   "packet_pose_sample_monotonic_ns": snap["monotonic_ns"],
+                                   "release_deadline_monotonic_ns": deadline,
+                                   "received_sim_s": released_snap["sim_s"],
+                                   "agent_pose_at_receive": released_snap["pose"],
+                                   "received_pose_sample_monotonic_ns": released_snap["monotonic_ns"]})
+                    # Controller-side receive is release; OLD's receive clock is untouched.
+                    release = time.monotonic_ns()
+                    record.update({"release_monotonic_ns": release, "received_monotonic_ns": release})
                 self.results.put_nowait((record, outputs))
         except BaseException as exc:
             self.error = exc
