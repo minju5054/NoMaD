@@ -334,3 +334,12 @@ Warm GPU median/p95 30.782/33.078 ms, RTF .999990, pacing p95/max .154/1.423 ms.
 동일 B52에서 실제 14 tick/.194444 s 구간만 비교: RAW52 clearance −1.262mm/overlap, HOLD51 +1.369mm/no overlap, OBS-ANCHORED52 +4.658mm/no overlap. B52 초기 clearance부터 19.190mm로 20mm margin 미달이고 **세 조건 모두 margin 미달**이다. 실제 51은 충돌하지 않았으나 margin을 소진했다. RAW52 및 실제 50–52의 전체 pose/각 tick swept 값은 저장값과 최대 오차 0. HOLD51의 timeout은 종료까지 유효하다. Counterfactual의 단기 no-overlap을 safe navigation이나 correction 검증으로 해석하지 않는다.
 
 Unsafe prediction/원본 PD 실행과 frame mismatch를 분리했으며 qualified Graph 후보는 입증하지 못했다. 53은 미적용, 49는 참고로만 유지. 기존 함수만 재사용해 작은 JSON/CSV와 [분석 보고서](PREDICTION_50_52_DIRECTION_REVERSAL.md)를 추가했다. 원본 257개 input hashes, 기존 분석·확대 그림 및 보호 source 9개 유지. 새 navigation/inference/시각화/test/Graph/새 correspondence/환경 변경 없음.
+
+
+## B51 speed-only safety feasibility
+
+2026-10-18. 기준 `6f8267b`의 저장된 run으로 offline oracle 검증. B51 tick1000 pose `(2.097864810,−.001133875,−.966924877)`, dynamic clearance 4.417414cm/timeout 잔여 .942698s. 실행 전 protocol에 v=[0,.02,…,.20] 11개, w=−.4, H1=16ticks/H2=30ticks를 고정했다. FRESH52/53 및 이후 실제 pose/clearance는 속도 선택에 사용하지 않았다. 선택 후 H1 RAW51의 17pose/16interval을 검증했고 pose·static/dynamic swept·corridor 오차 모두 0이다.
+
+Grid 최대 feasible v는 H1 .18m/s(10% 감소, clearance 2.154597cm, 전진4cm), H2 .10m/s(50% 감소, clearance2.206896cm, 전진4.166667cm). RAW .2m/s는 H1 1.918788cm/H2 .136918cm로 margin 미달이나 geometric overlap은 없다. 최초 미달은 H1 마지막 interval [14.097222222,14.111111111]s. B51부터 .10m/s를 한 번 선택해 유지하면 H1 prefix도 3.097952cm로 안전하며 중간 감속 스케줄은 없다. `(0,0)` 정지는 별도 trivial reference로만 저장했다.
+
+이번 정확한 geometry/제한 horizon에서는 전진하며 감속만으로 충분해 Graph 필요성 근거를 추가하지 못했다. H2 RAW·보정은 실제52실행과 다른 counterfactual이며 온라인 geometry 인지/후속prediction/목표도달은 미검증. 작은 protocol/summary JSON, 22행 grid·6행 comparison CSV 및 [보고서](B51_SPEED_CORRECTION_FEASIBILITY.md)만 추가했다. 257개 run inputs, 이전 분석·그림과 보호 source9개 hash 유지. 새 navigation/inference/시각화/test/실행코드 변경 없음.

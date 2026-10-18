@@ -1,0 +1,55 @@
+{
+  "analysis_base_commit": "6f8267b37e958d5daf2446d6c763b585f90fb8d8",
+  "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/old_rollout_obstacle_01",
+  "boundary_id": 51,
+  "boundary_tick": 1000,
+  "integration_hz": 72,
+  "speed_grid_m_s": [
+    0.0,
+    0.02,
+    0.04,
+    0.06,
+    0.08,
+    0.1,
+    0.12,
+    0.14,
+    0.16,
+    0.18,
+    0.2
+  ],
+  "grid_step_m_s": 0.02,
+  "fixed_w_rad_s": -0.4,
+  "horizons": {
+    "H1": {
+      "end_tick": 1016,
+      "end_sim_s": 14.11111111111111
+    },
+    "H2": {
+      "end_tick": 1030,
+      "end_sim_s": 14.305555555555555
+    }
+  },
+  "selection": "Largest strictly positive grid speed with every swept obstacle clearance lower bound >=0.02 m and corridor lower bound >0 over the entire horizon; no grid refinement",
+  "control": "One constant (v,-0.4) command chosen at B51 independently for each prescribed horizon, never updated; H2-selected command also checked on its H1 prefix",
+  "stop_reference_vw": [
+    0.0,
+    0.0
+  ],
+  "zero_speed_grid_note": "(0,-0.4) rotates in place and is excluded from moving feasible-speed selection; (0,0) is separate trivial reference",
+  "decision_inputs": [
+    "B51 pose",
+    "B51 original PD command and current validity",
+    "fixed static and already-spawned dynamic geometry",
+    "radius and margin",
+    "user-prescribed horizon duration",
+    "fixed speed grid"
+  ],
+  "excluded_from_decision": [
+    "FRESH52/53 predictions or commands",
+    "post-B51 actual poses or clearance",
+    "goal outcome"
+  ],
+  "validation_only": "Compare H1 RAW51 against recorded 72Hz pose and swept clearance after speed decisions are fixed",
+  "meaning": "offline oracle geometry feasibility; grid maximum is not a continuous optimum",
+  "frozen_before_evaluation": true
+}
