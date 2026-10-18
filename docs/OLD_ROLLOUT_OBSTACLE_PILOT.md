@@ -88,3 +88,12 @@ Prediction 51은 native 경로가 안전해도 실제 PD 구간 끝에서는 .02
 ![실제 OLD rollout, native OLD/FRESH, B와 동적 장애물](../research/results/isaac6_old_rollout_obstacle_20261018/old_rollout_handoff.svg)
 
 남은 불확실성: OLD/FRESH의 observation 및 noise/DDPM seed가 199/200→201/202로 달라져 revision을 장애물의 인과 효과로만 볼 수 없다. Fixed-goal adapter와 단일 실험이며 국소 여유 공간은 controller feasibility를 보장하지 않는다. Safe FRESH→실제 PD 안전성의 차이는 남지만, 이번 최초 handoff의 단순 연결은 안전하고 spatial correspondence가 invalid라 **Graph 비교에 사용할 qualified candidate를 입증하지 못했다**. Graph/Topomap/smoothing/추가 latency/영상은 구현하지 않았다.
+
+
+## 후속 요청: prediction 49–53 및 실제 경로 확대
+
+저장된 데이터만 사용해 [확대 그림](../research/results/isaac6_old_rollout_obstacle_20261018/old_rollout_detail.svg)을 추가했다. 왼쪽 점선은 각 observation pose에 고정한 sample 0의 8개 prediction points, 사각형은 index 2이며 굵은 실선은 실제 중심 경로다. 오른쪽은 실제 적용 ID별로 색상을 나눈 확대 주행선이다. 빈 원 `O49…O53`은 관측 위치, 채운 마름모 `S49…S52`는 실제 switch 위치다. **53은 관측·수신됐지만 실제 적용되지 않아 S53과 실행 구간이 없다.** 빨간 점선 원은 충돌 순간의 반경 .09 m footprint이다.
+
+각 observation/switch pose를 원본 72 Hz trace와 비교하고, 색칠한 모든 execution interval의 실제 incoming ID를 검증했다. 257개 입력 hash 및 이전 분석을 보존했다. 새 navigation/inference 0회, 모델·controller·trajectory 변경 없음. PNG는 `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/old_rollout_obstacle_detail_01/old_rollout_detail.png`, 재현 가능한 plot script는 `research/nomad_isaac/plot_old_rollout_detail.py`; [plot manifest](../research/results/isaac6_old_rollout_obstacle_20261018/detail_plot_manifest.json)에 좌표·시간·검증 결과와 그림 hash를 기록했다.
+
+![49–53 prediction 및 실제 실행 확대](../research/results/isaac6_old_rollout_obstacle_20261018/old_rollout_detail.svg)
