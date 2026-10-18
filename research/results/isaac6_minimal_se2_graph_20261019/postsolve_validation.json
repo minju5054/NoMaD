@@ -1,0 +1,50 @@
+{
+  "decision": "CONVERGED_BUT_H1_SAFETY_FAILED",
+  "clipping_diagnostic": {
+    "RAW": {
+      "unclipped_v_m_s": 0.3222545385360718,
+      "unclipped_w_rad_s": -0.9045301507058174,
+      "v_saturated": true,
+      "w_saturated": true,
+      "local_1um_perturbation_command_change": 0.0,
+      "rollout_max_pose_difference_from_RAW": 0.0
+    },
+    "RIGID": {
+      "unclipped_v_m_s": 0.22016192050331118,
+      "unclipped_w_rad_s": -1.0221535754650743,
+      "v_saturated": true,
+      "w_saturated": true,
+      "local_1um_perturbation_command_change": 0.0,
+      "rollout_max_pose_difference_from_RAW": 0.0
+    },
+    "GRAPH": {
+      "unclipped_v_m_s": 0.20543175439992695,
+      "unclipped_w_rad_s": -1.170503613618351,
+      "v_saturated": true,
+      "w_saturated": true,
+      "local_1um_perturbation_command_change": 0.0,
+      "rollout_max_pose_difference_from_RAW": 0.0
+    }
+  },
+  "residual_group_scalar_counts": {
+    "fresh_prior": 24,
+    "relative_pose": 21,
+    "boundary": 3,
+    "heading_tangent": 8,
+    "minimum_segment": 7,
+    "native_obstacle": 24,
+    "native_corridor": 9,
+    "controller_obstacle": 3,
+    "controller_corridor": 1
+  },
+  "initial_objective": 4.717881912651783,
+  "final_objective": 4.418300542912375,
+  "solver_invocations": 1,
+  "postsolve_solver_invocations": 0,
+  "postsolve_change": "figure labels and generated CSV/SVG whitespace only; frozen residuals, weights, solver and numerical outputs unchanged",
+  "preservation": {
+    "raw_inputs_unchanged": 257,
+    "protected_sources_unchanged": 9,
+    "manifest_sha256": "a12d8c44e9e6b21742636575948e488c142e51fea580a68bed1da11c5a57dfed"
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "protocol_sha256": "f0057b3cf6a4cc857b8eb2364c0d7dc9dcb6318375e0c8ff9f063fa0f9d6eafb",
+  "analysis_sha": "227c9d40daae1814bd8e1effb1c9adbae8ac6594",
+  "script_sha256": "fdfa6eefbfb8eb554b3662c9d6e5867891106566091595444dea32ac41bf7822",
+  "boundary": [
+    2.0978648104874,
+    -0.001133875463682103,
+    -0.9669248766751819
+  ],
+  "initial_fresh_poses": [
+    [
+      2.102292249181147,
+      0.004114423382582728,
+      -1.0920925517845894
+    ],
+    [
+      2.115725014506902,
+      -0.021769365883756057,
+      -1.599257891627837
+    ],
+    [
+      2.114882516164349,
+      -0.05136263820096881,
+      -2.07202435853688
+    ],
+    [
+      2.0980324092256026,
+      -0.082116727524641,
+      -2.5788778047408765
+    ],
+    [
+      2.063522614212547,
+      -0.10388336507224111,
+      -3.0503201596292437
+    ],
+    [
+      2.0164836693542423,
+      -0.10818868893590713,
+      -3.4210843188513023
+    ],
+    [
+      1.965642575488424,
+      -0.09359708967618677,
+      -3.62711061153073
+    ],
+    [
+      1.9177689687954853,
+      -0.06833683756842217,
+      -3.62711061153073
+    ]
+  ],
+  "fresh_observation_pose": [
+    2.079756858322824,
+    0.023472089614657323,
+    -0.905813765564071
+  ],
+  "obstacles": [
+    {
+      "id": "StaticObstacle1",
+      "center_xy_m": [
+        1.5,
+        0.0
+      ],
+      "size_xyz_m": [
+        0.4,
+        0.5,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "StaticObstacle2",
+      "center_xy_m": [
+        3.0,
+        0.75
+      ],
+      "size_xyz_m": [
+        0.5,
+        1.5,
+        1.0
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "DynamicObstacle",
+      "size_xyz_m": [
+        0.35,
+        0.35,
+        0.8
+      ],
+      "color_rgb": [
+        0.65,
+        0.04,
+        0.65
+      ],
+      "spawn_tick": 970,
+      "minimum_visible_pixels": 20,
+      "center_xy_m": [
+        2.4056335514242244,
+        -0.19550297450991216
+      ]
+    }
+  ],
+  "corridor": {
+    "xmin": -2.0,
+    "xmax": 6.0,
+    "half_width": 1.5,
+    "height": 2.6
+  },
+  "input_hashes": {
+    "model/derived/0050.npz": "782a9ab0ad2bbfeeb61bbc148b467eb5a4220c3ed86a80dd99d3e79e91452732",
+    "model/derived/0051.npz": "b1856a630fac405d41c8e2d52ef363818e4c9d16a76ce97c0dc98cdcba265062",
+    "events.jsonl": "1db35c012a5e373b02c3b45e893a83f8d8721b7ebdeb2e4ed8fd329ff8c06229",
+    "agent_trajectory.csv": "ebf1323c456c2697cda2e7d898a32509a26a67446e61ae686b1d4f0a2e8d979f",
+    "scenario.json": "c889d04179f660556962a075e5f086a3c6f7789a73dacc35dda396a1b3607f12",
+    "dynamic/spawn.json": "1e7accadedbde91d872a99971fba9f879e3ea6b8b785fa7d37c0130878616004"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "scipy": "1.11.4",
+    "numpy": "1.26.4"
+  },
+  "pre_solve_checks": {
+    "raw_inputs_unchanged": 257,
+    "protected_sources_unchanged": 9,
+    "manifest_sha256": "a12d8c44e9e6b21742636575948e488c142e51fea580a68bed1da11c5a57dfed",
+    "se2_log_and_inverse_frame": "PASS",
+    "rigid_relative_max_error": 4.440892098500626e-16
+  },
+  "solve_count": 1
+}

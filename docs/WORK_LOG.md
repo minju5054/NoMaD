@@ -343,3 +343,12 @@ Unsafe prediction/원본 PD 실행과 frame mismatch를 분리했으며 qualifie
 Grid 최대 feasible v는 H1 .18m/s(10% 감소, clearance 2.154597cm, 전진4cm), H2 .10m/s(50% 감소, clearance2.206896cm, 전진4.166667cm). RAW .2m/s는 H1 1.918788cm/H2 .136918cm로 margin 미달이나 geometric overlap은 없다. 최초 미달은 H1 마지막 interval [14.097222222,14.111111111]s. B51부터 .10m/s를 한 번 선택해 유지하면 H1 prefix도 3.097952cm로 안전하며 중간 감속 스케줄은 없다. `(0,0)` 정지는 별도 trivial reference로만 저장했다.
 
 이번 정확한 geometry/제한 horizon에서는 전진하며 감속만으로 충분해 Graph 필요성 근거를 추가하지 못했다. H2 RAW·보정은 실제52실행과 다른 counterfactual이며 온라인 geometry 인지/후속prediction/목표도달은 미검증. 작은 protocol/summary JSON, 22행 grid·6행 comparison CSV 및 [보고서](B51_SPEED_CORRECTION_FEASIBILITY.md)만 추가했다. 257개 run inputs, 이전 분석·그림과 보호 source9개 hash 유지. 새 navigation/inference/시각화/test/실행코드 변경 없음.
+
+
+## Minimal SE(2) graph — OLD50 → FRESH51 sample 0
+
+2026-10-19. 기준 `c6a72d5`에서 별도 `research/isaac6-minimal-se2-graph` 생성. Protocol `7ecee7f` 및 구현 `227c9d4`를 먼저 고정하고 SciPy 1.11.4/기존 시스템 Python으로 offline optimization 1회 수행했다. 8 editable SE(2) future nodes, 고정 B51, FRESH prior/relative pose/boundary/native obstacle/원본 PD rollout safety 및 tangent consistency를 구성했다. 가중치·2.5cm soft target·solver를 사전 고정했고 평가 threshold는 2cm를 유지했다. OLD50은 context, FRESH51 sample0/observation anchor/B51/당시 geometry만 optimization 입력이며 미래 실제 trace와 speed/sample 참고값은 solve 후 읽었다.
+
+`ftol` 수렴(nfev5, residual L2 2.972642, cost4.418301, .659856s)했으나 **H1 실행 안전성 실패**. Boundary 거리 6.866→2.342mm, 실제 tangent 차이 7.172→2.829°, XY 수정 RMS1.870mm 및 상대 transform translation RMS.4465mm. Native clearance 2.490854→2.634236cm 개선에도 clipping 후 RAW/RIGID/GRAPH의 원본 PD는 모두 (.2,−.4), 동일 H1 clearance1.918788cm/no overlap이었다. Controller penalty는 4.222590으로 남았고 국소 clipping plateau를 확인했다. 사후 tuning/restart 없음. 기존 감속 .18m/s와 samples4/6/7은 2cm를 통과한 참고값으로만 재사용했으며 Graph의 추가 실행 이점은 확인하지 못했다.
+
+RAW 17poses/16interval의 실제 pose·static/dynamic swept·corridor 오차0, SE(2) 수치 확인 및 rigid relative invariance 통과. Raw257/source9 hashes 유지, 기존 model/controller/environment와 결과 불변. [보고서](MINIMAL_SE2_GRAPH_OFFLINE.md), 작은 JSON/CSV, 비교 SVG 한 장 저장. 새 navigation/inference·closed-loop planner·sample reranking·correspondence·parameter sweep 없음. 한 구간의 기하학적 수정 mechanism과 H1 안전 실패를 구분하며 Graph 필요성/우월성/전체 navigation 개선은 주장하지 않는다.

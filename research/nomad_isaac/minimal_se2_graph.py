@@ -278,7 +278,7 @@ def write_comparison(out, results):
                      "distance_m": roll["distance_m"], "end_x_m": roll["end_pose"][0],
                      "end_y_m": roll["end_pose"][1], "end_yaw_rad": roll["end_pose"][2]})
     with (out / "comparison.csv").open("x") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader(); writer.writerows(rows)
 
 
@@ -299,13 +299,14 @@ def plot_comparison(out, exp, worlds, events, results):
         lo, hi = exp.boxes["DynamicObstacle"]
         d = np.sqrt(np.maximum(np.maximum(lo[0]-xx, xx-hi[0]), 0)**2 + np.maximum(np.maximum(lo[1]-yy, yy-hi[1]), 0)**2)
         ax.contour(xx, yy, d, levels=[exp.radius, exp.radius+.02], colors=["#952c83", "#952c83"], linestyles=[":", "--"], linewidths=1)
-        ax.plot(*exp.boundary[:2], "k*", ms=13, label="B51 fixed")
+        ax.plot(*exp.boundary[:2], "k*", ms=13, label="B51 fixed", zorder=10)
         ax.set_aspect("equal"); ax.grid(alpha=.18); ax.set_xlabel("World X [m]"); ax.set_ylabel("World Y [m]")
     axes[0].plot(*worlds[50].T, ":", color=".5", lw=1.5, label="OLD50 (context only)")
     for name, r in results.items():
         xy = np.array(r["world_poses"])[:, :2]
         trace = np.array(r["rollout"]["poses"])
-        axes[0].plot(*xy.T, "o--", color=colors[name], ms=3, lw=1.5, label=f"{name} future XY")
+        axes[0].plot(*xy.T, "o--", color=colors[name], ms=3,
+                     lw=3 if name == "RAW" else 1.5, label=f"{name} future XY")
         axes[0].plot(*xy[2], "s", color=colors[name], ms=6)
         axes[0].plot(*np.vstack([exp.boundary[:2], xy[0]]).T, ":", color=colors[name])
         for ax in axes:
@@ -319,12 +320,21 @@ def plot_comparison(out, exp, worlds, events, results):
     axes[1].set_xlim(2.065, 2.255); axes[1].set_ylim(-.15, .10)
     axes[0].set_title("Observation-anchored RAW and explicit corrections")
     axes[1].set_title("Same B51, original PD, 16/72 s")
+    axes[0].text(2.4056, -.20, "DynamicObstacle\n0.35 x 0.35 m", ha="center", fontsize=9)
+    if all(np.allclose(results[name]["rollout"]["poses"], results["RAW"]["rollout"]["poses"], atol=1e-12, rtol=0)
+           for name in ("RIGID", "GRAPH")):
+        shortfall = 1000 * (exp.p["required_clearance_m"] - results["RAW"]["rollout"]["minimum_clearance_m"])
+        axes[1].text(.04, .04, f"RAW = RIGID = GRAPH\nIdentical PD rollout\nMargin shortfall: {shortfall:.3f} mm",
+                     transform=axes[1].transAxes, fontsize=8,
+                     bbox={"facecolor": "white", "alpha": .9, "edgecolor": "none"})
     axes[0].legend(fontsize=8, loc="lower left")
     axes[1].legend(fontsize=8, loc="upper left")
     fig.suptitle("OLD50 -> FRESH51 sample 0: offline SE(2) mechanism", fontsize=14)
-    fig.text(.5, .025, "Dashed paths: predictions/corrections; solid arcs: fixed-command H1 rollouts.  Purple dotted/dashed: contact / 2 cm center limits.\nRAW is recorded execution; RIGID and GRAPH are unexecuted counterfactuals. No waypoint timestamps or native yaw.", ha="center", fontsize=8)
+    fig.text(.5, .025, "Dashed paths: predictions/corrections; squares: index 2; solid arcs: H1 rollouts. Purple dotted/dashed: contact / 2 cm center limits.\nRAW is recorded execution; RIGID and GRAPH are unexecuted counterfactuals. No waypoint timestamps or native yaw.", ha="center", fontsize=8)
     fig.tight_layout(rect=(0, .09, 1, .94))
     fig.savefig(out / "comparison.svg")
+    svg = out / "comparison.svg"
+    svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
     plt.close(fig)
 
 

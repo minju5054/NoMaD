@@ -1,0 +1,930 @@
+{
+  "scope": "OLD50_FRESH51_sample0_B51_H1_offline_mechanism",
+  "solver": {
+    "success": true,
+    "status": 2,
+    "message": "`ftol` termination condition is satisfied.",
+    "nfev": 5,
+    "njev": 5,
+    "residual_calls_including_jacobian": 245,
+    "wall_s": 0.6598562630824745,
+    "cost": 4.418300542912375,
+    "residual_l2": 2.9726421052364764,
+    "residual_max_abs": 2.9060593570320004,
+    "optimality": 2.795070767525054e-05
+  },
+  "boundary_pose": [
+    2.0978648104874,
+    -0.001133875463682103,
+    -0.9669248766751819
+  ],
+  "boundary_sim_s": 13.88888888888889,
+  "horizon_s": 0.2222222222222222,
+  "initial_clearances_m": {
+    "StaticObstacle1": 0.3078648104873999,
+    "StaticObstacle2": 0.5621361752534528,
+    "DynamicObstacle": 0.04417414269453099
+  },
+  "results": {
+    "RAW": {
+      "method": "RAW",
+      "world_poses": [
+        [
+          2.102292249181147,
+          0.004114423382582728,
+          -1.0920925517845894
+        ],
+        [
+          2.115725014506902,
+          -0.021769365883756057,
+          -1.599257891627837
+        ],
+        [
+          2.114882516164349,
+          -0.05136263820096881,
+          -2.07202435853688
+        ],
+        [
+          2.0980324092256026,
+          -0.082116727524641,
+          -2.5788778047408765
+        ],
+        [
+          2.063522614212547,
+          -0.10388336507224111,
+          -3.0503201596292437
+        ],
+        [
+          2.0164836693542423,
+          -0.10818868893590713,
+          -3.4210843188513023
+        ],
+        [
+          1.965642575488424,
+          -0.09359708967618677,
+          -3.62711061153073
+        ],
+        [
+          1.9177689687954853,
+          -0.06833683756842217,
+          -3.62711061153073
+        ]
+      ],
+      "controller_local_waypoint": [
+        0.08056363463401794,
+        -0.018535077571868896
+      ],
+      "selected_world_waypoint": [
+        2.114882516164349,
+        -0.05136263820096881
+      ],
+      "rollout": {
+        "command_vw": [
+          0.2,
+          -0.4
+        ],
+        "minimum_clearance_m": 0.019187881285936,
+        "minimum_upper_m": 0.019189810298041315,
+        "obstacles": {
+          "StaticObstacle1": 0.3078628814752946,
+          "StaticObstacle2": 0.5397501611956753,
+          "DynamicObstacle": 0.019187881285936
+        },
+        "minimum_corridor_m": 1.3712072917791687,
+        "margin_met": false,
+        "geometric_overlap": false,
+        "safe": false,
+        "distance_m": 0.044444444444444446,
+        "end_pose": [
+          2.1214437411261833,
+          -0.03879077920872582,
+          -1.0558137655640705
+        ],
+        "poses": [
+          [
+            2.0978648104874,
+            -0.001133875463682103,
+            -0.9669248766751819
+          ],
+          [
+            2.0994357661956364,
+            -0.0034247547053029904,
+            -0.9724804322307374
+          ],
+          [
+            2.1009939706193625,
+            -0.0057243260807578735,
+            -0.978035987786293
+          ],
+          [
+            2.1025393756659723,
+            -0.008032518615804132,
+            -0.9835915433418485
+          ],
+          [
+            2.104071933637902,
+            -0.010349261070114656,
+            -0.989147098897404
+          ],
+          [
+            2.1055915972341013,
+            -0.012674481939476618,
+            -0.9947026544529596
+          ],
+          [
+            2.107098319551494,
+            -0.015008109457998386,
+            -1.0002582100085151
+          ],
+          [
+            2.1085920540864236,
+            -0.017350071600324517,
+            -1.0058137655640706
+          ],
+          [
+            2.1100727547360916,
+            -0.019700296083858752,
+            -1.0113693211196262
+          ],
+          [
+            2.1115403757999776,
+            -0.022058710370994956,
+            -1.0169248766751817
+          ],
+          [
+            2.112994871981252,
+            -0.02442524167135593,
+            -1.0224804322307373
+          ],
+          [
+            2.114436198388173,
+            -0.02679981694404002,
+            -1.0280359877862928
+          ],
+          [
+            2.1158643105354717,
+            -0.029182362899875462,
+            -1.0335915433418483
+          ],
+          [
+            2.1172791643457267,
+            -0.03157280600368238,
+            -1.0391470988974039
+          ],
+          [
+            2.118680716150722,
+            -0.033971072476542394,
+            -1.0447026544529594
+          ],
+          [
+            2.120068922692798,
+            -0.03637708829807573,
+            -1.050258210008515
+          ],
+          [
+            2.1214437411261833,
+            -0.03879077920872582,
+            -1.0558137655640705
+          ]
+        ]
+      },
+      "native_full": {
+        "obstacle_clearance_m": 0.024908536917322394,
+        "obstacles": {
+          "StaticObstacle1": 0.12776896879548535,
+          "StaticObstacle2": 0.5446484558503631,
+          "DynamicObstacle": 0.024908536917322394
+        },
+        "corridor_clearance_m": 1.3018113110640928,
+        "safe": true
+      },
+      "native_prefix": {
+        "obstacle_clearance_m": 0.024908536917322394,
+        "obstacles": {
+          "StaticObstacle1": 0.3122922491811472,
+          "StaticObstacle2": 0.5446484558503631,
+          "DynamicObstacle": 0.024908536917322394
+        },
+        "corridor_clearance_m": 1.358637361799031,
+        "safe": true
+      },
+      "boundary_prefix": {
+        "obstacle_clearance_m": 0.024908536917322394,
+        "obstacles": {
+          "StaticObstacle1": 0.3078648104873999,
+          "StaticObstacle2": 0.5446484558503631,
+          "DynamicObstacle": 0.024908536917322394
+        },
+        "corridor_clearance_m": 1.358637361799031,
+        "safe": true
+      },
+      "boundary_position_m": 0.006866356687982022,
+      "boundary_pose_heading_deg": 7.1715795152337485,
+      "boundary_tangent_heading_deg": 7.1715795152337485,
+      "heading_valid": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "segment_lengths_m": [
+        0.029161785457702063,
+        0.029605262537223266,
+        0.035067650534012146,
+        0.040800888004695696,
+        0.04723556019519272,
+        0.052893587460383376,
+        0.05412912852003071
+      ],
+      "position_change_rms_m": 0.0,
+      "position_change_max_m": 0.0,
+      "pose_heading_change_rms_deg": 0.0,
+      "tangent_heading_change_rms_deg": 0.0,
+      "relative_translation_error_rms_m": 0.0,
+      "relative_heading_error_rms_deg": 0.0,
+      "tangent_pose_disagreement_max_deg": 0.0,
+      "common_graph_objective_cost": 4.717881912651783,
+      "factor_costs": {
+        "fresh_prior": 0.0,
+        "relative_pose": 0.0,
+        "boundary": 0.4932000454819384,
+        "heading_tangent": 0.0,
+        "minimum_segment": 0.0,
+        "native_obstacle": 0.002091373873222729,
+        "native_corridor": 0.0,
+        "controller_obstacle": 4.222590493296622,
+        "controller_corridor": 0.0
+      }
+    },
+    "RIGID": {
+      "method": "RIGID",
+      "world_poses": [
+        [
+          2.0978648104874,
+          -0.001133875463682103,
+          -0.9669248766751819
+        ],
+        [
+          2.114423848595703,
+          -0.025138208156110876,
+          -1.4740902165184295
+        ],
+        [
+          2.1172823979534536,
+          -0.05460514327782348,
+          -1.9468566834274725
+        ],
+        [
+          2.104403487934285,
+          -0.08722222148378425,
+          -2.453710129631469
+        ],
+        [
+          2.0728810426709248,
+          -0.11312681386795762,
+          -2.9251524845198364
+        ],
+        [
+          2.0267475766722067,
+          -0.12327084964760729,
+          -3.2959166437418945
+        ],
+        [
+          1.9744825941934638,
+          -0.11514046214602333,
+          -3.5019429364213224
+        ],
+        [
+          1.9238299971480255,
+          -0.09605442099311604,
+          -3.5019429364213224
+        ]
+      ],
+      "controller_local_waypoint": [
+        0.055040480125827795,
+        -0.014379316123231886
+      ],
+      "selected_world_waypoint": [
+        2.1172823979534536,
+        -0.05460514327782348
+      ],
+      "rollout": {
+        "command_vw": [
+          0.2,
+          -0.4
+        ],
+        "minimum_clearance_m": 0.019187881285936,
+        "minimum_upper_m": 0.019189810298041315,
+        "obstacles": {
+          "StaticObstacle1": 0.3078628814752946,
+          "StaticObstacle2": 0.5397501611956753,
+          "DynamicObstacle": 0.019187881285936
+        },
+        "minimum_corridor_m": 1.3712072917791687,
+        "margin_met": false,
+        "geometric_overlap": false,
+        "safe": false,
+        "distance_m": 0.044444444444444446,
+        "end_pose": [
+          2.1214437411261833,
+          -0.03879077920872582,
+          -1.0558137655640705
+        ],
+        "poses": [
+          [
+            2.0978648104874,
+            -0.001133875463682103,
+            -0.9669248766751819
+          ],
+          [
+            2.0994357661956364,
+            -0.0034247547053029904,
+            -0.9724804322307374
+          ],
+          [
+            2.1009939706193625,
+            -0.0057243260807578735,
+            -0.978035987786293
+          ],
+          [
+            2.1025393756659723,
+            -0.008032518615804132,
+            -0.9835915433418485
+          ],
+          [
+            2.104071933637902,
+            -0.010349261070114656,
+            -0.989147098897404
+          ],
+          [
+            2.1055915972341013,
+            -0.012674481939476618,
+            -0.9947026544529596
+          ],
+          [
+            2.107098319551494,
+            -0.015008109457998386,
+            -1.0002582100085151
+          ],
+          [
+            2.1085920540864236,
+            -0.017350071600324517,
+            -1.0058137655640706
+          ],
+          [
+            2.1100727547360916,
+            -0.019700296083858752,
+            -1.0113693211196262
+          ],
+          [
+            2.1115403757999776,
+            -0.022058710370994956,
+            -1.0169248766751817
+          ],
+          [
+            2.112994871981252,
+            -0.02442524167135593,
+            -1.0224804322307373
+          ],
+          [
+            2.114436198388173,
+            -0.02679981694404002,
+            -1.0280359877862928
+          ],
+          [
+            2.1158643105354717,
+            -0.029182362899875462,
+            -1.0335915433418483
+          ],
+          [
+            2.1172791643457267,
+            -0.03157280600368238,
+            -1.0391470988974039
+          ],
+          [
+            2.118680716150722,
+            -0.033971072476542394,
+            -1.0447026544529594
+          ],
+          [
+            2.120068922692798,
+            -0.03637708829807573,
+            -1.050258210008515
+          ],
+          [
+            2.1214437411261833,
+            -0.03879077920872582,
+            -1.0558137655640705
+          ]
+        ]
+      },
+      "native_full": {
+        "obstacle_clearance_m": 0.023351153470770963,
+        "obstacles": {
+          "StaticObstacle1": 0.13382999714802554,
+          "StaticObstacle2": 0.5450695124251546,
+          "DynamicObstacle": 0.023351153470770963
+        },
+        "corridor_clearance_m": 1.2867291503523925,
+        "safe": true
+      },
+      "native_prefix": {
+        "obstacle_clearance_m": 0.023351153470770963,
+        "obstacles": {
+          "StaticObstacle1": 0.3078648104873999,
+          "StaticObstacle2": 0.5450695124251546,
+          "DynamicObstacle": 0.023351153470770963
+        },
+        "corridor_clearance_m": 1.3553948567221765,
+        "safe": true
+      },
+      "boundary_prefix": {
+        "obstacle_clearance_m": 0.023351153470770963,
+        "obstacles": {
+          "StaticObstacle1": 0.3078648104873999,
+          "StaticObstacle2": 0.5450695124251546,
+          "DynamicObstacle": 0.023351153470770963
+        },
+        "corridor_clearance_m": 1.3553948567221765,
+        "safe": true
+      },
+      "boundary_position_m": 0.0,
+      "boundary_pose_heading_deg": 0.0,
+      "boundary_tangent_heading_deg": 1.0177774980683254e-13,
+      "heading_valid": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "segment_lengths_m": [
+        0.029161785457702028,
+        0.029605262537223283,
+        0.03506765053401216,
+        0.04080088800469562,
+        0.04723556019519284,
+        0.05289358746038327,
+        0.05412912852003087
+      ],
+      "position_change_rms_m": 0.015796452082251326,
+      "position_change_max_m": 0.02837253065193798,
+      "pose_heading_change_rms_deg": 7.171579515233742,
+      "tangent_heading_change_rms_deg": 7.1715795152337485,
+      "relative_translation_error_rms_m": 1.1827203938808193e-16,
+      "relative_heading_error_rms_deg": 1.3600623906213037e-14,
+      "tangent_pose_disagreement_max_deg": 2.5444437451708134e-13,
+      "common_graph_objective_cost": 8.315142249013439,
+      "factor_costs": {
+        "fresh_prior": 3.4128780364791558,
+        "relative_pose": 4.960638295078989e-28,
+        "boundary": 0.0,
+        "heading_tangent": 6.118113303860238e-28,
+        "minimum_segment": 0.0,
+        "native_obstacle": 0.6796737192376612,
+        "native_corridor": 0.0,
+        "controller_obstacle": 4.222590493296622,
+        "controller_corridor": 0.0
+      }
+    },
+    "GRAPH": {
+      "method": "GRAPH",
+      "world_poses": [
+        [
+          2.099135190836351,
+          0.000833803541265337,
+          -1.0233007297811503
+        ],
+        [
+          2.1141087862312653,
+          -0.02334371667919448,
+          -1.56504467286486
+        ],
+        [
+          2.1142911911277436,
+          -0.052194829321572545,
+          -2.0579019658475795
+        ],
+        [
+          2.098011963917122,
+          -0.08274736127367496,
+          -2.5752031192481146
+        ],
+        [
+          2.0636373569004403,
+          -0.1044594735663989,
+          -3.0508911909658205
+        ],
+        [
+          2.0165617821842625,
+          -0.10864036478177512,
+          -3.4225906121654557
+        ],
+        [
+          1.9656972362934348,
+          -0.0939021974300088,
+          -3.628309373871987
+        ],
+        [
+          1.9178250574508886,
+          -0.06855748978529576,
+          -3.6281701720947344
+        ]
+      ],
+      "controller_local_waypoint": [
+        0.05135793859998174,
+        -0.015472851468930402
+      ],
+      "selected_world_waypoint": [
+        2.1142911911277436,
+        -0.052194829321572545
+      ],
+      "rollout": {
+        "command_vw": [
+          0.2,
+          -0.4
+        ],
+        "minimum_clearance_m": 0.019187881285936,
+        "minimum_upper_m": 0.019189810298041315,
+        "obstacles": {
+          "StaticObstacle1": 0.3078628814752946,
+          "StaticObstacle2": 0.5397501611956753,
+          "DynamicObstacle": 0.019187881285936
+        },
+        "minimum_corridor_m": 1.3712072917791687,
+        "margin_met": false,
+        "geometric_overlap": false,
+        "safe": false,
+        "distance_m": 0.044444444444444446,
+        "end_pose": [
+          2.1214437411261833,
+          -0.03879077920872582,
+          -1.0558137655640705
+        ],
+        "poses": [
+          [
+            2.0978648104874,
+            -0.001133875463682103,
+            -0.9669248766751819
+          ],
+          [
+            2.0994357661956364,
+            -0.0034247547053029904,
+            -0.9724804322307374
+          ],
+          [
+            2.1009939706193625,
+            -0.0057243260807578735,
+            -0.978035987786293
+          ],
+          [
+            2.1025393756659723,
+            -0.008032518615804132,
+            -0.9835915433418485
+          ],
+          [
+            2.104071933637902,
+            -0.010349261070114656,
+            -0.989147098897404
+          ],
+          [
+            2.1055915972341013,
+            -0.012674481939476618,
+            -0.9947026544529596
+          ],
+          [
+            2.107098319551494,
+            -0.015008109457998386,
+            -1.0002582100085151
+          ],
+          [
+            2.1085920540864236,
+            -0.017350071600324517,
+            -1.0058137655640706
+          ],
+          [
+            2.1100727547360916,
+            -0.019700296083858752,
+            -1.0113693211196262
+          ],
+          [
+            2.1115403757999776,
+            -0.022058710370994956,
+            -1.0169248766751817
+          ],
+          [
+            2.112994871981252,
+            -0.02442524167135593,
+            -1.0224804322307373
+          ],
+          [
+            2.114436198388173,
+            -0.02679981694404002,
+            -1.0280359877862928
+          ],
+          [
+            2.1158643105354717,
+            -0.029182362899875462,
+            -1.0335915433418483
+          ],
+          [
+            2.1172791643457267,
+            -0.03157280600368238,
+            -1.0391470988974039
+          ],
+          [
+            2.118680716150722,
+            -0.033971072476542394,
+            -1.0447026544529594
+          ],
+          [
+            2.120068922692798,
+            -0.03637708829807573,
+            -1.050258210008515
+          ],
+          [
+            2.1214437411261833,
+            -0.03879077920872582,
+            -1.0558137655640705
+          ]
+        ]
+      },
+      "native_full": {
+        "obstacle_clearance_m": 0.026342360296481043,
+        "obstacles": {
+          "StaticObstacle1": 0.12782505745088865,
+          "StaticObstacle2": 0.5463195461846769,
+          "DynamicObstacle": 0.026342360296481043
+        },
+        "corridor_clearance_m": 1.3013596352182248,
+        "safe": true
+      },
+      "native_prefix": {
+        "obstacle_clearance_m": 0.026342360296481043,
+        "obstacles": {
+          "StaticObstacle1": 0.3091351908363512,
+          "StaticObstacle2": 0.5463195461846769,
+          "DynamicObstacle": 0.026342360296481043
+        },
+        "corridor_clearance_m": 1.3578051706784273,
+        "safe": true
+      },
+      "boundary_prefix": {
+        "obstacle_clearance_m": 0.026342360296481043,
+        "obstacles": {
+          "StaticObstacle1": 0.3078648104873999,
+          "StaticObstacle2": 0.5463195461846769,
+          "DynamicObstacle": 0.026342360296481043
+        },
+        "corridor_clearance_m": 1.3578051706784273,
+        "safe": true
+      },
+      "boundary_position_m": 0.002342141519531355,
+      "boundary_pose_heading_deg": 3.230098449421469,
+      "boundary_tangent_heading_deg": 2.828569445320089,
+      "heading_valid": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "segment_lengths_m": [
+        0.02843872435713912,
+        0.028851689244296368,
+        0.034618931919677624,
+        0.040657464600773775,
+        0.04726086738744056,
+        0.05295673333551442,
+        0.05416733067752839
+      ],
+      "position_change_rms_m": 0.001869614731251062,
+      "position_change_max_m": 0.004552964302044455,
+      "pose_heading_change_rms_deg": 1.5848471295921531,
+      "tangent_heading_change_rms_deg": 1.7080438215587674,
+      "relative_translation_error_rms_m": 0.0004464997808244683,
+      "relative_heading_error_rms_deg": 0.9000806827230978,
+      "tangent_pose_disagreement_max_deg": 0.4015290041013793,
+      "common_graph_objective_cost": 4.418300542912375,
+      "factor_costs": {
+        "fresh_prior": 0.0796186195929391,
+        "relative_pose": 0.03533275513906516,
+        "boundary": 0.0796030800324496,
+        "heading_tangent": 0.001155594851299259,
+        "minimum_segment": 0.0,
+        "native_obstacle": 0.0,
+        "native_corridor": 0.0,
+        "controller_obstacle": 4.222590493296622,
+        "controller_corridor": 0.0
+      }
+    }
+  },
+  "stored_references_only": {
+    "speed_limited_H1": {
+      "condition": "SPEED_LIMITED_51",
+      "horizon": "H1",
+      "v_m_s": "0.18",
+      "w_rad_s": "-0.4",
+      "duration_s": "0.2222222222222222",
+      "integration_intervals": "16",
+      "minimum_obstacle_clearance_lower_m": "0.02154596725092532",
+      "minimum_obstacle_clearance_upper_m": "0.021547703361920106",
+      "minimum_dynamic_clearance_lower_m": "0.02154596725092532",
+      "minimum_corridor_clearance_m": "1.3749731750547836",
+      "margin_met": "True",
+      "corridor_contained": "True",
+      "feasible": "True",
+      "geometric_overlap": "False",
+      "forward_distance_m": "0.039999999999999994",
+      "end_x_m": "2.1190858480623045",
+      "end_y_m": "-0.035025088834221445",
+      "end_yaw_rad": "-1.0558137655640705",
+      "speed_reduction_m_s": "0.020000000000000018",
+      "speed_reduction_percent": "10.000000000000009",
+      "first_margin_breach_interval_start_sim_s": "",
+      "first_margin_breach_interval_end_sim_s": "",
+      "actual_execution_match": "False"
+    },
+    "sample_references": [
+      {
+        "prediction_id": "51",
+        "sample_index": "4",
+        "selected_waypoint_index": "2",
+        "observation_sim_s": "13.73611111111111",
+        "switch_sim_s": "13.88888888888889",
+        "duration_s": "0.2222222222222222",
+        "local_dx_m": "0.04406662657856941",
+        "local_dy_m": "-0.010962462984025478",
+        "pd_v_m_s": "0.17626650631427765",
+        "pd_w_rad_s": "-0.4",
+        "turn_sign": "right",
+        "selected_world_x_m": "2.098321303885849",
+        "selected_world_y_m": "-0.017969490152874423",
+        "native_full_obstacle_clearance_m": "0.04228491894779912",
+        "native_full_corridor_clearance_m": "1.3442802191392345",
+        "native_full_margin_met": "True",
+        "native_full_corridor_contained": "True",
+        "native_full_safe": "True",
+        "native_prefix_obstacle_clearance_m": "0.04228491894779912",
+        "native_prefix_corridor_clearance_m": "1.3920305098471255",
+        "native_prefix_margin_met": "True",
+        "native_prefix_corridor_contained": "True",
+        "native_prefix_safe": "True",
+        "native_origin_prefix_obstacle_clearance_m": "0.04228491894779912",
+        "native_origin_prefix_corridor_clearance_m": "1.3865279103853425",
+        "native_origin_prefix_margin_met": "True",
+        "native_origin_prefix_corridor_contained": "True",
+        "native_origin_prefix_safe": "True",
+        "initial_obstacle_clearance_m": "0.04417414269453099",
+        "initial_margin_met": "True",
+        "rollout_min_obstacle_clearance_lower_m": "0.021986162203958874",
+        "rollout_min_obstacle_clearance_upper_m": "0.02198786230519975",
+        "rollout_min_dynamic_clearance_lower_m": "0.021986162203958874",
+        "rollout_geometric_overlap": "False",
+        "rollout_min_corridor_clearance_m": "1.3756761701263174",
+        "rollout_margin_met": "True",
+        "rollout_corridor_contained": "True",
+        "rollout_safe": "True",
+        "rollout_distance_m": "0.03917033473650614",
+        "end_x_m": "2.118645689119025",
+        "end_y_m": "-0.03432212977244157",
+        "end_yaw_rad": "-1.0558137655640705",
+        "actual_applied_sample": "False",
+        "counterfactual_sample": "True",
+        "sample0_pose_match_error": "",
+        "sample0_clearance_match_error": ""
+      },
+      {
+        "prediction_id": "51",
+        "sample_index": "6",
+        "selected_waypoint_index": "2",
+        "observation_sim_s": "13.73611111111111",
+        "switch_sim_s": "13.88888888888889",
+        "duration_s": "0.2222222222222222",
+        "local_dx_m": "0.03056272305548191",
+        "local_dy_m": "-0.007720208261162043",
+        "pd_v_m_s": "0.12225089222192764",
+        "pd_w_rad_s": "-0.4",
+        "turn_sign": "right",
+        "selected_world_x_m": "2.092540201754689",
+        "selected_world_y_m": "-0.005342278101202618",
+        "native_full_obstacle_clearance_m": "0.0489230720166729",
+        "native_full_corridor_clearance_m": "1.375382653399386",
+        "native_full_margin_met": "True",
+        "native_full_corridor_contained": "True",
+        "native_full_safe": "True",
+        "native_prefix_obstacle_clearance_m": "0.0489230720166729",
+        "native_prefix_corridor_clearance_m": "1.3882813206579028",
+        "native_prefix_margin_met": "True",
+        "native_prefix_corridor_contained": "True",
+        "native_prefix_safe": "True",
+        "native_origin_prefix_obstacle_clearance_m": "0.0489230720166729",
+        "native_origin_prefix_corridor_clearance_m": "1.3865279103853425",
+        "native_origin_prefix_margin_met": "True",
+        "native_origin_prefix_corridor_contained": "True",
+        "native_origin_prefix_safe": "True",
+        "initial_obstacle_clearance_m": "0.04417414269453099",
+        "initial_margin_met": "True",
+        "rollout_min_obstacle_clearance_lower_m": "0.028354835278030243",
+        "rollout_min_obstacle_clearance_upper_m": "0.028356014395673895",
+        "rollout_min_dynamic_clearance_lower_m": "0.028354835278030243",
+        "rollout_geometric_overlap": "False",
+        "rollout_min_corridor_clearance_m": "1.38584699501294",
+        "rollout_margin_met": "True",
+        "rollout_corridor_contained": "True",
+        "rollout_safe": "True",
+        "rollout_distance_m": "0.02716686493820614",
+        "end_x_m": "2.1122775370285507",
+        "end_y_m": "-0.02415182586941631",
+        "end_yaw_rad": "-1.0558137655640705",
+        "actual_applied_sample": "False",
+        "counterfactual_sample": "True",
+        "sample0_pose_match_error": "",
+        "sample0_clearance_match_error": ""
+      },
+      {
+        "prediction_id": "51",
+        "sample_index": "7",
+        "selected_waypoint_index": "2",
+        "observation_sim_s": "13.73611111111111",
+        "switch_sim_s": "13.88888888888889",
+        "duration_s": "0.2222222222222222",
+        "local_dx_m": "0.026242632418870926",
+        "local_dy_m": "0.03270287439227104",
+        "pd_v_m_s": "0.1049705296754837",
+        "pd_w_rad_s": "0.4",
+        "turn_sign": "left",
+        "selected_world_x_m": "2.1216845468821024",
+        "selected_world_y_m": "0.02300019782114814",
+        "native_full_obstacle_clearance_m": "0.021180626966871063",
+        "native_full_corridor_clearance_m": "1.1442898695072914",
+        "native_full_margin_met": "True",
+        "native_full_corridor_contained": "True",
+        "native_full_safe": "True",
+        "native_prefix_obstacle_clearance_m": "0.027313305270908195",
+        "native_prefix_corridor_clearance_m": "1.3869998021788519",
+        "native_prefix_margin_met": "True",
+        "native_prefix_corridor_contained": "True",
+        "native_prefix_safe": "True",
+        "native_origin_prefix_obstacle_clearance_m": "0.027313305270908195",
+        "native_origin_prefix_corridor_clearance_m": "1.3865279103853425",
+        "native_origin_prefix_margin_met": "True",
+        "native_origin_prefix_corridor_contained": "True",
+        "native_origin_prefix_safe": "True",
+        "initial_obstacle_clearance_m": "0.04417414269453099",
+        "initial_margin_met": "True",
+        "rollout_min_obstacle_clearance_lower_m": "0.02868917868409489",
+        "rollout_min_obstacle_clearance_upper_m": "0.028690191131682266",
+        "rollout_min_dynamic_clearance_lower_m": "0.02868917868409489",
+        "rollout_geometric_overlap": "False",
+        "rollout_min_corridor_clearance_m": "1.390277409536661",
+        "rollout_margin_met": "True",
+        "rollout_corridor_contained": "True",
+        "rollout_safe": "True",
+        "rollout_distance_m": "0.023326784372329712",
+        "end_x_m": "2.1119459324810754",
+        "end_y_m": "-0.019721578015751383",
+        "end_yaw_rad": "-0.8780359877862933",
+        "actual_applied_sample": "False",
+        "counterfactual_sample": "True",
+        "sample0_pose_match_error": "",
+        "sample0_clearance_match_error": ""
+      }
+    ],
+    "reoptimized_or_rerolled": false,
+    "source_sha256": {
+      "research/results/isaac6_b51_speed_feasibility_20261018/comparison.csv": "7da4f6aa0c70309e90aeb217fd791016f63c2afee344783a3c771e89c3003485",
+      "research/results/isaac6_sample_comparison_20261019/samples_51_52.csv": "bcfa7262504f50e6cc5374cd4d1e6cd511aecc8c3aaa53ab90b255b72f16bb73"
+    }
+  },
+  "validation": {
+    "actual_poses": 17,
+    "actual_intervals": 16,
+    "pose_max_abs_error": 0.0,
+    "swept_and_corridor_max_abs_error_m": 0.0,
+    "future_trace_read_only_after_solve": true,
+    "raw_inputs_unchanged": 257,
+    "protected_sources_unchanged": 9,
+    "manifest_sha256": "a12d8c44e9e6b21742636575948e488c142e51fea580a68bed1da11c5a57dfed",
+    "se2_log_and_inverse_frame": "PASS",
+    "rigid_relative_max_error": 4.440892098500626e-16
+  },
+  "limitations": [
+    "Exact simulator geometry: offline oracle",
+    "No OLD/FRESH index correspondence factor",
+    "RAW command retains original local point; corrected methods express world index2 at B51",
+    "Common objective uses corrected-point controller semantics even for RAW; actual RAW safety is separate",
+    "One local solve with clipping/non-smooth safety; no global optimality or hard feasibility guarantee",
+    "Only H1 constant-command mechanism; no navigation, necessity or superiority claim"
+  ]
+}
