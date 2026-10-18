@@ -325,3 +325,12 @@ Warm GPU median/p95 30.782/33.078 ms, RTF .999990, pacing p95/max .154/1.423 ms.
 ## Actual OLD rollout obstacle — 49–53 확대 그림 요청
 
 2026-10-18. 사용자가 요청한 장애물 부근 확대 그림 한 장을 추가했다. Native sample 0 예측 49–53과 실제 center path, index 2, observation O49…O53, 실제 switch S49…S52, 원본 applied command별 execution segment, 진행 화살표, spawn 및 충돌 footprint를 표시했다. 53은 terminal unapplied이므로 S53/실행 경로를 만들지 않았다. 각 marker는 72 Hz trace와 일치하고 colored interval incoming ID를 검증했으며 원본 257개 input hash 보존. 한글 PNG/SVG 육안 검토 완료. 새 navigation/inference 없이 기존 raw/그림을 유지하고 `old_rollout_obstacle_detail_01`에 별도 저장했다. Plot script·작은 manifest/SVG 및 문서만 commit한다.
+
+
+## Prediction 50→51→52 방향 반전 및 B52 counterfactual
+
+2026-10-18. `31f7881`의 저장된 `old_rollout_obstacle_01`만 분석했다. 51→52에서 local dy −.018535→+.043183 m, 원본 unclipped w −.904530→+2.410915 rad/s로 부호가 바뀌며 clipping 후 −.4→+.4다. 52 native full/prefix는 observation anchor부터 −.071843/−.038028 m로 unsafe. B52 기준 world selected point의 local 표현은 (.035526,.045640) m이며 PD 결과 (.142104,+.4); 회전 부호는 같고 v가 28.948% 줄었다.
+
+동일 B52에서 실제 14 tick/.194444 s 구간만 비교: RAW52 clearance −1.262mm/overlap, HOLD51 +1.369mm/no overlap, OBS-ANCHORED52 +4.658mm/no overlap. B52 초기 clearance부터 19.190mm로 20mm margin 미달이고 **세 조건 모두 margin 미달**이다. 실제 51은 충돌하지 않았으나 margin을 소진했다. RAW52 및 실제 50–52의 전체 pose/각 tick swept 값은 저장값과 최대 오차 0. HOLD51의 timeout은 종료까지 유효하다. Counterfactual의 단기 no-overlap을 safe navigation이나 correction 검증으로 해석하지 않는다.
+
+Unsafe prediction/원본 PD 실행과 frame mismatch를 분리했으며 qualified Graph 후보는 입증하지 못했다. 53은 미적용, 49는 참고로만 유지. 기존 함수만 재사용해 작은 JSON/CSV와 [분석 보고서](PREDICTION_50_52_DIRECTION_REVERSAL.md)를 추가했다. 원본 257개 input hashes, 기존 분석·확대 그림 및 보호 source 9개 유지. 새 navigation/inference/시각화/test/Graph/새 correspondence/환경 변경 없음.

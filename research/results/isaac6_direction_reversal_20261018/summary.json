@@ -1,0 +1,879 @@
+{
+  "analysis_base_commit": "31f7881719719e25c1bd0b1a49e45f0faf2b8efb",
+  "execution_commit": "9dd129ddc97d3856827cd92be442da5539e090f7",
+  "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/old_rollout_obstacle_01",
+  "reference_old_id": 49,
+  "terminal_unapplied_id": 53,
+  "pd_semantics": {
+    "formula": "v=dx/DT; w=arctan(dy/dx)/DT for abs(dx)>=EPS; v clipped [0,.2], w clipped [-.4,.4]",
+    "DT_s": 0.25,
+    "controller_hz": 9,
+    "forward_x_left_y": true
+  },
+  "predictions": [
+    {
+      "id": 50,
+      "timing": {
+        "observation_sim_s": 13.48611111111111,
+        "observation_capture_host_ns": 465310298208933,
+        "ready_host_ns": 465310374493808,
+        "ready_host_elapsed_s": 13.578777412,
+        "ready_sim_interpolated_s": 13.578671444944328,
+        "switch_sim_s": 13.666666666666666,
+        "switch_host_ns": 465310462750915,
+        "observation_to_ready_wall_s": 0.076284875,
+        "observation_to_switch_wall_s": 0.164541982,
+        "observation_snapshot_to_switch_sim_s": 0.18055555555555536
+      },
+      "observation_pose": [
+        2.0486564415756026,
+        0.06261683455359264,
+        -0.9265680366021063
+      ],
+      "switch_pose": [
+        2.071036095728683,
+        0.03428121219860397,
+        -0.8780359877862933
+      ],
+      "observation_to_switch_translation_m": 0.03610756727136332,
+      "observation_to_switch_yaw_rad": 0.04853204881581297,
+      "observation_to_switch_yaw_deg": 2.780681568268968,
+      "native_metric_local": [
+        [
+          0.04032334312796593,
+          0.006016850471496582
+        ],
+        [
+          0.07954985648393631,
+          0.0005185962072573602
+        ],
+        [
+          0.11019980907440186,
+          -0.014693642035126686
+        ],
+        [
+          0.12886030972003937,
+          -0.03856321796774864
+        ],
+        [
+          0.13521218299865723,
+          -0.06812667101621628
+        ],
+        [
+          0.12711481750011444,
+          -0.09840716421604156
+        ],
+        [
+          0.10778395086526871,
+          -0.12343336641788483
+        ],
+        [
+          0.08153079450130463,
+          -0.1390562653541565
+        ]
+      ],
+      "observation_anchored_world": [
+        [
+          2.077684752861292,
+          0.033989371611285873
+        ],
+        [
+          2.0968472711710686,
+          -0.000676866172007351
+        ],
+        [
+          2.103091918179043,
+          -0.034319639094087195
+        ],
+        [
+          2.0952138300691754,
+          -0.06357552170395218
+        ],
+        [
+          2.0753907908088154,
+          -0.08640951313731314
+        ],
+        [
+          2.0463164856824645,
+          -0.0981210620468934
+        ],
+        [
+          2.01469668581611,
+          -0.09769508327578798
+        ],
+        [
+          1.9864380240820323,
+          -0.08608684364858006
+        ]
+      ],
+      "selected_point_semantics": {
+        "anchored_world_point_m": [
+          2.103091918179043,
+          -0.034319639094087195
+        ],
+        "original_controller_local_point_m": [
+          0.11019980907440186,
+          -0.014693642035126686
+        ],
+        "controller_local_point_expressed_at_B_world_m": [
+          2.1301101564287257,
+          -0.05990029548044497
+        ],
+        "anchored_point_expressed_in_B_local_m": [
+          0.07326028479740128,
+          -0.0191463631652224
+        ],
+        "controller_minus_anchored_in_B_local_m": [
+          0.03693952427700058,
+          0.004452721130095715
+        ],
+        "offset_m": 0.037206923808258
+      },
+      "raw_pd": {
+        "input_dx_dy_m": [
+          0.11019980907440186,
+          -0.014693642035126686
+        ],
+        "dy_over_dx": -0.13333636563023638,
+        "atan_ratio_rad": -0.13255451162650878,
+        "unclipped_v_w": [
+          0.4407992362976074,
+          -0.5302180465060351
+        ],
+        "clipped_v_w": [
+          0.2,
+          -0.4
+        ],
+        "v_clipped": true,
+        "w_clipped": true
+      },
+      "obs_anchored_at_B_pd": {
+        "input_dx_dy_m": [
+          0.07326028479740128,
+          -0.0191463631652224
+        ],
+        "dy_over_dx": -0.26134710256957083,
+        "atan_ratio_rad": -0.2556294486407846,
+        "unclipped_v_w": [
+          0.2930411391896051,
+          -1.0225177945631383
+        ],
+        "clipped_v_w": [
+          0.2,
+          -0.4
+        ],
+        "v_clipped": true,
+        "w_clipped": true
+      },
+      "clipped_command_delta_anchored_minus_raw": [
+        0.0,
+        0.0
+      ],
+      "prediction_safety": {
+        "dynamic": {
+          "full": {
+            "obstacle_clearance_m": 0.03754163324518153,
+            "obstacles": {
+              "DynamicObstacle": 0.03754163324518153
+            },
+            "corridor_clearance_m": 1.3118789379531066,
+            "safe": true
+          },
+          "prefix": {
+            "obstacle_clearance_m": 0.03754163324518153,
+            "obstacles": {
+              "DynamicObstacle": 0.03754163324518153
+            },
+            "corridor_clearance_m": 1.3756803609059127,
+            "safe": true
+          },
+          "origin_prefix": {
+            "obstacle_clearance_m": 0.03754163324518153,
+            "obstacles": {
+              "DynamicObstacle": 0.03754163324518153
+            },
+            "corridor_clearance_m": 1.3473831654464072,
+            "safe": true
+          }
+        },
+        "all_obstacles": {
+          "full": {
+            "obstacle_clearance_m": 0.03754163324518153,
+            "obstacles": {
+              "StaticObstacle1": 0.19643802408203234,
+              "StaticObstacle2": 0.5578178015096671,
+              "DynamicObstacle": 0.03754163324518153
+            },
+            "corridor_clearance_m": 1.3118789379531066,
+            "safe": true
+          },
+          "prefix": {
+            "obstacle_clearance_m": 0.03754163324518153,
+            "obstacles": {
+              "StaticObstacle1": 0.28768475286129214,
+              "StaticObstacle2": 0.5578178015096671,
+              "DynamicObstacle": 0.03754163324518153
+            },
+            "corridor_clearance_m": 1.3756803609059127,
+            "safe": true
+          },
+          "origin_prefix": {
+            "obstacle_clearance_m": 0.03754163324518153,
+            "obstacles": {
+              "StaticObstacle1": 0.25865644157560264,
+              "StaticObstacle2": 0.5578178015096671,
+              "DynamicObstacle": 0.03754163324518153
+            },
+            "corridor_clearance_m": 1.3473831654464072,
+            "safe": true
+          }
+        }
+      },
+      "selected_point_dynamic_clearance_m": 0.03754163324518153,
+      "actual_execution": {
+        "start_sim_s": 13.666666666666666,
+        "end_sim_s": 13.88888888888889,
+        "intervals": 16,
+        "dynamic_min_clearance_lower_m": 0.04417221368242567,
+        "dynamic_min_clearance_upper_m": 0.04417414269453099,
+        "safety_margin_met": true,
+        "geometric_overlap": false,
+        "end_pose": [
+          2.0978648104874,
+          -0.001133875463682103,
+          -0.9669248766751819
+        ],
+        "reconstructed_pose_max_abs_error": 0.0
+      },
+      "noise_seed": 201,
+      "ddpm_seed": 202
+    },
+    {
+      "id": 51,
+      "timing": {
+        "observation_sim_s": 13.73611111111111,
+        "observation_capture_host_ns": 465310546922585,
+        "ready_host_ns": 465310625780439,
+        "ready_host_elapsed_s": 13.830064043,
+        "ready_sim_interpolated_s": 13.830007766706464,
+        "switch_sim_s": 13.88888888888889,
+        "switch_host_ns": 465310685163197,
+        "observation_to_ready_wall_s": 0.078857854,
+        "observation_to_switch_wall_s": 0.138240612,
+        "observation_snapshot_to_switch_sim_s": 0.15277777777777857
+      },
+      "observation_pose": [
+        2.079756858322824,
+        0.023472089614657323,
+        -0.905813765564071
+      ],
+      "switch_pose": [
+        2.0978648104874,
+        -0.001133875463682103,
+        -0.9669248766751819
+      ],
+      "observation_to_switch_translation_m": 0.0305508011193,
+      "observation_to_switch_yaw_rad": -0.0611111111111109,
+      "observation_to_switch_yaw_deg": -3.5014087480216856,
+      "native_metric_local": [
+        [
+          0.029138440266251564,
+          0.00578916072845459
+        ],
+        [
+          0.05779573321342468,
+          0.00038830042467452586
+        ],
+        [
+          0.08056363463401794,
+          -0.018535077571868896
+        ],
+        [
+          0.09436759352684021,
+          -0.0507715605199337
+        ],
+        [
+          0.09020224958658218,
+          -0.09135927259922028
+        ],
+        [
+          0.06456506252288818,
+          -0.1310320943593979
+        ],
+        [
+          0.02171126753091812,
+          -0.16203667223453522
+        ],
+        [
+          -0.02770690992474556,
+          -0.18412300944328308
+        ]
+      ],
+      "observation_anchored_world": [
+        [
+          2.102292249181147,
+          0.004114423382582728
+        ],
+        [
+          2.115725014506902,
+          -0.021769365883756057
+        ],
+        [
+          2.114882516164349,
+          -0.05136263820096881
+        ],
+        [
+          2.0980324092256026,
+          -0.082116727524641
+        ],
+        [
+          2.063522614212547,
+          -0.10388336507224111
+        ],
+        [
+          2.0164836693542423,
+          -0.10818868893590713
+        ],
+        [
+          1.965642575488424,
+          -0.09359708967618677
+        ],
+        [
+          1.9177689687954853,
+          -0.06833683756842217
+        ]
+      ],
+      "selected_point_semantics": {
+        "anchored_world_point_m": [
+          2.114882516164349,
+          -0.05136263820096881
+        ],
+        "original_controller_local_point_m": [
+          0.08056363463401794,
+          -0.018535077571868896
+        ],
+        "controller_local_point_expressed_at_B_world_m": [
+          2.1283545117720712,
+          -0.07797414122070723
+        ],
+        "anchored_point_expressed_in_B_local_m": [
+          0.05100870008295463,
+          -0.014513560158455287
+        ],
+        "controller_minus_anchored_in_B_local_m": [
+          0.02955493455106331,
+          -0.004021517413413609
+        ],
+        "offset_m": 0.02982728211929516
+      },
+      "raw_pd": {
+        "input_dx_dy_m": [
+          0.08056363463401794,
+          -0.018535077571868896
+        ],
+        "dy_over_dx": -0.23006754419744702,
+        "atan_ratio_rad": -0.22613253767645436,
+        "unclipped_v_w": [
+          0.3222545385360718,
+          -0.9045301507058174
+        ],
+        "clipped_v_w": [
+          0.2,
+          -0.4
+        ],
+        "v_clipped": true,
+        "w_clipped": true
+      },
+      "obs_anchored_at_B_pd": {
+        "input_dx_dy_m": [
+          0.05100870008295463,
+          -0.014513560158455287
+        ],
+        "dy_over_dx": -0.28453107283369533,
+        "atan_ratio_rad": -0.277205403640453,
+        "unclipped_v_w": [
+          0.20403480033181853,
+          -1.108821614561812
+        ],
+        "clipped_v_w": [
+          0.2,
+          -0.4
+        ],
+        "v_clipped": true,
+        "w_clipped": true
+      },
+      "clipped_command_delta_anchored_minus_raw": [
+        0.0,
+        0.0
+      ],
+      "prediction_safety": {
+        "dynamic": {
+          "full": {
+            "obstacle_clearance_m": 0.024908536917322394,
+            "obstacles": {
+              "DynamicObstacle": 0.024908536917322394
+            },
+            "corridor_clearance_m": 1.3018113110640928,
+            "safe": true
+          },
+          "prefix": {
+            "obstacle_clearance_m": 0.024908536917322394,
+            "obstacles": {
+              "DynamicObstacle": 0.024908536917322394
+            },
+            "corridor_clearance_m": 1.358637361799031,
+            "safe": true
+          },
+          "origin_prefix": {
+            "obstacle_clearance_m": 0.024908536917322394,
+            "obstacles": {
+              "DynamicObstacle": 0.024908536917322394
+            },
+            "corridor_clearance_m": 1.358637361799031,
+            "safe": true
+          }
+        },
+        "all_obstacles": {
+          "full": {
+            "obstacle_clearance_m": 0.024908536917322394,
+            "obstacles": {
+              "StaticObstacle1": 0.12776896879548535,
+              "StaticObstacle2": 0.5446484558503631,
+              "DynamicObstacle": 0.024908536917322394
+            },
+            "corridor_clearance_m": 1.3018113110640928,
+            "safe": true
+          },
+          "prefix": {
+            "obstacle_clearance_m": 0.024908536917322394,
+            "obstacles": {
+              "StaticObstacle1": 0.3122922491811472,
+              "StaticObstacle2": 0.5446484558503631,
+              "DynamicObstacle": 0.024908536917322394
+            },
+            "corridor_clearance_m": 1.358637361799031,
+            "safe": true
+          },
+          "origin_prefix": {
+            "obstacle_clearance_m": 0.024908536917322394,
+            "obstacles": {
+              "StaticObstacle1": 0.28975685832282416,
+              "StaticObstacle2": 0.5446484558503631,
+              "DynamicObstacle": 0.024908536917322394
+            },
+            "corridor_clearance_m": 1.358637361799031,
+            "safe": true
+          }
+        }
+      },
+      "selected_point_dynamic_clearance_m": 0.025751035259875404,
+      "actual_execution": {
+        "start_sim_s": 13.88888888888889,
+        "end_sim_s": 14.11111111111111,
+        "intervals": 16,
+        "dynamic_min_clearance_lower_m": 0.019187881285936,
+        "dynamic_min_clearance_upper_m": 0.019189810298041315,
+        "safety_margin_met": false,
+        "geometric_overlap": false,
+        "end_pose": [
+          2.1214437411261833,
+          -0.03879077920872582,
+          -1.0558137655640705
+        ],
+        "reconstructed_pose_max_abs_error": 0.0
+      },
+      "noise_seed": 203,
+      "ddpm_seed": 204
+    },
+    {
+      "id": 52,
+      "timing": {
+        "observation_sim_s": 13.98611111111111,
+        "observation_capture_host_ns": 465310796595944,
+        "ready_host_ns": 465310879165785,
+        "ready_host_elapsed_s": 14.083449389,
+        "ready_sim_interpolated_s": 14.083040686475384,
+        "switch_sim_s": 14.11111111111111,
+        "switch_host_ns": 465310907342896,
+        "observation_to_ready_wall_s": 0.082569841,
+        "observation_to_switch_wall_s": 0.110746952,
+        "observation_snapshot_to_switch_sim_s": 0.125
+      },
+      "observation_pose": [
+        2.1085920540864236,
+        -0.017350071600324517,
+        -1.0058137655640706
+      ],
+      "switch_pose": [
+        2.1214437411261833,
+        -0.03879077920872582,
+        -1.0558137655640705
+      ],
+      "observation_to_switch_translation_m": 0.024997395914712492,
+      "observation_to_switch_yaw_rad": -0.04999999999999982,
+      "observation_to_switch_yaw_deg": -2.864788975654106,
+      "native_metric_local": [
+        [
+          0.02734723687171936,
+          0.005606484599411488
+        ],
+        [
+          0.050576698035001755,
+          0.02000420168042183
+        ],
+        [
+          0.06275231391191483,
+          0.043183017522096634
+        ],
+        [
+          0.06461720913648605,
+          0.07528894394636154
+        ],
+        [
+          0.045607004314661026,
+          0.10123560577630997
+        ],
+        [
+          0.0045518092811107635,
+          0.1262984722852707
+        ],
+        [
+          -0.05683260038495064,
+          0.15202076733112335
+        ],
+        [
+          -0.12441504001617432,
+          0.16714873909950256
+        ]
+      ],
+      "observation_anchored_world": [
+        [
+          2.127969019771498,
+          -0.03744577350199538
+        ],
+        [
+          2.1525663806850113,
+          -0.04935677510436376
+        ],
+        [
+          2.1786619987132463,
+          -0.04723031195423075
+        ],
+        [
+          2.206777064876911,
+          -0.0316158506964196
+        ],
+        [
+          2.218513477605749,
+          -0.0016679999597838287
+        ],
+        [
+          2.2177005268996477,
+          0.046425819061357385
+        ],
+        [
+          2.2065602445564956,
+          0.11204270958347527
+        ],
+        [
+          2.1831535866434906,
+          0.1772222312269825
+        ]
+      ],
+      "selected_point_semantics": {
+        "anchored_world_point_m": [
+          2.1786619987132463,
+          -0.04723031195423075
+        ],
+        "original_controller_local_point_m": [
+          0.06275231391191483,
+          0.043183017522096634
+        ],
+        "controller_local_point_expressed_at_B_world_m": [
+          2.189932726977587,
+          -0.07213571466614487
+        ],
+        "anchored_point_expressed_in_B_local_m": [
+          0.03552605388221675,
+          0.04564048871144759
+        ],
+        "controller_minus_anchored_in_B_local_m": [
+          0.027226260029698073,
+          -0.0024574711893509543
+        ],
+        "offset_m": 0.027336942035480576
+      },
+      "raw_pd": {
+        "input_dx_dy_m": [
+          0.06275231391191483,
+          0.043183017522096634
+        ],
+        "dy_over_dx": 0.6881502024405421,
+        "atan_ratio_rad": 0.6027287289043393,
+        "unclipped_v_w": [
+          0.2510092556476593,
+          2.410914915617357
+        ],
+        "clipped_v_w": [
+          0.2,
+          0.4
+        ],
+        "v_clipped": true,
+        "w_clipped": true
+      },
+      "obs_anchored_at_B_pd": {
+        "input_dx_dy_m": [
+          0.03552605388221675,
+          0.04564048871144759
+        ],
+        "dy_over_dx": 1.2847047089092496,
+        "atan_ratio_rad": 0.9093724388976012,
+        "unclipped_v_w": [
+          0.142104215528867,
+          3.637489755590405
+        ],
+        "clipped_v_w": [
+          0.142104215528867,
+          0.4
+        ],
+        "v_clipped": false,
+        "w_clipped": true
+      },
+      "clipped_command_delta_anchored_minus_raw": [
+        -0.057895784471133,
+        0.0
+      ],
+      "prediction_safety": {
+        "dynamic": {
+          "full": {
+            "obstacle_clearance_m": -0.07184309804938221,
+            "obstacles": {
+              "DynamicObstacle": -0.07184309804938221
+            },
+            "corridor_clearance_m": 1.2327777687730175,
+            "safe": false
+          },
+          "prefix": {
+            "obstacle_clearance_m": -0.03802844728902169,
+            "obstacles": {
+              "DynamicObstacle": -0.03802844728902169
+            },
+            "corridor_clearance_m": 1.3606432248956362,
+            "safe": false
+          },
+          "origin_prefix": {
+            "obstacle_clearance_m": -0.03802844728902169,
+            "obstacles": {
+              "DynamicObstacle": -0.03802844728902169
+            },
+            "corridor_clearance_m": 1.3606432248956362,
+            "safe": false
+          }
+        },
+        "all_obstacles": {
+          "full": {
+            "obstacle_clearance_m": -0.07184309804938221,
+            "obstacles": {
+              "StaticObstacle1": 0.33796901977149807,
+              "StaticObstacle2": 0.44148913978613025,
+              "DynamicObstacle": -0.07184309804938221
+            },
+            "corridor_clearance_m": 1.2327777687730175,
+            "safe": false
+          },
+          "prefix": {
+            "obstacle_clearance_m": -0.03802844728902169,
+            "obstacles": {
+              "StaticObstacle1": 0.33796901977149807,
+              "StaticObstacle2": 0.4832868514815568,
+              "DynamicObstacle": -0.03802844728902169
+            },
+            "corridor_clearance_m": 1.3606432248956362,
+            "safe": false
+          },
+          "origin_prefix": {
+            "obstacle_clearance_m": -0.03802844728902169,
+            "obstacles": {
+              "StaticObstacle1": 0.31859205408642366,
+              "StaticObstacle2": 0.4832868514815568,
+              "DynamicObstacle": -0.03802844728902169
+            },
+            "corridor_clearance_m": 1.3606432248956362,
+            "safe": false
+          }
+        }
+      },
+      "selected_point_dynamic_clearance_m": -0.03802844728902169,
+      "actual_execution": {
+        "start_sim_s": 14.11111111111111,
+        "end_sim_s": 14.305555555555555,
+        "intervals": 14,
+        "dynamic_min_clearance_lower_m": -0.0012618892208847313,
+        "dynamic_min_clearance_upper_m": -0.0012599602087794148,
+        "safety_margin_met": false,
+        "geometric_overlap": true,
+        "end_pose": [
+          2.141893511633004,
+          -0.07185723233669378,
+          -0.978035987786293
+        ],
+        "reconstructed_pose_max_abs_error": 0.0
+      },
+      "noise_seed": 205,
+      "ddpm_seed": 206
+    }
+  ],
+  "counterfactual_window": {
+    "boundary_id": 52,
+    "initial_pose": [
+      2.1214437411261833,
+      -0.03879077920872582,
+      -1.0558137655640705
+    ],
+    "start_sim_s": 14.11111111111111,
+    "end_sim_s": 14.305555555555555,
+    "duration_s": 0.19444444444444442,
+    "integration_hz": 72,
+    "initial_dynamic_clearance_m": 0.019189810298041315,
+    "agent_radius_m": 0.09,
+    "required_clearance_m": 0.02,
+    "obstacle": {
+      "id": "DynamicObstacle",
+      "size_xyz_m": [
+        0.35,
+        0.35,
+        0.8
+      ],
+      "color_rgb": [
+        0.65,
+        0.04,
+        0.65
+      ],
+      "spawn_tick": 970,
+      "minimum_visible_pixels": 20,
+      "center_xy_m": [
+        2.4056335514242244,
+        -0.19550297450991216
+      ]
+    },
+    "hold_51_remaining_timeout_at_start_wall_s": 0.720518524,
+    "hold_51_remaining_timeout_at_end_wall_s": 0.5264442300000001,
+    "window_end_meaning": "Recorded collision-detection/stop pose, not earlier continuous contact bracket",
+    "control_semantics": "All three commands computed once at B52 and held for the identical 14 integration intervals; no feedback or replanning"
+  },
+  "counterfactuals": [
+    {
+      "condition": "RAW_52",
+      "v_m_s": 0.2,
+      "w_rad_s": 0.4,
+      "duration_s": 0.19444444444444442,
+      "integration_intervals": 14,
+      "minimum_dynamic_clearance_lower_m": -0.0012618892208847313,
+      "minimum_dynamic_clearance_upper_m": -0.0012599602087794148,
+      "safety_margin_met": false,
+      "geometric_overlap": true,
+      "end_x_m": 2.141893511633004,
+      "end_y_m": -0.07185723233669378,
+      "end_yaw_rad": -0.978035987786293,
+      "end_heading_deg": -56.037334312063116,
+      "yaw_change_rad": 0.07777777777777778,
+      "minimum_corridor_clearance_m": 1.3381408386512008,
+      "actual_execution": true,
+      "raw_vs_saved_max_pose_error": 0.0
+    },
+    {
+      "condition": "HOLD_51",
+      "v_m_s": 0.2,
+      "w_rad_s": -0.4,
+      "duration_s": 0.19444444444444442,
+      "integration_intervals": 14,
+      "minimum_dynamic_clearance_lower_m": 0.0013691768727267914,
+      "minimum_dynamic_clearance_upper_m": 0.0013711058848321078,
+      "safety_margin_met": false,
+      "geometric_overlap": false,
+      "end_x_m": 2.1392624455393925,
+      "end_y_m": -0.07334620149351943,
+      "end_yaw_rad": -1.133591543341848,
+      "end_heading_deg": -64.95001112520923,
+      "yaw_change_rad": -0.07777777777777778,
+      "minimum_corridor_clearance_m": 1.3366518694943752,
+      "actual_execution": false,
+      "raw_vs_saved_max_pose_error": null
+    },
+    {
+      "condition": "OBS_ANCHORED_52",
+      "v_m_s": 0.142104215528867,
+      "w_rad_s": 0.4,
+      "duration_s": 0.19444444444444442,
+      "integration_intervals": 14,
+      "minimum_dynamic_clearance_lower_m": 0.004658446715906429,
+      "minimum_dynamic_clearance_upper_m": 0.004659817319955767,
+      "safety_margin_met": false,
+      "geometric_overlap": false,
+      "end_x_m": 2.135973734104269,
+      "end_y_m": -0.0622851911190855,
+      "end_yaw_rad": -0.978035987786293,
+      "end_heading_deg": -56.037334312063116,
+      "yaw_change_rad": 0.07777777777777778,
+      "minimum_corridor_clearance_m": 1.347713438276865,
+      "actual_execution": false,
+      "raw_vs_saved_max_pose_error": null
+    }
+  ],
+  "conclusion": {
+    "primary_failure": "UNSAFE_FRESH_52_AND_ORIGINAL_PD_EXECUTION",
+    "angular_sign_change_from_waypoint": true,
+    "clipping_preserves_sign": true,
+    "anchor_diagnostic_changes_w52": false,
+    "anchor_diagnostic_changes_v52": true,
+    "all_three_fail_required_safety_margin": true,
+    "qualified_graph_candidate_established": false,
+    "counterfactual_scope": "HOLD51 and OBS_ANCHORED52 avoid geometric overlap only within this 0.194444 s window; neither meets the 2 cm margin or proves navigation improvement"
+  },
+  "validation": {
+    "original_pd_matches_all_50_51_52_control_records": true,
+    "predictions_match_prior_full_prefix_clearance": true,
+    "raw_52_matches_saved_execution": true,
+    "max_pose_reconstruction_error_50_51_52": 0.0,
+    "max_swept_clearance_reconstruction_error_50_51_52": 0.0,
+    "all_predicted_world_trajectories_observation_anchored": true,
+    "preserved_run_inputs": 257,
+    "input_hash_manifest": "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/isaac6_old_rollout_obstacle_20261018/input_hashes.json",
+    "input_hash_manifest_sha256": "a12d8c44e9e6b21742636575948e488c142e51fea580a68bed1da11c5a57dfed",
+    "prior_analysis_and_plot_hashes": {
+      "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/isaac6_old_rollout_obstacle_20261018/summary.json": "43149d63d6633d4ac8f5138c30a208d258c27a845ee26362bf0596ed780fae0a",
+      "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/isaac6_old_rollout_obstacle_20261018/old_rollout_detail.svg": "1f29f98f6e59d283348ba34112ac6cabe58941cd502c4c7a1ea18e2c3021ae85",
+      "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/isaac6_old_rollout_obstacle_20261018/detail_plot_manifest.json": "fe9c13eca09bc31df8146462cdb3aed62235176aa9e720c09ab22d43cc2fbcd8",
+      "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/isaac6_old_rollout_obstacle_20261018/predictions.csv": "cdd6cb055f65c324be5875c57c85b3ac76a2c65371c0e2604f58ac943b5acae8"
+    },
+    "protected_source_sha256": {
+      "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+      "research/nomad_isaac/worker.py": "2cc6a0bc56245dd05b8c2eeed6543cd8e27bcd5e9bd6665bdae73e53db2449a8",
+      "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+      "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+      "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+      "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+      "research/nomad_isaac/two_obstacles_wide_wall_scenario.json": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+      "research/nomad_isaac/handoff_audit.py": "48135820bdcbce3c7b0b70d55eb895c954feb623a4ffe30ff8eb1f269e785fef",
+      "research/nomad_isaac/async_handoff_protocol.json": "17fc5d9b1312650de83355407c1f12536062cc13f2eaafb36da8effac658d2cc"
+    },
+    "helper_source_sha256": {
+      "research/nomad_isaac/async_handoff_audit.py": "b47586b5edcb46270695309e603f9d4b2d3c3dd0faec6ae65c5c72b6c70b4186",
+      "research/nomad_isaac/handoff_audit.py": "48135820bdcbce3c7b0b70d55eb895c954feb623a4ffe30ff8eb1f269e785fef",
+      "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+      "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+      "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b"
+    },
+    "new_navigation_count": 0,
+    "new_inference_count": 0,
+    "new_visualization_count": 0,
+    "new_test_count": 0
+  },
+  "limitations": [
+    "Observation histories and diffusion seeds differ; no internal model-cause identification",
+    "No native trajectory yaw or waypoint timestamps inferred",
+    "OBS_ANCHORED52 is an offline single-point diagnostic, not a validated correction or whole-trajectory re-anchor",
+    "51 had no collision but already violated the 2 cm execution margin before B52",
+    "No Graph, new correspondence, closed-loop comparison, or extrapolation beyond actual stop"
+  ]
+}
