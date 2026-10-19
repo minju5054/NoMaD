@@ -401,3 +401,14 @@ WarmGPU median/p95 35.536/53.096ms, request/receive/switch54/54/54, 모두적용
 기존 Graph rollout kernel과 원본 PD/SE2/clearance로 고정 B52/16ticks 대조군을 계산했다. RAW(.166895986,+.4) clearance .002653804m, B-local(.082563738,+.4) .013106677m로 둘 다2cm미달/nooverlap. STOP(0,0) .023340344m로충족/이동0. Native XY는 수정하지 않았고 full/prefix .026484613m 안전. 좌표 표현만으로 v50.529824% 감소했지만 충분하지 않았으며 Graph 효과는 미평가다.
 
 Terminal heading rejection 이후 RAW의 실제17poses/16interval 대조: pose오차0, swept/corridor오차1.11e−16m, incomingID52 일치. FRESH53나 이후collision을 설정/Graph에 사용하지 않았다. Prior B51은 수렴했어도RAW/RIGID/GRAPH(.2,−.4)/clearance.019187881m가 같았으나, 이번은 headinggate에서미실행이므로성능비교불가. 257rawhash 및 원본Graph/protocol보존,새nav/GPU/solver/test0회,기존환경변경없음. 작은JSON/CSV/기존plot구조의XY한장과 [보고서](TOPOMAP_B52_GRAPH_REVALIDATION.md)를 저장했다.
+
+
+## Topomap B52 — 첫 chord heading variant, 단일 Graph solve
+
+2026-10-19. 기준 `5d7f55e`에서 `research/isaac6-topomap-b52-chord-heading` 생성. 첫 segment17.283mm를 위한 사용자 지정 누적chord규칙으로 k2 고정(누적37.820742mm/직접36.763055mm). 새subclass가 첫heading/tangent residual만X0→X2로 바꾸고 나머지node규칙·인접길이penalty·factor scales·safety25mm/pass20mm·solver를 유지했다. 같은pose에서 다른모든residual exact일치/기존SE2최소검증PASS. 사전code/protocol `66aebd0` 이후solve1회/restart0회.
+
+ftol수렴(status2),nfev/njev14/14,residualcalls686,cost27.171028→11.439448,L2 4.783189,optimality.026641,CPUwall1.782214/process1.772315s. GRAPH PD(.013416543,+.4),minclearance .021677381m/nooverlap/corridor통과,16ticks동안 .002981454m전진. RAW(.166895986,+.4)/.002653804m, B-LOCAL(.082563738,+.4)/.013106677m, RIGID(.147052219,≈0)/.003921908m는 margin미달. STOP .023340344m/이동0.
+
+GRAPH selected world point를약19.187mm수정해 v91.961135%감소,w는동일 clipping+.4. Nativefull/prefix .032480367m안전. Position수정RMS11.822696mm,relativeXY RMS2.861532mm/heading4.083227°. Boundary tangent41.776→27.899°개선이나 위치7.206→22.688mm악화. 최종adjacent0/1 길이15.085/16.232mm로softpenalty미해결,고정chord28.798mm는유효이나node1 tangent invalid. 모든기하품질이좋아졌다고평가하지않았다.
+
+RAW17poses/16interval pose오차0/swept·corridor1.11e−16m,실제9Hz두tick일치. RAW/B-LOCAL/STOP은priorB52pose/clearance exact동일. Raw257hash/priorresult8파일/기존graphsource·protocol보존. Solve입력은FRESH52·observation/B52·geometry·controller뿐,actualtrace/priorreference는solve후검증으로만사용. FRESH53/이후collision 입력없음. 새navigation/GPU/retry/tuning0회. 작은JSON/CSV/XY한장과 [보고서](TOPOMAP_B52_CHORD_GRAPH.md) 저장. 단일offline mechanism상명령·안전성변화는확인했으나약3mm전진의큰감속효과이므로 단순감속이상의Graph고유이점/necessity/closed-loop/실시간성은입증하지않았다.

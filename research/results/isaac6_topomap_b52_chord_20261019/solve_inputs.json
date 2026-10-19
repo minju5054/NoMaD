@@ -1,0 +1,229 @@
+{
+  "basis_sha": "5d7f55e2634a365f63de8ee9b75ca909f672b400",
+  "execution_sha": "66aebd068377290b0034f254b171f8876c666ad4",
+  "script_sha256": "1ab7831203410e112665e77def5b4c5489415d0ec930ced6bc0777b8f3a3cf1d",
+  "original_source_sha256": "307c833aec0f4bba13762ace8caa05c724fd65bfa8ba4b5c71f441ced47074e5",
+  "original_protocol_sha256": "f0057b3cf6a4cc857b8eb2364c0d7dc9dcb6318375e0c8ff9f063fa0f9d6eafb",
+  "variant_protocol_sha256": "320960423d154e3ac6098f44fc4edd3dfebf7c8a71d1321621a8a208c6c47749",
+  "fresh_id": 52,
+  "sample": 0,
+  "boundary": [
+    2.2943831561082764,
+    0.3990149473159676,
+    -0.6363090149848558
+  ],
+  "observation_pose": [
+    2.2766558784301134,
+    0.4128103951568842,
+    -0.6863090149848556
+  ],
+  "initial_fresh_poses": [
+    [
+      2.290392335045956,
+      0.405015047381973,
+      0.09282226759494962
+    ],
+    [
+      2.307437748263729,
+      0.40215921617531003,
+      0.30990520413850486
+    ],
+    [
+      2.3269971286551843,
+      0.4084225793571104,
+      0.7064270611156536
+    ],
+    [
+      2.3489836698004796,
+      0.42718446600522675,
+      1.1515289370485335
+    ],
+    [
+      2.361156130576137,
+      0.4544957097550766,
+      1.507839772450806
+    ],
+    [
+      2.36366309933492,
+      0.494263701549037,
+      1.6808672081586042
+    ],
+    [
+      2.3581106726256484,
+      0.5445039181235112,
+      1.8597117918342454
+    ],
+    [
+      2.3433441247981355,
+      0.5941841177104396,
+      1.8597117918342454
+    ]
+  ],
+  "local_sample0": [
+    [
+      0.01556619256734848,
+      0.002674198243767023
+    ],
+    [
+      0.030562058091163635,
+      0.01126639824360609
+    ],
+    [
+      0.04172399640083313,
+      0.028506183996796608
+    ],
+    [
+      0.04684342071413994,
+      0.056952763348817825
+    ],
+    [
+      0.038953159004449844,
+      0.08579399436712265
+    ],
+    [
+      0.015692098066210747,
+      0.11814675480127335
+    ],
+    [
+      -0.020439736545085907,
+      0.15349359810352325
+    ],
+    [
+      -0.06334464997053146,
+      0.18256835639476776
+    ]
+  ],
+  "obstacles": [
+    {
+      "id": "StaticObstacle1",
+      "center_xy_m": [
+        1.5,
+        0.0
+      ],
+      "size_xyz_m": [
+        0.4,
+        0.5,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "StaticObstacle2",
+      "center_xy_m": [
+        3.0,
+        0.75
+      ],
+      "size_xyz_m": [
+        0.5,
+        1.5,
+        1.0
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "DynamicObstacle",
+      "size_xyz_m": [
+        0.35,
+        0.35,
+        0.8
+      ],
+      "color_rgb": [
+        0.65,
+        0.04,
+        0.65
+      ],
+      "spawn_tick": 970,
+      "minimum_visible_pixels": 20,
+      "center_xy_m": [
+        2.3722795416396383,
+        0.1106746028619976
+      ]
+    }
+  ],
+  "corridor": {
+    "xmin": -2.0,
+    "xmax": 6.0,
+    "half_width": 1.5,
+    "height": 2.6
+  },
+  "heading": {
+    "k": 2,
+    "cumulative_distance_m": 0.03782074173607819,
+    "direct_chord_m": 0.03676305467906301,
+    "adjacent_lengths_m": [
+      0.017282994059062105,
+      0.020537747677016088,
+      0.028903570404545692,
+      0.029901050759105877,
+      0.03984693292691443,
+      0.05054610572350659,
+      0.05182830467745657
+    ],
+    "derived_headings_rad": [
+      0.09282226759494962,
+      0.30990520413850486,
+      0.7064270611156536,
+      1.1515289370485335,
+      1.507839772450806,
+      1.6808672081586042,
+      1.8597117918342454,
+      1.8597117918342454
+    ],
+    "fixed_for_all_iterations": true
+  },
+  "pre_solve_validation": {
+    "se2_log_and_inverse_frame": "PASS",
+    "rigid_relative_max_error": 4.440892098500626e-16,
+    "only_first_tangent_residual_changed": "PASS",
+    "minimum_adjacent_segment_penalty_unchanged": "PASS"
+  },
+  "initial_factor_costs": {
+    "fresh_prior": 0.0,
+    "relative_pose": 0.0,
+    "boundary": 8.997685862570002,
+    "heading_tangent": 0.0,
+    "minimum_segment": 0.14764242566183633,
+    "native_obstacle": 0.3443070664335122,
+    "native_corridor": 0.0,
+    "controller_obstacle": 17.681392966348803,
+    "controller_corridor": 0.0
+  },
+  "original_solver_settings": {
+    "method": "trf",
+    "jac": "3-point",
+    "ftol": 1e-08,
+    "xtol": 1e-08,
+    "gtol": 1e-08,
+    "max_nfev": 200,
+    "x_scale_per_pose": [
+      0.02,
+      0.02,
+      0.2617993877991494
+    ],
+    "initialization": "zero increments from original observation-anchored FRESH poses",
+    "bounds": "unbounded; priors regularize",
+    "number_of_solves": 1,
+    "restarts_or_weight_tuning": false
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "1.26.4",
+    "scipy": "1.11.4"
+  },
+  "input_hashes": {
+    "model/derived/0052.npz": "2ef973a91001b57661841ab92ae1759133ffc7ffabaf42f4dd2cd2a49325ae60",
+    "events.jsonl": "9e96337dd88b00a4e3119a461adbd3398492245c6596daac6ba04ca1377e64db",
+    "agent_trajectory.csv": "03d717c8194a42690cd5533a621c9b1b6f94fb960e155fbe46826f3a95a598e6",
+    "scenario.json": "98e11851bda2cf04b241b747f6fec66eac2529ba0c05867d7d9d8a62872b1140",
+    "dynamic/spawn.json": "b531bc0c8ce9258542be8d45d9832234c1bd654175592098056ef4c43ac42664"
+  },
+  "no_future_trace_or_fresh53_solver_inputs": true
+}
