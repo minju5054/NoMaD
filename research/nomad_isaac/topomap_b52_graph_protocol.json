@@ -1,0 +1,29 @@
+{
+  "basis_commit": "830728850b5f4fc6725c3c33894bf26e1d26df1d",
+  "graph_source_commit": "14621b685885b8a58514a00e67c785a8b6932023",
+  "unchanged_reused_files_sha256": {
+    "research/nomad_isaac/minimal_se2_graph.py": "307c833aec0f4bba13762ace8caa05c724fd65bfa8ba4b5c71f441ced47074e5",
+    "research/nomad_isaac/minimal_se2_graph_protocol.json": "f0057b3cf6a4cc857b8eb2364c0d7dc9dcb6318375e0c8ff9f063fa0f9d6eafb"
+  },
+  "raw_run": "artifacts/isaac6/topomap_sudden_01",
+  "old_id": 51,
+  "fresh_id": 52,
+  "sample": 0,
+  "selected_index": 2,
+  "boundary_tick": 1016,
+  "horizon_ticks": 16,
+  "integration_hz": 72,
+  "inherited_protocol": "minimal_se2_graph_protocol.json",
+  "all_factor_scales_safety_and_solver_settings": "unchanged",
+  "heading_gate": "Every original segment must be >=0.02m as in the original read_inputs; no surrogate first-node heading",
+  "on_invalid_initial_heading": "No optimizer or rigid alignment; report NOT_RUN_INVALID_INITIAL_HEADING. Evaluate only RAW, UNCHANGED-B-LOCAL, STOP.",
+  "maximum_solver_calls": 1,
+  "retry_or_tuning": false,
+  "pre_raw_gate": "Original PD, fixed B52, native XY and RAW rollout checked against frozen expected values; prior validated trace hash/status is available. No future prediction.",
+  "post_gate_trace_validation": "After a solve or terminal heading rejection, compare only FRESH52 execution ticks1016..1032. Trace is never passed to a solver.",
+  "horizon_note": "16 ticks fixed a priori; no FRESH53 event/prediction or later collision outcome read",
+  "stop": "Literal zero command, no fabricated waypoint/trajectory/yaw; trivial reference only",
+  "outputs": "small JSON/CSV and one comparison XY figure",
+  "new_navigation": 0,
+  "new_gpu_inference": 0
+}
