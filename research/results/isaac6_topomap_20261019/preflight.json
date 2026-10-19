@@ -1,0 +1,124 @@
+{
+  "status": "PASS",
+  "cpu_tests": "17 passed in 0.18 s",
+  "map_checks": {
+    "nodes": 26,
+    "rgb_file_and_pixel_hashes": "PASS",
+    "pose_and_tick_correspondence": "PASS",
+    "reference_source_hashes": "PASS",
+    "maximum_usd_pose_error": 3.3306690738754696e-16
+  },
+  "topomap_manifest_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_reference_01/topomap/manifest.json",
+  "topomap_manifest_sha256": "6dabf9d1116d266884e011e0611e540cf0b25da307d7044c908f173c78d2de5f",
+  "reference_execution_sha": "fb9bf2253044be477873aa113a19899f479af248",
+  "render_git_sha": "5b05a1c0cfb553a90f3c1c55a1b6cf21a952a8db",
+  "node_times": [
+    0.0,
+    1.0,
+    2.0,
+    3.0,
+    4.0,
+    5.0,
+    6.0,
+    7.0,
+    8.0,
+    9.0,
+    10.0,
+    11.0,
+    12.0,
+    13.0,
+    14.0,
+    15.0,
+    16.0,
+    17.0,
+    18.0,
+    19.0,
+    20.0,
+    21.0,
+    22.0,
+    23.0,
+    24.0,
+    24.583333333333332
+  ],
+  "gpu_equivalence": {
+    "status": "PASS",
+    "map_manifest_sha256": "6dabf9d1116d266884e011e0611e540cf0b25da307d7044c908f173c78d2de5f",
+    "checkpoint_coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "same_condition_noise_ddpm_seed_max_abs_error": {
+      "normalized_diffusion": 0.0,
+      "cumulative": 0.0,
+      "metric": 0.0,
+      "selected_waypoint": 0.0
+    },
+    "single_goal_encoder_and_distance": "bitwise_equal",
+    "batched_official_encoder_and_distance": "bitwise_equal",
+    "selected_condition_diffusion": "bitwise_equal",
+    "topomap_component_calls": {
+      "vision_encoder": 1,
+      "dist_pred_net": 1,
+      "noise_pred_net": 10
+    },
+    "sample_shape": [
+      8,
+      8,
+      2
+    ],
+    "selection_example": {
+      "candidate_start": 0,
+      "candidate_end_inclusive": 5,
+      "candidate_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "distances": [
+        15.14948558807373,
+        15.055618286132812,
+        7.898530006408691,
+        1.4790244102478027,
+        2.8894903659820557,
+        5.351459503173828
+      ],
+      "previous_closest_node": 0,
+      "closest_node": 3,
+      "previous_subgoal_id": null,
+      "selected_subgoal_id": 4,
+      "subgoal_changed": true,
+      "closest_moved_backward": false,
+      "subgoal_moved_backward": false,
+      "selection_monotonic_ns": 15505092197133,
+      "goal_node": 25,
+      "topomap_goal_node_reached": false,
+      "selected_subgoal_image": {
+        "rgb_file": "rgb/0004.png",
+        "png_sha256": "d1dc47d31c765f0e2a213c063a7fa81c5268084ecc77984b05d2a3967122b399",
+        "rgb_sha256": "5483a0b8602364516ee48ec3582276e334d45119bc407bfa8cb9c2fb5da77f2a"
+      },
+      "candidate_encoding_and_selection_ms": 36.893587,
+      "diffusion_and_action_ms": 17.12738,
+      "diffusion_passes": 1,
+      "diffusion_steps": 10
+    },
+    "torch": "2.7.0+cu128",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "peak_torch_allocated_bytes": 738400256,
+    "validation_wall_s": 0.087168731,
+    "input_note": "map nodes0..3 as chronological RGB test history, node4 for fixed-goal equality; not navigation or a 4Hz observation-performance experiment",
+    "new_navigation_count": 0
+  },
+  "reference_render_startup_errors": 6,
+  "reference_render_status": "completed RGB gate; startup renderer-step errors retained",
+  "navigation_before_validation": 0
+}
