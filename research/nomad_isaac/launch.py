@@ -29,8 +29,12 @@ def main():
         parser.error("Topomap navigation requires asynchronous execution without extra delay")
     if args.render_topomap_reference and (not args.prepare_only or args.topomap):
         parser.error("Reference rendering requires --prepare-only and no navigation Topomap")
-    if args.topomap or args.render_topomap_reference:
+    if args.render_topomap_reference:
         assert "dynamic_obstacle" not in read_scenario(args.scenario)
+    if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario):
+        from .topomap import validate_dynamic_combination
+        validate_dynamic_combination(read_scenario(args.scenario), args.topomap, args.asynchronous,
+                                     args.prepare_only, args.controlled_delivery_delay, args.uniform_delivery_delay_s)
     if args.controlled_delivery_delay and (not args.asynchronous or args.prepare_only):
         parser.error("Controlled delivery delay requires asynchronous navigation")
     if args.uniform_delivery_delay_s is not None and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay):
@@ -45,6 +49,8 @@ def main():
     sources = list(Path(__file__).parent.glob("*.py")) + [scenario_path, ROOT / "research/nomad_preflight/native.py"]
     if args.topomap or args.render_topomap_reference:
         sources += [Path(__file__).with_name("topomap_protocol.json")]
+    if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario):
+        sources += [Path(__file__).with_name("topomap_sudden_protocol.json")]
     if args.controlled_delivery_delay:
         sources += [Path(__file__).with_name("controlled_latency_protocol.json")]
     if args.uniform_delivery_delay_s is not None:

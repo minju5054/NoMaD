@@ -101,3 +101,23 @@ def load_map(manifest_path):
         hashes.append({key: row[key] for key in ("rgb_file", "png_sha256", "rgb_sha256")})
     # Intentionally do not expose map world poses to the policy selection code.
     return images, hashes
+
+
+def validate_dynamic_combination(config, manifest_path, asynchronous, prepare_only=False,
+                                 controlled_delay=False, uniform_delay=None):
+    """Permit only the frozen 2s-map / actual-OLD pilot, without changing its rules."""
+    if not asynchronous or prepare_only or controlled_delay or uniform_delay is not None:
+        raise ValueError("Topomap + dynamic pilot requires async navigation and no delivery-delay option")
+    protocol = json.loads(Path(__file__).with_name("topomap_sudden_protocol.json").read_text())
+    scenario_path = Path(__file__).with_name(protocol["scenario_file"])
+    if sha256_file(scenario_path) != protocol["scenario_sha256"]:
+        raise ValueError("Frozen OLD placement scenario has changed")
+    expected = json.loads(scenario_path.read_text())
+    if any(config.get(key) != value for key, value in expected.items() if key != "synchronous"):
+        raise ValueError("Topomap + dynamic pilot requires the unchanged OLD placement scenario")
+    if sha256_file(manifest_path) != protocol["topomap_manifest_sha256"]:
+        raise ValueError("Topomap + dynamic pilot requires the preserved 2s static reference manifest")
+    manifest = json.loads(Path(manifest_path).read_text())
+    if (manifest["dynamic_obstacle"] or manifest["node_count"] != protocol["topomap_node_count"]
+            or manifest["spacing_sim_s"] != protocol["topomap_spacing_sim_s"]):
+        raise ValueError("Dynamic obstacle must be absent from the 14-node static reference")

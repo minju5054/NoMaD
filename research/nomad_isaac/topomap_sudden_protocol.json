@@ -1,0 +1,23 @@
+{
+  "basis_commit": "62809c09d1dd3e43bf539645ff34779ffed281e5",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "topomap_spacing_sim_s": 2.0,
+  "topomap_node_count": 14,
+  "scenario_file": "old_rollout_obstacle_scenario.json",
+  "scenario_sha256": "9d3785d811b2ecb0c879c62bcf849799a04511eda34887f6e70c9facdcc09589",
+  "navigation_runs": 1,
+  "navigation_retries": 0,
+  "asynchronous": true,
+  "extra_delivery_latency_s": 0,
+  "spawn_tick": 970,
+  "placement": "Unchanged actual OLD constant-command rule; candidates .42/.45/.48m; no FRESH/future-outcome inputs",
+  "on_placement_infeasible": "Stop and preserve result; no adjustment or retry",
+  "first_fresh": "First received prediction whose actual history includes a visible RGB-magenta observation",
+  "all_sample_scope": "Eight stored samples of the first visible FRESH; original PD commands and full/prefix/origin-prefix native safety, no reranking",
+  "successive_scope": "Actual first visible FRESH through recorded run end; terminal unapplied results kept separate",
+  "geometry_protocol": "Reuse async_handoff_protocol.json thresholds; observation anchors only",
+  "safety": "full and prefix separately; 0.02m obstacle margin and corridor >0, radius .09m; native versus actual PD execution distinguished",
+  "no_graph_no_recovery_no_new_controller": true,
+  "figures": 1,
+  "video": false
+}

@@ -138,7 +138,11 @@ def main():
         config = {**config, "synchronous": False}
     if args.topomap:
         from nomad_isaac.common import sha256_file
-        assert args.asynchronous and "dynamic_obstacle" not in config
+        assert args.asynchronous
+        if "dynamic_obstacle" in config:
+            from nomad_isaac.topomap import validate_dynamic_combination
+            validate_dynamic_combination(config, args.topomap, args.asynchronous, args.prepare_only,
+                                         args.controlled_delivery_delay, args.uniform_delivery_delay_s)
         config = {**config, "goal_mode": "topomap", "topomap_manifest": str(args.topomap.resolve()),
                   "topomap_manifest_sha256": sha256_file(args.topomap)}
     obstacles = configured_obstacles(config)
