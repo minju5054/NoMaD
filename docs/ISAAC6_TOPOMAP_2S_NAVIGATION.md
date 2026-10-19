@@ -42,9 +42,9 @@ Goal node 13 선택은 실제 적용된 ID 93·96에서 확인됐다. 마지막 
 - 기존 1초 run의 **117개** hash와 reference source hashes 보존. 기존 runtime validator가 확인하는 synchronous baseline **484개** hash도 보존. 실행 시 working tree는 clean이었으며 실행 source hashes 유지.
 - 초기 renderer 준비 중 step error 5개는 기존 로그에 남겼고 이후 RGB gate와 정상 주행이 완료됐다. 이를 navigation failure나 무시된 collision으로 분류하지 않는다.
 
-새 map: `../artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json`  
-새 raw run: `../artifacts/isaac6/topomap_static_2s_01/`  
-GPU 검증: `../artifacts/isaac6/topomap_2s_gpu_validation_01/gpu_equivalence.json`  
+새 map: `../artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json`
+새 raw run: `../artifacts/isaac6/topomap_static_2s_01/`
+GPU 검증: `../artifacts/isaac6/topomap_2s_gpu_validation_01/gpu_equivalence.json`
 주행 검증: `../artifacts/isaac6/topomap_static_2s_01_validation/`
 
 [작은 summary](../research/results/isaac6_topomap_2s_20261019/summary.json), [비교 CSV](../research/results/isaac6_topomap_2s_20261019/comparison.csv), [node metadata](../research/results/isaac6_topomap_2s_20261019/topomap_nodes.csv), [선택 기록](../research/results/isaac6_topomap_2s_20261019/topomap_selection.csv), [실제 XY 경로](../research/results/isaac6_topomap_2s_20261019/topomap_navigation.svg), [보존·검증 요약](../research/results/isaac6_topomap_2s_20261019/review.json).
