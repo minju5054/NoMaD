@@ -1,0 +1,38 @@
+{
+  "solver_invocations": 0,
+  "navigation_runs": 0,
+  "gpu_inference_calls": 0,
+  "gate": "NOT_RUN_INVALID_INITIAL_HEADING",
+  "raw_reproduction": "PASS",
+  "original_graph_source_and_protocol_byte_identical": true,
+  "new_tests": 0,
+  "figure_visual_review": "PASS",
+  "raw_input_hashes_preserved": 257,
+  "heading_gate_is_not_obstacle_safety_threshold": "Both have numerical value 0.02m, but one measures segment length and the other footprint clearance.",
+  "future_data_handling": "Only FRESH52 events/observation/B52/geometry used for gate and controls. Actual ticks1016..1032 entered validation after terminal gate rejection; never passed to optimization.",
+  "frame_only_effect": "Native XY unchanged; B-local transform reduced v by 50.529824%, w remained clipped at +0.4; still fails 2cm margin.",
+  "complete_graph_metrics": "Not available; no initial complete SE2 chain and no optimization. Missing metrics are null, not PASS or zero.",
+  "files_sha256": {
+    "comparison.csv": "0426ce32807aff62a5fba543dc0bdd5a65b22887d8667c4333f4404dc5249530",
+    "comparison.svg": "cbc133f6c6a5ba35dd517aeeb59c9aa824e1ea41edc6d8436747534866baa875",
+    "heading_gate.json": "4713a1c1f5d595de909a2a9e0cc062a4242253bf04912d599b79e0053a24f0b6",
+    "inputs.json": "9d5a563b940233f352141558e668d321732b9268b7ad3920b2d5b0100a321217",
+    "protocol.json": "a136b1fcd068ffb6fa612742c5bd52794ca0ba0731455ba39e2ab68cefb08a04",
+    "solver.json": "e97b9c0d379b4cb760eeca89eb17b1371cb5f439a730fea53412f3e7f6e71f3b",
+    "summary.json": "b097d9648a837d2fe4d6deeb085c8494c61e6840acb91129ad011617772e6df2"
+  },
+  "actual_controller_tick_checks": [
+    {
+      "simulation_time_s": 14.11111111111111,
+      "waypoint_id": 52,
+      "v_m_s": 0.16689598560333252,
+      "w_rad_s": 0.4
+    },
+    {
+      "simulation_time_s": 14.222222222222221,
+      "waypoint_id": 52,
+      "v_m_s": 0.16689598560333252,
+      "w_rad_s": 0.4
+    }
+  ]
+}

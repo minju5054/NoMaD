@@ -1,0 +1,601 @@
+{
+  "status": "NOT_RUN_INVALID_INITIAL_HEADING",
+  "solve_count": 0,
+  "solver": {
+    "status": "NOT_RUN_INVALID_INITIAL_HEADING",
+    "calls": 0,
+    "converged": null,
+    "cost": null,
+    "residual_l2": null,
+    "factor_costs": null,
+    "cpu_wall_s": null,
+    "reason": "F0->F1 = 0.017282994059m < unchanged 0.020m minimum; F0 yaw unavailable"
+  },
+  "heading_gate": {
+    "status": "INVALID_INITIAL_HEADING",
+    "minimum_segment_m": 0.02,
+    "segment_lengths_m": [
+      0.017282994059062105,
+      0.020537747677016088,
+      0.028903570404545692,
+      0.029901050759105877,
+      0.03984693292691443,
+      0.05054610572350659,
+      0.05182830467745657
+    ],
+    "invalid_segments": [
+      0
+    ],
+    "valid_node_headings": [
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "derived_heading_rad": [
+      null,
+      0.30990520413850486,
+      0.7064270611156536,
+      1.1515289370485335,
+      1.507839772450806,
+      1.6808672081586042,
+      1.8597117918342454,
+      1.8597117918342454
+    ],
+    "rule": "outgoing tangent nodes0..6, last incoming at7; reject ANY invalid initial segment"
+  },
+  "raw_reproduction": {
+    "actual_poses": 17,
+    "actual_intervals": 16,
+    "pose_max_abs_error": 0.0,
+    "swept_and_corridor_max_abs_error_m": 1.1102230246251565e-16,
+    "future_trace_read_after_terminal_heading_rejection": true
+  },
+  "boundary": [
+    2.2943831561082764,
+    0.3990149473159676,
+    -0.6363090149848558
+  ],
+  "boundary_sim_s": 14.11111111111111,
+  "horizon_s": 0.2222222222222222,
+  "initial_clearances_m": {
+    "StaticObstacle1": 0.5227779294237157,
+    "StaticObstacle2": 0.36561684389172366,
+    "DynamicObstacle": 0.023340344453970013
+  },
+  "methods": {
+    "RAW": {
+      "status": "EVALUATED",
+      "controller": {
+        "local_waypoint": [
+          0.04172399640083313,
+          0.028506183996796608
+        ],
+        "unclipped_vw": [
+          0.16689598560333252,
+          2.397469202812339
+        ],
+        "command_vw": [
+          0.16689598560333252,
+          0.4
+        ],
+        "v_clipped": false,
+        "w_clipped": true
+      },
+      "native": {
+        "full": {
+          "obstacle_clearance_m": 0.02648461331331245,
+          "obstacles": {
+            "StaticObstacle1": 0.520403779637587,
+            "StaticObstacle2": 0.2963369006650799,
+            "DynamicObstacle": 0.02648461331331245
+          },
+          "corridor_clearance_m": 0.8158158822895605,
+          "safe": true
+        },
+        "prefix": {
+          "obstacle_clearance_m": 0.02648461331331245,
+          "obstacles": {
+            "StaticObstacle1": 0.520403779637587,
+            "StaticObstacle2": 0.33300287134481577,
+            "DynamicObstacle": 0.02648461331331245
+          },
+          "corridor_clearance_m": 1.0015774206428896,
+          "safe": true
+        },
+        "boundary_prefix": {
+          "obstacle_clearance_m": 0.023340344453970013,
+          "obstacles": {
+            "StaticObstacle1": 0.520403779637587,
+            "StaticObstacle2": 0.33300287134481577,
+            "DynamicObstacle": 0.023340344453970013
+          },
+          "corridor_clearance_m": 1.0015774206428896,
+          "safe": true
+        }
+      },
+      "boundary_position_m": 0.007206098358580575,
+      "boundary_tangent_heading_deg": null,
+      "trajectory_position_change_rms_m": 0.0,
+      "trajectory_heading_change_deg": null,
+      "relative_transform_error": null,
+      "relative_transform_note": "No complete SE2 chain: first-node heading invalid; XY unchanged",
+      "rollout": {
+        "command_vw": [
+          0.16689598560333252,
+          0.4
+        ],
+        "minimum_clearance_m": 0.002653804024105354,
+        "minimum_upper_m": 0.002655413746153662,
+        "obstacles": {
+          "StaticObstacle1": 0.5227763197016674,
+          "StaticObstacle2": 0.33484596874212896,
+          "DynamicObstacle": 0.002653804024105354
+        },
+        "minimum_corridor_m": 1.010983442961984,
+        "margin_met": false,
+        "geometric_overlap": false,
+        "safe": false,
+        "distance_m": 0.037087996800740555,
+        "end_pose": [
+          2.325152421535823,
+          0.37833001660815124,
+          -0.5474201260959672
+        ],
+        "poses": [
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2962513272509546,
+            0.39764270614367625,
+            -0.6307534594293003
+          ],
+          [
+            2.298127093086758,
+            0.39628086482307373,
+            -0.6251979038737447
+          ],
+          [
+            2.300010395721828,
+            0.39492946538619145,
+            -0.6196423483181892
+          ],
+          [
+            2.30190117702969,
+            0.3935885495427813,
+            -0.6140867927626337
+          ],
+          [
+            2.3037993786530455,
+            0.39225815867902825,
+            -0.6085312372070781
+          ],
+          [
+            2.305704942005576,
+            0.3909383338562732,
+            -0.6029756816515226
+          ],
+          [
+            2.3076178082737493,
+            0.38962911580974535,
+            -0.5974201260959671
+          ],
+          [
+            2.309537918418634,
+            0.3883305449473052,
+            -0.5918645705404115
+          ],
+          [
+            2.3114652131777245,
+            0.38704266134819726,
+            -0.586309014984856
+          ],
+          [
+            2.313399633066767,
+            0.3857655047618131,
+            -0.5807534594293005
+          ],
+          [
+            2.315341118381598,
+            0.38449911460646446,
+            -0.5751979038737449
+          ],
+          [
+            2.317289609199985,
+            0.38324352996816674,
+            -0.5696423483181894
+          ],
+          [
+            2.3192450453834774,
+            0.38199878959943256,
+            -0.5640867927626338
+          ],
+          [
+            2.321207366579262,
+            0.38076493191807576,
+            -0.5585312372070783
+          ],
+          [
+            2.323176512222025,
+            0.37954199500602553,
+            -0.5529756816515228
+          ],
+          [
+            2.325152421535823,
+            0.37833001660815124,
+            -0.5474201260959672
+          ]
+        ]
+      }
+    },
+    "UNCHANGED-B-LOCAL": {
+      "status": "EVALUATED",
+      "controller": {
+        "local_waypoint": [
+          0.020640934430348343,
+          0.0269467358274441
+        ],
+        "unclipped_vw": [
+          0.08256373772139337,
+          3.6685592572159877
+        ],
+        "command_vw": [
+          0.08256373772139337,
+          0.4
+        ],
+        "v_clipped": false,
+        "w_clipped": true
+      },
+      "native": {
+        "full": {
+          "obstacle_clearance_m": 0.02648461331331245,
+          "obstacles": {
+            "StaticObstacle1": 0.520403779637587,
+            "StaticObstacle2": 0.2963369006650799,
+            "DynamicObstacle": 0.02648461331331245
+          },
+          "corridor_clearance_m": 0.8158158822895605,
+          "safe": true
+        },
+        "prefix": {
+          "obstacle_clearance_m": 0.02648461331331245,
+          "obstacles": {
+            "StaticObstacle1": 0.520403779637587,
+            "StaticObstacle2": 0.33300287134481577,
+            "DynamicObstacle": 0.02648461331331245
+          },
+          "corridor_clearance_m": 1.0015774206428896,
+          "safe": true
+        },
+        "boundary_prefix": {
+          "obstacle_clearance_m": 0.023340344453970013,
+          "obstacles": {
+            "StaticObstacle1": 0.520403779637587,
+            "StaticObstacle2": 0.33300287134481577,
+            "DynamicObstacle": 0.023340344453970013
+          },
+          "corridor_clearance_m": 1.0015774206428896,
+          "safe": true
+        }
+      },
+      "boundary_position_m": 0.007206098358580575,
+      "boundary_tangent_heading_deg": null,
+      "trajectory_position_change_rms_m": 0.0,
+      "trajectory_heading_change_deg": null,
+      "relative_transform_error": null,
+      "relative_transform_note": "No complete SE2 chain: first-node heading invalid; XY unchanged",
+      "rollout": {
+        "command_vw": [
+          0.08256373772139337,
+          0.4
+        ],
+        "minimum_clearance_m": 0.01310667650609005,
+        "minimum_upper_m": 0.013107472838924855,
+        "obstacles": {
+          "StaticObstacle1": 0.5227771330908809,
+          "StaticObstacle2": 0.3503944378152134,
+          "DynamicObstacle": 0.01310667650609005
+        },
+        "minimum_corridor_m": 1.0109842563511975,
+        "margin_met": false,
+        "geometric_overlap": false,
+        "safe": false,
+        "distance_m": 0.018347497271420748,
+        "end_pose": [
+          2.309604765851952,
+          0.38878207570092244,
+          -0.5474201260959672
+        ],
+        "poses": [
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.295307343659494,
+            0.3983360971936594,
+            -0.6307534594293003
+          ],
+          [
+            2.296235288318763,
+            0.39766239189627967,
+            -0.6251979038737447
+          ],
+          [
+            2.2971669614458894,
+            0.39699385221714817,
+            -0.6196423483181892
+          ],
+          [
+            2.298102334285604,
+            0.3963304987901526,
+            -0.6140867927626337
+          ],
+          [
+            2.2990413779684498,
+            0.39567235208911145,
+            -0.6085312372070781
+          ],
+          [
+            2.2999840635116704,
+            0.3950194324271423,
+            -0.6029756816515226
+          ],
+          [
+            2.3009303618201082,
+            0.3943717599560348,
+            -0.5974201260959671
+          ],
+          [
+            2.301880243687101,
+            0.39372935466562853,
+            -0.5918645705404115
+          ],
+          [
+            2.302833679795382,
+            0.3930922363831963,
+            -0.586309014984856
+          ],
+          [
+            2.3037906407179864,
+            0.39246042477283205,
+            -0.5807534594293005
+          ],
+          [
+            2.30475109691916,
+            0.39183393933484395,
+            -0.5751979038737449
+          ],
+          [
+            2.305715018755268,
+            0.3912127994051526,
+            -0.5696423483181894
+          ],
+          [
+            2.306682376475714,
+            0.39059702415469416,
+            -0.5640867927626338
+          ],
+          [
+            2.3076531402238545,
+            0.38998663258882876,
+            -0.5585312372070783
+          ],
+          [
+            2.3086272800379226,
+            0.38938164354675375,
+            -0.5529756816515228
+          ],
+          [
+            2.309604765851952,
+            0.38878207570092244,
+            -0.5474201260959672
+          ]
+        ]
+      }
+    },
+    "RIGID": {
+      "status": "NOT_RUN_INVALID_INITIAL_HEADING",
+      "controller": null,
+      "rollout": null,
+      "native": null,
+      "reason": "Original rigid alignment/graph requires valid first future pose heading"
+    },
+    "GRAPH": {
+      "status": "NOT_RUN_INVALID_INITIAL_HEADING",
+      "controller": null,
+      "rollout": null,
+      "native": null,
+      "reason": "Original rigid alignment/graph requires valid first future pose heading"
+    },
+    "STOP": {
+      "status": "TRIVIAL_REFERENCE",
+      "controller": {
+        "local_waypoint": null,
+        "unclipped_vw": null,
+        "command_vw": [
+          0.0,
+          0.0
+        ],
+        "v_clipped": null,
+        "w_clipped": null
+      },
+      "native": null,
+      "rollout": {
+        "command_vw": [
+          0.0,
+          0.0
+        ],
+        "minimum_clearance_m": 0.023340344452970015,
+        "minimum_upper_m": 0.023340344453970013,
+        "obstacles": {
+          "StaticObstacle1": 0.5227779294227157,
+          "StaticObstacle2": 0.3656168438907237,
+          "DynamicObstacle": 0.023340344452970015
+        },
+        "minimum_corridor_m": 1.0109850526830322,
+        "margin_met": true,
+        "geometric_overlap": false,
+        "safe": true,
+        "distance_m": 0.0,
+        "end_pose": [
+          2.2943831561082764,
+          0.3990149473159676,
+          -0.6363090149848558
+        ],
+        "poses": [
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ],
+          [
+            2.2943831561082764,
+            0.3990149473159676,
+            -0.6363090149848558
+          ]
+        ]
+      }
+    }
+  },
+  "fixed_goal_B51_reference": {
+    "source_commit": "14621b685885b8a58514a00e67c785a8b6932023",
+    "source_file": "research/results/isaac6_minimal_se2_graph_20261019/summary.json",
+    "solver": {
+      "success": true,
+      "status": 2,
+      "message": "`ftol` termination condition is satisfied.",
+      "nfev": 5,
+      "njev": 5,
+      "residual_calls_including_jacobian": 245,
+      "wall_s": 0.6598562630824745,
+      "cost": 4.418300542912375,
+      "residual_l2": 2.9726421052364764,
+      "residual_max_abs": 2.9060593570320004,
+      "optimality": 2.795070767525054e-05
+    },
+    "initial_clearances_m": {
+      "StaticObstacle1": 0.3078648104873999,
+      "StaticObstacle2": 0.5621361752534528,
+      "DynamicObstacle": 0.04417414269453099
+    },
+    "methods": {
+      "RAW": {
+        "command_vw": [
+          0.2,
+          -0.4
+        ],
+        "rollout_clearance_m": 0.019187881285936,
+        "safe": false
+      },
+      "RIGID": {
+        "command_vw": [
+          0.2,
+          -0.4
+        ],
+        "rollout_clearance_m": 0.019187881285936,
+        "safe": false
+      },
+      "GRAPH": {
+        "command_vw": [
+          0.2,
+          -0.4
+        ],
+        "rollout_clearance_m": 0.019187881285936,
+        "safe": false
+      }
+    },
+    "not_rerun": true,
+    "different_conditions_not_paired": true
+  },
+  "preserved_run_hashes": 257,
+  "limitations": [
+    "No Graph convergence, cost, or benefit can be assessed: the original initialization gate rejects this input.",
+    "No substitute first yaw, segment skipping, threshold change, weight change, restart, or optimization.",
+    "Exact scene geometry offline; no inference/navigation. RAW alone is actual execution.",
+    "STOP has no selected waypoint or future trajectory; not reconciliation or a recovery policy."
+  ]
+}

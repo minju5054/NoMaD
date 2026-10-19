@@ -392,3 +392,12 @@ WarmGPU median/p95 35.536/53.096ms, request/receive/switch54/54/54, 모두적용
 ## Topomap sudden obstacle — FRESH 50–53 왼쪽 회전 그림
 
 2026-10-19. 사용자 요청에 따라 저장 데이터만으로 native 8점/실제 경로/B50–B53, 실제 PD w 시간축, 실제 yaw 시간축을 한 그림에 표시했다. w=+.340089/+.4/+.4/+.4, yaw −45.881°→−30.410°로 모두 왼쪽 회전이며 world Y 감소와 구분했다. 원본 PD·9Hz command·72Hz pose/incoming ID·yaw increment 검증, 기존257개 raw hash 보존. PNG/SVG 육안 검토 완료, 원래 그림·결과 보존, 새 주행/inference0회. 별도 `topomap_left_turns_01` 저장 후 plot source/작은manifest/SVG와 문서만 추가했다.
+
+
+## Topomap B52 — 기존 Graph 초기화 조건 재검증
+
+2026-10-19. 사용자 기준 `8307288`에서 `research/isaac6-topomap-b52-graph` 생성. 기존 Graph branch `14621b6`의 source/protocol 두 파일만 byte-identical 재사용, 관련 없는 branch 변경 없음. Protocol/audit를 `81693d2`에 고정했다. FRESH52 sample0 첫 segment가 **.017282994m < 기존 .02m heading minimum**으로 원본 read_inputs 조건을 위반했다. 다른 heading 대입/segment 합침/기준 변경 없이 **NOT_RUN_INVALID_INITIAL_HEADING**, RIGID·GRAPH 미실행/solver0회. Convergence/cost/residual/CPU time은 null이며 optimization 실패나 PASS로 기록하지 않았다.
+
+기존 Graph rollout kernel과 원본 PD/SE2/clearance로 고정 B52/16ticks 대조군을 계산했다. RAW(.166895986,+.4) clearance .002653804m, B-local(.082563738,+.4) .013106677m로 둘 다2cm미달/nooverlap. STOP(0,0) .023340344m로충족/이동0. Native XY는 수정하지 않았고 full/prefix .026484613m 안전. 좌표 표현만으로 v50.529824% 감소했지만 충분하지 않았으며 Graph 효과는 미평가다.
+
+Terminal heading rejection 이후 RAW의 실제17poses/16interval 대조: pose오차0, swept/corridor오차1.11e−16m, incomingID52 일치. FRESH53나 이후collision을 설정/Graph에 사용하지 않았다. Prior B51은 수렴했어도RAW/RIGID/GRAPH(.2,−.4)/clearance.019187881m가 같았으나, 이번은 headinggate에서미실행이므로성능비교불가. 257rawhash 및 원본Graph/protocol보존,새nav/GPU/solver/test0회,기존환경변경없음. 작은JSON/CSV/기존plot구조의XY한장과 [보고서](TOPOMAP_B52_GRAPH_REVALIDATION.md)를 저장했다.
