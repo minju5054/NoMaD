@@ -1,0 +1,38 @@
+{
+  "technical_topomap_validation": "PASS",
+  "navigation_result": "FAIL_CORRIDOR_FOOTPRINT_STOP",
+  "normal_navigation_runs": 1,
+  "navigation_retries": 0,
+  "dynamic_navigation_runs": 0,
+  "reference_render_navigation_runs": 0,
+  "execution_git_sha": "fd125a493e7ff3523d0cd10dec6ef094ed7a1f51",
+  "execution_git_clean": true,
+  "runtime_sources_match_provenance": true,
+  "postrun_changed_source_only": [
+    "research/nomad_isaac/topomap_report.py"
+  ],
+  "preserved_input_counts": {
+    "fixed_goal_reference": 203,
+    "old_rollout_original": 257
+  },
+  "original_model_controller_coordinate_clearance_scenario_unchanged": true,
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "topomap_manifest_sha256": "6dabf9d1116d266884e011e0611e540cf0b25da307d7044c908f173c78d2de5f",
+  "map_checks": {
+    "nodes": 26,
+    "rgb_file_and_pixel_hashes": "PASS",
+    "pose_and_tick_correspondence": "PASS",
+    "reference_source_hashes": "PASS",
+    "maximum_usd_pose_error": 3.3306690738754696e-16
+  },
+  "actual_final_wall_footprint_intrusion_m": 0.00150711407497095,
+  "renderer_startup_errors": 5,
+  "renderer_status": "RGB/frame gate passed; initial renderer-step errors preserved",
+  "result_sha256": {
+    "summary.json": "04b32b9800aede132c37adae833b7d04b7cf7446061149dbe829f17f5ccc1b79",
+    "topomap_selection.csv": "b45b14aa5cfc80950a900e8b504780793b246dba8273ff344d55e2bd5ea76044",
+    "topomap_nodes.csv": "5ac9b85b00966bfc4a1aedb45866b47e98614398d4fec790cc91a90869b07827",
+    "topomap_navigation.svg": "eaa0566f3ac05f21615d84ec4e7ece56b9207ab3243b2b9291d10e646bc16b83"
+  },
+  "next_old_sudden_obstacle_status": "Technical adapter available, but successful static Topomap baseline not established; no dynamic experiment performed"
+}

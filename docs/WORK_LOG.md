@@ -343,3 +343,14 @@ Unsafe prediction/원본 PD 실행과 frame mismatch를 분리했으며 qualifie
 Grid 최대 feasible v는 H1 .18m/s(10% 감소, clearance 2.154597cm, 전진4cm), H2 .10m/s(50% 감소, clearance2.206896cm, 전진4.166667cm). RAW .2m/s는 H1 1.918788cm/H2 .136918cm로 margin 미달이나 geometric overlap은 없다. 최초 미달은 H1 마지막 interval [14.097222222,14.111111111]s. B51부터 .10m/s를 한 번 선택해 유지하면 H1 prefix도 3.097952cm로 안전하며 중간 감속 스케줄은 없다. `(0,0)` 정지는 별도 trivial reference로만 저장했다.
 
 이번 정확한 geometry/제한 horizon에서는 전진하며 감속만으로 충분해 Graph 필요성 근거를 추가하지 못했다. H2 RAW·보정은 실제52실행과 다른 counterfactual이며 온라인 geometry 인지/후속prediction/목표도달은 미검증. 작은 protocol/summary JSON, 22행 grid·6행 comparison CSV 및 [보고서](B51_SPEED_CORRECTION_FEASIBILITY.md)만 추가했다. 257개 run inputs, 이전 분석·그림과 보호 source9개 hash 유지. 새 navigation/inference/시각화/test/실행코드 변경 없음.
+
+
+## Isaac Sim Topomap — reference 생성 및 단일 정적 주행
+
+2026-10-19. 사용자 지정 `c6a72d5`에서 별도 `research/isaac6-topomap` 생성. 성공 reference `async_wide_wall_01`의 tick0,72,…,1728,1770에서 실제 정적 RGB26장을 렌더링했다(새 navigation/inference0회). Node pose/PNG/pixel hash와 원래 execution SHA를 새 manifest에 저장했다. 최대 USD pose 오차3.33e−16. 공식 radius4의 inclusive/+1 candidate 범위(최대10개), argmin/strict distance<3/clamp/closest 갱신을 그대로 사용하며 pose로 localization하지 않는다. 선택 condition에만 diffusion10steps를 한 번 적용했다.
+
+Protocol·adapter `5b05a1c`, GPU 및 최소 tests 검증 후 clean runtime `fd125a4`에서 navigation1회. CPU tests17 passed; 실제 GPU의 official encoder/distance 및 동일 condition/noise/DDPM seed decoder가 bitwise equal, 차이0. 실제 component 호출 encoder1/distance1/noise10 확인. Model/checkpoint/original PD·좌표·geometry·4/9/72Hz·1초 timeout·seed101+2k/추가지연0 유지.
+
+**Topomap 기술검증 PASS / navigation 실패**. Request/receive/switch52/52/52, 첫 장애물은 왼쪽11.722222s 통과, 두 번째 미도달. 13.902778s pose `(2.025235709,1.411507114,.740370522)`에서 corridor footprint stop; actual wall footprint intrusion1.507mm. Static obstacle clearance .432678/.634763m 및 no box overlap이지만 corridor 하한−.001509m, goal false/min distance2.849002m. 최종closest7/goal25, 최대closest11, closest역방향5/subgoal역방향6. 첫 장애물 X범위에서 steering부호반전8개와 node11→7→3 후퇴 관찰; 원인별 기여나 동적 회피 성능으로 확대하지 않았다.
+
+Warm inference median/p95 36.579/52.610ms(reference29.187/31.903), 실제 waypoint적용3.991Hz(reference4.005). Timeout0/busy1/missed0, RTF.999993906, pacing p95/max .145488/1.293862ms. Input history RGB/선택score/원본PD/normalization·sample0·index2/observation anchor/모든 pose·swept·corridor 검증 통과, integration/corridor error0. Reference203/OLD-rollout257/synchronous484 hashes 보존. Reference rendering startup error6/navigation startup error5는 로그에 보존 후 RGB gate 통과. Retry·threshold/spacing tuning·Graph·smoothing·recovery·dynamic실험·video/GUI재생 없음. 작은 JSON/CSV/XY SVG 한 장과 [보고서](ISAAC6_TOPOMAP_NAVIGATION.md) 저장. 기술 연결은 준비됐으나 성공한 정적 Topomap baseline은 미확보이므로 후속 sudden-obstacle 비교의 전제는 아직 충족하지 못했다.

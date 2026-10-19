@@ -37,6 +37,8 @@ def comparison_record(run):
     inference = rows(run/"model/inference.jsonl")
     events = rows(run/"events.jsonl")
     switches = np.array([r["application_sim_s"] for r in events])
+    reversals = [(old, fresh) for old, fresh in zip(events[:-1], events[1:])
+                 if old["w_rad_s"] * fresh["w_rad_s"] < 0]
     return {"run": str(run), "goal_entry": summary["goal_entry"], "termination": summary["termination_reason"],
             "minimum_goal_distance_m": summary["minimum_goal_distance_m"],
             "duration_sim_s": summary["simulation_duration_s"], "inferences": len(inference), "switches": len(events),
@@ -45,6 +47,10 @@ def comparison_record(run):
             "switch_frequency_hz_after_first": (len(switches)-1)/(switches[-1]-switches[0]) if len(switches)>1 else None,
             "observation_to_switch_wall_ms": stats([(e["application_monotonic_ns"]-e["observation_monotonic_ns"])/1e6 for e in events]),
             "obstacle_evaluation": summary["obstacle_evaluation"],
+            "executed_turn_sign_reversal_count": len(reversals),
+            "obstacle_neighborhood_turn_reversals": {key: [fresh["id"] for _, fresh in reversals
+                if lower <= fresh["agent_pose_at_switch"][0] <= upper]
+                for key, lower, upper in (("StaticObstacle1", 1., 2.), ("StaticObstacle2", 2.5, 3.6))},
             "timeout_episodes": summary["waypoint_timeout_episodes"], "busy_skips": summary["busy_observation_skips"],
             "missed_slots": summary["missed_capture_slots"]}
 
@@ -187,6 +193,8 @@ def main():
     ax.plot(*poses[:,:2].T,color="#087e8b",lw=2.2,label="Actual Topomap navigation")
     ax.plot(*poses[0,:2],"ko",ms=6,label="Start")
     ax.plot(*poses[-1,:2],"x",color="#d1495b",ms=9,mew=2,label="Actual end")
+    ax.add_patch(Circle(poses[-1,:2],config["agent_radius_m"],fill=False,color="#d1495b",lw=1,
+                        label="End footprint (radius 0.09 m)"))
     ax.add_patch(Circle(config["goal_pose"][:2],.3,fill=False,color="#e69724",lw=1.5,label="World goal tolerance 0.30 m"))
     ax.axhline(1.5,color=".5",lw=1);ax.axhline(-1.5,color=".5",lw=1)
     ax.set(xlabel="World X [m]",ylabel="World Y [m]",xlim=(-.25,5.1),ylim=(-1.65,1.65),aspect="equal",
