@@ -224,7 +224,8 @@ def analyze(run, output, rgb_visibility_recovery=False, preservation_manifest=No
             "visibility_evidence": ("RGB_CONFIRMED_MASK_CHANNEL_FAILED" if rgb_visibility_recovery else "PASS") if rgb_evidence else "INSUFFICIENT_EVIDENCE",
             "inactive_before_spawn_and_zero_duration_activation": "PASS", "dynamic_and_corridor_clearance_recomputed": "PASS",
             "input_count": len(hashes), "preserved_previous_inputs": len(preserved)},
-        "limitations": ["Fixed-goal adapter; single pilot; no counterfactual execution or Graph",
+        "limitations": [("Topomap adapter" if config.get("goal_mode") == "topomap" else "Fixed-goal adapter")
+                        + "; single pilot; no counterfactual execution or Graph",
                         "Appearance keyed to logical simulation timestamp; RGB sampled at 4 Hz",
                         "Paths observation-anchored; no native yaw or waypoint time", "Safe polyline is not a guarantee of original PD execution",
                         "Instance path matching recorded zero IDs; RGB recovery is an explicit offline instrumentation correction, not a successful instance-mask gate"

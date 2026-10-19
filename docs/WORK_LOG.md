@@ -374,3 +374,16 @@ ID30 closest/SG9는 geometric nearest8과 한 node 차이지만 B30 reference pr
 기존 tests17passed, 새 map GPU 동등성 bitwise equal/최대오차0. Clean d1b3b86에서 navigation1회/재시도0. **25.305556s goal entry 성공**, 최종거리 .297394m, pose `(4.206426199,−.047513042,.273984436)`. 장애물1왼쪽10.986111s/장애물2오른쪽20.902778s 통과. Min swept clearance .279149/.074423m, overlap없음/2cm충족, corridor minimum+.778398m. 98request/receive,97switch,마지막ID97미적용. Warm inference35.182/46.586ms(median/p95), waypoint4Hz, timeout0/busy1/missed0. RTF .999994655,pacingp95/max .151901/1.205512ms.
 
 실제 score/선택/workerhistory/normalization/원본PD/anchor/pose/clearance 검증PASS, integration/corridor오차0. 이전1초run117개·기존syncbaseline484개hash 보존. Startup renderer error5개 이후RGBgate/주행정상완료. Closest후퇴11/subgoal후퇴13/turn반전23회는 남아있으며 안정성 일반화나 간격만의 인과효과를 주장하지 않는다. 두실행은 RGB/관측시각/seed대응이 다르다. 새 raw `topomap_static_2s_01`, map `topomap_reference_2s_01`, 작은JSON/CSV/기존report의XY그림과 [보고서](ISAAC6_TOPOMAP_2S_NAVIGATION.md) 저장. Dynamic/Graph/reranking/recovery/추가sweep/영상/GUI실행 없음.
+
+
+## 2초 Topomap + 실제 OLD rollout sudden obstacle
+
+2026-10-19. 기준 `62809c0`에서 `research/isaac6-topomap-sudden-obstacle` 생성. 좁은 async/zero-extra-delay 조합 gate와 기존 scenario/map hash 고정 protocol을 `be51bb4`에 사전 commit했다. 14-node map/모델/공식 선택/PD/placement/4·9·72Hz/1초 timeout/seed를 유지하고 tests33passed 후 clean runtime에서 navigation **1회, retry0회** 실행했다. 기존 static2s 성공 run은 재실행하지 않았다.
+
+Tick970/13.472222s, OLD49 `(.2,−.4)`/timeout잔여 .852955s의 첫 .42m 후보가 통과해 box `(2.372279542,.110674603)`에 배치됐다. 초기 clearance .106013m, .55s 반응 구간 .021761m, 동일 OLD 유지시 약 .699936s 뒤 접촉/timeout 내 overlap이다. Renderer/monitor geometry 일치, 첫 RGB54(tick971)에 magenta46,570pixels, 출현 전0. FRESH50의 실제 [51,52,53,54] history hash 일치. 출현→첫 switch OLD 실제 .038889m/−4.4563°, clearance .079174m로 안전했다.
+
+첫 FRESH50 native full/prefix .030975/.059524m, 실제 .048466m; 8 samples full안전4/8(0,1,5,6), prefix/origin-prefix8/8, 좌/우4/4. 이후51도 native .052852m/실제 .023339m 안전. **52는 native .026485m 안전이나 실제 .002654m로 margin 미달**, 첫 미달14.152778s. **53 native .002057m margin 미달(양수, overlap 아님), 실제 −.000941m overlap으로14.375s 중단**. Goal false/min2.200973m, 정적box와corridor 침범없음. `UNSAFE_OLD_SAFE_FRESH`, `LATER_UNSAFE_FRESH`, `HANDOFF_OR_EXECUTION_FAILURE`를 사건별로 구분했다.
+
+OLD49→50은 동일SG2에서 −.4→+.340089 반전했지만 첫 FRESH 이후50→51→52→53은 양의w 유지, SG2→6→9→9/후퇴없음. 모든54개 Topomap score/선택/worker/switch 검증PASS. First B→entry .005640m/connector .079176m, 52 connector도 .023340m로 안전한 entry4개. 기존 correspondence invalid로 revision 통계를 만들지 않았고 qualified Graph 후보 미확인/근거 `INSUFFICIENT_EVIDENCE`. Unsafe53 upstream과 safe-native52/PD 실행 차이를 확인했으나 anchor/PD 각각의 인과기여는 미확정이다.
+
+WarmGPU median/p95 35.536/53.096ms, request/receive/switch54/54/54, 모두적용. Busy1/missed0/timeout0(자연timeout NOT_EXERCISED), RTF .999993035,pacingp95/max .147790/1.082767ms. Pose integration오차0, 원본PD/scaling/anchor/swept 검증PASS. Prior488/new257 input hashes 보존, execution source36개 중34개 동일(2개는 post-run report표기만 수정), 공식train/deployment diff없음. Startup renderer error5개 로그보존 후RGBgate통과. 기존 fixed-goal pilot과 event별로만 비교했고 causal 개선효과를 주장하지 않았다. 작은JSON/CSV, 기존plot의XY그림 한 장, [상세보고서](ISAAC6_TOPOMAP_SUDDEN_OBSTACLE.md)를 저장했다. 추가navigation/inference, Graph, reranking, recovery, 영상, 환경 변경 없음.

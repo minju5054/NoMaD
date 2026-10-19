@@ -97,7 +97,8 @@ def report(run, output, preservation):
                   "0.55 s reaction budget is predeclared, not added delay or guaranteed inference deadline",
                   "Native predictions and held-command arc are different; predictions have no native yaw/time",
                   "Different observation histories and diffusion seeds confound causal obstacle-response claims",
-                  "First visible FRESH retained even if unsafe; no tuning, Graph, Topomap, or new controller"]}
+                  "First visible FRESH retained even if unsafe; no tuning, Graph, or new controller",
+                  "Goal mode: " + config.get("goal_mode", "fixed_goal")]}
     # Explain the eventual outcome without attributing later commands to the
     # first FRESH or replacing it with a retrospectively favorable prediction.
     trace = np.genfromtxt(run/"agent_trajectory.csv", delimiter=",", names=True, dtype=None, encoding="utf-8")
@@ -208,7 +209,8 @@ def plot(result, config, run, output):
              Line2D([],[],c="#2167b1",marker="o",label="Native FRESH (observation anchored)"),
              Line2D([],[],c="#d32f3d",marker="^",ls="none",label="Actual spawn pose"),
              Line2D([],[],c="black",marker="D",ls="none",label="Actual switch B / 9 cm footprint")]
-    fig.suptitle("Actual OLD rollout obstacle pilot",fontsize=17,weight="bold",y=.97)
+    fig.suptitle(("Topomap: " if config.get("goal_mode") == "topomap" else "") +
+                 "Actual OLD rollout obstacle pilot",fontsize=17,weight="bold",y=.97)
     fig.text(.5,.91,f"{result['classification']}  |  Graph evidence: {result['graph_verdict']}",ha="center",fontsize=11)
     fig.legend(handles=handles,ncol=3,loc="lower center",bbox_to_anchor=(.5,.065),fontsize=8.5,frameon=False)
     fig.text(.5,.025,"Dashed red is counterfactual, not executed motion. Squares: selected index 2. Dotted connector is an offline diagnostic; no Graph or smoothing.",ha="center",fontsize=8)

@@ -1,0 +1,292 @@
+{
+  "navigation_runs": 1,
+  "retries": 0,
+  "pre_navigation_tests": {
+    "passed": 33,
+    "command": "bash research/python.sh -m pytest research/tests/test_topomap_dynamic.py research/tests/test_topomap.py research/tests/test_old_rollout_placement.py research/tests/test_sudden_obstacle.py research/tests/test_async_execution.py research/tests/test_obstacle_geometry.py research/tests/test_two_obstacles.py -q"
+  },
+  "execution_git_sha": "be51bb45c6a2d6755a1d8bfc05d3d67b90451712",
+  "execution_git_status": "",
+  "map_validation": {
+    "nodes": 14,
+    "rgb_file_and_pixel_hashes": "PASS",
+    "pose_and_tick_correspondence": "PASS",
+    "reference_source_hashes": "PASS",
+    "maximum_usd_pose_error": 3.3306690738754696e-16
+  },
+  "topomap_selection_records_validated": 54,
+  "placement_and_input_validation": {
+    "placement_recomputed_from_current_applied_old": "PASS",
+    "remaining_old_timeout_clock": "PASS",
+    "render_and_collision_same_geometry": "PASS",
+    "raw_history_hashes": "PASS",
+    "prior_inputs_preserved": 488,
+    "new_navigation_count_for_analysis": 0,
+    "new_run_inputs_preserved": 257
+  },
+  "new_raw_input_hashes": 257,
+  "prior_preservation_hashes": 488,
+  "runtime_validation": {
+    "status": "PASS",
+    "max_pose_integration_error": 0.0,
+    "normalization_cumsum_metric_selection": "exact",
+    "controller_matches_original": true,
+    "observation_world_anchor_matches_planning": true,
+    "checkpoint_coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "previous_baseline_hashes_unchanged": 484,
+    "swept_clearance_recomputed": {
+      "StaticObstacle1": 0.31676803553132554,
+      "StaticObstacle2": 0.32883602688901403
+    }
+  },
+  "switch_tick_mismatch_ids": [],
+  "static_obstacle_evaluation_only": {
+    "category": "no_collision_goal_failure",
+    "avoidance_success": false,
+    "geometric_overlap": false,
+    "first_contact": null,
+    "safety_margin_met": true,
+    "minimum_swept_clearance_lower_m": 0.31676803553132554,
+    "minimum_swept_clearance_upper_m": 0.3167710600998377,
+    "minimum_corridor_clearance_lower_m": 0.7238174153539124,
+    "corridor_containment_certified": true,
+    "passage": {
+      "StaticObstacle1": {
+        "side": "left_positive_y",
+        "simulation_time_s": 11.069444444444445,
+        "pose": [
+          1.7912245884755578,
+          0.6467090841271863,
+          -0.20345319102857928
+        ]
+      },
+      "StaticObstacle2": null
+    },
+    "collision_detection_period_s": 0.013888888888888888,
+    "obstacles": {
+      "StaticObstacle1": {
+        "category": "no_collision_goal_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "minimum_swept_clearance_lower_m": 0.31676803553132554,
+        "minimum_swept_clearance_upper_m": 0.3167710600998377,
+        "safety_margin_met": true,
+        "minimum_corridor_clearance_lower_m": 0.7238174153539124,
+        "corridor_containment_certified": true,
+        "passage": {
+          "side": "left_positive_y",
+          "simulation_time_s": 11.069444444444445,
+          "pose": [
+            1.7912245884755578,
+            0.6467090841271863,
+            -0.20345319102857928
+          ]
+        },
+        "collision_detection_period_s": 0.013888888888888888
+      },
+      "StaticObstacle2": {
+        "category": "no_collision_goal_failure",
+        "avoidance_success": false,
+        "geometric_overlap": false,
+        "first_contact": null,
+        "minimum_swept_clearance_lower_m": 0.32883602688901403,
+        "minimum_swept_clearance_upper_m": 0.3288376480025098,
+        "safety_margin_met": true,
+        "minimum_corridor_clearance_lower_m": 0.7238174153539124,
+        "corridor_containment_certified": true,
+        "passage": null,
+        "collision_detection_period_s": 0.013888888888888888
+      }
+    }
+  },
+  "dynamic_obstacle_evaluation": {
+    "category": "collision_or_safety_margin_failure",
+    "avoidance_success": false,
+    "geometric_overlap": true,
+    "first_contact": {
+      "interval_start_s": 14.36111111111111,
+      "detected_sim_s": 14.375,
+      "detected_pose": [
+        2.3311623519974902,
+        0.3747349425263754,
+        -0.5307534594293006
+      ],
+      "lower_m": -0.0009412814491179855,
+      "upper_m": -0.0009396603356221778,
+      "bound_width_m": 1.62111349580774e-06,
+      "pieces": 1,
+      "witness_offset_s": 0.013888888888888888,
+      "witness_pose": [
+        2.3311623519974902,
+        0.3747349425263754,
+        -0.5307534594293006
+      ],
+      "geometric_overlap": true,
+      "offset_bracket_s": [
+        0.002885388821596279,
+        0.002885388824830038
+      ],
+      "pose_at_bracket_end": [
+        2.329569415911385,
+        0.375674603136097,
+        -0.535154859454924
+      ],
+      "meaning": "earliest possible contact within conservative spatial bound; not PhysX contact"
+    },
+    "minimum_swept_clearance_lower_m": -0.0009412814491179855,
+    "minimum_swept_clearance_upper_m": -0.0009396603356221778,
+    "safety_margin_met": false,
+    "minimum_corridor_clearance_lower_m": 0.9283102615974623,
+    "corridor_containment_certified": true,
+    "passage": null,
+    "collision_detection_period_s": 0.013888888888888888
+  },
+  "runtime_timing": {
+    "observation_to_ready_wall_s": {
+      "n": 54,
+      "median": 0.073613629,
+      "p95": 0.1088785802999998,
+      "min": 0.068819033,
+      "max": 0.308494452
+    },
+    "observation_to_switch_wall_s": {
+      "n": 54,
+      "median": 0.13828658300000002,
+      "p95": 0.1938835816,
+      "min": 0.083367301,
+      "max": 0.361099457
+    },
+    "observation_to_switch_sim_s": {
+      "n": 54,
+      "median": 0.15277777777777857,
+      "p95": 0.20833333333333393,
+      "min": 0.09722222222222232,
+      "max": 0.375
+    },
+    "rgb_available_to_ready_wall_s": {
+      "n": 54,
+      "median": 0.037464933000000006,
+      "p95": 0.05555433975,
+      "min": 0.034578108,
+      "max": 0.27381959
+    },
+    "rgb_available_to_switch_wall_s": {
+      "n": 54,
+      "median": 0.101208568,
+      "p95": 0.15381932304999998,
+      "min": 0.039517015,
+      "max": 0.326424595
+    },
+    "ready_to_received_wall_s": {
+      "n": 54,
+      "median": 0.001954305,
+      "p95": 0.0024358542,
+      "min": 0.001736604,
+      "max": 0.019452127
+    },
+    "received_to_switch_wall_s": {
+      "n": 54,
+      "median": 0.061633984,
+      "p95": 0.09956351285,
+      "min": 0.002351288,
+      "max": 0.109572907
+    },
+    "render_s": {
+      "n": 54,
+      "median": 0.036126723,
+      "p95": 0.04458649785,
+      "min": 0.031821516,
+      "max": 0.099722517
+    },
+    "request_delay_wall_s": {
+      "n": 54,
+      "median": 0.036357514,
+      "p95": 0.04483834509999999,
+      "min": 0.032052627,
+      "max": 0.099971071
+    },
+    "dispatch_to_infer_start_wall_s": {
+      "n": 54,
+      "median": 0.0017835989999999999,
+      "p95": 0.0022008399999999995,
+      "min": 0.001486076,
+      "max": 0.01163622
+    },
+    "pose_age_at_capture_start_s": {
+      "n": 54,
+      "median": 0.014718959,
+      "p95": 0.0149678,
+      "min": 0.001031178,
+      "max": 0.015767174
+    },
+    "switch_translation_from_observation_m": {
+      "n": 54,
+      "median": 0.03055080111930053,
+      "p95": 0.04166457196178226,
+      "min": 0.0,
+      "max": 0.04721537778969814
+    },
+    "switch_abs_yaw_from_observation_rad": {
+      "n": 54,
+      "median": 0.035192509543526596,
+      "p95": 0.07222222222222197,
+      "min": 0.0,
+      "max": 0.08333333333333304
+    }
+  },
+  "old_motion_during_inference": {
+    "distance_m": {
+      "n": 53,
+      "median": 0.005555555555555556,
+      "p95": 0.006666666666666663,
+      "min": 0.002777777777777778,
+      "max": 0.008333333333333333
+    },
+    "abs_net_yaw_rad": {
+      "n": 53,
+      "median": 0.00571529682791283,
+      "p95": 0.011111111111111072,
+      "min": 0.0005198099408803003,
+      "max": 0.016666666666666607
+    },
+    "nonzero_request_count": 53,
+    "meaning": "Sum of complete executed intervals inside GPU inference wall window, valid previous commands only; excludes first inference"
+  },
+  "rgb_visual_review": {
+    "before_observation": 53,
+    "first_visible_observation": 54,
+    "result": "Magenta box absent then visible in saved original RGB; worker history hash verified"
+  },
+  "saved_xy_figure_visual_review": "PASS",
+  "startup_renderer_errors": 5,
+  "official_train_deployment_diff_from_basis": "empty",
+  "execution_source_hashes": 36,
+  "execution_source_hashes_unchanged_after_run": 34,
+  "postrun_source_changes": [
+    "sudden_obstacle_report.py: goal-mode wording",
+    "old_rollout_obstacle_report.py: goal-mode wording and plot title"
+  ],
+  "limitations": [
+    "Runtime obstacle_evaluation is STATIC-only; dynamic evaluation must be read separately.",
+    "Natural waypoint timeout did not occur; synthetic boundary test reused.",
+    "Fixed-goal and Topomap pilots are event-aligned descriptive comparisons, not paired causal trials.",
+    "Source audit uses existing invalid-correspondence rules; no fabricated position/heading revision.",
+    "One existing plot in SVG/PNG formats; no new video or second figure."
+  ],
+  "source_files_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_sudden_01_validation/summary.json": "f508b7e1e5c246130c0d795aaee80ec687e1279c57ce481c887d9bdcce692615",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_sudden_01_validation/input_hashes.json": "9453d66c6b1e8f2ccbf4af07239dcb65dd36dc1f995e05db9ed771ff2166ac23",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_sudden_preservation_01.json": "75e7292a7e5148a09fc4929c57ca1e37f27933d4fd33393a55c29953777784aa",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/old_rollout_obstacle_audit_02/summary.json": "5d6b23587cd394eca1e3b7d2e2d4a88e9201dc75703d6972ca9a684cb7598bce"
+  }
+}
