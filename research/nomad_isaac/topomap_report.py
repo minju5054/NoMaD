@@ -20,13 +20,22 @@ def validate_map(path):
     reference = Path(manifest["source_run"])
     for name, digest in manifest["reference_sha256"].items():
         assert sha256_file(reference/name) == digest
-    expected = reference_rows(reference, manifest["scenario"])
-    assert len(expected) == len(images) == 26
+    expected = reference_rows(reference, manifest["scenario"], manifest["spacing_sim_s"])
+    assert len(expected) == len(images) == manifest["node_count"]
     for node, (index, row) in zip(manifest["nodes"], expected):
         assert node["reference_pose_row"] == index
         assert node["simulation_time_s"] == float(row["simulation_time_s"])
         np.testing.assert_array_equal(node["world_pose"], [float(row[k]) for k in ("x_m", "y_m", "yaw_rad")])
         assert node["usd_pose_max_error"] < 1e-10
+    if "parent_manifest" in manifest:
+        parent_path = Path(manifest["parent_manifest"])
+        assert sha256_file(parent_path) == manifest["parent_manifest_sha256"]
+        parent = json.loads(parent_path.read_text())
+        for node in manifest["nodes"]:
+            old = parent["nodes"][node["parent_node_id"]]
+            for key in ("reference_pose_row", "simulation_time_s", "world_pose", "png_sha256", "rgb_sha256"):
+                assert node[key] == old[key]
+            assert sha256_file(parent_path.parent / old["rgb_file"]) == node["png_sha256"]
     return manifest, {"nodes": len(images), "rgb_file_and_pixel_hashes": "PASS",
                       "pose_and_tick_correspondence": "PASS", "reference_source_hashes": "PASS",
                       "maximum_usd_pose_error": max(r["usd_pose_max_error"] for r in manifest["nodes"])}
@@ -186,7 +195,8 @@ def main():
         ax.add_patch(Rectangle(lower,*(upper-lower),facecolor="#6f9e75",alpha=.6))
         ax.text(*((lower+upper)/2),box["id"].replace("StaticObstacle","Obstacle "),ha="center",fontsize=9)
     nodes=np.array([r["world_pose"] for r in manifest["nodes"]])
-    ax.plot(*nodes[:,:2].T,"o--",color="#9180b4",ms=4,lw=1,label="Reference Topomap nodes (1 s + final)")
+    ax.plot(*nodes[:,:2].T,"o--",color="#9180b4",ms=4,lw=1,
+            label=f"Reference Topomap nodes ({manifest['spacing_sim_s']:g} s + final)")
     for node in manifest["nodes"]:
         x,y,_=node["world_pose"]
         ax.annotate(str(node["node_id"]),(x,y),xytext=(0,9 if node["node_id"]%2 else -12),textcoords="offset points",ha="center",fontsize=7)

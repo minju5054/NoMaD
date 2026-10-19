@@ -26,7 +26,7 @@ def select_subgoal(distances, start, close_threshold=3):
     return start + min_idx, start + sg_idx, sg_idx
 
 
-def reference_rows(reference, config):
+def reference_rows(reference, config, spacing_sim_s=1.):
     source = json.loads((reference / "scenario.json").read_text())
     assert "dynamic_obstacle" not in source and "dynamic_obstacle" not in config
     for key in ("obstacles", "camera", "corridor", "start_pose", "goal_pose", "agent_radius_m",
@@ -38,7 +38,9 @@ def reference_rows(reference, config):
     assert hz == 72 and len(rows) == 1771
     times = np.array([float(row["simulation_time_s"]) for row in rows])
     np.testing.assert_allclose(times, np.arange(len(rows))/hz, atol=1e-12, rtol=0)
-    indices = list(range(0, len(rows), hz))
+    step = round(spacing_sim_s * hz)
+    assert step > 0 and abs(step / hz - spacing_sim_s) < 1e-12
+    indices = list(range(0, len(rows), step))
     if indices[-1] != len(rows)-1:
         indices.append(len(rows)-1)
     return [(i, rows[i]) for i in indices]
