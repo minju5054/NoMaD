@@ -1,0 +1,85 @@
+{
+  "technical_validation": "PASS",
+  "navigation_result": "avoidance_and_goal_success",
+  "runtime_sha": "d1b3b86bd2d7e0e88def7fc671e57b66aa0c9853",
+  "runtime_was_clean": true,
+  "runtime_sources_preserved": 35,
+  "previous_1s_hashes_preserved": 117,
+  "navigation_runs": 1,
+  "navigation_retries": 0,
+  "new_reference_render_count": 0,
+  "reference_node_spacing_sim_s": 2.0,
+  "node_count": 14,
+  "node_euclidean_spacing_m": {
+    "min": 0.11666072708374496,
+    "median": 0.3973880556674759,
+    "max": 0.3998552188673948
+  },
+  "changed_scenario_metadata_keys_only": [
+    "topomap_manifest_sha256",
+    "topomap_manifest"
+  ],
+  "final_pose": [
+    4.206426199318592,
+    -0.04751304172018795,
+    0.2739844361301982
+  ],
+  "inference_count": 98,
+  "received_count": 98,
+  "applied_waypoints": 97,
+  "terminal_unapplied_id": 97,
+  "all_outputs_finite": true,
+  "no_physx_collision_claim": true,
+  "renderer_startup_step_errors": 5,
+  "render_gate": "PASS",
+  "comparison": [
+    {
+      "condition": "Topomap_1s",
+      "nodes": 26,
+      "goal_entry": false,
+      "termination": "corridor_footprint_stop",
+      "duration_sim_s": 13.902777777777779,
+      "minimum_goal_distance_m": 2.849001690028828,
+      "obstacle1_minimum_clearance_m": 0.4326781025665992,
+      "obstacle2_minimum_clearance_m": 0.6347625580934868,
+      "corridor_minimum_clearance_m": -0.0015088471217266375,
+      "inferences": 52,
+      "switches": 52,
+      "warm_inference_median_ms": 36.578838,
+      "warm_inference_p95_ms": 52.61031,
+      "switch_frequency_hz": 3.9913043478260866,
+      "timeout_count": 0
+    },
+    {
+      "condition": "Topomap_2s",
+      "nodes": 14,
+      "goal_entry": true,
+      "termination": "goal_entry",
+      "duration_sim_s": 25.305555555555557,
+      "minimum_goal_distance_m": 0.2973937887381497,
+      "obstacle1_minimum_clearance_m": 0.27914867870801535,
+      "obstacle2_minimum_clearance_m": 0.07442262091940491,
+      "corridor_minimum_clearance_m": 0.7783975640964266,
+      "inferences": 98,
+      "switches": 97,
+      "warm_inference_median_ms": 35.181938,
+      "warm_inference_p95_ms": 46.58598859999995,
+      "switch_frequency_hz": 4.0,
+      "timeout_count": 0
+    }
+  ],
+  "limitations": [
+    "Single run per map spacing; not a paired causal comparison because observations/timing/RNG association differ.",
+    "Fixed radius=4 covers more space at 2s cadence; radius and threshold were not retuned.",
+    "Closest/subgoal backtracking and turn-sign reversals persist; success does not establish general stability.",
+    "No dynamic obstacle, graph, recovery, smoothing, reranking, video or GUI work."
+  ],
+  "result_sha256": {
+    "preflight.json": "76cc09cb47ea3a83e331ec6465ed037fef1aefbf4df14fee50539ea3d360d2c9",
+    "topomap_navigation.svg": "29480af3b5df11a933fbce6c8521822f1f9b8deca6f4412ccbd10ce5aee4be36",
+    "comparison.csv": "90568c63ee3f443f66ef5f737c0a166db5d6ba07049bf9cb51567f9eb9e67685",
+    "topomap_nodes.csv": "2a7afd1835bcf51e588fb4f06ed366fac81833f80964612b95e4b4072bfa667f",
+    "summary.json": "f17b6c5083297d1405a3e26d42ef52121ec0c0c7c8949897bb58a4139f54acbc",
+    "topomap_selection.csv": "509b28f9043ce03538a5e6ce4a1b1c6aefb6c000914735bcdd599763eeb65214"
+  }
+}

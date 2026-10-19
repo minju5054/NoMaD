@@ -365,3 +365,12 @@ ID30 closest/SG9는 geometric nearest8과 한 node 차이지만 B30 reference pr
 작은 closest 후퇴8→7→6은6.889/7.111s에 선행했으며, ID21·27의 뒤쪽 SG 선택도 있었다. 큰11→7→3 후퇴는11.667/12.111s, 이미 .569793/.654804m 이탈 후다. 후퇴 전 closest/SG9 고정 중에도 .1841→.3078m,10 고정 중 .3078→.4078m 증가했다. 따라서 큰 후퇴를 최초 원인으로 볼 수 없으며 early localization/subgoal 기여와 Sample0/PD 실행을 분리했다. 단일 원인 판정 `INSUFFICIENT_EVIDENCE`.
 
 기존함수/CSV 재사용, 52개 selection/history/PD/실행interval 일치. Pose·PD 오차0, swept/corridor오차2.22e−16m. 기존117개 run hash 포함208개 input/result/RGB 보존, 새 runtime 변경·test·시각화·navigation·inference 없음. 작은 CSV2/JSON2와 [보고서](ISAAC6_TOPOMAP_DRIFT_ANALYSIS.md), 재현 가능한 offline analyzer만 추가했다. 다음 최소 검증은 저장된 ID34의8sample을 동일 B34/실제 다음switch 구간으로 비교하는 한 가지이며 이번에는 수행하지 않았다.
+
+
+## Topomap 간격 2초 — 사용자 요청 단일 주행
+
+2026-10-19. 사용자의 간격 확대·실행 요청에 따라 `b2d490a`에서 `research/isaac6-topomap-2s` 생성. `d1b3b86`에 protocol/간격 변경을 사전 고정했다. 기존 reference RGB parent IDs0,2,…,24,25의 PNG를 그대로 복사해 14node/2초 간격으로 구성했고 시작·최종24.583333s 포함, 새 reference render0회. Node spacing median .397388m. Radius4/threshold3, checkpoint/모델/PD/scenario/seed schedule/4·9·72Hz/1초timeout/추가지연0을 유지했다.
+
+기존 tests17passed, 새 map GPU 동등성 bitwise equal/최대오차0. Clean d1b3b86에서 navigation1회/재시도0. **25.305556s goal entry 성공**, 최종거리 .297394m, pose `(4.206426199,−.047513042,.273984436)`. 장애물1왼쪽10.986111s/장애물2오른쪽20.902778s 통과. Min swept clearance .279149/.074423m, overlap없음/2cm충족, corridor minimum+.778398m. 98request/receive,97switch,마지막ID97미적용. Warm inference35.182/46.586ms(median/p95), waypoint4Hz, timeout0/busy1/missed0. RTF .999994655,pacingp95/max .151901/1.205512ms.
+
+실제 score/선택/workerhistory/normalization/원본PD/anchor/pose/clearance 검증PASS, integration/corridor오차0. 이전1초run117개·기존syncbaseline484개hash 보존. Startup renderer error5개 이후RGBgate/주행정상완료. Closest후퇴11/subgoal후퇴13/turn반전23회는 남아있으며 안정성 일반화나 간격만의 인과효과를 주장하지 않는다. 두실행은 RGB/관측시각/seed대응이 다르다. 새 raw `topomap_static_2s_01`, map `topomap_reference_2s_01`, 작은JSON/CSV/기존report의XY그림과 [보고서](ISAAC6_TOPOMAP_2S_NAVIGATION.md) 저장. Dynamic/Graph/reranking/recovery/추가sweep/영상/GUI실행 없음.

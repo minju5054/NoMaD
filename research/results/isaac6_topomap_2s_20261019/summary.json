@@ -1,0 +1,828 @@
+{
+  "topomap_technical_validation": "PASS",
+  "map": {
+    "nodes": 14,
+    "rgb_file_and_pixel_hashes": "PASS",
+    "pose_and_tick_correspondence": "PASS",
+    "reference_source_hashes": "PASS",
+    "maximum_usd_pose_error": 3.3306690738754696e-16
+  },
+  "gpu_equivalence": {
+    "status": "PASS",
+    "map_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "checkpoint_coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "same_condition_noise_ddpm_seed_max_abs_error": {
+      "normalized_diffusion": 0.0,
+      "cumulative": 0.0,
+      "metric": 0.0,
+      "selected_waypoint": 0.0
+    },
+    "single_goal_encoder_and_distance": "bitwise_equal",
+    "batched_official_encoder_and_distance": "bitwise_equal",
+    "selected_condition_diffusion": "bitwise_equal",
+    "topomap_component_calls": {
+      "vision_encoder": 1,
+      "dist_pred_net": 1,
+      "noise_pred_net": 10
+    },
+    "sample_shape": [
+      8,
+      8,
+      2
+    ],
+    "selection_example": {
+      "candidate_start": 0,
+      "candidate_end_inclusive": 5,
+      "candidate_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "distances": [
+        13.89985466003418,
+        6.542351722717285,
+        11.453571319580078,
+        1.163841724395752,
+        5.42597770690918,
+        8.598633766174316
+      ],
+      "previous_closest_node": 0,
+      "closest_node": 3,
+      "previous_subgoal_id": null,
+      "selected_subgoal_id": 4,
+      "subgoal_changed": true,
+      "closest_moved_backward": false,
+      "subgoal_moved_backward": false,
+      "selection_monotonic_ns": 18758137015449,
+      "goal_node": 13,
+      "topomap_goal_node_reached": false,
+      "selected_subgoal_image": {
+        "rgb_file": "rgb/0004.png",
+        "png_sha256": "8e350c5dde5aac3d41c12fb6b95f6c3ea8613171ebce193e41d78e1e73fb542d",
+        "rgb_sha256": "bd5795a0fc472209f003ab3d07394d241980b5f7f8f8a1688b8daf59c33d1c9f"
+      },
+      "candidate_encoding_and_selection_ms": 35.460492,
+      "diffusion_and_action_ms": 16.862169,
+      "diffusion_passes": 1,
+      "diffusion_steps": 10
+    },
+    "torch": "2.7.0+cu128",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "peak_torch_allocated_bytes": 738400256,
+    "validation_wall_s": 0.086799023,
+    "input_note": "map nodes0..3 as chronological RGB test history, node4 for fixed-goal equality; not navigation or a 4Hz observation-performance experiment",
+    "new_navigation_count": 0
+  },
+  "runtime_validation": {
+    "status": "PASS",
+    "max_pose_integration_error": 0.0,
+    "normalization_cumsum_metric_selection": "exact",
+    "controller_matches_original": true,
+    "observation_world_anchor_matches_planning": true,
+    "checkpoint_coverage": {
+      "missing_keys": [],
+      "unexpected_keys": [],
+      "shape_mismatch_keys": [],
+      "matching_state_tensors": 645,
+      "total_state_tensors": 645,
+      "covered_parameter_elements": 19049675,
+      "total_parameter_elements": 19049675,
+      "parameter_coverage": 1.0
+    },
+    "previous_baseline_hashes_unchanged": 484,
+    "swept_clearance_recomputed": {
+      "StaticObstacle1": 0.27914867870801524,
+      "StaticObstacle2": 0.07442262091940491
+    }
+  },
+  "runtime_async_reproduction": "PASS",
+  "pacing": {
+    "absolute_pose_error_s": {
+      "n": 1823,
+      "median": 9.844488888965941e-05,
+      "p95": 0.00015190067777775122,
+      "min": 4.893888888801712e-05,
+      "max": 0.0012055120000002972
+    },
+    "real_time_factor": 0.9999946547420737,
+    "late_more_than_one_tick": 0,
+    "inference_clock_mapping_abs_error_s": {
+      "n": 97,
+      "median": 7.954508724490605e-06,
+      "p95": 4.736602932516043e-05,
+      "min": 1.3616299177759972e-07,
+      "max": 0.0001317972024696551
+    },
+    "actual_pose_interval_wall_s": {
+      "n": 1822,
+      "median": 0.013888942000000348,
+      "p95": 0.013934388000002507,
+      "min": 0.01279204899999975,
+      "max": 0.014993699999999777
+    },
+    "actual_control_interval_wall_s": {
+      "n": 227,
+      "median": 0.111117798,
+      "p95": 0.1120293573,
+      "min": 0.109499239,
+      "max": 0.112760474
+    }
+  },
+  "clock_mapping_pass": true,
+  "switch_tick_mismatch_ids": [],
+  "old_motion_during_inference": {
+    "distance_m": {
+      "n": 97,
+      "median": 0.005555555555555556,
+      "p95": 0.008333333333333333,
+      "min": 0.002777777777777778,
+      "max": 0.008333333333333333
+    },
+    "abs_net_yaw_rad": {
+      "n": 97,
+      "median": 0.004969248163256168,
+      "p95": 0.011111111111111072,
+      "min": 3.5326696053772366e-05,
+      "max": 0.016666666666666607
+    },
+    "nonzero_request_count": 97,
+    "nonzero_request_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97
+    ],
+    "meaning": "Sum of complete executed intervals inside GPU inference wall window, valid previous commands only; excludes first inference"
+  },
+  "topomap_selection_validation": "PASS",
+  "all_worker_history_rgb_hashes": "PASS",
+  "corridor_recompute_max_error_m": 0.0,
+  "topomap_goal_node_events": [
+    {
+      "id": 93,
+      "observation_sim_s": 24.23611111111111,
+      "applied": true
+    },
+    {
+      "id": 96,
+      "observation_sim_s": 24.98611111111111,
+      "applied": true
+    },
+    {
+      "id": 97,
+      "observation_sim_s": 25.23611111111111,
+      "applied": false
+    }
+  ],
+  "last_closest_node": 13,
+  "goal_node": 13,
+  "subgoal_update_count": 31,
+  "closest_backward_count": 11,
+  "subgoal_backward_count": 13,
+  "candidate_count": {
+    "n": 98,
+    "median": 8.5,
+    "p95": 10.0,
+    "min": 5.0,
+    "max": 10.0
+  },
+  "warm_candidate_encode_selection_ms": {
+    "n": 97,
+    "median": 16.918695,
+    "p95": 22.86649739999988,
+    "min": 12.336007,
+    "max": 35.174624
+  },
+  "warm_diffusion_action_ms": {
+    "n": 97,
+    "median": 17.572755,
+    "p95": 19.0814924,
+    "min": 16.839214,
+    "max": 23.680212
+  },
+  "fixed_goal_reference": {
+    "run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/async_wide_wall_01",
+    "goal_entry": true,
+    "termination": "goal_entry",
+    "minimum_goal_distance_m": 0.2977081165557891,
+    "duration_sim_s": 24.583333333333332,
+    "inferences": 95,
+    "switches": 94,
+    "warm_inference_ms": {
+      "n": 94,
+      "median": 29.186994499999997,
+      "p95": 31.903354800000002,
+      "min": 27.570501,
+      "max": 32.879417
+    },
+    "switch_interval_sim_s": {
+      "n": 93,
+      "median": 0.22222222222222232,
+      "p95": 0.3333333333333357,
+      "min": 0.11111111111111072,
+      "max": 0.3333333333333357
+    },
+    "switch_frequency_hz_after_first": 4.0047846889952154,
+    "observation_to_switch_wall_ms": {
+      "n": 94,
+      "median": 138.28286500000002,
+      "p95": 176.11276579999983,
+      "min": 82.478555,
+      "max": 360.984334
+    },
+    "obstacle_evaluation": {
+      "category": "avoidance_and_goal_success",
+      "avoidance_success": true,
+      "geometric_overlap": false,
+      "first_contact": null,
+      "safety_margin_met": true,
+      "minimum_swept_clearance_lower_m": 0.06962950693052558,
+      "minimum_swept_clearance_upper_m": 0.06962989795204655,
+      "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+      "corridor_containment_certified": true,
+      "passage": {
+        "StaticObstacle1": {
+          "side": "left_positive_y",
+          "simulation_time_s": 11.319444444444445,
+          "pose": [
+            1.7912724308735348,
+            0.3856529187123945,
+            -0.8020235847093597
+          ]
+        },
+        "StaticObstacle2": {
+          "side": "right_negative_y",
+          "simulation_time_s": 20.13888888888889,
+          "pose": [
+            3.3412120371466805,
+            -0.21348675213475918,
+            0.15039287017310254
+          ]
+        }
+      },
+      "collision_detection_period_s": 0.013888888888888888,
+      "obstacles": {
+        "StaticObstacle1": {
+          "category": "avoidance_and_goal_success",
+          "avoidance_success": true,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.06962950693052558,
+          "minimum_swept_clearance_upper_m": 0.06962989795204655,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "left_positive_y",
+            "simulation_time_s": 11.319444444444445,
+            "pose": [
+              1.7912724308735348,
+              0.3856529187123945,
+              -0.8020235847093597
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        },
+        "StaticObstacle2": {
+          "category": "avoidance_and_goal_success",
+          "avoidance_success": true,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.08283605541433607,
+          "minimum_swept_clearance_upper_m": 0.08283605545192366,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.7903889863504303,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "right_negative_y",
+            "simulation_time_s": 20.13888888888889,
+            "pose": [
+              3.3412120371466805,
+              -0.21348675213475918,
+              0.15039287017310254
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        }
+      }
+    },
+    "executed_turn_sign_reversal_count": 12,
+    "obstacle_neighborhood_turn_reversals": {
+      "StaticObstacle1": [
+        45
+      ],
+      "StaticObstacle2": [
+        59,
+        60,
+        61,
+        64,
+        79
+      ]
+    },
+    "timeout_episodes": 0,
+    "busy_skips": 1,
+    "missed_slots": 0
+  },
+  "topomap_run": {
+    "run": "../artifacts/isaac6/topomap_static_2s_01",
+    "goal_entry": true,
+    "termination": "goal_entry",
+    "minimum_goal_distance_m": 0.2973937887381497,
+    "duration_sim_s": 25.305555555555557,
+    "inferences": 98,
+    "switches": 97,
+    "warm_inference_ms": {
+      "n": 97,
+      "median": 35.181938,
+      "p95": 46.58598859999995,
+      "min": 30.337199,
+      "max": 53.117094
+    },
+    "switch_interval_sim_s": {
+      "n": 96,
+      "median": 0.22222222222222232,
+      "p95": 0.3333333333333357,
+      "min": 0.11111111111111072,
+      "max": 0.3333333333333357
+    },
+    "switch_frequency_hz_after_first": 4.0,
+    "observation_to_switch_wall_ms": {
+      "n": 97,
+      "median": 138.241685,
+      "p95": 166.41053399999998,
+      "min": 82.460667,
+      "max": 360.961588
+    },
+    "obstacle_evaluation": {
+      "category": "avoidance_and_goal_success",
+      "avoidance_success": true,
+      "geometric_overlap": false,
+      "first_contact": null,
+      "safety_margin_met": true,
+      "minimum_swept_clearance_lower_m": 0.07442262091940491,
+      "minimum_swept_clearance_upper_m": 0.07442629142145171,
+      "minimum_corridor_clearance_lower_m": 0.7783975640964266,
+      "corridor_containment_certified": true,
+      "passage": {
+        "StaticObstacle1": {
+          "side": "left_positive_y",
+          "simulation_time_s": 10.98611111111111,
+          "pose": [
+            1.7918172790219753,
+            0.6092633031436933,
+            -0.16919561793049498
+          ]
+        },
+        "StaticObstacle2": {
+          "side": "right_negative_y",
+          "simulation_time_s": 20.90277777777778,
+          "pose": [
+            3.3405564142237187,
+            -0.19237489409351177,
+            0.15153855874904432
+          ]
+        }
+      },
+      "collision_detection_period_s": 0.013888888888888888,
+      "obstacles": {
+        "StaticObstacle1": {
+          "category": "avoidance_and_goal_success",
+          "avoidance_success": true,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.27914867870801535,
+          "minimum_swept_clearance_upper_m": 0.27914873997105905,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.7783975640964266,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "left_positive_y",
+            "simulation_time_s": 10.98611111111111,
+            "pose": [
+              1.7918172790219753,
+              0.6092633031436933,
+              -0.16919561793049498
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        },
+        "StaticObstacle2": {
+          "category": "avoidance_and_goal_success",
+          "avoidance_success": true,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.07442262091940491,
+          "minimum_swept_clearance_upper_m": 0.07442629142145171,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.7783975640964266,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "right_negative_y",
+            "simulation_time_s": 20.90277777777778,
+            "pose": [
+              3.3405564142237187,
+              -0.19237489409351177,
+              0.15153855874904432
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        }
+      }
+    },
+    "executed_turn_sign_reversal_count": 23,
+    "obstacle_neighborhood_turn_reversals": {
+      "StaticObstacle1": [
+        24,
+        25,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        41,
+        44
+      ],
+      "StaticObstacle2": [
+        74,
+        77,
+        80,
+        84
+      ]
+    },
+    "timeout_episodes": 0,
+    "busy_skips": 1,
+    "missed_slots": 0
+  },
+  "executed_turn_sign_reversals": 23,
+  "selected_world_target_revision_m": {
+    "n": 96,
+    "median": 0.048583521126278006,
+    "p95": 0.08806795043737975,
+    "min": 0.008202013325222446,
+    "max": 0.1375828253531896
+  },
+  "obstacle_neighborhoods": {
+    "StaticObstacle1": {
+      "pairs": 21,
+      "reversals": [
+        {
+          "old_id": 23,
+          "fresh_id": 24,
+          "switch_sim_s": 7.111111111111111,
+          "switch_pose": [
+            1.021688434696523,
+            0.5834930964555138,
+            0.21134035752072577
+          ],
+          "old_w": -0.35713702239980166,
+          "fresh_w": 0.14152074230926587,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.011860638092254832,
+          "old_subgoal": 5,
+          "fresh_subgoal": 5
+        },
+        {
+          "old_id": 24,
+          "fresh_id": 25,
+          "switch_sim_s": 7.333333333333333,
+          "switch_pose": [
+            1.0649902653002121,
+            0.5934979606865717,
+            0.24278941136722665
+          ],
+          "old_w": 0.14152074230926587,
+          "fresh_w": -0.33414588833393766,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.07355567527557501,
+          "old_subgoal": 5,
+          "fresh_subgoal": 5
+        },
+        {
+          "old_id": 31,
+          "fresh_id": 32,
+          "switch_sim_s": 9.11111111111111,
+          "switch_pose": [
+            1.418076677522609,
+            0.6309322230692119,
+            0.00885092052882186
+          ],
+          "old_w": -0.0917458053439578,
+          "fresh_w": 0.022075109335576007,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.06170523804657267,
+          "old_subgoal": 5,
+          "fresh_subgoal": 5
+        },
+        {
+          "old_id": 32,
+          "fresh_id": 33,
+          "switch_sim_s": 9.333333333333334,
+          "switch_pose": [
+            1.4625182380165282,
+            0.6314345989982245,
+            0.013756500381170156
+          ],
+          "old_w": 0.022075109335576007,
+          "fresh_w": -0.11303557281102791,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.03372661367268551,
+          "old_subgoal": 5,
+          "fresh_subgoal": 5
+        },
+        {
+          "old_id": 33,
+          "fresh_id": 34,
+          "switch_sim_s": 9.666666666666666,
+          "switch_pose": [
+            1.52918010012598,
+            0.6310957697172144,
+            -0.02392202388917042
+          ],
+          "old_w": -0.11303557281102791,
+          "fresh_w": 0.07107497938017623,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.03932431772902437,
+          "old_subgoal": 5,
+          "fresh_subgoal": 5
+        },
+        {
+          "old_id": 34,
+          "fresh_id": 35,
+          "switch_sim_s": 9.88888888888889,
+          "switch_pose": [
+            1.573618376241382,
+            0.630383594092298,
+            -0.008127584026908607
+          ],
+          "old_w": 0.07107497938017623,
+          "fresh_w": -0.33203058773595995,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.022751892064841107,
+          "old_subgoal": 5,
+          "fresh_subgoal": 5
+        },
+        {
+          "old_id": 35,
+          "fresh_id": 36,
+          "switch_sim_s": 10.11111111111111,
+          "switch_pose": [
+            1.6180077176567822,
+            0.6283838404347357,
+            -0.08191215907934435
+          ],
+          "old_w": -0.33203058773595995,
+          "fresh_w": 0.15709895569145915,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.04689376912693999,
+          "old_subgoal": 5,
+          "fresh_subgoal": 5
+        },
+        {
+          "old_id": 36,
+          "fresh_id": 37,
+          "switch_sim_s": 10.333333333333334,
+          "switch_pose": [
+            1.6623576158317745,
+            0.625521225982269,
+            -0.04700128003679538
+          ],
+          "old_w": 0.15709895569145915,
+          "fresh_w": -0.3064461855825668,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.04452846643229982,
+          "old_subgoal": 5,
+          "fresh_subgoal": 5
+        },
+        {
+          "old_id": 40,
+          "fresh_id": 41,
+          "switch_sim_s": 11.333333333333334,
+          "switch_pose": [
+            1.859590168507186,
+            0.5943059613196463,
+            -0.28196008294705166
+          ],
+          "old_w": -0.4,
+          "fresh_w": 0.043085824999619445,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.019042238327939845,
+          "old_subgoal": 7,
+          "fresh_subgoal": 7
+        },
+        {
+          "old_id": 43,
+          "fresh_id": 44,
+          "switch_sim_s": 12.11111111111111,
+          "switch_pose": [
+            1.9604815949152374,
+            0.57252233752985,
+            -0.12767564503448625
+          ],
+          "old_w": 0.22965123310709185,
+          "fresh_w": -0.17203424396758396,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.04124159142380119,
+          "old_subgoal": 7,
+          "fresh_subgoal": 6
+        }
+      ],
+      "target_revision_m": {
+        "n": 21,
+        "median": 0.04407325272661984,
+        "p95": 0.07355567527557501,
+        "min": 0.011860638092254832,
+        "max": 0.07706114232163654
+      }
+    },
+    "StaticObstacle2": {
+      "pairs": 24,
+      "reversals": [
+        {
+          "old_id": 73,
+          "fresh_id": 74,
+          "switch_sim_s": 19.666666666666668,
+          "switch_pose": [
+            3.094621792265616,
+            -0.21702618186298972,
+            0.12641188466912467
+          ],
+          "old_w": 0.07843915582559931,
+          "fresh_w": -0.06865269435618478,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.06628147985979235,
+          "old_subgoal": 11,
+          "fresh_subgoal": 11
+        },
+        {
+          "old_id": 76,
+          "fresh_id": 77,
+          "switch_sim_s": 20.333333333333332,
+          "switch_pose": [
+            3.227292278820569,
+            -0.2039659001567819,
+            0.068140154140238
+          ],
+          "old_w": -0.08011789029123244,
+          "fresh_w": 0.09743721664464329,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.055571828543425454,
+          "old_subgoal": 11,
+          "fresh_subgoal": 11
+        },
+        {
+          "old_id": 79,
+          "fresh_id": 80,
+          "switch_sim_s": 21.11111111111111,
+          "switch_pose": [
+            3.381672020257445,
+            -0.18562611074703758,
+            0.17384324404488183
+          ],
+          "old_w": 0.10706248942002136,
+          "fresh_w": -0.030637742905746647,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.03843466280647511,
+          "old_subgoal": 11,
+          "fresh_subgoal": 11
+        },
+        {
+          "old_id": 83,
+          "fresh_id": 84,
+          "switch_sim_s": 22.11111111111111,
+          "switch_pose": [
+            3.580078052207953,
+            -0.16183826762539325,
+            0.05445802082462947
+          ],
+          "old_w": -0.07201274300227418,
+          "fresh_w": 0.13845175544998342,
+          "turn_sign_reversal": true,
+          "selected_world_target_revision_m": 0.015613557563899106,
+          "old_subgoal": 12,
+          "fresh_subgoal": 12
+        }
+      ],
+      "target_revision_m": {
+        "n": 24,
+        "median": 0.05272525555357703,
+        "p95": 0.07609903554523617,
+        "min": 0.014646542140730806,
+        "max": 0.08132970222035589
+      }
+    }
+  },
+  "runtime_source_sha": "d1b3b86bd2d7e0e88def7fc671e57b66aa0c9853",
+  "limitations": [
+    "Reference route from prior successful static execution; not unseen-scene generalization",
+    "Learned distance scores are not metric world distance; fixed 1s map cadence/threshold uncalibrated",
+    "Different RGB/observation timing and seed association: whole-run change is not a paired causal comparison",
+    "Target revision is a control-target change, not same-index physical trajectory correspondence",
+    "No dynamic obstacle, graph, recovery, reranking, smoothing or new controller"
+  ]
+}
