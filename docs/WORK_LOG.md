@@ -387,3 +387,8 @@ Tick970/13.472222s, OLD49 `(.2,−.4)`/timeout잔여 .852955s의 첫 .42m 후보
 OLD49→50은 동일SG2에서 −.4→+.340089 반전했지만 첫 FRESH 이후50→51→52→53은 양의w 유지, SG2→6→9→9/후퇴없음. 모든54개 Topomap score/선택/worker/switch 검증PASS. First B→entry .005640m/connector .079176m, 52 connector도 .023340m로 안전한 entry4개. 기존 correspondence invalid로 revision 통계를 만들지 않았고 qualified Graph 후보 미확인/근거 `INSUFFICIENT_EVIDENCE`. Unsafe53 upstream과 safe-native52/PD 실행 차이를 확인했으나 anchor/PD 각각의 인과기여는 미확정이다.
 
 WarmGPU median/p95 35.536/53.096ms, request/receive/switch54/54/54, 모두적용. Busy1/missed0/timeout0(자연timeout NOT_EXERCISED), RTF .999993035,pacingp95/max .147790/1.082767ms. Pose integration오차0, 원본PD/scaling/anchor/swept 검증PASS. Prior488/new257 input hashes 보존, execution source36개 중34개 동일(2개는 post-run report표기만 수정), 공식train/deployment diff없음. Startup renderer error5개 로그보존 후RGBgate통과. 기존 fixed-goal pilot과 event별로만 비교했고 causal 개선효과를 주장하지 않았다. 작은JSON/CSV, 기존plot의XY그림 한 장, [상세보고서](ISAAC6_TOPOMAP_SUDDEN_OBSTACLE.md)를 저장했다. 추가navigation/inference, Graph, reranking, recovery, 영상, 환경 변경 없음.
+
+
+## Topomap sudden obstacle — FRESH 50–53 왼쪽 회전 그림
+
+2026-10-19. 사용자 요청에 따라 저장 데이터만으로 native 8점/실제 경로/B50–B53, 실제 PD w 시간축, 실제 yaw 시간축을 한 그림에 표시했다. w=+.340089/+.4/+.4/+.4, yaw −45.881°→−30.410°로 모두 왼쪽 회전이며 world Y 감소와 구분했다. 원본 PD·9Hz command·72Hz pose/incoming ID·yaw increment 검증, 기존257개 raw hash 보존. PNG/SVG 육안 검토 완료, 원래 그림·결과 보존, 새 주행/inference0회. 별도 `topomap_left_turns_01` 저장 후 plot source/작은manifest/SVG와 문서만 추가했다.

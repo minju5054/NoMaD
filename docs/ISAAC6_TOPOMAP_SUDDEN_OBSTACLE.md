@@ -85,3 +85,8 @@ Offline 분석만 재현할 때는 새 output 경로를 지정한다:
 ```bash
 PYTHONPATH=research MPLCONFIGDIR=/tmp/nomad-topomap-mpl /usr/bin/python3 -m nomad_isaac.topomap_sudden_report --run ../artifacts/isaac6/topomap_sudden_01 --topomap ../artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json --preservation ../artifacts/isaac6/topomap_sudden_preservation_01.json --out /tmp/nomad-topomap-sudden-audit-new
 ```
+
+
+## 후속 요청: FRESH 50–53의 왼쪽 회전 그래프
+
+저장된 native sample 0, 실제 switch B50–B53, 실행 경로, controller 각속도 및 실제 yaw를 [추가 그림 한 장](../research/results/isaac6_topomap_sudden_20261019/fresh_50_53_left_turns.svg)에 함께 표시했다. 50의 w=+.340089, 51·52·53은 +.4 rad/s이며 실제 yaw는 −45.881°에서 −30.410°로 증가한다. 음의 yaw 상태에서 전진했으므로 world Y가 감소하면서도 로봇 기준 왼쪽 회전이다. 예측은 observation anchor를 유지하고 실제 arc와 점선/실선으로 구분했다. 원본 PD와 모든 해당 controller tick, switch/observation pose, incoming ID, yaw 증가량=w×dt를 저장 기록과 대조했다. 기존257개 input hash 보존, 새 navigation/inference 없음. [그림 provenance](../research/results/isaac6_topomap_sudden_20261019/fresh_50_53_left_turns_manifest.json).
