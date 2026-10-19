@@ -17,6 +17,8 @@ parser.add_argument("--socket")
 parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
+parser.add_argument("--topomap", type=Path)
+parser.add_argument("--render-topomap-reference", type=Path)
 parser.add_argument("--controlled-delivery-delay", action="store_true")
 parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75])
 args, _ = parser.parse_known_args()
@@ -134,6 +136,11 @@ def main():
         raise ValueError("Sudden obstacle requires asynchronous execution with zero additional delay")
     if args.asynchronous:
         config = {**config, "synchronous": False}
+    if args.topomap:
+        from nomad_isaac.common import sha256_file
+        assert args.asynchronous and "dynamic_obstacle" not in config
+        config = {**config, "goal_mode": "topomap", "topomap_manifest": str(args.topomap.resolve()),
+                  "topomap_manifest_sha256": sha256_file(args.topomap)}
     obstacles = configured_obstacles(config)
     write_json(out / "scenario.json", config)
     rep.orchestrator.set_capture_on_play(False)
@@ -301,6 +308,10 @@ def main():
     if obstacles:
         export_view_scene(out / "scene.usda", out / "scene_gui.usda")
     if args.prepare_only:
+        if args.render_topomap_reference:
+            from nomad_isaac.topomap import render_reference
+            manifest = render_reference(args.render_topomap_reference, out, config, capture, set_pose, get_pose)
+            print(f"TOPOMAP_RENDERED {manifest['node_count']} nodes", flush=True)
         print("RENDER_GATE_PASS", flush=True)
         return
 

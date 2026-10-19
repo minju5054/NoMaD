@@ -21,17 +21,24 @@ def main():
     parser.add_argument("--socket", required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--checkpoint", type=Path, required=True)
+    parser.add_argument("--topomap", type=Path)
     args = parser.parse_args()
     for part in ["raw", "derived"]:
         (args.output / part).mkdir(parents=True, exist_ok=False)
     assert torch.cuda.is_available()
     device = torch.device("cuda:0")
     model, coverage = load_checked(args.checkpoint, device)
+    policy = None
+    if args.topomap:
+        from .topomap_inference import TopomapPolicy
+        policy = TopomapPolicy(args.topomap)
     write_json(args.output / "environment.json", {
         "python": sys.version, "executable": sys.executable, "torch": torch.__version__,
         "cuda": torch.version.cuda, "gpu": torch.cuda.get_device_name(),
         "numpy": np.__version__, "torchvision": version("torchvision"), "diffusers": version("diffusers"),
         "checkpoint_sha256": sha256_file(args.checkpoint), "coverage": coverage,
+        "goal_mode": "topomap" if policy else "fixed_goal",
+        "topomap_manifest_sha256": sha256_file(args.topomap) if args.topomap else None,
         "config": {k: CONFIG[k] for k in ["context_size", "image_size", "num_diffusion_iters", "len_traj_pred"]}})
     with socket.socket(socket.AF_UNIX) as listener, (args.output / "inference.jsonl").open("x") as log:
         listener.bind(args.socket)
@@ -46,15 +53,22 @@ def main():
                     return
                 identifier = metadata["id"]
                 history = data["history"]
-                goal = data["goal"]
                 assert history.shape == (4, 240, 320, 3) and history.dtype == np.uint8
-                assert goal.shape == (240, 320, 3) and goal.dtype == np.uint8
+                if policy is None:
+                    goal = data["goal"]
+                    assert goal.shape == (240, 320, 3) and goal.dtype == np.uint8
                 seed = metadata["seed"]
                 noise = torch.randn((8, 8, 2), device=device,
                                     generator=torch.Generator(device=device).manual_seed(seed))
                 start_ns = time.monotonic_ns()
-                result = infer(model, [Image.fromarray(frame) for frame in history],
-                               Image.fromarray(goal), noise, seed + 1, goal_mask=0)
+                if policy is None:
+                    result = infer(model, [Image.fromarray(frame) for frame in history],
+                                   Image.fromarray(goal), noise, seed + 1, goal_mask=0)
+                    goal_digest = hashlib.sha256(goal.tobytes()).hexdigest()
+                    topomap_record = None
+                else:
+                    result, topomap_record = policy.infer(model, [Image.fromarray(frame) for frame in history], noise, seed+1)
+                    goal_digest = topomap_record["selected_subgoal_image"]["rgb_sha256"]
                 torch.cuda.synchronize()
                 finish_ns = time.monotonic_ns()
                 assert all(bool(torch.isfinite(value).all()) for value in result.values())
@@ -63,7 +77,8 @@ def main():
                 host_output_ready_ns = time.monotonic_ns()
                 # No predicted point is adjusted, averaged, smoothed, or selected again.
                 with (args.output / "raw" / f"{identifier:04d}.npz").open("xb") as f:
-                    np.savez_compressed(f, initial_noise=noise.cpu().numpy(), normalized_diffusion=arrays["normalized_diffusion"])
+                    condition = {"selected_condition": result["condition"].cpu().numpy()} if policy else {}
+                    np.savez_compressed(f, initial_noise=noise.cpu().numpy(), normalized_diffusion=arrays["normalized_diffusion"], **condition)
                 with (args.output / "derived" / f"{identifier:04d}.npz").open("xb") as f:
                     np.savez_compressed(f, **{k: v for k, v in arrays.items() if k != "normalized_diffusion"})
                 response = {"id": identifier, "seed": seed, "ddpm_seed": seed + 1,
@@ -73,7 +88,9 @@ def main():
                             "persistence_end_monotonic_ns": time.monotonic_ns(),
                             "inference_ms": (finish_ns - start_ns) / 1e6,
                             "history_sha256": hashlib.sha256(history.tobytes()).hexdigest(),
-                            "goal_sha256": hashlib.sha256(goal.tobytes()).hexdigest(), "finite": True}
+                            "goal_sha256": goal_digest, "finite": True}
+                if topomap_record is not None:
+                    response["topomap"] = topomap_record
                 log.write(json.dumps({**metadata, **response}) + "\n"); log.flush()
                 send_packet(connection, response, **arrays)
 

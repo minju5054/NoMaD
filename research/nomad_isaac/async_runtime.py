@@ -171,7 +171,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     engine = ExecutionThread(config, out)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
     dynamic_history = deque(maxlen=4)
-    if engine.dynamic is not None:
+    save_observations = engine.dynamic is not None or config.get("goal_mode") == "topomap"
+    if save_observations:
         (out/"observations").mkdir(exist_ok=False)
     observation_id = request_id = 0
     busy_skips = missed_slots = 0
@@ -206,6 +207,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                           "observation_pose": snap["pose"], "pose_sample_monotonic_ns": snap["monotonic_ns"],
                           "capture_end_monotonic_ns": capture_end, "render_ms": (capture_end-capture_start)/1e6,
                           "frame_sha256": digest}
+                if save_observations:
+                    record["rgb_file"] = f"observations/{observation_id:04d}.png"
                 if engine.dynamic is not None:
                     diagnostic = dict(capture.dynamic_metadata)
                     assert diagnostic["capture_tick"] == snap["tick"]
@@ -219,7 +222,10 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                                "old_valid_at_observation": snap["command_valid"], "request_submit_monotonic_ns": time.monotonic_ns()}
                     if engine.dynamic is not None:
                         request["history_dynamic"] = list(dynamic_history)
-                    submitted = client.submit(request, history=np.stack(history), goal=goal)
+                    inputs = {"history": np.stack(history)}
+                    if config.get("goal_mode") != "topomap":
+                        inputs["goal"] = goal
+                    submitted = client.submit(request, **inputs)
                     record["status"] = "submitted" if submitted else "busy_history_only"
                     if submitted:
                         record["request_id"] = request_id
@@ -228,8 +234,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                         busy_skips += 1
                 else:
                     record["status"] = "history_warmup" if len(history)<4 else "terminal_history_only"
-                if engine.dynamic is not None:
+                if save_observations:
                     Image.fromarray(rgb).save(out/record["rgb_file"])
+                if engine.dynamic is not None:
                     Image.fromarray(capture.dynamic_mask.astype(np.uint8)*255).save(out/record["dynamic_mask_file"])
                 append(obs_log, record)
                 if slot % (5*config["observation_hz"]) == 0:

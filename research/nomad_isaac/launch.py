@@ -19,10 +19,18 @@ def main():
     parser.add_argument("--prepare-only", action="store_true", help="Render/frame gate only; no inference or movement")
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
+    parser.add_argument("--topomap", type=Path, help="Verified static Topomap manifest for the NoMaD worker")
+    parser.add_argument("--render-topomap-reference", type=Path, help="Render saved reference poses only; requires --prepare-only")
     parser.add_argument("--controlled-delivery-delay", action="store_true", help="Single predeclared 0.5 s IPC result hold")
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.topomap and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
+        parser.error("Topomap navigation requires asynchronous execution without extra delay")
+    if args.render_topomap_reference and (not args.prepare_only or args.topomap):
+        parser.error("Reference rendering requires --prepare-only and no navigation Topomap")
+    if args.topomap or args.render_topomap_reference:
+        assert "dynamic_obstacle" not in read_scenario(args.scenario)
     if args.controlled_delivery_delay and (not args.asynchronous or args.prepare_only):
         parser.error("Controlled delivery delay requires asynchronous navigation")
     if args.uniform_delivery_delay_s is not None and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay):
@@ -35,6 +43,8 @@ def main():
         raise RuntimeError(f"Expected existing Isaac Sim 6, got {version}")
     scenario_path = args.scenario.resolve()
     sources = list(Path(__file__).parent.glob("*.py")) + [scenario_path, ROOT / "research/nomad_preflight/native.py"]
+    if args.topomap or args.render_topomap_reference:
+        sources += [Path(__file__).with_name("topomap_protocol.json")]
     if args.controlled_delivery_delay:
         sources += [Path(__file__).with_name("controlled_latency_protocol.json")]
     if args.uniform_delivery_delay_s is not None:
@@ -45,6 +55,9 @@ def main():
         "git_status": subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True),
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
+        "topomap_manifest": str(args.topomap.resolve()) if args.topomap else None,
+        "topomap_manifest_sha256": sha256_file(args.topomap) if args.topomap else None,
+        "render_topomap_reference": str(args.render_topomap_reference.resolve()) if args.render_topomap_reference else None,
         "controlled_delivery_delay": args.controlled_delivery_delay,
         "uniform_delivery_delay_s": args.uniform_delivery_delay_s, "launcher_python": sys.executable,
         "gpu": subprocess.check_output(["nvidia-smi", "--query-gpu=name,driver_version,memory.total", "--format=csv,noheader"], text=True).strip()})
@@ -58,9 +71,12 @@ def main():
             worker_env["PYTHONPATH"] = ":".join(str(ROOT / p) for p in ["research", "train", "external/diffusion_policy"])
             worker_env["PYTHONPYCACHEPREFIX"] = str(out / "worker_pycache")
             if not args.prepare_only:
-                worker = subprocess.Popen([str(ROOT.parent / ".venv/bin/python"), "-u", "-m", "nomad_isaac.worker",
+                worker_command = [str(ROOT.parent / ".venv/bin/python"), "-u", "-m", "nomad_isaac.worker",
                     "--socket", str(socket_path), "--output", str(out / "model"),
-                    "--checkpoint", str(ROOT.parent / "artifacts/checkpoints/nomad.pth")],
+                    "--checkpoint", str(ROOT.parent / "artifacts/checkpoints/nomad.pth")]
+                if args.topomap:
+                    worker_command += ["--topomap", str(args.topomap.resolve())]
+                worker = subprocess.Popen(worker_command,
                     cwd=ROOT, env=worker_env, stdout=worker_log, stderr=subprocess.STDOUT, start_new_session=True)
                 deadline = time.monotonic() + 90
                 while not socket_path.exists():
@@ -84,6 +100,10 @@ def main():
             command += ["--prepare-only"] if args.prepare_only else ["--socket", str(socket_path)]
             if args.asynchronous:
                 command.append("--asynchronous")
+            if args.topomap:
+                command += ["--topomap", str(args.topomap.resolve())]
+            if args.render_topomap_reference:
+                command += ["--render-topomap-reference", str(args.render_topomap_reference.resolve())]
             if args.controlled_delivery_delay:
                 command.append("--controlled-delivery-delay")
             if args.uniform_delivery_delay_s is not None:
@@ -94,6 +114,8 @@ def main():
             expected = "render_check.json" if args.prepare_only else "summary.json"
             if code != 0 or not (out / expected).exists() or (out / "FAILED.txt").exists():
                 raise RuntimeError(f"Isaac adapter did not complete (exit {code}); see {out}")
+            if args.render_topomap_reference and not (out / "topomap/manifest.json").exists():
+                raise RuntimeError("Reference Topomap manifest missing")
             if worker is not None and worker.wait(timeout=15) != 0:
                 raise RuntimeError("Worker failed after simulator; see worker.log")
             print(f"Completed: {out / expected}", flush=True)
