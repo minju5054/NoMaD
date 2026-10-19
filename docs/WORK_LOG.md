@@ -354,3 +354,14 @@ Protocol·adapter `5b05a1c`, GPU 및 최소 tests 검증 후 clean runtime `fd12
 **Topomap 기술검증 PASS / navigation 실패**. Request/receive/switch52/52/52, 첫 장애물은 왼쪽11.722222s 통과, 두 번째 미도달. 13.902778s pose `(2.025235709,1.411507114,.740370522)`에서 corridor footprint stop; actual wall footprint intrusion1.507mm. Static obstacle clearance .432678/.634763m 및 no box overlap이지만 corridor 하한−.001509m, goal false/min distance2.849002m. 최종closest7/goal25, 최대closest11, closest역방향5/subgoal역방향6. 첫 장애물 X범위에서 steering부호반전8개와 node11→7→3 후퇴 관찰; 원인별 기여나 동적 회피 성능으로 확대하지 않았다.
 
 Warm inference median/p95 36.579/52.610ms(reference29.187/31.903), 실제 waypoint적용3.991Hz(reference4.005). Timeout0/busy1/missed0, RTF.999993906, pacing p95/max .145488/1.293862ms. Input history RGB/선택score/원본PD/normalization·sample0·index2/observation anchor/모든 pose·swept·corridor 검증 통과, integration/corridor error0. Reference203/OLD-rollout257/synchronous484 hashes 보존. Reference rendering startup error6/navigation startup error5는 로그에 보존 후 RGB gate 통과. Retry·threshold/spacing tuning·Graph·smoothing·recovery·dynamic실험·video/GUI재생 없음. 작은 JSON/CSV/XY SVG 한 장과 [보고서](ISAAC6_TOPOMAP_NAVIGATION.md) 저장. 기술 연결은 준비됐으나 성공한 정적 Topomap baseline은 미확보이므로 후속 sudden-obstacle 비교의 전제는 아직 충족하지 못했다.
+
+
+## Topomap 정적 경로 이탈 원인 분석
+
+2026-10-19. 기준 `edf716e`에서 `research/isaac6-topomap-drift-audit` 생성. 저장된 Topomap run의 1,002개 실제 pose를 성공 reference 1,771개 pose의 polyline에 공간 projection했다. 동시각 correspondence는 사용하지 않았고, 정지 segment 80개 제외·1mm 근접 projection의 arclength 폭 10cm 초과 규칙에서 모호한 pose 0개다. 첫 20cm 초과는 tick636/8.833333s, ID30 실행 중 +.200121247m. 직전 tick .198785730m이며 이후 12s까지229/229 pose와 종료까지 초과 유지, 12s .633105m/종료 .988399m.
+
+ID30 closest/SG9는 geometric nearest8과 한 node 차이지만 B30 reference projection보다 .148821m 앞이다. B30 yaw는 reference tangent보다 +28.842°이며 원본 PD (.2,−.251488) 실행으로 이탈 .184052→.205454m. Native tail은 오른쪽으로 더 굽지만 실제로는 index2의 고정 PD arc만 실행했다. ID34(SG9),36·37(SG10)은 동일 SG에서 dy/각속도 부호가 바뀌었고 clipping이 부호를 만든 것은 아니다. Observation은 각각 약5cm 이동, yaw/RGB/seed도 바뀌므로 diffusion 단독 원인으로 확정하지 않는다.
+
+작은 closest 후퇴8→7→6은6.889/7.111s에 선행했으며, ID21·27의 뒤쪽 SG 선택도 있었다. 큰11→7→3 후퇴는11.667/12.111s, 이미 .569793/.654804m 이탈 후다. 후퇴 전 closest/SG9 고정 중에도 .1841→.3078m,10 고정 중 .3078→.4078m 증가했다. 따라서 큰 후퇴를 최초 원인으로 볼 수 없으며 early localization/subgoal 기여와 Sample0/PD 실행을 분리했다. 단일 원인 판정 `INSUFFICIENT_EVIDENCE`.
+
+기존함수/CSV 재사용, 52개 selection/history/PD/실행interval 일치. Pose·PD 오차0, swept/corridor오차2.22e−16m. 기존117개 run hash 포함208개 input/result/RGB 보존, 새 runtime 변경·test·시각화·navigation·inference 없음. 작은 CSV2/JSON2와 [보고서](ISAAC6_TOPOMAP_DRIFT_ANALYSIS.md), 재현 가능한 offline analyzer만 추가했다. 다음 최소 검증은 저장된 ID34의8sample을 동일 B34/실제 다음switch 구간으로 비교하는 한 가지이며 이번에는 수행하지 않았다.
