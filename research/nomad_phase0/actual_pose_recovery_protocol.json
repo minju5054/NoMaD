@@ -1,0 +1,57 @@
+{
+  "phase": "B",
+  "scope": "Oracle geometry; offline SE(2) kinematic feasibility",
+  "base_commit": "2892c3f913ed3064253efb05798438e0109b61f9",
+  "inputs": [
+    {
+      "id": "EARLY_GRAPH",
+      "run": "artifacts/isaac6/early_graph_01",
+      "tracked_summary": "research/results/isaac6_early_graph_20261020/summary.json",
+      "summary_key": "EARLY-GRAPH",
+      "spawn_tick": 792,
+      "expected_spawn_pose": [1.7314569349, 0.7295227810, -0.2931363464],
+      "expected_final_pose": [2.1914518700, 0.3969282017, -0.6528244798],
+      "expected_dynamic_center": [2.372279542, 0.110674603]
+    },
+    {
+      "id": "ORACLE_STOP",
+      "run": "artifacts/isaac6/topomap_oracle_stop_01",
+      "tracked_summary": "research/results/isaac6_topomap_oracle_stop_20261020/summary.json",
+      "summary_key": null,
+      "spawn_tick": 970,
+      "expected_spawn_pose": [2.1783146067, 0.4496824585, -0.7799250804],
+      "expected_final_pose": [2.2623238938, 0.3675453962, -0.6222850123],
+      "expected_dynamic_center": [2.3543967116, 0.0777164944]
+    }
+  ],
+  "rounded_input_absolute_tolerance": 5e-10,
+  "use_full_precision_raw_pose": true,
+  "frozen_dynamic_geometry": "Use actual dynamic/spawn.json obstacle; no adaptive placement or time-dependent appearance in search",
+  "search": {
+    "method": "Existing continuous SE(2) Hybrid A* with quantized duplicate pruning",
+    "xy_bin_m": 0.05,
+    "heading_bins": 64,
+    "primitive_duration_s": 0.5,
+    "heuristic_weight": 1.5,
+    "max_expansions_per_search": 30000,
+    "time_budget_clock": "cpu",
+    "max_cpu_seconds_per_search": 120.0,
+    "max_path_duration_s": 60.0,
+    "goal": "Existing world XY goal disk, radius .30m; no terminal yaw constraint",
+    "wall_rule": "Existing corridor_clearance > 0 with radius .09m",
+    "obstacle_rule": "Existing continuous swept_clearance lower bound >= .02m with radius .09m",
+    "side_rule": null,
+    "one_pass_certificate": false
+  },
+  "actions": {
+    "B0": [[0.2, 0.0], [0.2, -0.2], [0.2, 0.2], [0.2, -0.4], [0.2, 0.4]],
+    "B1_add": [[0.0, -0.4], [0.0, 0.4]],
+    "B2_add": [[-0.2, 0.0], [-0.2, -0.2], [-0.2, 0.2], [-0.2, -0.4], [-0.2, 0.4]]
+  },
+  "execution": "Four raw states in listed run order, spawn then final; B0 then B1 then B2; one search each, no tuning/retry",
+  "clock_note": "Phase 0-A default was 120 wall seconds. Phase B explicitly uses 120 process CPU seconds; both CPU and wall time are recorded. Other search settings unchanged.",
+  "witness": "Recheck every entire .5s primitive with original continuous swept/corridor functions; distance integrates abs(v), not signed displacement",
+  "interpretation": "NO_PATH_FOUND is bounded-search negative evidence, not a proof of geometric or kinematic impossibility. First weighted-search witness is not an optimum.",
+  "online_recovery_policy": "In-place rotation first; reverse disabled. Reverse permitted only in this offline B2 comparison.",
+  "new_navigation_or_inference": false
+}

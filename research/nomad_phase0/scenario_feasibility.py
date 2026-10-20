@@ -198,7 +198,7 @@ class Node:
     passed: bool
 
 
-def verify_witness(scene, nodes, end_id, primitives, duration, side):
+def verify_witness(scene, nodes, end_id, primitives, duration, side, minimum_v=0.):
     ids = []
     while end_id >= 0:
         ids.append(end_id)
@@ -213,7 +213,7 @@ def verify_witness(scene, nodes, end_id, primitives, duration, side):
     for identifier in ids[1:]:
         n = nodes[identifier]
         v, w = primitives[n.primitive]
-        assert 0 <= v <= .2 and abs(w) <= .4
+        assert minimum_v <= v <= .2 and abs(w) <= .4
         end, checks = scene.interval(pose, v, w, duration, final=True)
         assert checks["safe"] and not checks["overlap"]
         max_error = max(max_error, float(np.max(np.abs(end-n.pose))))
@@ -240,14 +240,20 @@ def verify_witness(scene, nodes, end_id, primitives, duration, side):
             "minimum_obstacle_clearance_m": minima, "minimum_corridor_footprint_clearance_m": wall_min,
             "goal_distance_m": distance, "goal_reached": True,
             "path_duration_s": sum(c[2] for c in commands),
-            "distance_m": sum(c[0]*c[2] for c in commands),
+            "distance_m": sum(abs(c[0])*c[2] for c in commands),
             "pose_reconstruction_max_error": max_error,
             "validation": "Every original continuous arc rechecked by swept_clearance and corridor_clearance"}
 
 
 def search(scene, settings, side=None):
     start_clock = time.monotonic()
+    start_cpu = time.process_time()
+    budget_clock = settings.get("time_budget_clock", "wall")
+    assert budget_clock in ("wall", "cpu")
+    minimum_v = settings.get("minimum_v_m_s", 0.)
+    assert minimum_v in (0., -.2)
     primitives, duration = settings["primitives_vw"], settings["primitive_duration_s"]
+    assert all(minimum_v <= v <= .2 and abs(w) <= .4 for v, w in primitives)
     nodes = [Node(scene.start.copy(), -1, -1, 0., False)]
     def key(n):
         return (int(math.floor(n.pose[0]/settings["xy_bin_m"])),
@@ -262,14 +268,16 @@ def search(scene, settings, side=None):
     while heap:
         if expanded >= settings["max_expansions_per_search"]:
             reason = "EXPANSION_BUDGET"; break
-        if time.monotonic()-start_clock >= settings["max_wall_seconds_per_search"]:
-            reason = "WALL_TIME_BUDGET"; break
+        elapsed = time.process_time()-start_cpu if budget_clock == "cpu" else time.monotonic()-start_clock
+        budget = settings["max_cpu_seconds_per_search"] if budget_clock == "cpu" else settings["max_wall_seconds_per_search"]
+        if elapsed >= budget:
+            reason = "CPU_TIME_BUDGET" if budget_clock == "cpu" else "WALL_TIME_BUDGET"; break
         _, idx = heapq.heappop(heap)
         n = nodes[idx]
         if best.get(key(n)) != idx:
             continue
         if np.linalg.norm(n.pose[:2]-scene.goal[:2]) <= scene.tolerance and (side is None or n.passed):
-            witness = verify_witness(scene, nodes, idx, primitives, duration, side)
+            witness = verify_witness(scene, nodes, idx, primitives, duration, side, minimum_v)
             reason = "GOAL_WITNESS_REVALIDATED"; break
         expanded += 1
         if n.cost+duration > settings["max_path_duration_s"]:
@@ -293,7 +301,8 @@ def search(scene, settings, side=None):
             generated += 1
     return {"status": "FEASIBLE" if witness else "NO_PATH_FOUND", "termination_reason": reason,
             "search_executed": True, "expanded": expanded, "generated": generated,
-            "wall_seconds": time.monotonic()-start_clock, "goal_reached": witness is not None,
+            "wall_seconds": time.monotonic()-start_clock, "cpu_seconds": time.process_time()-start_cpu,
+            "time_budget_clock": budget_clock, "goal_reached": witness is not None,
             "witness": witness, "no_path_meaning": None if witness else "No witness within this discretized bounded search; not impossibility"}
 
 

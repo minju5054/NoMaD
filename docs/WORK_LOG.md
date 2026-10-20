@@ -479,3 +479,7 @@ Phase0-D 최종사전검증: clean91ff683의CLI dry-run02는PP10/PD10 정확히2
 PP SUCCESS9/10(Wilson95%59.6–98.2%), corridor침범1(S0_08), obstacle충돌0. PD SUCCESS3/10(10.8–60.3%), corridor침범4(S0_01/03/06/10), Static2충돌3(S0_02/08/09). 60초timeout0/OTHER_TERMINATION0. 2cm위반은성공판정과독립: PP총0s/PD총.513889s. Goal조건부평균PP24.360s(n9)/PD25.185s(n3); 실제clipping평균20.00%/30.32%; run별switch|Δw|median평균.11875/.08102rad/s로PP전환이더부드럽다는근거는없다.
 
 Run-ID paired 성공률차+60%p[+30,+90], 양쪽goal3pair시간차−.958s[−1.722,−.403], w clipping차−10.32%p[−15.43,−4.74]. PCG64고정seed20261020/10000bootstrap 유지. 조기종료로clearance/거리/전환횟수 노출구간이달라짐, N10불확실성, 동일offset≠동일RGB/FRESH, PP→PD순서한계를명시. [본 실행 보고서](PHASE0_D_S0_N10_RESULTS.md)와작은원본aggregate복사·CI·검증JSON/CSV만Git보존. Raw/RGB는artifact에유지. Phase2 S0 baseline으로고정하며다음단계는실제pose feasibility B; B조건을임의설정하거나추가실행하지않았다. 과거preflight/pilot/UNDECIDED기록은보존한다.
+
+## Phase B — actual-pose recovery 사전 고정
+
+2026-10-20. 기준2892c3f/동일Phase0 branch. EARLY-GRAPH와Oracle STOP의spawn/final 네실제pose 및실제dynamic box를raw trace/기존tracked summary와정확대조했다. 모든시작valid(최소clearance390.553/21.406/106.969/24.829mm). 기존Hybrid A*에선택형reverse witness검증/CPUbudget만추가하고B0전진5/B1+spin2/B2+reverse5를고정. XY5cm/yaw64bin/.5s/weight1.5/30kexpansion/60path-s유지. 이번요청120CPU-s와기존0A120wall-s를구분기록; 기존기본값보존. side=None으로one-pass/certificate우회. 새3+기존5testsPASS. 코드·protocolcommit후12조건1회씩실행예정. Online recovery는spin우선/reverse비활성,Isaac/GPU추가실행없음. [사전 protocol](PHASE_B_ACTUAL_POSE_RECOVERY.md).
