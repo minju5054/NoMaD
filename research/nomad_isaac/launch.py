@@ -19,6 +19,7 @@ def main():
     parser.add_argument("--prepare-only", action="store_true", help="Render/frame gate only; no inference or movement")
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
+    parser.add_argument("--pure-pursuit", action="store_true", help="Phase 0-C frozen S0 chunk follower PILOT")
     parser.add_argument("--oracle-safety-stop", action="store_true", help="Exact-geometry STOP after adaptive dynamic spawn")
     parser.add_argument("--early-obstacle-mode", choices=["raw", "graph"], help="Frozen early fixed-location experiment")
     parser.add_argument("--topomap", type=Path, help="Verified static Topomap manifest for the NoMaD worker")
@@ -27,6 +28,9 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.pure_pursuit:
+        from nomad_phase0.chunk_execution import validate_mode
+        validate_mode(args)
     if args.early_obstacle_mode:
         from .early_experiment import validate_early
         if not args.topomap:
@@ -59,6 +63,9 @@ def main():
         raise RuntimeError(f"Expected existing Isaac Sim 6, got {version}")
     scenario_path = args.scenario.resolve()
     sources = list(Path(__file__).parent.glob("*.py")) + [scenario_path, ROOT / "research/nomad_preflight/native.py"]
+    if args.pure_pursuit:
+        sources += [ROOT/"research/nomad_phase0"/name for name in
+                    ("pure_pursuit.py", "chunk_execution.py", "chunk_pilot_protocol.json", "follower_protocol.json")]
     if args.topomap or args.render_topomap_reference:
         sources += [Path(__file__).with_name("topomap_protocol.json")]
     if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario):
@@ -78,6 +85,7 @@ def main():
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
+        "pure_pursuit": args.pure_pursuit,
         "early_obstacle_mode": args.early_obstacle_mode,
         "topomap_manifest": str(args.topomap.resolve()) if args.topomap else None,
         "topomap_manifest_sha256": sha256_file(args.topomap) if args.topomap else None,
@@ -124,6 +132,8 @@ def main():
             command += ["--prepare-only"] if args.prepare_only else ["--socket", str(socket_path)]
             if args.asynchronous:
                 command.append("--asynchronous")
+            if args.pure_pursuit:
+                command.append("--pure-pursuit")
             if args.oracle_safety_stop:
                 command.append("--oracle-safety-stop")
             if args.early_obstacle_mode:

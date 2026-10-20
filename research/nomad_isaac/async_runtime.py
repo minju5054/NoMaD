@@ -23,9 +23,14 @@ def append(stream, record):
 
 
 class ExecutionThread:
-    def __init__(self, config, out, oracle_safety_stop=False, online_graph=False):
+    def __init__(self, config, out, oracle_safety_stop=False, online_graph=False, pure_pursuit=False):
         self.config, self.out = config, out
         self.core = WaypointExecution(config["start_pose"], config["integration_hz"], config["controller_hz"])
+        self.chunk_executor = None
+        if pure_pursuit:
+            from nomad_phase0.chunk_execution import ChunkExecution
+            assert not oracle_safety_stop and not online_graph and "dynamic_obstacle" not in config
+            self.chunk_executor = ChunkExecution()
         self.lock = threading.Lock()
         self.done, self.started, self.cancel = threading.Event(), threading.Event(), threading.Event()
         self.state = {"pose": self.core.pose.tolist(), "sim_s": 0., "monotonic_ns": 0, "tick": 0,
@@ -65,6 +70,9 @@ class ExecutionThread:
         np.testing.assert_array_equal(arrays["selected_waypoint"], arrays["metric"][0, 2])
         row = {**metadata, "latched_sim_s": sim_time, "latched_monotonic_ns": time.monotonic_ns(),
                "selected_waypoint_m": arrays["selected_waypoint"].tolist(), "terminal_unapplied": terminal}
+        if self.chunk_executor is not None:
+            from nomad_phase0.chunk_execution import describe_chunk
+            row["chunk"] = describe_chunk(arrays["metric"][0], row["observation_pose"])
         self.received.append(row)
         append(self.rf, row)
         self.monitor.plan(row["id"], arrays["metric"], row)
@@ -141,6 +149,8 @@ class ExecutionThread:
                     if result is not None:
                         self.accept(result, sim_time)
                     refresh, switch = self.core.control(tick, time.monotonic_ns())
+                    if refresh is not None and self.chunk_executor is not None:
+                        self.chunk_executor.apply(self.core, refresh, switch)
                     if refresh is not None and self.safety is not None:
                         box = self.dynamic.obstacle if self.dynamic.spawn is not None else None
                         self.safety.apply(self.core, refresh, switch, tick, box)
@@ -165,7 +175,8 @@ class ExecutionThread:
 
 
 def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, render_check,
-              controlled_delivery_delay=False, uniform_delivery_delay_s=None, oracle_safety_stop=False, online_graph=False):
+              controlled_delivery_delay=False, uniform_delivery_delay_s=None, oracle_safety_stop=False, online_graph=False,
+              pure_pursuit=False):
     if controlled_delivery_delay and uniform_delivery_delay_s is not None:
         raise ValueError("Single-trigger and uniform delivery delays are mutually exclusive")
     if "dynamic_obstacle" in config and (controlled_delivery_delay or uniform_delivery_delay_s not in (None, 0.)):
@@ -191,7 +202,10 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     write_json(out/"async_protocol.json", protocol)
     if oracle_safety_stop:
         assert not controlled_delivery_delay and uniform_delivery_delay_s is None
-    engine = ExecutionThread(config, out, oracle_safety_stop=oracle_safety_stop, online_graph=online_graph)
+    engine = ExecutionThread(config, out, oracle_safety_stop=oracle_safety_stop, online_graph=online_graph,
+                             pure_pursuit=pure_pursuit)
+    if pure_pursuit:
+        write_json(out/"chunk_pilot_protocol.json", engine.chunk_executor.settings)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
     dynamic_history = deque(maxlen=4)
     save_observations = engine.dynamic is not None or config.get("goal_mode") == "topomap"
@@ -308,6 +322,10 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     if oracle_safety_stop:
         summary["oracle_safety_stop_enabled"] = True
         summary["command_semantics"] = "controller/events v,w are nominal PD; applied_v,w and 72Hz trace are actual"
+    if pure_pursuit:
+        summary["pure_pursuit_enabled"] = True
+        summary["experiment_label"] = "PILOT"
+        summary["command_semantics"] = "controller/events v,w are original index-2 PD reference ONLY; applied_v,w and 72Hz trace are actual Pure Pursuit commands"
     if online_graph:
         summary["online_graph_enabled"] = True
         summary["graph_submitted_requests"] = engine.graph.next_id

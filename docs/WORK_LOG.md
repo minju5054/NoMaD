@@ -445,3 +445,9 @@ S2 Dynamic–Static2 실제틈202.720458mm/요구220mm/부족17.279542mm 재현.
 PurePursuit는21.847222s goal entry/최종거리.298735643m,4.369444m이동. CTE mean/RMS/max4.270680/7.001366/21.412157mm. Static1최소clearance1.289712mm,Static2 .109260569m,geometric overlap없음/corridor .958431620m. **Goal도달했지만2cm미달로SAFETY_FAILURE**. 첫위반6.402778s,최소6.722222s. v clipping0%/상한점유100%,w clipping4/197=2.030457%,첫clipping7.555556s로최초위반이앞선다. 추종오차로reference의작은여유가소진됐으며경로infeasibility로해석하지않는다.
 
 Reference1585pose/44primitive,PP1574pose/197command 보존. 저장된actualcommand/72Hz적분오차0,PP공식·CTE·hash검증PASS. 새artifact에전체trace,작은JSON·고정설정·XY그림1장·[보고서](PHASE0_B_PURE_PURSUIT.md) 저장. 기존Phase0-A파일3개와runtime·geometry·scenario변경없음. Isaac/GPU실행·parameter sweep없음. Phase0-C 전에는기하feasible과추종safe/goal entry를계속분리해야하며좁은여유의안전추종은미통과. 주실행기교체등네정책은모두UNDECIDED.
+
+## Phase 0-C — S0 Pure Pursuit chunk PILOT 사전 고정
+
+2026-10-20. 같은 Phase0 branch/기준ab466f9. 기존 PurePursuit .25m/.2m/s/±.4rad/s 및 endpoint1cm 규칙 그대로 사용. Sample0 native8점을 observation pose로 world 변환하고 switch마다 progress 초기화, 이후9Hz 갱신/72Hz 적분. 원본 timing·1초timeout 유지하며 실제 명령만 선택형 PP로 교체한다. 원본index2PD 참고값과 actual PP 필드를 분리했다. NoMaD/Topomap/공식PD/기존follower/geometry 변경 없음. 짧은경로 endpointclamp, 퇴화path stop, tangent20mm 유효성 및 실제 command jump 기록.
+
+최소 신규3+기존8 tests PASS, 14node map 검증PASS, 기존343파일 hash 및 checkpoint 보존목록 기록. 코드·protocol commit 후 단일 Isaac S0 navigation1회/재시도0회 예정. Geometry 사후평가만 사용; 후진recovery 비활성, upstream NoMaD, 영구실행기교체 미결정. [보고서](PHASE0_C_CHUNK_PILOT.md).

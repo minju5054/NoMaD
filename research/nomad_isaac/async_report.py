@@ -30,7 +30,8 @@ def validate(run, baseline, out, actual_command_override=False):
     summary = json.loads((run/"summary.json").read_text())
     config = summary["scenario"]
     if actual_command_override:
-        assert summary.get("oracle_safety_stop_enabled") is True or summary.get("online_graph_enabled") is True
+        assert (summary.get("oracle_safety_stop_enabled") is True or summary.get("online_graph_enabled") is True
+                or summary.get("pure_pursuit_enabled") is True)
     protocol = json.loads((run/"async_protocol.json").read_text())
     requests, received, events = (rows(run/name) for name in ["requests.jsonl", "received.jsonl", "events.jsonl"])
     observations = rows(run/"observations.jsonl")

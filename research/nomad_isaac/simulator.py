@@ -17,6 +17,7 @@ parser.add_argument("--socket")
 parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
+parser.add_argument("--pure-pursuit", action="store_true")
 parser.add_argument("--oracle-safety-stop", action="store_true")
 parser.add_argument("--early-obstacle-mode", choices=["raw", "graph"])
 parser.add_argument("--topomap", type=Path)
@@ -133,6 +134,9 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    if args.pure_pursuit:
+        from nomad_phase0.chunk_execution import validate_mode
+        validate_mode(args)
     if args.early_obstacle_mode:
         from nomad_isaac.early_experiment import validate_early
         validate_early(config, args.topomap, args.asynchronous, args.prepare_only,
@@ -343,7 +347,7 @@ def main():
                            controlled_delivery_delay=args.controlled_delivery_delay,
                            uniform_delivery_delay_s=args.uniform_delivery_delay_s,
                            oracle_safety_stop=args.oracle_safety_stop,
-                           online_graph=args.early_obstacle_mode == "graph")
+                           online_graph=args.early_obstacle_mode == "graph", pure_pursuit=args.pure_pursuit)
         if adaptive:
             stage.Export(str(out/"scene_resolved.usda"))
             export_view_scene(out/"scene_resolved.usda", out/"scene_resolved_gui.usda")
