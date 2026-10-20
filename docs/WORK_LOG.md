@@ -461,3 +461,11 @@ Chunk길이 median.382659/min.136397m,lookahead미만8/93;clamp20/208유효contr
 WarmGPU35.602/43.999ms,obs→switch138.163/177.426ms median/p95. RTF.999996079,pacingp95/max.151/1.271ms,asyncPASS;busy1/missed0/timeout0(자연timeout미실행,syntheticPASS). 원본PD는참고필드만유지하고actualapplied필드로적분됨. PP재계산오차7.22e−16,pose0,corridor0;normalization·anchor·Topomap·RGBhash·swept검증PASS. 기존343/new199hash보존.
 
 초기renderer오류5건후같은시도내RGBgate통과. 분석01의5.55e−17m 완전일치assertion을분석기1e−12허용오차로수정,partial보존후analysis02만재계산했다. 새navigation없음. 저장PD참고25.305556s/최소74.423mm대비PP24.180556s/72.557mm이나비paired단일pilot로성능인과결론없음. 작은JSON/CSV/그림1장과 [보고서](PHASE0_C_CHUNK_PILOT.md). N≥10미실행,주실행기영구교체미결정;전환명령jump와0B좁은여유실패한계는남는다.
+
+## Phase 0-D — S0 paired batch runner 구현 및 사전 검증
+
+2026-10-20. 같은Phase0 branch,기준f90b9ae. 새S0전용protocol:PP/PD각10회,동일pair offset10000..100000,seed101+offset+2id/DDPM+1,PP→PD직렬순서. 기본offset0 기존동작유지,nonzero는frozenstaticS0+14nodeTopomap+async/zero-delay에서만허용. 원본scenario/model/Topomap/PP/PD변경없음. ID/offset/Git/config/hash/실제seed기록,독립출력,공통batch lock,실패로그,재시도·resume없음.
+
+새batch SUCCESS는goal+overlap없음+corridor침범없음.2cm미달은별도interval누적시간. Conservative contact·기술실패·60초timeout분리. PP실제applied/PD실제명령으로switchΔw·clipping계산. Wilson95%,고정PCG64 seed20261020/10000bootstrap,runID단위paired차이,goal미도달null/양쪽도달pair만time차이. Metric별n/missing과기술실패분모를명시했다.
+
+신규6+기존8=14 CPU tests PASS. 기존PP/PD read-only추출은둘다SUCCESS/goal24.180556·25.305556s/최소72.557·74.423mm/2cm위반0/pose재적분오차0. w clipping19/218·66/228,부호전환27·23,최대|Δw|.726350·.8. 신규navigation/GPU inference없음;N10은실행하지않는다. 현재확정결정(PP주실행기/제자리회전Recovery/oracle geometry/NoMaD)을새protocol에만기록하고과거UNDECIDED문서보존. 이번S0에는Recovery구현없음. [보고서](PHASE0_D_S0_BATCH.md).

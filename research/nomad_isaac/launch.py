@@ -1,6 +1,7 @@
 """Launch existing Isaac 6 and NoMaD interpreters as separate local processes."""
 import argparse
 from datetime import datetime
+import json
 import os
 import signal
 from pathlib import Path
@@ -20,6 +21,8 @@ def main():
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
     parser.add_argument("--pure-pursuit", action="store_true", help="Phase 0-C frozen S0 chunk follower PILOT")
+    parser.add_argument("--seed-offset", type=int, default=0, help="Optional static S0 Topomap run seed offset")
+    parser.add_argument("--run-id", help="Frozen Phase 0-D pair ID S0_01 ... S0_10")
     parser.add_argument("--oracle-safety-stop", action="store_true", help="Exact-geometry STOP after adaptive dynamic spawn")
     parser.add_argument("--early-obstacle-mode", choices=["raw", "graph"], help="Frozen early fixed-location experiment")
     parser.add_argument("--topomap", type=Path, help="Verified static Topomap manifest for the NoMaD worker")
@@ -28,6 +31,8 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    from .seed_offset import validate_seed_options
+    validate_seed_options(args)
     if args.pure_pursuit:
         from nomad_phase0.chunk_execution import validate_mode
         validate_mode(args)
@@ -66,6 +71,12 @@ def main():
     if args.pure_pursuit:
         sources += [ROOT/"research/nomad_phase0"/name for name in
                     ("pure_pursuit.py", "chunk_execution.py", "chunk_pilot_protocol.json", "follower_protocol.json")]
+    if args.seed_offset or args.run_id is not None:
+        sources += [ROOT/"research/nomad_phase0/chunk_pilot_protocol.json"]
+    if args.run_id is not None:
+        batch_protocol = ROOT/"research/nomad_phase0/s0_batch_protocol.json"
+        sources += [batch_protocol]
+        write_json(out/"batch_protocol.json", json.loads(batch_protocol.read_text()))
     if args.topomap or args.render_topomap_reference:
         sources += [Path(__file__).with_name("topomap_protocol.json")]
     if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario):
@@ -86,6 +97,8 @@ def main():
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
         "pure_pursuit": args.pure_pursuit,
+        "run_id": args.run_id, "seed_offset": args.seed_offset,
+        "source_scenario_sha256": sha256_file(scenario_path),
         "early_obstacle_mode": args.early_obstacle_mode,
         "topomap_manifest": str(args.topomap.resolve()) if args.topomap else None,
         "topomap_manifest_sha256": sha256_file(args.topomap) if args.topomap else None,
@@ -134,6 +147,10 @@ def main():
                 command.append("--asynchronous")
             if args.pure_pursuit:
                 command.append("--pure-pursuit")
+            if args.seed_offset:
+                command += ["--seed-offset", str(args.seed_offset)]
+            if args.run_id is not None:
+                command += ["--run-id", args.run_id]
             if args.oracle_safety_stop:
                 command.append("--oracle-safety-stop")
             if args.early_obstacle_mode:

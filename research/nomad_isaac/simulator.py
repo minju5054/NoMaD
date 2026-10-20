@@ -18,6 +18,8 @@ parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
 parser.add_argument("--pure-pursuit", action="store_true")
+parser.add_argument("--seed-offset", type=int, default=0)
+parser.add_argument("--run-id")
 parser.add_argument("--oracle-safety-stop", action="store_true")
 parser.add_argument("--early-obstacle-mode", choices=["raw", "graph"])
 parser.add_argument("--topomap", type=Path)
@@ -134,6 +136,10 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    from nomad_isaac.seed_offset import validate_seed_options
+    validate_seed_options(args)
+    if args.seed_offset or args.run_id is not None:
+        config = {**config, "seed_offset": args.seed_offset, "run_id": args.run_id}
     if args.pure_pursuit:
         from nomad_phase0.chunk_execution import validate_mode
         validate_mode(args)

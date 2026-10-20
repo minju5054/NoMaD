@@ -15,6 +15,7 @@ from PIL import Image
 from .async_core import AsyncClient, WaypointExecution, deadline_ns
 from .clearance import MultiObstacleMonitor
 from .common import write_json
+from .seed_offset import request_seed
 
 
 def append(stream, record):
@@ -253,10 +254,12 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                                    "dynamic_mask_file": f"observations/{observation_id:04d}_mask.png"})
                     dynamic_history.append(diagnostic)
                 if len(history) == 4 and not engine.done.is_set():
-                    request = {**record, "kind": "infer", "id": request_id, "seed": config["seed"]+2*request_id,
+                    request = {**record, "kind": "infer", "id": request_id, "seed": request_seed(config, request_id),
                                "history_sim_s": list(times), "history_frame_sha256": list(hashes),
                                "history_observation_ids": list(frame_ids), "old_id_at_observation": snap["applied_id"],
                                "old_valid_at_observation": snap["command_valid"], "request_submit_monotonic_ns": time.monotonic_ns()}
+                    if config.get("seed_offset") or config.get("run_id") is not None:
+                        request.update(run_id=config.get("run_id"), seed_offset=config.get("seed_offset", 0))
                     if engine.dynamic is not None:
                         request["history_dynamic"] = list(dynamic_history)
                     inputs = {"history": np.stack(history)}
@@ -330,6 +333,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         summary["online_graph_enabled"] = True
         summary["graph_submitted_requests"] = engine.graph.next_id
         summary["command_semantics"] = "controller/events remain nominal; actual overrides and separate Graph actions are in graph_control.jsonl"
+    if config.get("run_id") is not None:
+        summary.update(experiment_label="PHASE0_D_S0_BATCH", run_id=config["run_id"],
+                       seed_offset=config.get("seed_offset", 0))
     if dynamic_result is not None:
         summary["dynamic_obstacle"] = dynamic_result
         summary["obstacle_evaluation_scope"] = "Original static obstacles only; dynamic evaluation is separate"

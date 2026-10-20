@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 
 from .common import integrate_se2, local_to_world, original_controller, sha256_file, write_json
+from .seed_offset import request_seed
 from .clearance import (configured_obstacles, obstacle_bounds, planning_diagnostic,
                         single_obstacle_config, swept_clearance)
 
@@ -109,7 +110,7 @@ def validate(run, baseline, out, actual_command_override=False):
         assert wall_ns[obs_tick] == r["pose_sample_monotonic_ns"]
         receive_tick = round(r["received_sim_s"]*config["integration_hz"])
         np.testing.assert_allclose(pose[receive_tick], r["agent_pose_at_receive"], atol=1e-10,rtol=0)
-        assert r["seed"] == config["seed"]+2*i and r["ddpm_seed"]==r["seed"]+1
+        assert r["seed"] == request_seed(config, i) and r["ddpm_seed"]==r["seed"]+1
         with np.load(run/f"model/raw/{i:04d}.npz",allow_pickle=False) as raw, np.load(run/f"model/derived/{i:04d}.npz",allow_pickle=False) as derived:
             z, metric = raw["normalized_diffusion"], derived["metric"]
             assert z.shape == metric.shape == (8,8,2) and metric.dtype == np.float32
