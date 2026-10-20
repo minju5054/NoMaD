@@ -1,0 +1,651 @@
+{
+  "scenario_path": "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+  "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+  "protocol": {
+    "phase": "0-A",
+    "purpose": "Offline geometry/kinematics witness search, not NoMaD evaluation",
+    "kinematics": {
+      "v_range_m_s": [
+        0.0,
+        0.2
+      ],
+      "w_range_rad_s": [
+        -0.4,
+        0.4
+      ],
+      "reverse_primitives": false
+    },
+    "search": {
+      "method": "Continuous SE(2) forward-arc Hybrid A* with quantized duplicate pruning",
+      "xy_bin_m": 0.05,
+      "heading_bins": 64,
+      "primitive_duration_s": 0.5,
+      "primitives_vw": [
+        [
+          0.2,
+          0.0
+        ],
+        [
+          0.2,
+          -0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          -0.4
+        ],
+        [
+          0.2,
+          0.4
+        ]
+      ],
+      "heuristic_weight": 1.5,
+      "max_expansions_per_search": 30000,
+      "max_wall_seconds_per_search": 120.0,
+      "max_path_duration_s": 60.0,
+      "goal": "World XY disk from scenario; goal yaw unconstrained",
+      "wall_rule": "Original corridor_clearance > 0 with radius; 0.02m margin applies to obstacles",
+      "side_rule": "Cross dynamic center-X plane west-to-east once, above/below inflated Y face; never return west of plane; reach goal east of full inflated box",
+      "notes": "Subset of allowed controls, no in-place turn primitive; bin pruning and finite budgets are incomplete. Settings apply only to this checker."
+    },
+    "research_plan_section_7": [
+      {
+        "item": 1,
+        "question": "\uc8fc \uc2e4\ud589\uae30\ub97c trajectory follower\ub85c \ubcc0\uacbd\ud560\uc9c0",
+        "status": "UNDECIDED"
+      },
+      {
+        "item": 2,
+        "question": "Recovery\uc5d0\uc11c \ud6c4\uc9c4 \ud5c8\uc6a9 \uc5ec\ubd80",
+        "status": "UNDECIDED"
+      },
+      {
+        "item": 3,
+        "question": "Oracle geometry \ub610\ub294 depth \uae30\ubc18 \uc548\uc804 \uc778\uc2dd",
+        "status": "UNDECIDED"
+      },
+      {
+        "item": 4,
+        "question": "\uc5b8\uc5b4 \uc9c0\uc2dc\ub97c \ubc1b\ub294 VLA \ud544\uc218 \uc5ec\ubd80",
+        "status": "UNDECIDED"
+      }
+    ]
+  },
+  "protocol_sha256": "86af1d84b901acaff98843ad051ac00c286725c8b40f61dfb372cce7f762d027",
+  "source_sha256": {
+    "research/nomad_phase0/scenario_feasibility.py": "f138d47ab5eb80b186efbf2b2e4a57664d90a8768c3de508dad87f280efe94a1",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c"
+  },
+  "source_git_sha": "3637f5a71522c1576179a046f1d93b3150b98c04",
+  "source_git_status": "",
+  "geometry": {
+    "start_pose": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "goal_pose_metadata": [
+      4.5,
+      0.0,
+      0.0
+    ],
+    "goal_region": {
+      "center_xy": [
+        4.5,
+        0.0
+      ],
+      "radius_m": 0.3,
+      "yaw_required": false,
+      "center_safe": true,
+      "entire_disk_certified_safe": true,
+      "center_obstacle_clearance_m": {
+        "StaticObstacle1": 2.71,
+        "StaticObstacle2": 1.16
+      }
+    },
+    "corridor": {
+      "xmin": -2.0,
+      "xmax": 6.0,
+      "half_width": 1.5,
+      "height": 2.6
+    },
+    "agent_radius_m": 0.09,
+    "required_obstacle_clearance_m": 0.02,
+    "required_corridor_footprint_clearance_m": 0.0,
+    "obstacles": [
+      {
+        "id": "StaticObstacle1",
+        "aabb_min_xy_m": [
+          1.3,
+          -0.25
+        ],
+        "aabb_max_xy_m": [
+          1.7,
+          0.25
+        ],
+        "size_xyz_m": [
+          0.4,
+          0.5,
+          0.8
+        ]
+      },
+      {
+        "id": "StaticObstacle2",
+        "aabb_min_xy_m": [
+          2.75,
+          0.0
+        ],
+        "aabb_max_xy_m": [
+          3.25,
+          1.5
+        ],
+        "size_xyz_m": [
+          0.5,
+          1.5,
+          1.0
+        ]
+      }
+    ],
+    "dynamic_state": "absent",
+    "pair_gaps": [
+      {
+        "boxes": [
+          "StaticObstacle1",
+          "StaticObstacle2"
+        ],
+        "actual_surface_gap_m": 1.05,
+        "axis_separations_m": [
+          1.05,
+          0.0
+        ],
+        "required_two_obstacle_width_m": 0.22,
+        "width_deficit_m": 0.0,
+        "interpretation": "Local gap only; not a proof that all routes are blocked"
+      }
+    ],
+    "scope": "Frozen geometry including active dynamic box; no spawn-time feasibility claim"
+  },
+  "status": "FEASIBLE",
+  "unconstrained": {
+    "status": "FEASIBLE",
+    "termination_reason": "GOAL_WITNESS_REVALIDATED",
+    "search_executed": true,
+    "expanded": 166,
+    "generated": 325,
+    "wall_seconds": 0.02862896899750922,
+    "goal_reached": true,
+    "witness": {
+      "poses_se2": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.1,
+          0.0,
+          0.0
+        ],
+        [
+          0.2,
+          0.0,
+          0.0
+        ],
+        [
+          0.30000000000000004,
+          0.0,
+          0.0
+        ],
+        [
+          0.4,
+          0.0,
+          0.0
+        ],
+        [
+          0.5,
+          0.0,
+          0.0
+        ],
+        [
+          0.6,
+          0.0,
+          0.0
+        ],
+        [
+          0.7,
+          0.0,
+          0.0
+        ],
+        [
+          0.7993346653975306,
+          -0.009966711079379185,
+          -0.20000000000000018
+        ],
+        [
+          0.8947091711543252,
+          -0.039469502998557476,
+          -0.40000000000000036
+        ],
+        [
+          0.9823212366975177,
+          -0.08733219254516089,
+          -0.6000000000000005
+        ],
+        [
+          1.0586780454497613,
+          -0.15164664532641736,
+          -0.8000000000000007
+        ],
+        [
+          1.124648864177722,
+          -0.22674338640291836,
+          -0.9000000000000008
+        ],
+        [
+          1.1906196829056825,
+          -0.30184012747941935,
+          -0.8000000000000007
+        ],
+        [
+          1.2669764916579263,
+          -0.3661545802606758,
+          -0.6000000000000005
+        ],
+        [
+          1.3545885572011187,
+          -0.41401726980727926,
+          -0.40000000000000036
+        ],
+        [
+          1.4499630629579134,
+          -0.4435200617264576,
+          -0.20000000000000018
+        ],
+        [
+          1.549297728355444,
+          -0.45348677280583677,
+          0.0
+        ],
+        [
+          1.6486323937529748,
+          -0.4435200617264576,
+          0.20000000000000018
+        ],
+        [
+          1.7474683079012079,
+          -0.42858247428967344,
+          0.10000000000000009
+        ],
+        [
+          1.846304222049441,
+          -0.4136448868528893,
+          0.20000000000000018
+        ],
+        [
+          1.9451401361976741,
+          -0.39870729941610517,
+          0.10000000000000009
+        ],
+        [
+          2.0439760503459072,
+          -0.383769711979321,
+          0.20000000000000018
+        ],
+        [
+          2.14281196449414,
+          -0.3688321245425369,
+          0.10000000000000009
+        ],
+        [
+          2.241647878642373,
+          -0.35389453710575275,
+          0.20000000000000018
+        ],
+        [
+          2.340483792790606,
+          -0.3389569496689686,
+          0.10000000000000009
+        ],
+        [
+          2.439319706938839,
+          -0.32401936223218447,
+          0.20000000000000018
+        ],
+        [
+          2.5381556210870717,
+          -0.30908177479540033,
+          0.10000000000000009
+        ],
+        [
+          2.6369915352353046,
+          -0.2941441873586162,
+          0.20000000000000018
+        ],
+        [
+          2.7358274493835375,
+          -0.27920659992183205,
+          0.10000000000000009
+        ],
+        [
+          2.8346633635317704,
+          -0.2642690124850479,
+          0.20000000000000018
+        ],
+        [
+          2.9334992776800033,
+          -0.24933142504826375,
+          0.10000000000000009
+        ],
+        [
+          3.032335191828236,
+          -0.2343938376114796,
+          0.20000000000000018
+        ],
+        [
+          3.131171105976469,
+          -0.21945625017469544,
+          0.10000000000000009
+        ],
+        [
+          3.230007020124702,
+          -0.2045186627379113,
+          0.20000000000000018
+        ],
+        [
+          3.328842934272935,
+          -0.18958107530112714,
+          0.10000000000000009
+        ],
+        [
+          3.4276788484211678,
+          -0.174643487864343,
+          0.20000000000000018
+        ],
+        [
+          3.5265147625694007,
+          -0.15970590042755883,
+          0.10000000000000009
+        ],
+        [
+          3.6253506767176336,
+          -0.1447683129907747,
+          0.20000000000000018
+        ],
+        [
+          3.7241865908658665,
+          -0.12983072555399053,
+          0.10000000000000009
+        ],
+        [
+          3.8230225050140993,
+          -0.11489313811720639,
+          0.20000000000000018
+        ],
+        [
+          3.9210291627982237,
+          -0.09502620503770025,
+          0.20000000000000018
+        ],
+        [
+          4.019865076946457,
+          -0.0800886176009161,
+          0.10000000000000009
+        ],
+        [
+          4.1187009910946895,
+          -0.06515103016413196,
+          0.20000000000000018
+        ],
+        [
+          4.216707648878813,
+          -0.045284097084625816,
+          0.20000000000000018
+        ]
+      ],
+      "commands_v_w_duration": [
+        [
+          0.2,
+          0.0,
+          0.5
+        ],
+        [
+          0.2,
+          0.0,
+          0.5
+        ],
+        [
+          0.2,
+          0.0,
+          0.5
+        ],
+        [
+          0.2,
+          0.0,
+          0.5
+        ],
+        [
+          0.2,
+          0.0,
+          0.5
+        ],
+        [
+          0.2,
+          0.0,
+          0.5
+        ],
+        [
+          0.2,
+          0.0,
+          0.5
+        ],
+        [
+          0.2,
+          -0.4,
+          0.5
+        ],
+        [
+          0.2,
+          -0.4,
+          0.5
+        ],
+        [
+          0.2,
+          -0.4,
+          0.5
+        ],
+        [
+          0.2,
+          -0.4,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.4,
+          0.5
+        ],
+        [
+          0.2,
+          0.4,
+          0.5
+        ],
+        [
+          0.2,
+          0.4,
+          0.5
+        ],
+        [
+          0.2,
+          0.4,
+          0.5
+        ],
+        [
+          0.2,
+          0.4,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.0,
+          0.5
+        ],
+        [
+          0.2,
+          -0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.2,
+          0.5
+        ],
+        [
+          0.2,
+          0.0,
+          0.5
+        ]
+      ],
+      "side_crossing_pose": [],
+      "minimum_obstacle_clearance_m": {
+        "StaticObstacle1": 0.021829287987606864,
+        "StaticObstacle2": 0.10798468543222185
+      },
+      "minimum_corridor_footprint_clearance_m": 0.9540153098321762,
+      "goal_distance_m": 0.28688883849417973,
+      "goal_reached": true,
+      "path_duration_s": 22.0,
+      "distance_m": 4.4,
+      "pose_reconstruction_max_error": 0.0,
+      "validation": "Every original continuous arc rechecked by swept_clearance and corridor_clearance"
+    },
+    "no_path_meaning": null
+  },
+  "sides": {
+    "left_positive_y": null,
+    "right_negative_y": null
+  },
+  "side_scope": "Not applicable: no active dynamic obstacle"
+}

@@ -96,10 +96,97 @@ not decide the future recovery policy.
 From repository root, with the existing environment:
 
 ```bash
-bash research/python.sh -m unittest discover -s research/tests -p test_scenario_feasibility.py
+bash research/python.sh -m pytest -q research/tests/test_scenario_feasibility.py research/tests/test_obstacle_geometry.py
 bash research/python.sh -m nomad_phase0.scenario_feasibility --scenario research/nomad_isaac/two_obstacles_wide_wall_scenario.json --dynamic-state absent --output research/results/phase0a_feasibility_20261020/S0.json
 bash research/python.sh -m nomad_phase0.scenario_feasibility --scenario research/nomad_isaac/early_obstacle_scenario.json --dynamic-state active --output research/results/phase0a_feasibility_20261020/S2.json
 ```
 
 Outputs are exclusive-create: use a new output path for another invocation.
 No Isaac Sim navigation or GPU inference is involved.
+
+## S0 / S2 results
+
+The checker/settings were committed as `3637f5a` before either invocation.
+Both used the same code/settings; there was no search tuning. S0's source was
+clean. S2 provenance lists only the newly generated, untracked S0 result
+directory; no source had changed.
+
+| Scene / route | Status | Goal witness | Minimum obstacle clearance | Corridor footprint clearance |
+|---|---|---|---:|---:|
+| S0, unrestricted | `FEASIBLE` | 4.4m / 22.0s | 0.021829288m | 0.954015310m |
+| S0, dynamic left/right | Not applicable | No dynamic box | — | — |
+| S2, left (+Y) | `GEOMETRICALLY_BLOCKED` | Certified one-pass pocket, no search | — | — |
+| S2, right (−Y) | `FEASIBLE` | 4.4m / 22.0s | 0.021829288m | 0.954015310m |
+
+Both found paths consist of44 constant-command arcs /45 SE(2) poses and reach
+the0.30m goal disk at distance0.286888838m. Each search expanded166 states and
+generated325; it terminated with `GOAL_WITNESS_REVALIDATED`, not a budget limit.
+Search plus witness-check wall time was0.028629s /0.043274s in these invocations;
+these are infrastructure timings, not navigation/inference performance.
+Reconstructed pose error was0, and every continuous arc passed the unchanged
+swept/corridor functions. There is no geometric overlap along either witness.
+
+The deterministic search finds the **same** path in S0 and S2: it takes the
+negative-Y side of both static boxes and the dynamic box. S2's dynamic
+center-plane crossing is `(2.372279542, −0.335251812, 0.132012267rad)`;
+it crosses once and never returns west of the plane before reaching the goal.
+Per-obstacle minimum clearances are:
+
+- Static1: 0.021829288m in both scenes.
+- Static2: 0.107984685m in both scenes.
+- Dynamic (S2 only): 0.149394826m.
+
+This is a start-to-goal witness in the frozen scene, **not** a continuation
+from a historical robot pose on the positive-Y side of Static1. It does not
+claim that NoMaD will choose this path or that a sudden appearance during the
+previous execution is recoverable.
+
+### S2 narrow gap and left-side proof
+
+Dynamic right face `x=2.547279542`; Static2 left face `x=2.75`.
+
+```text
+Actual surface gap:           0.202720458m = 20.2720458cm
+Robot diameter:               0.180000000m
+Required two-sided safe gap:  0.220000000m = 22cm
+Safety-width deficit:         0.017279542m = 1.7279542cm
+Best centered gap clearance:  0.011360229m per side (< 0.02m)
+```
+
+Thus it is a **safety-margin blockage**, not a claim that the physical circle
+cannot fit without the required margin. The certificate additionally verifies:
+
+- At `y=0.110674603`, forbidden center-X intervals
+  `[2.372279542,2.657279542]` and `[2.64,3.0]` overlap by0.017279542m.
+- At `x=3.0`, Static2 blocks the interval from that separator up to the
+  corridor's positive-Y wall (its raw Y span is `[0,1.5]`).
+- A left crossing enters above the horizontal separator. The corridor closes
+  the top, and the side convention forbids returning west of `x=2.372279542`.
+  It cannot exit this pocket to the goal disk, whose minimum X is4.2m.
+
+The JSON contains these sections explicitly. No conclusion is drawn from
+gap width alone. Returning in front of the dynamic box and taking a right
+bypass is outside the definition of a successful left route.
+
+## Validation and limitations
+
+Five focused new tests and six existing obstacle-geometry tests passed
+(`11 passed`): original arc/corridor equality, endpoint-safe but colliding
+interior, numeric gap/certificate, rejection of side recrossing, and invalid
+start/goal-region checks. The final witnesses independently recheck every
+original continuous primitive. Original runtime/geometry/scenario files are
+unchanged; outputs are new small JSONs in
+`research/results/phase0a_feasibility_20261020/`.
+`validation.json` records source/scenario hashes and successful preservation
+of3,073 entries from the existing raw-data hash manifests.
+
+No figure is needed to establish the numeric witnesses and certificate.
+No Isaac navigation, GPU inference, trajectory follower, recovery, Graph,
+depth processing, batch runner, S1/S3 design or environment change was performed.
+Quantized duplicate pruning, five forward arcs, weighted heuristic,60s path
+cap and finite expansion/wall budgets make the search incomplete.
+`NO_PATH_FOUND` would remain absence of evidence, not impossibility.
+The checker uses exact supplied geometry with a circle footprint and unicycle
+kinematics; it says nothing about perception uncertainty, PhysX, tracking,
+language-conditioned VLA requirements or online control performance.
+All four research-plan section7 decisions remain `UNDECIDED`.

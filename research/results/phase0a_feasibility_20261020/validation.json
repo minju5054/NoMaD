@@ -1,0 +1,80 @@
+{
+  "phase": "0-A",
+  "base_commit": "3ec84aa685f9b2302dd2a8255372e9f9dfa913b4",
+  "checker_commit": "3637f5a71522c1576179a046f1d93b3150b98c04",
+  "tests": {
+    "new_geometry_and_side_tests": 5,
+    "reused_obstacle_geometry_tests": 6,
+    "passed": 11
+  },
+  "original_geometry_scenarios_and_PD_unchanged_sha256": {
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/two_obstacles_wide_wall_scenario.json": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "research/nomad_isaac/early_obstacle_scenario.json": "78330d97dc27f56252a3003245d97ae904eb69f250902fef70ca78a012d89295",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b"
+  },
+  "prior_raw_preservation": [
+    {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_sudden_preservation_01.json",
+      "entries": 488,
+      "status": "PASS"
+    },
+    {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_sudden_01_validation/input_hashes.json",
+      "entries": 257,
+      "status": "PASS"
+    },
+    {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01_validation/input_hashes.json",
+      "entries": 999,
+      "status": "PASS"
+    },
+    {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_comparison_02/EARLY-RAW/input_hashes.json",
+      "entries": 298,
+      "status": "PASS"
+    },
+    {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_comparison_02/EARLY-GRAPH/input_hashes.json",
+      "entries": 1031,
+      "status": "PASS"
+    }
+  ],
+  "prior_raw_preserved_entries": 3073,
+  "results": {
+    "S0": {
+      "sha256": "048cf368d11b288270535fe3b08a9faa9300a84781ed8f84d95d7b14a9f04f46",
+      "status": "FEASIBLE"
+    },
+    "S2": {
+      "sha256": "b6b4fa6750a57a16ed40c64ca57cdeb07cfa1960621cc0e136d82d01322deb66",
+      "status": "FEASIBLE"
+    }
+  },
+  "new_navigation_count": 0,
+  "new_inference_count": 0,
+  "scenario_changes": false,
+  "research_plan_section_7": [
+    {
+      "item": 1,
+      "question": "주 실행기를 trajectory follower로 변경할지",
+      "status": "UNDECIDED"
+    },
+    {
+      "item": 2,
+      "question": "Recovery에서 후진 허용 여부",
+      "status": "UNDECIDED"
+    },
+    {
+      "item": 3,
+      "question": "Oracle geometry 또는 depth 기반 안전 인식",
+      "status": "UNDECIDED"
+    },
+    {
+      "item": 4,
+      "question": "언어 지시를 받는 VLA 필수 여부",
+      "status": "UNDECIDED"
+    }
+  ]
+}

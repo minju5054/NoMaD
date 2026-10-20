@@ -423,3 +423,13 @@ Graph6(FRESH58): 원본(.151153,+.4)→보정(.018810,+.4), Graph16(FRESH196): �
 Solve wall median/p95/max5.859/23.404/23.740s, 주행 중 Graph 대기43.777778s/전체정지46.555556s. 대기 중 RGB175장/FRESH172개 수신 유지. 적용 input age3.166/5.111s는 원본1초timeout을 넘는 별도 Graph action이며 nominal timeout은0회. 72Hz RTF RAW.999994137/GRAPH.999985167, pacing max1.274/2.004ms로 execution은 유지됐으나 실시간 Graph 성공은 아니다.
 
 모든 actual command/72Hz pose 오차0, swept/corridor오차1.11e−16m; nominalPD·Topomap·RGB history·observation anchor·single outstanding·B/geometry 재검사 PASS. 기존1744개/new1329개 hash 항목 보존, 모델환경/checkpoint/Topomap 동일. 첫 offline report의 파일 나열 순서 assertion은 ID 정렬로 수정 후 새 comparison_02에 분석만 실행했고 partial comparison_01은 보존했다. 작은 JSON/CSV와 실제 XY 비교 그림1장 및 [보고서](ISAAC6_EARLY_ONLINE_GRAPH.md) 저장. Oracle geometry·STOP과 계산 대기 효과를 분리했고 두 비paired 단일 주행으로 Graph 우월성·목표 성공을 주장하지 않는다.
+
+## Phase 0-A — 독립 offline scenario feasibility checker
+
+2026-10-20. 기준 `3ec84aa`에서 이후 인프라 작업용 `research/phase0-infrastructure` 생성. `research/nomad_phase0/`만 추가해 기존 exact SE(2) 적분·swept/corridor geometry 재사용. NoMaD/Topomap/PD/Graph/시나리오 변경 없음. `3637f5a`에 XY5cm/yaw64bin, 0.5s 전진 primitive5개(v=.2,w=0/±.2/±.4), weighted Hybrid A*, 30,000 expansion/120wall-s/60path-s budget 고정 후 S0/S2만 검사했다. 신규5+기존geometry6 tests PASS.
+
+S0 `FEASIBLE`, S2 우측 `FEASIBLE`: 각각166 expansion,325 generated,44arc/45pose,4.4m/22s, goal거리.286888838m. 전체 swept 최소clearance21.829288mm, corridor .954015310m, overlap없음/pose재구성오차0. S2 dynamic clearance149.394826mm. 동일 witness가 첫 정적 장애물부터 음의Y를 택하므로 기존 실제 OLD 실행 pose에서의 recovery 가능성이나 NoMaD 성능으로 확대하지 않는다. S2는 등장 후 geometry를 전체 경로에 고정한 검사다.
+
+S2 Dynamic–Static2 실제틈202.720458mm/요구220mm/부족17.279542mm 재현. 단순틈폭뿐 아니라 두 금지단면과 +Y벽, center-X선 재횡단 금지를 결합해 좌측 one-pass goal연결을 `GEOMETRICALLY_BLOCKED`로 판정. 한번 좌측통과후 앞쪽으로돌아와 우측으로빠지는 경로는 좌측성공으로 집계하지 않는다. 전체 S2는 우측witness가 있어FEASIBLE. S0 dynamic좌/우는N/A.
+
+작은 S0/S2 JSON과 [보고서](PHASE0_A_SCENARIO_FEASIBILITY.md) 저장. 새 navigation/inference/시각화/환경변경/scene설계/runner/controller 없음. 탐색미발견은 불가능증명아님. 사용자 확인 연구계획7번 네항목(trajectory follower 전환, recovery 후진, oracle/depth 안전인식, 언어VLA 필수성)은 모두 `UNDECIDED`; checker의 전진 primitive와 정확한JSON geometry 사용은 이 정책들을 결정하지 않는다.
