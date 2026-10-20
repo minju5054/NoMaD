@@ -1,0 +1,29 @@
+{
+  "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+  "label": "PHASE_0_D_PREFLIGHT_ONLY",
+  "status": "PASS",
+  "implementation_git_sha": "91ff683199f48faefadcdc5efec1d92be3d3d6bc",
+  "implementation_git_status": "",
+  "tests": "15 passed: seven new CPU-only tests, three existing chunk tests, five existing async tests",
+  "dry_run_jobs": 20,
+  "planned_per_condition": 10,
+  "new_navigation_count": 0,
+  "new_gpu_inference_count": 0,
+  "actual_batch_root_exists": false,
+  "seed_pairs_match": true,
+  "zero_offset_identity": "PASS request IDs 0..720; observed legacy request seeds also match",
+  "distinct_run_seed_streams": "PASS including inference and DDPM request IDs 0..720",
+  "legacy_metric_match": "PASS goal time/stop/margin/clearance/PP clipping/switch vs saved report; actual command/pose linkage checked for both",
+  "positive_margin_independent_fixture": {
+    "classification": "SUCCESS",
+    "margin_violation_s": 0.013888888888888888
+  },
+  "conservative_contact_fixture": "OTHER_TERMINATION",
+  "preserved_files": 542,
+  "preservation_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase0d_metric_validation_02/preserved_input_hashes.json",
+  "preservation_manifest_sha256": "6c8fd757eab84b2144ad51c6941cfaf4f9ed2fbbdbd9b17c35cc40bc29be96b7",
+  "ready_for_later_authorized_batch": "CPU preflight passed; nonzero-offset live GPU execution NOT RUN",
+  "statistical_results": "No N=10 estimates produced. Bootstrap/Wilson checked with synthetic data only.",
+  "dry_plan_sha256": "634854ed312033fc9498553752c35ea7ef44443fffd82188def9df53a6073df8",
+  "earlier_preflight": "phase0d_metric_validation_01 partial JSON preserved: NumPy clipping count serialization failed. Scalar type normalized, saved-data serialization test added. No navigation/retry."
+}

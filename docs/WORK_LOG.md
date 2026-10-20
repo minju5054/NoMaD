@@ -469,3 +469,5 @@ WarmGPU35.602/43.999ms,obs→switch138.163/177.426ms median/p95. RTF.999996079,p
 새batch SUCCESS는goal+overlap없음+corridor침범없음.2cm미달은별도interval누적시간. Conservative contact·기술실패·60초timeout분리. PP실제applied/PD실제명령으로switchΔw·clipping계산. Wilson95%,고정PCG64 seed20261020/10000bootstrap,runID단위paired차이,goal미도달null/양쪽도달pair만time차이. Metric별n/missing과기술실패분모를명시했다.
 
 신규6+기존8=14 CPU tests PASS. 기존PP/PD read-only추출은둘다SUCCESS/goal24.180556·25.305556s/최소72.557·74.423mm/2cm위반0/pose재적분오차0. w clipping19/218·66/228,부호전환27·23,최대|Δw|.726350·.8. 신규navigation/GPU inference없음;N10은실행하지않는다. 현재확정결정(PP주실행기/제자리회전Recovery/oracle geometry/NoMaD)을새protocol에만기록하고과거UNDECIDED문서보존. 이번S0에는Recovery구현없음. [보고서](PHASE0_D_S0_BATCH.md).
+
+Phase0-D 최종사전검증: clean91ff683의CLI dry-run02는PP10/PD10 정확히20job,새navigation0/GPUinference0,예정batch root미생성. 실제기존metricJSON저장에서NumPy int64 clipping-count 직렬화문제를발견해Python scalar로정규화하고회귀검증추가;최종15testsPASS. Partial metric_validation01보존후02에서기존542hash불변/metric일치PASS. Positive-margin synthetic은SUCCESS+별도1/72s위반,conservative contact는OTHER_TERMINATION. 기존2run은batch표본/pairedCI에포함하지않았다. 작은plan/seed명령CSV/legacy metricCSV/검증JSON저장. N10실행준비사전검증통과이며nonzero-offset live GPU검증은미실행으로명시.

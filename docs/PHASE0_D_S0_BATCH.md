@@ -38,7 +38,7 @@ Request k의 seed=`101+offset+2k`, DDPM=그 값+1. `--seed-offset` 기본0에서
 Dry-run 예시(실행 child 없음):
 
 ```bash
-bash research/python.sh -m nomad_phase0.s0_batch --dry-run --run-root /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s0_paired_n10_01 --output /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase0d_dryrun_01
+bash research/python.sh -m nomad_phase0.s0_batch --dry-run --run-root /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s0_paired_n10_01 --output /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase0d_dryrun_03
 ```
 
 향후 본 실행용 명령이며 **이번 작업에서는 실행하지 않는다**:
@@ -93,3 +93,11 @@ N=10의 불확실성이 크며 작은 표본·상수값 bootstrap CI는 퇴화�
 | 저장 pose 재적분 최대 오차 | 0 | 0 |
 
 위 두 기록은 offset0의 **metric 검증용 기존 자료**이며 N=10 batch 표본으로 포함하거나 paired CI를 계산하지 않는다. 실제 nonzero-offset GPU 주행은 아직 실행하지 않았으므로 그 live 실행 검증은 미완료다.
+
+최종 clean 코드 `91ff683`의 CLI dry-run은 `artifacts/isaac6/phase0d_dryrun_02/`에 **20개 job, PP10/PD10, navigation_started=0**을 기록했다. 예정된 `s0_paired_n10_01/` 및 각 run 출력 경로는 존재하지 않는다. 위 예시의 `_03`은 기존 dry-run 결과를 덮어쓰지 않기 위한 새 보고서 경로다.
+
+Read-only metric 검증은 `artifacts/isaac6/phase0d_metric_validation_02/`에 저장했고 기존542개 파일 hash가 유지됐다. 최초 `_01`의 NumPy int64 clipping-count JSON 직렬화 실패는 partial 파일과 함께 보존했다. Python scalar로 정규화하고 실제 저장자료의 JSON 직렬화 test를 추가해 수정했다. 이 과정에 새 navigation이나 inference는 없었다.
+
+작은 산출물: [20-job plan](../research/results/phase0d_batch_preflight_20261020/plan.json), [명령·seed 대응표](../research/results/phase0d_batch_preflight_20261020/seed_commands.csv), [기존 PP/PD metric](../research/results/phase0d_batch_preflight_20261020/legacy_metrics.csv), [검증 결과](../research/results/phase0d_batch_preflight_20261020/validation.json).
+
+변경 파일은 새 `s0_batch.py`, `s0_batch_metrics.py`, `s0_batch_protocol.json`, `seed_offset.py`, 최소 tests/문서/작은검증결과와 launch/simulator/async runtime/async report의 seed metadata 연결이다. NoMaD/Topomap/원본PD/PurePursuit/geometry/scenario 및 과거 pilot 결과는 유지했다. **향후 본 실행을 시작할 준비는 완료했으며 이번 작업에서는 N=10을 실행하지 않았다.**
