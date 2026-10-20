@@ -411,3 +411,15 @@ WarmGPU35.543/37.311ms,gate2.631/3.458ms median/p95. RTF.99998957,pacingp95/max 
 ## Early fixed obstacle + online Graph — 사전 고정
 
 2026-10-20. Runtimea76ed2b / Graph3a60531에서 research/isaac6-early-online-graph 생성. 새fixedcenter(2.372279542,.110674603),size(.35,.35,.8),tick792/11s scenario만추가; 기존adaptive/frozenvalidator보존. 저장reference11s clearance.4263/.4653m 및FOV/occlusion/boxseparationPASS. 필요Graph정의8개AST동일,원래factorprotocol byte동일. 별도CPUprocess(systemPython/SciPy1.11.4) B52단일preflight solve1.765s,기존해1e-9내동일,21testsPASS. 1744 prior hash항목보존. Stop-and-plan에서1outstanding,FreshID당1attempt,원래1초timeout은nominal에유지; 늦은Graph는B/geometry/safety재검사후최대16tick별도action. VLA관측계속. Protocol/codecommit후EARLY-RAW/GRAPH각1회,재시도0회. [보고서](ISAAC6_EARLY_ONLINE_GRAPH.md).
+
+## Early fixed obstacle + online Graph — 실제 closed-loop 결과
+
+2026-10-20. Clean `7428f28`에서 EARLY-RAW/GRAPH 각 1회, 재시도·튜닝 0회. 두 run 모두 tick792에 동일 fixed box 활성화, 첫 visible RGB45/11.236111s 확인. RAW는 동적 장애물을 왼쪽으로 17s에 통과(clearance22.320mm)했으나 Static2에 17.152778s 충돌(−.509mm), goal false/min1.869510m. FRESH63/64의 Static2 native prefix도 unsafe여서 upstream prediction과 실제 PD 실행의 위험을 함께 확인했다.
+
+GRAPH는 **SAFE_BUT_STUCK**, 60s timeout/goal false/min2.342423m. Dynamic clearance21.406mm, static1/2 .369350/.468548m, overlap·corridor·2cm 위반 없음. Dynamic과 Static2는 미통과. 고유 FRESH18개 시도 중13개는 기존 heading 규칙 미충족으로 solve하지 않았다. 실제 solve5회/수렴3회/안전 재검사 통과 및 실제 적용2회. 다른 수렴1개는19.086mm로 차단,2개는200nfev 미수렴. 마지막 pending 결과는 종료 후 보존하고 미적용했다.
+
+Graph6(FRESH58): 원본(.151153,+.4)→보정(.018810,+.4), Graph16(FRESH196): 원본(.2,−.287461)→보정(.017014,+.4). 각각8tick 동안2.090/1.890mm 전진 후 다음16tick 안전 검사에서 차단, 실제 Graph 전진 합3.980mm. 최신 nominal ID70/216과 오래된 Graph source ID를 구분해 기록했다. 이후 실제 이동 pose의 RGB75/221이 request71/217 입력에 포함돼 **Graph 제어→실제 pose→RGB→새 inference** 검증 PASS.
+
+Solve wall median/p95/max5.859/23.404/23.740s, 주행 중 Graph 대기43.777778s/전체정지46.555556s. 대기 중 RGB175장/FRESH172개 수신 유지. 적용 input age3.166/5.111s는 원본1초timeout을 넘는 별도 Graph action이며 nominal timeout은0회. 72Hz RTF RAW.999994137/GRAPH.999985167, pacing max1.274/2.004ms로 execution은 유지됐으나 실시간 Graph 성공은 아니다.
+
+모든 actual command/72Hz pose 오차0, swept/corridor오차1.11e−16m; nominalPD·Topomap·RGB history·observation anchor·single outstanding·B/geometry 재검사 PASS. 기존1744개/new1329개 hash 항목 보존, 모델환경/checkpoint/Topomap 동일. 첫 offline report의 파일 나열 순서 assertion은 ID 정렬로 수정 후 새 comparison_02에 분석만 실행했고 partial comparison_01은 보존했다. 작은 JSON/CSV와 실제 XY 비교 그림1장 및 [보고서](ISAAC6_EARLY_ONLINE_GRAPH.md) 저장. Oracle geometry·STOP과 계산 대기 효과를 분리했고 두 비paired 단일 주행으로 Graph 우월성·목표 성공을 주장하지 않는다.

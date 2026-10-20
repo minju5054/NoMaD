@@ -1,0 +1,85 @@
+{
+  "execution_git_sha": "7428f2824b618986f4a304111ec24c3dbfe24c6d",
+  "navigation_runs": {
+    "EARLY-RAW": 1,
+    "EARLY-GRAPH": 1
+  },
+  "navigation_retries": 0,
+  "parameter_tuning": false,
+  "source_artifact": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_comparison_02",
+  "preservation": {
+    "status": "PASS",
+    "old_manifest_entries": 1744,
+    "new_manifest_entries": 1329,
+    "manifests": [
+      {
+        "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_sudden_preservation_01.json",
+        "entries": 488,
+        "sha256": "75e7292a7e5148a09fc4929c57ca1e37f27933d4fd33393a55c29953777784aa"
+      },
+      {
+        "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_sudden_01_validation/input_hashes.json",
+        "entries": 257,
+        "sha256": "9453d66c6b1e8f2ccbf4af07239dcb65dd36dc1f995e05db9ed771ff2166ac23"
+      },
+      {
+        "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01_validation/input_hashes.json",
+        "entries": 999,
+        "sha256": "5952f9835f94c9f20de5d380902a772e54b34bf3316f85fab0d054b49d9cb29c"
+      },
+      {
+        "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_comparison_02/EARLY-RAW/input_hashes.json",
+        "entries": 298,
+        "sha256": "bb3842217fa7ece266f1df288b7810d5db375d800b4a07277195060579fbb116"
+      },
+      {
+        "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_comparison_02/EARLY-GRAPH/input_hashes.json",
+        "entries": 1031,
+        "sha256": "6802989c268688d3b169f01816e8749ebf05281423cd1fe43c1d30fb7a1be142"
+      }
+    ]
+  },
+  "model_environment_identical_to_topomap_sudden_01": true,
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "during_graph_wait": {
+    "counts": {
+      "RGB": 175,
+      "FRESH_received": 172
+    },
+    "definition": "Host-monotonic membership in GRAPH_WAIT controller intervals through final execution tick; observation capture start / actual FRESH receive times"
+  },
+  "actual_graph_actions_latest_nominal": [
+    {
+      "graph_id": 6,
+      "nominal_waypoint_id": 70,
+      "nominal_vw": [
+        0.2,
+        0.00958874702750176
+      ],
+      "applied_vw": [
+        0.018809739955699033,
+        0.4
+      ]
+    },
+    {
+      "graph_id": 16,
+      "nominal_waypoint_id": 216,
+      "nominal_vw": [
+        0.2,
+        -0.3673000114227219
+      ],
+      "applied_vw": [
+        0.017014444400383653,
+        0.4
+      ]
+    }
+  ],
+  "limitations": [
+    "Oracle geometry and STOP contribute to safety",
+    "Separate Graph actions can exceed original nominal waypoint timeout; ages logged",
+    "Graph solves are not real-time",
+    "Two single runs are not a paired causal comparison",
+    "No closed-loop goal success achieved"
+  ]
+}
