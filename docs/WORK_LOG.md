@@ -491,3 +491,13 @@ Run-ID paired 성공률차+60%p[+30,+90], 양쪽goal3pair시간차−.958s[−1.
 EARLYfinal/Oracle spawn/Oracle final의B1→B2 witness시간22.5→16.5/18.5→17.5/23.5→18s, B2후진0.2/0.2/0.3m. 첫weighted-search witness비교이므로최적성·온라인성능차이주장없음. B1최종상태spin8/8.5s가B2에서.5s로줄지만이동거리는늘었다. EARLYspawn의B1/B2는동일해,reverse0. 모든9witness저장파일재적분/swept/corridor재검증PASS/pose오차0, goal거리.218596… .295737m, 최소obstacle20.014718…26.080095mm. 일부여유는threshold초과.014718mm로매우작다.
 
 최대CPU2.501s/expansion14723,시간·expansionbudget종료없음. 기존16input/frozen sourcehash불변. 조건별command·pose·spin/reverse구간JSON,12행CSV,검증JSON,XY그림1장과[보고서](PHASE_B_ACTUAL_POSE_RECOVERY.md)저장. Scope는Oracle geometry/offline SE2 kinematic feasibility. 후진필요성근거없으며온라인Recovery는제자리회전우선·후진비활성유지. 새Isaac/GPU/온라인controller/Graph변경없음.
+
+## Graph v2 — S0 PP offline pilot
+
+2026-10-20. 같은 Phase0 branch, 기준a00f3b4. 기존 PP10 run의 실제 applied command로 882 eligible handoff에서 run별 최대/중앙값 근접 사례 총20개 선정. 초기OLD없음10건, terminal미적용2건 제외. 새로운 offline 코드·protocol만 추가하고 기존 PP/PD/Graph runtime·geometry·scene·raw는 보존했다. 기존 SE2 log/relative 연산과 PP/clearance 함수를 재사용하며 PD residual은 사용하지 않았다. RAW projection entry 및 chord heading indices를 solve전에 고정; prior/relative/boundary/PP angular continuity/anti-shrink/native와PP safety factor 포함. 설정·solver를afd4d0d에고정한후 clean상태에서20solve/재시도0.
+
+RAW first command 최대오차2.22e−16,72Hz pose재현오차0,clearance1.11e−16m,world변환4.44e−16m. 기존 batch validator와최소2testsPASS. 전방법동일B/16tick/9Hz갱신 확인. 1011input/sourcehash불변,기존PP110loghash일치. 20/20ftol수렴/heading거부0; S0_05F90은short-chord fallback사용.
+
+|Δw|평균RAW/RIGID/GRAPH=.425200/.401720/.367062rad/s,중앙값=.325461/.298177/.125050,p95/max는모두.8. Graph12개감소/7유지/1증가,부호반전11→9. GraphXY수정RMS평균8.328mm,boundarygap20.134→8.093mm,길이비.9680–1.0598. Native full안전19→20/20; 실제짧은PP rollout은모두20/20안전·44.444mm전진·endpointstop0·overlap0·corridor침범0. Graph최소PPclearance122.259mm.
+
+Clipping plateau7건은큰명령반전을해결하지못했다. S0_02F54는native전체path−1.141→24.271mm로안전해졌지만|Δw|가.116793→.124975로증가. 각속도감소12건모두최소clearance중일부감소가있어사전고정된엄격한비악화기준의joint improvement는0/20; 2cm실패와구분한다. Graph solve median/p95/max=.668/1.778/1.885s,100ms는미래목표일뿐pass gate아님. 새navigation/inference/시각화/튜닝0. 작은사례JSON·60행CSV·summary·검증과[보고서](GRAPH_V2_OFFLINE_PILOT.md)저장. Online 전핵심은포화PP불연속과안전성의동시보장및계산지연처리이며closed-loop개선으로해석하지않는다.
