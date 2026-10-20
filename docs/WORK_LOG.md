@@ -471,3 +471,11 @@ WarmGPU35.602/43.999ms,obs→switch138.163/177.426ms median/p95. RTF.999996079,p
 신규6+기존8=14 CPU tests PASS. 기존PP/PD read-only추출은둘다SUCCESS/goal24.180556·25.305556s/최소72.557·74.423mm/2cm위반0/pose재적분오차0. w clipping19/218·66/228,부호전환27·23,최대|Δw|.726350·.8. 신규navigation/GPU inference없음;N10은실행하지않는다. 현재확정결정(PP주실행기/제자리회전Recovery/oracle geometry/NoMaD)을새protocol에만기록하고과거UNDECIDED문서보존. 이번S0에는Recovery구현없음. [보고서](PHASE0_D_S0_BATCH.md).
 
 Phase0-D 최종사전검증: clean91ff683의CLI dry-run02는PP10/PD10 정확히20job,새navigation0/GPUinference0,예정batch root미생성. 실제기존metricJSON저장에서NumPy int64 clipping-count 직렬화문제를발견해Python scalar로정규화하고회귀검증추가;최종15testsPASS. Partial metric_validation01보존후02에서기존542hash불변/metric일치PASS. Positive-margin synthetic은SUCCESS+별도1/72s위반,conservative contact는OTHER_TERMINATION. 기존2run은batch표본/pairedCI에포함하지않았다. 작은plan/seed명령CSV/legacy metricCSV/검증JSON저장. N10실행준비사전검증통과이며nonzero-offset live GPU검증은미실행으로명시.
+
+## Phase 0-D — S0 paired N=10 본 실행 완료
+
+2026-10-20. 사용자 본 실행 요청에 따라 clean `5ec2d1eb2e67479c3c7f54765fd5e3ed84812e51`의 기존 runner/protocol을 그대로 실행했다. `s0_paired_n10_01/`에 PP10/PD10 순차 완료, 재시도·튜닝·기술 실패0회. 모든 source/model/map/scenario hash 및 seed offset10000..100000 유지, 실제1570request seed/DDPM+1 검증. 20run pose 재적분오차0, 기존 aggregate 재계산일치. Pacing20/20PASS(max2.099ms, run p95최대.165ms), waypoint timeout0. 새 코드/모델/환경 변경 없음.
+
+PP SUCCESS9/10(Wilson95%59.6–98.2%), corridor침범1(S0_08), obstacle충돌0. PD SUCCESS3/10(10.8–60.3%), corridor침범4(S0_01/03/06/10), Static2충돌3(S0_02/08/09). 60초timeout0/OTHER_TERMINATION0. 2cm위반은성공판정과독립: PP총0s/PD총.513889s. Goal조건부평균PP24.360s(n9)/PD25.185s(n3); 실제clipping평균20.00%/30.32%; run별switch|Δw|median평균.11875/.08102rad/s로PP전환이더부드럽다는근거는없다.
+
+Run-ID paired 성공률차+60%p[+30,+90], 양쪽goal3pair시간차−.958s[−1.722,−.403], w clipping차−10.32%p[−15.43,−4.74]. PCG64고정seed20261020/10000bootstrap 유지. 조기종료로clearance/거리/전환횟수 노출구간이달라짐, N10불확실성, 동일offset≠동일RGB/FRESH, PP→PD순서한계를명시. [본 실행 보고서](PHASE0_D_S0_N10_RESULTS.md)와작은원본aggregate복사·CI·검증JSON/CSV만Git보존. Raw/RGB는artifact에유지. Phase2 S0 baseline으로고정하며다음단계는실제pose feasibility B; B조건을임의설정하거나추가실행하지않았다. 과거preflight/pilot/UNDECIDED기록은보존한다.

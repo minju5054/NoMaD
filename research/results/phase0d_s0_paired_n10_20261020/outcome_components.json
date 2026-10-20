@@ -1,0 +1,94 @@
+{
+  "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+  "source": "Completed frozen batch metrics; supplemental components, unchanged outcome definitions",
+  "conditions": {
+    "PP": {
+      "geometric_overlap": {
+        "n": 10,
+        "count": 0,
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.2775327998628892
+        ],
+        "method": "Wilson"
+      },
+      "corridor_violation": {
+        "n": 10,
+        "count": 1,
+        "estimate": 0.1,
+        "ci95": [
+          0.017876213095072896,
+          0.4041500267952385
+        ],
+        "method": "Wilson"
+      }
+    },
+    "PD": {
+      "geometric_overlap": {
+        "n": 10,
+        "count": 3,
+        "estimate": 0.3,
+        "ci95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ],
+        "method": "Wilson"
+      },
+      "corridor_violation": {
+        "n": 10,
+        "count": 4,
+        "estimate": 0.4,
+        "ci95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ],
+        "method": "Wilson"
+      }
+    }
+  },
+  "paired_PP_minus_PD": {
+    "geometric_overlap": {
+      "n": 10,
+      "estimate": -0.3,
+      "ci95": [
+        -0.6,
+        0.0
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ]
+    },
+    "corridor_violation": {
+      "n": 10,
+      "estimate": -0.3,
+      "ci95": [
+        -0.7,
+        0.1
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ]
+    }
+  }
+}

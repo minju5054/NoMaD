@@ -1,0 +1,1065 @@
+{
+  "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+  "label": "S0_PAIRED_BATCH_METRICS",
+  "planned_per_condition": 10,
+  "attempted": 20,
+  "conditions": {
+    "PP": {
+      "attempted": 10,
+      "metrics": {
+        "success": {
+          "n": 10,
+          "count": 9,
+          "estimate": 0.9,
+          "ci95": [
+            0.5958499732047615,
+            0.9821237869049271
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "goal_entry": {
+          "n": 10,
+          "count": 9,
+          "estimate": 0.9,
+          "ci95": [
+            0.5958499732047615,
+            0.9821237869049271
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "safety_failure": {
+          "n": 10,
+          "count": 1,
+          "estimate": 0.1,
+          "ci95": [
+            0.017876213095072896,
+            0.4041500267952385
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "timeout": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "technical_failure": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle1_pass_plus_y": {
+          "n": 10,
+          "count": 10,
+          "estimate": 1.0,
+          "ci95": [
+            0.7224672001371107,
+            0.9999999999999999
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle1_pass_minus_y": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle1_not_passed": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle2_pass_plus_y": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle2_pass_minus_y": {
+          "n": 10,
+          "count": 9,
+          "estimate": 0.9,
+          "ci95": [
+            0.5958499732047615,
+            0.9821237869049271
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle2_not_passed": {
+          "n": 10,
+          "count": 1,
+          "estimate": 0.1,
+          "ci95": [
+            0.017876213095072896,
+            0.4041500267952385
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "goal_time_s": {
+          "n": 9,
+          "estimate": 24.35956790123457,
+          "ci95": [
+            24.243827160493826,
+            24.490740740740744
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 1
+        },
+        "duration_s": {
+          "n": 10,
+          "estimate": 23.3125,
+          "ci95": [
+            21.173611111111107,
+            24.448611111111113
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "stop_time_s": {
+          "n": 10,
+          "estimate": 1.1222222222222202,
+          "ci95": [
+            1.1111111111111092,
+            1.1444444444444424
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "distance_m": {
+          "n": 10,
+          "estimate": 4.438053435844187,
+          "ci95": [
+            4.010546573714952,
+            4.665838190380539
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "margin_violation_s": {
+          "n": 10,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "switch_abs_dw_median": {
+          "n": 10,
+          "estimate": 0.11875252628687467,
+          "ci95": [
+            0.1056810337659006,
+            0.13294831476451674
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "switch_abs_dw_max": {
+          "n": 10,
+          "estimate": 0.7308776996472359,
+          "ci95": [
+            0.6650601243495301,
+            0.7884154901872544
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "switch_sign_reversals": {
+          "n": 10,
+          "estimate": 24.2,
+          "ci95": [
+            21.0,
+            26.9
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "w_clipping_fraction": {
+          "n": 10,
+          "estimate": 0.1999983522942847,
+          "ci95": [
+            0.15427871192463413,
+            0.25628810998531304
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "StaticObstacle1_minimum_clearance_m": {
+          "n": 10,
+          "estimate": 0.16451901121410942,
+          "ci95": [
+            0.132173713105912,
+            0.21049063320113445
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "StaticObstacle2_minimum_clearance_m": {
+          "n": 10,
+          "estimate": 0.12123933828496739,
+          "ci95": [
+            0.05688224775346514,
+            0.23976317113856518
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        }
+      },
+      "classification_counts": {
+        "SUCCESS": 9,
+        "SAFETY_FAILURE": 1
+      },
+      "termination_counts": {
+        "goal_entry": 9,
+        "corridor_footprint_stop": 1
+      }
+    },
+    "PD": {
+      "attempted": 10,
+      "metrics": {
+        "success": {
+          "n": 10,
+          "count": 3,
+          "estimate": 0.3,
+          "ci95": [
+            0.10779126740630099,
+            0.6032218525388546
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "goal_entry": {
+          "n": 10,
+          "count": 3,
+          "estimate": 0.3,
+          "ci95": [
+            0.10779126740630099,
+            0.6032218525388546
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "safety_failure": {
+          "n": 10,
+          "count": 7,
+          "estimate": 0.7,
+          "ci95": [
+            0.39677814746114537,
+            0.8922087325936989
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "timeout": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "technical_failure": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle1_pass_plus_y": {
+          "n": 10,
+          "count": 8,
+          "estimate": 0.8,
+          "ci95": [
+            0.49016247153664183,
+            0.9433178485456247
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle1_pass_minus_y": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle1_not_passed": {
+          "n": 10,
+          "count": 2,
+          "estimate": 0.2,
+          "ci95": [
+            0.05668215145437519,
+            0.5098375284633583
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle2_pass_plus_y": {
+          "n": 10,
+          "count": 0,
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.2775327998628892
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle2_pass_minus_y": {
+          "n": 10,
+          "count": 3,
+          "estimate": 0.3,
+          "ci95": [
+            0.10779126740630099,
+            0.6032218525388546
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "StaticObstacle2_not_passed": {
+          "n": 10,
+          "count": 7,
+          "estimate": 0.7,
+          "ci95": [
+            0.39677814746114537,
+            0.8922087325936989
+          ],
+          "method": "Wilson",
+          "missing": 0
+        },
+        "goal_time_s": {
+          "n": 3,
+          "estimate": 25.185185185185187,
+          "ci95": [
+            24.61111111111111,
+            26.0
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 7
+        },
+        "duration_s": {
+          "n": 10,
+          "estimate": 17.836111111111112,
+          "ci95": [
+            14.892986111111114,
+            21.145868055555557
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "stop_time_s": {
+          "n": 10,
+          "estimate": 1.1111111111111092,
+          "ci95": [
+            1.1111111111111092,
+            1.1111111111111092
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "distance_m": {
+          "n": 10,
+          "estimate": 3.3152759967228365,
+          "ci95": [
+            2.729684470377417,
+            3.973445947964607
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "margin_violation_s": {
+          "n": 10,
+          "estimate": 0.05138888888889035,
+          "ci95": [
+            0.0,
+            0.10833333333333642
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "switch_abs_dw_median": {
+          "n": 10,
+          "estimate": 0.08102243428321532,
+          "ci95": [
+            0.06530425439138124,
+            0.09470431286540518
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "switch_abs_dw_max": {
+          "n": 10,
+          "estimate": 0.6863332637021233,
+          "ci95": [
+            0.6254219570473892,
+            0.7422993177695419
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "switch_sign_reversals": {
+          "n": 10,
+          "estimate": 16.1,
+          "ci95": [
+            12.9,
+            19.6
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "w_clipping_fraction": {
+          "n": 10,
+          "estimate": 0.3032404945242665,
+          "ci95": [
+            0.26277346202829827,
+            0.34681173353003686
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "StaticObstacle1_minimum_clearance_m": {
+          "n": 10,
+          "estimate": 0.29831358602144115,
+          "ci95": [
+            0.24867282716016298,
+            0.3499684427335503
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        },
+        "StaticObstacle2_minimum_clearance_m": {
+          "n": 10,
+          "estimate": 0.3714152534697785,
+          "ci95": [
+            0.11400918742536324,
+            0.6313396833383782
+          ],
+          "method": "percentile bootstrap mean",
+          "missing": 0
+        }
+      },
+      "classification_counts": {
+        "SAFETY_FAILURE": 7,
+        "SUCCESS": 3
+      },
+      "termination_counts": {
+        "corridor_footprint_stop": 4,
+        "geometric_collision": 3,
+        "goal_entry": 3
+      }
+    }
+  },
+  "paired_PP_minus_PD": {
+    "success": {
+      "n": 10,
+      "estimate": 0.6,
+      "ci95": [
+        0.3,
+        0.9
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "goal_entry": {
+      "n": 10,
+      "estimate": 0.6,
+      "ci95": [
+        0.3,
+        0.9
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "safety_failure": {
+      "n": 10,
+      "estimate": -0.6,
+      "ci95": [
+        -0.9,
+        -0.3
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "timeout": {
+      "n": 10,
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "technical_failure": {
+      "n": 10,
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "StaticObstacle1_pass_plus_y": {
+      "n": 10,
+      "estimate": 0.2,
+      "ci95": [
+        0.0,
+        0.5
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "StaticObstacle1_pass_minus_y": {
+      "n": 10,
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "StaticObstacle1_not_passed": {
+      "n": 10,
+      "estimate": -0.2,
+      "ci95": [
+        -0.5,
+        0.0
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "StaticObstacle2_pass_plus_y": {
+      "n": 10,
+      "estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "StaticObstacle2_pass_minus_y": {
+      "n": 10,
+      "estimate": 0.6,
+      "ci95": [
+        0.3,
+        0.9
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "StaticObstacle2_not_passed": {
+      "n": 10,
+      "estimate": -0.6,
+      "ci95": [
+        -0.9,
+        -0.3
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "goal_time_s": {
+      "n": 3,
+      "estimate": -0.9583333333333334,
+      "ci95": [
+        -1.7222222222222214,
+        -0.40277777777777857
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_04",
+        "S0_05",
+        "S0_07"
+      ],
+      "missing_pairs": 7
+    },
+    "duration_s": {
+      "n": 10,
+      "estimate": 5.476388888888889,
+      "ci95": [
+        1.787465277777777,
+        9.03892361111111
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "stop_time_s": {
+      "n": 10,
+      "estimate": 0.011111111111111072,
+      "ci95": [
+        0.0,
+        0.033333333333333215
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "distance_m": {
+      "n": 10,
+      "estimate": 1.1227774391213523,
+      "ci95": [
+        0.3911217702637807,
+        1.8314825693483465
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "margin_violation_s": {
+      "n": 10,
+      "estimate": -0.05138888888889035,
+      "ci95": [
+        -0.10833333333333642,
+        0.0
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "switch_abs_dw_median": {
+      "n": 10,
+      "estimate": 0.037730092003659364,
+      "ci95": [
+        0.01775180105333513,
+        0.057326248928816645
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "switch_abs_dw_max": {
+      "n": 10,
+      "estimate": 0.04454443594511254,
+      "ci95": [
+        -0.03920341507158499,
+        0.12874849703515415
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "switch_sign_reversals": {
+      "n": 10,
+      "estimate": 8.1,
+      "ci95": [
+        4.3,
+        12.1
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "w_clipping_fraction": {
+      "n": 10,
+      "estimate": -0.10324214222998185,
+      "ci95": [
+        -0.15428000897260463,
+        -0.047410858889528285
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "StaticObstacle1_minimum_clearance_m": {
+      "n": 10,
+      "estimate": -0.13379457480733176,
+      "ci95": [
+        -0.1891212416782854,
+        -0.06761615715967927
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    },
+    "StaticObstacle2_minimum_clearance_m": {
+      "n": 10,
+      "estimate": -0.2501759151848112,
+      "ci95": [
+        -0.5574715929877709,
+        0.058712250696859265
+      ],
+      "method": "percentile bootstrap mean",
+      "run_ids": [
+        "S0_01",
+        "S0_02",
+        "S0_03",
+        "S0_04",
+        "S0_05",
+        "S0_06",
+        "S0_07",
+        "S0_08",
+        "S0_09",
+        "S0_10"
+      ],
+      "missing_pairs": 0
+    }
+  },
+  "protocol": {
+    "phase": "0-D",
+    "label": "S0_PAIRED_BATCH_PROTOCOL",
+    "base_commit": "f90b9ae265eb5e286956efc4ece3275935491469",
+    "scope": [
+      "Oracle geometry evaluation",
+      "SE(2) kinematic Isaac Sim"
+    ],
+    "scenario": "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "topomap": "artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+    "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "topomap_nodes": 14,
+    "conditions_in_order": [
+      "PP",
+      "PD"
+    ],
+    "pairs": 10,
+    "offsets": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000,
+      60000,
+      70000,
+      80000,
+      90000,
+      100000
+    ],
+    "inference_seed": "101 + offset + 2 * request_id",
+    "ddpm_seed": "inference_seed + 1",
+    "pair_id": "S0_01 ... S0_10; equal offsets within pair",
+    "execution": "Sequential PP then PD per pair; one subprocess at a time; exclusive batch lock; no retry/resume, seed replacement or tuning",
+    "follower_source": "Unchanged Phase 0-C chunk_pilot_protocol.json; PP lookahead .25m, v .2m/s, |w|<=.4rad/s",
+    "pd": "Original index-2 controller",
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "integration_hz": 72,
+    "waypoint_timeout_s": 1,
+    "extra_delivery_delay_s": 0,
+    "maximum_simulation_s": 60,
+    "goal_tolerance_m": 0.3,
+    "classification_precedence": [
+      "TECHNICAL_FAILURE",
+      "SAFETY_FAILURE",
+      "SUCCESS",
+      "STUCK",
+      "OTHER_TERMINATION"
+    ],
+    "SUCCESS": "goal entry AND no confirmed geometric overlap AND no footprint outside corridor",
+    "SAFETY_FAILURE": "confirmed geometric overlap OR footprint outside corridor (existing SE2 arcs, axis extrema checked)",
+    "STUCK": "no preceding classification and simulation_timeout at 60s",
+    "OTHER_TERMINATION": "conservative_contact_stop or other non-goal termination without confirmed geometric collision/corridor intrusion; preserve original termination reason",
+    "MARGIN_VIOLATION": "Separate sum of positive-duration 72Hz intervals with any obstacle swept lower bound <.02m; no change to SUCCESS/SAFETY_FAILURE",
+    "margin_duration_note": "Inspection-interval duration, not exact threshold-crossing time; overlapping obstacle violations counted once",
+    "switch_change": "Actual controller command immediately before vs at a FRESH switch; exclude initial switch with no OLD",
+    "w_clipping": "Strict |unclipped_w - actual_w| >1e-12 at all actual control refreshes; missing/expired command is unclipped zero; PP uses applied command and PP diagnostic",
+    "statistics": {
+      "confidence": 0.95,
+      "binary_method": "Wilson",
+      "normal_z": 1.959963984540054,
+      "bootstrap_method": "Percentile bootstrap of arithmetic mean, numpy PCG64; fixed seed reset per estimand",
+      "bootstrap_seed": 20261020,
+      "bootstrap_resamples": 10000,
+      "paired_method": "Complete run-ID PP-PD differences resampled as whole pairs",
+      "goal_time": "Conditional on goal entry; missing times remain null; paired goal-time difference only for both-goal pairs",
+      "success_denominator": "All attempted runs including technical failures (no confirmed success)",
+      "goal_entry_denominator": "Valid navigation records with observed goal-entry status",
+      "safety_timeout_denominator": "Valid navigation records only; unknown technical outcomes excluded and separately counted",
+      "continuous_denominator": "Available valid records per metric; n and missing reported",
+      "averaging_unit": "Run-level metrics, not pooled controller ticks or switch events",
+      "passage": "Per-obstacle +/-Y/not-passed fractions with Wilson CI; categorical label retained per run"
+    },
+    "research_decisions": {
+      "main_executor": "Pure Pursuit",
+      "recovery": "In-place rotation (decision only; not implemented or enabled in this S0 batch)",
+      "safety_information": "Oracle geometry",
+      "upstream": "NoMaD navigation policy"
+    },
+    "limitations": [
+      "N=10 per condition has large statistical uncertainty; bootstrap intervals may be degenerate for constant/small samples",
+      "Same seed offset does not imply identical closed-loop RGB, requests or physical correspondence",
+      "Pairing is by run seed ID, not a claim of identical observations or deterministic paired causal effect",
+      "Fixed sequential PP-then-PD order may carry wall-clock/order effects",
+      "Infrastructure preflight only in Phase 0-D; no new navigation or inference"
+    ]
+  },
+  "missing_goal_time_policy": "null, not 60s; conditional means and complete both-goal pairs"
+}
