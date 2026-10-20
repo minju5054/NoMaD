@@ -1,0 +1,37 @@
+{
+  "phase": "0-B",
+  "base_commit": "67c3304950a3e3b41df3e7640ecf02d1ab77cd2e",
+  "scope": "Independent offline XY geometric follower validation; no runtime replacement",
+  "reference_sha256": "048cf368d11b288270535fe3b08a9faa9300a84781ed8f84d95d7b14a9f04f46",
+  "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+  "follower": {
+    "lookahead_m": 0.25,
+    "speed_m_s": 0.2,
+    "max_v_m_s": 0.2,
+    "max_abs_w_rad_s": 0.4,
+    "endpoint_tolerance_m": 0.01,
+    "projection": "Nearest polyline projection; nondecreasing arclength progress",
+    "target": "Interpolate at progress + lookahead, clamped to path end",
+    "curvature": "2 * target_local_y / squared_target_distance",
+    "speed_policy": "Constant 0.2m/s; zero v,w only within 0.01m of path endpoint",
+    "angular_policy": "w = clip(v * curvature, -0.4, +0.4); no curvature-dependent speed reduction"
+  },
+  "reference_sampling_hz": 72,
+  "controller_hz": 9,
+  "integration_hz": 72,
+  "maximum_simulation_s": 60,
+  "goal_tolerance_m": 0.3,
+  "termination": "After each executed interval: geometric overlap or uncertified contact / conservative corridor containment loss / goal entry / time limit",
+  "margin_violation": "Record but do not stop or override commands",
+  "safety_evaluation": "Passive post-interval geometry evaluation outside follower; no prospective obstacle check",
+  "cross_track_error": "Unsigned shortest Euclidean distance to dense XY polyline at every 72Hz pose, including start and final",
+  "saturation": "Report strict clipping fraction and bound-occupancy fraction separately, per controller update",
+  "pure_pursuit_simulation_count": 1,
+  "parameter_tuning": false,
+  "research_plan_section_7": [
+    {"item": 1, "question": "주 실행기를 trajectory follower로 변경할지", "status": "UNDECIDED"},
+    {"item": 2, "question": "Recovery에서 후진 허용 여부", "status": "UNDECIDED"},
+    {"item": 3, "question": "Oracle geometry 또는 depth 기반 안전 인식", "status": "UNDECIDED"},
+    {"item": 4, "question": "언어 지시를 받는 VLA 필수 여부", "status": "UNDECIDED"}
+  ]
+}

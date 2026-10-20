@@ -433,3 +433,7 @@ S0 `FEASIBLE`, S2 우측 `FEASIBLE`: 각각166 expansion,325 generated,44arc/45p
 S2 Dynamic–Static2 실제틈202.720458mm/요구220mm/부족17.279542mm 재현. 단순틈폭뿐 아니라 두 금지단면과 +Y벽, center-X선 재횡단 금지를 결합해 좌측 one-pass goal연결을 `GEOMETRICALLY_BLOCKED`로 판정. 한번 좌측통과후 앞쪽으로돌아와 우측으로빠지는 경로는 좌측성공으로 집계하지 않는다. 전체 S2는 우측witness가 있어FEASIBLE. S0 dynamic좌/우는N/A.
 
 작은 S0/S2 JSON과 [보고서](PHASE0_A_SCENARIO_FEASIBILITY.md) 저장. 새 navigation/inference/시각화/환경변경/scene설계/runner/controller 없음. 탐색미발견은 불가능증명아님. 사용자 확인 연구계획7번 네항목(trajectory follower 전환, recovery 후진, oracle/depth 안전인식, 언어VLA 필수성)은 모두 `UNDECIDED`; checker의 전진 primitive와 정확한JSON geometry 사용은 이 정책들을 결정하지 않는다.
+
+## Phase 0-B — 독립 Pure Pursuit 사전 고정
+
+2026-10-20. 동일 `research/phase0-infrastructure`, 기준67c3304. S0 witness만 입력으로 별도XY follower 추가: lookahead.25m, constant v.2m/s, w±.4 clipping, endpoint1cm 정지,9Hz/72Hz/최대60s. 원본44개 .5s primitive는72Hz geometric reference 재구성과 exact replay에만 사용하며 follower에는XY만 전달한다. 장애물·goal·yaw/timestamp를제어입력으로전달하지않는다. 이미실행된구간을별도평가해충돌/복도이탈종료,2cm위반은기록만수행. 최소tests3passed; 코드·설정commit후 원본pose/primitive clearance 일치검증 및PurePursuit1회예정. 네미확정정책모두UNDECIDED. [보고서](PHASE0_B_PURE_PURSUIT.md).
