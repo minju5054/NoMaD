@@ -111,7 +111,7 @@ def extract_run(run, condition, run_id, offset, legacy=False):
         else:
             np.testing.assert_array_equal(command, [0., 0.])
             clipped = False
-        clips.append(clipped)
+        clips.append(bool(clipped))
     max_pose_error = 0.
     min_corridor = math.inf
     dt = 1/72

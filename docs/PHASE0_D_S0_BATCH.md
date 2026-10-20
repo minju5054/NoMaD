@@ -75,7 +75,7 @@ N=10의 불확실성이 크며 작은 표본·상수값 bootstrap CI는 퇴화�
 
 ## 사전 검증
 
-최소 신규6개+기존chunk3개/async5개, 총14 tests PASS. Zero offset 동일성, S0 제한,20job/seed 대응, 서로 다른 pair seed stream 분리, dry-run child 미호출, 실패 기록/재시도0/직렬 순서, lock, margin 독립성, conservative contact 구분, Wilson 경계, deterministic paired bootstrap 및 goal-time 결측을 검증했다. Fake child를 이용한 runner test는 GPU/navigation 실행이 아니다.
+최소 신규7개+기존chunk3개/async5개, 총15 tests PASS. Zero offset 동일성, S0 제한,20job/seed 대응, 서로 다른 pair seed stream 분리, dry-run child 미호출, 실패 기록/재시도0/직렬 순서, lock, margin 독립성, conservative contact 구분, Wilson 경계, deterministic paired bootstrap 및 goal-time 결측을 검증했다. 실제 기존PP/PD metric의JSON직렬화도 검사한다. Fake child를 이용한 runner test는 GPU/navigation 실행이 아니다.
 
 저장된 PP `phase0c_pure_pursuit_01`, PD `topomap_static_2s_01`을 read-only로 추출한 값:
 

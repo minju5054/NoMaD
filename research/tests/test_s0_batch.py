@@ -9,7 +9,7 @@ from nomad_isaac.common import ROOT, integrate_se2, original_controller
 from nomad_isaac.seed_offset import request_seed, validate_seed_options
 from nomad_phase0 import s0_batch
 from nomad_phase0.s0_batch_metrics import (aggregate, bootstrap_mean, classify, corridor_arc_minimum,
-                                         margin_violation_duration, pd_unclipped_w, protocol, wilson)
+                                         extract_run, margin_violation_duration, pd_unclipped_w, protocol, wilson)
 
 
 def test_zero_offset_identity_and_static_only_guard():
@@ -124,3 +124,12 @@ def test_serial_attempts_failure_preserved_no_retry_and_lock(tmp_path, monkeypat
         with pytest.raises(RuntimeError):
             with s0_batch.exclusive_batch():
                 pytest.fail("Concurrent batch acquired lock")
+
+
+def test_existing_pp_pd_metrics_are_json_serializable_and_use_actual_commands():
+    root = ROOT.parent/"artifacts/isaac6"
+    pp = extract_run(root/"phase0c_pure_pursuit_01", "PP", "LEGACY_REFERENCE", 0, legacy=True)
+    pd = extract_run(root/"topomap_static_2s_01", "PD", "LEGACY_REFERENCE", 0, legacy=True)
+    assert json.loads(json.dumps([pp, pd])) == [pp, pd]
+    assert [r["w_clipped_ticks"] for r in (pp, pd)] == [19, 66]
+    assert all(r["classification"] == "SUCCESS" and r["max_pose_replay_error"] == 0 for r in (pp, pd))
