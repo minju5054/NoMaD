@@ -1,0 +1,30 @@
+{
+  "phase": "0-A",
+  "purpose": "Offline geometry/kinematics witness search, not NoMaD evaluation",
+  "kinematics": {
+    "v_range_m_s": [0.0, 0.2],
+    "w_range_rad_s": [-0.4, 0.4],
+    "reverse_primitives": false
+  },
+  "search": {
+    "method": "Continuous SE(2) forward-arc Hybrid A* with quantized duplicate pruning",
+    "xy_bin_m": 0.05,
+    "heading_bins": 64,
+    "primitive_duration_s": 0.5,
+    "primitives_vw": [[0.2, 0.0], [0.2, -0.2], [0.2, 0.2], [0.2, -0.4], [0.2, 0.4]],
+    "heuristic_weight": 1.5,
+    "max_expansions_per_search": 30000,
+    "max_wall_seconds_per_search": 120.0,
+    "max_path_duration_s": 60.0,
+    "goal": "World XY disk from scenario; goal yaw unconstrained",
+    "wall_rule": "Original corridor_clearance > 0 with radius; 0.02m margin applies to obstacles",
+    "side_rule": "Cross dynamic center-X plane west-to-east once, above/below inflated Y face; never return west of plane; reach goal east of full inflated box",
+    "notes": "Subset of allowed controls, no in-place turn primitive; bin pruning and finite budgets are incomplete. Settings apply only to this checker."
+  },
+  "research_plan_section_7": [
+    {"item": 1, "question": "주 실행기를 trajectory follower로 변경할지", "status": "UNDECIDED"},
+    {"item": 2, "question": "Recovery에서 후진 허용 여부", "status": "UNDECIDED"},
+    {"item": 3, "question": "Oracle geometry 또는 depth 기반 안전 인식", "status": "UNDECIDED"},
+    {"item": 4, "question": "언어 지시를 받는 VLA 필수 여부", "status": "UNDECIDED"}
+  ]
+}
