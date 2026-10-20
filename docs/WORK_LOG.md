@@ -397,3 +397,12 @@ WarmGPU median/p95 35.536/53.096ms, request/receive/switch54/54/54, 모두적용
 ## Topomap Oracle Safety Stop — 사전 검증
 
 2026-10-20. 기준8307288에서 별도 research/isaac6-topomap-oracle-stop 브랜치. 실제9Hz 원본PD 계산 직후 actual integration 명령만 opt-in STOP override한다. Tick970 실제 adaptive spawn 이후16/72초 horizon, swept obstacle>=.02m 및 corridor containment, 원래4/9/72Hz·timeout·worker·Topomap·placement 유지. Nominal/actual 별도 로그, waypoint 갱신 중 정지 가능. 저장된B52 RAW clearance .002653804024m 위험/STOP .023340344453m 안전, RAW16pose 오차0. 최소 신규2개+기존tests 총23passed; prior745hash 및14node map 검증PASS. Protocol/code commit 후 clean 상태에서 단일 navigation1회/재시도0회 예정. [보고서](ISAAC6_TOPOMAP_ORACLE_SAFETY_STOP.md).
+
+
+## Topomap Oracle Safety Stop — 단일 closed-loop 결과
+
+2026-10-20. Clean32ca832에서 기존Isaac6/NoMaD 환경으로 navigation1회/재시도0회. 결과 **SAFE_BUT_STUCK**: 60s timeout, goal false/min distance2.267660m. Tick970 OLD49 기반 dynamic center(2.354396712,.077716494), 실제placement/render/monitor 일치. Static1/2 최소clearance .300221/.397675m, dynamic .024828160m, corridor .725852m. 충돌·2cm위반·검사시이미위반 모두0.
+
+Tick976부터gate활성, 첫STOP13.888889s의 현재46.871mm/예측17.869mm. 4stop episode 총45.777778sim s; FRESH54/56/70에서각8tick씩3회재출발했으나18.777778s 이후종료까지정지. 정지중183RGB/184FRESH수신, 전체236request/receive/switch, timeout0/busy1/missed0. 최종정지중71–235 계속수신됐으나 nominal short rollout 모두2cm미달. 원본waypoint/PD/worker/Topomap를 유지하고 actual명령만(0,0)으로차단했다.
+
+WarmGPU35.543/37.311ms,gate2.631/3.458ms median/p95. RTF.99998957,pacingp95/max .153/1.412ms,asyncPASS. 4321pose/540control,nominalPD와actual적분,normalization·observationanchor·Topomap선택·RGBhistoryhash·dynamic및corridor재계산PASS/최대오차0. 모델환경·checkpoint동일,기존745hash보존,새input999hash검증. Startup renderer error4건보존후RGBgate통과. Natural timeout NOT_EXERCISED,syntheticPASS. 새 raw/작은JSON·CSV·XY그림한장과 [보고서](ISAAC6_TOPOMAP_ORACLE_SAFETY_STOP.md). 기존collisionbaseline과는adaptive위치·RGB가다른비paired비교; oracleSTOP의안전정지와navigation성공을구분. Graph/recovery/reranking/추가실험없음.

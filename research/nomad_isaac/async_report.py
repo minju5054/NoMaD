@@ -25,10 +25,12 @@ def wrapped(a):
     return (a+np.pi) % (2*np.pi)-np.pi
 
 
-def validate(run, baseline, out):
+def validate(run, baseline, out, actual_command_override=False):
     out.mkdir(parents=True, exist_ok=False)
     summary = json.loads((run/"summary.json").read_text())
     config = summary["scenario"]
+    if actual_command_override:
+        assert summary.get("oracle_safety_stop_enabled") is True
     protocol = json.loads((run/"async_protocol.json").read_text())
     requests, received, events = (rows(run/name) for name in ["requests.jsonl", "received.jsonl", "events.jsonl"])
     observations = rows(run/"observations.jsonl")
@@ -85,7 +87,8 @@ def validate(run, baseline, out):
     for i in range(1,len(trace)):
         ci = (i-1)//(config["integration_hz"]//config["controller_hz"])
         c = control[ci]
-        np.testing.assert_allclose(incoming[i], [c["v_m_s"],c["w_rad_s"]],atol=1e-12,rtol=0)
+        fields = ("applied_v_m_s", "applied_w_rad_s") if actual_command_override else ("v_m_s", "w_rad_s")
+        np.testing.assert_allclose(incoming[i], [c[key] for key in fields],atol=1e-12,rtol=0)
         assert incoming_id[i] == c["waypoint_id"] and incoming_valid[i] == c["valid"]
 
     timing = []
@@ -258,6 +261,9 @@ def validate(run, baseline, out):
     names=list(dict.fromkeys(k for r in timing for k in r))
     with (out/"request_timing.csv").open("x") as f:
         writer=csv.DictWriter(f,fieldnames=names);writer.writeheader();writer.writerows(timing)
+    if actual_command_override:
+        report["validation"]["actual_command_override"] = "Trace linked to applied fields; nominal PD checked independently"
+        report["limitations"].append("Oracle Safety Stop override decisions require the separate gate audit")
     write_json(out/"summary.json",report)
     files=[run/p for p in ["scenario.json","summary.json","provenance.json","async_protocol.json","agent_trajectory.csv",
            "controller.jsonl","events.jsonl","received.jsonl","requests.jsonl","observations.jsonl","planning.jsonl","model/environment.json","model/inference.jsonl"]]
