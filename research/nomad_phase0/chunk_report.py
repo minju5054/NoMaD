@@ -123,10 +123,20 @@ def main():
             fresh_t = tangent_at_projection(follower.path if follower else None, pose[:2],
                                             p["diagnostic_tangent_minimum_segment_m"])
             transition = e["chunk_transition"]
-            assert transition["old_tangent_at_B"] == old_t and transition["fresh_tangent_at_B"] == fresh_t
+            for stored, computed in ((transition["old_tangent_at_B"], old_t),
+                                     (transition["fresh_tangent_at_B"], fresh_t)):
+                assert stored.keys() == computed.keys()
+                for key, value in computed.items():
+                    if value is None or isinstance(value, (str, bool, int)):
+                        assert stored[key] == value
+                    else:
+                        np.testing.assert_allclose(stored[key], value, atol=1e-12, rtol=0)
             np.testing.assert_allclose(transition["actual_command_before"], previous_command, atol=1e-12, rtol=0)
             remaining = float(follower.path.s[-1]-follower.path.project(pose[:2])[0]) if follower else None
-            assert remaining == transition["remaining_length_at_switch_m"]
+            if remaining is None:
+                assert transition["remaining_length_at_switch_m"] is None
+            else:
+                np.testing.assert_allclose(remaining, transition["remaining_length_at_switch_m"], atol=1e-12, rtol=0)
             switches.append({"id": e["id"], "old_id": transition["old_id"],
                 "observation_sim_s": e["observation_sim_s"], "switch_sim_s": e["application_sim_s"],
                 "ready_monotonic_ns": e["ready_monotonic_ns"],

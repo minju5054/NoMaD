@@ -1,0 +1,380 @@
+{
+  "label": "PILOT",
+  "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase0c_pure_pursuit_01",
+  "baseline": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_static_2s_01",
+  "execution_git_sha": "3f2fac53c200e92b215f29c7c67f12726794584d",
+  "execution_git_status": "",
+  "protocol_sha256": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+  "validation": {
+    "status": "PASS",
+    "map": {
+      "nodes": 14,
+      "rgb_file_and_pixel_hashes": "PASS",
+      "pose_and_tick_correspondence": "PASS",
+      "reference_source_hashes": "PASS",
+      "maximum_usd_pose_error": 3.3306690738754696e-16
+    },
+    "preserved_hashes": 343,
+    "max_actual_command_error": 7.216449660063518e-16,
+    "max_corridor_error": 0.0,
+    "max_pose_integration_error": 0.0,
+    "normalization_and_observation_anchor": "PASS",
+    "topomap_selection_and_RGB_history": "PASS",
+    "feedback_count": 92,
+    "feedback_first_example": {
+      "fresh_id": 1,
+      "previous_applied_id": 0,
+      "pose_displacement_m": 0.024997744613522124,
+      "observation_id": 5
+    }
+  },
+  "navigation": {
+    "classification": "SAFE_GOAL_SUCCESS",
+    "goal_entry": true,
+    "goal_entry_sim_s": 24.180555555555557,
+    "termination": "goal_entry",
+    "duration_s": 24.180555555555557,
+    "final_pose": [
+      4.205805459964852,
+      -0.057897938630344155,
+      0.22070293003754404
+    ],
+    "final_goal_distance_m": 0.29983762052840457,
+    "minimum_goal_distance_m": 0.29983762052840457,
+    "distance_m": 4.613887180450387,
+    "stop_duration_s": 1.1111111111111112,
+    "margin_violation_intervals": 0,
+    "margin_violation_interval_duration_s": 0,
+    "first_margin_violation_interval": null,
+    "obstacles": {
+      "category": "avoidance_and_goal_success",
+      "avoidance_success": true,
+      "geometric_overlap": false,
+      "first_contact": null,
+      "safety_margin_met": true,
+      "minimum_swept_clearance_lower_m": 0.07255670524150303,
+      "minimum_swept_clearance_upper_m": 0.07255753757642686,
+      "minimum_corridor_clearance_lower_m": 0.8162444870167311,
+      "corridor_containment_certified": true,
+      "passage": {
+        "StaticObstacle1": {
+          "side": "left_positive_y",
+          "simulation_time_s": 11.027777777777779,
+          "pose": [
+            1.7901320115032882,
+            0.45060971229632973,
+            -0.6324096066361182
+          ]
+        },
+        "StaticObstacle2": {
+          "side": "right_negative_y",
+          "simulation_time_s": 19.77777777777778,
+          "pose": [
+            3.3402011503136144,
+            -0.20572103782953793,
+            0.08698314695620457
+          ]
+        }
+      },
+      "collision_detection_period_s": 0.013888888888888888,
+      "obstacles": {
+        "StaticObstacle1": {
+          "category": "avoidance_and_goal_success",
+          "avoidance_success": true,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.12367606754872507,
+          "minimum_swept_clearance_upper_m": 0.12367705832084741,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.8162444870167311,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "left_positive_y",
+            "simulation_time_s": 11.027777777777779,
+            "pose": [
+              1.7901320115032882,
+              0.45060971229632973,
+              -0.6324096066361182
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        },
+        "StaticObstacle2": {
+          "category": "avoidance_and_goal_success",
+          "avoidance_success": true,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.07255670524150303,
+          "minimum_swept_clearance_upper_m": 0.07255753757642686,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.8162444870167311,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "right_negative_y",
+            "simulation_time_s": 19.77777777777778,
+            "pose": [
+              3.3402011503136144,
+              -0.20572103782953793,
+              0.08698314695620457
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        }
+      }
+    },
+    "received": 93,
+    "switches": 93,
+    "controller_ticks": 218,
+    "timeout_episodes": 0,
+    "busy_observation_skips": 1,
+    "missed_capture_slots": 0,
+    "warm_inference_ms": {
+      "n": 92,
+      "median": 35.602075,
+      "p95": 43.99910660000003,
+      "min": 31.232551,
+      "max": 53.138985
+    },
+    "observation_to_switch_wall_s": {
+      "n": 93,
+      "median": 0.138162507,
+      "p95": 0.17742615899999978,
+      "min": 0.083216108,
+      "max": 0.360952911
+    },
+    "v_upper_bound_occupancy_fraction": 0.9541284403669725,
+    "w_bound_occupancy_fraction": 0.0871559633027523
+  },
+  "original_pd_reference": {
+    "classification": "SAFE_GOAL_SUCCESS",
+    "goal_entry": true,
+    "goal_entry_sim_s": 25.305555555555557,
+    "termination": "goal_entry",
+    "duration_s": 25.305555555555557,
+    "final_pose": [
+      4.206426199318592,
+      -0.04751304172018795,
+      0.2739844361301982
+    ],
+    "final_goal_distance_m": 0.2973937887381497,
+    "minimum_goal_distance_m": 0.2973937887381497,
+    "distance_m": 4.776190887922411,
+    "stop_duration_s": 1.1111111111111112,
+    "margin_violation_intervals": 0,
+    "margin_violation_interval_duration_s": 0,
+    "first_margin_violation_interval": null,
+    "obstacles": {
+      "category": "avoidance_and_goal_success",
+      "avoidance_success": true,
+      "geometric_overlap": false,
+      "first_contact": null,
+      "safety_margin_met": true,
+      "minimum_swept_clearance_lower_m": 0.07442262091940491,
+      "minimum_swept_clearance_upper_m": 0.07442629142145171,
+      "minimum_corridor_clearance_lower_m": 0.7783975640964266,
+      "corridor_containment_certified": true,
+      "passage": {
+        "StaticObstacle1": {
+          "side": "left_positive_y",
+          "simulation_time_s": 10.98611111111111,
+          "pose": [
+            1.7918172790219753,
+            0.6092633031436933,
+            -0.16919561793049498
+          ]
+        },
+        "StaticObstacle2": {
+          "side": "right_negative_y",
+          "simulation_time_s": 20.90277777777778,
+          "pose": [
+            3.3405564142237187,
+            -0.19237489409351177,
+            0.15153855874904432
+          ]
+        }
+      },
+      "collision_detection_period_s": 0.013888888888888888,
+      "obstacles": {
+        "StaticObstacle1": {
+          "category": "avoidance_and_goal_success",
+          "avoidance_success": true,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.27914867870801535,
+          "minimum_swept_clearance_upper_m": 0.27914873997105905,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.7783975640964266,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "left_positive_y",
+            "simulation_time_s": 10.98611111111111,
+            "pose": [
+              1.7918172790219753,
+              0.6092633031436933,
+              -0.16919561793049498
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        },
+        "StaticObstacle2": {
+          "category": "avoidance_and_goal_success",
+          "avoidance_success": true,
+          "geometric_overlap": false,
+          "first_contact": null,
+          "minimum_swept_clearance_lower_m": 0.07442262091940491,
+          "minimum_swept_clearance_upper_m": 0.07442629142145171,
+          "safety_margin_met": true,
+          "minimum_corridor_clearance_lower_m": 0.7783975640964266,
+          "corridor_containment_certified": true,
+          "passage": {
+            "side": "right_negative_y",
+            "simulation_time_s": 20.90277777777778,
+            "pose": [
+              3.3405564142237187,
+              -0.19237489409351177,
+              0.15153855874904432
+            ]
+          },
+          "collision_detection_period_s": 0.013888888888888888
+        }
+      }
+    },
+    "received": 98,
+    "switches": 97,
+    "controller_ticks": 228,
+    "timeout_episodes": 0,
+    "busy_observation_skips": 1,
+    "missed_capture_slots": 0,
+    "warm_inference_ms": {
+      "n": 97,
+      "median": 35.181938,
+      "p95": 46.58598859999995,
+      "min": 30.337199,
+      "max": 53.117094
+    },
+    "observation_to_switch_wall_s": {
+      "n": 97,
+      "median": 0.138241685,
+      "p95": 0.166410534,
+      "min": 0.082460667,
+      "max": 0.360961588
+    },
+    "v_upper_bound_occupancy_fraction": 0.9035087719298246,
+    "w_bound_occupancy_fraction": 0.2894736842105263
+  },
+  "runtime": {
+    "async_reproduction": "PASS",
+    "real_time_pacing_pass": true,
+    "inference_clock_mapping_pass": true,
+    "pacing": {
+      "absolute_pose_error_s": {
+        "n": 1742,
+        "median": 9.964894444469685e-05,
+        "p95": 0.00015082271111107603,
+        "min": 4.9124000000233536e-05,
+        "max": 0.0012710830000006723
+      },
+      "real_time_factor": 0.9999960790779815,
+      "late_more_than_one_tick": 0,
+      "inference_clock_mapping_abs_error_s": {
+        "n": 93,
+        "median": 1.3406734746354565e-05,
+        "p95": 5.050458865232114e-05,
+        "min": 2.632080790612723e-07,
+        "max": 0.00010727482271800232
+      },
+      "actual_pose_interval_wall_s": {
+        "n": 1741,
+        "median": 0.01388877100000041,
+        "p95": 0.013934607999999571,
+        "min": 0.012725181999998725,
+        "max": 0.015007414000001162
+      },
+      "actual_control_interval_wall_s": {
+        "n": 217,
+        "median": 0.111105717,
+        "p95": 0.1122528324,
+        "min": 0.109229199,
+        "max": 0.112789257
+      }
+    },
+    "timeout": {
+      "episodes": 0,
+      "expired_control_ticks": 0,
+      "runtime_status": "NOT_EXERCISED_no_natural_timeout",
+      "synthetic_exact_timeout": "PASS"
+    },
+    "terminal_unapplied_requests": []
+  },
+  "chunks": {
+    "received": 93,
+    "switched": 93,
+    "native_length_m": {
+      "n": 93,
+      "median": 0.3826593272486214,
+      "p95": 0.44698273636159247,
+      "min": 0.13639735763771715,
+      "max": 0.45626241338854007
+    },
+    "length_below_lookahead_count": 8,
+    "length_below_lookahead_fraction": 0.08602150537634409,
+    "remaining_at_switch_m": {
+      "n": 93,
+      "median": 0.3826593272486214,
+      "p95": 0.44698273636159247,
+      "min": 0.13639735763771715,
+      "max": 0.45626241338854007
+    },
+    "remaining_below_lookahead_count": 8,
+    "invalid_received_ids": [],
+    "clamped_control_count": 20,
+    "valid_path_control_count": 208,
+    "clamped_control_fraction": 0.09615384615384616,
+    "clamped_switch_count": 8
+  },
+  "control": {
+    "stop_reason_tick_counts": {
+      "missing": 10,
+      "null": 208
+    },
+    "v_clipping_fraction_all_ticks": 0.0,
+    "w_clipping_fraction_all_ticks": 0.0871559633027523,
+    "w_clipping_fraction_valid_path_ticks": 0.09134615384615384
+  },
+  "transitions": {
+    "pairs": 92,
+    "valid_tangent_pairs": 92,
+    "invalid_tangent_pairs": 0,
+    "abs_tangent_change_rad": {
+      "n": 92,
+      "median": 0.045174092234148144,
+      "p95": 0.12583825022555414,
+      "min": 0.00032450677124939986,
+      "max": 0.20966831661758123
+    },
+    "abs_delta_v_m_s": {
+      "n": 92,
+      "median": 0.0,
+      "p95": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "abs_delta_w_rad_s": {
+      "n": 92,
+      "median": 0.10923195103041927,
+      "p95": 0.43568422468043533,
+      "min": 0.0,
+      "max": 0.7263497362435223
+    },
+    "saturated_opposite_turn_switch_ids": []
+  },
+  "limitations": [
+    "Single unpaired closed-loop PILOT; no performance superiority or statistical inference",
+    "Fixed 0-B parameters, no rerun/tuning; main executor decision remains open",
+    "Native path tangents are geometric diagnostics, not yaw output, timing or physical correspondence",
+    "Oracle geometry is passive post-interval evaluation; no safety override or reverse recovery",
+    "Original PD values in controller/events are reference-only; actual command uses applied fields",
+    "Canonical SE2 kinematics with real Isaac RGB and GPU NoMaD, not PhysX wheel dynamics",
+    "Violation duration counts full 72Hz inspection intervals, not exact continuous threshold crossing time"
+  ]
+}

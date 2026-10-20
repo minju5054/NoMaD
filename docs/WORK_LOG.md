@@ -451,3 +451,13 @@ Reference1585pose/44primitive,PP1574pose/197command 보존. 저장된actualcomma
 2026-10-20. 같은 Phase0 branch/기준ab466f9. 기존 PurePursuit .25m/.2m/s/±.4rad/s 및 endpoint1cm 규칙 그대로 사용. Sample0 native8점을 observation pose로 world 변환하고 switch마다 progress 초기화, 이후9Hz 갱신/72Hz 적분. 원본 timing·1초timeout 유지하며 실제 명령만 선택형 PP로 교체한다. 원본index2PD 참고값과 actual PP 필드를 분리했다. NoMaD/Topomap/공식PD/기존follower/geometry 변경 없음. 짧은경로 endpointclamp, 퇴화path stop, tangent20mm 유효성 및 실제 command jump 기록.
 
 최소 신규3+기존8 tests PASS, 14node map 검증PASS, 기존343파일 hash 및 checkpoint 보존목록 기록. 코드·protocol commit 후 단일 Isaac S0 navigation1회/재시도0회 예정. Geometry 사후평가만 사용; 후진recovery 비활성, upstream NoMaD, 영구실행기교체 미결정. [보고서](PHASE0_C_CHUNK_PILOT.md).
+
+## Phase 0-C — 실제 Pure Pursuit closed-loop PILOT 결과
+
+2026-10-20. Clean3f2fac5에서 단일Isaac주행1회/재시도·튜닝0회, **SAFE_GOAL_SUCCESS**. 93receive/93switch,218control/1742pose; 실제PP명령→이동pose→RGB→후속inference92사례검증PASS. 24.180556s goal entry(.299838m),4.613887m이동. 초기1.111111s 대기 이후정지없음. 첫장애물왼쪽11.027778s/둘째오른쪽19.777778s통과. 최소clearance Static1 .123676m/Static2 .072557m, corridor .816244m; overlap·2cm위반·corridor침범0.
+
+Chunk길이 median.382659/min.136397m,lookahead미만8/93;clamp20/208유효control=9.62%,퇴화·endpoint정지0. Tangent92pair 유효/절대차median2.588° p957.210° max12.013°. 실제switch|Δw|median.109232/p95.435684/max.726350rad/s(89→90,+.326350→−.4),부호전환27회. Δv0. w clipping19/218=8.72%(유효tick기준9.13%),v clipping0. 작은 tangent차와 큰controller변화는구분했다.
+
+WarmGPU35.602/43.999ms,obs→switch138.163/177.426ms median/p95. RTF.999996079,pacingp95/max.151/1.271ms,asyncPASS;busy1/missed0/timeout0(자연timeout미실행,syntheticPASS). 원본PD는참고필드만유지하고actualapplied필드로적분됨. PP재계산오차7.22e−16,pose0,corridor0;normalization·anchor·Topomap·RGBhash·swept검증PASS. 기존343/new199hash보존.
+
+초기renderer오류5건후같은시도내RGBgate통과. 분석01의5.55e−17m 완전일치assertion을분석기1e−12허용오차로수정,partial보존후analysis02만재계산했다. 새navigation없음. 저장PD참고25.305556s/최소74.423mm대비PP24.180556s/72.557mm이나비paired단일pilot로성능인과결론없음. 작은JSON/CSV/그림1장과 [보고서](PHASE0_C_CHUNK_PILOT.md). N≥10미실행,주실행기영구교체미결정;전환명령jump와0B좁은여유실패한계는남는다.

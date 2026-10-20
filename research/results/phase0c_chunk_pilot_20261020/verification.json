@@ -1,0 +1,40 @@
+{
+  "label": "PILOT",
+  "new_run_input_hashes_verified": 199,
+  "input_hash_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase0c_pure_pursuit_01/analysis_02/runtime_validation/input_hashes.json",
+  "input_hash_manifest_sha256": "35141c704376f9851d49b8093d41c6fb9909b1e6ee2df8d1070daa489dba04fc",
+  "previous_data_preservation_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase0c_preflight_01.json",
+  "previous_data_preservation_manifest_sha256": "a29f9be748fd607a5e88758a9a1c64889b44a771b9d4e60114ebe92928b1bbfd",
+  "minimal_tests": "11 passed (3 chunk adapter, 3 existing follower, 5 existing async)",
+  "environment": {
+    "python": "3.11.16 (main, Sep  1 2026, 14:18:37) [Clang 22.1.3 ]",
+    "executable": "/home/gpuadmin/Workspace/NoMaD/.venv/bin/python",
+    "torch": "2.7.0+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "numpy": "1.26.4",
+    "torchvision": "0.22.0+cu128",
+    "diffusers": "0.11.1",
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "goal_mode": "topomap",
+    "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "config": {
+      "context_size": 3,
+      "image_size": [
+        96,
+        96
+      ],
+      "num_diffusion_iters": 10,
+      "len_traj_pred": 8
+    }
+  },
+  "partial_offline_analysis": "analysis_01 preserved: exact equality failed on 5.55e-17m floating point difference; analysis_02 uses 1e-12 absolute tolerance; no runtime change or navigation retry",
+  "original_sources_unchanged": [
+    "deployment/src/pd_controller.py",
+    "deployment/src/navigate.py",
+    "research/nomad_preflight/native.py",
+    "research/nomad_phase0/pure_pursuit.py",
+    "research/nomad_isaac/common.py",
+    "research/nomad_isaac/clearance.py"
+  ]
+}
