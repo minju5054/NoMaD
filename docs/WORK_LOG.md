@@ -406,3 +406,8 @@ WarmGPU median/p95 35.536/53.096ms, request/receive/switch54/54/54, 모두적용
 Tick976부터gate활성, 첫STOP13.888889s의 현재46.871mm/예측17.869mm. 4stop episode 총45.777778sim s; FRESH54/56/70에서각8tick씩3회재출발했으나18.777778s 이후종료까지정지. 정지중183RGB/184FRESH수신, 전체236request/receive/switch, timeout0/busy1/missed0. 최종정지중71–235 계속수신됐으나 nominal short rollout 모두2cm미달. 원본waypoint/PD/worker/Topomap를 유지하고 actual명령만(0,0)으로차단했다.
 
 WarmGPU35.543/37.311ms,gate2.631/3.458ms median/p95. RTF.99998957,pacingp95/max .153/1.412ms,asyncPASS. 4321pose/540control,nominalPD와actual적분,normalization·observationanchor·Topomap선택·RGBhistoryhash·dynamic및corridor재계산PASS/최대오차0. 모델환경·checkpoint동일,기존745hash보존,새input999hash검증. Startup renderer error4건보존후RGBgate통과. Natural timeout NOT_EXERCISED,syntheticPASS. 새 raw/작은JSON·CSV·XY그림한장과 [보고서](ISAAC6_TOPOMAP_ORACLE_SAFETY_STOP.md). 기존collisionbaseline과는adaptive위치·RGB가다른비paired비교; oracleSTOP의안전정지와navigation성공을구분. Graph/recovery/reranking/추가실험없음.
+
+
+## Early fixed obstacle + online Graph — 사전 고정
+
+2026-10-20. Runtimea76ed2b / Graph3a60531에서 research/isaac6-early-online-graph 생성. 새fixedcenter(2.372279542,.110674603),size(.35,.35,.8),tick792/11s scenario만추가; 기존adaptive/frozenvalidator보존. 저장reference11s clearance.4263/.4653m 및FOV/occlusion/boxseparationPASS. 필요Graph정의8개AST동일,원래factorprotocol byte동일. 별도CPUprocess(systemPython/SciPy1.11.4) B52단일preflight solve1.765s,기존해1e-9내동일,21testsPASS. 1744 prior hash항목보존. Stop-and-plan에서1outstanding,FreshID당1attempt,원래1초timeout은nominal에유지; 늦은Graph는B/geometry/safety재검사후최대16tick별도action. VLA관측계속. Protocol/codecommit후EARLY-RAW/GRAPH각1회,재시도0회. [보고서](ISAAC6_EARLY_ONLINE_GRAPH.md).

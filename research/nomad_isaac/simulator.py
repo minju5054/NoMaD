@@ -18,6 +18,7 @@ parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
 parser.add_argument("--oracle-safety-stop", action="store_true")
+parser.add_argument("--early-obstacle-mode", choices=["raw", "graph"])
 parser.add_argument("--topomap", type=Path)
 parser.add_argument("--render-topomap-reference", type=Path)
 parser.add_argument("--controlled-delivery-delay", action="store_true")
@@ -132,6 +133,10 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    if args.early_obstacle_mode:
+        from nomad_isaac.early_experiment import validate_early
+        validate_early(config, args.topomap, args.asynchronous, args.prepare_only,
+                       args.controlled_delivery_delay, args.uniform_delivery_delay_s, args.oracle_safety_stop)
     if args.oracle_safety_stop:
         assert args.topomap and args.asynchronous and not args.prepare_only
         assert not args.controlled_delivery_delay and args.uniform_delivery_delay_s is None
@@ -144,7 +149,7 @@ def main():
     if args.topomap:
         from nomad_isaac.common import sha256_file
         assert args.asynchronous
-        if "dynamic_obstacle" in config:
+        if "dynamic_obstacle" in config and not args.early_obstacle_mode:
             from nomad_isaac.topomap import validate_dynamic_combination
             validate_dynamic_combination(config, args.topomap, args.asynchronous, args.prepare_only,
                                          args.controlled_delivery_delay, args.uniform_delivery_delay_s)
@@ -158,12 +163,12 @@ def main():
     timeline.pause()
     dynamic_annotator = None
     adaptive = "placement" in config.get("dynamic_obstacle", {})
-    resolved_dynamic = None
+    resolved_dynamic = config["dynamic_obstacle"] if args.early_obstacle_mode else None
     main_thread_id = threading.get_ident()
     if "dynamic_obstacle" in config:
         from nomad_isaac.sudden_obstacle import active_at_tick
         dynamic_prim = stage.GetPrimAtPath("/World/"+config["dynamic_obstacle"]["id"])
-        if not adaptive:
+        if not adaptive and not args.early_obstacle_mode:
             dynamic_annotator = rep.AnnotatorRegistry.get_annotator("instance_segmentation_fast", device="cpu")
             dynamic_annotator.attach([product])
 
@@ -238,7 +243,7 @@ def main():
                 "mask_sha256": hashlib.sha256(mask.tobytes()).hexdigest(),
                 "masked_rgb_median": np.median(pixels, axis=0).tolist() if len(pixels) else None}
             capture.dynamic_mask = mask
-        elif adaptive:
+        elif adaptive or args.early_obstacle_mode:
             from nomad_isaac.old_rollout_placement import magenta_mask
             tick = round(sim_time*config["integration_hz"])
             active = resolved_dynamic is not None and active_at_tick(config, tick)
@@ -293,6 +298,14 @@ def main():
         np.testing.assert_allclose(bounds.GetMin(), [*lower, 0.], atol=1e-12, rtol=0)
         np.testing.assert_allclose(bounds.GetMax(), [*upper, dynamic_box["size_xyz_m"][2]], atol=1e-12, rtol=0)
         render_check["dynamic_active_aabb"] = [list(bounds.GetMin()), list(bounds.GetMax())]
+    elif args.early_obstacle_mode:
+        render_check["dynamic_initial"] = capture.dynamic_metadata
+        dynamic_box = config["dynamic_obstacle"]
+        bounds = UsdGeom.BBoxCache(dynamic_box["spawn_tick"], [UsdGeom.Tokens.default_]).ComputeWorldBound(dynamic_prim).ComputeAlignedRange()
+        lower, upper = obstacle_bounds(single_obstacle_config(config, dynamic_box))
+        np.testing.assert_allclose(bounds.GetMin(), [*lower, 0.], atol=1e-12, rtol=0)
+        np.testing.assert_allclose(bounds.GetMax(), [*upper, .8], atol=1e-12, rtol=0)
+        render_check["fixed_dynamic_world_aabb"] = [list(bounds.GetMin()), list(bounds.GetMax())]
     elif adaptive:
         render_check["dynamic_initial"] = capture.dynamic_metadata
         render_check["dynamic_placement"] = "Pending tick 970; hidden placeholder is not collision geometry"
@@ -329,7 +342,8 @@ def main():
         result = run_async(config, out, args.socket, goal, capture, set_pose, get_pose, render_check,
                            controlled_delivery_delay=args.controlled_delivery_delay,
                            uniform_delivery_delay_s=args.uniform_delivery_delay_s,
-                           oracle_safety_stop=args.oracle_safety_stop)
+                           oracle_safety_stop=args.oracle_safety_stop,
+                           online_graph=args.early_obstacle_mode == "graph")
         if adaptive:
             stage.Export(str(out/"scene_resolved.usda"))
             export_view_scene(out/"scene_resolved.usda", out/"scene_resolved_gui.usda")

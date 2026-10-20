@@ -1,0 +1,47 @@
+{
+  "experiment": "early_fixed_obstacle_raw_vs_online_graph",
+  "runtime_base": "a76ed2bb332ec71280e877614bd88fca26da2cb4",
+  "graph_source": "3a6053163b03685a0ddf26a31d69eeabf72dc516",
+  "scenario_sha256": "78330d97dc27f56252a3003245d97ae904eb69f250902fef70ca78a012d89295",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "factor_protocol_sha256": "f0057b3cf6a4cc857b8eb2364c0d7dc9dcb6318375e0c8ff9f063fa0f9d6eafb",
+  "navigation_conditions": [
+    "raw",
+    "graph"
+  ],
+  "runs_per_condition": 1,
+  "retries": 0,
+  "spawn_tick": 792,
+  "spawn_sim_s": 11.0,
+  "dynamic_center_xy_m": [
+    2.372279542,
+    0.110674603
+  ],
+  "maximum_sim_s": 60,
+  "controller_hz": 9,
+  "integration_hz": 72,
+  "observation_hz": 4,
+  "heading_rule": "Unchanged 3a60531 chord variant: first cumulative distance crossing 20mm; direct chord must also reach20mm; other initial adjacent segments >=20mm; freeze k throughout solve",
+  "worker": "Existing /usr/bin/python3 with SciPy1.11.4; separate CPU process and background pipe thread",
+  "graph_outstanding_limit": 1,
+  "attempt_policy": "At most one attempt per FRESH ID; next attempt uses most recent valid FRESH; no restart or tuning",
+  "trigger": "After actual fixed dynamic spawn, valid nominal PD unsafe for16/72s",
+  "wait_policy": "STOP until outstanding result resolved; VLA observations/inference continue",
+  "acceptance": "Converged, same B within1e-9 per pose component, identical active geometry, freshly rechecked PD swept clearance>=.02m and corridor>0",
+  "graph_action_ticks": 16,
+  "graph_action": "Separate fixed command action for at most16 ticks; recheck16tick safety at every9Hz refresh; cancel ifunsafe; then return to nominal controller",
+  "graph_action_priority": "Accepted bounded Graph action finishes before returning to newest nominal waypoint; pending solve holds STOP even if newer nominal waypoint arrives",
+  "graph_age": "Original receive timeout stays1s for nominalPD. Graph action may beolder; log input age and receive age separately; never label it a fresh waypoint switch",
+  "waypoint_semantics": "core and events retain nominal IDs/commands; actual applied command and Graph action ID logged separately",
+  "safety_target_m": 0.025,
+  "pass_clearance_m": 0.02,
+  "oracle_geometry": true,
+  "nominal_timeout_s": 1.0,
+  "extra_delivery_delay_s": 0,
+  "invalid_heading": "No solve; STOP and wait for a later valid FRESH",
+  "scope": "Stop-and-plan kinematic closed loop, not real-time Graph or PhysX; nonpaired two single runs",
+  "source_sha256": {
+    "minimal_se2_graph.py": "307c833aec0f4bba13762ace8caa05c724fd65bfa8ba4b5c71f441ced47074e5",
+    "topomap_b52_chord_graph.py": "1ab7831203410e112665e77def5b4c5489415d0ec930ced6bc0777b8f3a3cf1d"
+  }
+}

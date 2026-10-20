@@ -20,12 +20,19 @@ def main():
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
     parser.add_argument("--oracle-safety-stop", action="store_true", help="Exact-geometry STOP after adaptive dynamic spawn")
+    parser.add_argument("--early-obstacle-mode", choices=["raw", "graph"], help="Frozen early fixed-location experiment")
     parser.add_argument("--topomap", type=Path, help="Verified static Topomap manifest for the NoMaD worker")
     parser.add_argument("--render-topomap-reference", type=Path, help="Render saved reference poses only; requires --prepare-only")
     parser.add_argument("--controlled-delivery-delay", action="store_true", help="Single predeclared 0.5 s IPC result hold")
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.early_obstacle_mode:
+        from .early_experiment import validate_early
+        if not args.topomap:
+            parser.error("Early experiment requires its fixed Topomap")
+        validate_early(read_scenario(args.scenario), args.topomap, args.asynchronous, args.prepare_only,
+                       args.controlled_delivery_delay, args.uniform_delivery_delay_s, args.oracle_safety_stop)
     if args.oracle_safety_stop and (not args.topomap or not args.asynchronous or args.prepare_only
             or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None
             or "placement" not in read_scenario(args.scenario).get("dynamic_obstacle", {})):
@@ -36,7 +43,7 @@ def main():
         parser.error("Reference rendering requires --prepare-only and no navigation Topomap")
     if args.render_topomap_reference:
         assert "dynamic_obstacle" not in read_scenario(args.scenario)
-    if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario):
+    if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario) and not args.early_obstacle_mode:
         from .topomap import validate_dynamic_combination
         validate_dynamic_combination(read_scenario(args.scenario), args.topomap, args.asynchronous,
                                      args.prepare_only, args.controlled_delivery_delay, args.uniform_delivery_delay_s)
@@ -58,6 +65,8 @@ def main():
         sources += [Path(__file__).with_name("topomap_sudden_protocol.json")]
     if args.oracle_safety_stop:
         sources += [Path(__file__).with_name("oracle_safety_stop_protocol.json")]
+    if args.early_obstacle_mode:
+        sources += [Path(__file__).with_name(name) for name in ("early_graph_protocol.json", "online_graph_factor_protocol.json")]
     if args.controlled_delivery_delay:
         sources += [Path(__file__).with_name("controlled_latency_protocol.json")]
     if args.uniform_delivery_delay_s is not None:
@@ -69,6 +78,7 @@ def main():
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
+        "early_obstacle_mode": args.early_obstacle_mode,
         "topomap_manifest": str(args.topomap.resolve()) if args.topomap else None,
         "topomap_manifest_sha256": sha256_file(args.topomap) if args.topomap else None,
         "render_topomap_reference": str(args.render_topomap_reference.resolve()) if args.render_topomap_reference else None,
@@ -116,6 +126,8 @@ def main():
                 command.append("--asynchronous")
             if args.oracle_safety_stop:
                 command.append("--oracle-safety-stop")
+            if args.early_obstacle_mode:
+                command += ["--early-obstacle-mode", args.early_obstacle_mode]
             if args.topomap:
                 command += ["--topomap", str(args.topomap.resolve())]
             if args.render_topomap_reference:

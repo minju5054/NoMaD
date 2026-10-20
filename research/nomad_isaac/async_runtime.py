@@ -23,7 +23,7 @@ def append(stream, record):
 
 
 class ExecutionThread:
-    def __init__(self, config, out, oracle_safety_stop=False):
+    def __init__(self, config, out, oracle_safety_stop=False, online_graph=False):
         self.config, self.out = config, out
         self.core = WaypointExecution(config["start_pose"], config["integration_hz"], config["controller_hz"])
         self.lock = threading.Lock()
@@ -47,6 +47,12 @@ class ExecutionThread:
             from .oracle_safety_stop import OracleSafetyStop
             assert self.dynamic is not None and self.dynamic.adaptive and config.get("goal_mode") == "topomap"
             self.safety = OracleSafetyStop(config, out)
+        self.graph = None
+        self.latest_sample = None
+        if online_graph:
+            from .online_graph import GraphRecovery
+            assert not oracle_safety_stop and self.dynamic is not None
+            self.graph = GraphRecovery(config, out)
 
     def snapshot(self):
         with self.lock:
@@ -64,6 +70,8 @@ class ExecutionThread:
         self.monitor.plan(row["id"], arrays["metric"], row)
         if not terminal:
             self.core.receive(row, arrays["selected_waypoint"])
+            if self.graph is not None:
+                self.latest_sample = (row["id"], arrays["metric"][0].copy())
 
     def start(self, client):
         self.client = client
@@ -136,6 +144,9 @@ class ExecutionThread:
                     if refresh is not None and self.safety is not None:
                         box = self.dynamic.obstacle if self.dynamic.spawn is not None else None
                         self.safety.apply(self.core, refresh, switch, tick, box)
+                    if refresh is not None and self.graph is not None:
+                        box = self.dynamic.obstacle if self.dynamic.spawn is not None else None
+                        self.graph.apply(self.core, refresh, switch, tick, box, self.latest_sample)
                     if refresh:
                         append(cf, refresh)
                     if switch:
@@ -154,7 +165,7 @@ class ExecutionThread:
 
 
 def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, render_check,
-              controlled_delivery_delay=False, uniform_delivery_delay_s=None, oracle_safety_stop=False):
+              controlled_delivery_delay=False, uniform_delivery_delay_s=None, oracle_safety_stop=False, online_graph=False):
     if controlled_delivery_delay and uniform_delivery_delay_s is not None:
         raise ValueError("Single-trigger and uniform delivery delays are mutually exclusive")
     if "dynamic_obstacle" in config and (controlled_delivery_delay or uniform_delivery_delay_s not in (None, 0.)):
@@ -180,7 +191,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     write_json(out/"async_protocol.json", protocol)
     if oracle_safety_stop:
         assert not controlled_delivery_delay and uniform_delivery_delay_s is None
-    engine = ExecutionThread(config, out, oracle_safety_stop=oracle_safety_stop)
+    engine = ExecutionThread(config, out, oracle_safety_stop=oracle_safety_stop, online_graph=online_graph)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
     dynamic_history = deque(maxlen=4)
     save_observations = engine.dynamic is not None or config.get("goal_mode") == "topomap"
@@ -272,6 +283,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
             engine.cancel.set()
             engine.thread.join(5)
             engine.rf.close()
+            if engine.graph is not None:
+                engine.graph.close()  # After navigation; pending result cannot move the agent.
         state = engine.snapshot()
         set_pose(state["pose"])
         if hasattr(capture, "sync_dynamic"):
@@ -295,6 +308,10 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     if oracle_safety_stop:
         summary["oracle_safety_stop_enabled"] = True
         summary["command_semantics"] = "controller/events v,w are nominal PD; applied_v,w and 72Hz trace are actual"
+    if online_graph:
+        summary["online_graph_enabled"] = True
+        summary["graph_submitted_requests"] = engine.graph.next_id
+        summary["command_semantics"] = "controller/events remain nominal; actual overrides and separate Graph actions are in graph_control.jsonl"
     if dynamic_result is not None:
         summary["dynamic_obstacle"] = dynamic_result
         summary["obstacle_evaluation_scope"] = "Original static obstacles only; dynamic evaluation is separate"
