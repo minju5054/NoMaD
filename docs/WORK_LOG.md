@@ -436,4 +436,12 @@ S2 Dynamic–Static2 실제틈202.720458mm/요구220mm/부족17.279542mm 재현.
 
 ## Phase 0-B — 독립 Pure Pursuit 사전 고정
 
-2026-10-20. 동일 `research/phase0-infrastructure`, 기준67c3304. S0 witness만 입력으로 별도XY follower 추가: lookahead.25m, constant v.2m/s, w±.4 clipping, endpoint1cm 정지,9Hz/72Hz/최대60s. 원본44개 .5s primitive는72Hz geometric reference 재구성과 exact replay에만 사용하며 follower에는XY만 전달한다. 장애물·goal·yaw/timestamp를제어입력으로전달하지않는다. 이미실행된구간을별도평가해충돌/복도이탈종료,2cm위반은기록만수행. 최소tests3passed; 코드·설정commit후 원본pose/primitive clearance 일치검증 및PurePursuit1회예정. 네미확정정책모두UNDECIDED. [보고서](PHASE0_B_PURE_PURSUIT.md).
+2026-10-20. 동일 `research/phase0-infrastructure`, 기준67c3304. S0 witness만 입력으로 별도XY follower 추가: lookahead.25m, constant v.2m/s, w±.4 clipping, endpoint1cm 정지,9Hz/72Hz/최대60s. 원본44개 .5s primitive는72Hz geometric reference 재구성과 exact replay에만 사용하며 reference는XY만 전달한다(현재robot SE(2) pose는별도입력). 장애물·goal·reference yaw/waypoint timestamp를제어입력으로전달하지않는다. 이미실행된구간을별도평가해충돌/복도이탈종료,2cm위반은기록만수행. 최소tests3passed; 코드·설정commit후 원본pose/primitive clearance 일치검증 및PurePursuit1회예정. 네미확정정책모두UNDECIDED. [보고서](PHASE0_B_PURE_PURSUIT.md).
+
+## Phase 0-B — exact replay 및 단일 follower 결과
+
+2026-10-20. Clean0a856a6에서 reference검증 후PurePursuit1회/튜닝·재시도0회. Exact primitive pose·기존clearance 차이0;72Hz boundary pose오차1.24345e−14. 원래 .5s swept최소21.829288mm를정확재현했으며72Hz의덜보수적bound는22.608845mm. 이는동일경로의interval-bound차이로구분했다.
+
+PurePursuit는21.847222s goal entry/최종거리.298735643m,4.369444m이동. CTE mean/RMS/max4.270680/7.001366/21.412157mm. Static1최소clearance1.289712mm,Static2 .109260569m,geometric overlap없음/corridor .958431620m. **Goal도달했지만2cm미달로SAFETY_FAILURE**. 첫위반6.402778s,최소6.722222s. v clipping0%/상한점유100%,w clipping4/197=2.030457%,첫clipping7.555556s로최초위반이앞선다. 추종오차로reference의작은여유가소진됐으며경로infeasibility로해석하지않는다.
+
+Reference1585pose/44primitive,PP1574pose/197command 보존. 저장된actualcommand/72Hz적분오차0,PP공식·CTE·hash검증PASS. 새artifact에전체trace,작은JSON·고정설정·XY그림1장·[보고서](PHASE0_B_PURE_PURSUIT.md) 저장. 기존Phase0-A파일3개와runtime·geometry·scenario변경없음. Isaac/GPU실행·parameter sweep없음. Phase0-C 전에는기하feasible과추종safe/goal entry를계속분리해야하며좁은여유의안전추종은미통과. 주실행기교체등네정책은모두UNDECIDED.

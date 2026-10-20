@@ -98,3 +98,79 @@ The original NoMaD/Topomap/PD/Graph/runtime/scenarios, earlier feasibility
 results and raw data are preserved. No Isaac Sim, GPU inference, obstacle
 avoidance planner, safety controller, reverse recovery, batch runner,
 S1/S2/S3 experiment, parameter sweep or environment installation is included.
+
+## Actual result
+
+Clean execution SHA `0a856a646a8d0d1de67a671cdf8a669e86c79d6a`.
+Exact replay passed, then Pure Pursuit ran **once**, without tuning or retry.
+
+| Metric | Original exact-command replay | Pure Pursuit |
+|---|---:|---:|
+| Cross-track mean | 1.48e−15m | **0.004270680m** |
+| Cross-track RMS | 1.81e−15m | **0.007001366m** |
+| Cross-track max | 3.03e−15m | **0.021412157m** |
+| Goal entry | Yes, 21.944444s | **Yes, 21.847222s** |
+| Final goal distance | 0.286888838m | 0.298735643m |
+| Trace duration | 22.000000s | 21.847222s |
+| Distance | 4.400000m | 4.369444m |
+| 72Hz minimum obstacle clearance lower bound | 0.022608845m | **0.001289712m** |
+| Required 0.02m margin | Met | **Violated** |
+| Geometric overlap | No, no-contact certified | No, no-contact certified |
+| Minimum corridor footprint clearance | 0.956511298m | 0.958431620m |
+| Corridor containment | Met | Met |
+| Pose / command records | 1,585 /44 primitives | 1,574 /197 controller updates |
+| Termination | Full reference replay completed | `GOAL_ENTRY` |
+| Safety classification | Safe reference replay | **`SAFETY_FAILURE` despite goal entry** |
+
+The original whole-primitive minimum clearance **0.021829287988m** and corridor
+bound0.954015309832m reproduce exactly: maximum stored-bound difference0.
+Original primitive endpoint error0; sequential72Hz boundary error
+**1.24345e−14** (maximum SE(2) component difference).
+The72Hz replay's different lower bound is due to shorter-bound intervals,
+not a path change. Its Static1 minimum is bounded by
+`[0.022608845161,0.022612169653]m`. Reference sample spacing≤2.777778mm
+and arc/chord sagitta≤1.929012µm.
+
+Pure Pursuit's minimum at Static1 is bounded by
+`[0.001289712367,0.001291968178]m`; Static2 minimum is0.109260568820m.
+First margin violation: tick461/6.402778s,
+pose `(1.195000617,−0.279633756,−0.741586801)`.
+Minimum clearance interval ends at tick484/6.722222s,
+pose `(1.243239314,−0.321509911,−0.682342167)`.
+The maximum cross-track error occurs at6.791667s, near the same first obstacle.
+The certified-safe reference and failing follower are thus different paths;
+this does **not** invalidate the Phase0-A geometric witness.
+
+Strict clipping fractions are v **0/197=0%**, w **4/197=2.030457%**.
+Bound occupancy is v **100%**, |w| **2.030457%**.
+The first w clipping occurs at7.555556s, after the first margin violation
+and minimum-clearance interval. The first failure cannot be attributed solely
+to w clipping. The fixed lookahead follower's spatial tracking error is
+observed, but separate causal contributions are not isolated by this one run.
+The endpoint-stop branch is unit-tested; actual termination was external
+goal entry before endpoint stop.
+
+Three unit tests passed. Saved9Hz raw/applied commands satisfy the frozen
+formula and bounds; every72Hz command matches its held controller update.
+Reintegration from saved consecutive poses has maximum error0, and saved
+cross-track errors match independent polyline-distance recomputation.
+Reference/S0 hash checks, all three existing Phase0-A result files, and
+original runtime/geometry code are unchanged.
+
+Small summaries/settings/provenance/figure are copied to
+`research/results/phase0b_follower_20261020/`. Full traces remain in the new
+artifact directory outside Git; `output_hashes.json` records their hashes.
+The figure is generated from stored traces only.
+
+![S0 reference and actual offline Pure Pursuit path](../research/results/phase0b_follower_20261020/path_comparison.svg)
+
+## Before Phase 0-C
+
+Basic standalone execution and goal-region entry are verified. **Safe tracking
+of the narrow-margin S0 reference is not verified: this configuration failed
+the2cm criterion.** Future infrastructure must preserve the distinction
+between geometric path feasibility, measured tracking error, goal entry and
+executed safety. The necessary tracking-error allowance for safe references
+is unresolved; no change to planner margin or follower parameters was made.
+There is no evidence here for NoMaD performance, main-executor replacement,
+online obstacle avoidance or any of the four undecided policy choices.

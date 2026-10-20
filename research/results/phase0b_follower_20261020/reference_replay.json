@@ -1,0 +1,73 @@
+{
+  "method": "EXACT_COMMAND_REPLAY",
+  "termination_reason": "REFERENCE_REPLAY_COMPLETE",
+  "cross_track_error_m": {
+    "mean": 1.479579483013773e-15,
+    "RMS": 1.8098476965984638e-15,
+    "max": 3.0303191209571215e-15,
+    "definition": "Unsigned polyline distance, uniform 72Hz poses including endpoints"
+  },
+  "goal_entry": true,
+  "goal_entry_time_s": 21.944444444444443,
+  "final_goal_distance_m": 0.28688883849417934,
+  "duration_s": 22.0,
+  "distance_m": 4.400000000000049,
+  "final_pose": [
+    4.216707648878813,
+    -0.04528409708462337,
+    0.1999999999999993
+  ],
+  "pose_rows": 1585,
+  "command_rows": 44,
+  "safety": {
+    "minimum_obstacle_clearance_lower_m": {
+      "StaticObstacle1": 0.022608845161443042,
+      "StaticObstacle2": 0.10798401913252338
+    },
+    "minimum_obstacle_clearance_upper_m": {
+      "StaticObstacle1": 0.022612169652994493,
+      "StaticObstacle2": 0.10798487937228174
+    },
+    "minimum_clearance_lower_m": 0.022608845161443042,
+    "margin_0_02_met": true,
+    "first_margin_violation": null,
+    "geometric_overlap": false,
+    "no_contact_certified": true,
+    "corridor_contained": true,
+    "minimum_corridor_footprint_clearance_m": 0.95651129818206
+  },
+  "saturation": {
+    "denominator": 44,
+    "basis": "command records; replay records are original 0.5s primitives",
+    "v_strict_clipping_fraction": 0.0,
+    "w_strict_clipping_fraction": 0.0,
+    "v_at_upper_bound_fraction": 1.0,
+    "w_at_either_bound_fraction": 0.20454545454545456
+  },
+  "validation": {
+    "status": "PASS",
+    "coarse_primitive_pose_max_error": 0.0,
+    "original_primitive_clearance_max_error_m": 0.0,
+    "replayed_72Hz_boundary_pose_max_error": 1.2434497875801753e-14,
+    "original_primitive_safety": {
+      "minimum_obstacle_clearance_lower_m": {
+        "StaticObstacle1": 0.021829287987606864,
+        "StaticObstacle2": 0.10798468543222185
+      },
+      "minimum_obstacle_clearance_upper_m": {
+        "StaticObstacle1": 0.022717157430671542,
+        "StaticObstacle2": 0.10798474750670442
+      },
+      "minimum_clearance_lower_m": 0.021829287987606864,
+      "margin_0_02_met": true,
+      "first_margin_violation": null,
+      "geometric_overlap": false,
+      "no_contact_certified": true,
+      "corridor_contained": true,
+      "minimum_corridor_footprint_clearance_m": 0.9540153098321762
+    },
+    "sampling_max_spacing_m": 0.002777777777778496,
+    "sampling_arc_chord_sagitta_max_m": 1.929011105316455e-06,
+    "clearance_note": "Original 0.5s bounds reproduced separately; finer 1/72s bounds differ in conservatism, not path"
+  }
+}

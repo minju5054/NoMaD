@@ -1,0 +1,61 @@
+{
+  "method": "PURE_PURSUIT",
+  "termination_reason": "GOAL_ENTRY",
+  "cross_track_error_m": {
+    "mean": 0.004270680296735787,
+    "RMS": 0.007001365684397661,
+    "max": 0.02141215680543465,
+    "definition": "Unsigned polyline distance, uniform 72Hz poses including endpoints"
+  },
+  "goal_entry": true,
+  "goal_entry_time_s": 21.84722222222222,
+  "final_goal_distance_m": 0.29873564296285765,
+  "duration_s": 21.84722222222222,
+  "distance_m": 4.369444444444489,
+  "final_pose": [
+    4.20505905006283,
+    -0.04746388549825662,
+    0.18449970464049326
+  ],
+  "pose_rows": 1574,
+  "command_rows": 197,
+  "safety": {
+    "minimum_obstacle_clearance_lower_m": {
+      "StaticObstacle1": 0.0012897123671066996,
+      "StaticObstacle2": 0.10926056882006818
+    },
+    "minimum_obstacle_clearance_upper_m": {
+      "StaticObstacle1": 0.0012919681777008168,
+      "StaticObstacle2": 0.1092605765480674
+    },
+    "minimum_clearance_lower_m": 0.0012897123671066996,
+    "margin_0_02_met": false,
+    "first_margin_violation": {
+      "tick": 461,
+      "simulation_time_s": 6.402777777777778,
+      "interval_start_s": 6.388888888888888,
+      "pose": [
+        1.1950006167255505,
+        -0.2796337557321995,
+        -0.7415868011112083
+      ],
+      "obstacle_ids": [
+        "StaticObstacle1"
+      ],
+      "minimum_clearance_lower_m": 0.019100396542646093
+    },
+    "geometric_overlap": false,
+    "no_contact_certified": true,
+    "corridor_contained": true,
+    "minimum_corridor_footprint_clearance_m": 0.9584316204760931
+  },
+  "saturation": {
+    "denominator": 197,
+    "basis": "command records; replay records are original 0.5s primitives",
+    "v_strict_clipping_fraction": 0.0,
+    "w_strict_clipping_fraction": 0.02030456852791878,
+    "v_at_upper_bound_fraction": 1.0,
+    "w_at_either_bound_fraction": 0.02030456852791878
+  },
+  "classification": "SAFETY_FAILURE"
+}
