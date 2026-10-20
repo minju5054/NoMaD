@@ -1,0 +1,778 @@
+{
+  "scope": "Oracle geometry; offline SE(2) kinematic feasibility",
+  "protocol": {
+    "phase": "B",
+    "scope": "Oracle geometry; offline SE(2) kinematic feasibility",
+    "base_commit": "2892c3f913ed3064253efb05798438e0109b61f9",
+    "inputs": [
+      {
+        "id": "EARLY_GRAPH",
+        "run": "artifacts/isaac6/early_graph_01",
+        "tracked_summary": "research/results/isaac6_early_graph_20261020/summary.json",
+        "summary_key": "EARLY-GRAPH",
+        "spawn_tick": 792,
+        "expected_spawn_pose": [
+          1.7314569349,
+          0.729522781,
+          -0.2931363464
+        ],
+        "expected_final_pose": [
+          2.19145187,
+          0.3969282017,
+          -0.6528244798
+        ],
+        "expected_dynamic_center": [
+          2.372279542,
+          0.110674603
+        ]
+      },
+      {
+        "id": "ORACLE_STOP",
+        "run": "artifacts/isaac6/topomap_oracle_stop_01",
+        "tracked_summary": "research/results/isaac6_topomap_oracle_stop_20261020/summary.json",
+        "summary_key": null,
+        "spawn_tick": 970,
+        "expected_spawn_pose": [
+          2.1783146067,
+          0.4496824585,
+          -0.7799250804
+        ],
+        "expected_final_pose": [
+          2.2623238938,
+          0.3675453962,
+          -0.6222850123
+        ],
+        "expected_dynamic_center": [
+          2.3543967116,
+          0.0777164944
+        ]
+      }
+    ],
+    "rounded_input_absolute_tolerance": 5e-10,
+    "use_full_precision_raw_pose": true,
+    "frozen_dynamic_geometry": "Use actual dynamic/spawn.json obstacle; no adaptive placement or time-dependent appearance in search",
+    "search": {
+      "method": "Existing continuous SE(2) Hybrid A* with quantized duplicate pruning",
+      "xy_bin_m": 0.05,
+      "heading_bins": 64,
+      "primitive_duration_s": 0.5,
+      "heuristic_weight": 1.5,
+      "max_expansions_per_search": 30000,
+      "time_budget_clock": "cpu",
+      "max_cpu_seconds_per_search": 120.0,
+      "max_path_duration_s": 60.0,
+      "goal": "Existing world XY goal disk, radius .30m; no terminal yaw constraint",
+      "wall_rule": "Existing corridor_clearance > 0 with radius .09m",
+      "obstacle_rule": "Existing continuous swept_clearance lower bound >= .02m with radius .09m",
+      "side_rule": null,
+      "one_pass_certificate": false
+    },
+    "actions": {
+      "B0": [
+        [
+          0.2,
+          0.0
+        ],
+        [
+          0.2,
+          -0.2
+        ],
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          -0.4
+        ],
+        [
+          0.2,
+          0.4
+        ]
+      ],
+      "B1_add": [
+        [
+          0.0,
+          -0.4
+        ],
+        [
+          0.0,
+          0.4
+        ]
+      ],
+      "B2_add": [
+        [
+          -0.2,
+          0.0
+        ],
+        [
+          -0.2,
+          -0.2
+        ],
+        [
+          -0.2,
+          0.2
+        ],
+        [
+          -0.2,
+          -0.4
+        ],
+        [
+          -0.2,
+          0.4
+        ]
+      ]
+    },
+    "execution": "Four raw states in listed run order, spawn then final; B0 then B1 then B2; one search each, no tuning/retry",
+    "clock_note": "Phase 0-A default was 120 wall seconds. Phase B explicitly uses 120 process CPU seconds; both CPU and wall time are recorded. Other search settings unchanged.",
+    "witness": "Recheck every entire .5s primitive with original continuous swept/corridor functions; distance integrates abs(v), not signed displacement",
+    "interpretation": "NO_PATH_FOUND is bounded-search negative evidence, not a proof of geometric or kinematic impossibility. First weighted-search witness is not an optimum.",
+    "online_recovery_policy": "In-place rotation first; reverse disabled. Reverse permitted only in this offline B2 comparison.",
+    "new_navigation_or_inference": false
+  },
+  "protocol_sha256": "51aa22addc7190b6fc9610b2a7f716e672abab62c5d63e9d1c2626e8724ee95a",
+  "git_sha": "5bf2fa0f82369e513ccc2b71ad8fc83b1a9f54cf",
+  "git_status": "",
+  "input_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01/agent_trajectory.csv": "ce757f42c5465c5f2d00f217398aa1818822c94bd36954221070fb6d5f6365bb",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01/scenario.json": "960885a847d93920caee3dae9106a149a752ec64f97b4740e5efca2389c6ef87",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01/summary.json": "f73a01e0a9688df2e01cf5ce1aea915c8a1627062fc3772d6089b5fd84ddbd58",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01/provenance.json": "40230a091e842fed55a1184553538a39f883ac336e8af2890fc5d63e0701682c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01/obstacle_geometry.json": "54d41712f8ba79e25fbe67d4e918f3ba09c165f5f0b355885e058653515eec2c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01/dynamic/spawn.json": "89450b213eb7045e998e1860ceffdc09c7eac3f6e1daef457c3470a9dff2ef21",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01/dynamic/obstacle_geometry.json": "9409498277d5277c6875027cf336cf1ac0b64e84d1258320f12f96968718937c",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/isaac6_early_graph_20261020/summary.json": "5871bc7703c37598e3700414ba695e18d3076877eaf94f5c2b6d539e2be03bf7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01/agent_trajectory.csv": "fa71512d2f4ec7f378f3e9dac93b37b41aadf6af2e2318c8c39c81e62bc52eb3",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01/scenario.json": "98e11851bda2cf04b241b747f6fec66eac2529ba0c05867d7d9d8a62872b1140",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01/summary.json": "ea0a81cf99595a1eb26cb465f738e888d71a5f563874aaaa63473b37b10d4a42",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01/provenance.json": "da4758bb75191cea43f5ca7f4f05275f9f8f9c7ef6107d99ea9b0f33b9e97043",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01/obstacle_geometry.json": "54d41712f8ba79e25fbe67d4e918f3ba09c165f5f0b355885e058653515eec2c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01/dynamic/spawn.json": "b90beb6fb23063a211370855651309a3740c3bc0ac67dcab5dc8c1931ba3be0d",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01/dynamic/obstacle_geometry.json": "f02524fba26671ebdd35a40df2e0b1eed0a9fe75604d779c9baa174bb29e9019",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/isaac6_topomap_oracle_stop_20261020/summary.json": "bf94700c37bc73422fbb4c2ec95603e1e4c19d39029cc4a6fdf6ddeaf8b16536"
+  },
+  "states": [
+    {
+      "id": "EARLY_GRAPH_spawn",
+      "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01",
+      "tracked_summary": "research/results/isaac6_early_graph_20261020/summary.json",
+      "source_tick": 792,
+      "source_sim_s": 11.0,
+      "pose": [
+        1.7314569349077615,
+        0.7295227809822565,
+        -0.29313634644889675
+      ],
+      "config": {
+        "name": "topomap_early_fixed_obstacle",
+        "start_pose": [
+          1.7314569349077615,
+          0.7295227809822565,
+          -0.29313634644889675
+        ],
+        "goal_pose": [
+          4.5,
+          0.0,
+          0.0
+        ],
+        "goal_tolerance_m": 0.3,
+        "timeout_sim_s": 60.0,
+        "timeout_navigation_wall_s": 180.0,
+        "timeout_process_wall_s": 600.0,
+        "integration_hz": 72,
+        "observation_hz": 4,
+        "controller_hz": 9,
+        "controller_dt_s": 0.25,
+        "max_v": 0.2,
+        "max_w": 0.4,
+        "seed": 101,
+        "context_size": 3,
+        "num_samples": 8,
+        "selected_sample": 0,
+        "selected_waypoint_index": 2,
+        "camera": {
+          "width": 320,
+          "height": 240,
+          "height_m": 0.5,
+          "horizontal_fov_deg": 90.0,
+          "focal_length_mm": 18.0,
+          "horizontal_aperture_mm": 36.0,
+          "vertical_aperture_mm": 27.0
+        },
+        "corridor": {
+          "xmin": -2.0,
+          "xmax": 6.0,
+          "half_width": 1.5,
+          "height": 2.6
+        },
+        "boundary_stop_margin_m": 0.1,
+        "synchronous": false,
+        "smoothing": false,
+        "waypoint_modification": false,
+        "agent_radius_m": 0.09,
+        "required_clearance_m": 0.02,
+        "obstacles": [
+          {
+            "id": "StaticObstacle1",
+            "center_xy_m": [
+              1.5,
+              0.0
+            ],
+            "size_xyz_m": [
+              0.4,
+              0.5,
+              0.8
+            ],
+            "color_rgb": [
+              0.04,
+              0.65,
+              0.04
+            ]
+          },
+          {
+            "id": "StaticObstacle2",
+            "center_xy_m": [
+              3.0,
+              0.75
+            ],
+            "size_xyz_m": [
+              0.5,
+              1.5,
+              1.0
+            ],
+            "color_rgb": [
+              0.04,
+              0.65,
+              0.04
+            ]
+          }
+        ],
+        "dynamic_obstacle": {
+          "id": "DynamicObstacle",
+          "size_xyz_m": [
+            0.35,
+            0.35,
+            0.8
+          ],
+          "color_rgb": [
+            0.65,
+            0.04,
+            0.65
+          ],
+          "spawn_tick": 792,
+          "minimum_visible_pixels": 20,
+          "center_xy_m": [
+            2.372279542,
+            0.110674603
+          ]
+        },
+        "goal_mode": "topomap",
+        "topomap_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+        "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36"
+      },
+      "start_obstacle_clearance_m": {
+        "StaticObstacle1": 0.3905534686533314,
+        "StaticObstacle2": 0.9285430650922385,
+        "DynamicObstacle": 0.5534220282026244
+      },
+      "start_corridor_clearance_m": 0.6804772190167435,
+      "valid_start": true,
+      "raw_summary_pose_max_error": 0.0,
+      "rounded_prompt_pose_max_error": 4.88967200062973e-11
+    },
+    {
+      "id": "EARLY_GRAPH_final",
+      "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/early_graph_01",
+      "tracked_summary": "research/results/isaac6_early_graph_20261020/summary.json",
+      "source_tick": 4320,
+      "source_sim_s": 60.0,
+      "pose": [
+        2.1914518700078536,
+        0.39692820166977016,
+        -0.6528244797617582
+      ],
+      "config": {
+        "name": "topomap_early_fixed_obstacle",
+        "start_pose": [
+          2.1914518700078536,
+          0.39692820166977016,
+          -0.6528244797617582
+        ],
+        "goal_pose": [
+          4.5,
+          0.0,
+          0.0
+        ],
+        "goal_tolerance_m": 0.3,
+        "timeout_sim_s": 60.0,
+        "timeout_navigation_wall_s": 180.0,
+        "timeout_process_wall_s": 600.0,
+        "integration_hz": 72,
+        "observation_hz": 4,
+        "controller_hz": 9,
+        "controller_dt_s": 0.25,
+        "max_v": 0.2,
+        "max_w": 0.4,
+        "seed": 101,
+        "context_size": 3,
+        "num_samples": 8,
+        "selected_sample": 0,
+        "selected_waypoint_index": 2,
+        "camera": {
+          "width": 320,
+          "height": 240,
+          "height_m": 0.5,
+          "horizontal_fov_deg": 90.0,
+          "focal_length_mm": 18.0,
+          "horizontal_aperture_mm": 36.0,
+          "vertical_aperture_mm": 27.0
+        },
+        "corridor": {
+          "xmin": -2.0,
+          "xmax": 6.0,
+          "half_width": 1.5,
+          "height": 2.6
+        },
+        "boundary_stop_margin_m": 0.1,
+        "synchronous": false,
+        "smoothing": false,
+        "waypoint_modification": false,
+        "agent_radius_m": 0.09,
+        "required_clearance_m": 0.02,
+        "obstacles": [
+          {
+            "id": "StaticObstacle1",
+            "center_xy_m": [
+              1.5,
+              0.0
+            ],
+            "size_xyz_m": [
+              0.4,
+              0.5,
+              0.8
+            ],
+            "color_rgb": [
+              0.04,
+              0.65,
+              0.04
+            ]
+          },
+          {
+            "id": "StaticObstacle2",
+            "center_xy_m": [
+              3.0,
+              0.75
+            ],
+            "size_xyz_m": [
+              0.5,
+              1.5,
+              1.0
+            ],
+            "color_rgb": [
+              0.04,
+              0.65,
+              0.04
+            ]
+          }
+        ],
+        "dynamic_obstacle": {
+          "id": "DynamicObstacle",
+          "size_xyz_m": [
+            0.35,
+            0.35,
+            0.8
+          ],
+          "color_rgb": [
+            0.65,
+            0.04,
+            0.65
+          ],
+          "spawn_tick": 792,
+          "minimum_visible_pixels": 20,
+          "center_xy_m": [
+            2.372279542,
+            0.110674603
+          ]
+        },
+        "goal_mode": "topomap",
+        "topomap_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+        "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36"
+      },
+      "start_obstacle_clearance_m": {
+        "StaticObstacle1": 0.4229452572937281,
+        "StaticObstacle2": 0.46854812999214646,
+        "DynamicObstacle": 0.021406126302920797
+      },
+      "start_corridor_clearance_m": 1.0130717983292297,
+      "valid_start": true,
+      "raw_summary_pose_max_error": 0.0,
+      "rounded_prompt_pose_max_error": 3.824185412781844e-11
+    },
+    {
+      "id": "ORACLE_STOP_spawn",
+      "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01",
+      "tracked_summary": "research/results/isaac6_topomap_oracle_stop_20261020/summary.json",
+      "source_tick": 970,
+      "source_sim_s": 13.472222222222221,
+      "pose": [
+        2.178314606672017,
+        0.44968245846541816,
+        -0.7799250803946496
+      ],
+      "config": {
+        "name": "sudden_obstacle_on_actual_old_rollout",
+        "start_pose": [
+          2.178314606672017,
+          0.44968245846541816,
+          -0.7799250803946496
+        ],
+        "goal_pose": [
+          4.5,
+          0.0,
+          0.0
+        ],
+        "goal_tolerance_m": 0.3,
+        "timeout_sim_s": 60.0,
+        "timeout_navigation_wall_s": 180.0,
+        "timeout_process_wall_s": 600.0,
+        "integration_hz": 72,
+        "observation_hz": 4,
+        "controller_hz": 9,
+        "controller_dt_s": 0.25,
+        "max_v": 0.2,
+        "max_w": 0.4,
+        "seed": 101,
+        "context_size": 3,
+        "num_samples": 8,
+        "selected_sample": 0,
+        "selected_waypoint_index": 2,
+        "camera": {
+          "width": 320,
+          "height": 240,
+          "height_m": 0.5,
+          "horizontal_fov_deg": 90.0,
+          "focal_length_mm": 18.0,
+          "horizontal_aperture_mm": 36.0,
+          "vertical_aperture_mm": 27.0
+        },
+        "corridor": {
+          "xmin": -2.0,
+          "xmax": 6.0,
+          "half_width": 1.5,
+          "height": 2.6
+        },
+        "boundary_stop_margin_m": 0.1,
+        "synchronous": false,
+        "smoothing": false,
+        "waypoint_modification": false,
+        "agent_radius_m": 0.09,
+        "required_clearance_m": 0.02,
+        "obstacles": [
+          {
+            "id": "StaticObstacle1",
+            "center_xy_m": [
+              1.5,
+              0.0
+            ],
+            "size_xyz_m": [
+              0.4,
+              0.5,
+              0.8
+            ],
+            "color_rgb": [
+              0.04,
+              0.65,
+              0.04
+            ]
+          },
+          {
+            "id": "StaticObstacle2",
+            "center_xy_m": [
+              3.0,
+              0.75
+            ],
+            "size_xyz_m": [
+              0.5,
+              1.5,
+              1.0
+            ],
+            "color_rgb": [
+              0.04,
+              0.65,
+              0.04
+            ]
+          }
+        ],
+        "dynamic_obstacle": {
+          "id": "DynamicObstacle",
+          "size_xyz_m": [
+            0.35,
+            0.35,
+            0.8
+          ],
+          "color_rgb": [
+            0.65,
+            0.04,
+            0.65
+          ],
+          "spawn_tick": 970,
+          "minimum_visible_pixels": 20,
+          "center_xy_m": [
+            2.35439671156368,
+            0.07771649443348477
+          ]
+        },
+        "goal_mode": "topomap",
+        "topomap_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+        "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36"
+      },
+      "start_obstacle_clearance_m": {
+        "StaticObstacle1": 0.4283222426006815,
+        "StaticObstacle2": 0.4816853933279831,
+        "DynamicObstacle": 0.10696893647990649
+      },
+      "start_corridor_clearance_m": 0.9603175415335818,
+      "valid_start": true,
+      "raw_summary_pose_max_error": 0.0,
+      "rounded_prompt_pose_max_error": 3.458183739368792e-11
+    },
+    {
+      "id": "ORACLE_STOP_final",
+      "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_oracle_stop_01",
+      "tracked_summary": "research/results/isaac6_topomap_oracle_stop_20261020/summary.json",
+      "source_tick": 4320,
+      "source_sim_s": 60.0,
+      "pose": [
+        2.2623238937814256,
+        0.36754539616337856,
+        -0.6222850123138457
+      ],
+      "config": {
+        "name": "sudden_obstacle_on_actual_old_rollout",
+        "start_pose": [
+          2.2623238937814256,
+          0.36754539616337856,
+          -0.6222850123138457
+        ],
+        "goal_pose": [
+          4.5,
+          0.0,
+          0.0
+        ],
+        "goal_tolerance_m": 0.3,
+        "timeout_sim_s": 60.0,
+        "timeout_navigation_wall_s": 180.0,
+        "timeout_process_wall_s": 600.0,
+        "integration_hz": 72,
+        "observation_hz": 4,
+        "controller_hz": 9,
+        "controller_dt_s": 0.25,
+        "max_v": 0.2,
+        "max_w": 0.4,
+        "seed": 101,
+        "context_size": 3,
+        "num_samples": 8,
+        "selected_sample": 0,
+        "selected_waypoint_index": 2,
+        "camera": {
+          "width": 320,
+          "height": 240,
+          "height_m": 0.5,
+          "horizontal_fov_deg": 90.0,
+          "focal_length_mm": 18.0,
+          "horizontal_aperture_mm": 36.0,
+          "vertical_aperture_mm": 27.0
+        },
+        "corridor": {
+          "xmin": -2.0,
+          "xmax": 6.0,
+          "half_width": 1.5,
+          "height": 2.6
+        },
+        "boundary_stop_margin_m": 0.1,
+        "synchronous": false,
+        "smoothing": false,
+        "waypoint_modification": false,
+        "agent_radius_m": 0.09,
+        "required_clearance_m": 0.02,
+        "obstacles": [
+          {
+            "id": "StaticObstacle1",
+            "center_xy_m": [
+              1.5,
+              0.0
+            ],
+            "size_xyz_m": [
+              0.4,
+              0.5,
+              0.8
+            ],
+            "color_rgb": [
+              0.04,
+              0.65,
+              0.04
+            ]
+          },
+          {
+            "id": "StaticObstacle2",
+            "center_xy_m": [
+              3.0,
+              0.75
+            ],
+            "size_xyz_m": [
+              0.5,
+              1.5,
+              1.0
+            ],
+            "color_rgb": [
+              0.04,
+              0.65,
+              0.04
+            ]
+          }
+        ],
+        "dynamic_obstacle": {
+          "id": "DynamicObstacle",
+          "size_xyz_m": [
+            0.35,
+            0.35,
+            0.8
+          ],
+          "color_rgb": [
+            0.65,
+            0.04,
+            0.65
+          ],
+          "spawn_tick": 970,
+          "minimum_visible_pixels": 20,
+          "center_xy_m": [
+            2.35439671156368,
+            0.07771649443348477
+          ]
+        },
+        "goal_mode": "topomap",
+        "topomap_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+        "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36"
+      },
+      "start_obstacle_clearance_m": {
+        "StaticObstacle1": 0.4844780950364511,
+        "StaticObstacle2": 0.3976761062185744,
+        "DynamicObstacle": 0.0248289017298938
+      },
+      "start_corridor_clearance_m": 1.0424546038356213,
+      "valid_start": true,
+      "raw_summary_pose_max_error": 0.0,
+      "rounded_prompt_pose_max_error": 3.6621428112226795e-11
+    }
+  ],
+  "action_sets": {
+    "B0": [
+      [
+        0.2,
+        0.0
+      ],
+      [
+        0.2,
+        -0.2
+      ],
+      [
+        0.2,
+        0.2
+      ],
+      [
+        0.2,
+        -0.4
+      ],
+      [
+        0.2,
+        0.4
+      ]
+    ],
+    "B1": [
+      [
+        0.2,
+        0.0
+      ],
+      [
+        0.2,
+        -0.2
+      ],
+      [
+        0.2,
+        0.2
+      ],
+      [
+        0.2,
+        -0.4
+      ],
+      [
+        0.2,
+        0.4
+      ],
+      [
+        0.0,
+        -0.4
+      ],
+      [
+        0.0,
+        0.4
+      ]
+    ],
+    "B2": [
+      [
+        0.2,
+        0.0
+      ],
+      [
+        0.2,
+        -0.2
+      ],
+      [
+        0.2,
+        0.2
+      ],
+      [
+        0.2,
+        -0.4
+      ],
+      [
+        0.2,
+        0.4
+      ],
+      [
+        0.0,
+        -0.4
+      ],
+      [
+        0.0,
+        0.4
+      ],
+      [
+        -0.2,
+        0.0
+      ],
+      [
+        -0.2,
+        -0.2
+      ],
+      [
+        -0.2,
+        0.2
+      ],
+      [
+        -0.2,
+        -0.4
+      ],
+      [
+        -0.2,
+        0.4
+      ]
+    ]
+  },
+  "source_sha256": {
+    "research/nomad_phase0/actual_pose_recovery.py": "4199db1a2878fff18700945c9d8196bbaf0d9aff92f2aa5d97ad7a522d1e705a",
+    "research/nomad_phase0/scenario_feasibility.py": "6f7769d3e233c82cf0eb44937f65aed92c103ff0b8be31db97763918769b5b73",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c"
+  }
+}

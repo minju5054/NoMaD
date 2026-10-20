@@ -1,0 +1,55 @@
+{
+  "scope": "Oracle geometry; offline SE(2) kinematic feasibility",
+  "state_id": "ORACLE_STOP_final",
+  "method": "B0",
+  "settings": {
+    "method": "Existing continuous SE(2) Hybrid A* with quantized duplicate pruning",
+    "xy_bin_m": 0.05,
+    "heading_bins": 64,
+    "primitive_duration_s": 0.5,
+    "heuristic_weight": 1.5,
+    "max_expansions_per_search": 30000,
+    "time_budget_clock": "cpu",
+    "max_cpu_seconds_per_search": 120.0,
+    "max_path_duration_s": 60.0,
+    "goal": "Existing world XY goal disk, radius .30m; no terminal yaw constraint",
+    "wall_rule": "Existing corridor_clearance > 0 with radius .09m",
+    "obstacle_rule": "Existing continuous swept_clearance lower bound >= .02m with radius .09m",
+    "side_rule": null,
+    "one_pass_certificate": false,
+    "primitives_vw": [
+      [
+        0.2,
+        0.0
+      ],
+      [
+        0.2,
+        -0.2
+      ],
+      [
+        0.2,
+        0.2
+      ],
+      [
+        0.2,
+        -0.4
+      ],
+      [
+        0.2,
+        0.4
+      ]
+    ],
+    "minimum_v_m_s": 0.0
+  },
+  "status": "NO_PATH_FOUND",
+  "termination_reason": "OPEN_SET_EXHAUSTED",
+  "search_executed": true,
+  "expanded": 1,
+  "generated": 1,
+  "wall_seconds": 8.03440052550286e-05,
+  "cpu_seconds": 8.014000000144961e-05,
+  "time_budget_clock": "cpu",
+  "goal_reached": false,
+  "witness": null,
+  "no_path_meaning": "No witness within this discretized bounded search; not impossibility"
+}

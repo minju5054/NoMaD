@@ -483,3 +483,11 @@ Run-ID paired 성공률차+60%p[+30,+90], 양쪽goal3pair시간차−.958s[−1.
 ## Phase B — actual-pose recovery 사전 고정
 
 2026-10-20. 기준2892c3f/동일Phase0 branch. EARLY-GRAPH와Oracle STOP의spawn/final 네실제pose 및실제dynamic box를raw trace/기존tracked summary와정확대조했다. 모든시작valid(최소clearance390.553/21.406/106.969/24.829mm). 기존Hybrid A*에선택형reverse witness검증/CPUbudget만추가하고B0전진5/B1+spin2/B2+reverse5를고정. XY5cm/yaw64bin/.5s/weight1.5/30kexpansion/60path-s유지. 이번요청120CPU-s와기존0A120wall-s를구분기록; 기존기본값보존. side=None으로one-pass/certificate우회. 새3+기존5testsPASS. 코드·protocolcommit후12조건1회씩실행예정. Online recovery는spin우선/reverse비활성,Isaac/GPU추가실행없음. [사전 protocol](PHASE_B_ACTUAL_POSE_RECOVERY.md).
+
+## Phase B — 실제 pose 12조건 결과
+
+2026-10-20. Clean5bf2fa0에서12조건한번씩/재시도·튜닝0. B0는EARLY-GRAPH spawn만FEASIBLE(17s/3.4m/최소20.014718mm). 나머지B0는OPEN_SET_EXHAUSTED(EARLYfinal1,Oracle spawn6,Oracle final1 expansions);불가능증명아님. B1/B2는각4/4FEASIBLE, INVALID_START0. B1은세추가상태에서spin후forward로뒤쪽공간을거쳐goal연결, B2만의신규feasible상태0.
+
+EARLYfinal/Oracle spawn/Oracle final의B1→B2 witness시간22.5→16.5/18.5→17.5/23.5→18s, B2후진0.2/0.2/0.3m. 첫weighted-search witness비교이므로최적성·온라인성능차이주장없음. B1최종상태spin8/8.5s가B2에서.5s로줄지만이동거리는늘었다. EARLYspawn의B1/B2는동일해,reverse0. 모든9witness저장파일재적분/swept/corridor재검증PASS/pose오차0, goal거리.218596… .295737m, 최소obstacle20.014718…26.080095mm. 일부여유는threshold초과.014718mm로매우작다.
+
+최대CPU2.501s/expansion14723,시간·expansionbudget종료없음. 기존16input/frozen sourcehash불변. 조건별command·pose·spin/reverse구간JSON,12행CSV,검증JSON,XY그림1장과[보고서](PHASE_B_ACTUAL_POSE_RECOVERY.md)저장. Scope는Oracle geometry/offline SE2 kinematic feasibility. 후진필요성근거없으며온라인Recovery는제자리회전우선·후진비활성유지. 새Isaac/GPU/온라인controller/Graph변경없음.
