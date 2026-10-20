@@ -23,7 +23,7 @@ def append(stream, record):
 
 
 class ExecutionThread:
-    def __init__(self, config, out):
+    def __init__(self, config, out, oracle_safety_stop=False):
         self.config, self.out = config, out
         self.core = WaypointExecution(config["start_pose"], config["integration_hz"], config["controller_hz"])
         self.lock = threading.Lock()
@@ -42,6 +42,11 @@ class ExecutionThread:
         if "dynamic_obstacle" in config:
             from .sudden_obstacle import SuddenObstacleMonitor
             self.dynamic = SuddenObstacleMonitor(config, out)
+        self.safety = None
+        if oracle_safety_stop:
+            from .oracle_safety_stop import OracleSafetyStop
+            assert self.dynamic is not None and self.dynamic.adaptive and config.get("goal_mode") == "topomap"
+            self.safety = OracleSafetyStop(config, out)
 
     def snapshot(self):
         with self.lock:
@@ -128,6 +133,9 @@ class ExecutionThread:
                     if result is not None:
                         self.accept(result, sim_time)
                     refresh, switch = self.core.control(tick, time.monotonic_ns())
+                    if refresh is not None and self.safety is not None:
+                        box = self.dynamic.obstacle if self.dynamic.spawn is not None else None
+                        self.safety.apply(self.core, refresh, switch, tick, box)
                     if refresh:
                         append(cf, refresh)
                     if switch:
@@ -139,12 +147,14 @@ class ExecutionThread:
             self.error = exc
             (self.out/"async_thread_failure.txt").write_text(traceback.format_exc())
         finally:
+            if self.safety is not None:
+                self.safety.close()
             self.started.set()
             self.done.set()
 
 
 def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, render_check,
-              controlled_delivery_delay=False, uniform_delivery_delay_s=None):
+              controlled_delivery_delay=False, uniform_delivery_delay_s=None, oracle_safety_stop=False):
     if controlled_delivery_delay and uniform_delivery_delay_s is not None:
         raise ValueError("Single-trigger and uniform delivery delays are mutually exclusive")
     if "dynamic_obstacle" in config and (controlled_delivery_delay or uniform_delivery_delay_s not in (None, 0.)):
@@ -168,7 +178,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         protocol["post_inference_result_delivery_delay_s"] = uniform_delivery_delay_s
         protocol["waypoint_timeout_clock"] = "host_monotonic_since_controller_side_result_release"
     write_json(out/"async_protocol.json", protocol)
-    engine = ExecutionThread(config, out)
+    if oracle_safety_stop:
+        assert not controlled_delivery_delay and uniform_delivery_delay_s is None
+    engine = ExecutionThread(config, out, oracle_safety_stop=oracle_safety_stop)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
     dynamic_history = deque(maxlen=4)
     save_observations = engine.dynamic is not None or config.get("goal_mode") == "topomap"
@@ -280,6 +292,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                "all_outputs_finite": True, "frame_and_rgb_check": render_check, "obstacle_evaluation": obstacle_result,
                "raw_model_output_directory": "model/raw", "derived_trajectory_directory": "model/derived",
                "note": "Pacing and concurrent OLD movement require offline validation; this file alone is not a realtime PASS."}
+    if oracle_safety_stop:
+        summary["oracle_safety_stop_enabled"] = True
+        summary["command_semantics"] = "controller/events v,w are nominal PD; applied_v,w and 72Hz trace are actual"
     if dynamic_result is not None:
         summary["dynamic_obstacle"] = dynamic_result
         summary["obstacle_evaluation_scope"] = "Original static obstacles only; dynamic evaluation is separate"

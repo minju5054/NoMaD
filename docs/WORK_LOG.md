@@ -392,3 +392,8 @@ WarmGPU median/p95 35.536/53.096ms, request/receive/switch54/54/54, 모두적용
 ## Topomap sudden obstacle — FRESH 50–53 왼쪽 회전 그림
 
 2026-10-19. 사용자 요청에 따라 저장 데이터만으로 native 8점/실제 경로/B50–B53, 실제 PD w 시간축, 실제 yaw 시간축을 한 그림에 표시했다. w=+.340089/+.4/+.4/+.4, yaw −45.881°→−30.410°로 모두 왼쪽 회전이며 world Y 감소와 구분했다. 원본 PD·9Hz command·72Hz pose/incoming ID·yaw increment 검증, 기존257개 raw hash 보존. PNG/SVG 육안 검토 완료, 원래 그림·결과 보존, 새 주행/inference0회. 별도 `topomap_left_turns_01` 저장 후 plot source/작은manifest/SVG와 문서만 추가했다.
+
+
+## Topomap Oracle Safety Stop — 사전 검증
+
+2026-10-20. 기준8307288에서 별도 research/isaac6-topomap-oracle-stop 브랜치. 실제9Hz 원본PD 계산 직후 actual integration 명령만 opt-in STOP override한다. Tick970 실제 adaptive spawn 이후16/72초 horizon, swept obstacle>=.02m 및 corridor containment, 원래4/9/72Hz·timeout·worker·Topomap·placement 유지. Nominal/actual 별도 로그, waypoint 갱신 중 정지 가능. 저장된B52 RAW clearance .002653804024m 위험/STOP .023340344453m 안전, RAW16pose 오차0. 최소 신규2개+기존tests 총23passed; prior745hash 및14node map 검증PASS. Protocol/code commit 후 clean 상태에서 단일 navigation1회/재시도0회 예정. [보고서](ISAAC6_TOPOMAP_ORACLE_SAFETY_STOP.md).

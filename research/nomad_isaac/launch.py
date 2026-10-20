@@ -19,12 +19,17 @@ def main():
     parser.add_argument("--prepare-only", action="store_true", help="Render/frame gate only; no inference or movement")
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
+    parser.add_argument("--oracle-safety-stop", action="store_true", help="Exact-geometry STOP after adaptive dynamic spawn")
     parser.add_argument("--topomap", type=Path, help="Verified static Topomap manifest for the NoMaD worker")
     parser.add_argument("--render-topomap-reference", type=Path, help="Render saved reference poses only; requires --prepare-only")
     parser.add_argument("--controlled-delivery-delay", action="store_true", help="Single predeclared 0.5 s IPC result hold")
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.oracle_safety_stop and (not args.topomap or not args.asynchronous or args.prepare_only
+            or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None
+            or "placement" not in read_scenario(args.scenario).get("dynamic_obstacle", {})):
+        parser.error("Oracle Safety Stop requires the frozen asynchronous Topomap + adaptive obstacle, zero-delay experiment")
     if args.topomap and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
         parser.error("Topomap navigation requires asynchronous execution without extra delay")
     if args.render_topomap_reference and (not args.prepare_only or args.topomap):
@@ -51,6 +56,8 @@ def main():
         sources += [Path(__file__).with_name("topomap_protocol.json")]
     if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario):
         sources += [Path(__file__).with_name("topomap_sudden_protocol.json")]
+    if args.oracle_safety_stop:
+        sources += [Path(__file__).with_name("oracle_safety_stop_protocol.json")]
     if args.controlled_delivery_delay:
         sources += [Path(__file__).with_name("controlled_latency_protocol.json")]
     if args.uniform_delivery_delay_s is not None:
@@ -61,6 +68,7 @@ def main():
         "git_status": subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True),
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
+        "oracle_safety_stop": args.oracle_safety_stop,
         "topomap_manifest": str(args.topomap.resolve()) if args.topomap else None,
         "topomap_manifest_sha256": sha256_file(args.topomap) if args.topomap else None,
         "render_topomap_reference": str(args.render_topomap_reference.resolve()) if args.render_topomap_reference else None,
@@ -106,6 +114,8 @@ def main():
             command += ["--prepare-only"] if args.prepare_only else ["--socket", str(socket_path)]
             if args.asynchronous:
                 command.append("--asynchronous")
+            if args.oracle_safety_stop:
+                command.append("--oracle-safety-stop")
             if args.topomap:
                 command += ["--topomap", str(args.topomap.resolve())]
             if args.render_topomap_reference:

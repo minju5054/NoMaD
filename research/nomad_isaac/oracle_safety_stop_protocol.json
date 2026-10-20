@@ -1,0 +1,33 @@
+{
+  "experiment": "topomap_oracle_safety_stop_01",
+  "base_commit": "830728850b5f4fc6725c3c33894bf26e1d26df1d",
+  "scenario": "research/nomad_isaac/old_rollout_obstacle_scenario.json",
+  "scenario_sha256": "9d3785d811b2ecb0c879c62bcf849799a04511eda34887f6e70c9facdcc09589",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "navigation_runs": 1,
+  "retries": 0,
+  "controller_hz": 9,
+  "integration_hz": 72,
+  "observation_hz": 4,
+  "activation": "First existing controller tick after actual dynamic spawn at tick 970; never before successful placement",
+  "horizon_ticks": 16,
+  "horizon_s": 0.2222222222222222,
+  "agent_radius_m": 0.09,
+  "required_obstacle_clearance_m": 0.02,
+  "corridor_requirement": "Strictly positive conservative footprint containment bound",
+  "decision": "Valid nominal PD is allowed only if all 16 swept intervals satisfy bounds; otherwise actual command becomes [0,0]. Re-evaluate at each 9 Hz tick.",
+  "invalid_waypoint": "Preserve original missing/expired zero velocity; do not count as Safety Stop",
+  "geometry": "Two original static AABBs plus actual SuddenObstacleMonitor adaptive box after spawn",
+  "command_logs": "controller/events v_m_s,w_rad_s remain nominal; applied_v_m_s,applied_w_rad_s are actual; agent_trajectory v_m_s,w_rad_s are incoming actual interval command",
+  "waypoint_switch": "Original receive/latch/switch timing retained; a switch can occur while actual execution is blocked",
+  "post_inference_extra_delay_s": 0,
+  "stop_duration": "Simulation intervals controlled by blocked refreshes, truncated at next refresh or termination; host monotonic duration reported separately",
+  "classification_priority": [
+    "INCONCLUSIVE if placement fails or technical validation is unavailable",
+    "SAFETY_FAILURE if actual obstacle margin or corridor containment is violated, regardless of goal",
+    "SAFE_GOAL_SUCCESS if actual margins hold and world goal tolerance is entered",
+    "SAFE_BUT_STUCK if safe but goal not reached and experiment ends blocked without resuming",
+    "INCONCLUSIVE for other safe goal failures; report partial progress and termination explicitly"
+  ],
+  "limitations": "Oracle geometry, SE(2) kinematics and Isaac RGB; not camera-based safety perception or PhysX/real robot verification. Baseline is nonpaired."
+}

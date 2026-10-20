@@ -17,6 +17,7 @@ parser.add_argument("--socket")
 parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
+parser.add_argument("--oracle-safety-stop", action="store_true")
 parser.add_argument("--topomap", type=Path)
 parser.add_argument("--render-topomap-reference", type=Path)
 parser.add_argument("--controlled-delivery-delay", action="store_true")
@@ -131,6 +132,10 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    if args.oracle_safety_stop:
+        assert args.topomap and args.asynchronous and not args.prepare_only
+        assert not args.controlled_delivery_delay and args.uniform_delivery_delay_s is None
+        assert "placement" in config.get("dynamic_obstacle", {})
     if "dynamic_obstacle" in config and (not args.asynchronous or args.controlled_delivery_delay or
                                          args.uniform_delivery_delay_s not in (None, 0.)):
         raise ValueError("Sudden obstacle requires asynchronous execution with zero additional delay")
@@ -323,7 +328,8 @@ def main():
         from nomad_isaac.async_runtime import run_async
         result = run_async(config, out, args.socket, goal, capture, set_pose, get_pose, render_check,
                            controlled_delivery_delay=args.controlled_delivery_delay,
-                           uniform_delivery_delay_s=args.uniform_delivery_delay_s)
+                           uniform_delivery_delay_s=args.uniform_delivery_delay_s,
+                           oracle_safety_stop=args.oracle_safety_stop)
         if adaptive:
             stage.Export(str(out/"scene_resolved.usda"))
             export_view_scene(out/"scene_resolved.usda", out/"scene_resolved_gui.usda")
