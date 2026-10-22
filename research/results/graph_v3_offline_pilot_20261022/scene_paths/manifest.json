@@ -1,0 +1,237 @@
+{
+  "scope": "Saved command reconstruction; fixed-B offline counterfactual, not new closed-loop navigation",
+  "new_optimization": 0,
+  "new_navigation": 0,
+  "new_inference": 0,
+  "input_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/graph_v3/offline_pilot_01/cases/S0_02_F0054.json": "64a5d90468f6064d6c06cffa55652f19f226cbb21fa48dc0611026fe95867dbd",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/graph_v3/offline_pilot_01/cases/S1_P0_F0060.json": "5d69073ff605ebf954155be92b2f6e3d38f523518900ac3093cc4588d53fc51d",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/graph_v3/offline_pilot_01/cases/topomap_sudden_01_F0052.json": "cec50796d54b56ae74a10909180d27740f74d4778d0d7a95ad5e78c5c9cab367"
+  },
+  "cases": [
+    {
+      "case_id": "S0_02_F0054",
+      "figure": "S0_02_F0054_scene.png",
+      "figure_sha256": "cd136caec91228518add39bc1f26946d7ced495f9569140c050f496f67333e8f",
+      "viewport": [
+        [
+          2.18547212094297,
+          -0.38056255149078044
+        ],
+        [
+          2.8630834619455205,
+          0.29704878951176994
+        ]
+      ],
+      "maximum_replay_error": 0.0,
+      "methods": {
+        "RAW": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 2.0,
+          "chunk_status": "ENDPOINT_REACHED",
+          "first_overlap_offset_tick": 141,
+          "minimum_clearance_m": -0.0014251244826983544,
+          "converged": true,
+          "native_full_safe": false,
+          "chunk_rollout_safe": false
+        },
+        "RAW+Speed": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 2.0,
+          "chunk_status": "ENDPOINT_REACHED",
+          "first_overlap_offset_tick": 141,
+          "minimum_clearance_m": -0.0014251244826983544,
+          "converged": true,
+          "native_full_safe": false,
+          "chunk_rollout_safe": false
+        },
+        "RAW+Rate limit": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 2.0,
+          "chunk_status": "ENDPOINT_REACHED",
+          "first_overlap_offset_tick": 141,
+          "minimum_clearance_m": -0.0014263695800168068,
+          "converged": true,
+          "native_full_safe": false,
+          "chunk_rollout_safe": false
+        },
+        "RIGID": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 1.8888888888888888,
+          "chunk_status": "ENDPOINT_REACHED",
+          "first_overlap_offset_tick": 130,
+          "minimum_clearance_m": -0.009075492680734683,
+          "converged": true,
+          "native_full_safe": false,
+          "chunk_rollout_safe": false
+        },
+        "Graph v2": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 2.0,
+          "chunk_status": "ENDPOINT_REACHED",
+          "first_overlap_offset_tick": null,
+          "minimum_clearance_m": 0.024469301025168734,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": true
+        },
+        "Graph v3": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 2.0,
+          "chunk_status": "ENDPOINT_REACHED",
+          "first_overlap_offset_tick": null,
+          "minimum_clearance_m": 0.02452122886230275,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": true
+        }
+      },
+      "illustration_selection_reason": "S0 selected cases ordered by run/ID: first B with world X in [2.1,2.7]; geometry-only illustration selection"
+    },
+    {
+      "case_id": "S1_P0_F0060",
+      "figure": "S1_P0_F0060_scene.png",
+      "figure_sha256": "669b167860fc51026dc60a00c8ab4adfe67cec6b81f50f58e6a510b3ee8ca8d4",
+      "viewport": [
+        [
+          1.628092942183358,
+          -1.1921563040551835
+        ],
+        [
+          3.699764930344769,
+          0.8795156841062273
+        ]
+      ],
+      "maximum_replay_error": 0.0,
+      "methods": {
+        "RAW": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 60.0,
+          "chunk_status": "CHUNK_TIMEOUT",
+          "first_overlap_offset_tick": 263,
+          "minimum_clearance_m": -0.09000192901210533,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        },
+        "RAW+Speed": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 60.0,
+          "chunk_status": "CHUNK_TIMEOUT",
+          "first_overlap_offset_tick": 356,
+          "minimum_clearance_m": -0.09000048225377633,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        },
+        "RAW+Rate limit": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 60.0,
+          "chunk_status": "CHUNK_TIMEOUT",
+          "first_overlap_offset_tick": 118,
+          "minimum_clearance_m": -0.09000192901210533,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        },
+        "RIGID": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 60.0,
+          "chunk_status": "CHUNK_TIMEOUT",
+          "first_overlap_offset_tick": 263,
+          "minimum_clearance_m": -0.09000192901210533,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        },
+        "Graph v2": {
+          "status": "NOT_AVAILABLE"
+        },
+        "Graph v3": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 15.666666666666666,
+          "chunk_status": "ENDPOINT_REACHED",
+          "first_overlap_offset_tick": null,
+          "minimum_clearance_m": 0.0063118766868798075,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        }
+      },
+      "illustration_selection_reason": "Previously reported Graph v3 H_chunk 2cm margin failure; deliberately show the retained failure"
+    },
+    {
+      "case_id": "topomap_sudden_01_F0052",
+      "figure": "topomap_sudden_01_F0052_scene.png",
+      "figure_sha256": "2de83dad04554788558014a80ab36f9be3c97a21c6a8fe0d7036a387feb58e3f",
+      "viewport": [
+        [
+          1.9614990082915564,
+          0.17116337743874754
+        ],
+        [
+          3.2214982788402162,
+          1.4311626479874076
+        ]
+      ],
+      "maximum_replay_error": 0.0,
+      "methods": {
+        "RAW": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 60.0,
+          "chunk_status": "CHUNK_TIMEOUT",
+          "first_overlap_offset_tick": 16,
+          "minimum_clearance_m": -0.09000192901210533,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        },
+        "RAW+Speed": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 60.0,
+          "chunk_status": "CHUNK_TIMEOUT",
+          "first_overlap_offset_tick": 55,
+          "minimum_clearance_m": -0.006985855710791633,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        },
+        "RAW+Rate limit": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 60.0,
+          "chunk_status": "CHUNK_TIMEOUT",
+          "first_overlap_offset_tick": 16,
+          "minimum_clearance_m": -0.09000192901210533,
+          "converged": true,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        },
+        "RIGID": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 60.0,
+          "chunk_status": "CHUNK_TIMEOUT",
+          "first_overlap_offset_tick": 16,
+          "minimum_clearance_m": -0.09000192901210533,
+          "converged": true,
+          "native_full_safe": false,
+          "chunk_rollout_safe": false
+        },
+        "Graph v2": {
+          "status": "NOT_AVAILABLE"
+        },
+        "Graph v3": {
+          "horizon_switch_s": 0.2222222222222222,
+          "horizon_chunk_s": 10.11111111111111,
+          "chunk_status": "ENDPOINT_REACHED",
+          "first_overlap_offset_tick": 53,
+          "minimum_clearance_m": -0.007719852159037925,
+          "converged": false,
+          "native_full_safe": true,
+          "chunk_rollout_safe": false
+        }
+      },
+      "illustration_selection_reason": "Previously specified B52 stress case; PD-origin history, PP counterfactual, rejected v3 final iterate"
+    }
+  ],
+  "note": "Selected illustrations do not replace aggregate59-case results; post-overlap extensions are grey, not actual collision execution."
+}

@@ -237,3 +237,15 @@ Online integration is not validated. The main unresolved issue is enforcing actu
 - Complete control traces and factor costs remain at `/home/gpuadmin/Workspace/NoMaD/artifacts/graph_v3/offline_pilot_01/cases/` (about74MB, excluded from Git). Existing raw/derived runs are unchanged.
 
 This remains **offline mechanism validation with oracle geometry**. H_chunk is a frozen, unexecuted continuation; stress PP is counterfactual after actual PD. S0 selected maxima/medians, one contiguous S1 window and historical failures are not an unbiased performance sample. None of these results establishes closed-loop improvement, Graph necessity or real-time applicability.
+
+## Scene XY views requested after the experiment
+
+`research/nomad_phase0/graph_v3_scene_plot.py` draws each method in the same scene and viewport, starting at the same saved B. It reconstructs 72Hz poses from the already saved 9Hz commands with `integrate_se2`; it never recomputes PP commands or runs optimization, inference or navigation. Every stored control pose and terminal pose matches exactly (maximum replay error0). Original case hashes are preserved in the figure manifest.
+
+Three illustrative scenes are shown, without replacing the59-case aggregate:
+
+- [S0 run02 / FRESH54](../research/results/graph_v3_offline_pilot_20261022/scene_paths/S0_02_F0054_scene.png): first selected S0 case in run/ID order with B world X in[2.1,2.7], selected by geometry alone. RAW/Speed/Rate/Rigid reach the static-box corner with footprint overlap in H_chunk; Graph v2/v3 avoid overlap and retain2cm in this individual continuation.
+- [S1 P0 / FRESH60](../research/results/graph_v3_offline_pilot_20261022/scene_paths/S1_P0_F0060_scene.png): previously reported H_chunk margin failure. Graph v3 completes a loop and returns near B to reach the chunk endpoint; minimum clearance6.312mm remains below2cm. Endpoint completion and travelled distance are not goal progress.
+- [Topomap sudden / FRESH52](../research/results/graph_v3_offline_pilot_20261022/scene_paths/topomap_sudden_01_F0052_scene.png): specified stress boundary. All available method continuations overlap an obstacle. Graph v3 is a rejected nonconverged final iterate, shown explicitly as a diagnostic. Original historical execution used PD; these are PP counterfactuals.
+
+Dark thick segments show H_switch; coloured solid lines show H_chunk up to its first overlap; grey dotted lines show the saved mathematical continuation after overlap. Red crosses and circles mark first overlap and the9cm footprint. Thin coloured dashed lines are the8-point paths; box outlines expanded by9cm+2cm show the required center clearance. Hollow circles mark observation positions, diamonds mark B, and squares mark the evaluation endpoints. Missing Graph v2 S1/stress results remain unavailable. These are local chunk continuations, not complete closed-loop routes with future FRESH updates.
