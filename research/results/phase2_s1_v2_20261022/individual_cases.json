@@ -1,0 +1,405 @@
+[
+  {
+    "pair": {
+      "family": "main16",
+      "d_m": 1.0,
+      "D_s": 0.25,
+      "index": 1,
+      "seed_offset": 10000,
+      "category": "M0_SUCCESS_INTERVENTION_HARM",
+      "M0": "SUCCESS",
+      "M3": "SUCCESS",
+      "M5": "SAFETY_FAILURE",
+      "M3_minus_M0": 0,
+      "M5_minus_M3": -1,
+      "graph_associated_candidate": false,
+      "intervention_harm": true,
+      "both_no_witness_by_method": {
+        "M0": false,
+        "M3": false,
+        "M5": false
+      },
+      "not_impossibility_proof": true
+    },
+    "actual_runs": {
+      "M0": {
+        "classification": "SUCCESS",
+        "spawn": {
+          "tick": 820,
+          "simulation_time_s": 11.38888888888889,
+          "active": true,
+          "collision_checked": true,
+          "monotonic_ns": 281344725155024,
+          "checked_duration_s": 0.0,
+          "clearance_row": 0,
+          "pose": [
+            2.001619168172337,
+            0.13961056152757692,
+            0.3045012863118508
+          ],
+          "old_id": 20,
+          "old_command_valid": true,
+          "old_command_vw": [
+            0.2,
+            0.4
+          ],
+          "footprint_clearance_m": 0.9999999999989999,
+          "obstacle": {
+            "id": "DynamicObstacle",
+            "size_xyz_m": [
+              0.35,
+              0.35,
+              0.8
+            ],
+            "color_rgb": [
+              0.65,
+              0.04,
+              0.65
+            ],
+            "minimum_visible_pixels": 20,
+            "spawn_tick": 820,
+            "placement": {
+              "mode": "phase2_world_x",
+              "distance_m": 1.0
+            },
+            "center_xy_m": [
+              3.266619168172337,
+              0.13961056152757692
+            ]
+          },
+          "old_remaining_timeout_s": 0.682717577,
+          "old_received_monotonic_ns": 281344407872601
+        },
+        "interventions": [],
+        "graph": {
+          "calls": 0,
+          "returned": 0,
+          "accepted": 0,
+          "applied": 0,
+          "nonconverged": 0,
+          "initialization_rejected": 0,
+          "stale": 0,
+          "solve_wall_s": {
+            "n": 0
+          },
+          "dispatch_to_result_s": {
+            "n": 0
+          },
+          "movement_during_graph_m": {
+            "n": 0
+          }
+        },
+        "executed_trace": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d10_i1_M0/agent_trajectory.csv",
+        "trace_sha256": "6a38ce5f9c22a5e907ab26db7a65482a6f80e7902689dc5405916966144611f6"
+      },
+      "M3": {
+        "classification": "SUCCESS",
+        "spawn": {
+          "tick": 829,
+          "simulation_time_s": 11.51388888888889,
+          "active": true,
+          "collision_checked": true,
+          "monotonic_ns": 283813290698609,
+          "checked_duration_s": 0.0,
+          "clearance_row": 0,
+          "pose": [
+            2.002573560483866,
+            0.14851556106829272,
+            0.37382771891448296
+          ],
+          "old_id": 20,
+          "old_command_valid": true,
+          "old_command_vw": [
+            0.2,
+            0.4
+          ],
+          "footprint_clearance_m": 0.9999999999989999,
+          "obstacle": {
+            "id": "DynamicObstacle",
+            "size_xyz_m": [
+              0.35,
+              0.35,
+              0.8
+            ],
+            "color_rgb": [
+              0.65,
+              0.04,
+              0.65
+            ],
+            "minimum_visible_pixels": 20,
+            "spawn_tick": 829,
+            "placement": {
+              "mode": "phase2_world_x",
+              "distance_m": 1.0
+            },
+            "center_xy_m": [
+              3.2675735604838656,
+              0.14851556106829272
+            ]
+          },
+          "old_remaining_timeout_s": 0.5665993570000001,
+          "old_received_monotonic_ns": 283812857297966
+        },
+        "interventions": [
+          {
+            "id": 28,
+            "selected_sample": 1,
+            "graph_applied": false,
+            "switch_s": 15.11111111111111,
+            "B": [
+              2.6871676160342344,
+              0.35520316462895524,
+              0.049742571934402235
+            ],
+            "correction_rms_m": 1.962615573354719e-17,
+            "difference_from_sample0_rms_m": 0.02630173040807619,
+            "world_xy_m": [
+              [
+                2.6643388675152155,
+                0.35479981292340435
+              ],
+              [
+                2.716164126718785,
+                0.3607481997291535
+              ],
+              [
+                2.7670466902864583,
+                0.3686025767794716
+              ],
+              [
+                2.8206642592797104,
+                0.3790664697039925
+              ],
+              [
+                2.871456226737991,
+                0.3912060858435851
+              ],
+              [
+                2.9202884454697204,
+                0.4061800757899538
+              ],
+              [
+                2.9704698426049436,
+                0.42253965119572995
+              ],
+              [
+                3.0204808089556416,
+                0.43813714824463235
+              ]
+            ],
+            "applied_vw": [
+              0.2,
+              0.27097667296748645
+            ]
+          }
+        ],
+        "graph": {
+          "calls": 0,
+          "returned": 0,
+          "accepted": 0,
+          "applied": 0,
+          "nonconverged": 0,
+          "initialization_rejected": 0,
+          "stale": 0,
+          "solve_wall_s": {
+            "n": 0
+          },
+          "dispatch_to_result_s": {
+            "n": 0
+          },
+          "movement_during_graph_m": {
+            "n": 0
+          }
+        },
+        "executed_trace": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2b_D250_d10_i1_M3/agent_trajectory.csv",
+        "trace_sha256": "7702536064fc429724da02a1edcd5ffe06c76cf8c3b45f3f8d57abc795b7b92e"
+      },
+      "M5": {
+        "classification": "SAFETY_FAILURE",
+        "spawn": {
+          "tick": 820,
+          "simulation_time_s": 11.38888888888889,
+          "active": true,
+          "collision_checked": true,
+          "monotonic_ns": 283971177557520,
+          "checked_duration_s": 0.0,
+          "clearance_row": 0,
+          "pose": [
+            2.002293385851461,
+            0.1306403045468077,
+            0.2752245090038965
+          ],
+          "old_id": 20,
+          "old_command_valid": true,
+          "old_command_vw": [
+            0.2,
+            0.4
+          ],
+          "footprint_clearance_m": 0.9999999999989999,
+          "obstacle": {
+            "id": "DynamicObstacle",
+            "size_xyz_m": [
+              0.35,
+              0.35,
+              0.8
+            ],
+            "color_rgb": [
+              0.65,
+              0.04,
+              0.65
+            ],
+            "minimum_visible_pixels": 20,
+            "spawn_tick": 820,
+            "placement": {
+              "mode": "phase2_world_x",
+              "distance_m": 1.0
+            },
+            "center_xy_m": [
+              3.2672933858514606,
+              0.1306403045468077
+            ]
+          },
+          "old_remaining_timeout_s": 0.75103879,
+          "old_received_monotonic_ns": 283970928596310
+        },
+        "interventions": [
+          {
+            "id": 27,
+            "selected_sample": 1,
+            "graph_applied": true,
+            "switch_s": 14.555555555555555,
+            "B": [
+              2.6250107413153736,
+              0.22959497082710897,
+              0.07620889718286072
+            ],
+            "correction_rms_m": 0.02059168753446515,
+            "difference_from_sample0_rms_m": 0.07156827417237441,
+            "world_xy_m": [
+              [
+                2.5811456598761087,
+                0.22409873413839232
+              ],
+              [
+                2.6321743756898734,
+                0.23062384888470142
+              ],
+              [
+                2.682125490717195,
+                0.23803948223977667
+              ],
+              [
+                2.730019798533168,
+                0.24658102064550286
+              ],
+              [
+                2.776420877500961,
+                0.2567522180031482
+              ],
+              [
+                2.815100302132574,
+                0.26833169555667113
+              ],
+              [
+                2.8516554950247186,
+                0.2813847873999893
+              ],
+              [
+                2.8879049036403273,
+                0.29291935396448276
+              ]
+            ],
+            "applied_vw": [
+              0.2,
+              0.2462147349262215
+            ]
+          },
+          {
+            "id": 31,
+            "selected_sample": 0,
+            "graph_applied": true,
+            "switch_s": 16.22222222222222,
+            "B": [
+              2.9547275762021172,
+              0.2775197171767303,
+              0.18779701580524666
+            ],
+            "correction_rms_m": 0.10451711870842083,
+            "difference_from_sample0_rms_m": 0.10451711870842083,
+            "world_xy_m": [
+              [
+                2.937672958012208,
+                0.2532223644541377
+              ],
+              [
+                2.9619790174373244,
+                0.2922582972077423
+              ],
+              [
+                2.972553955301082,
+                0.34753328243127385
+              ],
+              [
+                2.9956372691748743,
+                0.38874918001573044
+              ],
+              [
+                3.0350893020268868,
+                0.4198642789650333
+              ],
+              [
+                3.0828329648923454,
+                0.4438942848933532
+              ],
+              [
+                3.1300932546595894,
+                0.4651005878137796
+              ],
+              [
+                3.1759653231488474,
+                0.48565809783866004
+              ]
+            ],
+            "applied_vw": [
+              0.14444444444444446,
+              0.4
+            ]
+          }
+        ],
+        "graph": {
+          "calls": 6,
+          "returned": 6,
+          "accepted": 2,
+          "applied": 2,
+          "nonconverged": 4,
+          "initialization_rejected": 0,
+          "stale": 0,
+          "solve_wall_s": {
+            "n": 6,
+            "median": 0.10910322150448337,
+            "p95": 0.17623204295523465,
+            "min": 0.06318320200080052,
+            "max": 0.1834139739512466
+          },
+          "dispatch_to_result_s": {
+            "n": 6,
+            "median": 0.118970459,
+            "p95": 0.18006308975000002,
+            "min": 0.070721698,
+            "max": 0.187265059
+          },
+          "movement_during_graph_m": {
+            "n": 6,
+            "median": 0.033333319108940246,
+            "p95": 0.04444443933422903,
+            "min": 0.00987653050856602,
+            "max": 0.04444444415087563
+          }
+        },
+        "executed_trace": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2b_D250_d10_i1_M5/agent_trajectory.csv",
+        "trace_sha256": "d06c247142da0221bc40df1f14fc719f89ef594f9c989a7ba363d277585ffbf3"
+      }
+    },
+    "scope": "Different closed-loop RGB/placement possible; association, not necessity proof"
+  }
+]
