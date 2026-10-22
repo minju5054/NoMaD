@@ -19,6 +19,7 @@ parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
 parser.add_argument("--pure-pursuit", action="store_true")
 parser.add_argument("--s1-mode", action="store_true")
+parser.add_argument("--s1-v2-mode", action="store_true", help="Frozen obstacle-free straight corridor pilot")
 parser.add_argument("--s1-distance-m", type=float, choices=[.8, 1., 1.2, 1.5])
 parser.add_argument("--seed-offset", type=int, default=0)
 parser.add_argument("--run-id")
@@ -81,21 +82,24 @@ def build_scene(config):
         material.CreateSurfaceOutput().ConnectToSource(shader.ConnectableAPI(), "surface")
         UsdShade.MaterialBindingAPI.Apply(prim.GetPrim()).Bind(material)
 
-    box("Floor", (2, 0, -.05), (8, 3, .1), (.22, .23, .24))
-    box("LeftWall", (2, 1.55, 1.3), (8, .1, 2.6), (.78, .76, .70))
-    box("RightWall", (2, -1.55, 1.3), (8, .1, 2.6), (.76, .77, .79))
-    box("EndWall", (6.05, 0, 1.3), (.1, 3.2, 2.6), (.70, .64, .52))
+    straight = config.get("experiment_mode") == "phase1_s1_v2_straight"
+    xmin, xmax = (-1., 9.) if straight else (-2., 6.)
+    center, length = (xmin+xmax)/2, xmax-xmin
+    box("Floor", (center, 0, -.05), (length, 3, .1), (.22, .23, .24))
+    box("LeftWall", (center, 1.55, 1.3), (length, .1, 2.6), (.78, .76, .70))
+    box("RightWall", (center, -1.55, 1.3), (length, .1, 2.6), (.76, .77, .79))
+    box("EndWall", (xmax+.05, 0, 1.3), (.1, 3.2, 2.6), (.70, .64, .52))
     # Surface markings only: nothing blocks the corridor or protrudes into the path.
-    for i, x in enumerate(np.arange(-1.5, 6, .5)):
+    for i, x in enumerate(np.arange(xmin+.5, xmax, .5)):
         box(f"FloorSeam{i}", (float(x), 0, .001), (.012, 3, .002), (.12, .12, .12))
-    for i, x in enumerate([-1., .5, 2., 3.5, 5.]):
+    for i, x in enumerate([-1., .5, 2., 3.5, 5.] + ([6.5, 8.] if straight else [])):
         for side in [-1, 1]:
             color = (.43, .37, .29)
             if x == 2.:
                 color = (.7, .04, .04) if side == 1 else (.04, .04, .7)
             box(f"Panel{i}_{'L' if side == 1 else 'R'}", (x, side * 1.498, 1.15),
                 (.65, .004, 1.7), color)
-    box("EndDoor", (5.998, .15, 1.1), (.004, .9, 2.2), (.32, .22, .13))
+    box("EndDoor", (xmax-.002, .15, 1.1), (.004, .9, 2.2), (.32, .22, .13))
     for obstacle in configured_obstacles(config):
         box(obstacle["id"], (*obstacle["center_xy_m"], obstacle["size_xyz_m"][2]/2),
             obstacle["size_xyz_m"], obstacle["color_rgb"], double_scale=True)
@@ -138,6 +142,9 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    if args.s1_v2_mode:
+        from nomad_phase1.s1_v2 import validate_options
+        validate_options(args)
     if args.s1_mode:
         from nomad_phase1.s1 import validate_options
         validate_options(args)
@@ -344,6 +351,14 @@ def main():
             render_check["obstacles_actual_world_aabb"] = actual_bounds
         else:
             render_check["obstacle_actual_world_aabb"] = actual_bounds["StaticObstacle"]
+    if args.s1_v2_mode:
+        cache = UsdGeom.BBoxCache(0, [UsdGeom.Tokens.default_])
+        bounds = cache.ComputeWorldBound(stage.GetPrimAtPath("/World/Floor")).ComputeAlignedRange()
+        np.testing.assert_allclose(list(bounds.GetMin())[:2], [-1., -1.5], atol=1e-10, rtol=0)
+        np.testing.assert_allclose(list(bounds.GetMax())[:2], [9., 1.5], atol=1e-10, rtol=0)
+        assert not obstacles and "dynamic_obstacle" not in config
+        render_check["straight_corridor_floor_xy_bounds"] = [[-1., -1.5], [9., 1.5]]
+        render_check["obstacle_count"] = 0
     write_json(out / "render_check.json", render_check)
     stage.Export(str(out / "scene.usda"))
     if obstacles:

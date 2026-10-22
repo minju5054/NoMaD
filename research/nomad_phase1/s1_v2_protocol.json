@@ -1,0 +1,36 @@
+{
+  "name": "PHASE1_S1_V2_OBSTACLE_FREE_PILOT",
+  "base_commit": "208166425a59bb722aa7707a030ab7a23fabd7a0",
+  "scenario_sha256": "3bbb2e210af9ca7e5e712aca95994cfb7dcba547a6367a894d4d1f4992857096",
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "reference": {
+    "v_m_s": 0.2,
+    "w_rad_s": 0.0,
+    "integration_hz": 72,
+    "spacing_sim_s": 2.0,
+    "terminal": "First exact-integrated pose with world XY goal distance <= 0.3m; include initial and terminal RGB",
+    "navigation": false,
+    "inference": false
+  },
+  "rendering": "Existing floor/wall materials, dimensions except corridor X extent, camera, lighting, 0.5m seams and 1.5m panel cadence retained. Existing panels at -1,.5,2,3.5,5 extended at6.5,8; red/blue at x2 unchanged. No tuning.",
+  "pilot": {
+    "navigation_attempts": 1,
+    "retries": 0,
+    "seed": 101,
+    "uniform_delivery_delay_s": 0.0,
+    "maximum_simulation_s": 60.0,
+    "topomap_radius": 4,
+    "close_threshold": 3,
+    "sample": 0,
+    "native_points": 8,
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "integration_hz": 72,
+    "waypoint_timeout_s": 1.0,
+    "pp_lookahead_m": 0.25,
+    "v_m_s": 0.2,
+    "max_abs_w_rad_s": 0.4
+  },
+  "safety": "Obstacle clearance N/A for empty set; original corridor footprint check remains active. Geometry is passive evaluation only. No dynamic obstacle, safety override or recovery.",
+  "scope": "Single obstacle-free baseline pilot, no delay robustness or sudden-obstacle claim"
+}

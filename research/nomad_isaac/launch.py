@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
     parser.add_argument("--pure-pursuit", action="store_true", help="Phase 0-C frozen S0 chunk follower PILOT")
     parser.add_argument("--s1-mode", action="store_true", help="Frozen Phase 1 S1 PP/Topomap/uniform-delay pilot")
+    parser.add_argument("--s1-v2-mode", action="store_true", help="Frozen obstacle-free straight corridor pilot")
     parser.add_argument("--s1-distance-m", type=float, choices=[.8, 1., 1.2, 1.5])
     parser.add_argument("--seed-offset", type=int, default=0, help="Optional static S0 Topomap run seed offset")
     parser.add_argument("--run-id", help="Frozen Phase 0-D pair ID S0_01 ... S0_10")
@@ -33,6 +34,9 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.s1_v2_mode:
+        from nomad_phase1.s1_v2 import validate_options
+        validate_options(args)
     if args.s1_mode:
         from nomad_phase1.s1 import validate_options
         validate_options(args)
@@ -53,7 +57,7 @@ def main():
             or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None
             or "placement" not in read_scenario(args.scenario).get("dynamic_obstacle", {})):
         parser.error("Oracle Safety Stop requires the frozen asynchronous Topomap + adaptive obstacle, zero-delay experiment")
-    if args.topomap and not args.s1_mode and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
+    if args.topomap and not (args.s1_mode or args.s1_v2_mode) and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
         parser.error("Topomap navigation requires asynchronous execution without extra delay")
     if args.render_topomap_reference and (not args.prepare_only or args.topomap):
         parser.error("Reference rendering requires --prepare-only and no navigation Topomap")
@@ -79,6 +83,9 @@ def main():
         sources += list((ROOT/"research/nomad_phase1").glob("*.py"))
         sources += [ROOT/"research/nomad_phase1/s1_protocol.json"]
         write_json(out/"s1_protocol.json", json.loads((ROOT/"research/nomad_phase1/s1_protocol.json").read_text()))
+    if args.s1_v2_mode:
+        sources += [ROOT/"research/nomad_phase1"/n for n in ("s1_v2.py", "s1_v2_protocol.json")]
+        write_json(out/"s1_v2_protocol.json", json.loads((ROOT/"research/nomad_phase1/s1_v2_protocol.json").read_text()))
     if args.pure_pursuit:
         sources += [ROOT/"research/nomad_phase0"/name for name in
                     ("pure_pursuit.py", "chunk_execution.py", "chunk_pilot_protocol.json", "follower_protocol.json")]
@@ -108,7 +115,7 @@ def main():
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
         "pure_pursuit": args.pure_pursuit,
-        "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
+        "s1_v2_mode": args.s1_v2_mode, "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
         "run_id": args.run_id, "seed_offset": args.seed_offset,
         "source_scenario_sha256": sha256_file(scenario_path),
         "early_obstacle_mode": args.early_obstacle_mode,
@@ -159,6 +166,8 @@ def main():
                 command.append("--asynchronous")
             if args.pure_pursuit:
                 command.append("--pure-pursuit")
+            if args.s1_v2_mode:
+                command.append("--s1-v2-mode")
             if args.s1_mode:
                 command += ["--s1-mode", "--s1-distance-m", str(args.s1_distance_m)]
             if args.seed_offset:

@@ -35,7 +35,15 @@ def reference_rows(reference, config, spacing_sim_s=1.):
     with (reference / "agent_trajectory.csv").open() as stream:
         rows = list(csv.DictReader(stream))
     hz = config["integration_hz"]
-    assert hz == 72 and len(rows) == 1771
+    assert hz == 72
+    if config.get("experiment_mode") == "phase1_s1_v2_straight":
+        from nomad_phase1.s1_v2 import centerline
+        expected = centerline(config)
+        actual = np.array([[float(row[k]) for k in ("x_m", "y_m", "yaw_rad")] for row in rows])
+        np.testing.assert_array_equal(actual, expected)
+        assert json.loads((reference/"provenance.json").read_text())["kind"] == "deterministic_centerline"
+    else:
+        assert len(rows) == 1771
     times = np.array([float(row["simulation_time_s"]) for row in rows])
     np.testing.assert_allclose(times, np.arange(len(rows))/hz, atol=1e-12, rtol=0)
     step = round(spacing_sim_s * hz)
@@ -52,10 +60,12 @@ def render_reference(reference, out, config, capture, set_pose, get_pose):
     destination = out / "topomap"
     destination.mkdir(exist_ok=False)
     (destination / "rgb").mkdir()
+    straight = config.get("experiment_mode") == "phase1_s1_v2_straight"
+    spacing = 2. if straight else 1.
     reference_hashes = {name: sha256_file(reference/name) for name in
-                        ("agent_trajectory.csv", "scenario.json", "scene.usda", "provenance.json")}
+                        ("agent_trajectory.csv", "scenario.json", "reference_protocol.json" if straight else "scene.usda", "provenance.json")}
     records = []
-    for node, (tick, row) in enumerate(reference_rows(reference, config)):
+    for node, (tick, row) in enumerate(reference_rows(reference, config, spacing)):
         pose = np.array([float(row[k]) for k in ("x_m", "y_m", "yaw_rad")])
         sim_time = float(row["simulation_time_s"])
         set_pose(pose)
@@ -76,9 +86,13 @@ def render_reference(reference, out, config, capture, set_pose, get_pose):
                 "render_git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
                 "protocol_sha256": sha256_file(PROTOCOL), "reference_sha256": reference_hashes,
                 "scenario": config, "node_count": len(records), "nodes": records,
-                "spacing_sim_s": 1., "include_start_and_final": True,
+                "spacing_sim_s": spacing, "include_start_and_final": True,
                 "dynamic_obstacle": False, "new_navigation_count": 0, "new_inference_count": 0,
                 "note": "Static reference-route RGB at saved 72Hz poses; last image is recorded goal-entry pose, not an invented pose at exact goal"}
+    if straight:
+        from nomad_phase1.s1_v2 import HERE
+        manifest.update(reference_kind="deterministic_centerline", protocol_sha256=sha256_file(HERE/"s1_v2_protocol.json"),
+                        rendered_scene_sha256=sha256_file(out/"scene.usda"))
     write_json(destination / "manifest.json", manifest)
     return manifest
 

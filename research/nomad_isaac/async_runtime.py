@@ -44,7 +44,11 @@ class ExecutionThread:
         self.initial_distance = self.minimum_distance
         self.distance = 0.
         self.events, self.received = [], []
-        self.monitor = MultiObstacleMonitor(config, out)
+        if config.get("experiment_mode") == "phase1_s1_v2_straight":
+            from nomad_phase1.s1_v2 import CorridorOnlyMonitor
+            self.monitor = CorridorOnlyMonitor(config, out)
+        else:
+            self.monitor = MultiObstacleMonitor(config, out)
         self.dynamic = None
         if "dynamic_obstacle" in config:
             from .sudden_obstacle import SuddenObstacleMonitor
