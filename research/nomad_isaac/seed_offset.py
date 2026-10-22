@@ -3,6 +3,10 @@ import re
 
 
 def validate_seed_options(args):
+    if getattr(args, "phase2_method", None):
+        from nomad_phase2.config import validate_options
+        validate_options(args)
+        return
     if args.seed_offset < 0:
         raise ValueError("seed-offset must be nonnegative")
     if args.seed_offset or args.run_id is not None:

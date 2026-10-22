@@ -28,7 +28,11 @@ class ExecutionThread:
         self.config, self.out = config, out
         self.core = WaypointExecution(config["start_pose"], config["integration_hz"], config["controller_hz"])
         self.chunk_executor = None
-        if pure_pursuit:
+        self.phase2 = None
+        if config.get("experiment_mode") == "phase2_s1_v2":
+            from nomad_phase2.execution import Phase2Execution
+            self.phase2 = Phase2Execution(config,out)
+        if pure_pursuit and self.phase2 is None:
             from nomad_phase0.chunk_execution import ChunkExecution
             assert not oracle_safety_stop and not online_graph
             assert "dynamic_obstacle" not in config or config.get("experiment_mode") == "phase1_s1_forward_ray"
@@ -44,9 +48,12 @@ class ExecutionThread:
         self.initial_distance = self.minimum_distance
         self.distance = 0.
         self.events, self.received = [], []
-        if config.get("experiment_mode") == "phase1_s1_v2_straight":
+        if config.get("experiment_mode") in ("phase1_s1_v2_straight", "phase2_s1_v2"):
             from nomad_phase1.s1_v2 import CorridorOnlyMonitor
-            self.monitor = CorridorOnlyMonitor(config, out)
+            monitor_config = config
+            if self.phase2 is not None:
+                monitor_config = json.loads(Path(__file__).parents[1].joinpath("nomad_phase1/s1_v2_scenario.json").read_text())
+            self.monitor = CorridorOnlyMonitor(monitor_config, out)
         else:
             self.monitor = MultiObstacleMonitor(config, out)
         self.dynamic = None
@@ -84,6 +91,8 @@ class ExecutionThread:
         self.monitor.plan(row["id"], arrays["metric"], row)
         if not terminal:
             self.core.receive(row, arrays["selected_waypoint"])
+            if self.phase2 is not None:
+                self.phase2.accept(row, arrays["metric"])
             if self.graph is not None:
                 self.latest_sample = (row["id"], arrays["metric"][0].copy())
 
@@ -119,6 +128,8 @@ class ExecutionThread:
                         self.core.integrate()
                     now = time.monotonic_ns()
                     pose = self.core.pose.copy()
+                    if self.phase2 is not None:
+                        self.phase2.integrate_record(previous,pose)
                     sim_time = tick/hz
                     distance = float(np.linalg.norm(pose[:2]-c["goal_pose"][:2]))
                     self.minimum_distance = min(self.minimum_distance, distance)
@@ -154,7 +165,10 @@ class ExecutionThread:
                     result = self.client.poll()
                     if result is not None:
                         self.accept(result, sim_time)
-                    refresh, switch = self.core.control(tick, time.monotonic_ns())
+                    if self.phase2 is not None:
+                        refresh, switch = self.phase2.control(self.core,tick,time.monotonic_ns())
+                    else:
+                        refresh, switch = self.core.control(tick, time.monotonic_ns())
                     if refresh is not None and self.chunk_executor is not None:
                         self.chunk_executor.apply(self.core, refresh, switch)
                     if refresh is not None and self.safety is not None:
@@ -185,7 +199,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
               pure_pursuit=False):
     if controlled_delivery_delay and uniform_delivery_delay_s is not None:
         raise ValueError("Single-trigger and uniform delivery delays are mutually exclusive")
-    s1 = config.get("experiment_mode") == "phase1_s1_forward_ray"
+    phase2 = config.get("experiment_mode") == "phase2_s1_v2"
+    s1 = phase2 or config.get("experiment_mode") == "phase1_s1_forward_ray"
     if s1:
         assert pure_pursuit and not oracle_safety_stop and not online_graph and not controlled_delivery_delay
         assert uniform_delivery_delay_s in (0., .25, .5, .75)
@@ -215,11 +230,11 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     engine = ExecutionThread(config, out, oracle_safety_stop=oracle_safety_stop, online_graph=online_graph,
                              pure_pursuit=pure_pursuit)
     if pure_pursuit:
-        write_json(out/"chunk_pilot_protocol.json", engine.chunk_executor.settings)
+        write_json(out/"chunk_pilot_protocol.json", (engine.phase2 or engine.chunk_executor).settings)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
     dynamic_history = deque(maxlen=4)
     oracle_gate = None
-    if s1:
+    if s1 and engine.dynamic is not None:
         from nomad_phase1.s1 import VisibilityGate
         oracle_gate = VisibilityGate()
     save_observations = engine.dynamic is not None or config.get("goal_mode") == "topomap"
@@ -268,6 +283,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                     dynamic_history.append(diagnostic)
                 if oracle_gate is not None:
                     record["oracle_information"] = oracle_gate.observe(record)
+                    if engine.phase2 is not None:
+                        engine.phase2.publish(record["oracle_information"], engine.dynamic.obstacle)
                 if len(history) == 4 and not engine.done.is_set():
                     request = {**record, "kind": "infer", "id": request_id, "seed": request_seed(config, request_id),
                                "history_sim_s": list(times), "history_frame_sha256": list(hashes),
@@ -315,6 +332,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
             engine.cancel.set()
             engine.thread.join(5)
             engine.rf.close()
+            if engine.phase2 is not None:
+                engine.phase2.close()
             if engine.graph is not None:
                 engine.graph.close()  # After navigation; pending result cannot move the agent.
         state = engine.snapshot()
@@ -375,6 +394,6 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                                      "status": "TRIGGERED" if delay.triggered_id is not None else "NOT_TRIGGERED",
                                      "configured_additional_s": delay.protocol["additional_delivery_delay_s"]}
     if s1:
-        summary["experiment_label"] = "PHASE1_S1_PREFLIGHT_PILOT"
+        summary["experiment_label"] = "PHASE2_EXPLORATORY" if phase2 else "PHASE1_S1_PREFLIGHT_PILOT"
     write_json(out/"summary.json", summary)
     print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

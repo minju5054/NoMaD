@@ -1,0 +1,77 @@
+{
+  "name": "Phase2 S1-v2 exploratory closed-loop",
+  "base_commit": "8b019e8",
+  "methods": [
+    "M0",
+    "M3",
+    "M5"
+  ],
+  "scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+  "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+  "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+  "topomap_nodes": 21,
+  "protected_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/graph_v3.py": "83b05538d51eda2896bc9612ef55c595702b3a211dc1c3be58ec19d0d3e80ae0",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/graph_v2.py": "a8b57749f482ba775356c6ca025255053659c7e8b202501ed1dd8d5372102ad1",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/worker.py": "41f1310a3f32c091ef47175204dfe2ec47fcaec1112a17e5b870512c394f7f0e",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase1/s1_v2_scenario.json": "3bbb2e210af9ca7e5e712aca95994cfb7dcba547a6367a894d4d1f4992857096",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/checkpoints/nomad.pth": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333"
+  },
+  "seed": "101+10000*run_index+2*request_id; DDPM +1; pilots offset0",
+  "stages": {
+    "0": "M0,M3,M5 once D.5 d.8 offset0; stop campaign on technical validation failure",
+    "1": "M0 D.25,.5 x index1,2; no dynamic; annotate delay failures; do not remove D",
+    "2a": "M0 d.8,1 x D.25,.5 x index1..4",
+    "branch": "any 2a SAFETY_FAILURE/STUCK =>2b else2c; technical/placement failures not counted as policy failures",
+    "2b": "same16 pairs, run index then d then D, each M3 then M5",
+    "2c": "M0 d.6 D.5,.75 x index1..4; only failed M0 SAFETY_FAILURE/STUCK get M3 then M5; no more runs"
+  },
+  "maximum_navigation_attempts": 55,
+  "retries": 0,
+  "timeout_sim_s": 90.0,
+  "trigger_x_m": [
+    2.0,
+    2.1
+  ],
+  "placement": "x=actualx+.09+d+.175,y=clip(actualy,-.925,.925), AABB .35,.35,.8; no predictions/commands/future",
+  "oracle": "first visible RGB then NEXT actual capture completion; controller reads geometry only after this monotonic timestamp",
+  "executor": "sample0 unchanged: original PP .2; changed sample or accepted graph: frozen variable speed. ALL_UNSAFE fallback sample0 constant speed. Endpoint/timeout stop semantics preserved.",
+  "variable_speed": {
+    "v_min": 0.05,
+    "v_max": 0.2,
+    "w_max": 0.4,
+    "acceleration_max_m_s2": 0.5
+  },
+  "graph": "Import unchanged GraphV4 and protocol. One CPU process, one outstanding. B frozen at controller-tick dispatch; worker start/IPC delay separate. Previous actual command; immediately previous accepted corrected path only if preceding actual FRESH was accepted Graph; otherwise no previous prior.",
+  "graph_deadline_s": 0.5,
+  "graph_timeout_semantics": "Deadline includes dispatch, worker/SDF/init/solve/certificate/return; solver wall also logged. Reject elapsed>.5 at receive; do not retime original FRESH 1s lifetime. During waiting hold active command only while its original receive age<1s, then timeout STOP. New FRESH queued FIFO; one actual switch per tick. Expired queued inputs recorded unapplied.",
+  "graph_empty_geometry": "No fabricated obstacle for unchanged v4 SDF; if invoked with no public obstacles, INIT_REJECT and M3 fallback; record reason.",
+  "selection": "sample0 if public native full safe; else safe sample lowest unchanged v4 zero-edit endpoint deficit/index; none=>sample0 ALL_UNSAFE",
+  "feasibility": "Saved actual spawn and first-visible-FRESH switch B; existing Phase B B0/B1 settings30000exp/120CPU s/60path s; post-run offline, no control input or execution blocking; NO_PATH_FOUND not impossibility.",
+  "classification": "SUCCESS goal+no overlap+no corridor intrusion; SAFETY_FAILURE overlap/corridor OR conservative contact stop separately flagged; STUCK90s timeout; MARGIN_VIOLATION independent. Placement_invalid and technical failures separate.",
+  "statistics": "Exploratory N4 main; N2 delay baseline. Wilson95 descriptive only. Paired differences matched run index; bootstrap fixedseed20261022,10000resamples descriptive. No Graph necessity claim.",
+  "branch2c_reporting": "2a16 have M3/M5 NOT_RUN if branch2c; no fabricated all-success pairs. Hard subset paired only failed M0; selection bias explicit.",
+  "fixed_graph_initialization": "M3 selected sample; no tuning/restarts; failed/stale graph fallback M3",
+  "safety_scope": "Oracle geometry, Isaac RGB closed-loop SE2 kinematic, not PhysX robot",
+  "dynamic_rendering": {
+    "color_rgb": [
+      0.65,
+      0.04,
+      0.65
+    ],
+    "minimum_visible_magenta_pixels": 20,
+    "rule": "Existing RGB_MAGENTA rule and VisibilityGate unchanged"
+  }
+}

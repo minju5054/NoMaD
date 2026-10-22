@@ -21,6 +21,8 @@ def main():
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
     parser.add_argument("--pure-pursuit", action="store_true", help="Phase 0-C frozen S0 chunk follower PILOT")
+    parser.add_argument("--phase2-method", choices=["M0", "M3", "M5"])
+    parser.add_argument("--phase2-distance-m", type=float, choices=[.6, .8, 1.])
     parser.add_argument("--s1-mode", action="store_true", help="Frozen Phase 1 S1 PP/Topomap/uniform-delay pilot")
     parser.add_argument("--s1-v2-mode", action="store_true", help="Frozen obstacle-free straight corridor pilot")
     parser.add_argument("--s1-distance-m", type=float, choices=[.8, 1., 1.2, 1.5])
@@ -34,6 +36,11 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.phase2_method:
+        from nomad_phase2.config import validate_options
+        validate_options(args)
+    elif args.phase2_distance_m is not None:
+        raise ValueError("Phase2 distance requires Phase2 method")
     if args.s1_v2_mode:
         from nomad_phase1.s1_v2 import validate_options
         validate_options(args)
@@ -57,13 +64,13 @@ def main():
             or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None
             or "placement" not in read_scenario(args.scenario).get("dynamic_obstacle", {})):
         parser.error("Oracle Safety Stop requires the frozen asynchronous Topomap + adaptive obstacle, zero-delay experiment")
-    if args.topomap and not (args.s1_mode or args.s1_v2_mode) and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
+    if args.topomap and not (args.s1_mode or args.s1_v2_mode or args.phase2_method) and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
         parser.error("Topomap navigation requires asynchronous execution without extra delay")
     if args.render_topomap_reference and (not args.prepare_only or args.topomap):
         parser.error("Reference rendering requires --prepare-only and no navigation Topomap")
     if args.render_topomap_reference:
         assert "dynamic_obstacle" not in read_scenario(args.scenario)
-    if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario) and not args.early_obstacle_mode and not args.s1_mode:
+    if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario) and not args.early_obstacle_mode and not args.s1_mode and not args.phase2_method:
         from .topomap import validate_dynamic_combination
         validate_dynamic_combination(read_scenario(args.scenario), args.topomap, args.asynchronous,
                                      args.prepare_only, args.controlled_delivery_delay, args.uniform_delivery_delay_s)
@@ -79,6 +86,9 @@ def main():
         raise RuntimeError(f"Expected existing Isaac Sim 6, got {version}")
     scenario_path = args.scenario.resolve()
     sources = list(Path(__file__).parent.glob("*.py")) + [scenario_path, ROOT / "research/nomad_preflight/native.py"]
+    if args.phase2_method:
+        sources += list((ROOT/"research/nomad_phase2").glob("*.py"))+[ROOT/"research/nomad_phase2/protocol.json"]
+        sources += [ROOT/"research/nomad_phase0"/n for n in ("graph_v4.py","graph_v4_protocol.json")]
     if args.s1_mode:
         sources += list((ROOT/"research/nomad_phase1").glob("*.py"))
         sources += [ROOT/"research/nomad_phase1/s1_protocol.json"]
@@ -91,7 +101,7 @@ def main():
                     ("pure_pursuit.py", "chunk_execution.py", "chunk_pilot_protocol.json", "follower_protocol.json")]
     if args.seed_offset or args.run_id is not None:
         sources += [ROOT/"research/nomad_phase0/chunk_pilot_protocol.json"]
-    if args.run_id is not None:
+    if args.run_id is not None and not args.phase2_method:
         batch_protocol = ROOT/"research/nomad_phase0/s0_batch_protocol.json"
         sources += [batch_protocol]
         write_json(out/"batch_protocol.json", json.loads(batch_protocol.read_text()))
@@ -114,6 +124,7 @@ def main():
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
+        "phase2_method": args.phase2_method, "phase2_distance_m": args.phase2_distance_m,
         "pure_pursuit": args.pure_pursuit,
         "s1_v2_mode": args.s1_v2_mode, "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
         "run_id": args.run_id, "seed_offset": args.seed_offset,
@@ -166,6 +177,10 @@ def main():
                 command.append("--asynchronous")
             if args.pure_pursuit:
                 command.append("--pure-pursuit")
+            if args.phase2_method:
+                command += ["--phase2-method", args.phase2_method]
+                if args.phase2_distance_m is not None:
+                    command += ["--phase2-distance-m",str(args.phase2_distance_m)]
             if args.s1_v2_mode:
                 command.append("--s1-v2-mode")
             if args.s1_mode:

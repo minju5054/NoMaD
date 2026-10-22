@@ -18,6 +18,8 @@ parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
 parser.add_argument("--pure-pursuit", action="store_true")
+parser.add_argument("--phase2-method", choices=["M0", "M3", "M5"])
+parser.add_argument("--phase2-distance-m", type=float, choices=[.6, .8, 1.])
 parser.add_argument("--s1-mode", action="store_true")
 parser.add_argument("--s1-v2-mode", action="store_true", help="Frozen obstacle-free straight corridor pilot")
 parser.add_argument("--s1-distance-m", type=float, choices=[.8, 1., 1.2, 1.5])
@@ -82,7 +84,7 @@ def build_scene(config):
         material.CreateSurfaceOutput().ConnectToSource(shader.ConnectableAPI(), "surface")
         UsdShade.MaterialBindingAPI.Apply(prim.GetPrim()).Bind(material)
 
-    straight = config.get("experiment_mode") == "phase1_s1_v2_straight"
+    straight = config.get("experiment_mode") in ("phase1_s1_v2_straight", "phase2_s1_v2")
     xmin, xmax = (-1., 9.) if straight else (-2., 6.)
     center, length = (xmin+xmax)/2, xmax-xmin
     box("Floor", (center, 0, -.05), (length, 3, .1), (.22, .23, .24))
@@ -142,6 +144,11 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    if args.phase2_method:
+        from nomad_phase2.config import validate_options
+        validate_options(args)
+    elif args.phase2_distance_m is not None:
+        raise ValueError("Phase2 distance requires Phase2 method")
     if args.s1_v2_mode:
         from nomad_phase1.s1_v2 import validate_options
         validate_options(args)
@@ -166,15 +173,18 @@ def main():
         assert args.topomap and args.asynchronous and not args.prepare_only
         assert not args.controlled_delivery_delay and args.uniform_delivery_delay_s is None
         assert "placement" in config.get("dynamic_obstacle", {})
-    if "dynamic_obstacle" in config and not args.s1_mode and (not args.asynchronous or args.controlled_delivery_delay or
+    if "dynamic_obstacle" in config and not (args.s1_mode or args.phase2_method) and (not args.asynchronous or args.controlled_delivery_delay or
                                          args.uniform_delivery_delay_s not in (None, 0.)):
         raise ValueError("Sudden obstacle requires asynchronous execution with zero additional delay")
+    if args.phase2_method:
+        from nomad_phase2.config import runtime_config
+        config = runtime_config(config,args)
     if args.asynchronous:
         config = {**config, "synchronous": False}
     if args.topomap:
         from nomad_isaac.common import sha256_file
         assert args.asynchronous
-        if "dynamic_obstacle" in config and not args.early_obstacle_mode and not args.s1_mode:
+        if "dynamic_obstacle" in config and not args.early_obstacle_mode and not args.s1_mode and not args.phase2_method:
             from nomad_isaac.topomap import validate_dynamic_combination
             validate_dynamic_combination(config, args.topomap, args.asynchronous, args.prepare_only,
                                          args.controlled_delivery_delay, args.uniform_delivery_delay_s)
@@ -201,7 +211,7 @@ def main():
         nonlocal resolved_dynamic
         assert threading.get_ident() == main_thread_id
         box = snapshot.get("resolved_dynamic_obstacle")
-        if not args.s1_mode and snapshot["tick"] >= config["dynamic_obstacle"]["spawn_tick"]:
+        if not (args.s1_mode or args.phase2_method) and snapshot["tick"] >= config["dynamic_obstacle"]["spawn_tick"]:
             assert snapshot.get("dynamic_placement_status") != "PENDING"
         if box is None:
             return
@@ -271,7 +281,7 @@ def main():
         elif adaptive or args.early_obstacle_mode:
             from nomad_isaac.old_rollout_placement import magenta_mask
             tick = round(sim_time*config["integration_hz"])
-            active = resolved_dynamic is not None and (tick >= resolved_dynamic["spawn_tick"] if args.s1_mode else active_at_tick(config, tick))
+            active = resolved_dynamic is not None and (tick >= resolved_dynamic["spawn_tick"] if (args.s1_mode or args.phase2_method) else active_at_tick(config, tick))
             visibility = UsdGeom.Imageable(dynamic_prim).ComputeVisibility(Usd.TimeCode(tick))
             assert (visibility == UsdGeom.Tokens.inherited) == active
             mask = magenta_mask(rgb)
@@ -334,7 +344,7 @@ def main():
     elif adaptive:
         render_check["dynamic_initial"] = capture.dynamic_metadata
         render_check["dynamic_placement"] = ("Pending S1 world-region entry; hidden placeholder is not collision geometry"
-                                              if args.s1_mode else "Pending tick 970; hidden placeholder is not collision geometry")
+                                              if (args.s1_mode or args.phase2_method) else "Pending tick 970; hidden placeholder is not collision geometry")
     if obstacles:
         green = (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 0]) & (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 2])
         assert int(green.sum()) > 100, "Obstacle must be visible in actual starting RGB before inference"
@@ -351,12 +361,13 @@ def main():
             render_check["obstacles_actual_world_aabb"] = actual_bounds
         else:
             render_check["obstacle_actual_world_aabb"] = actual_bounds["StaticObstacle"]
-    if args.s1_v2_mode:
+    if args.s1_v2_mode or args.phase2_method:
         cache = UsdGeom.BBoxCache(0, [UsdGeom.Tokens.default_])
         bounds = cache.ComputeWorldBound(stage.GetPrimAtPath("/World/Floor")).ComputeAlignedRange()
         np.testing.assert_allclose(list(bounds.GetMin())[:2], [-1., -1.5], atol=1e-10, rtol=0)
         np.testing.assert_allclose(list(bounds.GetMax())[:2], [9., 1.5], atol=1e-10, rtol=0)
-        assert not obstacles and "dynamic_obstacle" not in config
+        assert not obstacles
+        assert args.phase2_method or "dynamic_obstacle" not in config
         render_check["straight_corridor_floor_xy_bounds"] = [[-1., -1.5], [9., 1.5]]
         render_check["obstacle_count"] = 0
     write_json(out / "render_check.json", render_check)

@@ -16,7 +16,8 @@ class SuddenObstacleMonitor:
         self.output = output / "dynamic"
         self.output.mkdir(exist_ok=False)
         self.adaptive = "placement" in config["dynamic_obstacle"]
-        self.s1 = config.get("experiment_mode") == "phase1_s1_forward_ray"
+        self.phase2 = config.get("experiment_mode") == "phase2_s1_v2"
+        self.s1 = self.phase2 or config.get("experiment_mode") == "phase1_s1_forward_ray"
         self.obstacle = None if self.adaptive else config["dynamic_obstacle"]
         self.monitor = None if self.adaptive else ObstacleMonitor(single_obstacle_config(config, self.obstacle), self.output)
         self.placement = None
@@ -27,8 +28,8 @@ class SuddenObstacleMonitor:
 
     @property
     def stop_reason(self):
-        if self.placement is not None and self.placement["status"] == "PLACEMENT_INFEASIBLE":
-            return "placement_infeasible"
+        if self.placement is not None and self.placement["status"] in ("PLACEMENT_INFEASIBLE", "PLACEMENT_INVALID"):
+            return "placement_invalid" if self.phase2 else "placement_infeasible"
         return self.monitor.stop_reason if self.monitor is not None else None
 
     def observe_tick(self, tick, previous, pose, v, w, old_id, old_valid, monotonic_ns,
@@ -37,7 +38,10 @@ class SuddenObstacleMonitor:
         self.last_tick = tick
         hz = self.config["integration_hz"]
         if self.s1:
-            from nomad_phase1.s1 import triggered
+            if self.phase2:
+                from nomad_phase2.config import triggered
+            else:
+                from nomad_phase1.s1 import triggered
             trigger = self.placement is None and triggered(self.config, pose)
         else:
             trigger = self.adaptive and tick == self.config["dynamic_obstacle"]["spawn_tick"]
@@ -46,7 +50,10 @@ class SuddenObstacleMonitor:
             started = time.monotonic_ns()
             remaining = 0. if old_received_ns is None else max(0., 1.-(monotonic_ns-old_received_ns)/1e9)
             if self.s1:
-                from nomad_phase1.s1 import place_forward
+                if self.phase2:
+                    from nomad_phase2.config import place as place_forward
+                else:
+                    from nomad_phase1.s1 import place_forward
                 self.placement = place_forward(self.config, pose)
                 self.placement["obstacle"]["spawn_tick"] = tick
                 self.placement["old_remaining_timeout_s"] = remaining  # logging only, not placement input
@@ -89,6 +96,6 @@ class SuddenObstacleMonitor:
             for name in ("minimum_swept_clearance_lower_m", "minimum_swept_clearance_upper_m",
                          "minimum_corridor_clearance_lower_m"):
                 result[name] = None
-        status = "SPAWNED" if self.spawn else "PLACEMENT_INFEASIBLE" if self.placement else "NOT_TRIGGERED"
+        status = "SPAWNED" if self.spawn else self.placement["status"] if self.placement else "NOT_TRIGGERED"
         return {"status": status, "spawn": self.spawn, "placement": self.placement,
                 "active_checks": self.active_checks, "evaluation": result}
