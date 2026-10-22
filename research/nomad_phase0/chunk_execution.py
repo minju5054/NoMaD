@@ -17,6 +17,10 @@ def protocol():
 
 
 def validate_mode(args):
+    if getattr(args, "s1_mode", False):
+        from nomad_phase1.s1 import validate_options
+        validate_options(args)
+        return
     p = protocol()
     if (not args.asynchronous or not args.topomap or args.prepare_only
             or args.oracle_safety_stop or args.early_obstacle_mode

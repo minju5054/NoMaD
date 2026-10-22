@@ -16,6 +16,7 @@ class SuddenObstacleMonitor:
         self.output = output / "dynamic"
         self.output.mkdir(exist_ok=False)
         self.adaptive = "placement" in config["dynamic_obstacle"]
+        self.s1 = config.get("experiment_mode") == "phase1_s1_forward_ray"
         self.obstacle = None if self.adaptive else config["dynamic_obstacle"]
         self.monitor = None if self.adaptive else ObstacleMonitor(single_obstacle_config(config, self.obstacle), self.output)
         self.placement = None
@@ -35,11 +36,22 @@ class SuddenObstacleMonitor:
         assert tick == self.last_tick + 1
         self.last_tick = tick
         hz = self.config["integration_hz"]
-        if self.adaptive and tick == self.config["dynamic_obstacle"]["spawn_tick"]:
+        if self.s1:
+            from nomad_phase1.s1 import triggered
+            trigger = self.placement is None and triggered(self.config, pose)
+        else:
+            trigger = self.adaptive and tick == self.config["dynamic_obstacle"]["spawn_tick"]
+        if trigger:
             from .old_rollout_placement import place_on_old
             started = time.monotonic_ns()
             remaining = 0. if old_received_ns is None else max(0., 1.-(monotonic_ns-old_received_ns)/1e9)
-            self.placement = place_on_old(self.config, pose, v, w, old_id, old_valid, remaining)
+            if self.s1:
+                from nomad_phase1.s1 import place_forward
+                self.placement = place_forward(self.config, pose)
+                self.placement["obstacle"]["spawn_tick"] = tick
+                self.placement["old_remaining_timeout_s"] = remaining  # logging only, not placement input
+            else:
+                self.placement = place_on_old(self.config, pose, v, w, old_id, old_valid, remaining)
             self.placement.update({"decision_tick": tick, "decision_sim_s": tick/hz,
                                    "pose_monotonic_ns": monotonic_ns, "old_received_monotonic_ns": old_received_ns,
                                    "computation_start_ns": started, "computation_end_ns": time.monotonic_ns()})
@@ -47,7 +59,7 @@ class SuddenObstacleMonitor:
                 self.obstacle = self.placement["obstacle"]
                 self.monitor = ObstacleMonitor(single_obstacle_config(self.config, self.obstacle), self.output)
             write_json(self.output/"placement.json", self.placement)
-        active = active_at_tick(self.config, tick) and self.obstacle is not None
+        active = (self.placement is not None and self.placement["status"] == "PLACED") if self.s1 else (active_at_tick(self.config, tick) and self.obstacle is not None)
         record = {"tick": tick, "simulation_time_s": tick/hz, "active": active,
                   "collision_checked": active, "monotonic_ns": monotonic_ns}
         if active:
@@ -59,7 +71,7 @@ class SuddenObstacleMonitor:
             record.update({"checked_duration_s": duration, "clearance_row": self.active_checks})
             self.active_checks += 1
             if spawning:
-                assert tick == self.config["dynamic_obstacle"]["spawn_tick"]
+                assert tick == (self.obstacle["spawn_tick"] if self.s1 else self.config["dynamic_obstacle"]["spawn_tick"])
                 self.spawn = {**record, "pose": list(pose), "old_id": old_id, "old_command_valid": old_valid,
                               "old_command_vw": [v, w], "footprint_clearance_m": check["lower_m"],
                               "obstacle": self.obstacle}

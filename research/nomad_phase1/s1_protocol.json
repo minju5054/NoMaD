@@ -1,0 +1,44 @@
+{
+  "name": "PHASE1_S1_PP_UNIFORM_DELAY_PREFLIGHT",
+  "base_commit": "9c7a43d77b9875c7d34379740b2c64933c8fe928",
+  "distance_candidates_m": [
+    0.8,
+    1.0,
+    1.2,
+    1.5
+  ],
+  "delay_candidates_s": [
+    0.0,
+    0.25,
+    0.5,
+    0.75
+  ],
+  "pilots": [
+    {
+      "id": "P0",
+      "D_s": 0.0,
+      "d_m": 1.2,
+      "seed": 101
+    },
+    {
+      "id": "P1",
+      "D_s": 0.75,
+      "d_m": 0.8,
+      "seed": 101
+    }
+  ],
+  "maximum_navigation_attempts": 2,
+  "retries": 0,
+  "placement": "First integration tick inside fixed XY region; fixed axis-aligned box center on robot yaw ray; d = first ray/AABB intersection minus radius. Invalid placement stops without adjustment.",
+  "geometry_reference": "phase0c_pure_pursuit_01 saved PP seed101 trace only for preflight; online placement uses actual current pose",
+  "oracle_information": "First actual visible magenta RGB then next actually captured RGB; available at capture completion; never used for control",
+  "rgb_magenta_rule": "R>1.5G and B>1.5G and R>40 and B>40; at least20pixels",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "follower": "Unchanged phase0 PurePursuit and chunk execution; 0.25m/.2m/s/\u00b1.4rad/s/4-9-72Hz/1s timeout",
+  "side_feasibility": "Existing Phase0A forward-only search, two sides per actual spawn only; +Y/-Y world one-pass labels; same settings/budgets; NO_PATH_FOUND is not impossible; no tuning",
+  "delay_validation": "For every accepted result release >= packet + D; record overshoot separately from GPU time",
+  "scope": "Isaac RGB closed-loop SE2 kinematic pilot; oracle geometry evaluation, no PhysX validation",
+  "navigation_success": "goal entry and no geometric overlap or corridor intrusion; report 2cm margin separately",
+  "technical_gate": "Existing async pacing/clock/seed/raw-normalization checks plus exact PP replay, shared USD/collision AABB, visibility/hash gate, delay validation. Failed technical validation blocks further navigation."
+}

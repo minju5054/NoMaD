@@ -30,7 +30,8 @@ class ExecutionThread:
         self.chunk_executor = None
         if pure_pursuit:
             from nomad_phase0.chunk_execution import ChunkExecution
-            assert not oracle_safety_stop and not online_graph and "dynamic_obstacle" not in config
+            assert not oracle_safety_stop and not online_graph
+            assert "dynamic_obstacle" not in config or config.get("experiment_mode") == "phase1_s1_forward_ray"
             self.chunk_executor = ChunkExecution()
         self.lock = threading.Lock()
         self.done, self.started, self.cancel = threading.Event(), threading.Event(), threading.Event()
@@ -180,7 +181,11 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
               pure_pursuit=False):
     if controlled_delivery_delay and uniform_delivery_delay_s is not None:
         raise ValueError("Single-trigger and uniform delivery delays are mutually exclusive")
-    if "dynamic_obstacle" in config and (controlled_delivery_delay or uniform_delivery_delay_s not in (None, 0.)):
+    s1 = config.get("experiment_mode") == "phase1_s1_forward_ray"
+    if s1:
+        assert pure_pursuit and not oracle_safety_stop and not online_graph and not controlled_delivery_delay
+        assert uniform_delivery_delay_s in (0., .25, .5, .75)
+    if "dynamic_obstacle" in config and not s1 and (controlled_delivery_delay or uniform_delivery_delay_s not in (None, 0.)):
         raise ValueError("Sudden-obstacle pilot requires zero additional latency")
     protocol = json.loads(Path(__file__).with_name("async_protocol.json").read_text())
     delay = None
@@ -209,6 +214,10 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         write_json(out/"chunk_pilot_protocol.json", engine.chunk_executor.settings)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
     dynamic_history = deque(maxlen=4)
+    oracle_gate = None
+    if s1:
+        from nomad_phase1.s1 import VisibilityGate
+        oracle_gate = VisibilityGate()
     save_observations = engine.dynamic is not None or config.get("goal_mode") == "topomap"
     if save_observations:
         (out/"observations").mkdir(exist_ok=False)
@@ -253,6 +262,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                     record.update({"dynamic": diagnostic, "rgb_file": f"observations/{observation_id:04d}.png",
                                    "dynamic_mask_file": f"observations/{observation_id:04d}_mask.png"})
                     dynamic_history.append(diagnostic)
+                if oracle_gate is not None:
+                    record["oracle_information"] = oracle_gate.observe(record)
                 if len(history) == 4 and not engine.done.is_set():
                     request = {**record, "kind": "infer", "id": request_id, "seed": request_seed(config, request_id),
                                "history_sim_s": list(times), "history_frame_sha256": list(hashes),
@@ -306,7 +317,18 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         set_pose(state["pose"])
         if hasattr(capture, "sync_dynamic"):
             capture.sync_dynamic(state)
-        Image.fromarray(capture(state["sim_s"])).save(out/"observation_final.png")
+        final_rgb = capture(state["sim_s"])
+        final_capture_end = time.monotonic_ns()
+        Image.fromarray(final_rgb).save(out/"observation_final.png")
+        if oracle_gate is not None:
+            final_record = {"observation_id": observation_id, "status": "terminal_capture_no_request",
+                "observation_sim_s": state["sim_s"], "observation_pose": state["pose"],
+                "capture_end_monotonic_ns": final_capture_end, "rgb_file": "observation_final.png",
+                "frame_sha256": hashlib.sha256(final_rgb.tobytes()).hexdigest(),
+                "dynamic": dict(capture.dynamic_metadata)}
+            final_record["oracle_information"] = oracle_gate.observe(final_record)
+            append(obs_log, final_record)
+            write_json(out/"oracle_information.json", final_record["oracle_information"])
     obstacle_result = engine.monitor.finish(engine.goal_entry)
     dynamic_result = engine.dynamic.finish(engine.goal_entry) if engine.dynamic is not None else None
     summary = {"integration_success": bool(engine.events) and engine.distance > 0,
@@ -348,5 +370,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         summary["delivery_delay"] = {"triggered_id": delay.triggered_id,
                                      "status": "TRIGGERED" if delay.triggered_id is not None else "NOT_TRIGGERED",
                                      "configured_additional_s": delay.protocol["additional_delivery_delay_s"]}
+    if s1:
+        summary["experiment_label"] = "PHASE1_S1_PREFLIGHT_PILOT"
     write_json(out/"summary.json", summary)
     print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

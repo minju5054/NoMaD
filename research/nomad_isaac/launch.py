@@ -21,6 +21,8 @@ def main():
     parser.add_argument("--scenario", type=Path, default=SCENARIO_PATH)
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
     parser.add_argument("--pure-pursuit", action="store_true", help="Phase 0-C frozen S0 chunk follower PILOT")
+    parser.add_argument("--s1-mode", action="store_true", help="Frozen Phase 1 S1 PP/Topomap/uniform-delay pilot")
+    parser.add_argument("--s1-distance-m", type=float, choices=[.8, 1., 1.2, 1.5])
     parser.add_argument("--seed-offset", type=int, default=0, help="Optional static S0 Topomap run seed offset")
     parser.add_argument("--run-id", help="Frozen Phase 0-D pair ID S0_01 ... S0_10")
     parser.add_argument("--oracle-safety-stop", action="store_true", help="Exact-geometry STOP after adaptive dynamic spawn")
@@ -31,6 +33,11 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.s1_mode:
+        from nomad_phase1.s1 import validate_options
+        validate_options(args)
+    elif args.s1_distance_m is not None:
+        parser.error("--s1-distance-m requires --s1-mode")
     from .seed_offset import validate_seed_options
     validate_seed_options(args)
     if args.pure_pursuit:
@@ -46,13 +53,13 @@ def main():
             or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None
             or "placement" not in read_scenario(args.scenario).get("dynamic_obstacle", {})):
         parser.error("Oracle Safety Stop requires the frozen asynchronous Topomap + adaptive obstacle, zero-delay experiment")
-    if args.topomap and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
+    if args.topomap and not args.s1_mode and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
         parser.error("Topomap navigation requires asynchronous execution without extra delay")
     if args.render_topomap_reference and (not args.prepare_only or args.topomap):
         parser.error("Reference rendering requires --prepare-only and no navigation Topomap")
     if args.render_topomap_reference:
         assert "dynamic_obstacle" not in read_scenario(args.scenario)
-    if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario) and not args.early_obstacle_mode:
+    if args.topomap and "dynamic_obstacle" in read_scenario(args.scenario) and not args.early_obstacle_mode and not args.s1_mode:
         from .topomap import validate_dynamic_combination
         validate_dynamic_combination(read_scenario(args.scenario), args.topomap, args.asynchronous,
                                      args.prepare_only, args.controlled_delivery_delay, args.uniform_delivery_delay_s)
@@ -68,6 +75,10 @@ def main():
         raise RuntimeError(f"Expected existing Isaac Sim 6, got {version}")
     scenario_path = args.scenario.resolve()
     sources = list(Path(__file__).parent.glob("*.py")) + [scenario_path, ROOT / "research/nomad_preflight/native.py"]
+    if args.s1_mode:
+        sources += list((ROOT/"research/nomad_phase1").glob("*.py"))
+        sources += [ROOT/"research/nomad_phase1/s1_protocol.json"]
+        write_json(out/"s1_protocol.json", json.loads((ROOT/"research/nomad_phase1/s1_protocol.json").read_text()))
     if args.pure_pursuit:
         sources += [ROOT/"research/nomad_phase0"/name for name in
                     ("pure_pursuit.py", "chunk_execution.py", "chunk_pilot_protocol.json", "follower_protocol.json")]
@@ -97,6 +108,7 @@ def main():
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
         "pure_pursuit": args.pure_pursuit,
+        "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
         "run_id": args.run_id, "seed_offset": args.seed_offset,
         "source_scenario_sha256": sha256_file(scenario_path),
         "early_obstacle_mode": args.early_obstacle_mode,
@@ -147,6 +159,8 @@ def main():
                 command.append("--asynchronous")
             if args.pure_pursuit:
                 command.append("--pure-pursuit")
+            if args.s1_mode:
+                command += ["--s1-mode", "--s1-distance-m", str(args.s1_distance_m)]
             if args.seed_offset:
                 command += ["--seed-offset", str(args.seed_offset)]
             if args.run_id is not None:
