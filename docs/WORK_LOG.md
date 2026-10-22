@@ -537,3 +537,9 @@ Seven tests and RAW reproduction passed; 53,632 control records independently ch
 ## 2026-10-22 — Graph v3 scene path visualizations
 
 At the user's request, added per-method scene XY panels for S0_02_F0054, S1_P0_F0060 and Topomap sudden F52. Saved9Hz commands reconstruct every72Hz pose exactly; max saved-pose error0. No new controller evaluation, optimization, inference or navigation. H_switch, H_chunk,8-point paths, first overlap and post-overlap mathematical extensions are visually separated; S1 loop/margin failure and stress nonconverged iterate are retained. Original case hashes unchanged. Figures and provenance are in `graph_v3_offline_pilot_20261022/scene_paths/`; full results remain unchanged.
+
+## 2026-10-22 — Graph v4 protocol freeze
+
+Same59 v3 cases and472 saved samples, no new navigation/inference. Added independent path-constrained analytic-Jacobian SLSQP graph and offline runner. Full native segment safety uses public-geometry1cm SDF with conservative interpolation/segment Lipschitz certificates at2.5cm; exact path recheck. Discrete curvature<=8/m and boundary tangent-circle curvature=previous actual w/v. No PP rollout in optimization or selection. Weaker FRESH prior0.10m/30deg, existing relative/boundary/side scales retained, previous corrected XY prior sigma0.20m only for successive S1 cases. Single0 and multi8 starts have independent histories; at most531 solves, one per method/case/start, no tuning or restarts. Sample-selection-only uses unchanged safe native sample and same variable-speed executor as v4.
+
+Four minimum derivative/geometry/prior tests passed without a solve. Preflight59x8 samples and2,378 protected hashes PASS; first RAW command error0. Three initially-unsafe stress states explicitly separated; all59 retained. No optimization executed yet. Freeze code/protocol clean before one campaign. See `GRAPH_V4_OFFLINE_PILOT.md`.
