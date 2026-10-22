@@ -1,0 +1,347 @@
+{
+  "scope": "N=3 exploratory closed-loop RGB SE(2) kinematics, oracle switch only C3; not PhysX robot. C0 paired offline diffusion, not executed navigation.",
+  "execution_sha": "baded63f879c641c24c54f7675e80a58433871c3",
+  "C0": {
+    "conditioned": {
+      "observations": 127,
+      "any_safe_observations": 112,
+      "any_safe_fraction": 0.8818897637795275,
+      "band": "SUFFICIENT",
+      "sample0_safe_fraction": 0.8267716535433071,
+      "safe_sample_fraction": 0.84251968503937,
+      "any_safe_crossing_fraction": 0.031496062992125984,
+      "lateral_counts": {
+        "LEFT": 32,
+        "RIGHT": 0,
+        "FRONT": 22,
+        "NOT_REACHED": 962
+      }
+    },
+    "masked": {
+      "observations": 127,
+      "any_safe_observations": 111,
+      "any_safe_fraction": 0.8740157480314961,
+      "band": "SUFFICIENT",
+      "sample0_safe_fraction": 0.8267716535433071,
+      "safe_sample_fraction": 0.8385826771653543,
+      "any_safe_crossing_fraction": 0.031496062992125984,
+      "lateral_counts": {
+        "LEFT": 37,
+        "RIGHT": 0,
+        "FRONT": 17,
+        "NOT_REACHED": 962
+      }
+    }
+  },
+  "conditions": [
+    {
+      "condition": "C1",
+      "d_m": 0.8,
+      "n": 3,
+      "successes": 0,
+      "collisions": 3,
+      "corridor_intrusions": 0,
+      "passed": 0,
+      "timeouts": 0
+    },
+    {
+      "condition": "C1",
+      "d_m": 1.2,
+      "n": 3,
+      "successes": 0,
+      "collisions": 3,
+      "corridor_intrusions": 0,
+      "passed": 0,
+      "timeouts": 0
+    },
+    {
+      "condition": "C2",
+      "d_m": 1.0,
+      "n": 3,
+      "successes": 1,
+      "collisions": 2,
+      "corridor_intrusions": 0,
+      "passed": 1,
+      "timeouts": 0
+    },
+    {
+      "condition": "C3",
+      "d_m": 1.0,
+      "n": 3,
+      "successes": 1,
+      "collisions": 2,
+      "corridor_intrusions": 0,
+      "passed": 1,
+      "timeouts": 0
+    }
+  ],
+  "validation": {
+    "RGB_frames_recomputed": 995,
+    "mode_snapshot_max_error": 0.0,
+    "max_errors": {
+      "pose_error": 0.0,
+      "pp_command_error": 0.0,
+      "command_trace_error": 0.0
+    },
+    "pacing_error_s": {
+      "n": 17596,
+      "median": 0.0001055645,
+      "p95": 0.000160069,
+      "min": 3.5852e-05,
+      "max": 0.003062291
+    },
+    "protected_hashes_unchanged": true,
+    "C0_input_hashes_unchanged": true,
+    "graph_calls": 0,
+    "sample_replacements": 0,
+    "additional_delay_s": 0,
+    "observed_packet_release_s": {
+      "C1_d08_i1": {
+        "n": 57,
+        "median": 1.2614e-05,
+        "p95": 1.7314999999999996e-05,
+        "min": 9.938e-06,
+        "max": 2.5498e-05
+      },
+      "C1_d08_i2": {
+        "n": 57,
+        "median": 1.2765e-05,
+        "p95": 1.6882e-05,
+        "min": 1.055e-05,
+        "max": 2.0439e-05
+      },
+      "C1_d08_i3": {
+        "n": 58,
+        "median": 1.1988000000000001e-05,
+        "p95": 1.60845e-05,
+        "min": 9.328e-06,
+        "max": 1.6963e-05
+      },
+      "C1_d12_i1": {
+        "n": 65,
+        "median": 1.2815e-05,
+        "p95": 1.7637199999999994e-05,
+        "min": 1.0971e-05,
+        "max": 2.3174e-05
+      },
+      "C1_d12_i2": {
+        "n": 65,
+        "median": 1.2744e-05,
+        "p95": 1.68508e-05,
+        "min": 1.019e-05,
+        "max": 1.9357e-05
+      },
+      "C1_d12_i3": {
+        "n": 65,
+        "median": 1.2013e-05,
+        "p95": 1.4824799999999999e-05,
+        "min": 1.0771e-05,
+        "max": 2.4566e-05
+      },
+      "C2_d10_i1": {
+        "n": 61,
+        "median": 1.2524e-05,
+        "p95": 2.0439e-05,
+        "min": 9.078e-06,
+        "max": 2.7402e-05
+      },
+      "C2_d10_i2": {
+        "n": 161,
+        "median": 1.2303e-05,
+        "p95": 1.8686e-05,
+        "min": 1.041e-05,
+        "max": 2.072e-05
+      },
+      "C2_d10_i3": {
+        "n": 62,
+        "median": 1.2618999999999999e-05,
+        "p95": 1.55055e-05,
+        "min": 1.1282e-05,
+        "max": 2.0139e-05
+      },
+      "C3_d10_i1": {
+        "n": 160,
+        "median": 1.26245e-05,
+        "p95": 1.8927549999999995e-05,
+        "min": 1.062e-05,
+        "max": 3.096e-05
+      },
+      "C3_d10_i2": {
+        "n": 61,
+        "median": 1.2514e-05,
+        "p95": 1.6331e-05,
+        "min": 1.0751e-05,
+        "max": 3.9156e-05
+      },
+      "C3_d10_i3": {
+        "n": 61,
+        "median": 1.2624e-05,
+        "p95": 1.6953e-05,
+        "min": 9.188e-06,
+        "max": 1.8836e-05
+      }
+    },
+    "inference_ms": {
+      "C1_d08_i1": {
+        "n": 56,
+        "median": 36.912904499999996,
+        "p95": 52.12815175,
+        "min": 32.655726,
+        "max": 54.613893
+      },
+      "C1_d08_i2": {
+        "n": 56,
+        "median": 37.130624499999996,
+        "p95": 53.47851525,
+        "min": 32.622145,
+        "max": 55.846737
+      },
+      "C1_d08_i3": {
+        "n": 57,
+        "median": 37.280207,
+        "p95": 52.9415042,
+        "min": 32.558564,
+        "max": 55.576508
+      },
+      "C1_d12_i1": {
+        "n": 64,
+        "median": 36.8852865,
+        "p95": 51.76023704999992,
+        "min": 32.743925,
+        "max": 57.712428
+      },
+      "C1_d12_i2": {
+        "n": 64,
+        "median": 37.7379015,
+        "p95": 51.77083524999994,
+        "min": 31.918866,
+        "max": 58.105499
+      },
+      "C1_d12_i3": {
+        "n": 64,
+        "median": 37.406207,
+        "p95": 50.62566464999994,
+        "min": 32.114454,
+        "max": 57.305169
+      },
+      "C2_d10_i1": {
+        "n": 60,
+        "median": 36.983579000000006,
+        "p95": 53.1258924,
+        "min": 32.25209,
+        "max": 57.660714
+      },
+      "C2_d10_i2": {
+        "n": 160,
+        "median": 37.634364500000004,
+        "p95": 41.2621207,
+        "min": 32.481721,
+        "max": 57.295702
+      },
+      "C2_d10_i3": {
+        "n": 61,
+        "median": 38.400425,
+        "p95": 53.542418,
+        "min": 31.953194,
+        "max": 57.024778
+      },
+      "C3_d10_i1": {
+        "n": 159,
+        "median": 38.025083,
+        "p95": 46.3063564,
+        "min": 32.499772,
+        "max": 76.349273
+      },
+      "C3_d10_i2": {
+        "n": 60,
+        "median": 37.7984365,
+        "p95": 54.20795394999999,
+        "min": 31.602149,
+        "max": 73.097575
+      },
+      "C3_d10_i3": {
+        "n": 60,
+        "median": 38.2816385,
+        "p95": 53.191057349999994,
+        "min": 32.332929,
+        "max": 77.565571
+      }
+    }
+  },
+  "C0_pair_change": {
+    "(True, True)": 111,
+    "(False, False)": 15,
+    "(True, False)": 1
+  },
+  "C0_conditioned_ALL_UNSAFE": {
+    "applied": 8,
+    "terminal_unapplied": 7,
+    "agrees_with_saved_decisions": true
+  },
+  "C0_source_decision_hashes": {
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d08_i1_M0/phase2_decisions.jsonl": "18553bd6ce234cbc19b91b0040bbbce8d567e57ab4648a0a43c46d2ecceef036",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d08_i2_M0/phase2_decisions.jsonl": "885f337b6d1388f9f0c863e15d8c1fde6d7dc4ec6fac497e98c29815234ffc29",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d08_i3_M0/phase2_decisions.jsonl": "ca08b00fb5edb1db0393587e473de7630ff99384f2c0b6c80b8bfdaaeaecc9c5",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d08_i4_M0/phase2_decisions.jsonl": "899e9689d03577a9af7bc70998a97af02af3ab90253f8d135b624143e7457332",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d10_i1_M0/phase2_decisions.jsonl": "f456b615376722a5be3e5d93644431710e24ec6a7557c40234cfeb9d8911a2a1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d10_i2_M0/phase2_decisions.jsonl": "10d5c5a767897c365334d72e8e10798455f78c7f159d8f39be1d9a369e25c413",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d10_i3_M0/phase2_decisions.jsonl": "810ab888f822f697a710ba108ab71a56924890f999aa7479d0007f4650fcd6f2",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D250_d10_i4_M0/phase2_decisions.jsonl": "afa1af98198d7ee637326a1f128cad476afc76b0b6d2e965f9b673322aeeaf5e",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D500_d08_i1_M0/phase2_decisions.jsonl": "aea44a1a35bcd36b0ac28f7448a42efc4629ce757d3fa38f2b30bf760cc65628",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D500_d08_i2_M0/phase2_decisions.jsonl": "09b7828287a15e92346525380b05218d23c1eb8cf531b1ed951778203533ba51",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D500_d08_i3_M0/phase2_decisions.jsonl": "b7f5c5e7dcf0dde09094bb7e3dab58c9b5ebab5ea1c70aa168090d7d51d08283",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D500_d08_i4_M0/phase2_decisions.jsonl": "b2f18a9583c7e22315a7a0e5bef8e85e94c4048f81cd78cee678402597ae8d7f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D500_d10_i1_M0/phase2_decisions.jsonl": "6fe4e29a0df87bd67d3c254650ea9ad2f475290991eefcc551d4d9ae7f720be3",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D500_d10_i2_M0/phase2_decisions.jsonl": "1c617af4b51eaff0cdcb1cb4ec2073a68e472130c77afcbd5b618e75d6986539",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D500_d10_i3_M0/phase2_decisions.jsonl": "5b2a2a66d1052df0d9d60cb514d9efc06fb737ad0d5d5fa7291fc020589eebe7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01/s2a_D500_d10_i4_M0/phase2_decisions.jsonl": "a3be093313f08262ea754265008e42f703c65f7845ac20348a7907f40bde466c"
+  },
+  "C0_native_length_m": {
+    "conditioned": {
+      "n": 1016,
+      "median": 0.2879696786403656,
+      "p95": 0.4342917874455452,
+      "min": 0.03638821095228195,
+      "max": 0.47322365641593933
+    },
+    "masked": {
+      "n": 1016,
+      "median": 0.29411622881889343,
+      "p95": 0.43661221116781235,
+      "min": 0.034948449581861496,
+      "max": 0.47653624415397644
+    }
+  },
+  "C0_mask_changes_max_absolute_metric_m": {
+    "n": 127,
+    "median": 0.051281120628118515,
+    "p95": 0.16806020736694327,
+    "min": 0.01164259947836399,
+    "max": 0.30425506830215454
+  },
+  "C0_safe_crossing_runs": {
+    "conditioned": [
+      "s2a_D250_d10_i1_M0"
+    ],
+    "masked": [
+      "s2a_D250_d10_i1_M0"
+    ]
+  },
+  "input_hashes": {
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/c0/summary.json": "8adb5ac51a39d9bc6101f4c278d6e73f54c22b526e4d0be3dfa50c72cd66e3eb",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/c0/observations.jsonl": "0a80a39e0001c153a5e094c261ac11226b14f5c69d5ebc16372d7d53ffadde5d",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/journal.jsonl": "1747edb87ce2a989a29e449b91e7128335b058e55e6f15fd0191b2e39fb6c7c4",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C2_d10_i2.json": "9a61225aae7ba8aa76ac91b011c5be1f745b44f4e89344299a7156b4fb2c26ac",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C3_d10_i1.json": "087efc3eb652102746bd872a3707f39241c4570fd8d3c96ec8e4c58787abc486",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C1_d08_i1.json": "9022afa7e05ce2e74b7595919b31a03e0900ab68d855f1f14e191cb82c0ec23f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C3_d10_i3.json": "5f2451a6b066891bf46b89dc5682611861d76b4537c51fdb2cda6cdb2d2a1e88",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C1_d08_i2.json": "bd0a4e80e76f38d5ded776b541f3866b844d8bf64b7a36c29fc06dd0c8183b1b",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C1_d12_i3.json": "dd61e271a6954f3630a813c895baff1f1f7868f328be7b37ea5f85c243d4b7dc",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C3_d10_i2.json": "25bc7264e5eb4afe498543ea6bab36910c891b8024e42162721da20310d69c5e",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C2_d10_i3.json": "5dcece1f9de672893fb085f4a67e3448cf4989e4ca6fdd7ed5ca6ea7b9f83b7c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C1_d08_i3.json": "0bb58afcbd5c00356ec23afeb05b4dec35e447fd166780cf2561bc41062d3b99",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C1_d12_i2.json": "d3635547106eafc8a11ea6c8f6d8d60ba4b0e72bb8c654e5938f7efc68eda451",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C2_d10_i1.json": "52d0504cfa9a3f91ac85483559c313705f0871ddc1094f3294e537483e107ef1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_diagnostic_01/metrics/C1_d12_i1.json": "79fec2979e563ec7ac5836541080e6ae0b61c3fdecf88dd23ed4ce3eaebfb06b"
+  }
+}

@@ -573,3 +573,7 @@ Read-only final aggregation, mask/branch evidence and case analysis added after 
 ## 2026-10-23 — Phase 2 policy diagnosis preregistration
 
 Added a narrowly gated C0 paired replay / C1-C3 M0 diagnostic, using official goal mask only. User fixed pooled safe-observation bands <10%, [10%,30%), >=30% before inference. Read-only scope contains 127 saved inference inputs and 167 busy captures. Four new checks and 13 existing Phase2/delivery checks pass; actual inference/navigation pending. No model, PP, Topomap or Graph changes; no retries authorized.
+
+## 2026-10-23 — Phase 2 policy diagnosis completed
+
+Clean execution `baded63`: C0 127 paired observations (conditioned exact replay error0; 167 busy captures excluded), then 12/12 registered D0 runs, no retries. C1 .8/1.2m:0/3 each; C2:1/3; C3 oracle exploration:1/3. Two successes clear 2cm, ten actual overlaps, no corridor intrusion/timeout/technical failure. C0 any-safe fractions conditioned112/127=88.19%, masked111/127=87.40%, both preregistered SUFFICIENT; 94.69% of samples do not cross box-center X, safe-crossing observations4/127 both. Conditional avoidance is observed, no blanket inability or causal mask/Graph claim. RGB995 frames and all actual pose/PP commands verified (error0); old input/protected hashes unchanged. Report and exactly two figures in `docs/PHASE2_POLICY_DIAGNOSIS.md` and `research/results/phase2_policy_diagnosis_20261023/`.
