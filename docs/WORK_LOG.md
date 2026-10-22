@@ -515,3 +515,7 @@ P1(D750,d.8): tick968/13.444444s에pose(1.900864,1.070726,+.533895)로trigger. �
 ## 2026-10-22 — S1-v2 obstacle-free preflight
 
 Frozen straight corridor and deterministic centerline under `593b77a`; original S0/S1 modes preserved. Exact 72Hz reference enters 0.30m goal tolerance at tick2772 / 38.5s. Actual Isaac RGB reference rendering generated 21 verified 2s/terminal nodes, no navigation or inference. 32 relevant tests passed; checkpoint and 304 preservation hashes verified. S1-v2 permits only async PP, seed101, explicit uniform D0, one navigation attempt. Runtime, audit and protocol will be committed clean before that attempt. See `PHASE1_S1_V2_BASELINE.md`.
+
+## 2026-10-22 — S1-v2 D0 baseline completed
+
+Exactly one actual NoMaD+PP navigation from clean `b7e4b2a`: goal entry at41.833333s, distance0.299372m; no corridor intrusion, minimum footprint corridor clearance0.827256m. No obstacles (obstacle clearance N/A). 164 GPU inference/received results and163 actual switches, finalID163 unapplied. PP command and72Hz integration error0, allRGB/history/anchor/normalization checks PASS; warm inference median/p95=35.217/37.353ms. D0 packet-release median10.656us, pacing max1.356ms. Zero timeouts, initial wait1.111111s. All304 protected hashes retained. Official Topomap selections verified despite3 closest and9 subgoal backward changes. No retry/tuning. Baseline infrastructure ready for a separate D×N=5 protocol; no delay robustness claim or new batch implementation. See `PHASE1_S1_V2_BASELINE.md` and `research/results/phase1_s1_v2_baseline_20261022/`.

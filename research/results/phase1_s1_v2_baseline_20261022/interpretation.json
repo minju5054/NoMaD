@@ -1,0 +1,41 @@
+{
+  "classification": "D0_BASELINE_TECHNICAL_PASS_GOAL_SUCCESS",
+  "navigation_attempts": 1,
+  "retries": 0,
+  "topomap_backward_observations": {
+    "closest_ids": [
+      15,
+      36,
+      144
+    ],
+    "subgoal_ids": [
+      15,
+      27,
+      36,
+      43,
+      51,
+      57,
+      136,
+      144,
+      152
+    ],
+    "same_closest_threshold_crossing_ids": [
+      27,
+      43,
+      51,
+      57,
+      136,
+      152
+    ]
+  },
+  "interpretation": "All selection changes reproduce official argmin and close_threshold=3. Six subgoal backward moves had unchanged closest node and a minimum distance-head score crossing from below3 to >=3. Three closest-node backward changes reflect candidate argmin changes. This single run does not identify an upstream visual cause. Scores are not metric distance. No tuning.",
+  "baseline_readiness": "Scene/map/inference/PP/D0 integration validated as input for a separately authorized D x N=5 protocol. Current mode deliberately allows only D0 with offset0; no D>0/N=5 runner implemented or executed.",
+  "stopping": "All 1.111111s stopped motion precedes first valid waypoint; no later endpoint stop and no natural timeout.",
+  "provenance": {
+    "run/provenance.json": "5fa8d7473621b026078a51c8bdb9afa7b351443f025cb35e1a9bf40c2f488962",
+    "run/render_check.json": "3520f349e9c7746aa850faf4cfdb7749f9952b2151a5147005e6356445cbb418",
+    "audit/summary.json": "cf0b1e74ef9186efa90a916f89d24d6502ac446dd58e2d4e41ee33b732ff08c4",
+    "audit/runtime/summary.json": "0c096c391cd6f271183507b0001f8b71b071f2181b065288e72c06f9c0db4410",
+    "audit/runtime/input_hashes.json": "e0e6388cf280fb021943a31e83dd34ec0a1ffdea7d66565b2bb4c9a60550eda4"
+  }
+}
