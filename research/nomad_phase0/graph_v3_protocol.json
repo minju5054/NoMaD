@@ -1,0 +1,134 @@
+{
+  "name": "GRAPH_V3_OFFLINE_PILOT_01",
+  "scope": "Offline mechanism validation only; fixed saved B; released oracle geometry for solve, all active geometry for evaluation",
+  "base_commit": "3b78d3663c591b84aabf0b2c0aeee2cd2bc84e1b",
+  "selection": {
+    "a": "Exactly the 20 saved Graph v2 cases, no reselection",
+    "b": "P0 every applied FRESH ID43 through last switch at/before first recorded whole-footprint far-X passage of dynamic box (ID75). No exclusion based on solver/performance.",
+    "c": {
+      "old_rollout_obstacle_01": [
+        51,
+        52
+      ],
+      "topomap_sudden_01": [
+        52,
+        53
+      ],
+      "early_raw_01": [
+        63,
+        64
+      ]
+    },
+    "PD_stress": "RAW PP is counterfactual at saved B; previous actual PD v,w is continuity/acceleration initial condition; actual PD replay verified separately."
+  },
+  "integration_hz": 72,
+  "controller_hz": 9,
+  "horizon_ticks": 16,
+  "horizon_rule": "H_switch: all intervals to next actual switch (not capped at16); final/collision terminal pose if no next switch, explicitly right-censored. H_chunk: follow frozen chunk until existing 0.01m endpoint criterion, capped at60s; timeout retained. No future FRESH/1s waypoint expiry during this offline continuation. No collision early termination; overlaps are diagnostic counterfactual.",
+  "follower": {
+    "lookahead_m": 0.25,
+    "speed_m_s": 0.2,
+    "max_v_m_s": 0.2,
+    "max_abs_w_rad_s": 0.4,
+    "endpoint_tolerance_m": 0.01
+  },
+  "entry_rule": "Existing XYPath.project on RAW at B, outgoing segment at a vertex; freeze original endpoint indices and interpolation fraction for all boundary factors/diagnostics. PP itself keeps its original projection rule.",
+  "heading_rule": "For each node choose the nearest later node with chord length >=20mm; if none, the nearest earlier node with >=20mm chord, oriented in path order. Freeze these indices before solving; reject if any node has no such chord. These are auxiliary headings, not native yaw.",
+  "minimum_heading_chord_m": 0.02,
+  "rigid_rule": "One SE(2) transform aligning initial node 0 position and its valid auxiliary heading to B; preserve all relative transforms",
+  "radius_m": 0.09,
+  "required_clearance_m": 0.02,
+  "safety_target_m": 0.025,
+  "safety_sigma_m": 0.002,
+  "corridor_target_m": 0.005,
+  "prior_sigma_xy_m": 0.02,
+  "prior_sigma_yaw_deg": 15.0,
+  "relative_sigma_xy_m": 0.01,
+  "relative_sigma_yaw_deg": 10.0,
+  "boundary_sigma_xy_m": 0.01,
+  "boundary_sigma_yaw_deg": 10.0,
+  "tangent_consistency_sigma_deg": 10.0,
+  "pp_applied_w_sigma_rad_s": 0.1,
+  "minimum_segment_ratio": 0.8,
+  "minimum_total_length_ratio": 0.9,
+  "minimum_chord_ratio": 0.5,
+  "shrink_sigma_m": 0.005,
+  "factors": {
+    "prior_relative": "Reuse online_graph_factors.between/se2_log residual definitions",
+    "boundary": "SE(2) log from fixed B to fixed-entry interpolated editable pose",
+    "pp_continuity": "Retain clipped applied-w continuity, now from variable-speed rollout; add unclipped kappa_PP - previous actual w/max(previous v,0.05), sigma0.5/m, before clipping. Prior/relative/boundary/tangent/anti-shrink/native safety inherited unchanged.",
+    "anti_shrink": "Hinges on each original segment ratio, total XY length ratio and frozen heading chord ratio",
+    "safety": "Same 0.025m soft obstacle target and existing corridor target; variable-speed 9Hz/72Hz H_switch rollout using only released geometry. H_chunk is evaluation only.",
+    "no_PD_residual": true,
+    "side": "Frozen RAW definite-side crossings only, sigma0.02m; no side factor if undefined or undisclosed."
+  },
+  "solver": {
+    "method": "trf",
+    "jac": "3-point",
+    "ftol": 1e-08,
+    "xtol": 1e-08,
+    "gtol": 1e-08,
+    "max_nfev": 200,
+    "loss": "linear",
+    "x_scale_per_pose": [
+      0.02,
+      0.02,
+      0.2617993877991494
+    ],
+    "initialization": "Zero additive XY/yaw increments at observation-anchored FRESH; one solve per selected case; no restarts",
+    "future_online_target_ms": 100,
+    "target_is_pass_gate": false
+  },
+  "verification_atol": 1e-10,
+  "improvement_rule": {
+    "required_clearance_m": 0.02,
+    "maximum_raw_clearance_loss_m": 0.005,
+    "minimum_raw_motion_ratio": 0.7,
+    "angular_reduction_epsilon_rad_s": 1e-06,
+    "rules": "Safe native AND safe H_switch rollout AND corridor contained; obstacle/corridor minimum loss versus RAW <=5mm for both native and rollout; H_switch travel >=70% RAW and no endpoint stop/truncation; converged for Graph; delta-w decreases. Same constraints for Speed comparison, with angular decrease against RAW+Speed and additionally retain >=70% its travel. H_chunk-qualified additionally requires endpoint reached and native/H_chunk safe with <=5mm loss vs RAW H_chunk. Report all failures; no best-case filtering.",
+    "primary_reference": "RAW+Speed for Graph v3 contribution; RAW comparison secondary",
+    "stress_recovery": "RAW native-or-rollout collision/margin/corridor unsafe -> candidate native-and-rollout safe, separately per horizon. H_chunk safety requires endpoint completion, not just safe prefix."
+  },
+  "prohibited": [
+    "navigation",
+    "inference",
+    "online integration",
+    "tuning",
+    "restarts",
+    "new correspondence",
+    "recovery",
+    "visualization"
+  ],
+  "graph_v2_protocol_sha256": "2eca15b0ec96b7570db3ff1399d82ab70275f57e0c6f2c8a3c11c48de35524f1",
+  "chunk_max_s": 60.0,
+  "pp_unclipped_curvature_sigma_m_inv": 0.5,
+  "side_sigma_m": 0.02,
+  "variable_speed": {
+    "v_min": 0.05,
+    "v_max": 0.2,
+    "w_max": 0.4,
+    "acceleration_max_m_s2": 0.5,
+    "rule": "target=clip(0.4/abs(kappa_PP),0.05,0.2), zero kappa target0.2. Choose closest target within previous-v +/-0.5/9. omega=clip(v*kappa,-0.4,0.4). Continue when clipped. Same RAW+Speed/Graphv3.",
+    "initial_v": "Previous actual executed command one 9Hz tick before B; no reset to target speed",
+    "endpoint": "Endpoint completion terminates counterfactual before issuing v=0, not in-place recovery. H_switch completion before requested horizon is a stop/truncation and cannot qualify. H_chunk natural endpoint completion is reported separately.",
+    "flags": [
+      "CURVATURE_SATURATED: abs(kappa)>8",
+      "ACCEL_LIMITED: abs(v-target)>1e-12",
+      "OMEGA_CLIPPED: abs(omega-v*kappa)>1e-12"
+    ],
+    "speed_profile": "Ordered control samples of projected path arclength and executed/target speed from B. Repeated arclength retained with control ordinal because acceleration/pose are stateful; not native waypoint time or a universal open-loop v(s)."
+  },
+  "rate_limit_delta_w_rad_s": 0.1,
+  "geometry_information": "Static geometry always available. Dynamic included in solve only if next actually captured RGB after first visible frame completed before B host monotonic time. Validate RGB magenta hashes; freeze available set during solve. Evaluation uses all actually active geometry at B. Same reconstructed next-frame rule for older stress data.",
+  "side_rule": "World-axis aligned boxes: intersect RAW native full XY segments with x=center_x. Require all crossings strictly outside size_y/2+radius, all same sign; ambiguous/absent/vertical crossings SIDE_UNDEFINED. Define signed lateral as y-center_y (+Y left). Freeze crossing endpoint indices/fractions for factor; hinge sign*interpolated_offset >= halfwidth+radius. Only released boxes. Re-evaluate corrected path/rollout side separately; no claim of completed bypass from sign alone.",
+  "graph_v2_reuse": "Reuse saved S0 optimized XY/heading and solver outcomes without solving v2 again; re-evaluate at identical new H_switch and H_chunk. V2 original optimization horizon16 retained in metadata. b/c absent v2 = NOT_AVAILABLE, no new v2 solve.",
+  "plateau_case_ids": [
+    "S0_03_F0079",
+    "S0_04_F0089",
+    "S0_06_F0027",
+    "S0_07_F0090",
+    "S0_08_F0036",
+    "S0_09_F0025",
+    "S0_10_F0024"
+  ]
+}
