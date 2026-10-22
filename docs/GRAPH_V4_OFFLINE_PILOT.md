@@ -57,3 +57,144 @@ env PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python
 ```
 
 The runner requires a clean commit, frozen protocol/input hashes and a new cases directory. Actual results will be appended after the single execution. No new figure is part of this task.
+
+## Completed one-time execution
+
+Frozen execution commit: `b2470a7`. All59 cases finished in the one campaign: **531/531 solves attempted**, **403 converged and constraint-feasible**, **128 nonconverged**. There were no initialization rejections, new navigation, inference, restarts or parameter changes. SLSQP logged its normal clipping of intermediate trial points to the fixed trust bounds; no protocol adjustment followed.
+
+- Single-start:43/59 accepted paths;16 nonconverged solves (S0:3, S1:7, stress:6).
+- Multi-start:360/472 feasible starts;112 nonconverged starts. A feasible candidate was selected in53/59 cases (all20 S0 and33 S1; none of6 stress).
+- Solver statuses across531 starts:403 successful,109 positive-directional-derivative line-search exits,14 iteration limits,5 incompatible-inequality exits. A failed numerical search is **not** proof that no feasible path exists.
+- The previous-correction prior was verified on281 start stencils:25 single-start S1 cases and32x8 multi-start S1 candidates. No PP outcome was used to select candidates or update this prior.
+
+### Safety and progress
+
+Counts below are **H_switch / H_chunk**, requiring native full path and evaluated PP rollout >=2cm, corridor containment, horizon completion and an accepted method output. Missing actions and rejected final iterates do not count as safe. Stress uses the3 initially-safe B cases; the other3 remain in the raw CSV and the `all` summary partition, separately labelled initially unsafe. Safe counts are unchanged when adding them, but denominators and collision counts are not.
+
+| Method | S0 (20) | S1 P0 (33) | Stress initially safe B (3) |
+| --- | --- | --- | --- |
+| RAW | 19 / 11 | 32 / 25 | 0 / 0 |
+| RAW+Speed | 19 / 15 | 32 / 28 | 1 / 0 |
+| RAW+Rate limit | 19 / 10 | 32 / 24 | 0 / 0 |
+| RIGID | 19 / 13 | 33 / 22 | 0 / 0 |
+| Sample selection only | 20 / 18 | 33 / 32 | 1 / 0 |
+| Graph v3 | 16 / 14 | 33 / 32 | 0 / 0 |
+| Graph v4 single | 17 / 16 | 26 / 24 | 0 / 0 |
+| Graph v4 multi | 20 / 19 | 33 / 30 | 0 / 0 |
+
+Adding the required **>=70% RAW H_switch travel and no stop** gives:
+
+| Method | S0 (20) | S1 P0 (33) | Stress initially safe B (3) |
+| --- | --- | --- | --- |
+| RAW | 19 / 11 | 32 / 25 | 0 / 0 |
+| RAW+Speed | 15 / 13 | 26 / 26 | 0 / 0 |
+| RAW+Rate limit | 19 / 10 | 32 / 24 | 0 / 0 |
+| RIGID | 19 / 13 | 33 / 22 | 0 / 0 |
+| Sample selection only | 19 / 17 | 28 / 28 | 0 / 0 |
+| Graph v3 | 15 / 13 | 29 / 28 | 0 / 0 |
+| Graph v4 single | 15 / 15 | 25 / 23 | 0 / 0 |
+| Graph v4 multi | 17 / 16 | 29 / 28 | 0 / 0 |
+
+Sample selection uses unchanged geometry and the same variable-speed executor as v4. In S1 its32/33 H_chunk result matches cached v3 and exceeds v4 multi's30/33. S0 multi improves the safe-complete count to19/20 versus selection-only18/20 and v3 14/20, but the safe-plus-progress count is16/20 versus selection-only17/20. This pilot does not establish blanket superiority of trajectory correction.
+
+### Overlap and RAW-unsafe transitions
+
+The next table counts overlaps among **accepted outputs only**, H_switch / H_chunk. `0 (no action)` is not collision avoidance. Full diagnostic-iterate overlap counts remain separate in JSON/CSV. V4 multi has no selected path in any stress case.
+
+| Method | S0 (20) | S1 P0 (33) | Stress initially safe B (3) |
+| --- | --- | --- | --- |
+| RAW | 0 / 5 | 0 / 7 | 1 / 3 |
+| RAW+Speed | 0 / 1 | 0 / 5 | 0 / 2 |
+| RAW+Rate limit | 0 / 5 | 0 / 9 | 1 / 3 |
+| RIGID | 0 / 5 | 0 / 8 | 1 / 3 |
+| Sample selection only | 0 / 0 | 0 / 1 | 0 / 1 |
+| Graph v3 | 0 / 0 | 0 / 0 | 0 / 1 |
+| Graph v4 single | 0 / 0 | 0 / 0 | N/A: no accepted action |
+| Graph v4 multi | 0 / 0 | 0 / 2 | N/A: no accepted action |
+
+RAW native-or-rollout unsafe → accepted safe-complete transitions (not necessarily the70% progress criterion):
+
+| Method | S0 (20) | S1 P0 (33) | Stress initially safe B (3) |
+| --- | --- | --- | --- |
+| RAW | 0 / 0 | 0 / 0 | 0 / 0 |
+| RAW+Speed | 0 / 3 | 0 / 3 | 1 / 0 |
+| RAW+Rate limit | 0 / 1 | 0 / 0 | 0 / 0 |
+| RIGID | 0 / 2 | 1 / 0 | 0 / 0 |
+| Sample selection only | 1 / 5 | 1 / 7 | 1 / 0 |
+| Graph v3 | 1 / 3 | 1 / 7 | 0 / 0 |
+| Graph v4 single | 1 / 5 | 0 / 1 | 0 / 0 |
+| Graph v4 multi | 1 / 6 | 1 / 6 | 0 / 0 |
+
+The initially-safe stress set contains fixed-goal51, Topomap sudden52 and Early RAW63. V4 finds no accepted solution for any; no recovery advantage is demonstrated. The excluded initial violations are fixed-goal52=19.190mm, Topomap53=2.655mm and Early RAW64=5.369mm. They were still solved/evaluated and are not silently discarded. In all6 stress cases, selection-only has2 selected outputs; its one safe H_switch continuation does not complete H_chunk safely and does not retain70% RAW short-horizon travel.
+
+### Angular discontinuity and actual PP saturation
+
+Mean switch |delta-w| in rad/s below uses **accepted outputs**, with its sample count in parentheses. Different acceptance sets make these conditional means descriptive, not a paired performance proof. All-final-iterate means are also retained in `method_summary.csv`; rejected v4 single/v3 iterates are never treated as selected actions.
+
+| Method | S0 (20) | S1 P0 (33) | Stress initially safe B (3) |
+| --- | --- | --- | --- |
+| RAW | 0.4252 (n=20) | 0.1467 (n=33) | 0.0000 (n=3) |
+| RAW+Speed | 0.4252 (n=20) | 0.1467 (n=33) | 0.0000 (n=3) |
+| RAW+Rate limit | 0.0993 (n=20) | 0.0630 (n=33) | 0.0000 (n=3) |
+| RIGID | 0.4017 (n=20) | 0.1427 (n=33) | 0.0000 (n=3) |
+| Sample selection only | 0.3563 (n=20) | 0.1076 (n=33) | 0.0000 (n=2) |
+| Graph v3 | 0.1947 (n=16) | 0.0667 (n=33) | 0.0000 (n=1) |
+| Graph v4 single | 0.3653 (n=17) | 0.1319 (n=26) | N/A (n=0) |
+| Graph v4 multi | 0.3625 (n=20) | 0.1184 (n=33) | N/A (n=0) |
+
+Actual PP `CURVATURE_SATURATED` (|kappa_PP|>8) ratios among accepted control records, **H_switch / H_chunk**. This is not the graph's node-curvature constraint. Ratios are9Hz exposure-weighted; long looping failures contribute many records. All-evaluated and accepted counts/denominators for every flag are in `flag_counts.csv`.
+
+| Method | S0 (20) | S1 P0 (33) | Stress initially safe B (3) |
+| --- | --- | --- | --- |
+| RAW | 13.04% / 7.34% | 17.57% / 7.66% | 66.67% / 9.57% |
+| RAW+Speed | 10.87% / 47.71% | 17.57% / 86.45% | 66.67% / 96.17% |
+| RAW+Rate limit | 13.04% / 8.17% | 17.57% / 7.41% | 66.67% / 9.57% |
+| RIGID | 10.87% / 9.19% | 13.51% / 6.08% | 66.67% / 10.19% |
+| Sample selection only | 0.00% / 0.00% | 4.05% / 52.56% | 100.00% / 100.00% |
+| Graph v3 | 0.00% / 39.93% | 0.00% / 0.00% | 0.00% / 0.00% |
+| Graph v4 single | 7.50% / 64.75% | 0.00% / 0.00% | N/A / N/A |
+| Graph v4 multi | 0.00% / 0.00% | 5.41% / 51.23% | N/A / N/A |
+
+### Why full-path feasibility did not ensure PP safety
+
+All403 feasible graph starts were independently rechecked: minimum **public-geometry native** clearance33.577mm, maximum discrete node curvature8.000000402/m (within frozen numerical constraint tolerance), maximum boundary-curvature equality error1.10e-11/m. Conservative SDF discretization explains the clearance being above the25mm target. This verifies the path constraints, **not** the PP follower's swept route.
+
+The four v4-multi H_chunk failures were:
+
+| Case / selected sample | Native clearance | PP outcome |
+| --- | --- | --- |
+| S0_03_F0008 /4 |534.677mm | Corridor intrusion;60s chunk timeout; no obstacle overlap |
+| S1_P0_F0043 /1 |164.420mm | Corridor intrusion;60s timeout; no obstacle overlap; dynamic geometry not yet public at B |
+| S1_P0_F0063 /6 |54.458mm | Obstacle overlap;60s timeout; actual PP curvature saturation throughout540 control ticks |
+| S1_P0_F0064 /0 |34.526mm | Obstacle overlap;60s timeout; actual PP curvature saturation throughout540 control ticks |
+
+For F63/F64, discrete path curvature is at most8.00000001/8.00000033 per metre and boundary-circle curvature is2/m, as requested. Nevertheless first PP lookahead curvature is **8.369/8.321 per metre**. The path-entry circle and three-point path curvature are different quantities from PP's current-pose-to-lookahead geometry. Later saturated constant-curvature continuations overlap obstacles. H_switch remains safe, but full-chunk execution does not. The other two failures show that absence of curvature saturation also does not ensure endpoint convergence or corridor containment.
+
+This is direct negative evidence against treating the chosen path-level constraints as a sufficient substitute for PP execution constraints. It does not prove that all path-level formulations must fail. No new constraints or tuning were introduced after observing these results.
+
+### Timing and convergence
+
+Wall times include failures. Shared SDF preparation is measured separately (5 public-geometry fields,14.20–16.99ms each). Cold-inclusive values add that field's actual build time to each hypothetical standalone method invocation. Serial multi-start time includes **all8 starts**, initialization, exact certificates and selection; it is not disguised as one-start latency.
+
+| Timing | N | median ms | p95 ms | max ms | >20ms | >100ms |
+| --- | --- | --- | --- | --- | --- | --- |
+| Graph v3_cached_solver_s | 59 | 2657.89 | 38617.64 | 52146.20 | 100.0% | 100.0% |
+| single_per_start_solver_s | 59 | 54.47 | 208.72 | 507.91 | 100.0% | 20.3% |
+| Graph v4 single_method_s | 59 | 55.79 | 209.97 | 509.18 | 100.0% | 20.3% |
+| Graph v4 single_cold_inclusive_s | 59 | 72.78 | 226.39 | 524.70 | 100.0% | 27.1% |
+| multi_per_start_solver_s | 472 | 56.74 | 168.30 | 506.58 | 100.0% | 22.2% |
+| Graph v4 multi_method_s | 59 | 598.76 | 1088.78 | 2379.21 | 100.0% | 100.0% |
+| Graph v4 multi_cold_inclusive_s | 59 | 615.75 | 1104.38 | 2394.73 | 100.0% | 100.0% |
+| Sample selection only_method_s | 59 | 3.58 | 3.83 | 3.89 | 0.0% | 0.0% |
+
+Every v4 solve exceeded20ms. Single total median55.79ms is substantially below cached v3's2657.89ms, but misses the20ms goal. Multi total median598.76ms remains above100ms in59/59 cases. The sample-selection baseline took median3.58ms. Different formulations/workloads and cached measurement dates prevent attribution of the speedup solely to analytic Jacobians.
+
+Single start nonconvergence is16/59; multi individual-start nonconvergence112/472, leaving6/59 cases without a selected feasible result. These should not be compared to v3's7/59 failures as though v4 multi ran only59 optimizations. No solver deadline, restart or parameter change was used to improve timings.
+
+### Verification and preserved outputs
+
+Post-execution read-only verification checked all531 final constraint vectors,403 exact feasible path certificates, deterministic candidate selection,281 previous-prior stencils and12,265 new PP control records. Maximum pose discrepancy after held-command integration is1.04e-12; speed/acceleration/clipping flags match the frozen v3 speed rule. All cached baseline method records are identical to v3 and all2,378 input/source hashes remain unchanged. Four preflight numerical tests passed; no post-result optimization was run.
+
+Results are in `research/results/graph_v4_offline_pilot_20261022/`: summary,944-row comparison,531-start CSV (including failed paths), selected-path JSON, method/flag/timing tables, protocol execution/input provenance and verification. Full factor diagnostics, every candidate's auxiliary poses and new control traces remain in `/home/gpuadmin/Workspace/NoMaD/artifacts/graph_v4/offline_pilot_01/cases/` (~88MB, excluded from Git). Original results were not overwritten. The copied original v3 method records retain legacy v3 qualification metadata for provenance; v4 tables recompute the new criteria and never use the5mm loss rule.
+
+The next unresolved mechanism is consistency between path-level curvature/entry constraints and the **actual PP lookahead/endpoint dynamics**, along with no-action handling and compute-delay moving-B validity. Sample selection alone is a strong baseline in this dataset. No online navigation, feasibility theorem, Graph necessity or real-time applicability is established by this offline pilot.
