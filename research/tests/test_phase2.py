@@ -106,3 +106,28 @@ def test_m0_matches_original_chunk_core_tickwise(tmp_path):
         assert (a.v,a.w)==(b.v,b.w)
         np.testing.assert_array_equal(a.integrate(),b.integrate())
     actual.close()
+
+def test_accepted_graph_uses_fixed_world_and_variable_speed(monkeypatch,tmp_path):
+    import nomad_phase2.execution as module
+    class Fake:
+        def __init__(self,out):self.result=None
+        def submit(self,j):self.job=j
+        def poll(self):r=self.result;self.result=None;return r
+        def close(self):pass
+    monkeypatch.setattr(module,'GraphClient',Fake)
+    e=Phase2Execution(config('M5'),tmp_path);core=WaypointExecution([0,0,0])
+    xy=np.column_stack([np.linspace(.1,.8,8),np.zeros(8)]);metric=np.tile(xy,(8,1,1))
+    row={'id':0,'received_monotonic_ns':1000000000,'observation_pose':[0,0,0],'selected_waypoint_m':xy[2].tolist()}
+    core.receive(row,xy[2]);e.accept(row,metric);e.control(core,0,1000000000)
+    bad=metric.copy();bad[:,:,1]=2.
+    row={**row,'id':1,'received_monotonic_ns':1100000000}
+    core.receive(row,bad[0,2]);e.accept(row,bad);e.control(core,8,1100000000)
+    corrected=xy.copy();corrected[:,1]=.02
+    e.client.result={'job_id':0,'id':1,'kind':'result','accepted':True,'poses':np.column_stack([corrected,np.zeros(8)]).tolist(),
+                     'result_received_ns':1150000000}
+    core.integrate()  # Actual movement after fixed solve boundary; no reanchor on application.
+    refresh,event=e.control(core,16,1222222222)
+    assert event['phase2']['graph_applied'] and event['phase2']['variable_speed']
+    np.testing.assert_array_equal(event['phase2']['world_xy_m'],corrected)
+    assert event['agent_pose_at_switch'][0]>0 and refresh['applied_command_source']=='variable_speed_pp'
+    e.close()

@@ -1,0 +1,478 @@
+{
+  "status": "PASS_WITH_COVERAGE_LIMITS",
+  "navigation_attempts": 3,
+  "navigation_retries": 0,
+  "performance_inference": false,
+  "graph_and_selection_actual_intervention": "NOT_EXERCISED_in_pilots_all_native_sample0_safe; synthetic branches passed; CPU process startup verified",
+  "M0_audit_amendment": "roundoff-only; original failed audit retained; no navigation retry",
+  "records": [
+    {
+      "method": "M0",
+      "technical_validation": "PASS",
+      "classification": "SAFETY_FAILURE",
+      "validation": {
+        "pose_error": 0.0,
+        "pp_command_error": 0.0,
+        "command_trace_error": 0.0,
+        "RGB_history_hashes": true,
+        "uniform_delay": true,
+        "public_geometry_gate": true,
+        "native_and_selection": true,
+        "max_pacing_error_s": 0.001155032
+      },
+      "requests": 21,
+      "switches": 20,
+      "sample0_unsafe_count": 0,
+      "selection_replacement_count": 0,
+      "graph": {
+        "calls": 0,
+        "returned": 0,
+        "accepted": 0,
+        "applied": 0,
+        "nonconverged": 0,
+        "initialization_rejected": 0,
+        "stale": 0,
+        "solve_wall_s": {
+          "n": 0
+        },
+        "dispatch_to_result_s": {
+          "n": 0
+        },
+        "movement_during_graph_m": {
+          "n": 0
+        }
+      },
+      "first_visible": {
+        "observation_id": 47,
+        "observation_sim_s": 11.73611111111111,
+        "capture_end_monotonic_ns": 279750636981570,
+        "rgb_file": "observations/0047.png"
+      },
+      "oracle_available": {
+        "observation_id": 48,
+        "observation_sim_s": 11.98611111111111,
+        "capture_end_monotonic_ns": 279750874096061
+      },
+      "first_fresh": {
+        "fresh_id": 15,
+        "A": [
+          2.003649021879674,
+          0.15445607130793693,
+          0.09132993450224669
+        ],
+        "t_obs": 11.73611111111111,
+        "t_ready_ns": 279750674610486,
+        "t_packet_ns": 279750676505640,
+        "t_release_ns": 279751176542055,
+        "B": [
+          2.1450842211540784,
+          0.1619248811636166,
+          0.014655360252589844
+        ],
+        "t_switch": 12.444444444444445,
+        "status": "APPLIED",
+        "old_distance_m": 0.14166665332084288,
+        "yaw_change_rad": -0.07667457424965685,
+        "observation_to_switch_s": 0.7083333333333339
+      },
+      "feasibility": {
+        "spawn": {
+          "B0": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 149,
+            "generated": 375,
+            "wall_seconds": 0.014556983020156622,
+            "cpu_seconds": 0.014555905000000036,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 29.5,
+              "distance_m": 5.9,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.02061539354123825
+              },
+              "goal_distance_m": 0.2317466831924405
+            }
+          },
+          "B1": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 165,
+            "generated": 546,
+            "wall_seconds": 0.01983747904887423,
+            "cpu_seconds": 0.019836554999999978,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 30.0,
+              "distance_m": 5.9,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.021242768364720405
+              },
+              "goal_distance_m": 0.2619820769798671
+            }
+          }
+        },
+        "first_visible_B": {
+          "B0": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 132,
+            "generated": 360,
+            "wall_seconds": 0.012472828035242856,
+            "cpu_seconds": 0.012472456999999992,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 29.0,
+              "distance_m": 5.800000000000001,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.02020101406547751
+              },
+              "goal_distance_m": 0.20242286048663097
+            }
+          },
+          "B1": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 157,
+            "generated": 543,
+            "wall_seconds": 0.017837495950516313,
+            "cpu_seconds": 0.017836783000000023,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 29.0,
+              "distance_m": 5.800000000000001,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.02020101406547751
+              },
+              "goal_distance_m": 0.20242286048663097
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "M3",
+      "technical_validation": "PASS",
+      "classification": "SAFETY_FAILURE",
+      "validation": {
+        "pose_error": 0.0,
+        "pp_command_error": 0.0,
+        "command_trace_error": 0.0,
+        "RGB_history_hashes": true,
+        "uniform_delay": true,
+        "public_geometry_gate": true,
+        "native_and_selection": true,
+        "max_pacing_error_s": 0.001831574
+      },
+      "requests": 22,
+      "switches": 21,
+      "sample0_unsafe_count": 0,
+      "selection_replacement_count": 0,
+      "graph": {
+        "calls": 0,
+        "returned": 0,
+        "accepted": 0,
+        "applied": 0,
+        "nonconverged": 0,
+        "initialization_rejected": 0,
+        "stale": 0,
+        "solve_wall_s": {
+          "n": 0
+        },
+        "dispatch_to_result_s": {
+          "n": 0
+        },
+        "movement_during_graph_m": {
+          "n": 0
+        }
+      },
+      "first_visible": {
+        "observation_id": 48,
+        "observation_sim_s": 11.98611111111111,
+        "capture_end_monotonic_ns": 280069372952132,
+        "rgb_file": "observations/0048.png"
+      },
+      "oracle_available": {
+        "observation_id": 49,
+        "observation_sim_s": 12.23611111111111,
+        "capture_end_monotonic_ns": 280069619711594
+      },
+      "first_fresh": {
+        "fresh_id": 16,
+        "A": [
+          2.0828172570190624,
+          0.14208040801516594,
+          0.006661373361719125
+        ],
+        "t_obs": 12.23611111111111,
+        "t_ready_ns": 280069657496839,
+        "t_packet_ns": 280069659507023,
+        "t_release_ns": 280070159582734,
+        "B": [
+          2.213192746796973,
+          0.1483199181817286,
+          0.08436146403039047
+        ],
+        "t_switch": 12.88888888888889,
+        "status": "APPLIED",
+        "old_distance_m": 0.13055554042474124,
+        "yaw_change_rad": 0.07770009066867134,
+        "observation_to_switch_s": 0.6527777777777786
+      },
+      "feasibility": {
+        "spawn": {
+          "B0": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 144,
+            "generated": 375,
+            "wall_seconds": 0.014439628052059561,
+            "cpu_seconds": 0.014437973999999965,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 29.5,
+              "distance_m": 5.9,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.02104367557398657
+              },
+              "goal_distance_m": 0.2304974828134864
+            }
+          },
+          "B1": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 185,
+            "generated": 566,
+            "wall_seconds": 0.022081399045418948,
+            "cpu_seconds": 0.02208038299999998,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 30.0,
+              "distance_m": 5.9,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.020747228780073127
+              },
+              "goal_distance_m": 0.22436986528975802
+            }
+          }
+        },
+        "first_visible_B": {
+          "B0": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 120,
+            "generated": 330,
+            "wall_seconds": 0.01192302699200809,
+            "cpu_seconds": 0.011922437000000008,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 28.5,
+              "distance_m": 5.7,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.022347917487738518
+              },
+              "goal_distance_m": 0.27143715134062985
+            }
+          },
+          "B1": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 158,
+            "generated": 489,
+            "wall_seconds": 0.017731393047142774,
+            "cpu_seconds": 0.017730674999999974,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 28.5,
+              "distance_m": 5.7,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.022347917487738518
+              },
+              "goal_distance_m": 0.27143715134062985
+            }
+          }
+        }
+      }
+    },
+    {
+      "method": "M5",
+      "technical_validation": "PASS",
+      "classification": "SAFETY_FAILURE",
+      "validation": {
+        "pose_error": 0.0,
+        "pp_command_error": 0.0,
+        "command_trace_error": 0.0,
+        "RGB_history_hashes": true,
+        "uniform_delay": true,
+        "public_geometry_gate": true,
+        "native_and_selection": true,
+        "max_pacing_error_s": 0.001382473
+      },
+      "requests": 22,
+      "switches": 21,
+      "sample0_unsafe_count": 0,
+      "selection_replacement_count": 0,
+      "graph": {
+        "calls": 0,
+        "returned": 0,
+        "accepted": 0,
+        "applied": 0,
+        "nonconverged": 0,
+        "initialization_rejected": 0,
+        "stale": 0,
+        "solve_wall_s": {
+          "n": 0
+        },
+        "dispatch_to_result_s": {
+          "n": 0
+        },
+        "movement_during_graph_m": {
+          "n": 0
+        }
+      },
+      "first_visible": {
+        "observation_id": 48,
+        "observation_sim_s": 11.98611111111111,
+        "capture_end_monotonic_ns": 280201668963000,
+        "rgb_file": "observations/0048.png"
+      },
+      "oracle_available": {
+        "observation_id": 49,
+        "observation_sim_s": 12.23611111111111,
+        "capture_end_monotonic_ns": 280201918663496
+      },
+      "first_fresh": {
+        "fresh_id": 15,
+        "A": [
+          2.0288852415944896,
+          0.16126800707069325,
+          0.1051825683822818
+        ],
+        "t_obs": 11.98611111111111,
+        "t_ready_ns": 280201708076104,
+        "t_packet_ns": 280201709970436,
+        "t_release_ns": 280202210020960,
+        "B": [
+          2.164796504044603,
+          0.1664239539695575,
+          -0.02914184304608014
+        ],
+        "t_switch": 12.666666666666666,
+        "status": "APPLIED",
+        "old_distance_m": 0.13611106849160715,
+        "yaw_change_rad": -0.13432441142836193,
+        "observation_to_switch_s": 0.6805555555555554
+      },
+      "feasibility": {
+        "spawn": {
+          "B0": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 153,
+            "generated": 386,
+            "wall_seconds": 0.014293710002675653,
+            "cpu_seconds": 0.014292332000000019,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 29.5,
+              "distance_m": 5.9,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.020946751140267957
+              },
+              "goal_distance_m": 0.23035316162221975
+            }
+          },
+          "B1": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 202,
+            "generated": 628,
+            "wall_seconds": 0.022364040021784604,
+            "cpu_seconds": 0.02235379500000001,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 29.5,
+              "distance_m": 5.9,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.020946751140267957
+              },
+              "goal_distance_m": 0.23035316162221975
+            }
+          }
+        },
+        "first_visible_B": {
+          "B0": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 140,
+            "generated": 351,
+            "wall_seconds": 0.013071462977677584,
+            "cpu_seconds": 0.01307080599999999,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 28.5,
+              "distance_m": 5.7,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.02078493881800069
+              },
+              "goal_distance_m": 0.2675807905794574
+            }
+          },
+          "B1": {
+            "status": "FEASIBLE",
+            "termination_reason": "GOAL_WITNESS_REVALIDATED",
+            "search_executed": true,
+            "expanded": 180,
+            "generated": 541,
+            "wall_seconds": 0.01940686604939401,
+            "cpu_seconds": 0.01940163100000003,
+            "time_budget_clock": "cpu",
+            "goal_reached": true,
+            "no_path_meaning": null,
+            "witness_summary": {
+              "path_duration_s": 28.5,
+              "distance_m": 5.7,
+              "minimum_obstacle_clearance_m": {
+                "DynamicObstacle": 0.02078493881800069
+              },
+              "goal_distance_m": 0.2675807905794574
+            }
+          }
+        }
+      }
+    }
+  ]
+}
