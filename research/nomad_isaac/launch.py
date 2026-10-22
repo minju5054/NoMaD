@@ -22,7 +22,8 @@ def main():
     parser.add_argument("--asynchronous", action="store_true", help="Paced OLD execution while GPU inference runs")
     parser.add_argument("--pure-pursuit", action="store_true", help="Phase 0-C frozen S0 chunk follower PILOT")
     parser.add_argument("--phase2-method", choices=["M0", "M3", "M5"])
-    parser.add_argument("--phase2-distance-m", type=float, choices=[.6, .8, 1.])
+    parser.add_argument("--diagnostic-condition", choices=["C1", "C2", "C3"])
+    parser.add_argument("--phase2-distance-m", type=float, choices=[.6, .8, 1., 1.2])
     parser.add_argument("--s1-mode", action="store_true", help="Frozen Phase 1 S1 PP/Topomap/uniform-delay pilot")
     parser.add_argument("--s1-v2-mode", action="store_true", help="Frozen obstacle-free straight corridor pilot")
     parser.add_argument("--s1-distance-m", type=float, choices=[.8, 1., 1.2, 1.5])
@@ -36,6 +37,8 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.diagnostic_condition and not args.phase2_method:
+        raise ValueError("Diagnostic condition requires M0 Phase2 execution")
     if args.phase2_method:
         from nomad_phase2.config import validate_options
         validate_options(args)
@@ -101,6 +104,8 @@ def main():
                     ("pure_pursuit.py", "chunk_execution.py", "chunk_pilot_protocol.json", "follower_protocol.json")]
     if args.seed_offset or args.run_id is not None:
         sources += [ROOT/"research/nomad_phase0/chunk_pilot_protocol.json"]
+    if args.diagnostic_condition:
+        sources += list((ROOT/"research/nomad_diagnostic").glob("*.py"))+[ROOT/"research/nomad_diagnostic/protocol.json"]
     if args.run_id is not None and not args.phase2_method:
         batch_protocol = ROOT/"research/nomad_phase0/s0_batch_protocol.json"
         sources += [batch_protocol]
@@ -124,7 +129,7 @@ def main():
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
-        "phase2_method": args.phase2_method, "phase2_distance_m": args.phase2_distance_m,
+        "diagnostic_condition": args.diagnostic_condition, "phase2_method": args.phase2_method, "phase2_distance_m": args.phase2_distance_m,
         "pure_pursuit": args.pure_pursuit,
         "s1_v2_mode": args.s1_v2_mode, "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
         "run_id": args.run_id, "seed_offset": args.seed_offset,
@@ -151,6 +156,8 @@ def main():
                     "--checkpoint", str(ROOT.parent / "artifacts/checkpoints/nomad.pth")]
                 if args.topomap:
                     worker_command += ["--topomap", str(args.topomap.resolve())]
+                if args.diagnostic_condition:
+                    worker_command += ["--diagnostic"]
                 worker = subprocess.Popen(worker_command,
                     cwd=ROOT, env=worker_env, stdout=worker_log, stderr=subprocess.STDOUT, start_new_session=True)
                 deadline = time.monotonic() + 90
@@ -179,6 +186,8 @@ def main():
                 command.append("--pure-pursuit")
             if args.phase2_method:
                 command += ["--phase2-method", args.phase2_method]
+                if args.diagnostic_condition:
+                    command += ["--diagnostic-condition", args.diagnostic_condition]
                 if args.phase2_distance_m is not None:
                     command += ["--phase2-distance-m",str(args.phase2_distance_m)]
             if args.s1_v2_mode:

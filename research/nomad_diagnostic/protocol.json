@@ -1,0 +1,158 @@
+{
+  "name": "Phase 2 diagnosis C0 then C1/C2/C3",
+  "base_commit": "e2eac6b",
+  "scenario": "research/nomad_phase2/scenario.json",
+  "scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+  "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+  "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+  "protected_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/graph_v3.py": "83b05538d51eda2896bc9612ef55c595702b3a211dc1c3be58ec19d0d3e80ae0",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/graph_v2.py": "a8b57749f482ba775356c6ca025255053659c7e8b202501ed1dd8d5372102ad1",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase1/s1_v2_scenario.json": "3bbb2e210af9ca7e5e712aca95994cfb7dcba547a6367a894d4d1f4992857096",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/checkpoints/nomad.pth": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/topomap_inference.py": "bdc6554d8f97a75eddd7e880565a08864d27b0b8b09100d82caebe98a11cd75e",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/deployment/src/explore.py": "509a74582c64cda96f8552e0a425ed4caad43108c57f5f4c2e8cac72d8e4c211",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/base_model.py": "3928a0f616745a980a4c1f9c376d1c2494c179f28e0402f93d042e3539ea2958",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/nomad/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/nomad/vib_placeholder.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/nomad/nomad_vint.py": "87c2440ee1ffe9b6ecbdfc17c9fff2223ac90096bd3abd75ee0b59a0c0a67224",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/nomad/nomad.py": "fd404eb014195a090964ee214d5a976f5b8e8e181c48230b3f8957a04836dd61",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/vint/self_attention.py": "e28c8eb0c5017d8690b1328a7ec75c30c7fa30416f232b05b9bb406670ce57a6",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/vint/vint.py": "1af3afb275f6f52d643df792cf39d8bb77e0fe00f06d7ceb9c152a408554ad37",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/vint/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/vint/vit.py": "e37dfe2da650490d9d906fad49b0cf80d09afe3b1e56f776837afe4dc6ab6312",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/gnm/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/gnm/modified_mobilenetv2.py": "a705c9db714f0af2f353313cf74455f8026ac55cb06d2daaea9c5693d826a884",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/train/vint_train/models/gnm/gnm.py": "4c71ff2473f197f9b08aa066c339c6cdfc2971f20d2cc7106fde4dd74211624b"
+  },
+  "source_root": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/p2_01",
+  "checkpoint": "/home/gpuadmin/Workspace/NoMaD/artifacts/checkpoints/nomad.pth",
+  "C0_scope": "All actual inference inputs captured after oracle next-frame availability and before actual footprint passage; busy captures counted separately; no new seed/subgoal for skipped captures.",
+  "C0_pairing": "Saved initial noise and DDPM seed; goal-conditioned uses original candidate batch and saved selected subgoal. Masked follows official explore.py mask=1, no_grad, fake goal drawn with a separate deterministic generator; one diffusion per mode.",
+  "C0_reproduction_tolerance": {
+    "metric_max_abs_m": 1e-06,
+    "normalized_max_abs": 1e-05,
+    "condition_max_abs": 1e-05
+  },
+  "native_safety": "Existing full 8-point polyline (no invented origin segment), all obstacles >=.02m and corridor>0. No extrapolation to obstacle X.",
+  "lateral": "First forward crossing of box center world X; offset>halfwidth+.09+.02 LEFT, <-threshold RIGHT, else FRONT. No crossing NOT_REACHED; exact tangency excluded. Supplemental safe-and-crossing distinguishes short safe predictions.",
+  "ratio_bands": {
+    "indicator": "observation with at least one native-safe sample; pooled observation denominator",
+    "RARE": "<0.10",
+    "INDETERMINATE": "0.10 <= p <0.30",
+    "SUFFICIENT": ">=0.30",
+    "apply_to": [
+      "conditioned",
+      "masked"
+    ],
+    "run_fractions_also_reported": true
+  },
+  "navigation_order": [
+    {
+      "condition": "C1",
+      "d_m": 0.8,
+      "index": 1,
+      "offset": 10000,
+      "y_offset_m": 0
+    },
+    {
+      "condition": "C1",
+      "d_m": 0.8,
+      "index": 2,
+      "offset": 20000,
+      "y_offset_m": 0
+    },
+    {
+      "condition": "C1",
+      "d_m": 0.8,
+      "index": 3,
+      "offset": 30000,
+      "y_offset_m": 0
+    },
+    {
+      "condition": "C1",
+      "d_m": 1.2,
+      "index": 1,
+      "offset": 10000,
+      "y_offset_m": 0
+    },
+    {
+      "condition": "C1",
+      "d_m": 1.2,
+      "index": 2,
+      "offset": 20000,
+      "y_offset_m": 0
+    },
+    {
+      "condition": "C1",
+      "d_m": 1.2,
+      "index": 3,
+      "offset": 30000,
+      "y_offset_m": 0
+    },
+    {
+      "condition": "C2",
+      "d_m": 1.0,
+      "index": 1,
+      "offset": 10000,
+      "y_offset_m": 0.2
+    },
+    {
+      "condition": "C2",
+      "d_m": 1.0,
+      "index": 2,
+      "offset": 20000,
+      "y_offset_m": -0.2
+    },
+    {
+      "condition": "C2",
+      "d_m": 1.0,
+      "index": 3,
+      "offset": 30000,
+      "y_offset_m": 0.2
+    },
+    {
+      "condition": "C3",
+      "d_m": 1.0,
+      "index": 1,
+      "offset": 10000,
+      "y_offset_m": 0
+    },
+    {
+      "condition": "C3",
+      "d_m": 1.0,
+      "index": 2,
+      "offset": 20000,
+      "y_offset_m": 0
+    },
+    {
+      "condition": "C3",
+      "d_m": 1.0,
+      "index": 3,
+      "offset": 30000,
+      "y_offset_m": 0
+    }
+  ],
+  "placement": "Existing first actual X in [2,2.1]; centerX=x+.09+d+.175; centerY=clip(y+predeclared_C2_offset,+/-.925). AABB .35,.35,.8. Only actual pose/fixed geometry.",
+  "C3": "Oracle-public next FRESH mask1 until actual X > box rear+.30; latch back to mask0. Official Topomap localization continues for logging, only selected masked condition is diffused. Decision pose logged; trajectory anchored at observation pose.",
+  "executor": "M0 sample0 unchanged original PP .2/+.4, 4/9/72Hz, 1s release-based timeout, zero additional delay; no Graph, selection, recovery, safety stop.",
+  "seed": "101+10000*index+2*request_id; DDPM+1",
+  "timeout_sim_s": 90,
+  "max_navigation_attempts": 12,
+  "retries": 0,
+  "scope": "N=3 exploratory closed-loop RGB SE(2) kinematics, oracle switch only C3; not PhysX robot. C0 paired offline diffusion, not executed navigation.",
+  "interpretation": "C1 success: delay may contribute. C1 failure but C2/C3 success: conditional avoidance. All C1/C2/C3 fail AND masked pooled ratio<.10: current setup fails frontal unexpected obstacle. D0 still includes real inference/async age; no proof that delay/handoff has zero contribution."
+}

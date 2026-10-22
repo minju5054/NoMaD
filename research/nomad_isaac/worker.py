@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--checkpoint", type=Path, required=True)
     parser.add_argument("--topomap", type=Path)
+    parser.add_argument("--diagnostic", action="store_true")
     args = parser.parse_args()
     for part in ["raw", "derived"]:
         (args.output / part).mkdir(parents=True, exist_ok=False)
@@ -31,7 +32,11 @@ def main():
     policy = None
     if args.topomap:
         from .topomap_inference import TopomapPolicy
-        policy = TopomapPolicy(args.topomap)
+        if args.diagnostic:
+            from nomad_diagnostic.inference import DiagnosticPolicy
+            policy = DiagnosticPolicy(args.topomap)
+        else:
+            policy = TopomapPolicy(args.topomap)
     write_json(args.output / "environment.json", {
         "python": sys.version, "executable": sys.executable, "torch": torch.__version__,
         "cuda": torch.version.cuda, "gpu": torch.cuda.get_device_name(),
@@ -67,7 +72,8 @@ def main():
                     goal_digest = hashlib.sha256(goal.tobytes()).hexdigest()
                     topomap_record = None
                 else:
-                    result, topomap_record = policy.infer(model, [Image.fromarray(frame) for frame in history], noise, seed+1)
+                    options = {"goal_mask": metadata["diagnostic_mode"]["goal_mask"]} if args.diagnostic else {}
+                    result, topomap_record = policy.infer(model, [Image.fromarray(frame) for frame in history], noise, seed+1, **options)
                     goal_digest = topomap_record["selected_subgoal_image"]["rgb_sha256"]
                 torch.cuda.synchronize()
                 finish_ns = time.monotonic_ns()

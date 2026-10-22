@@ -240,6 +240,10 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     save_observations = engine.dynamic is not None or config.get("goal_mode") == "topomap"
     if save_observations:
         (out/"observations").mkdir(exist_ok=False)
+    diagnostic_schedule = None
+    if config.get("diagnostic_condition"):
+        from nomad_diagnostic.config import MaskSchedule
+        diagnostic_schedule = MaskSchedule(config["diagnostic_condition"])
     observation_id = request_id = 0
     busy_skips = missed_slots = 0
     with socket.socket(socket.AF_UNIX) as connection, (out/"observations.jsonl").open("x") as obs_log, \
@@ -285,6 +289,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                     record["oracle_information"] = oracle_gate.observe(record)
                     if engine.phase2 is not None:
                         engine.phase2.publish(record["oracle_information"], engine.dynamic.obstacle)
+                if diagnostic_schedule is not None:
+                    record["diagnostic_mode"] = diagnostic_schedule.decide(
+                        record.get("oracle_information"), engine.dynamic.obstacle, engine.snapshot())
                 if len(history) == 4 and not engine.done.is_set():
                     request = {**record, "kind": "infer", "id": request_id, "seed": request_seed(config, request_id),
                                "history_sim_s": list(times), "history_frame_sha256": list(hashes),

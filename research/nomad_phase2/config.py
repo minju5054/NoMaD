@@ -14,6 +14,9 @@ def protocol():
     return json.loads((HERE/'protocol.json').read_text())
 
 def validate_options(args):
+    if getattr(args,"diagnostic_condition",None):
+        from nomad_diagnostic.config import validate_options as validate_diagnostic
+        return validate_diagnostic(args)
     p = protocol()
     assert args.phase2_method in ('M0','M3','M5')
     assert args.asynchronous and args.pure_pursuit and args.topomap
@@ -33,6 +36,9 @@ def runtime_config(config,args):
     validate_options(args)
     c = copy.deepcopy(config)
     c.update(phase2_method=args.phase2_method, phase2_distance_m=args.phase2_distance_m)
+    if getattr(args,"diagnostic_condition",None):
+        c["diagnostic_condition"]=args.diagnostic_condition
+        c["diagnostic_y_offset_m"]=(.2 if int(args.run_id[-2:])%2 else -.2) if args.diagnostic_condition=="C2" else 0.
     if args.phase2_distance_m is not None:
         c['dynamic_obstacle'] = {'id':'DynamicObstacle','size_xyz_m':[.35,.35,.8],
             'color_rgb':[.65,.04,.65],'minimum_visible_pixels':20,'spawn_tick':0,
@@ -44,7 +50,8 @@ def triggered(config,pose):
 
 def place(config,pose):
     p=np.asarray(pose); d=config['phase2_distance_m']; r=config['agent_radius_m']
-    center=np.array([p[0]+r+d+.175,np.clip(p[1],-.925,.925)])
+    target_y=p[1]+config.get("diagnostic_y_offset_m",0.)
+    center=np.array([p[0]+r+d+.175,np.clip(target_y,-.925,.925)])
     box=copy.deepcopy(config['dynamic_obstacle']); box['center_xy_m']=center.tolist()
     lo,hi=center-.175,center+.175; c=config['corridor']
     gap=point_clearance(p[:2],lo,hi,r)
@@ -57,7 +64,8 @@ def place(config,pose):
     return {'status':'PLACEMENT_INVALID' if reasons else 'PLACED','reasons':reasons,
         'obstacle':box,'spawn_pose':p.tolist(),'configured_d_m':d,
         'measured_world_forward_surface_d_m':float(lo[0]-p[0]-r),
-        'y_clipped':bool(center[1]!=p[1]),'y_clip_delta_m':float(center[1]-p[1]),
+        'y_clipped':bool(center[1]!=target_y),'y_clip_delta_m':float(center[1]-target_y),
+        'intended_y_offset_m':float(config.get('diagnostic_y_offset_m',0.)),
         'footprint_euclidean_clearance_m':gap,'box_corridor_clearance_m':wall,
         'left_wall_gap_m':float(c['half_width']-hi[1]),'right_wall_gap_m':float(lo[1]+c['half_width']),
         'placement_inputs':'actual pose and fixed geometry only; +world X distance, not heading ray'}

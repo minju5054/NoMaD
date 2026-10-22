@@ -192,6 +192,6 @@ def audit(run,out,do_feasibility=True):
                       'max_pacing_error_s':max(abs(float(r['pacing_error_s'])) for r in trace)},
         'input_hashes':{str(f.relative_to(run)):sha256_file(f) for f in list(run.glob('*.json'))+list(run.glob('*.jsonl'))+[run/'agent_trajectory.csv']}}
     if spawn and do_feasibility:result['feasibility']=feasibility(run,states,spawn['obstacle'],config,out)
-    else:result['feasibility']={'status':'NOT_APPLICABLE_NO_SPAWN'}
+    else:result['feasibility']={'status':'NOT_REQUESTED' if spawn else 'NOT_APPLICABLE_NO_SPAWN'}
     write_json(out/'summary.json',result)
     return result

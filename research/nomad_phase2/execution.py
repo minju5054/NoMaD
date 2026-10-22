@@ -135,7 +135,15 @@ class Phase2Execution:
                 self.emit(self.decisions,{'id':row['id'],'status':'EXPIRED_BEFORE_DECISION','age_s':age})
             else:
                 samples=np.array([local_to_world(x,np.array(row['observation_pose'])) for x in metric])
-                public,gate=self.public_config();decision=select(samples,core.pose,public)
+                public,gate=self.public_config()
+                if self.config.get("diagnostic_condition"):
+                    from .config import native_safety
+                    safety=[native_safety(x,public) for x in samples]
+                    decision={"selected_sample":0,"sample0_unsafe":not safety[0]["safe"],
+                              "all_unsafe":not any(s["safe"] for s in safety),"sample_safety":safety,
+                              "selection_scores":None,"selection_disabled":True}
+                else:
+                    decision=select(samples,core.pose,public)
                 if self.method=='M0':decision['selected_sample']=0
                 decision.update(id=row['id'],decision_tick=tick,decision_ns=now,boundary=core.pose.tolist(),
                     geometry_available=gate is not None,public_obstacle_ids=[b['id'] for b in public['obstacles']],
