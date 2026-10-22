@@ -23,3 +23,9 @@ Success is goal entry without geometric overlap/corridor intrusion. Margin viola
 50 minimum/new and existing integration tests passed: placement/gate, conditional PP equivalence, speed formula equality, stale/timeout behavior, seed/counts, old async/latency/Topomap mode restrictions. External CPU worker import/start passed without a solve. Existing map RGB hashes and21 nodes, checkpoint and protected sources verified. Free disk approximately1.4TB. No navigation had started when this protocol was committed.
 
 Actual command/pose, native anchoring/selection, RGB history hashes, Topomap selection, delay, oracle reveal and swept geometry will be independently replayed after each attempt. Runtime records include every request/received/actual switch, decision, worker submission/result, and full raw/model output. Small results will be tracked; large artifacts remain outside Git.
+
+## Stage0 M0 audit repair (no navigation retry)
+
+The one M0 navigation finished and preserved all data. The initial audit rejected an observation-world anchor equality for a float64 difference of8.67e-19m between Isaac NumPy2.3 and offline NumPy1.26. The check now uses the same absolute1e-12 tolerance as the other coordinate/integration validators. This is a postprocessing correction only; controller/scenario/protocol thresholds are unchanged. A new `reaudit_M0_01` directory preserves the successful saved-data audit, while the original failed metric remains immutable. Exact PP command replay and72Hz pose integration both have error0. RGB/history, placement/USD, oracle reveal, all21 delivery packets and B0/B1 saved-pose checks passed. No pilot performance inference is made.
+
+A restricted `continue-pilots` entry point launches only the two never-attempted M3/M5 jobs after checking the M0 audit amendment. It refuses existing output directories and retains the original failed audit in the journal. No M0 rerun or new seed is permitted.

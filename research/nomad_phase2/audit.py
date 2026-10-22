@@ -93,7 +93,7 @@ def audit(run,out,do_feasibility=True):
             xy=active['phase2']['world_xy_m'];follower=PurePursuit(xy,pp_protocol()['follower'])
             with np.load(run/f"model/derived/{active['id']:04d}.npz",allow_pickle=False) as data:
                 native=local_to_world(data['metric'][active['phase2']['selected_sample']],np.array(active['observation_pose']))
-            if not active['phase2']['graph_applied']:np.testing.assert_array_equal(xy,native)
+            if not active['phase2']['graph_applied']:np.testing.assert_allclose(xy,native,rtol=0,atol=1e-12)
         age=None if active is None else (c['monotonic_ns']-active['received_monotonic_ns'])/1e9
         valid=age is not None and age<1.
         assert valid==c['valid']

@@ -83,7 +83,7 @@ def execute(jobs,root,state):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--stage',choices=['preflight','pilots','main'],required=True)
+    parser.add_argument('--stage',choices=['preflight','pilots','continue-pilots','main'],required=True)
     parser.add_argument('--run-root',type=Path,required=True);parser.add_argument('--output',type=Path)
     a=parser.parse_args();root=a.run_root.resolve();check=preflight(root)
     if a.stage=='preflight':
@@ -97,6 +97,21 @@ def main():
             write_json(root/'preflight.json',check)
             result=execute(check['plan']['pilots'],root,state)
             write_json(root/'stage0_complete.json',{'status':'PASS','execution':state,'records':[r['key'] for r in result]})
+        elif a.stage=='continue-pilots':
+            # Resume only UNATTEMPTED pilots after saved-data audit repair, never relaunch M0.
+            initial=json.loads((root/'metrics/s0_D500_d08_i0_M0.json').read_text())
+            corrected=json.loads((root/'reaudit_M0_01/summary.json').read_text())
+            assert initial['failure_stage']=='audit' and corrected['technical_validation']=='PASS'
+            assert corrected['run']==initial['output']
+            assert not (root/'stage0_complete.json').exists()
+            amended={**initial,**corrected,'audit_amendment':'Float64 anchor equality corrected; original audit failure preserved; no navigation retry'}
+            (root/'audit_amendments').mkdir(exist_ok=False)
+            write_json(root/'audit_amendments/s0_D500_d08_i0_M0.json',amended)
+            with (root/'journal.jsonl').open('a') as f:
+                f.write(json.dumps({'event':'AUDIT_AMENDMENT','key':initial['key'],'new_classification':corrected['classification'],'navigation_retry':False})+'\n')
+            result=execute(check['plan']['pilots'][1:],root,state)
+            write_json(root/'stage0_complete.json',{'status':'PASS','execution':state,'records':[initial['key']]+[r['key'] for r in result],
+                'audit_amendments':['audit_amendments/s0_D500_d08_i0_M0.json'],'navigation_attempts':3,'navigation_retries':0})
         else:
             assert json.loads((root/'stage0_complete.json').read_text())['status']=='PASS'
             assert not (root/'main_started.json').exists()
