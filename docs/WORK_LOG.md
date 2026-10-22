@@ -511,3 +511,7 @@ P0(D0,d1.2): tick845/11.736111s, pose(1.901449,.361814,−.676558), box(3.082304
 P1(D750,d.8): tick968/13.444444s에pose(1.900864,1.070726,+.533895)로trigger. 후보center(2.842004,1.627091)는Static2와겹치고box상단이corridor밖.302091m라PLACEMENT_INFEASIBLE로종료. 실제spawn/visibility/oracle공개/dynamic collisioncheck모두없음. 장애물관측FRESH와B를생성하지않았고sidefeasibility미실행. 배치거부규칙재계산일치. 최종goal실패지만collision/corridor침범/2cm미달없음; S1전체기술판정INCONCLUSIVE이며추가주행·위치조정없음.
 
 양쪽PP명령/72Hz재현오차0,pacing最大1.334/1.485ms PASS,request94/13·switch93/12. 실측packet→release median/p95 P0 .01056/.01559ms,P1 750.07072/750.08953ms; GPU warm median35.163/36.000ms와분리. P1전달대기OLD실행12window/거리median147.222mm확인. 실제timeout0회(정확1s는synthetic만검증),stop1.111/2.222s. 원본source/Topomap/model과기존raw hash불변. 작은JSON/CSV·로그hash·report만저장,영상/그림/sweep/Graph작업없음. 현재S1정의는delayed 실제pose에서유효배치를보장하지못하므로전체D×d지도실험진입은막혀있다. [보고서](PHASE1_S1_PREFLIGHT.md).
+
+## 2026-10-22 — S1-v2 obstacle-free preflight
+
+Frozen straight corridor and deterministic centerline under `593b77a`; original S0/S1 modes preserved. Exact 72Hz reference enters 0.30m goal tolerance at tick2772 / 38.5s. Actual Isaac RGB reference rendering generated 21 verified 2s/terminal nodes, no navigation or inference. 32 relevant tests passed; checkpoint and 304 preservation hashes verified. S1-v2 permits only async PP, seed101, explicit uniform D0, one navigation attempt. Runtime, audit and protocol will be committed clean before that attempt. See `PHASE1_S1_V2_BASELINE.md`.

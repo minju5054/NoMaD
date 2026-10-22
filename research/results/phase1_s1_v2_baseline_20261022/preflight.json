@@ -1,0 +1,136 @@
+{
+  "status": "PASS",
+  "map_validation": {
+    "nodes": 21,
+    "rgb_file_and_pixel_hashes": "PASS",
+    "pose_and_tick_correspondence": "PASS",
+    "reference_source_hashes": "PASS",
+    "maximum_usd_pose_error": 0.0
+  },
+  "protocol": {
+    "name": "PHASE1_S1_V2_OBSTACLE_FREE_PILOT",
+    "base_commit": "208166425a59bb722aa7707a030ab7a23fabd7a0",
+    "scenario_sha256": "3bbb2e210af9ca7e5e712aca95994cfb7dcba547a6367a894d4d1f4992857096",
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "reference": {
+      "v_m_s": 0.2,
+      "w_rad_s": 0.0,
+      "integration_hz": 72,
+      "spacing_sim_s": 2.0,
+      "terminal": "First exact-integrated pose with world XY goal distance <= 0.3m; include initial and terminal RGB",
+      "navigation": false,
+      "inference": false
+    },
+    "rendering": "Existing floor/wall materials, dimensions except corridor X extent, camera, lighting, 0.5m seams and 1.5m panel cadence retained. Existing panels at -1,.5,2,3.5,5 extended at6.5,8; red/blue at x2 unchanged. No tuning.",
+    "pilot": {
+      "navigation_attempts": 1,
+      "retries": 0,
+      "seed": 101,
+      "uniform_delivery_delay_s": 0.0,
+      "maximum_simulation_s": 60.0,
+      "topomap_radius": 4,
+      "close_threshold": 3,
+      "sample": 0,
+      "native_points": 8,
+      "observation_hz": 4,
+      "controller_hz": 9,
+      "integration_hz": 72,
+      "waypoint_timeout_s": 1.0,
+      "pp_lookahead_m": 0.25,
+      "v_m_s": 0.2,
+      "max_abs_w_rad_s": 0.4
+    },
+    "safety": "Obstacle clearance N/A for empty set; original corridor footprint check remains active. Geometry is passive evaluation only. No dynamic obstacle, safety override or recovery.",
+    "scope": "Single obstacle-free baseline pilot, no delay robustness or sudden-obstacle claim"
+  },
+  "manifest_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+  "manifest_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+  "terminal_reference": {
+    "node_id": 20,
+    "reference_pose_row": 2772,
+    "simulation_time_s": 38.5,
+    "world_pose": [
+      7.700000000000565,
+      0.0,
+      0.0
+    ],
+    "rgb_file": "rgb/0020.png",
+    "png_sha256": "64cfa198378a8b85ba943f40379fb05da858b71c41cfc67f953d24947b0bc324",
+    "rgb_sha256": "fb7d3f3e7a50a09b6e325eaa986e5bd612c86f71247aecf52f04d924439451fa",
+    "rgb_shape": [
+      240,
+      320,
+      3
+    ],
+    "usd_pose_max_error": 0.0
+  },
+  "render_check": {
+    "status": "PASS",
+    "rgb_shape": [
+      240,
+      320,
+      3
+    ],
+    "rgb_dtype": "uint8",
+    "forward_world": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "up_world": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "right_world": [
+      0.0,
+      -1.0,
+      0.0
+    ],
+    "red_left_pixels": 5341,
+    "red_mean_pixel_x": 35.93877551020408,
+    "blue_right_pixels": 5332,
+    "blue_mean_pixel_x": 283.04257314328584,
+    "goal_start_mean_abs_pixel_difference": 64.22460069444445,
+    "python": "3.12.13 (tags/v3.12.13-dirty:3bb231a, Apr 22 2026, 14:10:08) [GCC 11.4.0]",
+    "executable": "/home/gpuadmin/isaacsim/kit/python/bin/python3",
+    "numpy": "2.3.1",
+    "straight_corridor_floor_xy_bounds": [
+      [
+        -1.0,
+        -1.5
+      ],
+      [
+        9.0,
+        1.5
+      ]
+    ],
+    "obstacle_count": 0
+  },
+  "git_sha": "593b77a6d42cf52270808fc894bda27d1f467842",
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "navigation": "NOT_YET_RUN",
+  "reference_rendering_navigation_count": 0,
+  "reference_rendering_inference_count": 0,
+  "protected_file_count": 304,
+  "frozen_source_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/launch.py": "2bb32d276192d807907d60163e936941da15bb04a5e261d680fc2c3fc1c6a5b1",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/simulator.py": "79bc27810b3b35bb97b32788883c03a9682604c26794b8fbf91271c4f15d21ae",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/async_runtime.py": "1d89c61c082c306756f2ba541e9a334b944ba286f982104d6d471835e1cf8d7a",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/worker.py": "41f1310a3f32c091ef47175204dfe2ec47fcaec1112a17e5b870512c394f7f0e",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/chunk_execution.py": "c9490a35387cc41f696d44ccf33eeda1eebb5472eab2b1f75efbd89cbac099c5",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase1/s1_v2.py": "a98f315bfd41eb77d32b0ed5b3d861ede202bfe95fa53027503cce1ee40e4c56",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase1/s1_v2_audit.py": "395952d634c3608c6c786b42aa251b9439e45a5618ac9285217544cb025be91c",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase1/s1_v2_scenario.json": "3bbb2e210af9ca7e5e712aca95994cfb7dcba547a6367a894d4d1f4992857096",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase1/s1_v2_protocol.json": "d8a56118c49c399feb078467a973d035b61d06a1612c5951e204ef9c0a9e3932"
+  },
+  "full_inventory_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/preflight/preflight.json",
+  "full_inventory_sha256": "5e5f8261560867b89a0ed36cad13cd8f7cbc5c7a1c6407ecf6e82af7da769285",
+  "minimal_tests": "32 passed; test_s1_v2/topomap/topomap_dynamic/chunk_execution/uniform_latency/async_execution/s1_preflight"
+}
