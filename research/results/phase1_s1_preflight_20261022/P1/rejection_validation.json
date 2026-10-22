@@ -1,0 +1,73 @@
+{
+  "status": "PASS_rejection_rule",
+  "decision_tick": 968,
+  "decision_pose": [
+    1.9008643133687393,
+    1.0707261417144314,
+    0.5338946807711142
+  ],
+  "placement_recomputed": {
+    "status": "PLACEMENT_INFEASIBLE",
+    "reasons": [
+      "static_AABB_overlap",
+      "box_outside_corridor"
+    ],
+    "obstacle": {
+      "id": "DynamicObstacle",
+      "size_xyz_m": [
+        0.35,
+        0.35,
+        0.8
+      ],
+      "color_rgb": [
+        0.65,
+        0.04,
+        0.65
+      ],
+      "minimum_visible_pixels": 20,
+      "placement": {
+        "mode": "s1_forward_ray",
+        "trigger_region_xy_m": {
+          "x": [
+            1.9,
+            2.0
+          ],
+          "y": [
+            -1.4,
+            1.4
+          ]
+        },
+        "forward_clearance_m": 0.8
+      },
+      "center_xy_m": [
+        2.842004473641903,
+        1.627091241043522
+      ]
+    },
+    "spawn_pose": [
+      1.9008643133687393,
+      1.0707261417144314,
+      0.5338946807711142
+    ],
+    "configured_d_m": 0.8,
+    "measured_forward_ray_d_m": 0.8000000000000006,
+    "center_distance_m": 1.0932917840313559,
+    "footprint_euclidean_clearance_m": 0.7658096074301084,
+    "box_corridor_clearance_m": -0.30209124104352214,
+    "overlap_static_ids": [
+      "StaticObstacle2"
+    ],
+    "static_surface_separation_m": {
+      "StaticObstacle1": 1.542764079124546,
+      "StaticObstacle2": 0.0
+    },
+    "placement_inputs": "current SE2 pose and fixed geometry only",
+    "side_feasibility": "PENDING_offline_actual_spawn_search"
+  },
+  "dynamic_spawned": false,
+  "dynamic_collision_checks": 0,
+  "oracle_available": false,
+  "first_visible_FRESH": null,
+  "switch_B": null,
+  "side_feasibility": "NOT_EVALUATED_NO_VALID_SPAWN"
+}

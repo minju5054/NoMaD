@@ -1,0 +1,107 @@
+{
+  "scope": "S1 integration preflight; oracle evaluation; SE2 kinematic Isaac RGB; two pilots only",
+  "execution_commit": "ce6ae01",
+  "navigation_attempts": 2,
+  "retries": 0,
+  "configuration_changes_after_launch": 0,
+  "tests_passed": 36,
+  "overall_status": "INCONCLUSIVE_S1_DELAYED_SPAWN_NOT_VALIDATED",
+  "region_map_blocker": "P1 actual trigger pose yields a forward-ray candidate overlapping Static2 and outside corridor; current frozen S1 placement does not define a valid D750/d0.8 pilot obstacle.",
+  "runs": {
+    "P0": {
+      "technical_validation": "PASS",
+      "D_s": 0.0,
+      "configured_d_m": 1.2,
+      "requests": 94,
+      "switches": 93,
+      "goal_entry": true,
+      "goal_success": true,
+      "geometric_collision": false,
+      "corridor_intrusion": false,
+      "termination_reason": "goal_entry",
+      "duration_sim_s": 24.319444444444443,
+      "minimum_dynamic_clearance_m": 0.07097349069568717,
+      "stop_duration_s": 1.1111111111111112,
+      "waypoint_timeout_episodes": 0,
+      "actual_delivery_s": {
+        "n": 94,
+        "median": 1.05555e-05,
+        "p95": 1.5592099999999982e-05,
+        "min": 9.198e-06,
+        "max": 1.9478e-05
+      },
+      "warm_inference_ms": {
+        "n": 93,
+        "median": 35.163131,
+        "p95": 43.67272559999992,
+        "min": 31.150256,
+        "max": 53.875009
+      },
+      "PP_command_max_error": 0.0,
+      "pose_integration_max_error": 0.0,
+      "side_feasibility": {
+        "left_positive_y": "FEASIBLE",
+        "right_negative_y": "FEASIBLE"
+      },
+      "handoff_status": "APPLIED",
+      "delay_OLD_nonzero_windows": 0,
+      "delay_OLD_distance_m": {
+        "n": 93,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "margin_violation_interval_s": 0
+    },
+    "P1": {
+      "technical_validation": "INCONCLUSIVE",
+      "D_s": 0.75,
+      "configured_d_m": 0.8,
+      "requests": 13,
+      "switches": 12,
+      "goal_entry": false,
+      "goal_success": false,
+      "geometric_collision": false,
+      "corridor_intrusion": false,
+      "termination_reason": "placement_infeasible",
+      "duration_sim_s": 13.444444444444445,
+      "minimum_dynamic_clearance_m": null,
+      "stop_duration_s": 2.2222222222222223,
+      "waypoint_timeout_episodes": 0,
+      "actual_delivery_s": {
+        "n": 13,
+        "median": 0.750070723,
+        "p95": 0.7500895296,
+        "min": 0.750036682,
+        "max": 0.750090297
+      },
+      "warm_inference_ms": {
+        "n": 12,
+        "median": 36.0004475,
+        "p95": 51.83716715,
+        "min": 31.941596,
+        "max": 52.77216
+      },
+      "PP_command_max_error": 0.0,
+      "pose_integration_max_error": 0.0,
+      "side_feasibility": {},
+      "handoff_status": "NO_VISIBLE_FRESH_APPLIED",
+      "delay_OLD_nonzero_windows": 12,
+      "delay_OLD_distance_m": {
+        "n": 12,
+        "median": 0.14722222222222214,
+        "p95": 0.14722222222222214,
+        "min": 0.10000000000000005,
+        "max": 0.14722222222222214
+      },
+      "margin_violation_interval_s": 0
+    }
+  },
+  "limitations": [
+    "P0 valid spawn/handoff/visibility evidence; P1 only PP+delay and safe placement rejection validated.",
+    "No P1 dynamic appearance or first-obstacle FRESH/switch B exists; no counterfactual B generated.",
+    "No reverse/recovery/Graph, full sweep or added navigation; no policy superiority or D-only causal attribution.",
+    "Both pilots had no natural waypoint timeout; original 1-second behavior covered synthetically only."
+  ]
+}

@@ -501,3 +501,13 @@ RAW first command 최대오차2.22e−16,72Hz pose재현오차0,clearance1.11e�
 |Δw|평균RAW/RIGID/GRAPH=.425200/.401720/.367062rad/s,중앙값=.325461/.298177/.125050,p95/max는모두.8. Graph12개감소/7유지/1증가,부호반전11→9. GraphXY수정RMS평균8.328mm,boundarygap20.134→8.093mm,길이비.9680–1.0598. Native full안전19→20/20; 실제짧은PP rollout은모두20/20안전·44.444mm전진·endpointstop0·overlap0·corridor침범0. Graph최소PPclearance122.259mm.
 
 Clipping plateau7건은큰명령반전을해결하지못했다. S0_02F54는native전체path−1.141→24.271mm로안전해졌지만|Δw|가.116793→.124975로증가. 각속도감소12건모두최소clearance중일부감소가있어사전고정된엄격한비악화기준의joint improvement는0/20; 2cm실패와구분한다. Graph solve median/p95/max=.668/1.778/1.885s,100ms는미래목표일뿐pass gate아님. 새navigation/inference/시각화/튜닝0. 작은사례JSON·60행CSV·summary·검증과[보고서](GRAPH_V2_OFFLINE_PILOT.md)저장. Online 전핵심은포화PP불연속과안전성의동시보장및계산지연처리이며closed-loop개선으로해석하지않는다.
+
+## Phase 1 — S1 PP + uniform delay preflight
+
+2026-10-22. 기준9c7a43d/동일Phase0 branch. S1 전용flag로 PP·Topomap·dynamic·uniform-delay 조합만 허용; 기존S0/OLD adaptive 제한과원본scenario보존. Trigger는 x[1.9,2.0],y[-1.4,1.4] 최초72Hz진입. 현재pose yaw전방ray에0.35×0.35×0.8m AABB 배치하며 d는footprint전방경계→첫표면의ray거리다. 과거/future prediction과결과는배치에사용하지않는다. 실제다음capture완료에서oracle정보사용가능metadata만기록,PP에는사용하지않음. 사전36tests/기존14node/hash/checkpointPASS,reference seed101 PP pose에서d4개배치geometry검증. 코드·protocol을ce6ae01에고정후clean P0/P1 각1회,재시도0.
+
+P0(D0,d1.2): tick845/11.736111s, pose(1.901449,.361814,−.676558), box(3.082304,−.586394),실측d1.2m. USD/collision一致,첫visible47→oracle가능48,최초FRESH43은11.888889s switch. A→B OLD30.556mm/yaw+.016100rad/최소clearance1.148145m. 24.319444s goal,동적최소70.973mm,static123.852/119.799mm,overlap/corridor침범/2cm미달없음. 실제spawn pose좌/우one-pass witness FEASIBLE(12.5/16.5s,최소20.367/21.255mm). 기술검증PASS.
+
+P1(D750,d.8): tick968/13.444444s에pose(1.900864,1.070726,+.533895)로trigger. 후보center(2.842004,1.627091)는Static2와겹치고box상단이corridor밖.302091m라PLACEMENT_INFEASIBLE로종료. 실제spawn/visibility/oracle공개/dynamic collisioncheck모두없음. 장애물관측FRESH와B를생성하지않았고sidefeasibility미실행. 배치거부규칙재계산일치. 최종goal실패지만collision/corridor침범/2cm미달없음; S1전체기술판정INCONCLUSIVE이며추가주행·위치조정없음.
+
+양쪽PP명령/72Hz재현오차0,pacing最大1.334/1.485ms PASS,request94/13·switch93/12. 실측packet→release median/p95 P0 .01056/.01559ms,P1 750.07072/750.08953ms; GPU warm median35.163/36.000ms와분리. P1전달대기OLD실행12window/거리median147.222mm확인. 실제timeout0회(정확1s는synthetic만검증),stop1.111/2.222s. 원본source/Topomap/model과기존raw hash불변. 작은JSON/CSV·로그hash·report만저장,영상/그림/sweep/Graph작업없음. 현재S1정의는delayed 실제pose에서유효배치를보장하지못하므로전체D×d지도실험진입은막혀있다. [보고서](PHASE1_S1_PREFLIGHT.md).
