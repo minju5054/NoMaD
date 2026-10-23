@@ -25,3 +25,29 @@ The requested superiority criterion is frozen: GRAPH D750 successes exceed the b
 Eight targeted/legacy tests passed: speed bounds/acceleration, horizon time, opt-in gates/seeds/matrix, original D0 behavior, Graph result/supersession/staleness and unchanged timeout. A synthetic straight-path CPU worker smoke check returned a converged feasible solution; this is IPC/function validation, not navigation evidence. Dry-run contains exactly 3 pilots + 12 remaining jobs. Protected source/checkpoint and all 14 Topomap RGB nodes are hash-validated by the batch preflight.
 
 Pilot technical results will be added after the single authorized execution of each method. No scientific outcome comparison is made at this point.
+
+## Included pilot technical results
+
+All three authorized D750/index1 pilots ran exactly once from clean commit `7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1`. The batch stopped automatically afterward. No remaining navigation has started.
+
+| Method | Received / switched FRESH | Pose / PP command / clearance replay max error | Technical validation |
+|---|---:|---:|---|
+| CURV-SPEED | 39 / 38 | 0 / 0 / 0 | PASS |
+| HORIZON-SPEED | 29 / 28 | 0 / 0 / 0 | PASS |
+| GRAPH | 29 / 28 | 0 / 0 / 0 | PASS |
+
+All original sample0/index2 outputs, RGB histories, Topomap choices, seeds, observation anchors, receive-based timeout and next-tick switch timestamps passed audit. Actual additional delay median was 750.072–750.073 ms. Wall/simulation ratios were 1.000002–1.000038; maximum recorded pacing lateness 2.391 ms. Existing source/checkpoint/reference hashes were verified unchanged.
+
+GRAPH submitted 28 jobs and applied 26 accepted corrected paths. FRESH 0 and 24 retained the original v4 initialization rejection because the previous speed was zero. No nonconvergence, constraint rejection, STALE or SUPERSEDED occurred in this pilot; the latter two behaviors passed synthetic checks. Optimizer wall time median/p95/max: 56.324/62.975/70.630 ms. These are technical measurements only; no superiority inference is made from the three included pilots. The original worker's processing timestamps include setup/solve/certificate; dispatch-to-application movement also includes controller-tick waiting and is explicitly labeled separately.
+
+Small technical results: `research/results/phase3_stage2_pilot_20261023/technical_summary.json` and `technical_checks.csv`. Full raw data and per-run metrics: `/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/`.
+
+## User-started remaining batch
+
+Expected time is roughly 30–45 minutes, including separate Isaac startup for each of 12 jobs (pilot startup + navigation + audit took 144–154 seconds per job). The command is independent of the terminal's current directory and uses nohup to survive terminal disconnect. Do not invoke it twice. It refuses any existing remaining attempt, preserves all pilot outputs, and starts no RAW baseline run.
+
+```bash
+nohup env -u LD_LIBRARY_PATH -u LD_PRELOAD -u PYTHONHOME -u VIRTUAL_ENV OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 bash /home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/python.sh -m nomad_phase3_stage2.batch --remaining --run-root /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01 > /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/remaining_terminal.log 2>&1 &
+```
+
+Completion marker: `remaining_complete.json`. Terminal log: `remaining_terminal.log`. Run journal: `remaining_execution.jsonl`. Keep the checkout unchanged during execution. On interruption or technical failure preserve the logs; do not retry. Full scientific comparison, paired table, candidate decision and the one requested overlay will be produced after the user reports completion.

@@ -613,3 +613,7 @@ See `docs/PHASE3_STAGE1_S0_DELAY.md` for the full registered report.
 ## 2026-10-23 — Phase 3 Stage 2 selected S0 pre-registration
 
 Added opt-in CURV-SPEED, HORIZON-SPEED and unchanged-v4 asynchronous correction hooks, a frozen 15-run protocol, and a two-part runner (3 included pilots now; 12 only on later user invocation). Original model/PP/PD/Graph v4, geometry and timing core remain intact. Eight targeted/legacy tests and CPU-worker smoke validation pass; dry-run has the requested seed/method matrix. See `PHASE3_STAGE2_S0_SELECTED.md`. No navigation has run at this pre-registration point.
+
+### Phase 3 Stage 2 included pilots complete
+
+Clean execution SHA `7ffa61e`: exactly three D750/index1 navigations, zero retries. CURV-SPEED, HORIZON-SPEED and GRAPH all pass technical audit; 72Hz pose, applied command and swept-clearance replay max errors are zero. GRAPH applied 26 corrections from 28 requests; two original zero-previous-speed initialization rejections, no weight/parameter changes. Solver median/p95/max 56.324/62.975/70.630 ms. The remaining 12 jobs have **not** been launched. Added small technical JSON/CSV and documented the guarded `--remaining` user command; performance analysis and requested overlay deferred until user completion. Original raw/results preserved.

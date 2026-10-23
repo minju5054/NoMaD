@@ -1,0 +1,255 @@
+{
+  "scope": "PILOT technical validation only; included in main matrix; no performance comparison",
+  "base_commit": "d99d3e8",
+  "execution_git_sha": "7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1",
+  "protocol_sha256": "35c22b4d2c4f6932a0280e97c42f408556cd59074eea88abbbc2bba0ed0cb59c",
+  "tests_passed": 8,
+  "cpu_worker_smoke": "PASS: one synthetic straight-path solve; not navigation",
+  "attempts": 3,
+  "retries": 0,
+  "technical_passes": 3,
+  "remaining_navigation_started": 0,
+  "remaining_jobs": 12,
+  "frozen_input_hashes_verified": 199,
+  "original_inputs_preserved": true,
+  "cases": [
+    {
+      "key": "S0_01_D750_CURV-SPEED",
+      "method": "CURV-SPEED",
+      "run_id": "S0_01",
+      "delay_s": 0.75,
+      "seed_offset": 10000,
+      "technical_validation": "PASS",
+      "max_pose_replay_error": 0.0,
+      "max_pp_command_replay_error": 0.0,
+      "max_swept_clearance_replay_error": 0.0,
+      "receive_count": 39,
+      "switch_count": 38,
+      "actual_delivery_delay_s": {
+        "n": 39,
+        "median": 0.750072755,
+        "p95": 0.7500966009,
+        "min": 0.750031555,
+        "max": 0.750097975
+      },
+      "pacing_error_s": {
+        "n": 2799,
+        "median": 9.7672e-05,
+        "p95": 0.000150246,
+        "min": 5.1404e-05,
+        "max": 0.00239071
+      },
+      "wall_simulation_ratio": 1.0000017901415295,
+      "warm_inference_ms": {
+        "n": 38,
+        "median": 35.7359165,
+        "p95": 51.15554615,
+        "min": 30.715274,
+        "max": 52.898573
+      },
+      "graph": {
+        "calls": 0,
+        "dispositions": {},
+        "terminal_unapplied": 0,
+        "correction_abs_dw": {
+          "n": 0
+        },
+        "solver_time_s": {
+          "n": 0
+        },
+        "processing_time_s": {
+          "n": 0
+        },
+        "queue_wait_s": {
+          "n": 0
+        },
+        "movement_during_processing_and_wait_m": {
+          "n": 0
+        },
+        "independent_nonconverged": 0,
+        "independent_constraint_failure": 0,
+        "stale_flags": 0,
+        "corrected_control_ticks": 0,
+        "corrected_valid_tick_fraction": 0.0,
+        "corrected_fresh_fraction": 0.0
+      },
+      "launch_and_audit_wall_s": 153.5333964349702,
+      "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_01_D750_CURV-SPEED.json",
+      "metric_sha256": "39cd428bb7cc167be4cf95536f0b5cd88e4a7e807404d4e2290f645143c4248e",
+      "execution_git_sha": "7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1"
+    },
+    {
+      "key": "S0_01_D750_HORIZON-SPEED",
+      "method": "HORIZON-SPEED",
+      "run_id": "S0_01",
+      "delay_s": 0.75,
+      "seed_offset": 10000,
+      "technical_validation": "PASS",
+      "max_pose_replay_error": 0.0,
+      "max_pp_command_replay_error": 0.0,
+      "max_swept_clearance_replay_error": 0.0,
+      "receive_count": 29,
+      "switch_count": 28,
+      "actual_delivery_delay_s": {
+        "n": 29,
+        "median": 0.750071866,
+        "p95": 0.7500926609999999,
+        "min": 0.750063138,
+        "max": 0.750096805
+      },
+      "pacing_error_s": {
+        "n": 2053,
+        "median": 9.8676e-05,
+        "p95": 0.0001537624,
+        "min": 4.6354e-05,
+        "max": 0.001362758
+      },
+      "wall_simulation_ratio": 1.0000376009473684,
+      "warm_inference_ms": {
+        "n": 28,
+        "median": 36.0557845,
+        "p95": 53.4149312,
+        "min": 31.770477,
+        "max": 54.620916
+      },
+      "graph": {
+        "calls": 0,
+        "dispositions": {},
+        "terminal_unapplied": 0,
+        "correction_abs_dw": {
+          "n": 0
+        },
+        "solver_time_s": {
+          "n": 0
+        },
+        "processing_time_s": {
+          "n": 0
+        },
+        "queue_wait_s": {
+          "n": 0
+        },
+        "movement_during_processing_and_wait_m": {
+          "n": 0
+        },
+        "independent_nonconverged": 0,
+        "independent_constraint_failure": 0,
+        "stale_flags": 0,
+        "corrected_control_ticks": 0,
+        "corrected_valid_tick_fraction": 0.0,
+        "corrected_fresh_fraction": 0.0
+      },
+      "launch_and_audit_wall_s": 144.4806247780216,
+      "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_01_D750_HORIZON-SPEED.json",
+      "metric_sha256": "4c4f4cc8494dad8b6f319cc23a5b87363a0a6766e37194f470f477d0fb6bd6b2",
+      "execution_git_sha": "7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1"
+    },
+    {
+      "key": "S0_01_D750_GRAPH",
+      "method": "GRAPH",
+      "run_id": "S0_01",
+      "delay_s": 0.75,
+      "seed_offset": 10000,
+      "technical_validation": "PASS",
+      "max_pose_replay_error": 0.0,
+      "max_pp_command_replay_error": 0.0,
+      "max_swept_clearance_replay_error": 0.0,
+      "receive_count": 29,
+      "switch_count": 28,
+      "actual_delivery_delay_s": {
+        "n": 29,
+        "median": 0.750072274,
+        "p95": 0.7500961772,
+        "min": 0.750031818,
+        "max": 0.750097451
+      },
+      "pacing_error_s": {
+        "n": 2123,
+        "median": 0.000101269,
+        "p95": 0.0001583341,
+        "min": 5.3357e-05,
+        "max": 0.001425158
+      },
+      "wall_simulation_ratio": 1.0000032736512723,
+      "warm_inference_ms": {
+        "n": 28,
+        "median": 35.993701,
+        "p95": 51.8829187,
+        "min": 30.754169,
+        "max": 52.946929
+      },
+      "graph": {
+        "calls": 28,
+        "dispositions": {
+          "INITIALIZATION_REJECTED": 2,
+          "ACCEPTED": 26
+        },
+        "terminal_unapplied": 0,
+        "correction_abs_dw": {
+          "n": 26,
+          "median": 0.0644402614362736,
+          "p95": 0.28155824773268145,
+          "min": 0.0,
+          "max": 0.7321297800995092
+        },
+        "solver_time_s": {
+          "n": 26,
+          "median": 0.05632389450329356,
+          "p95": 0.06297501077642664,
+          "min": 0.05154337000567466,
+          "max": 0.07062963099451736
+        },
+        "processing_time_s": {
+          "n": 28,
+          "median": 0.0577645085,
+          "p95": 0.0644855094,
+          "min": 0.000583276,
+          "max": 0.072095104
+        },
+        "queue_wait_s": {
+          "n": 28,
+          "median": 0.0003531455,
+          "p95": 0.00042570095,
+          "min": 0.000268073,
+          "max": 0.000541336
+        },
+        "movement_during_processing_and_wait_m": {
+          "n": 28,
+          "median": 0.017178013565653242,
+          "p95": 0.022222222031405107,
+          "min": 0.006172837873910243,
+          "max": 0.022222222145392934
+        },
+        "independent_nonconverged": 0,
+        "independent_constraint_failure": 0,
+        "stale_flags": 0,
+        "corrected_control_ticks": 205,
+        "corrected_valid_tick_fraction": 0.8232931726907631,
+        "corrected_fresh_fraction": 0.9285714285714286
+      },
+      "launch_and_audit_wall_s": 145.4814692689688,
+      "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_01_D750_GRAPH.json",
+      "metric_sha256": "891d44854f8ec28118d662f74e8b0d34fc4aeb3554a02fa64d34ccfaae590509",
+      "execution_git_sha": "7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1"
+    }
+  ],
+  "remaining_order": [
+    "S0_02_D750_CURV-SPEED",
+    "S0_02_D750_HORIZON-SPEED",
+    "S0_02_D750_GRAPH",
+    "S0_03_D750_CURV-SPEED",
+    "S0_03_D750_HORIZON-SPEED",
+    "S0_03_D750_GRAPH",
+    "S0_04_D750_CURV-SPEED",
+    "S0_04_D750_HORIZON-SPEED",
+    "S0_04_D750_GRAPH",
+    "S0_01_D000_GRAPH",
+    "S0_02_D000_GRAPH",
+    "S0_03_D000_GRAPH"
+  ],
+  "limitations": [
+    "STALE and SUPERSEDED exercised synthetically; neither occurred in D750 GRAPH pilot",
+    "Two Graph initialization rejections (FRESH 0,24): previous applied speed zero; unchanged v4 behavior",
+    "Logged movement_since_dispatch includes CPU/IPC and controller-tick wait; exact processing window can be reconstructed from recorded monotonic clocks and 72Hz pose",
+    "Full outcomes and superiority criterion intentionally deferred until remaining user-run jobs finish"
+  ]
+}
