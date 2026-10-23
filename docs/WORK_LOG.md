@@ -617,3 +617,9 @@ Added opt-in CURV-SPEED, HORIZON-SPEED and unchanged-v4 asynchronous correction 
 ### Phase 3 Stage 2 included pilots complete
 
 Clean execution SHA `7ffa61e`: exactly three D750/index1 navigations, zero retries. CURV-SPEED, HORIZON-SPEED and GRAPH all pass technical audit; 72Hz pose, applied command and swept-clearance replay max errors are zero. GRAPH applied 26 corrections from 28 requests; two original zero-previous-speed initialization rejections, no weight/parameter changes. Solver median/p95/max 56.324/62.975/70.630 ms. The remaining 12 jobs have **not** been launched. Added small technical JSON/CSV and documented the guarded `--remaining` user command; performance analysis and requested overlay deferred until user completion. Original raw/results preserved.
+
+## 2026-10-23 — Phase 3 Stage 2 final analysis after user-run completion
+
+User completed the 12 remaining jobs from `503f556`; together with three included pilots (`7ffa61e`), all 15 planned new runs passed technical validation, zero retries. Verified 199 frozen inputs, saved log hashes, attempt journals and paired seed schedules. No new navigation/inference/optimization was performed during this analysis. Added read-only `nomad_phase3_stage2/report.py`, small final aggregate/paired/Graph-job/hash results and the single requested D750 index1–2 actual-path overlay.
+
+D750 success RAW 1/4 (reused), CURV-SPEED 4/4, HORIZON-SPEED 3/4 (+Y corridor at index4), GRAPH 4/4. D0 GRAPH and reused RAW both 3/3, but median goal time 25.417 vs24.236s. Graph D750 calls/accepted 123/103; D0 295/241; no STALE, 34 D0 SUPERSEDED, 14 total zero-speed initialization rejections. Frozen success advantage criterion fails (4 vs best simple baseline4, not +2); goal-time and D0 success gates pass. Decision `NO_GRAPH_ADVANTAGE_CANDIDATE`; do not trigger expansion. Full details and caveats in `docs/PHASE3_STAGE2_S0_SELECTED.md`. All raw and prior results preserved.

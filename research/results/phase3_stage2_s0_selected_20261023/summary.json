@@ -1,0 +1,658 @@
+{
+  "scope": "N=4 selected exploratory; oracle static geometry; SE(2) kinematic Isaac Sim",
+  "pilot_attempts": 3,
+  "remaining_attempts": 12,
+  "technical_passes": 15,
+  "retries": 0,
+  "raw_reused_runs": 7,
+  "conditions": [
+    {
+      "D_ms": 750,
+      "method": "RAW",
+      "N": 4,
+      "success": 1,
+      "success_wilson95": {
+        "n": 4,
+        "count": 1,
+        "estimate": 0.25,
+        "ci95": [
+          0.04558726080970055,
+          0.6993581574175981
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 2,
+      "timeout": 1,
+      "goal_time_success_s": {
+        "n": 1,
+        "median": 27.25,
+        "p95": 27.25,
+        "min": 27.25,
+        "max": 27.25
+      },
+      "goal_time_success_mean_s": 27.25,
+      "mean_run_speed_m_s": 0.1866463085885311,
+      "mean_run_stop_s": 2.944444444444436,
+      "minimum_obstacle_clearance_m": 0.01832443958646402,
+      "margin_violation_total_s": 0.20833333333333925,
+      "margin_violation_runs": 1,
+      "handoff_n": 211,
+      "switch_sign_reversals_sum": 108,
+      "endpoint_clamp_mean_run_fraction": 0.8303841451554255,
+      "curvature_above8_mean_run_fraction": 0.3268212311409491,
+      "actual_w_clipped_mean_run_fraction": 0.6824015783793921,
+      "received_interval_mean_run_median_s": 0.998693036875,
+      "all_tick_dw_mean_run_median": 0.0,
+      "staleness_pooled": {
+        "n": 211,
+        "median": 0.3496063818081462,
+        "p95": 0.6388788937655434,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "staleness_mean_run_median": 0.3502936099922508,
+      "A_B_distance_m_pooled": {
+        "n": 211,
+        "median": 0.18055555466485523,
+        "p95": 0.1861111033836425,
+        "min": 0.0,
+        "max": 0.19722204082214737
+      },
+      "A_B_distance_m_mean_run_median": 0.18333309756524915,
+      "A_B_abs_yaw_rad_pooled": {
+        "n": 211,
+        "median": 0.36111111111110983,
+        "p95": 0.3722222222222209,
+        "min": 0.0,
+        "max": 0.38333333333333197
+      },
+      "A_B_abs_yaw_rad_mean_run_median": 0.3652004827358485,
+      "abs_dw_pooled": {
+        "n": 211,
+        "median": 0.4,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "abs_dw_mean_run_median": 0.395192975128171,
+      "observation_to_switch_wall_s_pooled": {
+        "n": 211,
+        "median": 0.915897798,
+        "p95": 0.9440553775,
+        "min": 0.833226345,
+        "max": 1.055057314
+      },
+      "observation_to_switch_wall_s_mean_run_median": 0.9024715555
+    },
+    {
+      "D_ms": 750,
+      "method": "CURV-SPEED",
+      "N": 4,
+      "success": 4,
+      "success_wilson95": {
+        "n": 4,
+        "count": 4,
+        "estimate": 1.0,
+        "ci95": [
+          0.5101091635454027,
+          1.0
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 0,
+      "goal_time_success_s": {
+        "n": 4,
+        "median": 33.736111111111114,
+        "p95": 38.296527777777776,
+        "min": 30.666666666666668,
+        "max": 38.861111111111114
+      },
+      "goal_time_success_mean_s": 34.25,
+      "mean_run_speed_m_s": 0.13890588056956385,
+      "mean_run_stop_s": 2.027777777777773,
+      "minimum_obstacle_clearance_m": 0.06086691269227666,
+      "margin_violation_total_s": 0,
+      "margin_violation_runs": 0,
+      "handoff_n": 130,
+      "switch_sign_reversals_sum": 79,
+      "endpoint_clamp_mean_run_fraction": 0.6729730339071343,
+      "curvature_above8_mean_run_fraction": 0.09171921182884987,
+      "actual_w_clipped_mean_run_fraction": 0.12743471098679895,
+      "received_interval_mean_run_median_s": 0.9988818818749999,
+      "all_tick_dw_mean_run_median": 7.355227538141662e-16,
+      "staleness_pooled": {
+        "n": 130,
+        "median": 0.27051455009549863,
+        "p95": 0.49502912182646525,
+        "min": 0.0,
+        "max": 0.9686975286758179
+      },
+      "staleness_mean_run_median": 0.27245262463919984,
+      "A_B_distance_m_pooled": {
+        "n": 130,
+        "median": 0.15259298909569696,
+        "p95": 0.18611094645509815,
+        "min": 0.04236105663439388,
+        "max": 0.20833313578473645
+      },
+      "A_B_distance_m_mean_run_median": 0.15171879294130372,
+      "A_B_abs_yaw_rad_pooled": {
+        "n": 130,
+        "median": 0.3388888888888877,
+        "p95": 0.3722222222222209,
+        "min": 0.010233133788084992,
+        "max": 0.3722222222222209
+      },
+      "A_B_abs_yaw_rad_mean_run_median": 0.3476886986211848,
+      "abs_dw_pooled": {
+        "n": 130,
+        "median": 0.46382777303920225,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "abs_dw_mean_run_median": 0.4606855470136447,
+      "observation_to_switch_wall_s_pooled": {
+        "n": 130,
+        "median": 0.8886112385,
+        "p95": 0.94373654775,
+        "min": 0.832971918,
+        "max": 1.027574622
+      },
+      "observation_to_switch_wall_s_mean_run_median": 0.8954539895
+    },
+    {
+      "D_ms": 750,
+      "method": "HORIZON-SPEED",
+      "N": 4,
+      "success": 3,
+      "success_wilson95": {
+        "n": 4,
+        "count": 3,
+        "estimate": 0.75,
+        "ci95": [
+          0.30064184258240184,
+          0.9544127391902995
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 0,
+      "goal_time_success_s": {
+        "n": 3,
+        "median": 28.5,
+        "p95": 29.375,
+        "min": 27.65277777777778,
+        "max": 29.47222222222222
+      },
+      "goal_time_success_mean_s": 28.541666666666668,
+      "mean_run_speed_m_s": 0.16711395446668728,
+      "mean_run_stop_s": 1.9166666666666619,
+      "minimum_obstacle_clearance_m": 0.06561178189473509,
+      "margin_violation_total_s": 0,
+      "margin_violation_runs": 0,
+      "handoff_n": 92,
+      "switch_sign_reversals_sum": 43,
+      "endpoint_clamp_mean_run_fraction": 0.7510608513129671,
+      "curvature_above8_mean_run_fraction": 0.2321563067747049,
+      "actual_w_clipped_mean_run_fraction": 0.5412326605056335,
+      "received_interval_mean_run_median_s": 0.998825117375,
+      "all_tick_dw_mean_run_median": 3.608224830031759e-16,
+      "staleness_pooled": {
+        "n": 92,
+        "median": 0.3055859341906164,
+        "p95": 0.5888093243711212,
+        "min": 0.04494391935280568,
+        "max": 1.0
+      },
+      "staleness_mean_run_median": 0.30312690103805695,
+      "A_B_distance_m_pooled": {
+        "n": 92,
+        "median": 0.17845198458417655,
+        "p95": 0.18611099531554084,
+        "min": 0.05077158735583089,
+        "max": 0.19060542568766675
+      },
+      "A_B_distance_m_mean_run_median": 0.17783522824206363,
+      "A_B_abs_yaw_rad_pooled": {
+        "n": 92,
+        "median": 0.3429260431312162,
+        "p95": 0.36361111111110983,
+        "min": 0.023859148192897806,
+        "max": 0.3722222222222209
+      },
+      "A_B_abs_yaw_rad_mean_run_median": 0.3321316687519401,
+      "abs_dw_pooled": {
+        "n": 92,
+        "median": 0.3227692522336664,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "abs_dw_mean_run_median": 0.302113291667992,
+      "observation_to_switch_wall_s_pooled": {
+        "n": 92,
+        "median": 0.888557336,
+        "p95": 0.9164481628,
+        "min": 0.833920468,
+        "max": 0.97189686
+      },
+      "observation_to_switch_wall_s_mean_run_median": 0.888568711
+    },
+    {
+      "D_ms": 750,
+      "method": "GRAPH",
+      "N": 4,
+      "success": 4,
+      "success_wilson95": {
+        "n": 4,
+        "count": 4,
+        "estimate": 1.0,
+        "ci95": [
+          0.5101091635454027,
+          1.0
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 0,
+      "goal_time_success_s": {
+        "n": 4,
+        "median": 31.854166666666664,
+        "p95": 33.33680555555556,
+        "min": 29.47222222222222,
+        "max": 33.47222222222222
+      },
+      "goal_time_success_mean_s": 31.663194444444443,
+      "mean_run_speed_m_s": 0.14962975576859108,
+      "mean_run_stop_s": 2.361111111111105,
+      "minimum_obstacle_clearance_m": 0.05290976527761822,
+      "margin_violation_total_s": 0,
+      "margin_violation_runs": 0,
+      "handoff_n": 119,
+      "switch_sign_reversals_sum": 56,
+      "endpoint_clamp_mean_run_fraction": 0.6578009386786237,
+      "curvature_above8_mean_run_fraction": 0.09095218113765342,
+      "actual_w_clipped_mean_run_fraction": 0.12077619891515623,
+      "received_interval_mean_run_median_s": 0.998807021875,
+      "all_tick_dw_mean_run_median": 2.3869795029440866e-15,
+      "staleness_pooled": {
+        "n": 119,
+        "median": 0.2988236386496769,
+        "p95": 0.5526139905955425,
+        "min": 0.0,
+        "max": 0.8360595373044647
+      },
+      "staleness_mean_run_median": 0.2914243243728677,
+      "A_B_distance_m_pooled": {
+        "n": 119,
+        "median": 0.16740445616495175,
+        "p95": 0.18611110795596295,
+        "min": 0.042361056634395156,
+        "max": 0.18888883290367656
+      },
+      "A_B_distance_m_mean_run_median": 0.17029083984901072,
+      "A_B_abs_yaw_rad_pooled": {
+        "n": 119,
+        "median": 0.23378891350486342,
+        "p95": 0.3722222222222209,
+        "min": 0.004282539658701623,
+        "max": 0.3722222222222209
+      },
+      "A_B_abs_yaw_rad_mean_run_median": 0.24270303522011738,
+      "abs_dw_pooled": {
+        "n": 119,
+        "median": 0.30975512294185037,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "abs_dw_mean_run_median": 0.3179180270799793,
+      "observation_to_switch_wall_s_pooled": {
+        "n": 119,
+        "median": 0.916188464,
+        "p95": 0.9167386449,
+        "min": 0.832834347,
+        "max": 1.000443103
+      },
+      "observation_to_switch_wall_s_mean_run_median": 0.9093794146249999
+    },
+    {
+      "D_ms": 0,
+      "method": "RAW",
+      "N": 3,
+      "success": 3,
+      "success_wilson95": {
+        "n": 3,
+        "count": 3,
+        "estimate": 1.0,
+        "ci95": [
+          0.4385029682449546,
+          1.0
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 0,
+      "goal_time_success_s": {
+        "n": 3,
+        "median": 24.23611111111111,
+        "p95": 24.261111111111113,
+        "min": 24.208333333333332,
+        "max": 24.26388888888889
+      },
+      "goal_time_success_mean_s": 24.23611111111111,
+      "mean_run_speed_m_s": 0.19083086041404604,
+      "mean_run_stop_s": 1.1111111111111092,
+      "minimum_obstacle_clearance_m": 0.042323388800954036,
+      "margin_violation_total_s": 0,
+      "margin_violation_runs": 0,
+      "handoff_n": 276,
+      "switch_sign_reversals_sum": 63,
+      "endpoint_clamp_mean_run_fraction": 0.06094563836174996,
+      "curvature_above8_mean_run_fraction": 0.0182648401826484,
+      "actual_w_clipped_mean_run_fraction": 0.14173404270174408,
+      "received_interval_mean_run_median_s": 0.25004102,
+      "all_tick_dw_mean_run_median": 0.0020398092451812434,
+      "staleness_pooled": {
+        "n": 276,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.13231651580833156
+      },
+      "staleness_mean_run_median": 0.0,
+      "A_B_distance_m_pooled": {
+        "n": 276,
+        "median": 0.03055552138387907,
+        "p95": 0.03611111104855289,
+        "min": 0.01666666657548275,
+        "max": 0.0472221897992347
+      },
+      "A_B_distance_m_mean_run_median": 0.02962960683346495,
+      "A_B_abs_yaw_rad_pooled": {
+        "n": 276,
+        "median": 0.020882935753931298,
+        "p95": 0.07222222222222197,
+        "min": 4.732812251928564e-05,
+        "max": 0.09444444444444411
+      },
+      "A_B_abs_yaw_rad_mean_run_median": 0.02126231429067878,
+      "abs_dw_pooled": {
+        "n": 276,
+        "median": 0.12884626257337978,
+        "p95": 0.4415946383566268,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "abs_dw_mean_run_median": 0.12425484585945627,
+      "observation_to_switch_wall_s_pooled": {
+        "n": 276,
+        "median": 0.1382027965,
+        "p95": 0.16647729849999998,
+        "min": 0.083077971,
+        "max": 0.221900897
+      },
+      "observation_to_switch_wall_s_mean_run_median": 0.13369862566666665
+    },
+    {
+      "D_ms": 0,
+      "method": "GRAPH",
+      "N": 3,
+      "success": 3,
+      "success_wilson95": {
+        "n": 3,
+        "count": 3,
+        "estimate": 1.0,
+        "ci95": [
+          0.4385029682449546,
+          1.0
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 0,
+      "goal_time_success_s": {
+        "n": 3,
+        "median": 25.416666666666668,
+        "p95": 25.866666666666667,
+        "min": 25.15277777777778,
+        "max": 25.916666666666668
+      },
+      "goal_time_success_mean_s": 25.49537037037037,
+      "mean_run_speed_m_s": 0.18194130628713076,
+      "mean_run_stop_s": 1.1111111111111092,
+      "minimum_obstacle_clearance_m": 0.043636152285295216,
+      "margin_violation_total_s": 0,
+      "margin_violation_runs": 0,
+      "handoff_n": 292,
+      "switch_sign_reversals_sum": 88,
+      "endpoint_clamp_mean_run_fraction": 0.08550962831208296,
+      "curvature_above8_mean_run_fraction": 0.005760211000385673,
+      "actual_w_clipped_mean_run_fraction": 0.026003350974976316,
+      "received_interval_mean_run_median_s": 0.24992265733333333,
+      "all_tick_dw_mean_run_median": 0.026673942809074033,
+      "staleness_pooled": {
+        "n": 292,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0544008169702789
+      },
+      "staleness_mean_run_median": 0.0,
+      "A_B_distance_m_pooled": {
+        "n": 292,
+        "median": 0.024999999966047428,
+        "p95": 0.03611111076374589,
+        "min": 0.00786686106386936,
+        "max": 0.04166666092497888
+      },
+      "A_B_distance_m_mean_run_median": 0.025227396637095088,
+      "A_B_abs_yaw_rad_pooled": {
+        "n": 292,
+        "median": 0.021580117648315245,
+        "p95": 0.06776541480798091,
+        "min": 4.158389549413499e-05,
+        "max": 0.08333333333333304
+      },
+      "A_B_abs_yaw_rad_mean_run_median": 0.021707356919218473,
+      "abs_dw_pooled": {
+        "n": 292,
+        "median": 0.12765444096787498,
+        "p95": 0.544737465608187,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "abs_dw_mean_run_median": 0.13202500232207287,
+      "observation_to_switch_wall_s_pooled": {
+        "n": 292,
+        "median": 0.138181004,
+        "p95": 0.16648527475,
+        "min": 0.082673529,
+        "max": 0.194202537
+      },
+      "observation_to_switch_wall_s_mean_run_median": 0.1381617265
+    }
+  ],
+  "graph_statistics": [
+    {
+      "D_ms": 750,
+      "calls": 123,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 11,
+        "ACCEPTED": 103,
+        "NONCONVERGED": 9
+      },
+      "independent_nonconverged": 9,
+      "independent_constraint_failure": 8,
+      "stale_flags": 0,
+      "solve_time_s": {
+        "n": 112,
+        "median": 0.056880772492149845,
+        "p95": 0.10087119036470533,
+        "min": 0.04642784100724384,
+        "max": 0.16756911302218214
+      },
+      "processing_time_s": {
+        "n": 123,
+        "median": 0.058189387,
+        "p95": 0.0996067309,
+        "min": 0.000574271,
+        "max": 0.169046964
+      },
+      "queue_wait_s": {
+        "n": 123,
+        "median": 0.000349357,
+        "p95": 0.00043630069999999995,
+        "min": 0.000246092,
+        "max": 0.000541336
+      },
+      "processing_window_m": {
+        "n": 123,
+        "median": 0.008024681038209636,
+        "p95": 0.011111110973464022,
+        "min": 0.0,
+        "max": 0.01851849470356104
+      },
+      "dispatch_to_application_m": {
+        "n": 123,
+        "median": 0.016049362076419136,
+        "p95": 0.022222221557993232,
+        "min": 0.005555548411068242,
+        "max": 0.025925892584984785
+      },
+      "accepted_edit_rms_m": {
+        "n": 103,
+        "median": 0.026543380192045697,
+        "p95": 0.055389078505541624,
+        "min": 0.016554149532547906,
+        "max": 0.12472316708522087
+      },
+      "correction_abs_dw": {
+        "n": 103,
+        "median": 0.06343021032441465,
+        "p95": 0.2683420263818508,
+        "min": 0.0,
+        "max": 0.7321297800995092
+      },
+      "changed_command_applications": 102,
+      "corrected_valid_tick_fraction": 0.7455731593662628,
+      "accepted_fresh_fraction": 0.8373983739837398
+    },
+    {
+      "D_ms": 0,
+      "calls": 295,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 3,
+        "ACCEPTED": 241,
+        "SUPERSEDED": 34,
+        "NONCONVERGED": 14,
+        "TERMINAL_UNAPPLIED": 3
+      },
+      "independent_nonconverged": 17,
+      "independent_constraint_failure": 16,
+      "stale_flags": 0,
+      "solve_time_s": {
+        "n": 289,
+        "median": 0.05676114099333063,
+        "p95": 0.15746920322999347,
+        "min": 0.04440881102345884,
+        "max": 0.22657618002267554
+      },
+      "processing_time_s": {
+        "n": 292,
+        "median": 0.058313448500000004,
+        "p95": 0.15882408185,
+        "min": 0.015630394,
+        "max": 0.228112185
+      },
+      "queue_wait_s": {
+        "n": 292,
+        "median": 0.00031928999999999996,
+        "p95": 0.0004326663499999999,
+        "min": 0.000202247,
+        "max": 0.005684234
+      },
+      "processing_window_m": {
+        "n": 292,
+        "median": 0.011111109854166079,
+        "p95": 0.027777770720107453,
+        "min": 0.0007716048611367502,
+        "max": 0.04444444332053621
+      },
+      "dispatch_to_application_m": {
+        "n": 292,
+        "median": 0.02222221968218365,
+        "p95": 0.04444443925836688,
+        "min": 0.00572135350099528,
+        "max": 0.06666664398503293
+      },
+      "accepted_edit_rms_m": {
+        "n": 241,
+        "median": 0.011257713204754327,
+        "p95": 0.023899428131066314,
+        "min": 0.0012608365080289412,
+        "max": 0.03622702968457915
+      },
+      "correction_abs_dw": {
+        "n": 241,
+        "median": 0.01794398263536115,
+        "p95": 0.0672828053892516,
+        "min": 0.0,
+        "max": 0.20349330657455647
+      },
+      "changed_command_applications": 241,
+      "corrected_valid_tick_fraction": 0.45454545454545453,
+      "accepted_fresh_fraction": 0.8169491525423729
+    }
+  ],
+  "candidate_rule": {
+    "success": "D750 GRAPH >= max(CURV,HORIZON) +2",
+    "goal_time": "GRAPH success median <=1.2 times fastest median of speed methods with >=1 success; unavailable if neither succeeds",
+    "D0": "GRAPH successes index1..3 >= stored RAW same indices",
+    "all_required": true
+  },
+  "candidate_checks": {
+    "success_count": false,
+    "goal_time": true,
+    "D0_success": true
+  },
+  "decision": "NO_GRAPH_ADVANTAGE_CANDIDATE",
+  "candidate_numbers": {
+    "graph_successes": 4,
+    "required_successes": 6,
+    "graph_goal_median_s": 31.854166666666664,
+    "fastest_speed_goal_median_s": 28.5,
+    "goal_time_limit_s": 34.199999999999996
+  },
+  "execution_git_shas": [
+    "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1"
+  ],
+  "analysis_base_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+  "analysis_source_sha256": "5e929692f49ea84ce45a44316ed65e68d8ef2712c62091a2c4899772ce689821",
+  "frozen_input_hash_count": 199,
+  "max_replay_errors": {
+    "max_pose_replay_error": 0.0,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0
+  },
+  "limitations": [
+    "N=4 exploratory; D0 N=3; Wilson intervals descriptive only",
+    "Paired seed offsets, not identical closed-loop RGB/FRESH predictions; RAW historical reference",
+    "SUCCESS excludes overlap/corridor intrusion but 2cm margin is an independent metric",
+    "Staleness uses original observation-anchored FRESH at initial RAW switch, not later corrected path",
+    "Handoff distributions pool events; clamp/curvature/clipping summaries average per-run fractions",
+    "Common curvature flag abs(kappa)>8 for all methods; original Stage1 RAW >2 flag not mixed in",
+    "Graph processing-window motion uses logged72Hz poses: up to one integration tick resolution at each clock boundary",
+    "Graph total processing time includes setup/certificate; dispatch-to-application includes controller wait",
+    "D0 success-count non-harm criterion does not establish no effect on travel time or all other metrics"
+  ]
+}

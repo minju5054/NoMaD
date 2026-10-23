@@ -1,0 +1,4353 @@
+[
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "CURV-SPEED",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 38.861111111111114,
+    "termination_reason": "goal_entry",
+    "duration_s": 38.861111111111114,
+    "distance_m": 4.878585238701766,
+    "stop_time_s": 1.8888888888888842,
+    "mean_speed_m_s": 0.12553900542763657,
+    "moving_mean_speed_m_s": 0.13195271870267736,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.7973352346243362,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.22,
+    "execution_git_sha": "7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1",
+    "StaticObstacle1_minimum_clearance_m": 0.24299463349587588,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.12055415784049575,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.6126646723499155,
+    "failure": null,
+    "final_pose": [
+      4.210798841758365,
+      0.07914591227732984,
+      0.06688049463725632
+    ],
+    "final_goal_distance_m": 0.2998355972170651,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 37,
+        "median": 0.1247914192523065,
+        "p95": 0.18055553895550222,
+        "min": 0.045138830839928354,
+        "max": 0.18496061738751088
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 37,
+        "median": 0.36111111111110983,
+        "p95": 0.3722222222222209,
+        "min": 0.017424476520989884,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 37,
+        "median": 0.2693229883075958,
+        "p95": 0.46558959655573423,
+        "min": 0.0,
+        "max": 0.5838671171967423
+      },
+      "abs_dw": {
+        "n": 37,
+        "median": 0.4246204828047783,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 37,
+        "median": 0.888558964,
+        "p95": 0.9163549928,
+        "min": 0.886034397,
+        "max": 0.916391777
+      }
+    },
+    "endpoint_clamped_ticks": 236,
+    "endpoint_clamp_fraction": 0.6742857142857143,
+    "endpoint_clamp_valid_fraction": 0.7087087087087087,
+    "valid_pp_control_ticks": 333,
+    "curvature_saturated_ticks": 65,
+    "curvature_saturated_fraction": 0.18571428571428572,
+    "received_interval_wall_s": {
+      "n": 38,
+      "median": 0.99969641,
+      "p95": 1.0238526637499998,
+      "min": 0.805209937,
+      "max": 1.061880515
+    },
+    "actual_delivery_delay_s": {
+      "n": 39,
+      "median": 0.750072755,
+      "p95": 0.7500966009,
+      "min": 0.750031555,
+      "max": 0.750097975
+    },
+    "warm_inference_ms": {
+      "n": 38,
+      "median": 35.7359165,
+      "p95": 51.15554615,
+      "min": 30.715274,
+      "max": 52.898573
+    },
+    "observation_to_ready_wall_s": {
+      "n": 39,
+      "median": 0.072868739,
+      "p95": 0.1302820674,
+      "min": 0.067135678,
+      "max": 0.322874589
+    },
+    "observation_to_release_wall_s": {
+      "n": 39,
+      "median": 0.825140453,
+      "p95": 0.8823989312,
+      "min": 0.81909458,
+      "max": 1.090269855
+    },
+    "busy_skips": 114,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 39,
+    "switch_count": 38,
+    "unswitched_ids": [
+      38
+    ],
+    "pacing_error_s": {
+      "n": 2799,
+      "median": 9.7672e-05,
+      "p95": 0.000150246,
+      "min": 5.1404e-05,
+      "max": 0.00239071
+    },
+    "navigation_wall_s": 38.861180678,
+    "wall_simulation_ratio": 1.0000017901415295,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 156,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 65,
+      "ACCEL_LIMITED": 39,
+      "OMEGA_CLIPPED": 77
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.18571428571428572,
+      "ACCEL_LIMITED": 0.11142857142857143,
+      "OMEGA_CLIPPED": 0.22
+    },
+    "graph": {
+      "calls": 0,
+      "dispositions": {},
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 0
+      },
+      "solver_time_s": {
+        "n": 0
+      },
+      "processing_time_s": {
+        "n": 0
+      },
+      "queue_wait_s": {
+        "n": 0
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 0
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 0,
+      "corrected_valid_tick_fraction": 0.0,
+      "corrected_fresh_fraction": 0.0
+    },
+    "switch_sign_reversals": 24,
+    "key": "S0_01_D750_CURV-SPEED",
+    "run_id": "S0_01",
+    "index": 1,
+    "seed_offset": 10000,
+    "request_0_seed": 10101,
+    "request_0_ddpm_seed": 10102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_01_D750_CURV-SPEED",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 153.5333964349702,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_01_D750_CURV-SPEED.json",
+    "control_ticks": 350,
+    "mean_curvature_above8_fraction": 0.18571428571428572,
+    "actual_omega_clipped_fraction": 0.22,
+    "endpoint_clamp_fraction_common": 0.6742857142857143,
+    "minimum_obstacle_clearance_m": 0.12055415784049575,
+    "all_control_abs_dw": {
+      "n": 349,
+      "median": 0.0,
+      "p95": 0.42645493006499735,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 26
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "HORIZON-SPEED",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 28.5,
+    "termination_reason": "goal_entry",
+    "duration_s": 28.5,
+    "distance_m": 4.810960419686697,
+    "stop_time_s": 1.8888888888888842,
+    "mean_speed_m_s": 0.16880562876093672,
+    "moving_mean_speed_m_s": 0.18078765668968796,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.7348099859606041,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.4474708171206226,
+    "execution_git_sha": "7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1",
+    "StaticObstacle1_minimum_clearance_m": 0.24379233601167669,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.06561178189473509,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.6751896284294515,
+    "failure": null,
+    "final_pose": [
+      4.202507944151798,
+      -0.02191888687410232,
+      0.6196066715738757
+    ],
+    "final_goal_distance_m": 0.29829844266202477,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 27,
+        "median": 0.1752302637060569,
+        "p95": 0.18527767065342876,
+        "min": 0.05077158735583089,
+        "max": 0.19060542568766675
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 27,
+        "median": 0.29894853534785426,
+        "p95": 0.36111111111110983,
+        "min": 0.037805440606599294,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 27,
+        "median": 0.3033707089903471,
+        "p95": 0.5391051558994544,
+        "min": 0.10785561586699448,
+        "max": 1.0
+      },
+      "abs_dw": {
+        "n": 27,
+        "median": 0.24110469149995106,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 27,
+        "median": 0.888464829,
+        "p95": 0.9356752465999999,
+        "min": 0.833920468,
+        "max": 0.97189686
+      }
+    },
+    "endpoint_clamped_ticks": 187,
+    "endpoint_clamp_fraction": 0.7276264591439688,
+    "endpoint_clamp_valid_fraction": 0.7791666666666667,
+    "valid_pp_control_ticks": 240,
+    "curvature_saturated_ticks": 39,
+    "curvature_saturated_fraction": 0.1517509727626459,
+    "received_interval_wall_s": {
+      "n": 28,
+      "median": 0.9984373150000001,
+      "p95": 1.02030396895,
+      "min": 0.808092091,
+      "max": 1.021099489
+    },
+    "actual_delivery_delay_s": {
+      "n": 29,
+      "median": 0.750071866,
+      "p95": 0.7500926609999999,
+      "min": 0.750063138,
+      "max": 0.750096805
+    },
+    "warm_inference_ms": {
+      "n": 28,
+      "median": 36.0557845,
+      "p95": 53.4149312,
+      "min": 31.770477,
+      "max": 54.620916
+    },
+    "observation_to_ready_wall_s": {
+      "n": 29,
+      "median": 0.072414365,
+      "p95": 0.132746368,
+      "min": 0.067773229,
+      "max": 0.312854942
+    },
+    "observation_to_release_wall_s": {
+      "n": 29,
+      "median": 0.824493494,
+      "p95": 0.8851268958,
+      "min": 0.81988307,
+      "max": 1.079936007
+    },
+    "busy_skips": 82,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 29,
+    "switch_count": 28,
+    "unswitched_ids": [
+      28
+    ],
+    "pacing_error_s": {
+      "n": 2053,
+      "median": 9.8676e-05,
+      "p95": 0.0001537624,
+      "min": 4.6354e-05,
+      "max": 0.001362758
+    },
+    "navigation_wall_s": 28.501071627,
+    "wall_simulation_ratio": 1.0000376009473684,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 115,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 39,
+      "ACCEL_LIMITED": 13,
+      "OMEGA_CLIPPED": 115
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.1517509727626459,
+      "ACCEL_LIMITED": 0.05058365758754864,
+      "OMEGA_CLIPPED": 0.4474708171206226
+    },
+    "graph": {
+      "calls": 0,
+      "dispositions": {},
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 0
+      },
+      "solver_time_s": {
+        "n": 0
+      },
+      "processing_time_s": {
+        "n": 0
+      },
+      "queue_wait_s": {
+        "n": 0
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 0
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 0,
+      "corrected_valid_tick_fraction": 0.0,
+      "corrected_fresh_fraction": 0.0
+    },
+    "switch_sign_reversals": 11,
+    "key": "S0_01_D750_HORIZON-SPEED",
+    "run_id": "S0_01",
+    "index": 1,
+    "seed_offset": 10000,
+    "request_0_seed": 10101,
+    "request_0_ddpm_seed": 10102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_01_D750_HORIZON-SPEED",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 144.4806247780216,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_01_D750_HORIZON-SPEED.json",
+    "control_ticks": 257,
+    "mean_curvature_above8_fraction": 0.1517509727626459,
+    "actual_omega_clipped_fraction": 0.4474708171206226,
+    "endpoint_clamp_fraction_common": 0.7276264591439688,
+    "minimum_obstacle_clearance_m": 0.06561178189473509,
+    "all_control_abs_dw": {
+      "n": 256,
+      "median": 1.2490009027033011e-15,
+      "p95": 0.26442256569966416,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 11
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "GRAPH",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 29.47222222222222,
+    "termination_reason": "goal_entry",
+    "duration_s": 29.47222222222222,
+    "distance_m": 4.700630486692785,
+    "stop_time_s": 2.2222222222222165,
+    "mean_speed_m_s": 0.1594935886154008,
+    "moving_mean_speed_m_s": 0.1725002013465242,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.7944311278591724,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.06390977443609022,
+    "execution_git_sha": "7ffa61eea2ab08d1c6752bf5bbfd50d7db1562c1",
+    "StaticObstacle1_minimum_clearance_m": 0.1324198370225779,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.06050366952388581,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.6155682272230819,
+    "failure": null,
+    "final_pose": [
+      4.2085526227924195,
+      0.06553890664993646,
+      0.26420262316158105
+    ],
+    "final_goal_distance_m": 0.2987254960093745,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 27,
+        "median": 0.18464265468225924,
+        "p95": 0.1861111099141375,
+        "min": 0.05478388016470019,
+        "max": 0.18611111095843522
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 27,
+        "median": 0.2078917793197137,
+        "p95": 0.3722222222222209,
+        "min": 0.007986164878606594,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 27,
+        "median": 0.31076187839499037,
+        "p95": 0.517036198589742,
+        "min": 0.018337416956761988,
+        "max": 0.5629086338214477
+      },
+      "abs_dw": {
+        "n": 27,
+        "median": 0.28201269563046466,
+        "p95": 0.729996755459657,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 27,
+        "median": 0.916304533,
+        "p95": 0.9166432715,
+        "min": 0.88847067,
+        "max": 0.916655962
+      }
+    },
+    "endpoint_clamped_ticks": 186,
+    "endpoint_clamp_fraction": 0.6992481203007519,
+    "endpoint_clamp_valid_fraction": 0.7469879518072289,
+    "valid_pp_control_ticks": 249,
+    "curvature_saturated_ticks": 9,
+    "curvature_saturated_fraction": 0.03383458646616541,
+    "received_interval_wall_s": {
+      "n": 28,
+      "median": 0.999381094,
+      "p95": 1.0206425668,
+      "min": 0.828870289,
+      "max": 1.064526019
+    },
+    "actual_delivery_delay_s": {
+      "n": 29,
+      "median": 0.750072274,
+      "p95": 0.7500961772,
+      "min": 0.750031818,
+      "max": 0.750097451
+    },
+    "warm_inference_ms": {
+      "n": 28,
+      "median": 35.993701,
+      "p95": 51.8829187,
+      "min": 30.754169,
+      "max": 52.946929
+    },
+    "observation_to_ready_wall_s": {
+      "n": 29,
+      "median": 0.072556157,
+      "p95": 0.14221879999999998,
+      "min": 0.066674579,
+      "max": 0.310771824
+    },
+    "observation_to_release_wall_s": {
+      "n": 29,
+      "median": 0.824787173,
+      "p95": 0.8943376973999999,
+      "min": 0.818626058,
+      "max": 1.077789309
+    },
+    "busy_skips": 86,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 29,
+    "switch_count": 28,
+    "unswitched_ids": [
+      28
+    ],
+    "pacing_error_s": {
+      "n": 2123,
+      "median": 0.000101269,
+      "p95": 0.0001583341,
+      "min": 5.3357e-05,
+      "max": 0.001425158
+    },
+    "navigation_wall_s": 29.472318704,
+    "wall_simulation_ratio": 1.0000032736512723,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 118,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 9,
+      "ACCEL_LIMITED": 21,
+      "OMEGA_CLIPPED": 17
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.03383458646616541,
+      "ACCEL_LIMITED": 0.07894736842105263,
+      "OMEGA_CLIPPED": 0.06390977443609022
+    },
+    "graph": {
+      "calls": 28,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 2,
+        "ACCEPTED": 26
+      },
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 26,
+        "median": 0.0644402614362736,
+        "p95": 0.28155824773268145,
+        "min": 0.0,
+        "max": 0.7321297800995092
+      },
+      "solver_time_s": {
+        "n": 26,
+        "median": 0.05632389450329356,
+        "p95": 0.06297501077642664,
+        "min": 0.05154337000567466,
+        "max": 0.07062963099451736
+      },
+      "processing_time_s": {
+        "n": 28,
+        "median": 0.0577645085,
+        "p95": 0.0644855094,
+        "min": 0.000583276,
+        "max": 0.072095104
+      },
+      "queue_wait_s": {
+        "n": 28,
+        "median": 0.0003531455,
+        "p95": 0.00042570095,
+        "min": 0.000268073,
+        "max": 0.000541336
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 28,
+        "median": 0.017178013565653242,
+        "p95": 0.022222222031405107,
+        "min": 0.006172837873910243,
+        "max": 0.022222222145392934
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 205,
+      "corrected_valid_tick_fraction": 0.8232931726907631,
+      "corrected_fresh_fraction": 0.9285714285714286
+    },
+    "switch_sign_reversals": 14,
+    "key": "S0_01_D750_GRAPH",
+    "run_id": "S0_01",
+    "index": 1,
+    "seed_offset": 10000,
+    "request_0_seed": 10101,
+    "request_0_ddpm_seed": 10102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_01_D750_GRAPH",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 145.4814692689688,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_01_D750_GRAPH.json",
+    "control_ticks": 266,
+    "mean_curvature_above8_fraction": 0.03383458646616541,
+    "actual_omega_clipped_fraction": 0.06390977443609022,
+    "endpoint_clamp_fraction_common": 0.6992481203007519,
+    "minimum_obstacle_clearance_m": 0.06050366952388581,
+    "all_control_abs_dw": {
+      "n": 265,
+      "median": 3.0531133177191805e-15,
+      "p95": 0.35160301303826075,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 20
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "CURV-SPEED",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 35.09722222222222,
+    "termination_reason": "goal_entry",
+    "duration_s": 35.09722222222222,
+    "distance_m": 4.649944336098965,
+    "stop_time_s": 2.2222222222222165,
+    "mean_speed_m_s": 0.1324875315390287,
+    "moving_mean_speed_m_s": 0.1414431737216415,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.8820045863451288,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.1360759493670886,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.06086691269227666,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.12392126952621134,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.5279949190573205,
+    "failure": null,
+    "final_pose": [
+      4.208080784420174,
+      -0.06731356636476005,
+      0.7394826365340963
+    ],
+    "final_goal_distance_m": 0.29957961319402876,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 33,
+        "median": 0.15219613419541878,
+        "p95": 0.18055552489615626,
+        "min": 0.04236105663439388,
+        "max": 0.18611094133000416
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 33,
+        "median": 0.33243192946512323,
+        "p95": 0.36111111111110983,
+        "min": 0.02805856349525193,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 33,
+        "median": 0.2576364464564691,
+        "p95": 0.5220187764447104,
+        "min": 0.0,
+        "max": 0.9686975286758179
+      },
+      "abs_dw": {
+        "n": 33,
+        "median": 0.4236155757003466,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 33,
+        "median": 0.888430962,
+        "p95": 0.9438634572,
+        "min": 0.83298264,
+        "max": 0.944016622
+      }
+    },
+    "endpoint_clamped_ticks": 209,
+    "endpoint_clamp_fraction": 0.6613924050632911,
+    "endpoint_clamp_valid_fraction": 0.706081081081081,
+    "valid_pp_control_ticks": 296,
+    "curvature_saturated_ticks": 33,
+    "curvature_saturated_fraction": 0.10443037974683544,
+    "received_interval_wall_s": {
+      "n": 34,
+      "median": 0.9973725744999999,
+      "p95": 1.02023116845,
+      "min": 0.809851135,
+      "max": 1.057679592
+    },
+    "actual_delivery_delay_s": {
+      "n": 35,
+      "median": 0.750077326,
+      "p95": 0.7501055465,
+      "min": 0.750045031,
+      "max": 0.750154877
+    },
+    "warm_inference_ms": {
+      "n": 34,
+      "median": 35.734761500000005,
+      "p95": 51.551100549999994,
+      "min": 30.656508,
+      "max": 53.498026
+    },
+    "observation_to_ready_wall_s": {
+      "n": 35,
+      "median": 0.073373109,
+      "p95": 0.1335609557,
+      "min": 0.064733259,
+      "max": 0.369493757
+    },
+    "observation_to_release_wall_s": {
+      "n": 35,
+      "median": 0.825499856,
+      "p95": 0.8856955085,
+      "min": 0.816903167,
+      "max": 1.136677224
+    },
+    "busy_skips": 103,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 3,
+    "receive_count": 35,
+    "switch_count": 34,
+    "unswitched_ids": [
+      34
+    ],
+    "pacing_error_s": {
+      "n": 2528,
+      "median": 9.7804e-05,
+      "p95": 0.00015141240000000002,
+      "min": 2.7655e-05,
+      "max": 0.001401649
+    },
+    "navigation_wall_s": 35.097319168,
+    "wall_simulation_ratio": 1.000002762206569,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 141,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 33,
+      "ACCEL_LIMITED": 33,
+      "OMEGA_CLIPPED": 43
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.10443037974683544,
+      "ACCEL_LIMITED": 0.10443037974683544,
+      "OMEGA_CLIPPED": 0.1360759493670886
+    },
+    "graph": {
+      "calls": 0,
+      "dispositions": {},
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 0
+      },
+      "solver_time_s": {
+        "n": 0
+      },
+      "processing_time_s": {
+        "n": 0
+      },
+      "queue_wait_s": {
+        "n": 0
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 0
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 0,
+      "corrected_valid_tick_fraction": 0.0,
+      "corrected_fresh_fraction": 0.0
+    },
+    "switch_sign_reversals": 18,
+    "key": "S0_02_D750_CURV-SPEED",
+    "run_id": "S0_02",
+    "index": 2,
+    "seed_offset": 20000,
+    "request_0_seed": 20101,
+    "request_0_ddpm_seed": 20102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_02_D750_CURV-SPEED",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 148.8765741000534,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_02_D750_CURV-SPEED.json",
+    "control_ticks": 316,
+    "mean_curvature_above8_fraction": 0.10443037974683544,
+    "actual_omega_clipped_fraction": 0.1360759493670886,
+    "endpoint_clamp_fraction_common": 0.6613924050632911,
+    "minimum_obstacle_clearance_m": 0.06086691269227666,
+    "all_control_abs_dw": {
+      "n": 315,
+      "median": 5.551115123125783e-16,
+      "p95": 0.4380322644944223,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 19
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "HORIZON-SPEED",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 29.47222222222222,
+    "termination_reason": "goal_entry",
+    "duration_s": 29.47222222222222,
+    "distance_m": 4.895189742540863,
+    "stop_time_s": 1.999999999999995,
+    "mean_speed_m_s": 0.16609503367716405,
+    "moving_mean_speed_m_s": 0.17818688648278164,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.7846275234257574,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.5676691729323309,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.08795282079081918,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.20304037050833904,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.6253722606038594,
+    "failure": null,
+    "final_pose": [
+      4.200752102163412,
+      -0.013796939257877474,
+      0.7283461288322091
+    ],
+    "final_goal_distance_m": 0.2995657855839053,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 27,
+        "median": 0.17777777674830203,
+        "p95": 0.1805554976950537,
+        "min": 0.06020374171319832,
+        "max": 0.18055553959409956
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 27,
+        "median": 0.36111111111110983,
+        "p95": 0.36111111111110983,
+        "min": 0.023859148192897806,
+        "max": 0.36111111111110983
+      },
+      "staleness": {
+        "n": 27,
+        "median": 0.2976049923530507,
+        "p95": 0.5644892261069935,
+        "min": 0.04494391935280568,
+        "max": 0.7306796294645052
+      },
+      "abs_dw": {
+        "n": 27,
+        "median": 0.340029613027215,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 27,
+        "median": 0.888514155,
+        "p95": 0.8892762222,
+        "min": 0.888159082,
+        "max": 0.889686676
+      }
+    },
+    "endpoint_clamped_ticks": 200,
+    "endpoint_clamp_fraction": 0.7518796992481203,
+    "endpoint_clamp_valid_fraction": 0.8032128514056225,
+    "valid_pp_control_ticks": 249,
+    "curvature_saturated_ticks": 64,
+    "curvature_saturated_fraction": 0.24060150375939848,
+    "received_interval_wall_s": {
+      "n": 28,
+      "median": 1.000357727,
+      "p95": 1.06112636145,
+      "min": 0.93743895,
+      "max": 1.071364416
+    },
+    "actual_delivery_delay_s": {
+      "n": 29,
+      "median": 0.75007251,
+      "p95": 0.7500991818,
+      "min": 0.750035381,
+      "max": 0.750246707
+    },
+    "warm_inference_ms": {
+      "n": 28,
+      "median": 35.3122655,
+      "p95": 51.9378661,
+      "min": 31.683192,
+      "max": 53.959243
+    },
+    "observation_to_ready_wall_s": {
+      "n": 29,
+      "median": 0.072786829,
+      "p95": 0.13886483259999996,
+      "min": 0.066449429,
+      "max": 0.319740158
+    },
+    "observation_to_release_wall_s": {
+      "n": 29,
+      "median": 0.824883965,
+      "p95": 0.8910001076,
+      "min": 0.818315576,
+      "max": 1.087630986
+    },
+    "busy_skips": 86,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 29,
+    "switch_count": 28,
+    "unswitched_ids": [
+      28
+    ],
+    "pacing_error_s": {
+      "n": 2123,
+      "median": 9.8154e-05,
+      "p95": 0.0001497765,
+      "min": 4.0857e-05,
+      "max": 0.001369557
+    },
+    "navigation_wall_s": 29.47230141,
+    "wall_simulation_ratio": 1.0000026868614516,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 118,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 64,
+      "ACCEL_LIMITED": 16,
+      "OMEGA_CLIPPED": 151
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.24060150375939848,
+      "ACCEL_LIMITED": 0.06015037593984962,
+      "OMEGA_CLIPPED": 0.5676691729323309
+    },
+    "graph": {
+      "calls": 0,
+      "dispositions": {},
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 0
+      },
+      "solver_time_s": {
+        "n": 0
+      },
+      "processing_time_s": {
+        "n": 0
+      },
+      "queue_wait_s": {
+        "n": 0
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 0
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 0,
+      "corrected_valid_tick_fraction": 0.0,
+      "corrected_fresh_fraction": 0.0
+    },
+    "switch_sign_reversals": 14,
+    "key": "S0_02_D750_HORIZON-SPEED",
+    "run_id": "S0_02",
+    "index": 2,
+    "seed_offset": 20000,
+    "request_0_seed": 20101,
+    "request_0_ddpm_seed": 20102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_02_D750_HORIZON-SPEED",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 144.531727485999,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_02_D750_HORIZON-SPEED.json",
+    "control_ticks": 266,
+    "mean_curvature_above8_fraction": 0.24060150375939848,
+    "actual_omega_clipped_fraction": 0.5676691729323309,
+    "endpoint_clamp_fraction_common": 0.7518796992481203,
+    "minimum_obstacle_clearance_m": 0.08795282079081918,
+    "all_control_abs_dw": {
+      "n": 265,
+      "median": 0.0,
+      "p95": 0.33425615365547745,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 14
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "GRAPH",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 32.56944444444444,
+    "termination_reason": "goal_entry",
+    "duration_s": 32.56944444444444,
+    "distance_m": 4.735968742884271,
+    "stop_time_s": 1.999999999999995,
+    "mean_speed_m_s": 0.1454114070309883,
+    "moving_mean_speed_m_s": 0.15492492025791346,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.8356574631738996,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.1564625850340136,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.07753602943027897,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.05290976527761822,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.574341678086814,
+    "failure": null,
+    "final_pose": [
+      4.205343220228534,
+      -0.05628740521433346,
+      0.4327702345237734
+    ],
+    "final_goal_distance_m": 0.2999848160341665,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 31,
+        "median": 0.16415201271017013,
+        "p95": 0.18577031767149926,
+        "min": 0.04236105663439538,
+        "max": 0.18611110356502644
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 31,
+        "median": 0.23888888888888804,
+        "p95": 0.3722222222222209,
+        "min": 0.026068031658260882,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 31,
+        "median": 0.2690915673248357,
+        "p95": 0.5695182289172054,
+        "min": 0.0,
+        "max": 0.8291543985886246
+      },
+      "abs_dw": {
+        "n": 31,
+        "median": 0.36861892164196985,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 31,
+        "median": 0.888696865,
+        "p95": 0.916556869,
+        "min": 0.833210142,
+        "max": 0.943914186
+      }
+    },
+    "endpoint_clamped_ticks": 182,
+    "endpoint_clamp_fraction": 0.6190476190476191,
+    "endpoint_clamp_valid_fraction": 0.6570397111913358,
+    "valid_pp_control_ticks": 277,
+    "curvature_saturated_ticks": 36,
+    "curvature_saturated_fraction": 0.12244897959183673,
+    "received_interval_wall_s": {
+      "n": 32,
+      "median": 0.998492625,
+      "p95": 1.01574794155,
+      "min": 0.808943336,
+      "max": 1.042411503
+    },
+    "actual_delivery_delay_s": {
+      "n": 33,
+      "median": 0.750072035,
+      "p95": 0.7502304356,
+      "min": 0.750043953,
+      "max": 0.75024271
+    },
+    "warm_inference_ms": {
+      "n": 32,
+      "median": 35.1535315,
+      "p95": 51.5906137,
+      "min": 30.760254,
+      "max": 55.006163
+    },
+    "observation_to_ready_wall_s": {
+      "n": 33,
+      "median": 0.072901645,
+      "p95": 0.13878143759999997,
+      "min": 0.066965602,
+      "max": 0.31198873
+    },
+    "observation_to_release_wall_s": {
+      "n": 33,
+      "median": 0.824954434,
+      "p95": 0.8910713776,
+      "min": 0.819155341,
+      "max": 1.078604211
+    },
+    "busy_skips": 95,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 33,
+    "switch_count": 32,
+    "unswitched_ids": [
+      32
+    ],
+    "pacing_error_s": {
+      "n": 2346,
+      "median": 0.0001010045,
+      "p95": 0.00015814600000000001,
+      "min": 4.1183e-05,
+      "max": 0.001266096
+    },
+    "navigation_wall_s": 32.56954591,
+    "wall_simulation_ratio": 1.0000031153603413,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 131,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 36,
+      "ACCEL_LIMITED": 27,
+      "OMEGA_CLIPPED": 46
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.12244897959183673,
+      "ACCEL_LIMITED": 0.09183673469387756,
+      "OMEGA_CLIPPED": 0.1564625850340136
+    },
+    "graph": {
+      "calls": 32,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 2,
+        "ACCEPTED": 25,
+        "NONCONVERGED": 5
+      },
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 25,
+        "median": 0.0438616961433651,
+        "p95": 0.30137083607720916,
+        "min": 0.0,
+        "max": 0.4963437998543579
+      },
+      "solver_time_s": {
+        "n": 30,
+        "median": 0.0579073105182033,
+        "p95": 0.1272363016643793,
+        "min": 0.04978111601667479,
+        "max": 0.16756911302218214
+      },
+      "processing_time_s": {
+        "n": 32,
+        "median": 0.058963708000000004,
+        "p95": 0.12500697359999996,
+        "min": 0.00058153,
+        "max": 0.169046964
+      },
+      "queue_wait_s": {
+        "n": 32,
+        "median": 0.0003275655,
+        "p95": 0.00040377265,
+        "min": 0.000250438,
+        "max": 0.000437025
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 32,
+        "median": 0.01604936207641908,
+        "p95": 0.022222220989253923,
+        "min": 0.00555554841106831,
+        "max": 0.022222221332495358
+      },
+      "independent_nonconverged": 5,
+      "independent_constraint_failure": 5,
+      "stale_flags": 0,
+      "corrected_control_ticks": 198,
+      "corrected_valid_tick_fraction": 0.7148014440433214,
+      "corrected_fresh_fraction": 0.78125
+    },
+    "switch_sign_reversals": 15,
+    "key": "S0_02_D750_GRAPH",
+    "run_id": "S0_02",
+    "index": 2,
+    "seed_offset": 20000,
+    "request_0_seed": 20101,
+    "request_0_ddpm_seed": 20102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_02_D750_GRAPH",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 147.10567609698046,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_02_D750_GRAPH.json",
+    "control_ticks": 294,
+    "mean_curvature_above8_fraction": 0.12244897959183673,
+    "actual_omega_clipped_fraction": 0.1564625850340136,
+    "endpoint_clamp_fraction_common": 0.6190476190476191,
+    "minimum_obstacle_clearance_m": 0.05290976527761822,
+    "all_control_abs_dw": {
+      "n": 293,
+      "median": 9.367506770274758e-16,
+      "p95": 0.4446672965976461,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 19
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "CURV-SPEED",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 30.666666666666668,
+    "termination_reason": "goal_entry",
+    "duration_s": 30.666666666666668,
+    "distance_m": 4.675838477087195,
+    "stop_time_s": 1.8888888888888842,
+    "mean_speed_m_s": 0.1524729938180607,
+    "moving_mean_speed_m_s": 0.16248087372117664,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.8360081364853739,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.05434782608695652,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.09239118300550629,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.12377243780931516,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.5739909487480971,
+    "failure": null,
+    "final_pose": [
+      4.208523421127236,
+      -0.06824206844096882,
+      0.04586043033301834
+    ],
+    "final_goal_distance_m": 0.29935860758707544,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 29,
+        "median": 0.16782395582025866,
+        "p95": 0.18611109277913548,
+        "min": 0.053240672272737065,
+        "max": 0.20833313578473645
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 29,
+        "median": 0.36111111111110983,
+        "p95": 0.3722222222222209,
+        "min": 0.010233133788084992,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 29,
+        "median": 0.28022110720559246,
+        "p95": 0.4929136568359003,
+        "min": 0.0,
+        "max": 0.554498066197798
+      },
+      "abs_dw": {
+        "n": 29,
+        "median": 0.5276031925565015,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 29,
+        "median": 0.91604444,
+        "p95": 0.9607626067999999,
+        "min": 0.833849467,
+        "max": 1.027574622
+      }
+    },
+    "endpoint_clamped_ticks": 190,
+    "endpoint_clamp_fraction": 0.6884057971014492,
+    "endpoint_clamp_valid_fraction": 0.7335907335907336,
+    "valid_pp_control_ticks": 259,
+    "curvature_saturated_ticks": 7,
+    "curvature_saturated_fraction": 0.025362318840579712,
+    "received_interval_wall_s": {
+      "n": 30,
+      "median": 0.999272533,
+      "p95": 1.01721120255,
+      "min": 0.808682975,
+      "max": 1.058938215
+    },
+    "actual_delivery_delay_s": {
+      "n": 31,
+      "median": 0.750072212,
+      "p95": 0.750099014,
+      "min": 0.750026384,
+      "max": 0.750108329
+    },
+    "warm_inference_ms": {
+      "n": 30,
+      "median": 35.183403,
+      "p95": 50.99867615,
+      "min": 32.104736,
+      "max": 51.034123
+    },
+    "observation_to_ready_wall_s": {
+      "n": 31,
+      "median": 0.071800193,
+      "p95": 0.17012444,
+      "min": 0.065213089,
+      "max": 0.307835778
+    },
+    "observation_to_release_wall_s": {
+      "n": 31,
+      "median": 0.823864801,
+      "p95": 0.9224589485000001,
+      "min": 0.817147593,
+      "max": 1.075261607
+    },
+    "busy_skips": 89,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 31,
+    "switch_count": 30,
+    "unswitched_ids": [
+      30
+    ],
+    "pacing_error_s": {
+      "n": 2209,
+      "median": 9.7536e-05,
+      "p95": 0.0001524054,
+      "min": 4.4952e-05,
+      "max": 0.001356654
+    },
+    "navigation_wall_s": 30.666766938,
+    "wall_simulation_ratio": 1.0000032697173913,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 123,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 7,
+      "ACCEL_LIMITED": 18,
+      "OMEGA_CLIPPED": 15
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.025362318840579712,
+      "ACCEL_LIMITED": 0.06521739130434782,
+      "OMEGA_CLIPPED": 0.05434782608695652
+    },
+    "graph": {
+      "calls": 0,
+      "dispositions": {},
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 0
+      },
+      "solver_time_s": {
+        "n": 0
+      },
+      "processing_time_s": {
+        "n": 0
+      },
+      "queue_wait_s": {
+        "n": 0
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 0
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 0,
+      "corrected_valid_tick_fraction": 0.0,
+      "corrected_fresh_fraction": 0.0
+    },
+    "switch_sign_reversals": 20,
+    "key": "S0_03_D750_CURV-SPEED",
+    "run_id": "S0_03",
+    "index": 3,
+    "seed_offset": 30000,
+    "request_0_seed": 30101,
+    "request_0_ddpm_seed": 30102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_03_D750_CURV-SPEED",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 143.7500435130205,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_03_D750_CURV-SPEED.json",
+    "control_ticks": 276,
+    "mean_curvature_above8_fraction": 0.025362318840579712,
+    "actual_omega_clipped_fraction": 0.05434782608695652,
+    "endpoint_clamp_fraction_common": 0.6884057971014492,
+    "minimum_obstacle_clearance_m": 0.09239118300550629,
+    "all_control_abs_dw": {
+      "n": 275,
+      "median": 5.551115123125783e-17,
+      "p95": 0.5495102141031616,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 23
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "HORIZON-SPEED",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 27.65277777777778,
+    "termination_reason": "goal_entry",
+    "duration_s": 27.65277777777778,
+    "distance_m": 4.820126705532413,
+    "stop_time_s": 1.8888888888888842,
+    "mean_speed_m_s": 0.17430895168173466,
+    "moving_mean_speed_m_s": 0.18708847590206668,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.7945310859478141,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.46184738955823296,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.202941143150222,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.1514156439321231,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.6154686906314998,
+    "failure": null,
+    "final_pose": [
+      4.2016585565695115,
+      -0.004314116783933715,
+      0.17219508055465127
+    ],
+    "final_goal_distance_m": 0.29837263358393445,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 25,
+        "median": 0.18055532335971528,
+        "p95": 0.18611103930120745,
+        "min": 0.06574004952608004,
+        "max": 0.18611109846766893
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 25,
+        "median": 0.30735591743768653,
+        "p95": 0.3711111111111098,
+        "min": 0.0602176492047497,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 25,
+        "median": 0.31551246801085003,
+        "p95": 0.5577720898124172,
+        "min": 0.081422185425646,
+        "max": 0.6843011147796205
+      },
+      "abs_dw": {
+        "n": 25,
+        "median": 0.2856077921705357,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 25,
+        "median": 0.888735976,
+        "p95": 0.9163655842,
+        "min": 0.888009843,
+        "max": 0.916394926
+      }
+    },
+    "endpoint_clamped_ticks": 196,
+    "endpoint_clamp_fraction": 0.7871485943775101,
+    "endpoint_clamp_valid_fraction": 0.8448275862068966,
+    "valid_pp_control_ticks": 232,
+    "curvature_saturated_ticks": 47,
+    "curvature_saturated_fraction": 0.18875502008032127,
+    "received_interval_wall_s": {
+      "n": 26,
+      "median": 0.998597636,
+      "p95": 1.0206460675,
+      "min": 0.816923159,
+      "max": 1.048571888
+    },
+    "actual_delivery_delay_s": {
+      "n": 27,
+      "median": 0.750077854,
+      "p95": 0.7500970117,
+      "min": 0.750038927,
+      "max": 0.7501009
+    },
+    "warm_inference_ms": {
+      "n": 26,
+      "median": 35.5001465,
+      "p95": 52.4464445,
+      "min": 31.070829,
+      "max": 56.553828
+    },
+    "observation_to_ready_wall_s": {
+      "n": 27,
+      "median": 0.072250007,
+      "p95": 0.133826185,
+      "min": 0.066970695,
+      "max": 0.316029178
+    },
+    "observation_to_release_wall_s": {
+      "n": 27,
+      "median": 0.824266243,
+      "p95": 0.8859421531,
+      "min": 0.819206197,
+      "max": 1.083097611
+    },
+    "busy_skips": 81,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 27,
+    "switch_count": 26,
+    "unswitched_ids": [
+      26
+    ],
+    "pacing_error_s": {
+      "n": 1992,
+      "median": 9.6895e-05,
+      "p95": 0.00014896869999999994,
+      "min": 4.2736e-05,
+      "max": 0.001252385
+    },
+    "navigation_wall_s": 27.65285481,
+    "wall_simulation_ratio": 1.0000027856956304,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 111,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 47,
+      "ACCEL_LIMITED": 10,
+      "OMEGA_CLIPPED": 115
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.18875502008032127,
+      "ACCEL_LIMITED": 0.040160642570281124,
+      "OMEGA_CLIPPED": 0.46184738955823296
+    },
+    "graph": {
+      "calls": 0,
+      "dispositions": {},
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 0
+      },
+      "solver_time_s": {
+        "n": 0
+      },
+      "processing_time_s": {
+        "n": 0
+      },
+      "queue_wait_s": {
+        "n": 0
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 0
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 0,
+      "corrected_valid_tick_fraction": 0.0,
+      "corrected_fresh_fraction": 0.0
+    },
+    "switch_sign_reversals": 12,
+    "key": "S0_03_D750_HORIZON-SPEED",
+    "run_id": "S0_03",
+    "index": 3,
+    "seed_offset": 30000,
+    "request_0_seed": 30101,
+    "request_0_ddpm_seed": 30102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_03_D750_HORIZON-SPEED",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 141.07253086200217,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_03_D750_HORIZON-SPEED.json",
+    "control_ticks": 249,
+    "mean_curvature_above8_fraction": 0.18875502008032127,
+    "actual_omega_clipped_fraction": 0.46184738955823296,
+    "endpoint_clamp_fraction_common": 0.7871485943775101,
+    "minimum_obstacle_clearance_m": 0.1514156439321231,
+    "all_control_abs_dw": {
+      "n": 248,
+      "median": 1.942890293094024e-16,
+      "p95": 0.2589261277170384,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 12
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "GRAPH",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 31.13888888888889,
+    "termination_reason": "goal_entry",
+    "duration_s": 31.13888888888889,
+    "distance_m": 4.732153936478987,
+    "stop_time_s": 3.222222222222213,
+    "mean_speed_m_s": 0.15196926111796924,
+    "moving_mean_speed_m_s": 0.16950999175447112,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.8171626233690951,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.06405693950177936,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.13651921053657917,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.06328197733074832,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.5928371455012129,
+    "failure": null,
+    "final_pose": [
+      4.208980014573183,
+      -0.06687778417733375,
+      0.7927918816770712
+    ],
+    "final_goal_distance_m": 0.2986055423703565,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 29,
+        "median": 0.16651227289953552,
+        "p95": 0.18611110689046106,
+        "min": 0.05447525468438966,
+        "max": 0.18888883290367656
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 29,
+        "median": 0.21036715211606172,
+        "p95": 0.3722222222222209,
+        "min": 0.004282539658701623,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 29,
+        "median": 0.30705718633041246,
+        "p95": 0.5757131781190067,
+        "min": 0.019507146068320526,
+        "max": 0.8360595373044647
+      },
+      "abs_dw": {
+        "n": 29,
+        "median": 0.28382141816275663,
+        "p95": 0.6633170569035065,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 29,
+        "median": 0.916313098,
+        "p95": 0.9330079233999999,
+        "min": 0.832834347,
+        "max": 1.000443103
+      }
+    },
+    "endpoint_clamped_ticks": 194,
+    "endpoint_clamp_fraction": 0.6903914590747331,
+    "endpoint_clamp_valid_fraction": 0.7376425855513308,
+    "valid_pp_control_ticks": 263,
+    "curvature_saturated_ticks": 9,
+    "curvature_saturated_fraction": 0.03202846975088968,
+    "received_interval_wall_s": {
+      "n": 30,
+      "median": 0.997662312,
+      "p95": 1.0400192877999999,
+      "min": 0.809450807,
+      "max": 1.07776835
+    },
+    "actual_delivery_delay_s": {
+      "n": 31,
+      "median": 0.750070116,
+      "p95": 0.7500956915000001,
+      "min": 0.750038794,
+      "max": 0.750195987
+    },
+    "warm_inference_ms": {
+      "n": 30,
+      "median": 35.057266999999996,
+      "p95": 52.0434686,
+      "min": 31.569362,
+      "max": 52.482072
+    },
+    "observation_to_ready_wall_s": {
+      "n": 31,
+      "median": 0.070414748,
+      "p95": 0.14909184949999998,
+      "min": 0.064181611,
+      "max": 0.310162374
+    },
+    "observation_to_release_wall_s": {
+      "n": 31,
+      "median": 0.822458954,
+      "p95": 0.9012595495,
+      "min": 0.816324368,
+      "max": 1.077011478
+    },
+    "busy_skips": 91,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 1,
+    "receive_count": 31,
+    "switch_count": 30,
+    "unswitched_ids": [
+      30
+    ],
+    "pacing_error_s": {
+      "n": 2243,
+      "median": 9.8815e-05,
+      "p95": 0.0001548759,
+      "min": 3.929e-05,
+      "max": 0.001365179
+    },
+    "navigation_wall_s": 31.138939086,
+    "wall_simulation_ratio": 1.0000016120392508,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 125,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 9,
+      "ACCEL_LIMITED": 32,
+      "OMEGA_CLIPPED": 18
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.03202846975088968,
+      "ACCEL_LIMITED": 0.11387900355871886,
+      "OMEGA_CLIPPED": 0.06405693950177936
+    },
+    "graph": {
+      "calls": 30,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 5,
+        "ACCEPTED": 24,
+        "NONCONVERGED": 1
+      },
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 24,
+        "median": 0.08131713125800795,
+        "p95": 0.22050785824769312,
+        "min": 0.0,
+        "max": 0.6710220891999352
+      },
+      "solver_time_s": {
+        "n": 25,
+        "median": 0.05670046299928799,
+        "p95": 0.06331776157021522,
+        "min": 0.050264264980796725,
+        "max": 0.09815989399794489
+      },
+      "processing_time_s": {
+        "n": 30,
+        "median": 0.0577292895,
+        "p95": 0.0650344125,
+        "min": 0.000574271,
+        "max": 0.099682271
+      },
+      "queue_wait_s": {
+        "n": 30,
+        "median": 0.0003343355,
+        "p95": 0.0004014981,
+        "min": 0.000246092,
+        "max": 0.000445223
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 30,
+        "median": 0.016049362076419084,
+        "p95": 0.022222219744531507,
+        "min": 0.006172835506935594,
+        "max": 0.02222222207804561
+      },
+      "independent_nonconverged": 1,
+      "independent_constraint_failure": 1,
+      "stale_flags": 0,
+      "corrected_control_ticks": 186,
+      "corrected_valid_tick_fraction": 0.7072243346007605,
+      "corrected_fresh_fraction": 0.8
+    },
+    "switch_sign_reversals": 11,
+    "key": "S0_03_D750_GRAPH",
+    "run_id": "S0_03",
+    "index": 3,
+    "seed_offset": 30000,
+    "request_0_seed": 30101,
+    "request_0_ddpm_seed": 30102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_03_D750_GRAPH",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 145.5458395429887,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_03_D750_GRAPH.json",
+    "control_ticks": 281,
+    "mean_curvature_above8_fraction": 0.03202846975088968,
+    "actual_omega_clipped_fraction": 0.06405693950177936,
+    "endpoint_clamp_fraction_common": 0.6903914590747331,
+    "minimum_obstacle_clearance_m": 0.06328197733074832,
+    "all_control_abs_dw": {
+      "n": 280,
+      "median": 3.892719480091955e-15,
+      "p95": 0.3395341033285467,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 15
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "CURV-SPEED",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 32.375,
+    "termination_reason": "goal_entry",
+    "duration_s": 32.375,
+    "distance_m": 4.698389224603015,
+    "stop_time_s": 2.111111111111106,
+    "mean_speed_m_s": 0.14512399149352942,
+    "moving_mean_speed_m_s": 0.15524737226774532,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.7890324320332553,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.09931506849315068,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.10924463166766356,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.06586559603723481,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.6209675677112408,
+    "failure": null,
+    "final_pose": [
+      4.206196131995685,
+      -0.05142867362239527,
+      0.22713300581408724
+    ],
+    "final_goal_distance_m": 0.2982710534477925,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 31,
+        "median": 0.16206366249723092,
+        "p95": 0.18611106677242872,
+        "min": 0.0450616704453307,
+        "max": 0.1916665349459227
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 31,
+        "median": 0.33610064279739627,
+        "p95": 0.36666666666666536,
+        "min": 0.011798678690547515,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 31,
+        "median": 0.28262995658714196,
+        "p95": 0.4452395907407952,
+        "min": 0.010805892265147908,
+        "max": 0.8012503918152162
+      },
+      "abs_dw": {
+        "n": 31,
+        "median": 0.46690293699295254,
+        "p95": 0.7983544777164876,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 31,
+        "median": 0.888781592,
+        "p95": 0.9436441565,
+        "min": 0.832971918,
+        "max": 0.944237679
+      }
+    },
+    "endpoint_clamped_ticks": 195,
+    "endpoint_clamp_fraction": 0.6678082191780822,
+    "endpoint_clamp_valid_fraction": 0.7142857142857143,
+    "valid_pp_control_ticks": 273,
+    "curvature_saturated_ticks": 15,
+    "curvature_saturated_fraction": 0.05136986301369863,
+    "received_interval_wall_s": {
+      "n": 31,
+      "median": 0.99918601,
+      "p95": 1.0579685385,
+      "min": 0.805583528,
+      "max": 1.065955492
+    },
+    "actual_delivery_delay_s": {
+      "n": 32,
+      "median": 0.7500742625000001,
+      "p95": 0.75009848,
+      "min": 0.750063809,
+      "max": 0.7502716
+    },
+    "warm_inference_ms": {
+      "n": 31,
+      "median": 35.297734,
+      "p95": 51.9446195,
+      "min": 31.254411,
+      "max": 54.536833
+    },
+    "observation_to_ready_wall_s": {
+      "n": 32,
+      "median": 0.07305897350000001,
+      "p95": 0.13295339144999999,
+      "min": 0.066296166,
+      "max": 0.304917445
+    },
+    "observation_to_release_wall_s": {
+      "n": 32,
+      "median": 0.825065175,
+      "p95": 0.8848817457,
+      "min": 0.818431858,
+      "max": 1.072714088
+    },
+    "busy_skips": 95,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 2,
+    "receive_count": 32,
+    "switch_count": 32,
+    "unswitched_ids": [],
+    "pacing_error_s": {
+      "n": 2332,
+      "median": 9.6803e-05,
+      "p95": 0.00014887495,
+      "min": 4.3548e-05,
+      "max": 0.001410169
+    },
+    "navigation_wall_s": 32.375098693,
+    "wall_simulation_ratio": 1.0000030484324325,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 130,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 15,
+      "ACCEL_LIMITED": 37,
+      "OMEGA_CLIPPED": 29
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.05136986301369863,
+      "ACCEL_LIMITED": 0.1267123287671233,
+      "OMEGA_CLIPPED": 0.09931506849315068
+    },
+    "graph": {
+      "calls": 0,
+      "dispositions": {},
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 0
+      },
+      "solver_time_s": {
+        "n": 0
+      },
+      "processing_time_s": {
+        "n": 0
+      },
+      "queue_wait_s": {
+        "n": 0
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 0
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 0,
+      "corrected_valid_tick_fraction": 0.0,
+      "corrected_fresh_fraction": 0.0
+    },
+    "switch_sign_reversals": 17,
+    "key": "S0_04_D750_CURV-SPEED",
+    "run_id": "S0_04",
+    "index": 4,
+    "seed_offset": 40000,
+    "request_0_seed": 40101,
+    "request_0_ddpm_seed": 40102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_04_D750_CURV-SPEED",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 145.6309554320178,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_04_D750_CURV-SPEED.json",
+    "control_ticks": 292,
+    "mean_curvature_above8_fraction": 0.05136986301369863,
+    "actual_omega_clipped_fraction": 0.09931506849315068,
+    "endpoint_clamp_fraction_common": 0.6678082191780822,
+    "minimum_obstacle_clearance_m": 0.06586559603723481,
+    "all_control_abs_dw": {
+      "n": 291,
+      "median": 2.3314683517128287e-15,
+      "p95": 0.4754625820419828,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 23
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "HORIZON-SPEED",
+    "classification": "SAFETY_FAILURE",
+    "success": false,
+    "technical_failure": false,
+    "goal_entry": false,
+    "goal_time_s": null,
+    "termination_reason": "corridor_footprint_stop",
+    "duration_s": 15.583333333333334,
+    "distance_m": 2.481586675056072,
+    "stop_time_s": 1.8888888888888842,
+    "mean_speed_m_s": 0.1592462037469137,
+    "moving_mean_speed_m_s": 0.18121119736717758,
+    "geometric_overlap": false,
+    "corridor_violation": true,
+    "minimum_corridor_clearance_m": -0.00014660749300468567,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.6879432624113475,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.2812502378149354,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.8433085273839613,
+    "StaticObstacle2_passage_side": "not_passed",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 1.4101466074930047,
+    "failure": {
+      "tick": 1122,
+      "simulation_time_s": 15.583333333333334,
+      "pose": [
+        1.7946358933774986,
+        1.4101466074930047,
+        1.8689144532359627
+      ],
+      "causes": [
+        "left_wall_positive_y"
+      ]
+    },
+    "final_pose": [
+      1.7946358933774986,
+      1.4101466074930047,
+      1.8689144532359627
+    ],
+    "final_goal_distance_m": 3.0508209393580272,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 13,
+        "median": 0.1777775491541803,
+        "p95": 0.18055553005696665,
+        "min": 0.08823560317912303,
+        "max": 0.18055555048861707
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 13,
+        "median": 0.36111111111110983,
+        "p95": 0.36111111111110983,
+        "min": 0.05316614509762596,
+        "max": 0.36111111111110983
+      },
+      "staleness": {
+        "n": 13,
+        "median": 0.2960194347979798,
+        "p95": 0.5199817823496387,
+        "min": 0.1529597575472883,
+        "max": 0.5927724162955104
+      },
+      "abs_dw": {
+        "n": 13,
+        "median": 0.34171106997426626,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 13,
+        "median": 0.888559884,
+        "p95": 0.8888454184,
+        "min": 0.888301997,
+        "max": 0.888863803
+      }
+    },
+    "endpoint_clamped_ticks": 104,
+    "endpoint_clamp_fraction": 0.7375886524822695,
+    "endpoint_clamp_valid_fraction": 0.8387096774193549,
+    "valid_pp_control_ticks": 124,
+    "curvature_saturated_ticks": 49,
+    "curvature_saturated_fraction": 0.3475177304964539,
+    "received_interval_wall_s": {
+      "n": 14,
+      "median": 0.9979077915000001,
+      "p95": 1.03207504955,
+      "min": 0.935920754,
+      "max": 1.046728801
+    },
+    "actual_delivery_delay_s": {
+      "n": 15,
+      "median": 0.75007884,
+      "p95": 0.7501060574,
+      "min": 0.750056379,
+      "max": 0.75012665
+    },
+    "warm_inference_ms": {
+      "n": 14,
+      "median": 35.7621495,
+      "p95": 53.019343549999995,
+      "min": 32.421464,
+      "max": 53.362383
+    },
+    "observation_to_ready_wall_s": {
+      "n": 15,
+      "median": 0.073895099,
+      "p95": 0.1840228504999998,
+      "min": 0.067145333,
+      "max": 0.307485592
+    },
+    "observation_to_release_wall_s": {
+      "n": 15,
+      "median": 0.825752712,
+      "p95": 0.9405033405999997,
+      "min": 0.819256715,
+      "max": 1.074269681
+    },
+    "busy_skips": 45,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 15,
+    "switch_count": 14,
+    "unswitched_ids": [
+      14
+    ],
+    "pacing_error_s": {
+      "n": 1123,
+      "median": 9.6401e-05,
+      "p95": 0.00015028859999999998,
+      "min": 2.9501e-05,
+      "max": 0.001375924
+    },
+    "navigation_wall_s": 15.583432689,
+    "wall_simulation_ratio": 1.000006375764706,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 63,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 49,
+      "ACCEL_LIMITED": 7,
+      "OMEGA_CLIPPED": 97
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.3475177304964539,
+      "ACCEL_LIMITED": 0.04964539007092199,
+      "OMEGA_CLIPPED": 0.6879432624113475
+    },
+    "graph": {
+      "calls": 0,
+      "dispositions": {},
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 0
+      },
+      "solver_time_s": {
+        "n": 0
+      },
+      "processing_time_s": {
+        "n": 0
+      },
+      "queue_wait_s": {
+        "n": 0
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 0
+      },
+      "independent_nonconverged": 0,
+      "independent_constraint_failure": 0,
+      "stale_flags": 0,
+      "corrected_control_ticks": 0,
+      "corrected_valid_tick_fraction": 0.0,
+      "corrected_fresh_fraction": 0.0
+    },
+    "switch_sign_reversals": 6,
+    "key": "S0_04_D750_HORIZON-SPEED",
+    "run_id": "S0_04",
+    "index": 4,
+    "seed_offset": 40000,
+    "request_0_seed": 40101,
+    "request_0_ddpm_seed": 40102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_04_D750_HORIZON-SPEED",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 131.57122920104302,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_04_D750_HORIZON-SPEED.json",
+    "control_ticks": 141,
+    "mean_curvature_above8_fraction": 0.3475177304964539,
+    "actual_omega_clipped_fraction": 0.6879432624113475,
+    "endpoint_clamp_fraction_common": 0.7375886524822695,
+    "minimum_obstacle_clearance_m": 0.2812502378149354,
+    "all_control_abs_dw": {
+      "n": 140,
+      "median": 0.0,
+      "p95": 0.30417053918474196,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 6
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "GRAPH",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 33.47222222222222,
+    "termination_reason": "goal_entry",
+    "duration_s": 33.47222222222222,
+    "distance_m": 4.7411650945432555,
+    "stop_time_s": 1.999999999999995,
+    "mean_speed_m_s": 0.14164476631000597,
+    "moving_mean_speed_m_s": 0.15064602242149797,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.7771721683849452,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.1986754966887417,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.1581921161412903,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.10648163993019205,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.6328270464278682,
+    "failure": null,
+    "final_pose": [
+      4.20201484025221,
+      0.028899881838401035,
+      0.278696401182593
+    ],
+    "final_goal_distance_m": 0.2993832971295983,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 32,
+        "median": 0.16585641910407797,
+        "p95": 0.18611109292244832,
+        "min": 0.042361056634395156,
+        "max": 0.1861111104075998
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 32,
+        "median": 0.31366432055580606,
+        "p95": 0.3722222222222209,
+        "min": 0.010792649576895741,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 32,
+        "median": 0.2787866654412321,
+        "p95": 0.4436784934117294,
+        "min": 0.0,
+        "max": 0.5011662629562703
+      },
+      "abs_dw": {
+        "n": 32,
+        "median": 0.3372190728847262,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 32,
+        "median": 0.9162031625,
+        "p95": 0.9288218487,
+        "min": 0.833231976,
+        "max": 0.944261783
+      }
+    },
+    "endpoint_clamped_ticks": 188,
+    "endpoint_clamp_fraction": 0.6225165562913907,
+    "endpoint_clamp_valid_fraction": 0.6619718309859155,
+    "valid_pp_control_ticks": 284,
+    "curvature_saturated_ticks": 53,
+    "curvature_saturated_fraction": 0.17549668874172186,
+    "received_interval_wall_s": {
+      "n": 32,
+      "median": 0.9996920565,
+      "p95": 1.03496417215,
+      "min": 0.820525205,
+      "max": 1.082354248
+    },
+    "actual_delivery_delay_s": {
+      "n": 33,
+      "median": 0.750071966,
+      "p95": 0.7500949752,
+      "min": 0.75004845,
+      "max": 0.75010292
+    },
+    "warm_inference_ms": {
+      "n": 32,
+      "median": 35.285418500000006,
+      "p95": 52.678682699999996,
+      "min": 30.355163,
+      "max": 55.284565
+    },
+    "observation_to_ready_wall_s": {
+      "n": 33,
+      "median": 0.070993435,
+      "p95": 0.1475703416,
+      "min": 0.064000287,
+      "max": 0.306868395
+    },
+    "observation_to_release_wall_s": {
+      "n": 33,
+      "median": 0.822898274,
+      "p95": 0.8997432758,
+      "min": 0.815896297,
+      "max": 1.075843308
+    },
+    "busy_skips": 98,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 1,
+    "receive_count": 33,
+    "switch_count": 33,
+    "unswitched_ids": [],
+    "pacing_error_s": {
+      "n": 2411,
+      "median": 0.000100321,
+      "p95": 0.00015846399999999998,
+      "min": 3.6324e-05,
+      "max": 0.001231625
+    },
+    "navigation_wall_s": 33.472303904,
+    "wall_simulation_ratio": 1.0000024402854772,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 134,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 53,
+      "ACCEL_LIMITED": 24,
+      "OMEGA_CLIPPED": 60
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.17549668874172186,
+      "ACCEL_LIMITED": 0.07947019867549669,
+      "OMEGA_CLIPPED": 0.1986754966887417
+    },
+    "graph": {
+      "calls": 33,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 2,
+        "ACCEPTED": 28,
+        "NONCONVERGED": 3
+      },
+      "terminal_unapplied": 0,
+      "correction_abs_dw": {
+        "n": 28,
+        "median": 0.060202031874335496,
+        "p95": 0.21724592373204232,
+        "min": 0.0,
+        "max": 0.24345687218430107
+      },
+      "solver_time_s": {
+        "n": 31,
+        "median": 0.05682652699761093,
+        "p95": 0.1353046054719016,
+        "min": 0.04642784100724384,
+        "max": 0.15822825796203688
+      },
+      "processing_time_s": {
+        "n": 33,
+        "median": 0.058244872,
+        "p95": 0.1364191406,
+        "min": 0.000587193,
+        "max": 0.159718639
+      },
+      "queue_wait_s": {
+        "n": 33,
+        "median": 0.000368194,
+        "p95": 0.00047250739999999997,
+        "min": 0.000273132,
+        "max": 0.000513392
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 33,
+        "median": 0.016049362076419556,
+        "p95": 0.02222222134845853,
+        "min": 0.005555548411068242,
+        "max": 0.025925892584984785
+      },
+      "independent_nonconverged": 3,
+      "independent_constraint_failure": 2,
+      "stale_flags": 0,
+      "corrected_control_ticks": 211,
+      "corrected_valid_tick_fraction": 0.7429577464788732,
+      "corrected_fresh_fraction": 0.8484848484848485
+    },
+    "switch_sign_reversals": 16,
+    "key": "S0_04_D750_GRAPH",
+    "run_id": "S0_04",
+    "index": 4,
+    "seed_offset": 40000,
+    "request_0_seed": 40101,
+    "request_0_ddpm_seed": 40102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_04_D750_GRAPH",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 147.78843051195145,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_04_D750_GRAPH.json",
+    "control_ticks": 302,
+    "mean_curvature_above8_fraction": 0.17549668874172186,
+    "actual_omega_clipped_fraction": 0.1986754966887417,
+    "endpoint_clamp_fraction_common": 0.6225165562913907,
+    "minimum_obstacle_clearance_m": 0.10648163993019205,
+    "all_control_abs_dw": {
+      "n": 301,
+      "median": 1.6653345369377348e-15,
+      "p95": 0.3821338793172604,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 21
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "GRAPH",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 25.416666666666668,
+    "termination_reason": "goal_entry",
+    "duration_s": 25.416666666666668,
+    "distance_m": 4.649635448374228,
+    "stop_time_s": 1.1111111111111092,
+    "mean_speed_m_s": 0.1829364766573467,
+    "moving_mean_speed_m_s": 0.19129928701882537,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.7851684086781433,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.026200873362445413,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.14066829833629016,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.043636152285295216,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.0,
+    "max_abs_y_m": 0.6248313648888147,
+    "failure": null,
+    "final_pose": [
+      4.201880992387605,
+      0.005566649898003404,
+      0.32538905021593356
+    ],
+    "final_goal_distance_m": 0.2981709749303009,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 97,
+        "median": 0.02499999997373616,
+        "p95": 0.036111110479612414,
+        "min": 0.010802464816250993,
+        "max": 0.041666660590970725
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 97,
+        "median": 0.024128453105465297,
+        "p95": 0.061111111111110894,
+        "min": 0.00025953666138889275,
+        "max": 0.07222222222222197
+      },
+      "staleness": {
+        "n": 97,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0544008169702789
+      },
+      "abs_dw": {
+        "n": 97,
+        "median": 0.1237130077339953,
+        "p95": 0.4683393189546848,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 97,
+        "median": 0.138067919,
+        "p95": 0.166594282,
+        "min": 0.08290262,
+        "max": 0.193881274
+      }
+    },
+    "endpoint_clamped_ticks": 16,
+    "endpoint_clamp_fraction": 0.06986899563318777,
+    "endpoint_clamp_valid_fraction": 0.0730593607305936,
+    "valid_pp_control_ticks": 219,
+    "curvature_saturated_ticks": 2,
+    "curvature_saturated_fraction": 0.008733624454148471,
+    "received_interval_wall_s": {
+      "n": 97,
+      "median": 0.249976427,
+      "p95": 0.3084980826,
+      "min": 0.179645738,
+      "max": 0.326255558
+    },
+    "actual_delivery_delay_s": {
+      "n": 98,
+      "median": 1.054e-05,
+      "p95": 1.3418499999999999e-05,
+      "min": 8.776e-06,
+      "max": 1.8365e-05
+    },
+    "warm_inference_ms": {
+      "n": 97,
+      "median": 34.710251,
+      "p95": 40.8386741999999,
+      "min": 30.568631,
+      "max": 51.689603
+    },
+    "observation_to_ready_wall_s": {
+      "n": 98,
+      "median": 0.071874145,
+      "p95": 0.13198373524999998,
+      "min": 0.065604883,
+      "max": 0.303758996
+    },
+    "observation_to_release_wall_s": {
+      "n": 98,
+      "median": 0.07373721450000001,
+      "p95": 0.1341151981,
+      "min": 0.067647017,
+      "max": 0.321126651
+    },
+    "busy_skips": 1,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 98,
+    "switch_count": 98,
+    "unswitched_ids": [],
+    "pacing_error_s": {
+      "n": 1831,
+      "median": 0.000102189,
+      "p95": 0.000156004,
+      "min": 4.6021e-05,
+      "max": 0.001467261
+    },
+    "navigation_wall_s": 25.416774243,
+    "wall_simulation_ratio": 1.0000042325114753,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 102,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 2,
+      "ACCEL_LIMITED": 13,
+      "OMEGA_CLIPPED": 6
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.008733624454148471,
+      "ACCEL_LIMITED": 0.056768558951965066,
+      "OMEGA_CLIPPED": 0.026200873362445413
+    },
+    "graph": {
+      "calls": 98,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 1,
+        "ACCEPTED": 80,
+        "SUPERSEDED": 13,
+        "NONCONVERGED": 3
+      },
+      "terminal_unapplied": 1,
+      "correction_abs_dw": {
+        "n": 80,
+        "median": 0.018688045055502624,
+        "p95": 0.064097924431798,
+        "min": 0.0,
+        "max": 0.20349330657455647
+      },
+      "solver_time_s": {
+        "n": 96,
+        "median": 0.05746730000828393,
+        "p95": 0.1663275717291981,
+        "min": 0.04440881102345884,
+        "max": 0.18931748997420073
+      },
+      "processing_time_s": {
+        "n": 97,
+        "median": 0.05884781,
+        "p95": 0.16725002139999984,
+        "min": 0.015630394,
+        "max": 0.191209076
+      },
+      "queue_wait_s": {
+        "n": 97,
+        "median": 0.000335371,
+        "p95": 0.0004085988,
+        "min": 0.000202247,
+        "max": 0.00050723
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 97,
+        "median": 0.022222219094625816,
+        "p95": 0.04444443210903,
+        "min": 0.006172838889094002,
+        "max": 0.04444444442636408
+      },
+      "independent_nonconverged": 4,
+      "independent_constraint_failure": 4,
+      "stale_flags": 0,
+      "corrected_control_ticks": 102,
+      "corrected_valid_tick_fraction": 0.4657534246575342,
+      "corrected_fresh_fraction": 0.8163265306122449
+    },
+    "switch_sign_reversals": 31,
+    "key": "S0_01_D000_GRAPH",
+    "run_id": "S0_01",
+    "index": 1,
+    "seed_offset": 10000,
+    "request_0_seed": 10101,
+    "request_0_ddpm_seed": 10102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_01_D000_GRAPH",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 139.6710384269827,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_01_D000_GRAPH.json",
+    "control_ticks": 229,
+    "mean_curvature_above8_fraction": 0.008733624454148471,
+    "actual_omega_clipped_fraction": 0.026200873362445413,
+    "endpoint_clamp_fraction_common": 0.06986899563318777,
+    "minimum_obstacle_clearance_m": 0.043636152285295216,
+    "all_control_abs_dw": {
+      "n": 228,
+      "median": 0.027093227695345362,
+      "p95": 0.3353638182240827,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 35
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "GRAPH",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 25.15277777777778,
+    "termination_reason": "goal_entry",
+    "duration_s": 25.15277777777778,
+    "distance_m": 4.629573925942204,
+    "stop_time_s": 1.1111111111111092,
+    "mean_speed_m_s": 0.1840581571882047,
+    "moving_mean_speed_m_s": 0.19256460003919046,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.8354509940995555,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.01762114537444934,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.09243319960433383,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.10562823945494788,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.0,
+    "max_abs_y_m": 0.5745489131063305,
+    "failure": null,
+    "final_pose": [
+      4.209634962364425,
+      -0.07026535217746227,
+      0.24558877479894736
+    ],
+    "final_goal_distance_m": 0.2987458364525466,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 96,
+        "median": 0.025682190108972394,
+        "p95": 0.03611111078519854,
+        "min": 0.010802468917985048,
+        "max": 0.04166666092497888
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 96,
+        "median": 0.021174040328542088,
+        "p95": 0.0633941162709275,
+        "min": 0.00014150709383953242,
+        "max": 0.07222222222222197
+      },
+      "staleness": {
+        "n": 96,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "abs_dw": {
+        "n": 96,
+        "median": 0.1511009379463954,
+        "p95": 0.6011177571096151,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 96,
+        "median": 0.13823356250000002,
+        "p95": 0.16651201524999998,
+        "min": 0.082673529,
+        "max": 0.194202537
+      }
+    },
+    "endpoint_clamped_ticks": 22,
+    "endpoint_clamp_fraction": 0.09691629955947137,
+    "endpoint_clamp_valid_fraction": 0.10138248847926268,
+    "valid_pp_control_ticks": 217,
+    "curvature_saturated_ticks": 0,
+    "curvature_saturated_fraction": 0.0,
+    "received_interval_wall_s": {
+      "n": 96,
+      "median": 0.249964982,
+      "p95": 0.26756292675000004,
+      "min": 0.187903816,
+      "max": 0.313363911
+    },
+    "actual_delivery_delay_s": {
+      "n": 97,
+      "median": 1.0701e-05,
+      "p95": 1.4002599999999977e-05,
+      "min": 9.438e-06,
+      "max": 1.9968e-05
+    },
+    "warm_inference_ms": {
+      "n": 96,
+      "median": 34.586191,
+      "p95": 40.010298750000004,
+      "min": 30.818664,
+      "max": 51.707012
+    },
+    "observation_to_ready_wall_s": {
+      "n": 97,
+      "median": 0.071425928,
+      "p95": 0.09683139939999957,
+      "min": 0.064905586,
+      "max": 0.30642537
+    },
+    "observation_to_release_wall_s": {
+      "n": 97,
+      "median": 0.073488571,
+      "p95": 0.09871834999999957,
+      "min": 0.066726156,
+      "max": 0.323352665
+    },
+    "busy_skips": 1,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 97,
+    "switch_count": 97,
+    "unswitched_ids": [],
+    "pacing_error_s": {
+      "n": 1812,
+      "median": 9.77165e-05,
+      "p95": 0.00015566484999999998,
+      "min": 2.7433e-05,
+      "max": 0.001328105
+    },
+    "navigation_wall_s": 25.152883237,
+    "wall_simulation_ratio": 1.0000041927465488,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 101,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 0,
+      "ACCEL_LIMITED": 8,
+      "OMEGA_CLIPPED": 4
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.0,
+      "ACCEL_LIMITED": 0.03524229074889868,
+      "OMEGA_CLIPPED": 0.01762114537444934
+    },
+    "graph": {
+      "calls": 97,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 1,
+        "ACCEPTED": 78,
+        "SUPERSEDED": 12,
+        "NONCONVERGED": 5
+      },
+      "terminal_unapplied": 1,
+      "correction_abs_dw": {
+        "n": 78,
+        "median": 0.01472753221070728,
+        "p95": 0.06424740656603042,
+        "min": 0.0,
+        "max": 0.09944261158315115
+      },
+      "solver_time_s": {
+        "n": 95,
+        "median": 0.056405370007269084,
+        "p95": 0.15660943562397733,
+        "min": 0.04996247397502884,
+        "max": 0.22657618002267554
+      },
+      "processing_time_s": {
+        "n": 96,
+        "median": 0.057897343,
+        "p95": 0.15836376725,
+        "min": 0.016922556,
+        "max": 0.228112185
+      },
+      "queue_wait_s": {
+        "n": 96,
+        "median": 0.0003168505,
+        "p95": 0.00043787425,
+        "min": 0.000213338,
+        "max": 0.005684234
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 96,
+        "median": 0.022222220094658476,
+        "p95": 0.04444443902096911,
+        "min": 0.006172839475056066,
+        "max": 0.06666664398503293
+      },
+      "independent_nonconverged": 7,
+      "independent_constraint_failure": 7,
+      "stale_flags": 0,
+      "corrected_control_ticks": 96,
+      "corrected_valid_tick_fraction": 0.4423963133640553,
+      "corrected_fresh_fraction": 0.8041237113402062
+    },
+    "switch_sign_reversals": 27,
+    "key": "S0_02_D000_GRAPH",
+    "run_id": "S0_02",
+    "index": 2,
+    "seed_offset": 20000,
+    "request_0_seed": 20101,
+    "request_0_ddpm_seed": 20102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_02_D000_GRAPH",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 139.40738102799514,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_02_D000_GRAPH.json",
+    "control_ticks": 227,
+    "mean_curvature_above8_fraction": 0.0,
+    "actual_omega_clipped_fraction": 0.01762114537444934,
+    "endpoint_clamp_fraction_common": 0.09691629955947137,
+    "minimum_obstacle_clearance_m": 0.09243319960433383,
+    "all_control_abs_dw": {
+      "n": 226,
+      "median": 0.02474231755390846,
+      "p95": 0.37755095380076564,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 33
+  },
+  {
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim",
+    "method": "GRAPH",
+    "classification": "SUCCESS",
+    "success": true,
+    "technical_failure": false,
+    "goal_entry": true,
+    "goal_time_s": 25.916666666666668,
+    "termination_reason": "goal_entry",
+    "duration_s": 25.916666666666668,
+    "distance_m": 4.634658969993875,
+    "stop_time_s": 1.1111111111111092,
+    "mean_speed_m_s": 0.17882928501584083,
+    "moving_mean_speed_m_s": 0.18683955534129842,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "minimum_corridor_clearance_m": 0.8103324684602926,
+    "margin_violation_s": 0,
+    "max_pose_replay_error": 0.0,
+    "w_clipping_fraction": 0.03418803418803419,
+    "execution_git_sha": "503f556841ddf91bc3b74e9760a8cfbd019aff21",
+    "StaticObstacle1_minimum_clearance_m": 0.1177466436025623,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle2_minimum_clearance_m": 0.0721718794757383,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "label": "PHASE3_STAGE2_SELECTED_S0",
+    "technical_validation": "PASS",
+    "delay_s": 0.0,
+    "max_abs_y_m": 0.5996675241285284,
+    "failure": null,
+    "final_pose": [
+      4.206752658454161,
+      -0.058981844002208204,
+      0.31766129386104147
+    ],
+    "final_goal_distance_m": 0.2991201451684634,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 99,
+        "median": 0.024999999828576716,
+        "p95": 0.03611111066842299,
+        "min": 0.00786686106386936,
+        "max": 0.04083082644148539
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 99,
+        "median": 0.01981957732364803,
+        "p95": 0.07222222222222197,
+        "min": 4.158389549413499e-05,
+        "max": 0.08333333333333304
+      },
+      "staleness": {
+        "n": 99,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "abs_dw": {
+        "n": 99,
+        "median": 0.12126106128582792,
+        "p95": 0.5373183363839128,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 99,
+        "median": 0.138183698,
+        "p95": 0.1664577243,
+        "min": 0.083499354,
+        "max": 0.19413431
+      }
+    },
+    "endpoint_clamped_ticks": 21,
+    "endpoint_clamp_fraction": 0.08974358974358974,
+    "endpoint_clamp_valid_fraction": 0.09375,
+    "valid_pp_control_ticks": 224,
+    "curvature_saturated_ticks": 2,
+    "curvature_saturated_fraction": 0.008547008547008548,
+    "received_interval_wall_s": {
+      "n": 99,
+      "median": 0.249826563,
+      "p95": 0.2653178,
+      "min": 0.169106242,
+      "max": 0.327613339
+    },
+    "actual_delivery_delay_s": {
+      "n": 100,
+      "median": 1.08005e-05,
+      "p95": 1.73875e-05,
+      "min": 9.057e-06,
+      "max": 2.2243e-05
+    },
+    "warm_inference_ms": {
+      "n": 99,
+      "median": 35.155772,
+      "p95": 41.040872099999945,
+      "min": 30.785359,
+      "max": 52.288724
+    },
+    "observation_to_ready_wall_s": {
+      "n": 100,
+      "median": 0.072152599,
+      "p95": 0.09012018819999999,
+      "min": 0.065655686,
+      "max": 0.316645234
+    },
+    "observation_to_release_wall_s": {
+      "n": 100,
+      "median": 0.074206033,
+      "p95": 0.09199209655,
+      "min": 0.067716584,
+      "max": 0.334169113
+    },
+    "busy_skips": 1,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 100,
+    "switch_count": 100,
+    "unswitched_ids": [],
+    "pacing_error_s": {
+      "n": 1867,
+      "median": 0.00010094,
+      "p95": 0.00015410130000000001,
+      "min": 4.7604e-05,
+      "max": 0.001406168
+    },
+    "navigation_wall_s": 25.916747127,
+    "wall_simulation_ratio": 1.000003104578778,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 104,
+    "flag_counts": {
+      "CURVATURE_SATURATED": 2,
+      "ACCEL_LIMITED": 15,
+      "OMEGA_CLIPPED": 8
+    },
+    "flag_fraction": {
+      "CURVATURE_SATURATED": 0.008547008547008548,
+      "ACCEL_LIMITED": 0.0641025641025641,
+      "OMEGA_CLIPPED": 0.03418803418803419
+    },
+    "graph": {
+      "calls": 100,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 1,
+        "ACCEPTED": 83,
+        "SUPERSEDED": 9,
+        "NONCONVERGED": 6
+      },
+      "terminal_unapplied": 1,
+      "correction_abs_dw": {
+        "n": 83,
+        "median": 0.0184459781904777,
+        "p95": 0.07069009566508529,
+        "min": 0.0,
+        "max": 0.08293532444270829
+      },
+      "solver_time_s": {
+        "n": 98,
+        "median": 0.05687084500095807,
+        "p95": 0.1310193860903382,
+        "min": 0.048793512978591025,
+        "max": 0.18792431300971657
+      },
+      "processing_time_s": {
+        "n": 99,
+        "median": 0.058625154,
+        "p95": 0.1325437235,
+        "min": 0.022920842,
+        "max": 0.189244736
+      },
+      "queue_wait_s": {
+        "n": 99,
+        "median": 0.000312558,
+        "p95": 0.00042470899999999995,
+        "min": 0.00020927,
+        "max": 0.000485407
+      },
+      "movement_during_processing_and_wait_m": {
+        "n": 99,
+        "median": 0.022222218428440417,
+        "p95": 0.04444444069161435,
+        "min": 0.00572135350099528,
+        "max": 0.044444444395471204
+      },
+      "independent_nonconverged": 6,
+      "independent_constraint_failure": 5,
+      "stale_flags": 0,
+      "corrected_control_ticks": 102,
+      "corrected_valid_tick_fraction": 0.45535714285714285,
+      "corrected_fresh_fraction": 0.83
+    },
+    "switch_sign_reversals": 30,
+    "key": "S0_03_D000_GRAPH",
+    "run_id": "S0_03",
+    "index": 3,
+    "seed_offset": 30000,
+    "request_0_seed": 30101,
+    "request_0_ddpm_seed": 30102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/S0_03_D000_GRAPH",
+    "launcher_exit_code": 0,
+    "launch_and_audit_wall_s": 141.47385078301886,
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_stage2_s0_01/metrics/S0_03_D000_GRAPH.json",
+    "control_ticks": 234,
+    "mean_curvature_above8_fraction": 0.008547008547008548,
+    "actual_omega_clipped_fraction": 0.03418803418803419,
+    "endpoint_clamp_fraction_common": 0.08974358974358974,
+    "minimum_obstacle_clearance_m": 0.0721718794757383,
+    "all_control_abs_dw": {
+      "n": 233,
+      "median": 0.02818628317796827,
+      "p95": 0.3347022180668776,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 37
+  },
+  {
+    "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+    "run_id": "S0_01",
+    "condition": "D750",
+    "seed_offset": 10000,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_01_D750",
+    "legacy_preflight_only": false,
+    "execution_git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "runtime_config_sha256": "f7310df32d8581a650e6d8fe088c0c0743e5bce751bc371c6c81f36a51be8d20",
+    "topomap_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "classification": "STUCK",
+    "termination_reason": "simulation_timeout",
+    "technical_failure": false,
+    "success": false,
+    "safety_failure": false,
+    "goal_entry": false,
+    "timeout": true,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "corridor_minimum_exact_arc_m": 0.52757920188252,
+    "corridor_containment_certified": true,
+    "goal_time_s": null,
+    "duration_s": 90.0,
+    "stop_time_s": 3.3333333333333237,
+    "distance_m": 17.33331586905795,
+    "margin_violation_s": 0,
+    "switch_abs_dw_median": 0.37874680866052013,
+    "switch_abs_dw_max": 0.8,
+    "switch_sign_reversals": 46,
+    "w_clipping_fraction": 0.7148148148148148,
+    "w_clipped_ticks": 579,
+    "control_ticks": 810,
+    "switch_pairs": 88,
+    "max_pose_replay_error": 0.0,
+    "requests": 90,
+    "StaticObstacle1_minimum_clearance_m": 0.06588265005438795,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle1_pass_plus_y": 1,
+    "StaticObstacle1_pass_minus_y": 0,
+    "StaticObstacle1_not_passed": 0,
+    "StaticObstacle2_minimum_clearance_m": 0.10962761047298414,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "StaticObstacle2_pass_plus_y": 0,
+    "StaticObstacle2_pass_minus_y": 1,
+    "StaticObstacle2_not_passed": 0,
+    "label": "PHASE3_STAGE1_S0_DELAY",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.8824194893739523,
+    "failure": null,
+    "final_pose": [
+      1.8781880706881497,
+      0.40961188440416746,
+      -0.6598231974428082
+    ],
+    "final_goal_distance_m": 2.6536163416227034,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 88,
+        "median": 0.18055532335971675,
+        "p95": 0.18611092406507457,
+        "min": 0.11944441179713669,
+        "max": 0.19166642018185098
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 88,
+        "median": 0.36111111111110983,
+        "p95": 0.3722222222222209,
+        "min": 0.009475354684563175,
+        "max": 0.38333333333333197
+      },
+      "staleness": {
+        "n": 88,
+        "median": 0.3437877542947174,
+        "p95": 0.5942737591108919,
+        "min": 0.1088304473856974,
+        "max": 0.9635011111472229
+      },
+      "abs_dw": {
+        "n": 88,
+        "median": 0.37874680866052013,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 88,
+        "median": 0.8888742629999999,
+        "p95": 0.94426772635,
+        "min": 0.833496846,
+        "max": 1.055057314
+      }
+    },
+    "endpoint_clamped_ticks": 691,
+    "endpoint_clamp_fraction": 0.8530864197530864,
+    "endpoint_clamp_valid_fraction": 0.8780177890724269,
+    "valid_pp_control_ticks": 787,
+    "curvature_saturated_ticks": 579,
+    "curvature_saturated_fraction": 0.7148148148148148,
+    "received_interval_wall_s": {
+      "n": 89,
+      "median": 0.999229025,
+      "p95": 1.060629783,
+      "min": 0.804629167,
+      "max": 1.125362179
+    },
+    "actual_delivery_delay_s": {
+      "n": 90,
+      "median": 0.750072441,
+      "p95": 0.7501014818,
+      "min": 0.750025612,
+      "max": 0.750293801
+    },
+    "warm_inference_ms": {
+      "n": 89,
+      "median": 35.048237,
+      "p95": 45.57962859999994,
+      "min": 30.282552,
+      "max": 53.876371
+    },
+    "observation_to_ready_wall_s": {
+      "n": 90,
+      "median": 0.0766832875,
+      "p95": 0.13723100365,
+      "min": 0.066361047,
+      "max": 0.318530759
+    },
+    "observation_to_release_wall_s": {
+      "n": 90,
+      "median": 0.8287417285,
+      "p95": 0.889517394,
+      "min": 0.818272127,
+      "max": 1.085841579
+    },
+    "busy_skips": 267,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 5,
+    "receive_count": 90,
+    "switch_count": 89,
+    "unswitched_ids": [
+      89
+    ],
+    "pacing_error_s": {
+      "n": 6481,
+      "median": 9.978e-05,
+      "p95": 0.000154277,
+      "min": 4.8938e-05,
+      "max": 0.001400604
+    },
+    "navigation_wall_s": 90.000588186,
+    "wall_simulation_ratio": 1.0000065354,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 361,
+    "key": "S0_01_D750",
+    "index": 1,
+    "request_0_seed": 10101,
+    "request_0_ddpm_seed": 10102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_01_D750",
+    "launcher_exit_code": 0,
+    "method": "RAW",
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/metrics/S0_01_D750.json",
+    "mean_speed_m_s": 0.19259239854508836,
+    "mean_curvature_above8_fraction": 0.3333333333333333,
+    "actual_omega_clipped_fraction": 0.7148148148148148,
+    "endpoint_clamp_fraction_common": 0.8530864197530864,
+    "minimum_obstacle_clearance_m": 0.06588265005438795,
+    "all_control_abs_dw": {
+      "n": 809,
+      "median": 0.0,
+      "p95": 0.4,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 49
+  },
+  {
+    "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+    "run_id": "S0_02",
+    "condition": "D750",
+    "seed_offset": 20000,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_02_D750",
+    "legacy_preflight_only": false,
+    "execution_git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "runtime_config_sha256": "5692cfab66ffce2094fb32f2b31f965be723d6bf9ef5432f9a683bfa4a939c6b",
+    "topomap_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "classification": "SUCCESS",
+    "termination_reason": "goal_entry",
+    "technical_failure": false,
+    "success": true,
+    "safety_failure": false,
+    "goal_entry": true,
+    "timeout": false,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "corridor_minimum_exact_arc_m": 0.7651654185384695,
+    "corridor_containment_certified": true,
+    "goal_time_s": 27.25,
+    "duration_s": 27.25,
+    "stop_time_s": 2.6666666666666594,
+    "distance_m": 4.9166619603566994,
+    "margin_violation_s": 0,
+    "switch_abs_dw_median": 0.4,
+    "switch_abs_dw_max": 0.8,
+    "switch_sign_reversals": 11,
+    "w_clipping_fraction": 0.6016260162601627,
+    "w_clipped_ticks": 148,
+    "control_ticks": 246,
+    "switch_pairs": 25,
+    "max_pose_replay_error": 0.0,
+    "requests": 27,
+    "StaticObstacle1_minimum_clearance_m": 0.23614275080953687,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle1_pass_plus_y": 1,
+    "StaticObstacle1_pass_minus_y": 0,
+    "StaticObstacle1_not_passed": 0,
+    "StaticObstacle2_minimum_clearance_m": 0.1675832573810266,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "StaticObstacle2_pass_plus_y": 0,
+    "StaticObstacle2_pass_minus_y": 1,
+    "StaticObstacle2_not_passed": 0,
+    "label": "PHASE3_STAGE1_S0_DELAY",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 0.6448341432057203,
+    "failure": null,
+    "final_pose": [
+      4.271023058311878,
+      -0.19306150239028572,
+      0.31223781749446733
+    ],
+    "final_goal_distance_m": 0.299504897338992,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 25,
+        "median": 0.18055532335971478,
+        "p95": 0.18055554527065817,
+        "min": 0.06944439233377883,
+        "max": 0.18055555544219418
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 25,
+        "median": 0.36111111111110983,
+        "p95": 0.36111111111110983,
+        "min": 0.0032945399812258636,
+        "max": 0.36111111111110983
+      },
+      "staleness": {
+        "n": 25,
+        "median": 0.35658840033618017,
+        "p95": 0.5609681867634464,
+        "min": 0.12062532774920076,
+        "max": 0.6102032159545837
+      },
+      "abs_dw": {
+        "n": 25,
+        "median": 0.4,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 25,
+        "median": 0.88859162,
+        "p95": 0.8888208926000001,
+        "min": 0.888135082,
+        "max": 0.889411196
+      }
+    },
+    "endpoint_clamped_ticks": 196,
+    "endpoint_clamp_fraction": 0.7967479674796748,
+    "endpoint_clamp_valid_fraction": 0.8558951965065502,
+    "valid_pp_control_ticks": 229,
+    "curvature_saturated_ticks": 148,
+    "curvature_saturated_fraction": 0.6016260162601627,
+    "received_interval_wall_s": {
+      "n": 26,
+      "median": 0.9980684875,
+      "p95": 1.0178533832499999,
+      "min": 0.935732162,
+      "max": 1.063928416
+    },
+    "actual_delivery_delay_s": {
+      "n": 27,
+      "median": 0.750071646,
+      "p95": 0.7500957663,
+      "min": 0.750054907,
+      "max": 0.75010248
+    },
+    "warm_inference_ms": {
+      "n": 26,
+      "median": 35.8513545,
+      "p95": 51.972701,
+      "min": 31.704843,
+      "max": 53.385328
+    },
+    "observation_to_ready_wall_s": {
+      "n": 27,
+      "median": 0.073335184,
+      "p95": 0.12040566469999997,
+      "min": 0.068730241,
+      "max": 0.319551909
+    },
+    "observation_to_release_wall_s": {
+      "n": 27,
+      "median": 0.825395729,
+      "p95": 0.8726235805,
+      "min": 0.820692754,
+      "max": 1.087863029
+    },
+    "busy_skips": 79,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 27,
+    "switch_count": 26,
+    "unswitched_ids": [
+      26
+    ],
+    "pacing_error_s": {
+      "n": 1963,
+      "median": 9.9375e-05,
+      "p95": 0.0001529792,
+      "min": 5.2475e-05,
+      "max": 0.001473922
+    },
+    "navigation_wall_s": 27.250102644,
+    "wall_simulation_ratio": 1.0000037667522934,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 110,
+    "key": "S0_02_D750",
+    "index": 2,
+    "request_0_seed": 20101,
+    "request_0_ddpm_seed": 20102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_02_D750",
+    "launcher_exit_code": 0,
+    "method": "RAW",
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/metrics/S0_02_D750.json",
+    "mean_speed_m_s": 0.18042796184795226,
+    "mean_curvature_above8_fraction": 0.2926829268292683,
+    "actual_omega_clipped_fraction": 0.6016260162601627,
+    "endpoint_clamp_fraction_common": 0.7967479674796748,
+    "minimum_obstacle_clearance_m": 0.1675832573810266,
+    "all_control_abs_dw": {
+      "n": 245,
+      "median": 0.0,
+      "p95": 0.4,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 12
+  },
+  {
+    "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+    "run_id": "S0_03",
+    "condition": "D750",
+    "seed_offset": 30000,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_03_D750",
+    "legacy_preflight_only": false,
+    "execution_git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "runtime_config_sha256": "a60a8f27d40c96b81102ba820a871c71e32f2b235886ae073ea706b93da35213",
+    "topomap_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "classification": "SAFETY_FAILURE",
+    "termination_reason": "corridor_footprint_stop",
+    "technical_failure": false,
+    "success": false,
+    "safety_failure": true,
+    "goal_entry": false,
+    "timeout": false,
+    "geometric_overlap": false,
+    "corridor_violation": true,
+    "corridor_minimum_exact_arc_m": -0.0004524457200695553,
+    "corridor_containment_certified": false,
+    "goal_time_s": null,
+    "duration_s": 64.93055555555556,
+    "stop_time_s": 2.111111111111106,
+    "distance_m": 12.563875722256535,
+    "margin_violation_s": 0,
+    "switch_abs_dw_median": 0.37296802731401135,
+    "switch_abs_dw_max": 0.8,
+    "switch_sign_reversals": 33,
+    "w_clipping_fraction": 0.6752136752136753,
+    "w_clipped_ticks": 395,
+    "control_ticks": 585,
+    "switch_pairs": 63,
+    "max_pose_replay_error": 0.0,
+    "requests": 65,
+    "StaticObstacle1_minimum_clearance_m": 0.2639803512588943,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle1_pass_plus_y": 1,
+    "StaticObstacle1_pass_minus_y": 0,
+    "StaticObstacle1_not_passed": 0,
+    "StaticObstacle2_minimum_clearance_m": 0.464729963974581,
+    "StaticObstacle2_passage_side": "not_passed",
+    "StaticObstacle2_pass_plus_y": 0,
+    "StaticObstacle2_pass_minus_y": 0,
+    "StaticObstacle2_not_passed": 1,
+    "label": "PHASE3_STAGE1_S0_DELAY",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 1.4104524457200696,
+    "failure": {
+      "tick": 4675,
+      "simulation_time_s": 64.93055555555556,
+      "pose": [
+        1.8214559952845433,
+        -1.4104524457200696,
+        -2.429470701327097
+      ],
+      "causes": [
+        "right_wall_negative_y"
+      ]
+    },
+    "final_pose": [
+      1.8214559952845433,
+      -1.4104524457200696,
+      -2.429470701327097
+    ],
+    "final_goal_distance_m": 3.0272056565147407,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 63,
+        "median": 0.18611087177078253,
+        "p95": 0.18611110295137404,
+        "min": 0.16388870261197191,
+        "max": 0.19166642018185187
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 63,
+        "median": 0.36666666666666536,
+        "p95": 0.3722222222222209,
+        "min": 0.013340480040744396,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 63,
+        "median": 0.33519389621864926,
+        "p95": 0.6179537688928215,
+        "min": 0.20101783877786877,
+        "max": 0.8948056749932188
+      },
+      "abs_dw": {
+        "n": 63,
+        "median": 0.37296802731401135,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 63,
+        "median": 0.916170331,
+        "p95": 0.9166978692000001,
+        "min": 0.833383659,
+        "max": 0.944133288
+      }
+    },
+    "endpoint_clamped_ticks": 474,
+    "endpoint_clamp_fraction": 0.8102564102564103,
+    "endpoint_clamp_valid_fraction": 0.8359788359788359,
+    "valid_pp_control_ticks": 567,
+    "curvature_saturated_ticks": 395,
+    "curvature_saturated_fraction": 0.6752136752136753,
+    "received_interval_wall_s": {
+      "n": 64,
+      "median": 0.999914478,
+      "p95": 1.0188692387,
+      "min": 0.795189472,
+      "max": 1.057751477
+    },
+    "actual_delivery_delay_s": {
+      "n": 65,
+      "median": 0.750072206,
+      "p95": 0.7500969484,
+      "min": 0.75002412,
+      "max": 0.750103999
+    },
+    "warm_inference_ms": {
+      "n": 64,
+      "median": 35.7605155,
+      "p95": 51.0506641,
+      "min": 31.675985,
+      "max": 53.702593
+    },
+    "observation_to_ready_wall_s": {
+      "n": 65,
+      "median": 0.072361361,
+      "p95": 0.13124728859999998,
+      "min": 0.065902493,
+      "max": 0.311406056
+    },
+    "observation_to_release_wall_s": {
+      "n": 65,
+      "median": 0.824628223,
+      "p95": 0.8832719276000001,
+      "min": 0.817971836,
+      "max": 1.078881951
+    },
+    "busy_skips": 192,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 1,
+    "receive_count": 65,
+    "switch_count": 64,
+    "unswitched_ids": [
+      64
+    ],
+    "pacing_error_s": {
+      "n": 4676,
+      "median": 9.826999999999999e-05,
+      "p95": 0.000153381,
+      "min": 3.182e-05,
+      "max": 0.001644981
+    },
+    "navigation_wall_s": 64.930709428,
+    "wall_simulation_ratio": 1.0000023698002138,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 260,
+    "key": "S0_03_D750",
+    "index": 3,
+    "request_0_seed": 30101,
+    "request_0_ddpm_seed": 30102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_03_D750",
+    "launcher_exit_code": 0,
+    "method": "RAW",
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/metrics/S0_03_D750.json",
+    "mean_speed_m_s": 0.19349712342298833,
+    "mean_curvature_above8_fraction": 0.29572649572649573,
+    "actual_omega_clipped_fraction": 0.6752136752136753,
+    "endpoint_clamp_fraction_common": 0.8102564102564103,
+    "minimum_obstacle_clearance_m": 0.2639803512588943,
+    "all_control_abs_dw": {
+      "n": 584,
+      "median": 0.0,
+      "p95": 0.3865837867680017,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 33
+  },
+  {
+    "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+    "run_id": "S0_04",
+    "condition": "D750",
+    "seed_offset": 40000,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_04_D750",
+    "legacy_preflight_only": false,
+    "execution_git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "runtime_config_sha256": "d124c4c782fa09be286c9201ff5370f1c9324bf1da04f5e36a0bd557fbe46758",
+    "topomap_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "classification": "SAFETY_FAILURE",
+    "termination_reason": "corridor_footprint_stop",
+    "technical_failure": false,
+    "success": false,
+    "safety_failure": true,
+    "goal_entry": false,
+    "timeout": false,
+    "geometric_overlap": false,
+    "corridor_violation": true,
+    "corridor_minimum_exact_arc_m": -0.002214901864608848,
+    "corridor_containment_certified": false,
+    "goal_time_s": null,
+    "duration_s": 36.791666666666664,
+    "stop_time_s": 3.666666666666656,
+    "distance_m": 6.6249926552140925,
+    "margin_violation_s": 0.20833333333333925,
+    "switch_abs_dw_median": 0.42905706453815234,
+    "switch_abs_dw_max": 0.8,
+    "switch_sign_reversals": 18,
+    "w_clipping_fraction": 0.7379518072289156,
+    "w_clipped_ticks": 245,
+    "control_ticks": 332,
+    "switch_pairs": 35,
+    "max_pose_replay_error": 0.0,
+    "requests": 37,
+    "StaticObstacle1_minimum_clearance_m": 0.15825113034281008,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle1_pass_plus_y": 1,
+    "StaticObstacle1_pass_minus_y": 0,
+    "StaticObstacle1_not_passed": 0,
+    "StaticObstacle2_minimum_clearance_m": 0.01832443958646402,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "StaticObstacle2_pass_plus_y": 0,
+    "StaticObstacle2_pass_minus_y": 1,
+    "StaticObstacle2_not_passed": 0,
+    "label": "PHASE3_STAGE1_S0_DELAY",
+    "technical_validation": "PASS",
+    "delay_s": 0.75,
+    "max_abs_y_m": 1.4122149018646089,
+    "failure": {
+      "tick": 2649,
+      "simulation_time_s": 36.791666666666664,
+      "pose": [
+        5.192568139071114,
+        1.4122149018646089,
+        1.2967781975349615
+      ],
+      "causes": [
+        "left_wall_positive_y"
+      ]
+    },
+    "final_pose": [
+      5.192568139071114,
+      1.4122149018646089,
+      1.2967781975349615
+    ],
+    "final_goal_distance_m": 1.572895914008582,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 35,
+        "median": 0.18611087177078256,
+        "p95": 0.1933331142649077,
+        "min": 0.0,
+        "max": 0.19722204082214737
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 35,
+        "median": 0.3719130420545089,
+        "p95": 0.3722222222222209,
+        "min": 0.0,
+        "max": 0.3722222222222209
+      },
+      "staleness": {
+        "n": 35,
+        "median": 0.3656043891194564,
+        "p95": 0.9109400211669104,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "abs_dw": {
+        "n": 35,
+        "median": 0.42905706453815234,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 35,
+        "median": 0.916250008,
+        "p95": 0.9526181965999999,
+        "min": 0.833226345,
+        "max": 0.972164852
+      }
+    },
+    "endpoint_clamped_ticks": 286,
+    "endpoint_clamp_fraction": 0.8614457831325302,
+    "endpoint_clamp_valid_fraction": 0.910828025477707,
+    "valid_pp_control_ticks": 314,
+    "curvature_saturated_ticks": 245,
+    "curvature_saturated_fraction": 0.7379518072289156,
+    "received_interval_wall_s": {
+      "n": 36,
+      "median": 0.997560157,
+      "p95": 1.0483907895,
+      "min": 0.815667166,
+      "max": 1.067001255
+    },
+    "actual_delivery_delay_s": {
+      "n": 37,
+      "median": 0.750073516,
+      "p95": 0.7500970276,
+      "min": 0.750049206,
+      "max": 0.750107935
+    },
+    "warm_inference_ms": {
+      "n": 36,
+      "median": 34.6300825,
+      "p95": 51.64161825,
+      "min": 30.016746,
+      "max": 55.403666
+    },
+    "observation_to_ready_wall_s": {
+      "n": 37,
+      "median": 0.072221939,
+      "p95": 0.13822136679999994,
+      "min": 0.064225954,
+      "max": 0.305741924
+    },
+    "observation_to_release_wall_s": {
+      "n": 37,
+      "median": 0.824196216,
+      "p95": 0.8903419669999999,
+      "min": 0.816673377,
+      "max": 1.073033632
+    },
+    "busy_skips": 108,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 1,
+    "receive_count": 37,
+    "switch_count": 36,
+    "unswitched_ids": [
+      36
+    ],
+    "pacing_error_s": {
+      "n": 2650,
+      "median": 9.868950000000001e-05,
+      "p95": 0.00015264079999999998,
+      "min": 4.2862e-05,
+      "max": 0.001354483
+    },
+    "navigation_wall_s": 36.791767601,
+    "wall_simulation_ratio": 1.0000027434020384,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 148,
+    "key": "S0_04_D750",
+    "index": 4,
+    "request_0_seed": 40101,
+    "request_0_ddpm_seed": 40102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_04_D750",
+    "launcher_exit_code": 0,
+    "method": "RAW",
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/metrics/S0_04_D750.json",
+    "mean_speed_m_s": 0.1800677505380954,
+    "mean_curvature_above8_fraction": 0.3855421686746988,
+    "actual_omega_clipped_fraction": 0.7379518072289156,
+    "endpoint_clamp_fraction_common": 0.8614457831325302,
+    "minimum_obstacle_clearance_m": 0.01832443958646402,
+    "all_control_abs_dw": {
+      "n": 331,
+      "median": 0.0,
+      "p95": 0.44965259612560005,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 18
+  },
+  {
+    "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+    "run_id": "S0_01",
+    "condition": "D0",
+    "seed_offset": 10000,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_01_D000",
+    "legacy_preflight_only": false,
+    "execution_git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "runtime_config_sha256": "f7310df32d8581a650e6d8fe088c0c0743e5bce751bc371c6c81f36a51be8d20",
+    "topomap_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "classification": "SUCCESS",
+    "termination_reason": "goal_entry",
+    "technical_failure": false,
+    "success": true,
+    "safety_failure": false,
+    "goal_entry": true,
+    "timeout": false,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "corridor_minimum_exact_arc_m": 0.7998945723000471,
+    "corridor_containment_certified": true,
+    "goal_time_s": 24.23611111111111,
+    "duration_s": 24.23611111111111,
+    "stop_time_s": 1.1111111111111092,
+    "distance_m": 4.6249981740660795,
+    "margin_violation_s": 0,
+    "switch_abs_dw_median": 0.12909442913118527,
+    "switch_abs_dw_max": 0.6699248210399689,
+    "switch_sign_reversals": 17,
+    "w_clipping_fraction": 0.1324200913242009,
+    "w_clipped_ticks": 29,
+    "control_ticks": 219,
+    "switch_pairs": 92,
+    "max_pose_replay_error": 0.0,
+    "requests": 93,
+    "StaticObstacle1_minimum_clearance_m": 0.1427157077079819,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle1_pass_plus_y": 1,
+    "StaticObstacle1_pass_minus_y": 0,
+    "StaticObstacle1_not_passed": 0,
+    "StaticObstacle2_minimum_clearance_m": 0.042323388800954036,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "StaticObstacle2_pass_plus_y": 0,
+    "StaticObstacle2_pass_minus_y": 1,
+    "StaticObstacle2_not_passed": 0,
+    "label": "PHASE3_STAGE1_S0_DELAY",
+    "technical_validation": "PASS",
+    "delay_s": 0,
+    "max_abs_y_m": 0.6101049746270644,
+    "failure": null,
+    "final_pose": [
+      4.20441577220769,
+      -0.04185768228871069,
+      0.22666283066991877
+    ],
+    "final_goal_distance_m": 0.2985332498837591,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 92,
+        "median": 0.03055553893709035,
+        "p95": 0.04166665350613818,
+        "min": 0.01944441943873809,
+        "max": 0.0472221897992347
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 92,
+        "median": 0.02190796317872068,
+        "p95": 0.07222222222222197,
+        "min": 0.0007648957680199686,
+        "max": 0.09444444444444411
+      },
+      "staleness": {
+        "n": 92,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "abs_dw": {
+        "n": 92,
+        "median": 0.12909442913118527,
+        "p95": 0.41408510200206367,
+        "min": 0.0,
+        "max": 0.6699248210399689
+      },
+      "observation_to_switch_wall_s": {
+        "n": 92,
+        "median": 0.138359614,
+        "p95": 0.1939557077,
+        "min": 0.08345563,
+        "max": 0.221900897
+      }
+    },
+    "endpoint_clamped_ticks": 11,
+    "endpoint_clamp_fraction": 0.0502283105022831,
+    "endpoint_clamp_valid_fraction": 0.05263157894736842,
+    "valid_pp_control_ticks": 209,
+    "curvature_saturated_ticks": 29,
+    "curvature_saturated_fraction": 0.1324200913242009,
+    "received_interval_wall_s": {
+      "n": 92,
+      "median": 0.250125532,
+      "p95": 0.31063861145,
+      "min": 0.184826059,
+      "max": 0.314714492
+    },
+    "actual_delivery_delay_s": {
+      "n": 93,
+      "median": 1.1021e-05,
+      "p95": 1.582419999999997e-05,
+      "min": 9.468e-06,
+      "max": 2.097e-05
+    },
+    "warm_inference_ms": {
+      "n": 92,
+      "median": 35.7678885,
+      "p95": 43.61035185000003,
+      "min": 31.648277,
+      "max": 52.972123
+    },
+    "observation_to_ready_wall_s": {
+      "n": 93,
+      "median": 0.073648789,
+      "p95": 0.1347775428,
+      "min": 0.067388863,
+      "max": 0.309691495
+    },
+    "observation_to_release_wall_s": {
+      "n": 93,
+      "median": 0.075526552,
+      "p95": 0.13674278399999998,
+      "min": 0.069418508,
+      "max": 0.325714349
+    },
+    "busy_skips": 1,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 93,
+    "switch_count": 93,
+    "unswitched_ids": [],
+    "pacing_error_s": {
+      "n": 1746,
+      "median": 9.835249999999999e-05,
+      "p95": 0.000148984,
+      "min": 4.682e-05,
+      "max": 0.00141228
+    },
+    "navigation_wall_s": 24.236229566,
+    "wall_simulation_ratio": 1.0000048875369627,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 97,
+    "key": "S0_01_D000",
+    "index": 1,
+    "request_0_seed": 10101,
+    "request_0_ddpm_seed": 10102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_01_D000",
+    "launcher_exit_code": 0,
+    "method": "RAW",
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/metrics/S0_01_D000.json",
+    "mean_speed_m_s": 0.19083087021934542,
+    "mean_curvature_above8_fraction": 0.0,
+    "actual_omega_clipped_fraction": 0.1324200913242009,
+    "endpoint_clamp_fraction_common": 0.0502283105022831,
+    "minimum_obstacle_clearance_m": 0.042323388800954036,
+    "all_control_abs_dw": {
+      "n": 218,
+      "median": 0.002377005623537997,
+      "p95": 0.3235808433115513,
+      "min": 0.0,
+      "max": 0.6699248210399689
+    },
+    "all_control_sign_reversals": 17
+  },
+  {
+    "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+    "run_id": "S0_02",
+    "condition": "D0",
+    "seed_offset": 20000,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_02_D000",
+    "legacy_preflight_only": false,
+    "execution_git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "runtime_config_sha256": "5692cfab66ffce2094fb32f2b31f965be723d6bf9ef5432f9a683bfa4a939c6b",
+    "topomap_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "classification": "SUCCESS",
+    "termination_reason": "goal_entry",
+    "technical_failure": false,
+    "success": true,
+    "safety_failure": false,
+    "goal_entry": true,
+    "timeout": false,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "corridor_minimum_exact_arc_m": 0.8157163864593223,
+    "corridor_containment_certified": true,
+    "goal_time_s": 24.208333333333332,
+    "duration_s": 24.208333333333332,
+    "stop_time_s": 1.1111111111111092,
+    "distance_m": 4.619442697249602,
+    "margin_violation_s": 0,
+    "switch_abs_dw_median": 0.10127737851898516,
+    "switch_abs_dw_max": 0.5352636912822708,
+    "switch_sign_reversals": 19,
+    "w_clipping_fraction": 0.11926605504587157,
+    "w_clipped_ticks": 26,
+    "control_ticks": 218,
+    "switch_pairs": 92,
+    "max_pose_replay_error": 0.0,
+    "requests": 93,
+    "StaticObstacle1_minimum_clearance_m": 0.0963481730848358,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle1_pass_plus_y": 1,
+    "StaticObstacle1_pass_minus_y": 0,
+    "StaticObstacle1_not_passed": 0,
+    "StaticObstacle2_minimum_clearance_m": 0.062120048021299945,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "StaticObstacle2_pass_plus_y": 0,
+    "StaticObstacle2_pass_minus_y": 1,
+    "StaticObstacle2_not_passed": 0,
+    "label": "PHASE3_STAGE1_S0_DELAY",
+    "technical_validation": "PASS",
+    "delay_s": 0,
+    "max_abs_y_m": 0.5942826856392581,
+    "failure": null,
+    "final_pose": [
+      4.207805035328441,
+      -0.05561044890558732,
+      0.11597477752637797
+    ],
+    "final_goal_distance_m": 0.2974397744197882,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 92,
+        "median": 0.030555523462344063,
+        "p95": 0.0361111109917821,
+        "min": 0.01944441943873852,
+        "max": 0.04166666586884263
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 92,
+        "median": 0.020404116986085574,
+        "p95": 0.07222222222222197,
+        "min": 4.732812251928564e-05,
+        "max": 0.08333333333333304
+      },
+      "staleness": {
+        "n": 92,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.04813122314426662
+      },
+      "abs_dw": {
+        "n": 92,
+        "median": 0.10127737851898516,
+        "p95": 0.30782997987046423,
+        "min": 0.0,
+        "max": 0.5352636912822708
+      },
+      "observation_to_switch_wall_s": {
+        "n": 92,
+        "median": 0.13812382,
+        "p95": 0.16648654135,
+        "min": 0.083077971,
+        "max": 0.193974391
+      }
+    },
+    "endpoint_clamped_ticks": 9,
+    "endpoint_clamp_fraction": 0.04128440366972477,
+    "endpoint_clamp_valid_fraction": 0.04326923076923077,
+    "valid_pp_control_ticks": 208,
+    "curvature_saturated_ticks": 26,
+    "curvature_saturated_fraction": 0.11926605504587157,
+    "received_interval_wall_s": {
+      "n": 92,
+      "median": 0.2502196995,
+      "p95": 0.26532590125,
+      "min": 0.1726769,
+      "max": 0.327729058
+    },
+    "actual_delivery_delay_s": {
+      "n": 93,
+      "median": 1.076e-05,
+      "p95": 1.7474999999999998e-05,
+      "min": 8.877e-06,
+      "max": 1.8725e-05
+    },
+    "warm_inference_ms": {
+      "n": 92,
+      "median": 35.2776825,
+      "p95": 44.39583845000003,
+      "min": 30.832395,
+      "max": 52.551274
+    },
+    "observation_to_ready_wall_s": {
+      "n": 93,
+      "median": 0.076655507,
+      "p95": 0.09215038359999995,
+      "min": 0.071367371,
+      "max": 0.316249936
+    },
+    "observation_to_release_wall_s": {
+      "n": 93,
+      "median": 0.078535532,
+      "p95": 0.09408915519999994,
+      "min": 0.073242464,
+      "max": 0.334521063
+    },
+    "busy_skips": 1,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 93,
+    "switch_count": 93,
+    "unswitched_ids": [],
+    "pacing_error_s": {
+      "n": 1744,
+      "median": 9.93415e-05,
+      "p95": 0.0001537355,
+      "min": 4.3451e-05,
+      "max": 0.001938436
+    },
+    "navigation_wall_s": 24.208482019,
+    "wall_simulation_ratio": 1.0000061419208264,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 97,
+    "key": "S0_02_D000",
+    "index": 2,
+    "request_0_seed": 20101,
+    "request_0_ddpm_seed": 20102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_02_D000",
+    "launcher_exit_code": 0,
+    "method": "RAW",
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/metrics/S0_02_D000.json",
+    "mean_speed_m_s": 0.19082035238208342,
+    "mean_curvature_above8_fraction": 0.0,
+    "actual_omega_clipped_fraction": 0.11926605504587157,
+    "endpoint_clamp_fraction_common": 0.04128440366972477,
+    "minimum_obstacle_clearance_m": 0.062120048021299945,
+    "all_control_abs_dw": {
+      "n": 217,
+      "median": 0.0027438556504067457,
+      "p95": 0.26838102356515137,
+      "min": 0.0,
+      "max": 0.5352636912822708
+    },
+    "all_control_sign_reversals": 19
+  },
+  {
+    "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+    "run_id": "S0_03",
+    "condition": "D0",
+    "seed_offset": 30000,
+    "source_run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_03_D000",
+    "legacy_preflight_only": false,
+    "execution_git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "runtime_config_sha256": "a60a8f27d40c96b81102ba820a871c71e32f2b235886ae073ea706b93da35213",
+    "topomap_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "classification": "SUCCESS",
+    "termination_reason": "goal_entry",
+    "technical_failure": false,
+    "success": true,
+    "safety_failure": false,
+    "goal_entry": true,
+    "timeout": false,
+    "geometric_overlap": false,
+    "corridor_violation": false,
+    "corridor_minimum_exact_arc_m": 0.8239675359686287,
+    "corridor_containment_certified": true,
+    "goal_time_s": 24.26388888888889,
+    "duration_s": 24.26388888888889,
+    "stop_time_s": 1.1111111111111092,
+    "distance_m": 4.630553521462766,
+    "margin_violation_s": 0,
+    "switch_abs_dw_median": 0.14239272992819835,
+    "switch_abs_dw_max": 0.8,
+    "switch_sign_reversals": 27,
+    "w_clipping_fraction": 0.1735159817351598,
+    "w_clipped_ticks": 38,
+    "control_ticks": 219,
+    "switch_pairs": 92,
+    "max_pose_replay_error": 0.0,
+    "requests": 93,
+    "StaticObstacle1_minimum_clearance_m": 0.12210919328915427,
+    "StaticObstacle1_passage_side": "left_positive_y",
+    "StaticObstacle1_pass_plus_y": 1,
+    "StaticObstacle1_pass_minus_y": 0,
+    "StaticObstacle1_not_passed": 0,
+    "StaticObstacle2_minimum_clearance_m": 0.08217633599247079,
+    "StaticObstacle2_passage_side": "right_negative_y",
+    "StaticObstacle2_pass_plus_y": 0,
+    "StaticObstacle2_pass_minus_y": 1,
+    "StaticObstacle2_not_passed": 0,
+    "label": "PHASE3_STAGE1_S0_DELAY",
+    "technical_validation": "PASS",
+    "delay_s": 0,
+    "max_abs_y_m": 0.5860316333476696,
+    "failure": null,
+    "final_pose": [
+      4.200916613215492,
+      -0.0020010972847924317,
+      0.14785424620858612
+    ],
+    "final_goal_distance_m": 0.2990900811475279,
+    "handoff_statistics": {
+      "A_B_distance_m": {
+        "n": 92,
+        "median": 0.027777758100960427,
+        "p95": 0.036111110973690186,
+        "min": 0.01666666657548275,
+        "max": 0.03611111109774024
+      },
+      "A_B_abs_yaw_rad": {
+        "n": 92,
+        "median": 0.02147486270723009,
+        "p95": 0.061111111111110894,
+        "min": 0.0004195667021322791,
+        "max": 0.07222222222222197
+      },
+      "staleness": {
+        "n": 92,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.13231651580833156
+      },
+      "abs_dw": {
+        "n": 92,
+        "median": 0.14239272992819835,
+        "p95": 0.5649703750184101,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "observation_to_switch_wall_s": {
+        "n": 92,
+        "median": 0.124612443,
+        "p95": 0.16633330095,
+        "min": 0.083220375,
+        "max": 0.166537399
+      }
+    },
+    "endpoint_clamped_ticks": 20,
+    "endpoint_clamp_fraction": 0.091324200913242,
+    "endpoint_clamp_valid_fraction": 0.09569377990430622,
+    "valid_pp_control_ticks": 209,
+    "curvature_saturated_ticks": 38,
+    "curvature_saturated_fraction": 0.1735159817351598,
+    "received_interval_wall_s": {
+      "n": 92,
+      "median": 0.2497778285,
+      "p95": 0.28085449725000006,
+      "min": 0.185480565,
+      "max": 0.313143397
+    },
+    "actual_delivery_delay_s": {
+      "n": 93,
+      "median": 1.0861e-05,
+      "p95": 1.746539999999999e-05,
+      "min": 9.367e-06,
+      "max": 1.9487e-05
+    },
+    "warm_inference_ms": {
+      "n": 92,
+      "median": 35.344275999999994,
+      "p95": 43.262356950000026,
+      "min": 30.579115,
+      "max": 53.215842
+    },
+    "observation_to_ready_wall_s": {
+      "n": 93,
+      "median": 0.072397943,
+      "p95": 0.12946159719999997,
+      "min": 0.066727009,
+      "max": 0.310116792
+    },
+    "observation_to_release_wall_s": {
+      "n": 93,
+      "median": 0.074419196,
+      "p95": 0.13134410779999997,
+      "min": 0.068611132,
+      "max": 0.327198179
+    },
+    "busy_skips": 1,
+    "missed_captures": 0,
+    "waypoint_timeout_episodes": 0,
+    "receive_count": 93,
+    "switch_count": 93,
+    "unswitched_ids": [],
+    "pacing_error_s": {
+      "n": 1748,
+      "median": 9.97005e-05,
+      "p95": 0.0001526004,
+      "min": 3.844e-05,
+      "max": 0.00128968
+    },
+    "navigation_wall_s": 24.263988563,
+    "wall_simulation_ratio": 1.0000041079198627,
+    "max_pp_command_replay_error": 0.0,
+    "max_swept_clearance_replay_error": 0.0,
+    "verified_rgb_frames": 98,
+    "key": "S0_03_D000",
+    "index": 3,
+    "request_0_seed": 30101,
+    "request_0_ddpm_seed": 30102,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/S0_03_D000",
+    "launcher_exit_code": 0,
+    "method": "RAW",
+    "metric_path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase3_s0_delay_01/metrics/S0_03_D000.json",
+    "mean_speed_m_s": 0.1908413586407093,
+    "mean_curvature_above8_fraction": 0.0547945205479452,
+    "actual_omega_clipped_fraction": 0.1735159817351598,
+    "endpoint_clamp_fraction_common": 0.091324200913242,
+    "minimum_obstacle_clearance_m": 0.08217633599247079,
+    "all_control_abs_dw": {
+      "n": 218,
+      "median": 0.0009985664615989875,
+      "p95": 0.37226308523557394,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "all_control_sign_reversals": 29
+  }
+]
