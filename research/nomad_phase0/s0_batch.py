@@ -146,12 +146,16 @@ def main():
     mode.add_argument("--execute", action="store_true", help="Future authorized 20-run batch; NOT part of Phase 0-D preflight")
     parser.add_argument("--run-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, help="New dry-run report directory only")
+    parser.add_argument("--delay-sweep", action="store_true", help="Phase 3 S0 PP only, frozen 20-run delay protocol")
     args = parser.parse_args()
     if args.dry_run != (args.output is not None):
         parser.error("--dry-run requires --output; --execute stores reports in --run-root")
     root = args.run_root.resolve()
     if root.exists():
         raise FileExistsError(f"Batch root already exists; no retry/resume or overwrite: {root}")
+    if args.delay_sweep:
+        from nomad_phase3.batch import run
+        return run(args, root)
     plan = build_plan(root)
     if args.dry_run:
         out = args.output.resolve()

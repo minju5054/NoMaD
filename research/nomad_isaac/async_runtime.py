@@ -402,5 +402,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                                      "configured_additional_s": delay.protocol["additional_delivery_delay_s"]}
     if s1:
         summary["experiment_label"] = "PHASE2_EXPLORATORY" if phase2 else "PHASE1_S1_PREFLIGHT_PILOT"
+    if config.get("s0_delay_sweep"):
+        summary["experiment_label"] = "PHASE3_STAGE1_S0_DELAY"
     write_json(out/"summary.json", summary)
     print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

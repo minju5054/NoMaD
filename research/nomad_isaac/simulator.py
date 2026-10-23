@@ -18,6 +18,7 @@ parser.add_argument("--prepare-only", action="store_true")
 parser.add_argument("--scenario", type=Path)
 parser.add_argument("--asynchronous", action="store_true")
 parser.add_argument("--pure-pursuit", action="store_true")
+parser.add_argument("--s0-delay-sweep", action="store_true", help="Frozen Phase 3 S0 RAW+PP delay sweep")
 parser.add_argument("--phase2-method", choices=["M0", "M3", "M5"])
 parser.add_argument("--diagnostic-condition", choices=["C1", "C2", "C3"])
 parser.add_argument("--phase2-distance-m", type=float, choices=[.6, .8, 1., 1.2])
@@ -145,6 +146,10 @@ def build_scene(config):
 
 def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
+    if args.s0_delay_sweep:
+        from nomad_phase3.config import validate_options, runtime_config
+        validate_options(args)
+        config = runtime_config(config)
     if args.phase2_method:
         from nomad_phase2.config import validate_options
         validate_options(args)

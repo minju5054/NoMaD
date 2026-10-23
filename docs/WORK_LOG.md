@@ -577,3 +577,12 @@ Added a narrowly gated C0 paired replay / C1-C3 M0 diagnostic, using official go
 ## 2026-10-23 — Phase 2 policy diagnosis completed
 
 Clean execution `baded63`: C0 127 paired observations (conditioned exact replay error0; 167 busy captures excluded), then 12/12 registered D0 runs, no retries. C1 .8/1.2m:0/3 each; C2:1/3; C3 oracle exploration:1/3. Two successes clear 2cm, ten actual overlaps, no corridor intrusion/timeout/technical failure. C0 any-safe fractions conditioned112/127=88.19%, masked111/127=87.40%, both preregistered SUFFICIENT; 94.69% of samples do not cross box-center X, safe-crossing observations4/127 both. Conditional avoidance is observed, no blanket inability or causal mask/Graph claim. RGB995 frames and all actual pose/PP commands verified (error0); old input/protected hashes unchanged. Report and exactly two figures in `docs/PHASE2_POLICY_DIAGNOSIS.md` and `research/results/phase2_policy_diagnosis_20261023/`.
+
+## 2026-10-23 — Phase 3 Stage 1 preregistration
+
+Added a narrow S0 RAW+PP delay-sweep mode to the existing batch runner. Original
+S0/Phase1/Phase2 gates and PP execution remain intact. Uniform post-packet delays
+0/250/500/750ms, five paired seed offsets, 90s ceiling and 20 sequential attempts
+are frozen in `nomad_phase3/protocol.json`. No retries or corrections. 19 targeted
+tests passed; read-only replay of old S0_01–05 matched pose integration exactly
+and PP/clearance to floating-point tolerance. See `PHASE3_STAGE1_S0_DELAY.md`.

@@ -21,12 +21,12 @@ def protocol():
     return json.loads(PROTOCOL_PATH.read_text())
 
 
-def classify(goal, overlap, corridor_violation, reason, duration):
+def classify(goal, overlap, corridor_violation, reason, duration, timeout_s=60.):
     if overlap or corridor_violation:
         return "SAFETY_FAILURE"
     if goal:
         return "SUCCESS"
-    if reason == "simulation_timeout" and abs(duration-60.) < 1e-9:
+    if reason == "simulation_timeout" and abs(duration-timeout_s) < 1e-9:
         return "STUCK"
     return "OTHER_TERMINATION"
 
@@ -55,7 +55,7 @@ def margin_violation_duration(intervals):
                if r["end_sim_s"] > r["start_sim_s"] and r["lower_m"] < .02)
 
 
-def extract_run(run, condition, run_id, offset, legacy=False):
+def extract_run(run, condition, run_id, offset, legacy=False, delay_sweep=False):
     """PP applied fields and PD original fields checked against actual 72Hz commands."""
     run = Path(run)
     s = json.loads((run/"summary.json").read_text())
@@ -72,12 +72,22 @@ def extract_run(run, condition, run_id, offset, legacy=False):
     assert source_hash == p["scenario_sha256"]
     assert (c["controller_hz"], c["integration_hz"], c["observation_hz"]) == (9, 72, 4)
     assert c["selected_sample"] == 0 and c["selected_waypoint_index"] == 2
-    assert not prov.get("controlled_delivery_delay") and prov.get("uniform_delivery_delay_s") is None
+    assert not prov.get("controlled_delivery_delay")
+    if delay_sweep:
+        from nomad_phase3.config import protocol as delay_protocol
+        dp = delay_protocol()
+        assert pp and prov['s0_delay_sweep'] and c['s0_delay_sweep']
+        assert prov['uniform_delivery_delay_s'] in dp['delays_s']
+        assert c['timeout_sim_s'] == dp['maximum_simulation_s'] == 90
+        assert json.loads((run/'phase3_protocol.json').read_text()) == dp
+    else:
+        assert prov.get("uniform_delivery_delay_s") is None
     if not legacy:
         assert c["run_id"] == s["run_id"] == prov["run_id"] == run_id
-        assert s["experiment_label"] == "PHASE0_D_S0_BATCH"
+        assert s["experiment_label"] == ("PHASE3_STAGE1_S0_DELAY" if delay_sweep else "PHASE0_D_S0_BATCH")
         assert prov["seed_offset"] == offset and not prov["git_status"]
-        assert json.loads((run/"batch_protocol.json").read_text()) == p
+        if not delay_sweep:
+            assert json.loads((run/"batch_protocol.json").read_text()) == p
     control, events, received, requests, inference = (rows(run/name) for name in
         ("controller.jsonl", "events.jsonl", "received.jsonl", "requests.jsonl", "model/inference.jsonl"))
     records, poses = trace(run)
@@ -144,7 +154,7 @@ def extract_run(run, condition, run_id, offset, legacy=False):
     overlap = any(r["geometric_overlap"] for r in gaps)
     assert overlap == s["obstacle_evaluation"]["geometric_overlap"]
     corridor_violation = min_corridor < 0.
-    classification = classify(s["goal_entry"], overlap, corridor_violation, s["termination_reason"], s["simulation_duration_s"])
+    classification = classify(s["goal_entry"], overlap, corridor_violation, s["termination_reason"], s["simulation_duration_s"], 90. if delay_sweep else 60.)
     record = {"scope": SCOPE, "run_id": run_id, "condition": condition, "seed_offset": offset,
               "source_run": str(run), "legacy_preflight_only": legacy, "execution_git_sha": prov["git_sha"],
               "scenario_sha256": source_hash, "runtime_config_sha256": sha256_file(run/"scenario.json"),
@@ -152,7 +162,7 @@ def extract_run(run, condition, run_id, offset, legacy=False):
               "termination_reason": s["termination_reason"], "technical_failure": False,
               "success": classification == "SUCCESS", "safety_failure": classification == "SAFETY_FAILURE",
               "goal_entry": s["goal_entry"],
-              "timeout": s["termination_reason"] == "simulation_timeout" and abs(s["simulation_duration_s"]-60) < 1e-9,
+              "timeout": s["termination_reason"] == "simulation_timeout" and abs(s["simulation_duration_s"]-(90 if delay_sweep else 60)) < 1e-9,
               "geometric_overlap": overlap, "corridor_violation": corridor_violation,
               "corridor_minimum_exact_arc_m": min_corridor,
               "corridor_containment_certified": s["obstacle_evaluation"]["corridor_containment_certified"],
