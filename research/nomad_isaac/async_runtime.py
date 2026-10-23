@@ -30,7 +30,10 @@ class ExecutionThread:
         self.chunk_executor = None
         self.phase2 = None
         self.stage2 = None
-        if config.get("phase4_method"):
+        if config.get("phase4c_method"):
+            from nomad_phase4c.execution import AccelExecution
+            self.stage2=AccelExecution(config,out)
+        elif config.get("phase4_method"):
             from nomad_phase4.execution import Phase4Execution
             self.stage2 = Phase4Execution(config, out)
         elif config.get("s0_stage2_method"):
@@ -132,7 +135,10 @@ class ExecutionThread:
                     incoming_v, incoming_w = self.core.v, self.core.w
                     incoming_id, incoming_valid = self.core.applied_id, self.core.command_valid
                     if tick:
-                        self.core.integrate()
+                        if c.get("phase4c_method"):
+                            incoming_v,incoming_w=self.stage2.plant.integrate(self.core,tick)
+                        else:
+                            self.core.integrate()
                     now = time.monotonic_ns()
                     pose = self.core.pose.copy()
                     if self.phase2 is not None:
@@ -421,5 +427,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         summary.update(experiment_label="PHASE3_STAGE2_SELECTED_S0", s0_stage2_method=config["s0_stage2_method"])
     if config.get("phase4_method"):
         summary.update(experiment_label="PHASE4_GRAPH_V5_PILOT", phase4_method=config["phase4_method"])
+    if config.get("phase4c_method"):
+        summary.update(experiment_label="PHASE4C_ACCEL_LIMIT",phase4c_method=config["phase4c_method"],plant_alpha=config["plant_alpha"],
+            command_semantics="commanded_v/w are9Hz targets; plant.jsonl and72Hz trace contain actual angular-rate-limited motion; controller applied_w is boundary state")
     write_json(out/"summary.json", summary)
     print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

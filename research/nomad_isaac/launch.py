@@ -24,6 +24,8 @@ def main():
     parser.add_argument("--s0-delay-sweep", action="store_true", help="Frozen Phase 3 S0 RAW+PP delay sweep")
     parser.add_argument("--s0-stage2-method", choices=["CURV-SPEED", "HORIZON-SPEED", "GRAPH"], help="Frozen selected S0 speed/Graph experiment")
     parser.add_argument("--phase4-method", choices=["RAW", "CURV-SPEED", "GRAPH-v5"])
+    parser.add_argument("--phase4c-method", choices=["CURV", "CURV+ACC", "GRAPH"])
+    parser.add_argument("--plant-alpha", choices=["inf", "2.0", "1.0"])
     parser.add_argument("--phase2-method", choices=["M0", "M3", "M5"])
     parser.add_argument("--diagnostic-condition", choices=["C1", "C2", "C3"])
     parser.add_argument("--phase2-distance-m", type=float, choices=[.6, .8, 1., 1.2])
@@ -40,6 +42,11 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if bool(args.phase4c_method)!=bool(args.plant_alpha):
+        parser.error("Phase4c method and plant alpha must be supplied together")
+    if args.phase4c_method:
+        from nomad_phase4c.config import validate_options
+        validate_options(args)
     if args.phase4_method:
         from nomad_phase4.config import validate_options
         validate_options(args)
@@ -79,7 +86,7 @@ def main():
             or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None
             or "placement" not in read_scenario(args.scenario).get("dynamic_obstacle", {})):
         parser.error("Oracle Safety Stop requires the frozen asynchronous Topomap + adaptive obstacle, zero-delay experiment")
-    if args.topomap and not (args.s1_mode or args.s1_v2_mode or args.phase2_method or args.s0_delay_sweep or args.s0_stage2_method or args.phase4_method) and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
+    if args.topomap and not (args.s1_mode or args.s1_v2_mode or args.phase2_method or args.s0_delay_sweep or args.s0_stage2_method or args.phase4_method or args.phase4c_method) and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay or args.uniform_delivery_delay_s is not None):
         parser.error("Topomap navigation requires asynchronous execution without extra delay")
     if args.render_topomap_reference and (not args.prepare_only or args.topomap):
         parser.error("Reference rendering requires --prepare-only and no navigation Topomap")
@@ -122,6 +129,13 @@ def main():
         from nomad_phase3.config import HERE, protocol
         sources += list(HERE.glob("*.py"))+[HERE/"protocol.json"]
         write_json(out/"phase3_protocol.json", protocol())
+    if args.phase4c_method:
+        from nomad_phase4c.config import HERE, protocol
+        sources += list(HERE.glob("*.py"))+[HERE/"protocol.json"]
+        sources += [ROOT/"research"/package/name for package,names in (
+            ("nomad_phase3_stage2",("execution.py",)),("nomad_phase2",("execution.py","graph_worker.py")),
+            ("nomad_phase0",("graph_v4.py","graph_v4_protocol.json"))) for name in names]
+        write_json(out/"phase4c_protocol.json",protocol())
     if args.phase4_method:
         from nomad_phase4.config import HERE, protocol
         sources += list(HERE.glob("*.py"))+[HERE/"protocol.json"]
@@ -134,7 +148,7 @@ def main():
         sources += [ROOT/"research/nomad_phase2"/n for n in ("execution.py", "graph_worker.py")]
         sources += [ROOT/"research/nomad_phase0"/n for n in ("graph_v4.py", "graph_v4_protocol.json")]
         write_json(out/"stage2_protocol.json", protocol())
-    if args.run_id is not None and not args.phase2_method and not args.s0_delay_sweep and not args.s0_stage2_method and not args.phase4_method:
+    if args.run_id is not None and not args.phase2_method and not args.s0_delay_sweep and not args.s0_stage2_method and not args.phase4_method and not args.phase4c_method:
         batch_protocol = ROOT/"research/nomad_phase0/s0_batch_protocol.json"
         sources += [batch_protocol]
         write_json(out/"batch_protocol.json", json.loads(batch_protocol.read_text()))
@@ -158,7 +172,7 @@ def main():
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
         "diagnostic_condition": args.diagnostic_condition, "phase2_method": args.phase2_method, "phase2_distance_m": args.phase2_distance_m,
-        "pure_pursuit": args.pure_pursuit, "s0_delay_sweep": args.s0_delay_sweep, "s0_stage2_method": args.s0_stage2_method, "phase4_method": args.phase4_method,
+        "pure_pursuit": args.pure_pursuit, "s0_delay_sweep": args.s0_delay_sweep, "s0_stage2_method": args.s0_stage2_method, "phase4_method": args.phase4_method, "phase4c_method":args.phase4c_method,"plant_alpha":args.plant_alpha,
         "s1_v2_mode": args.s1_v2_mode, "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
         "run_id": args.run_id, "seed_offset": args.seed_offset,
         "source_scenario_sha256": sha256_file(scenario_path),
@@ -212,6 +226,8 @@ def main():
                 command.append("--asynchronous")
             if args.pure_pursuit:
                 command.append("--pure-pursuit")
+            if args.phase4c_method:
+                command += ["--phase4c-method",args.phase4c_method,"--plant-alpha",args.plant_alpha]
             if args.phase4_method:
                 command += ["--phase4-method",args.phase4_method]
             if args.s0_stage2_method:

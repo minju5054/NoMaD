@@ -17,6 +17,10 @@ def protocol():
 
 
 def validate_mode(args):
+    if getattr(args, "phase4c_method", None):
+        from nomad_phase4c.config import validate_options
+        validate_options(args)
+        return
     if getattr(args, "phase4_method", None):
         from nomad_phase4.config import validate_options
         validate_options(args)
