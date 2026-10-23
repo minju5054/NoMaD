@@ -1,0 +1,207 @@
+{
+  "scenario": "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+  "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+  "topomap": "artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "topomap_nodes": 14,
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "protected_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+    "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463"
+  },
+  "SUCCESS": "goal entry AND no confirmed geometric overlap AND no footprint outside corridor",
+  "SAFETY_FAILURE": "confirmed geometric overlap OR footprint outside corridor (existing SE2 arcs, axis extrema checked)",
+  "MARGIN_VIOLATION": "Separate sum of positive-duration 72Hz intervals with any obstacle swept lower bound <.02m; no change to SUCCESS/SAFETY_FAILURE",
+  "label": "PHASE4_GRAPH_V5_PILOT",
+  "base_commit": "bffd7fa",
+  "claim": "At D750, Graph v5 maintains or improves CURV-SPEED success count while reaching goal faster",
+  "methods": [
+    "RAW",
+    "CURV-SPEED",
+    "GRAPH-v5"
+  ],
+  "matrix": [
+    {
+      "D_s": 0.75,
+      "indices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "methods": [
+        "RAW",
+        "CURV-SPEED",
+        "GRAPH-v5"
+      ]
+    },
+    {
+      "D_s": 0,
+      "indices": [
+        1,
+        2
+      ],
+      "methods": [
+        "GRAPH-v5"
+      ]
+    }
+  ],
+  "attempts": 14,
+  "retries": 0,
+  "order": "run index 1..4, RAW then CURV-SPEED then GRAPH-v5 at D750; D0 GRAPH-v5 indices1..2",
+  "maximum_simulation_s": 90,
+  "waypoint_timeout_s": 1,
+  "observation_hz": 4,
+  "controller_hz": 9,
+  "integration_hz": 72,
+  "seed_rule": "101 + 10000*run_index + 2*request_id; DDPM +1",
+  "v_max_m_s": 0.3,
+  "metric_scaling": "unchanged official .05m action scaling; only execution speed cap raised from .2 to .3m/s",
+  "graph_parameters": {
+    "name": "Graph v4 full-path constrained offline pilot",
+    "base_commit": "b48c552efc45aba421818a56715a1c5a24301897",
+    "working_branch": "research/phase0-infrastructure",
+    "selection": "Exactly the saved v3 20 S0, 33 consecutive S1 P0 F43-75 and 6 stress cases; all 8 saved samples; no new inference",
+    "solver": {
+      "method": "SLSQP",
+      "maxiter": 100,
+      "ftol": 1e-08,
+      "jacobian": "explicit analytic for objective and every constraint",
+      "restarts": 0
+    },
+    "execution": "One frozen campaign: 59 single-start sample0 solves and 59 x 8 independent multi-start solves, at most 531 solves. Single and multi have separate consecutive-S1 previous-prior histories. No rerun/tuning/finite-difference solver derivatives.",
+    "nodes": "Eight editable SE(2) poses; native XY observation-anchored; auxiliary headings via v3 frozen >=20mm chords. No native yaw/time.",
+    "prior_sigma_xy_m": 0.1,
+    "prior_sigma_yaw_deg": 30.0,
+    "relative_sigma_xy_m": 0.01,
+    "relative_sigma_yaw_deg": 10.0,
+    "boundary_sigma_xy_m": 0.01,
+    "boundary_sigma_yaw_deg": 10.0,
+    "tangent_sigma_deg": 10.0,
+    "previous_sigma_xy_m": 0.2,
+    "previous_prior": "S1 only, immediately previous accepted constraint-feasible corrected path of the same method. Existing nearest projection at current B, then normalized arclength interpolation of remaining previous path at current native arclength fractions. Weak XY prior, not physical correspondences/timestamps. No previous-prior term for F43, S0, stress or after an immediately previous rejection. Never reanchor previous or FRESH paths.",
+    "se2_residual_variant": "Analytic local relative translations and periodic relative/prior heading residual 2sin(delta/2); tangent unit-vector residual. Replaces v3 SE2 log residual representation and weakens prior. Explicitly a new formulation, not identical v3 weights.",
+    "minimum_heading_chord_m": 0.02,
+    "minimum_segment_m": 0.005,
+    "minimum_segment_ratio": 0.8,
+    "minimum_total_length_ratio": 0.9,
+    "minimum_chord_ratio": 0.5,
+    "xy_trust_region_m": 0.75,
+    "heading_trust_region": "initial auxiliary yaw +/-pi",
+    "curvature_limit_m_inv": 8.0,
+    "curvature_definition": "Signed circumcircle curvature 2cross(u,v)/(|u||v||u+v|), all six consecutive triples; a discrete path constraint, not a guarantee on PP curvature",
+    "entry_forward_min_m": 0.02,
+    "entry_equality_scale_m": 0.04,
+    "entry_curvature_tolerance_m_inv": 0.0001,
+    "boundary_curvature": "Freeze original per-sample nearest-projection segment and fraction E. Require forward dot(E-B)>=0.02m and tangent-circle curvature 2*n_B dot(E-B)/|E-B|^2 = previous actual w/v. Reject undefined previous speed; do not replace actual command with earlier counterfactual w/v. This boundary-circle diagnostic is not a PP rollout or a new correspondence search.",
+    "radius_m": 0.09,
+    "path_safety_target_m": 0.025,
+    "evaluation_margin_m": 0.02,
+    "corridor_margin_m": 0.005,
+    "sdf_resolution_m": 0.01,
+    "sdf_padding_m": 2.0,
+    "segment_subdivisions": 8,
+    "safety_constraint_scale_m": 0.05,
+    "constraint_tolerance": 1e-07,
+    "sdf": "Precompute signed AABB-union distance minus radius using only geometry public at B. Bilinear values and analytic cell gradients. For all9 samples on every one of7 segments require interpolated clearance - h/sqrt(2) - segment_length/16 >=0.025m, certifying entire segment via Lipschitz bounds. Independent exact segment clearance confirms accepted solutions. Node corridor halfplanes certify every linear segment. No obstacle constraint on B-to-entry connector; full8point polyline safety does not certify connection/PP.",
+    "progress_target_m": 0.25,
+    "selection_xy_scale_m": 0.1,
+    "selection_score": "mean squared XY edit from that original sample /0.1^2 + (max(0,0.25-dot(corrected_endpoint-B,forward_B))/0.25)^2; choose smallest score then sample index among converged, hard-constraint feasible and exact-certified solutions. No rollout or future performance in selection.",
+    "sample_selection_only": "No correction. Filter original 8 samples by exact full native path >=0.02m and corridor containment using only public geometry; same score with zero edit term, deterministic index tie break. Execute with the SAME variable-speed PP as Graph v4 to separate trajectory editing from speed changes; explicitly not constant-speed sample selection. No feasible original sample means NO_SELECTION, not safe STOP.",
+    "execution_speed": "Unchanged v3 dedicated speed rule for sample selection and both v4 variants: target=clip(0.4/abs(kappa_PP),0.05,0.2), acceleration<=0.5m/s2 from previous actual v, omega=clip(v*kappa,-0.4,0.4), continue despite clipping. No zero-speed recovery.",
+    "evaluation": "Reuse v3 original PP/control72Hz9Hz, fixed B, actual H_switch or right-censored terminal, H_chunk max60s frozen path without future FRESH/1s expiry. Actual active geometry for post-hoc evaluation. Reuse saved RAW/Speed/Rate/RIGID/Graphv3 results; no v3 solve. No PP computation in v4 objective, constraints or selection.",
+    "acceptance": "Native full path AND PP rollout >=0.02m, corridor contained, horizon complete, and valid selected/constraint-feasible converged graph; report progress>=70% RAW H_switch and no stop separately and jointly. Discard old5mm relative loss rule entirely. Failed single final iterates may be evaluated as labelled diagnostics only; no arbitrary multi failure path is selected.",
+    "initial_unsafe": "Keep all six stress cases, separately list/exclude three already-below2cm B states in salvageable denominator; no claim of repairing prior violation. All starts still attempted once.",
+    "timing": "Report per-start solver wall and initialization/certificate time; single method time and complete serial8start multi-selection time, shared SDF construction separately plus cold-inclusive method time. 20ms target and100ms exceedance proportions, no deadline termination or tuning.",
+    "prohibited": [
+      "navigation",
+      "inference",
+      "runtime/controller/model changes",
+      "result-based tuning",
+      "restarts",
+      "finite-difference Jacobians",
+      "online claims",
+      "visualization unless requested"
+    ],
+    "side_sigma_m": 0.02,
+    "side_factor": "Retain v3 native definite-side rule and sigma0.02m, frozen raw crossing segment/fraction and only public geometry; SIDE_UNDEFINED has no factor.",
+    "v5": {
+      "time_weight": 1.0,
+      "curvature_change_weight": 0.01,
+      "v_max": 0.3,
+      "v_min": 0.05,
+      "omega_max": 0.4,
+      "a_max": 0.5,
+      "prior_interpretation": "Inherited numerical factors unchanged. Online prior=last accepted corrected path. Original v4 campaign text retained only as provenance; Phase4 top-level rules override campaign/execution descriptions."
+    }
+  },
+  "graph_variant": {
+    "variables": "24 SE2 pose components plus eight speeds; keep v4 raw observation anchor and all original constraints/factors",
+    "speed_init": "all eight speeds equal actual boundary v; when v=0 use .05 and first auxiliary heading=B_app yaw",
+    "node_curvature": "six triple Menger curvatures mapped to nodes [0,0,1,2,3,4,5,5]; endpoints inherit nearest triple",
+    "boundary": "at Graph dispatch AFTER immediate RAW command update, predict B_app with that actual new RAW v,w for exactly2/9s; hold input fixed in solve, not actual execution",
+    "application": "first eligible controller tick, no extra waiting; strict XY norm(actual-B_app)>.02 => APP_MISMATCH; yaw mismatch recorded only",
+    "stale_s": 0.3,
+    "stale_clock": "worker processing end-start includes setup/solve/certificate; solver wall reported separately",
+    "precedence": [
+      "SUPERSEDED",
+      "STALE",
+      "WAYPOINT_EXPIRED",
+      "INITIALIZATION_REJECTED",
+      "SOLVER_ERROR",
+      "NONCONVERGED",
+      "CONSTRAINT_FAILED",
+      "APP_MISMATCH",
+      "ACCEPTED"
+    ],
+    "prior": "last accepted corrected world path, retained across raw FRESH switches",
+    "trust_and_certificate": "unchanged v4; path constraints do not certify actual PP rollout or B-to-entry connector",
+    "timing_caveat": "fast result at first tick may fail 2cm check against two-tick predicted B_app; no hold/delay/retry added"
+  },
+  "execution": {
+    "PP": "unchanged PurePursuit computes projection/lookahead geometry only; separate actual-command wrapper sets speed up to .3",
+    "RAW": "active v=.3; omega=clip(v*kappa_PP,+/-.4); original endpoint/timeout/missing/invalid stops",
+    "CURV-SPEED": "target=clip(.4/abs(kappa_PP),.05,.3), acceleration<=.5m/s2 per9Hz tick, omega clipped",
+    "GRAPH_raw": "same CURV-SPEED immediately upon each FRESH switch",
+    "GRAPH_profile": "v=linear interpolation of accepted node speeds at literal nearest PP projection arclength; no extra temporal speed clamp; omega clipped. Spatial acceleration constraint is not a guarantee on temporal execution acceleration; report actual acceleration violations.",
+    "timeout": "same release-based1s, never reset by Graph"
+  },
+  "gate": "S0 static14node map + asynchronous PP only; explicit --phase4-method excludes all other opt-in modes",
+  "offline": {
+    "selection": "Stage2 D750 GRAPH index1..4, first five switched FRESH requests in each run; no outcome-based selection",
+    "solves": 20,
+    "restarts": 0,
+    "B": "original dispatch pose propagated by stored actual raw-switch command for2/9s",
+    "speed_comparison": "Same predicted B_app and dispatch speed; 16/72s offline PP replay. v4 stored accepted corrected path or RAW fallback with original max .2 speed rule, versus final finite v5 path/profile including rejected diagnostic iterates. Ratio of mean simulated speeds across all20, not online effectiveness; no v4 re-solve.",
+    "prior": "stored v4 job previous accepted path; not a v5 sequential experiment"
+  },
+  "decision": {
+    "proceed": "all: D750 GRAPH success>=CURV; GRAPH successful median goal<=.9*CURV successful median; D0 GRAPH2/2; all14technicalPASS",
+    "no_success_median": "unavailable => STOP_AND_REPORT",
+    "else": "STOP_AND_REPORT",
+    "no_automatic_extension": true
+  },
+  "output": {
+    "root": "artifacts/isaac6/phase4_pilot_01",
+    "report": "docs/PHASE4_GRAPH_V5_PILOT.md",
+    "results": "research/results/phase4_pilot"
+  },
+  "scope": "Oracle static geometry; SE2 kinematic Isaac Sim; N4/N2 pilot; paired offsets not identical closed-loop RGB",
+  "interpreters": {
+    "batch_report_offline_and_graph_worker": "/usr/bin/python3 (existing CPU SciPy; no environment installation)",
+    "navigation": "existing research/python.sh launcher, existing Isaac and NoMaD environments unchanged"
+  }
+}

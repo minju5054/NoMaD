@@ -1,0 +1,14 @@
+{
+  "tests_passed": 5,
+  "tests_total": 5,
+  "test_interpreter": "/usr/bin/python3",
+  "test_command": "env PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -m unittest nomad_phase4.test_phase4 -v",
+  "dry_run_jobs": 14,
+  "navigation_started": 0,
+  "inference_started": 0,
+  "worker_check": "ready/stop only; zero solver calls",
+  "report_check": "synthetic-labelled summaries with stored Stage2 traces, temporary output only",
+  "environment_note": "No scipy in existing NoMaD venv; use existing CPU /usr/bin/python3 for Graph/tests/report, do not install/change venv",
+  "protected_files": "all protocol protected_sha256 match",
+  "read_only_inputs_preserved": true
+}

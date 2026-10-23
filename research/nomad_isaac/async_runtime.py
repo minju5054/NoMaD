@@ -30,7 +30,10 @@ class ExecutionThread:
         self.chunk_executor = None
         self.phase2 = None
         self.stage2 = None
-        if config.get("s0_stage2_method"):
+        if config.get("phase4_method"):
+            from nomad_phase4.execution import Phase4Execution
+            self.stage2 = Phase4Execution(config, out)
+        elif config.get("s0_stage2_method"):
             from nomad_phase3_stage2.execution import Stage2Execution
             self.stage2 = Stage2Execution(config, out)
         if config.get("experiment_mode") == "phase2_s1_v2":
@@ -416,5 +419,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         summary["experiment_label"] = "PHASE3_STAGE1_S0_DELAY"
     if config.get("s0_stage2_method"):
         summary.update(experiment_label="PHASE3_STAGE2_SELECTED_S0", s0_stage2_method=config["s0_stage2_method"])
+    if config.get("phase4_method"):
+        summary.update(experiment_label="PHASE4_GRAPH_V5_PILOT", phase4_method=config["phase4_method"])
     write_json(out/"summary.json", summary)
     print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

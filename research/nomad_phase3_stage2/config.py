@@ -17,7 +17,7 @@ def validate_options(a):
         raise ValueError('Stage2 requires S0 asynchronous PP and static Topomap')
     excluded = ('prepare_only', 'oracle_safety_stop', 'early_obstacle_mode', 'controlled_delivery_delay',
         'render_topomap_reference', 's1_mode', 's1_v2_mode', 's1_distance_m', 'phase2_method',
-        'phase2_distance_m', 'diagnostic_condition', 's0_delay_sweep')
+        'phase2_distance_m', 'diagnostic_condition', 's0_delay_sweep', 'phase4_method')
     if any(getattr(a, k, None) for k in excluded):
         raise ValueError('Stage2 cannot mix with another experiment mode')
     if not re.fullmatch(r'S0_0[1-4]', a.run_id or '') or a.seed_offset != int(a.run_id[3:])*10000:
