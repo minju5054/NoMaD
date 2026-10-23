@@ -1,0 +1,57 @@
+{
+  "git_sha": "84c8416534f7b88ef8ea828f42aab3cb684d14df",
+  "v5": {
+    "attempts": 201,
+    "converged": 128,
+    "convergence_fraction": 0.6368159203980099,
+    "accepted": 91,
+    "acceptance_fraction": 0.4527363184079602,
+    "solver_time_s": {
+      "n": 200,
+      "median": 0.11707496698363684,
+      "p95": 0.2612609288014936,
+      "min": 0.0029077139915898442,
+      "max": 0.38451149995671585
+    },
+    "dispositions": {
+      "NONCONVERGED": 67,
+      "ACCEPTED": 91,
+      "APP_MISMATCH": 36,
+      "STALE": 6,
+      "INITIALIZATION_REJECTED": 1
+    },
+    "timing_scope": "recorded actual v5"
+  },
+  "v51": {
+    "attempts": 201,
+    "converged": 101,
+    "convergence_fraction": 0.5024875621890548,
+    "accepted": 88,
+    "acceptance_fraction": 0.43781094527363185,
+    "solver_time_s": {
+      "n": 200,
+      "median": 0.1557084259984549,
+      "p95": 0.3013450875965645,
+      "min": 0.04919928696472198,
+      "max": 0.6371416359907016
+    },
+    "dispositions": {
+      "NONCONVERGED": 87,
+      "ACCEPTED": 88,
+      "APP_MISMATCH": 12,
+      "STALE": 12,
+      "NO_RECORDED_APPLICATION": 1,
+      "INITIALIZATION_REJECTED": 1
+    },
+    "timing_scope": "new single-pass CPU measurement mapped onto saved v5 clock/poses"
+  },
+  "verdict": "STOP",
+  "navigation_started": 0,
+  "inference_started": 0,
+  "initialization_rejections": 1,
+  "solve_calls": 200,
+  "warm_starts": 194,
+  "accepted_fixed_solver_boundary_over_3cm": 4,
+  "scope": "conditional offline acceptance on actual v5 pose/clock trace; no claim of v5.1 closed-loop execution; warm-start replay does not change saved poses",
+  "boundary_caveat": "Optimization stays anchored to estimated candidate. If actual tick differs, report fixed-solver-boundary mismatch separately. Candidate acceptance does NOT certify exact boundary continuity at the actual pose; no silent post-solve boundary substitution."
+}
