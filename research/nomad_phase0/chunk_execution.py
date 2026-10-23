@@ -17,6 +17,10 @@ def protocol():
 
 
 def validate_mode(args):
+    if getattr(args, "s0_stage2_method", None):
+        from nomad_phase3_stage2.config import validate_options
+        validate_options(args)
+        return
     if getattr(args, "s0_delay_sweep", False):
         from nomad_phase3.config import validate_options
         validate_options(args)

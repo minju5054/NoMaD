@@ -17,7 +17,7 @@ def validate_options(a):
         raise ValueError('S0 delay sweep requires asynchronous PP and static Topomap')
     excluded = ('prepare_only', 'oracle_safety_stop', 'early_obstacle_mode', 'controlled_delivery_delay',
                 'render_topomap_reference', 's1_mode', 's1_v2_mode', 's1_distance_m', 'phase2_method',
-                'phase2_distance_m', 'diagnostic_condition')
+                'phase2_distance_m', 'diagnostic_condition', 's0_stage2_method')
     if any(getattr(a, name, None) for name in excluded):
         raise ValueError('S0 delay sweep cannot mix with another experiment mode')
     if a.uniform_delivery_delay_s not in p['delays_s']:

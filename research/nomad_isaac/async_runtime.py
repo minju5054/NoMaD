@@ -29,10 +29,14 @@ class ExecutionThread:
         self.core = WaypointExecution(config["start_pose"], config["integration_hz"], config["controller_hz"])
         self.chunk_executor = None
         self.phase2 = None
+        self.stage2 = None
+        if config.get("s0_stage2_method"):
+            from nomad_phase3_stage2.execution import Stage2Execution
+            self.stage2 = Stage2Execution(config, out)
         if config.get("experiment_mode") == "phase2_s1_v2":
             from nomad_phase2.execution import Phase2Execution
             self.phase2 = Phase2Execution(config,out)
-        if pure_pursuit and self.phase2 is None:
+        if pure_pursuit and self.phase2 is None and self.stage2 is None:
             from nomad_phase0.chunk_execution import ChunkExecution
             assert not oracle_safety_stop and not online_graph
             assert "dynamic_obstacle" not in config or config.get("experiment_mode") == "phase1_s1_forward_ray"
@@ -83,7 +87,7 @@ class ExecutionThread:
         np.testing.assert_array_equal(arrays["selected_waypoint"], arrays["metric"][0, 2])
         row = {**metadata, "latched_sim_s": sim_time, "latched_monotonic_ns": time.monotonic_ns(),
                "selected_waypoint_m": arrays["selected_waypoint"].tolist(), "terminal_unapplied": terminal}
-        if self.chunk_executor is not None:
+        if self.chunk_executor is not None or self.stage2 is not None:
             from nomad_phase0.chunk_execution import describe_chunk
             row["chunk"] = describe_chunk(arrays["metric"][0], row["observation_pose"])
         self.received.append(row)
@@ -130,6 +134,8 @@ class ExecutionThread:
                     pose = self.core.pose.copy()
                     if self.phase2 is not None:
                         self.phase2.integrate_record(previous,pose)
+                    if self.stage2 is not None:
+                        self.stage2.integrate_record(previous, pose)
                     sim_time = tick/hz
                     distance = float(np.linalg.norm(pose[:2]-c["goal_pose"][:2]))
                     self.minimum_distance = min(self.minimum_distance, distance)
@@ -171,6 +177,8 @@ class ExecutionThread:
                         refresh, switch = self.core.control(tick, time.monotonic_ns())
                     if refresh is not None and self.chunk_executor is not None:
                         self.chunk_executor.apply(self.core, refresh, switch)
+                    if refresh is not None and self.stage2 is not None:
+                        self.stage2.apply(self.core, refresh, switch)
                     if refresh is not None and self.safety is not None:
                         box = self.dynamic.obstacle if self.dynamic.spawn is not None else None
                         self.safety.apply(self.core, refresh, switch, tick, box)
@@ -230,7 +238,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     engine = ExecutionThread(config, out, oracle_safety_stop=oracle_safety_stop, online_graph=online_graph,
                              pure_pursuit=pure_pursuit)
     if pure_pursuit:
-        write_json(out/"chunk_pilot_protocol.json", (engine.phase2 or engine.chunk_executor).settings)
+        write_json(out/"chunk_pilot_protocol.json", (engine.stage2 or engine.phase2 or engine.chunk_executor).settings)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
     dynamic_history = deque(maxlen=4)
     oracle_gate = None
@@ -339,6 +347,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
             engine.cancel.set()
             engine.thread.join(5)
             engine.rf.close()
+            if engine.stage2 is not None:
+                engine.stage2.close()
             if engine.phase2 is not None:
                 engine.phase2.close()
             if engine.graph is not None:
@@ -404,5 +414,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         summary["experiment_label"] = "PHASE2_EXPLORATORY" if phase2 else "PHASE1_S1_PREFLIGHT_PILOT"
     if config.get("s0_delay_sweep"):
         summary["experiment_label"] = "PHASE3_STAGE1_S0_DELAY"
+    if config.get("s0_stage2_method"):
+        summary.update(experiment_label="PHASE3_STAGE2_SELECTED_S0", s0_stage2_method=config["s0_stage2_method"])
     write_json(out/"summary.json", summary)
     print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

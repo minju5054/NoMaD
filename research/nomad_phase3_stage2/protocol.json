@@ -1,0 +1,129 @@
+{
+  "scope": [
+    "Oracle geometry evaluation",
+    "SE(2) kinematic Isaac Sim"
+  ],
+  "scenario": "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+  "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+  "topomap": "artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "topomap_nodes": 14,
+  "inference_seed": "101 + offset + 2 * request_id",
+  "ddpm_seed": "inference_seed + 1",
+  "SUCCESS": "goal entry AND no confirmed geometric overlap AND no footprint outside corridor",
+  "SAFETY_FAILURE": "confirmed geometric overlap OR footprint outside corridor (existing SE2 arcs, axis extrema checked)",
+  "OTHER_TERMINATION": "conservative_contact_stop or other non-goal termination without confirmed geometric collision/corridor intrusion; preserve original termination reason",
+  "MARGIN_VIOLATION": "Separate sum of positive-duration 72Hz intervals with any obstacle swept lower bound <.02m; no change to SUCCESS/SAFETY_FAILURE",
+  "margin_duration_note": "Inspection-interval duration, not exact threshold-crossing time; overlapping obstacle violations counted once",
+  "label": "PHASE3_STAGE2_SELECTED_S0",
+  "base_commit": "d99d3e8",
+  "maximum_simulation_s": 90,
+  "retries": 0,
+  "technical_failure_policy": "Pilots: halt on technical failure, no retry. Remaining batch: record technical failure, continue only unattempted fixed jobs. Never resume an interrupted remaining invocation.",
+  "waypoint_timeout_s": 1,
+  "observation_hz": 4,
+  "controller_hz": 9,
+  "integration_hz": 72,
+  "goal_tolerance_m": 0.3,
+  "scope_label": "N=4 selected exploratory; oracle static geometry; SE(2) kinematic Isaac Sim",
+  "STUCK": "simulation_timeout at 90s with no collision/corridor breach/goal",
+  "protected_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+    "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463"
+  },
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "methods": [
+    "CURV-SPEED",
+    "HORIZON-SPEED",
+    "GRAPH"
+  ],
+  "matrix": [
+    {
+      "delay_s": 0.75,
+      "methods": [
+        "CURV-SPEED",
+        "HORIZON-SPEED",
+        "GRAPH"
+      ],
+      "indices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "delay_s": 0,
+      "methods": [
+        "GRAPH"
+      ],
+      "indices": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "total_attempts": 15,
+  "pilot_attempts": 3,
+  "remaining_attempts": 12,
+  "pilot_order": "D750 index1 CURV-SPEED,HORIZON-SPEED,GRAPH; counted in main",
+  "remaining_order": "D750 index2..4 in method order, then D0 GRAPH index1..3",
+  "horizon_speed": {
+    "T_D_s": 0.998,
+    "T_min_s": 0.1,
+    "remaining": "literal PP nearest projection arclength to endpoint",
+    "elapsed": "simulation time since actual FRESH switch; not arrival"
+  },
+  "speed": {
+    "v_min": 0.05,
+    "v_max": 0.2,
+    "w_max": 0.4,
+    "acceleration": 0.5,
+    "hz": 9,
+    "formula": "curvature target clip(.4/abs(kappa),.05,.2), rate-limit v, clip(v*kappa,+/-.4)",
+    "stop_exceptions": "original missing/expired/invalid/endpoint stop unchanged"
+  },
+  "graph": {
+    "implementation": "unchanged nomad_phase2.graph_worker imports unchanged Graph v4; same solver weights/certificate",
+    "initial": "sample0 observation-anchored world XY",
+    "B": "actual FRESH switch pose; immutable even if CPU job queues",
+    "prior": "last accepted corrected path, retained across subsequent RAW switches",
+    "raw": "immediately at original first eligible tick; variable speed",
+    "queue": "one CPU process, FIFO every switched FRESH; capacity512 exceeds <=361 captures per90s; no execution wait; terminal outstanding logged, never applied",
+    "stale_s": 0.5,
+    "stale_clock": "worker_end-start includes setup+solve+certificate; solver time separately logged; IPC/queue separately logged",
+    "superseded": "newer controller-side FRESH received by application tick, including simultaneous switch",
+    "accept": "same latest valid FRESH, not stale, success AND constraints AND exact certificate; next9Hz tick",
+    "timeout": "original receive-based 1s never reset by Graph",
+    "zero_previous_v": "unchanged Graph initialization rejection, no invented curvature",
+    "no_safety_override": true
+  },
+  "raw_reference": "artifacts/isaac6/phase3_s0_delay_01",
+  "candidate_rule": {
+    "success": "D750 GRAPH >= max(CURV,HORIZON) +2",
+    "goal_time": "GRAPH success median <=1.2 times fastest median of speed methods with >=1 success; unavailable if neither succeeds",
+    "D0": "GRAPH successes index1..3 >= stored RAW same indices",
+    "all_required": true
+  },
+  "stop_after_pilots": true,
+  "metric_notes": {
+    "curvature_saturation": "abs(kappa)>8 for variable speed; additionally record original PP fixed-speed clipping diagnostics",
+    "graph_application_ratio": "applied corrected path control ticks / valid path control ticks; also accepted corrected FRESH / switched FRESH",
+    "margin": "independent of SUCCESS; interval lower-bound 2cm criterion",
+    "graph_dispositions": "one primary precedence SUPERSEDED,STALE,EXPIRED,INIT_REJECTED,NONCONVERGED,CONSTRAINT_FAILED,ACCEPTED; independent flags retained"
+  }
+}

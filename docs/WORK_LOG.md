@@ -609,3 +609,7 @@ axis. S0_05/D750 was +X end-wall intrusion, initially mislabeled using Y sign.
 Original metric is preserved, corrected record is separately saved under raw
 root `analysis_amendments/`. No runtime, outcome, threshold or navigation changed.
 See `docs/PHASE3_STAGE1_S0_DELAY.md` for the full registered report.
+
+## 2026-10-23 — Phase 3 Stage 2 selected S0 pre-registration
+
+Added opt-in CURV-SPEED, HORIZON-SPEED and unchanged-v4 asynchronous correction hooks, a frozen 15-run protocol, and a two-part runner (3 included pilots now; 12 only on later user invocation). Original model/PP/PD/Graph v4, geometry and timing core remain intact. Eight targeted/legacy tests and CPU-worker smoke validation pass; dry-run has the requested seed/method matrix. See `PHASE3_STAGE2_S0_SELECTED.md`. No navigation has run at this pre-registration point.
