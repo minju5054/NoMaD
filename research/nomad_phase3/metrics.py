@@ -1,11 +1,12 @@
 """Read-only S0 delay audit. No model inference or counterfactual navigation."""
 import hashlib
 import json
+import math
 from pathlib import Path
 import numpy as np
 from PIL import Image
 from nomad_isaac.async_report import rows, stats, wrapped
-from nomad_isaac.common import local_to_world, original_controller, sha256_file
+from nomad_isaac.common import integrate_se2, local_to_world, original_controller, sha256_file
 from nomad_isaac.clearance import swept_clearance, obstacle_bounds, single_obstacle_config
 from nomad_isaac.topomap import candidate_range, select_subgoal
 from nomad_phase0.chunk_report import trace
@@ -13,6 +14,24 @@ from nomad_phase0.chunk_execution import protocol as follower_protocol
 from nomad_phase0.pure_pursuit import PurePursuit, XYPath
 from nomad_phase0.s0_batch_metrics import extract_run, corridor_arc_minimum
 from .config import protocol
+
+
+
+def corridor_breach_axes(pose, v, w, dt, corridor, radius):
+    """Label the exact arc extrema used by the existing corridor metric, including X walls."""
+    times = [0., dt]
+    if w != 0:
+        a, b = sorted((pose[2], pose[2]+w*dt))
+        for k in range(math.floor(a/(math.pi/2)), math.ceil(b/(math.pi/2))+1):
+            t = (k*math.pi/2-pose[2])/w
+            if 0 < t < dt:
+                times.append(t)
+    xy = np.array([integrate_se2(pose, v, w, t)[:2] for t in times])
+    bounds = {'back_wall_negative_x': np.min(xy[:,0]-corridor['xmin'])-radius,
+              'end_wall_positive_x': np.min(corridor['xmax']-xy[:,0])-radius,
+              'left_wall_positive_y': np.min(corridor['half_width']-xy[:,1])-radius,
+              'right_wall_negative_y': np.min(corridor['half_width']+xy[:,1])-radius}
+    return [name for name,value in bounds.items() if value < 0]
 
 
 def audit(run, run_id, offset, delay, legacy=False):
@@ -131,7 +150,7 @@ def audit(run, run_id, offset, delay, legacy=False):
             assert g['geometric_overlap']==stored['geometric_overlap']
             if g['geometric_overlap']:causes.append(box['id'])
         if corridor_arc_minimum(poses[i-1],*cmd,1/72,c['corridor'],c['agent_radius_m'])<0:
-            causes.append('left_wall_positive_y' if poses[i,1]>0 else 'right_wall_negative_y')
+            causes.extend(corridor_breach_axes(poses[i-1],*cmd,1/72,c['corridor'],c['agent_radius_m']))
         if causes and first_failure is None:
             first_failure={'tick':i,'simulation_time_s':i/72,'pose':poses[i].tolist(),'causes':causes}
     assert max_clearance_error<1e-10

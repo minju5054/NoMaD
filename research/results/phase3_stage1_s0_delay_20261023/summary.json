@@ -1,0 +1,1135 @@
+{
+  "scope": "N=5 exploratory; Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+  "protocol": {
+    "scope": [
+      "Oracle geometry evaluation",
+      "SE(2) kinematic Isaac Sim"
+    ],
+    "scenario": "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "topomap": "artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+    "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "topomap_nodes": 14,
+    "inference_seed": "101 + offset + 2 * request_id",
+    "ddpm_seed": "inference_seed + 1",
+    "SUCCESS": "goal entry AND no confirmed geometric overlap AND no footprint outside corridor",
+    "SAFETY_FAILURE": "confirmed geometric overlap OR footprint outside corridor (existing SE2 arcs, axis extrema checked)",
+    "OTHER_TERMINATION": "conservative_contact_stop or other non-goal termination without confirmed geometric collision/corridor intrusion; preserve original termination reason",
+    "MARGIN_VIOLATION": "Separate sum of positive-duration 72Hz intervals with any obstacle swept lower bound <.02m; no change to SUCCESS/SAFETY_FAILURE",
+    "margin_duration_note": "Inspection-interval duration, not exact threshold-crossing time; overlapping obstacle violations counted once",
+    "label": "PHASE3_STAGE1_S0_DELAY",
+    "base_commit": "c7fc0bc",
+    "method": "M0_RAW_PP",
+    "delays_s": [
+      0,
+      0.25,
+      0.5,
+      0.75
+    ],
+    "offsets": [
+      10000,
+      20000,
+      30000,
+      40000,
+      50000
+    ],
+    "order": "run index 1..5, within each D0,D250,D500,D750",
+    "maximum_simulation_s": 90,
+    "attempts": 20,
+    "retries": 0,
+    "technical_failure_policy": "Record and continue to next unattempted job; never rerun",
+    "waypoint_timeout_s": 1,
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "integration_hz": 72,
+    "goal_tolerance_m": 0.3,
+    "scope_label": "N=5 exploratory; Oracle geometry evaluation; SE(2) kinematic Isaac Sim",
+    "STUCK": "simulation_timeout at 90s with no collision/corridor breach/goal",
+    "metrics": {
+      "A_to_B_distance": "sum of 72Hz executed XY segment lengths from observation snapshot tick to actual switch tick; report chord displacement separately",
+      "yaw": "absolute wrapped net yaw; signed net and total absolute yaw also retained",
+      "staleness": "original PP nearest projection arclength at B / original observation-anchored FRESH XY path length; no invented timestamps; invalid path=null",
+      "handoff_population": "all actual switches except first without OLD; received but unswitched excluded and counted",
+      "endpoint_clamp": "remaining tracked path length < .25m at valid PP control ticks; report fraction of all control ticks and of valid PP ticks",
+      "curvature_saturation": "|kappa_PP|>2/m implies omega clipping at fixed v=.2; computed from PP target, no variable-speed threshold substitution",
+      "release_interval": "monotonic controller-side receive/release interval; GPU inference reported separately",
+      "margin": "72Hz interval lower bound < .02; independent of outcome",
+      "failure_last_fresh": "last 3 actually applied FRESH before termination, no received-only prediction",
+      "condition_handoff_summary": "pooled event percentiles descriptive only; per-run summaries separately, N=5 remains experiment unit",
+      "pacing": "logged integration lateness and actual wall/simulation ratio; never conflate host and simulation clocks"
+    },
+    "stage2": {
+      "rule": "D>0 and verified successes<=3 of5: smallest two such D (or one). Technical failures remain explicit and weaken interpretation.",
+      "robust": "If every positive D has >=4 successes, report robust up to750ms in these N5 S0 trials and no handoff-correction need established; stop.",
+      "no_auto_stage2": true
+    },
+    "d0_reference": "artifacts/isaac6/s0_paired_n10_01/S0_01..05/PP",
+    "d0_comparison": "same seed, new90s ceiling vs original60; report exact prefix, RGB/request/pose differences, no deterministic assumption",
+    "protected_sha256": {
+      "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+      "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+      "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+      "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+      "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+      "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+      "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+      "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+      "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+      "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+      "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+      "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+      "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+      "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+      "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463"
+    },
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333"
+  },
+  "conditions": [
+    {
+      "D_ms": 0,
+      "attempted": 5,
+      "valid_n": 5,
+      "technical_failures": 0,
+      "success": 5,
+      "success_wilson": {
+        "n": 5,
+        "count": 5,
+        "estimate": 1.0,
+        "ci95": [
+          0.5655175352168251,
+          1.0
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 0,
+      "other_termination": 0,
+      "classifications": {
+        "SUCCESS": 5
+      },
+      "margin_violating_runs": 0,
+      "margin_violation_s_total": 0,
+      "handoffs": 460,
+      "handoff_invalid_paths": 0,
+      "pooled_handoffs": {
+        "A_B_distance_m": {
+          "n": 460,
+          "median": 0.03055551871242182,
+          "p95": 0.036111111035468525,
+          "min": 0.01666666657548275,
+          "max": 0.052777777772090126
+        },
+        "A_B_abs_yaw_rad": {
+          "n": 460,
+          "median": 0.021838115940731262,
+          "p95": 0.07222222222222197,
+          "min": 4.732812251928564e-05,
+          "max": 0.09444444444444411
+        },
+        "staleness": {
+          "n": 460,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.13231651580833156
+        },
+        "abs_dw": {
+          "n": 460,
+          "median": 0.12136588433769419,
+          "p95": 0.4809060960659515,
+          "min": 0.0,
+          "max": 0.8
+        },
+        "observation_to_switch_wall_s": {
+          "n": 460,
+          "median": 0.1382219725,
+          "p95": 0.16657715674999998,
+          "min": 0.082835832,
+          "max": 0.25028691
+        }
+      },
+      "run_summary": {
+        "goal_time_s": {
+          "n": 5,
+          "median": 24.23611111111111,
+          "p95": 24.26388888888889,
+          "min": 24.180555555555557,
+          "max": 24.26388888888889
+        },
+        "duration_s": {
+          "n": 5,
+          "median": 24.23611111111111,
+          "p95": 24.26388888888889,
+          "min": 24.180555555555557,
+          "max": 24.26388888888889
+        },
+        "stop_time_s": {
+          "n": 5,
+          "median": 1.1111111111111092,
+          "p95": 1.1111111111111092,
+          "min": 1.1111111111111092,
+          "max": 1.1111111111111092
+        },
+        "distance_m": {
+          "n": 5,
+          "median": 4.6249981740660795,
+          "p95": 4.630553482573569,
+          "min": 4.613886867388868,
+          "max": 4.630553521462766
+        },
+        "max_abs_y_m": {
+          "n": 5,
+          "median": 0.5942826856392581,
+          "p95": 0.6085706154832737,
+          "min": 0.5775522345073856,
+          "max": 0.6101049746270644
+        },
+        "margin_violation_s": {
+          "n": 5,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "endpoint_clamp_fraction": {
+          "n": 5,
+          "median": 0.0639269406392694,
+          "p95": 0.11000795944870345,
+          "min": 0.04128440366972477,
+          "max": 0.11467889908256881
+        },
+        "endpoint_clamp_valid_fraction": {
+          "n": 5,
+          "median": 0.06698564593301436,
+          "p95": 0.11529260213470739,
+          "min": 0.04326923076923077,
+          "max": 0.1201923076923077
+        },
+        "curvature_saturated_fraction": {
+          "n": 5,
+          "median": 0.13302752293577982,
+          "p95": 0.18447488584474886,
+          "min": 0.11926605504587157,
+          "max": 0.1872146118721461
+        },
+        "switch_sign_reversals": {
+          "n": 5,
+          "median": 22.0,
+          "p95": 26.8,
+          "min": 17.0,
+          "max": 27.0
+        },
+        "busy_skips": {
+          "n": 5,
+          "median": 1.0,
+          "p95": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "waypoint_timeout_episodes": {
+          "n": 5,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "wall_simulation_ratio": {
+          "n": 5,
+          "median": 1.0000041079198627,
+          "p95": 1.0000058910440537,
+          "min": 1.000003106522688,
+          "max": 1.0000061419208264
+        },
+        "StaticObstacle1_minimum_clearance_m": {
+          "n": 5,
+          "median": 0.12210919328915427,
+          "p95": 0.14047925465233518,
+          "min": 0.0963481730848358,
+          "max": 0.1427157077079819
+        },
+        "StaticObstacle2_minimum_clearance_m": {
+          "n": 5,
+          "median": 0.062120048021299945,
+          "p95": 0.08128316792212138,
+          "min": 0.03394733729946886,
+          "max": 0.08217633599247079
+        }
+      },
+      "receive_interval_median_s_by_run": [
+        0.250125532,
+        0.2502196995,
+        0.2497778285,
+        0.2497705955,
+        0.2497705685
+      ],
+      "delivery_delay_s_by_run": [
+        {
+          "n": 93,
+          "median": 1.1021e-05,
+          "p95": 1.582419999999997e-05,
+          "min": 9.468e-06,
+          "max": 2.097e-05
+        },
+        {
+          "n": 93,
+          "median": 1.076e-05,
+          "p95": 1.7474999999999998e-05,
+          "min": 8.877e-06,
+          "max": 1.8725e-05
+        },
+        {
+          "n": 93,
+          "median": 1.0861e-05,
+          "p95": 1.746539999999999e-05,
+          "min": 9.367e-06,
+          "max": 1.9487e-05
+        },
+        {
+          "n": 93,
+          "median": 1.0761e-05,
+          "p95": 1.8379e-05,
+          "min": 8.907e-06,
+          "max": 2.3404e-05
+        },
+        {
+          "n": 93,
+          "median": 1.1132e-05,
+          "p95": 1.8036399999999996e-05,
+          "min": 9.428e-06,
+          "max": 1.8796e-05
+        }
+      ],
+      "pacing_by_run": [
+        {
+          "n": 1746,
+          "median": 9.835249999999999e-05,
+          "p95": 0.000148984,
+          "min": 4.682e-05,
+          "max": 0.00141228
+        },
+        {
+          "n": 1744,
+          "median": 9.93415e-05,
+          "p95": 0.0001537355,
+          "min": 4.3451e-05,
+          "max": 0.001938436
+        },
+        {
+          "n": 1748,
+          "median": 9.97005e-05,
+          "p95": 0.0001526004,
+          "min": 3.844e-05,
+          "max": 0.00128968
+        },
+        {
+          "n": 1748,
+          "median": 9.841449999999999e-05,
+          "p95": 0.00015328035,
+          "min": 3.434e-05,
+          "max": 0.001268242
+        },
+        {
+          "n": 1742,
+          "median": 9.830249999999999e-05,
+          "p95": 0.00015192989999999998,
+          "min": 3.2651e-05,
+          "max": 0.002999786
+        }
+      ]
+    },
+    {
+      "D_ms": 250,
+      "attempted": 5,
+      "valid_n": 5,
+      "technical_failures": 0,
+      "success": 4,
+      "success_wilson": {
+        "n": 5,
+        "count": 4,
+        "estimate": 0.8,
+        "ci95": [
+          0.37553462976252533,
+          0.9637758913675698
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 0,
+      "other_termination": 0,
+      "classifications": {
+        "SUCCESS": 4,
+        "SAFETY_FAILURE": 1
+      },
+      "margin_violating_runs": 2,
+      "margin_violation_s_total": 0.7916666666666892,
+      "handoffs": 225,
+      "handoff_invalid_paths": 0,
+      "pooled_handoffs": {
+        "A_B_distance_m": {
+          "n": 225,
+          "median": 0.08055545578981765,
+          "p95": 0.09166664403659495,
+          "min": 0.03611106467194294,
+          "max": 0.10277776340399104
+        },
+        "A_B_abs_yaw_rad": {
+          "n": 225,
+          "median": 0.1140048822019315,
+          "p95": 0.1722222222222216,
+          "min": 0.0005202550771405967,
+          "max": 0.19444444444444375
+        },
+        "staleness": {
+          "n": 225,
+          "median": 0.07527690163202111,
+          "p95": 0.2441928676234837,
+          "min": 0.0,
+          "max": 0.666491517318363
+        },
+        "abs_dw": {
+          "n": 225,
+          "median": 0.176924265609603,
+          "p95": 0.8,
+          "min": 0.0,
+          "max": 0.8
+        },
+        "observation_to_switch_wall_s": {
+          "n": 225,
+          "median": 0.388403544,
+          "p95": 0.44436145,
+          "min": 0.333058146,
+          "max": 0.500811416
+        }
+      },
+      "run_summary": {
+        "goal_time_s": {
+          "n": 4,
+          "median": 24.958333333333336,
+          "p95": 28.10625,
+          "min": 24.40277777777778,
+          "max": 28.625
+        },
+        "duration_s": {
+          "n": 5,
+          "median": 24.75,
+          "p95": 27.933333333333334,
+          "min": 13.86111111111111,
+          "max": 28.625
+        },
+        "stop_time_s": {
+          "n": 5,
+          "median": 1.3333333333333306,
+          "p95": 1.5111111111111077,
+          "min": 1.3333333333333306,
+          "max": 1.555555555555552
+        },
+        "distance_m": {
+          "n": 5,
+          "median": 4.683330474470564,
+          "p95": 5.284439940482654,
+          "min": 2.5055536028408465,
+          "max": 5.413884087338434
+        },
+        "max_abs_y_m": {
+          "n": 5,
+          "median": 0.6390884121569185,
+          "p95": 1.280792758743883,
+          "min": 0.5855356490557073,
+          "max": 1.41166704319767
+        },
+        "margin_violation_s": {
+          "n": 5,
+          "median": 0.0,
+          "p95": 0.47500000000001347,
+          "min": 0.0,
+          "max": 0.5277777777777928
+        },
+        "endpoint_clamp_fraction": {
+          "n": 5,
+          "median": 0.336322869955157,
+          "p95": 0.42584186046511624,
+          "min": 0.2590909090909091,
+          "max": 0.448
+        },
+        "endpoint_clamp_valid_fraction": {
+          "n": 5,
+          "median": 0.35365853658536583,
+          "p95": 0.4675502243845153,
+          "min": 0.27403846153846156,
+          "max": 0.49557522123893805
+        },
+        "curvature_saturated_fraction": {
+          "n": 5,
+          "median": 0.3920704845814978,
+          "p95": 0.46449612403100776,
+          "min": 0.2645739910313901,
+          "max": 0.4806201550387597
+        },
+        "switch_sign_reversals": {
+          "n": 5,
+          "median": 16.0,
+          "p95": 18.8,
+          "min": 10.0,
+          "max": 19.0
+        },
+        "busy_skips": {
+          "n": 5,
+          "median": 46.0,
+          "p95": 54.199999999999996,
+          "min": 27.0,
+          "max": 56.0
+        },
+        "waypoint_timeout_episodes": {
+          "n": 5,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "wall_simulation_ratio": {
+          "n": 5,
+          "median": 1.0000039288484848,
+          "p95": 1.0000056143379374,
+          "min": 1.0000035921048034,
+          "max": 1.0000056258757515
+        },
+        "StaticObstacle1_minimum_clearance_m": {
+          "n": 5,
+          "median": 0.21223389782234317,
+          "p95": 0.24524185046783098,
+          "min": 0.11074255993263653,
+          "max": 0.252046004406022
+        },
+        "StaticObstacle2_minimum_clearance_m": {
+          "n": 5,
+          "median": 0.09894088918169469,
+          "p95": 0.6702563063467378,
+          "min": 0.007432543698891432,
+          "max": 0.7162331350417632
+        }
+      },
+      "receive_interval_median_s_by_run": [
+        0.497147617,
+        0.499959792,
+        0.500166428,
+        0.499770494,
+        0.497877029
+      ],
+      "delivery_delay_s_by_run": [
+        {
+          "n": 52,
+          "median": 0.250073164,
+          "p95": 0.25010053265,
+          "min": 0.250040006,
+          "max": 0.250195618
+        },
+        {
+          "n": 26,
+          "median": 0.25007160900000003,
+          "p95": 0.25009130375,
+          "min": 0.250047603,
+          "max": 0.250096346
+        },
+        {
+          "n": 56,
+          "median": 0.2500727705,
+          "p95": 0.25009326175,
+          "min": 0.250044916,
+          "max": 0.250097582
+        },
+        {
+          "n": 49,
+          "median": 0.250072529,
+          "p95": 0.250095344,
+          "min": 0.250030225,
+          "max": 0.250127203
+        },
+        {
+          "n": 50,
+          "median": 0.250072708,
+          "p95": 0.25009403150000004,
+          "min": 0.250052642,
+          "max": 0.250095758
+        }
+      ],
+      "pacing_by_run": [
+        {
+          "n": 1813,
+          "median": 0.000100104,
+          "p95": 0.00015481099999999998,
+          "min": 3.1974e-05,
+          "max": 0.001405892
+        },
+        {
+          "n": 999,
+          "median": 0.000101728,
+          "p95": 0.0001583771,
+          "min": 5.1012e-05,
+          "max": 0.001334569
+        },
+        {
+          "n": 2062,
+          "median": 0.000100508,
+          "p95": 0.00015563559999999998,
+          "min": 4.4258e-05,
+          "max": 0.001570305
+        },
+        {
+          "n": 1783,
+          "median": 0.000100401,
+          "p95": 0.00015713249999999994,
+          "min": 3.42e-05,
+          "max": 0.002668668
+        },
+        {
+          "n": 1758,
+          "median": 0.0001005285,
+          "p95": 0.00015663075,
+          "min": 5.5555e-05,
+          "max": 0.001357217
+        }
+      ]
+    },
+    {
+      "D_ms": 500,
+      "attempted": 5,
+      "valid_n": 5,
+      "technical_failures": 0,
+      "success": 4,
+      "success_wilson": {
+        "n": 5,
+        "count": 4,
+        "estimate": 0.8,
+        "ci95": [
+          0.37553462976252533,
+          0.9637758913675698
+        ],
+        "method": "Wilson"
+      },
+      "collision": 1,
+      "corridor": 0,
+      "timeout": 0,
+      "other_termination": 0,
+      "classifications": {
+        "SAFETY_FAILURE": 1,
+        "SUCCESS": 4
+      },
+      "margin_violating_runs": 1,
+      "margin_violation_s_total": 0.12500000000000355,
+      "handoffs": 145,
+      "handoff_invalid_paths": 0,
+      "pooled_handoffs": {
+        "A_B_distance_m": {
+          "n": 145,
+          "median": 0.13055538766010136,
+          "p95": 0.14166665110376697,
+          "min": 0.002777774205534009,
+          "max": 0.1527776238160565
+        },
+        "A_B_abs_yaw_rad": {
+          "n": 145,
+          "median": 0.23888888888888804,
+          "p95": 0.27222222222222126,
+          "min": 0.002345482820816258,
+          "max": 0.2944444444444434
+        },
+        "staleness": {
+          "n": 145,
+          "median": 0.20825568251625995,
+          "p95": 0.44683893720935985,
+          "min": 0.0,
+          "max": 0.7764334971530292
+        },
+        "abs_dw": {
+          "n": 145,
+          "median": 0.3043302590015816,
+          "p95": 0.8,
+          "min": 0.0,
+          "max": 0.8
+        },
+        "observation_to_switch_wall_s": {
+          "n": 145,
+          "median": 0.638504379,
+          "p95": 0.6944450238,
+          "min": 0.582785909,
+          "max": 0.750769219
+        }
+      },
+      "run_summary": {
+        "goal_time_s": {
+          "n": 4,
+          "median": 25.20138888888889,
+          "p95": 25.538194444444443,
+          "min": 24.90277777777778,
+          "max": 25.569444444444443
+        },
+        "duration_s": {
+          "n": 5,
+          "median": 25.041666666666668,
+          "p95": 25.527777777777775,
+          "min": 16.805555555555557,
+          "max": 25.569444444444443
+        },
+        "stop_time_s": {
+          "n": 5,
+          "median": 1.6666666666666627,
+          "p95": 2.288888888888883,
+          "min": 1.6666666666666627,
+          "max": 2.444444444444438
+        },
+        "distance_m": {
+          "n": 5,
+          "median": 4.647218149102188,
+          "p95": 4.726107265093397,
+          "min": 3.0277754016224243,
+          "max": 4.738885101063806
+        },
+        "max_abs_y_m": {
+          "n": 5,
+          "median": 0.5884934313357096,
+          "p95": 0.5959861852121394,
+          "min": 0.577523387234693,
+          "max": 0.5966739387797857
+        },
+        "margin_violation_s": {
+          "n": 5,
+          "median": 0.0,
+          "p95": 0.10000000000000282,
+          "min": 0.0,
+          "max": 0.12500000000000355
+        },
+        "endpoint_clamp_fraction": {
+          "n": 5,
+          "median": 0.6060606060606061,
+          "p95": 0.6536715830875123,
+          "min": 0.46710526315789475,
+          "max": 0.6548672566371682
+        },
+        "endpoint_clamp_valid_fraction": {
+          "n": 5,
+          "median": 0.6481481481481481,
+          "p95": 0.700185059805913,
+          "min": 0.5182481751824818,
+          "max": 0.7014218009478673
+        },
+        "curvature_saturated_fraction": {
+          "n": 5,
+          "median": 0.46710526315789475,
+          "p95": 0.5222104228121928,
+          "min": 0.36681222707423583,
+          "max": 0.5244444444444445
+        },
+        "switch_sign_reversals": {
+          "n": 5,
+          "median": 14.0,
+          "p95": 16.6,
+          "min": 9.0,
+          "max": 17.0
+        },
+        "busy_skips": {
+          "n": 5,
+          "median": 65.0,
+          "p95": 66.6,
+          "min": 43.0,
+          "max": 67.0
+        },
+        "waypoint_timeout_episodes": {
+          "n": 5,
+          "median": 0.0,
+          "p95": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "wall_simulation_ratio": {
+          "n": 5,
+          "median": 1.000004143361963,
+          "p95": 1.0000062014049773,
+          "min": 1.000003662322651,
+          "max": 1.0000062728785357
+        },
+        "StaticObstacle1_minimum_clearance_m": {
+          "n": 5,
+          "median": 0.1581580012545912,
+          "p95": 0.2006251914081521,
+          "min": 0.09422328543062267,
+          "max": 0.20185075004288344
+        },
+        "StaticObstacle2_minimum_clearance_m": {
+          "n": 5,
+          "median": 0.04216991794762211,
+          "p95": 0.11141844515197746,
+          "min": -0.001211959923535148,
+          "max": 0.12716618608450403
+        }
+      },
+      "receive_interval_median_s_by_run": [
+        0.74923494,
+        0.7493672625000001,
+        0.749238045,
+        0.750342722,
+        0.7470040389999999
+      ],
+      "delivery_delay_s_by_run": [
+        {
+          "n": 22,
+          "median": 0.5000768185,
+          "p95": 0.5000965779,
+          "min": 0.500070373,
+          "max": 0.519009766
+        },
+        {
+          "n": 33,
+          "median": 0.500076515,
+          "p95": 0.500101207,
+          "min": 0.500040012,
+          "max": 0.500105148
+        },
+        {
+          "n": 34,
+          "median": 0.500073062,
+          "p95": 0.5000966385,
+          "min": 0.500046774,
+          "max": 0.500100755
+        },
+        {
+          "n": 32,
+          "median": 0.500072174,
+          "p95": 0.50009295575,
+          "min": 0.500062196,
+          "max": 0.500103209
+        },
+        {
+          "n": 33,
+          "median": 0.500072295,
+          "p95": 0.500096472,
+          "min": 0.500026217,
+          "max": 0.500098385
+        }
+      ],
+      "pacing_by_run": [
+        {
+          "n": 1211,
+          "median": 9.8122e-05,
+          "p95": 0.0001521585,
+          "min": 2.7882e-05,
+          "max": 0.001156194
+        },
+        {
+          "n": 1842,
+          "median": 9.83135e-05,
+          "p95": 0.00015323369999999998,
+          "min": 4.5385e-05,
+          "max": 0.001391545
+        },
+        {
+          "n": 1827,
+          "median": 9.8844e-05,
+          "p95": 0.0001543897,
+          "min": 2.7649e-05,
+          "max": 0.001217957
+        },
+        {
+          "n": 1804,
+          "median": 0.0001005705,
+          "p95": 0.0001534024,
+          "min": 5.0367e-05,
+          "max": 0.001316092
+        },
+        {
+          "n": 1794,
+          "median": 9.82875e-05,
+          "p95": 0.0001515364,
+          "min": 4.9574e-05,
+          "max": 0.001362246
+        }
+      ]
+    },
+    {
+      "D_ms": 750,
+      "attempted": 5,
+      "valid_n": 5,
+      "technical_failures": 0,
+      "success": 1,
+      "success_wilson": {
+        "n": 5,
+        "count": 1,
+        "estimate": 0.2,
+        "ci95": [
+          0.03622410863243014,
+          0.6244653702374747
+        ],
+        "method": "Wilson"
+      },
+      "collision": 0,
+      "corridor": 3,
+      "timeout": 1,
+      "other_termination": 0,
+      "classifications": {
+        "STUCK": 1,
+        "SUCCESS": 1,
+        "SAFETY_FAILURE": 3
+      },
+      "margin_violating_runs": 1,
+      "margin_violation_s_total": 0.20833333333333925,
+      "handoffs": 248,
+      "handoff_invalid_paths": 0,
+      "pooled_handoffs": {
+        "A_B_distance_m": {
+          "n": 248,
+          "median": 0.18055553998404708,
+          "p95": 0.18611110655500382,
+          "min": 0.0,
+          "max": 0.20277766528863927
+        },
+        "A_B_abs_yaw_rad": {
+          "n": 248,
+          "median": 0.36111111111110983,
+          "p95": 0.3722222222222209,
+          "min": 0.0,
+          "max": 0.38333333333333197
+        },
+        "staleness": {
+          "n": 248,
+          "median": 0.34321009075972186,
+          "p95": 0.6317520362044039,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "abs_dw": {
+          "n": 248,
+          "median": 0.4,
+          "p95": 0.8,
+          "min": 0.0,
+          "max": 0.8
+        },
+        "observation_to_switch_wall_s": {
+          "n": 248,
+          "median": 0.9157267185,
+          "p95": 0.9441203471,
+          "min": 0.833226345,
+          "max": 1.055057314
+        }
+      },
+      "run_summary": {
+        "goal_time_s": {
+          "n": 1,
+          "median": 27.25,
+          "p95": 27.25,
+          "min": 27.25,
+          "max": 27.25
+        },
+        "duration_s": {
+          "n": 5,
+          "median": 38.22222222222222,
+          "p95": 84.98611111111111,
+          "min": 27.25,
+          "max": 90.0
+        },
+        "stop_time_s": {
+          "n": 5,
+          "median": 3.3333333333333237,
+          "p95": 3.844444444444433,
+          "min": 2.111111111111106,
+          "max": 3.8888888888888773
+        },
+        "distance_m": {
+          "n": 5,
+          "median": 6.866660171316632,
+          "p95": 16.379427839697666,
+          "min": 4.9166619603566994,
+          "max": 17.33331586905795
+        },
+        "max_abs_y_m": {
+          "n": 5,
+          "median": 1.1056991378132648,
+          "p95": 1.411862410635701,
+          "min": 0.6448341432057203,
+          "max": 1.4122149018646089
+        },
+        "margin_violation_s": {
+          "n": 5,
+          "median": 0.0,
+          "p95": 0.16666666666667138,
+          "min": 0.0,
+          "max": 0.20833333333333925
+        },
+        "endpoint_clamp_fraction": {
+          "n": 5,
+          "median": 0.8372093023255814,
+          "p95": 0.8597739104566414,
+          "min": 0.7967479674796748,
+          "max": 0.8614457831325302
+        },
+        "endpoint_clamp_valid_fraction": {
+          "n": 5,
+          "median": 0.8780177890724269,
+          "p95": 0.9053495369465828,
+          "min": 0.8359788359788359,
+          "max": 0.910828025477707
+        },
+        "curvature_saturated_fraction": {
+          "n": 5,
+          "median": 0.6752136752136753,
+          "p95": 0.7333244087460955,
+          "min": 0.5436046511627907,
+          "max": 0.7379518072289156
+        },
+        "switch_sign_reversals": {
+          "n": 5,
+          "median": 18.0,
+          "p95": 43.4,
+          "min": 11.0,
+          "max": 46.0
+        },
+        "busy_skips": {
+          "n": 5,
+          "median": 111.0,
+          "p95": 252.0,
+          "min": 79.0,
+          "max": 267.0
+        },
+        "waypoint_timeout_episodes": {
+          "n": 5,
+          "median": 1.0,
+          "p95": 4.199999999999999,
+          "min": 0.0,
+          "max": 5.0
+        },
+        "wall_simulation_ratio": {
+          "n": 5,
+          "median": 1.0000027434020384,
+          "p95": 1.0000059816704587,
+          "min": 1.0000023698002138,
+          "max": 1.0000065354
+        },
+        "StaticObstacle1_minimum_clearance_m": {
+          "n": 5,
+          "median": 0.15825113034281008,
+          "p95": 0.2584128311690228,
+          "min": 0.06588265005438795,
+          "max": 0.2639803512588943
+        },
+        "StaticObstacle2_minimum_clearance_m": {
+          "n": 5,
+          "median": 0.13082296365756055,
+          "p95": 0.4053006226558701,
+          "min": 0.01832443958646402,
+          "max": 0.464729963974581
+        }
+      },
+      "receive_interval_median_s_by_run": [
+        0.999229025,
+        0.9980684875,
+        0.999914478,
+        0.997560157,
+        0.9978148505
+      ],
+      "delivery_delay_s_by_run": [
+        {
+          "n": 90,
+          "median": 0.750072441,
+          "p95": 0.7501014818,
+          "min": 0.750025612,
+          "max": 0.750293801
+        },
+        {
+          "n": 27,
+          "median": 0.750071646,
+          "p95": 0.7500957663,
+          "min": 0.750054907,
+          "max": 0.75010248
+        },
+        {
+          "n": 65,
+          "median": 0.750072206,
+          "p95": 0.7500969484,
+          "min": 0.75002412,
+          "max": 0.750103999
+        },
+        {
+          "n": 37,
+          "median": 0.750073516,
+          "p95": 0.7500970276,
+          "min": 0.750049206,
+          "max": 0.750107935
+        },
+        {
+          "n": 39,
+          "median": 0.75007756,
+          "p95": 0.7500987291,
+          "min": 0.750030494,
+          "max": 0.750185871
+        }
+      ],
+      "pacing_by_run": [
+        {
+          "n": 6481,
+          "median": 9.978e-05,
+          "p95": 0.000154277,
+          "min": 4.8938e-05,
+          "max": 0.001400604
+        },
+        {
+          "n": 1963,
+          "median": 9.9375e-05,
+          "p95": 0.0001529792,
+          "min": 5.2475e-05,
+          "max": 0.001473922
+        },
+        {
+          "n": 4676,
+          "median": 9.826999999999999e-05,
+          "p95": 0.000153381,
+          "min": 3.182e-05,
+          "max": 0.001644981
+        },
+        {
+          "n": 2650,
+          "median": 9.868950000000001e-05,
+          "p95": 0.00015264079999999998,
+          "min": 4.2862e-05,
+          "max": 0.001354483
+        },
+        {
+          "n": 2753,
+          "median": 9.8764e-05,
+          "p95": 0.0001538314,
+          "min": 2.9262e-05,
+          "max": 0.001559998
+        }
+      ]
+    }
+  ],
+  "stage2_delays_ms": [
+    750
+  ],
+  "decision": "STAGE2_DELAY_RANGE_SELECTED",
+  "technical_caveat": false,
+  "navigation_retries": 0,
+  "execution_git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217",
+  "complete": {
+    "attempts": 20,
+    "retries": 0,
+    "reference_preservation": true,
+    "git_sha": "8e73999d8deaf70bfebbd3ca2b356aa708514217"
+  },
+  "input_plan_sha256": "34743e82b46029275dcae2a523bb472d5bd860b93b92ea147467d7506821a6f8",
+  "analysis_amendments": [
+    {
+      "key": "S0_05_D750",
+      "sha256": "57d0d1b28a13753e4bc5f64f2ccb36e9c6d42cfd06093e0fbb0ebac7cb14d2d5",
+      "original_causes": [
+        "left_wall_positive_y"
+      ],
+      "corrected_causes": [
+        "end_wall_positive_x"
+      ]
+    }
+  ],
+  "analysis_source_sha256": {
+    "research/nomad_phase3/report.py": "4a1babeb246dca01fc665b2a07547f91be308da9255211329d309f624096bc5a",
+    "research/nomad_phase3/metrics.py": "c7bee41ed8a127a6b2efa84c21080dfaf95d8b2587f38dbebb45f2ca870f9dbc"
+  }
+}

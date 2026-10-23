@@ -586,3 +586,26 @@ S0/Phase1/Phase2 gates and PP execution remain intact. Uniform post-packet delay
 are frozen in `nomad_phase3/protocol.json`. No retries or corrections. 19 targeted
 tests passed; read-only replay of old S0_01–05 matched pose integration exactly
 and PP/clearance to floating-point tolerance. See `PHASE3_STAGE1_S0_DELAY.md`.
+
+## 2026-10-23 — Phase 3 Stage 1 complete
+
+Execution commit `8e73999`; 20 sequential S0 RAW+PP attempts, no retries and no
+technical failures. D0/D250/D500/D750 successes: 5/5, 4/5, 4/5, 1/5. D250 had
+one left-wall intrusion; D500 one Static2 overlap; D750 one timeout and three
+corridor intrusions (+Y, -Y, +X). Preregistered Stage 2 target is **750ms only**;
+Stage 2 was not run. D0 matches the prior 5/5 success outcome, but not exact RGB
+or executed paths. All five initial histories already differ at equal pose and
+subgoal. Previous reference hashes remain unchanged.
+
+1,110 GPU outputs, 1,098 actual switches, 1,078 OLD/FRESH pairs. Pose replay error
+0, PP command error <=2.50e-15, clearance error <=8.89e-16. Median A→B travel
+increases 3.06→18.06cm, staleness 0→0.343 across D0→D750. Soft real-time maximum
+integration lateness is 3.00ms. N=5 exploratory only; Graph necessity/effect is
+not established. Small JSON/CSV, last-three-FRESH failure tables, D0 comparison,
+and exactly two figures are in `research/results/phase3_stage1_s0_delay_20261023/`.
+
+Post-run analysis-only amendment: label corridor failure by exact arc boundary
+axis. S0_05/D750 was +X end-wall intrusion, initially mislabeled using Y sign.
+Original metric is preserved, corrected record is separately saved under raw
+root `analysis_amendments/`. No runtime, outcome, threshold or navigation changed.
+See `docs/PHASE3_STAGE1_S0_DELAY.md` for the full registered report.
