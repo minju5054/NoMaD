@@ -1,0 +1,617 @@
+{
+  "execution_git_sha": "ef2cde3fa870a9a914120548a87a3cfcea5c396e",
+  "protocol": {
+    "scenario": "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+    "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+    "topomap": "artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+    "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+    "topomap_nodes": 14,
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "SUCCESS": "goal entry AND no confirmed geometric overlap AND no footprint outside corridor",
+    "SAFETY_FAILURE": "confirmed geometric overlap OR footprint outside corridor (existing SE2 arcs, axis extrema checked)",
+    "MARGIN_VIOLATION": "Separate sum of positive-duration 72Hz intervals with any obstacle swept lower bound <.02m; no change to SUCCESS/SAFETY_FAILURE",
+    "label": "PHASE5_ABLATION",
+    "base_commit": "5e89eda",
+    "protected_sha256": {
+      "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+      "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+      "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+      "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+      "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+      "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+      "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+      "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+      "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+      "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+      "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+      "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+      "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+      "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+      "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463",
+      "research/nomad_phase2/graph_worker.py": "2ffc21b0bd7d1469c123ce10e9647d7241f49cfcbf8833036d5dd9b01daef0e0",
+      "research/nomad_phase3_stage2/execution.py": "6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0",
+      "research/nomad_phase4c/execution.py": "9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232",
+      "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d",
+      "research/nomad_phase4c/protocol.json": "12b56f55d88c01101ef9ecd397723276260c5f11212a96418c04be4ab200cf00",
+      "research/nomad_phase4c/base_metrics.py": "12257847bfb605950a172add5f79b87af1434e1586530c139519128cacaa1497",
+      "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86"
+    },
+    "methods": [
+      "CURV",
+      "RIGID-ENTRY",
+      "GRAPH",
+      "GRAPH-NO-PREV",
+      "GRAPH-NO-SDF",
+      "GRAPH-NO-KB"
+    ],
+    "display_names": {
+      "GRAPH-NO-PREV": "GRAPH \u2212 PREV",
+      "GRAPH-NO-SDF": "GRAPH \u2212 SDF",
+      "GRAPH-NO-KB": "GRAPH \u2212 \u03baB"
+    },
+    "graph_flags": {
+      "GRAPH": {
+        "previous_prior": true,
+        "obstacle_sdf": true,
+        "boundary_curvature": true
+      },
+      "GRAPH-NO-PREV": {
+        "previous_prior": false,
+        "obstacle_sdf": true,
+        "boundary_curvature": true
+      },
+      "GRAPH-NO-SDF": {
+        "previous_prior": true,
+        "obstacle_sdf": false,
+        "boundary_curvature": true
+      },
+      "GRAPH-NO-KB": {
+        "previous_prior": true,
+        "obstacle_sdf": true,
+        "boundary_curvature": false
+      }
+    },
+    "graph_protocol_source": "research/nomad_phase0/graph_v4_protocol.json",
+    "new_runs": 48,
+    "indices": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "alpha": "inf",
+    "delay_s": 0.75,
+    "timeout_sim_s": 90,
+    "execution_v_max_m_s": 0.3,
+    "metric_scaling_m": 0.05,
+    "seed_rule": "101 + 10000*index + 2*request_id; DDPM +1. Same index across six methods.",
+    "seed_provenance": "Indices9/10 offsets90000/100000 already appear in historical s0_paired_n10_01; not globally unseen seeds. Requested9..16 retained without changes. New Phase5 runs, no Phase4 outcomes reused.",
+    "execution_order": "index9..16, then methods in the listed order; serial; no retries",
+    "rigid_entry": "Existing XYPath nearest projection and v2 fixed_entry; v2 >=20mm outgoing/incoming chords and interpolated entry heading (shortest angle). One rigid transform maps entry pose to actual B; no optimization. NumPy-only mirror verified against v2. Invalid chord => recorded rejection and native CURV fallback. Native observation anchor is preserved separately.",
+    "graph": "Original Phase4c AccelExecution and original Stage2 decision/single serial worker semantics; immediately native RAW, corrected result next eligible controller tick,0.5s stale and superseded unchanged. GRAPH uses original worker/v4 directly; only ablations use subclass with base protocol plus flags. No restarts/tuning.",
+    "ablation_details": "PREV passes no previous_xy; SDF removes only obstacle inequality rows and obstacle acceptance certificate, retains corridor certificate and definite-side residual; KB removes only boundary-curvature equality and its post-solve tolerance, retains entry-forward inequality. Original initialization guards (including previous v>0) are retained for all. Existing analytic derivatives/scales/bounds unchanged.",
+    "safety": "All actual obstacle/corridor monitoring and collision termination remain enabled including NO-SDF. Native obstacle clearance remains a diagnostic in NO-SDF and cannot be claimed certified safe.",
+    "circling": "Literal cumulative absolute wrapped actual yaw change from run start >=2*pi; record total and first threshold-reaching prefix. Existence over any unrestricted contiguous interval is equivalent to total>=2*pi. This may include oscillatory steering and does not prove a spatial loop; no unstated window/threshold.",
+    "staleness": "At every actual path application (fresh RAW/RIGID or accepted Graph replacement), nearest projected arclength / actual applied path total length, independent of follower progress. Report all and correction-only distributions; no reanchoring.",
+    "classification": {
+      "C1": "GRAPH successes >= CURV successes+3",
+      "C2": "GRAPH successes >= RIGID-ENTRY successes+2",
+      "C3": ">=2 difference CONTRIBUTES;0 or1 NOT_SHOWN;negative ABLATION_BETTER",
+      "overall": "C1 and C2 => GRAPH_SUPPORTED; C1 only => RIGID_SUFFICIENT_POSSIBLE; otherwise NOT_REPLICATED",
+      "technical": "Technical failures separate, success counts literal; completeness flagged separately. No technical run is counted as a navigation collision/timeout."
+    },
+    "fisher": "Two-sided success/non-success among technically valid runs, descriptive only; not used in any decision; paired seed dependence not modeled by Fisher.",
+    "plots": "Exactly success-count bars plus path overlay for lowest index with technical-PASS CURV failure and GRAPH success. If none, second figure states no qualifying index and draws no substitute paths.",
+    "output_root": "artifacts/isaac6/phase5_ablation_01",
+    "report": "docs/PHASE5_ABLATION.md",
+    "results": "research/results/phase5",
+    "scope": "Oracle geometry; SE(2) kinematic Isaac Sim; N8 per method; closed-loop RGB can differ despite paired seed.",
+    "preparation": "No navigation or NoMaD inference by Codex. Minimal synthetic tests only; freeze before user execution.",
+    "git_state": "Keep tracked source clean. Existing untracked research/results/phase4_pilot is retained and hashed as in Phase4c."
+  },
+  "conditions": [
+    {
+      "alpha": "inf",
+      "method": "CURV",
+      "attempts": 8,
+      "valid": 8,
+      "reused": 0,
+      "success": 3,
+      "collision": 1,
+      "corridor": 3,
+      "timeout": 1,
+      "technical_failure": 0,
+      "other": 0,
+      "goal_time_median_s": 39.083333333333336,
+      "mean_speed_m_s": 0.13456956165732903,
+      "minimum_clearance_m": -0.0021432663265633423,
+      "tracking_rms_rad_s": 0.0,
+      "tracking_max_rad_s": 0.0,
+      "graph_calls": 0,
+      "graph_accepted": 0,
+      "graph_acceptance_fraction": null,
+      "graph_dispositions": {}
+    },
+    {
+      "alpha": "inf",
+      "method": "RIGID-ENTRY",
+      "attempts": 8,
+      "valid": 8,
+      "reused": 0,
+      "success": 3,
+      "collision": 4,
+      "corridor": 1,
+      "timeout": 0,
+      "technical_failure": 0,
+      "other": 0,
+      "goal_time_median_s": 29.75,
+      "mean_speed_m_s": 0.15907206428283666,
+      "minimum_clearance_m": -0.0016114962140175832,
+      "tracking_rms_rad_s": 0.0,
+      "tracking_max_rad_s": 0.0,
+      "graph_calls": 0,
+      "graph_accepted": 0,
+      "graph_acceptance_fraction": null,
+      "graph_dispositions": {}
+    },
+    {
+      "alpha": "inf",
+      "method": "GRAPH",
+      "attempts": 8,
+      "valid": 8,
+      "reused": 0,
+      "success": 7,
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 0,
+      "technical_failure": 0,
+      "other": 0,
+      "goal_time_median_s": 30.083333333333332,
+      "mean_speed_m_s": 0.1540544617391813,
+      "minimum_clearance_m": 0.04080011360867733,
+      "tracking_rms_rad_s": 0.0,
+      "tracking_max_rad_s": 0.0,
+      "graph_calls": 229,
+      "graph_accepted": 168,
+      "graph_acceptance_fraction": 0.7336244541484717,
+      "graph_dispositions": {
+        "INITIALIZATION_REJECTED": 46,
+        "ACCEPTED": 168,
+        "NONCONVERGED": 15
+      }
+    },
+    {
+      "alpha": "inf",
+      "method": "GRAPH-NO-PREV",
+      "attempts": 8,
+      "valid": 8,
+      "reused": 0,
+      "success": 4,
+      "collision": 1,
+      "corridor": 1,
+      "timeout": 2,
+      "technical_failure": 0,
+      "other": 0,
+      "goal_time_median_s": 29.42361111111111,
+      "mean_speed_m_s": 0.15217295207436826,
+      "minimum_clearance_m": -0.0018889442134337718,
+      "tracking_rms_rad_s": 0.0,
+      "tracking_max_rad_s": 0.0,
+      "graph_calls": 333,
+      "graph_accepted": 256,
+      "graph_acceptance_fraction": 0.7687687687687688,
+      "graph_dispositions": {
+        "INITIALIZATION_REJECTED": 46,
+        "ACCEPTED": 256,
+        "NONCONVERGED": 30
+      }
+    },
+    {
+      "alpha": "inf",
+      "method": "GRAPH-NO-SDF",
+      "attempts": 8,
+      "valid": 7,
+      "reused": 0,
+      "success": 6,
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 0,
+      "technical_failure": 1,
+      "other": 0,
+      "goal_time_median_s": 30.97222222222222,
+      "mean_speed_m_s": 0.15730017548629144,
+      "minimum_clearance_m": 0.008815797650315548,
+      "tracking_rms_rad_s": 0.0,
+      "tracking_max_rad_s": 0.0,
+      "graph_calls": 194,
+      "graph_accepted": 138,
+      "graph_acceptance_fraction": 0.711340206185567,
+      "graph_dispositions": {
+        "INITIALIZATION_REJECTED": 39,
+        "ACCEPTED": 138,
+        "NONCONVERGED": 17
+      }
+    },
+    {
+      "alpha": "inf",
+      "method": "GRAPH-NO-KB",
+      "attempts": 8,
+      "valid": 8,
+      "reused": 0,
+      "success": 5,
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 2,
+      "technical_failure": 0,
+      "other": 0,
+      "goal_time_median_s": 29.944444444444443,
+      "mean_speed_m_s": 0.15225831551268454,
+      "minimum_clearance_m": 0.038808925541630054,
+      "tracking_rms_rad_s": 0.0,
+      "tracking_max_rad_s": 0.0,
+      "graph_calls": 344,
+      "graph_accepted": 263,
+      "graph_acceptance_fraction": 0.7645348837209303,
+      "graph_dispositions": {
+        "INITIALIZATION_REJECTED": 49,
+        "ACCEPTED": 263,
+        "NONCONVERGED": 32
+      }
+    }
+  ],
+  "mechanisms": [
+    {
+      "method": "CURV",
+      "valid": 8,
+      "endpoint_clamp_fraction": 0.6580345285524568,
+      "curvature_saturated_fraction": 0.18260292164674635,
+      "circling_runs": 5,
+      "cumulative_abs_yaw_rad": {
+        "n": 8,
+        "median": 9.296131634822991,
+        "p95": 29.482844214838455,
+        "min": 5.430909184026676,
+        "max": 29.825549619028337
+      },
+      "executed_path_staleness": {
+        "n": 330,
+        "median": 0.16053654657361802,
+        "p95": 0.5853651303908675,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "corrected_path_staleness": {
+        "n": 0
+      },
+      "switch_abs_dw": {
+        "n": 322,
+        "median": 0.4,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "margin_violation_mean_s": 0.010416666666666963,
+      "graph_calls": 0,
+      "graph_accepted": 0,
+      "graph_nonconverged": 0,
+      "graph_constraint_failure": 0,
+      "graph_superseded": 0,
+      "graph_stale": 0,
+      "graph_initialization_rejected": 0,
+      "graph_terminal_unapplied": 0,
+      "graph_solve_wall_s": {
+        "n": 0
+      },
+      "graph_corrected_control_fraction": 0.0,
+      "rigid_applied": 0,
+      "rigid_rejected": 0
+    },
+    {
+      "method": "RIGID-ENTRY",
+      "valid": 8,
+      "endpoint_clamp_fraction": 0.7367244270542203,
+      "curvature_saturated_fraction": 0.03745108999441028,
+      "circling_runs": 4,
+      "cumulative_abs_yaw_rad": {
+        "n": 8,
+        "median": 4.776420581429245,
+        "p95": 11.577973013318434,
+        "min": 1.2172899328470024,
+        "max": 13.449139279328417
+      },
+      "executed_path_staleness": {
+        "n": 189,
+        "median": 0.32578654305468374,
+        "p95": 0.6566678192013351,
+        "min": 0.0,
+        "max": 0.9990734650569911
+      },
+      "corrected_path_staleness": {
+        "n": 189,
+        "median": 0.32578654305468374,
+        "p95": 0.6566678192013351,
+        "min": 0.0,
+        "max": 0.9990734650569911
+      },
+      "switch_abs_dw": {
+        "n": 181,
+        "median": 0.12172210141763022,
+        "p95": 0.6062252943632221,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "margin_violation_mean_s": 0.2309027777777808,
+      "graph_calls": 0,
+      "graph_accepted": 0,
+      "graph_nonconverged": 0,
+      "graph_constraint_failure": 0,
+      "graph_superseded": 0,
+      "graph_stale": 0,
+      "graph_initialization_rejected": 0,
+      "graph_terminal_unapplied": 0,
+      "graph_solve_wall_s": {
+        "n": 0
+      },
+      "graph_corrected_control_fraction": 0.0,
+      "rigid_applied": 189,
+      "rigid_rejected": 0
+    },
+    {
+      "method": "GRAPH",
+      "valid": 8,
+      "endpoint_clamp_fraction": 0.672429906542056,
+      "curvature_saturated_fraction": 0.1336448598130841,
+      "circling_runs": 8,
+      "cumulative_abs_yaw_rad": {
+        "n": 8,
+        "median": 8.120486637025166,
+        "p95": 11.691604402311377,
+        "min": 6.561447175104278,
+        "max": 12.314949409315425
+      },
+      "executed_path_staleness": {
+        "n": 397,
+        "median": 0.27588912063069976,
+        "p95": 0.6700969737670401,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "corrected_path_staleness": {
+        "n": 168,
+        "median": 0.25979105894107857,
+        "p95": 0.6579434731572249,
+        "min": 0.0,
+        "max": 0.8677938996254729
+      },
+      "switch_abs_dw": {
+        "n": 221,
+        "median": 0.3779757581462452,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "margin_violation_mean_s": 0.0,
+      "graph_calls": 229,
+      "graph_accepted": 168,
+      "graph_nonconverged": 15,
+      "graph_constraint_failure": 14,
+      "graph_superseded": 0,
+      "graph_stale": 0,
+      "graph_initialization_rejected": 46,
+      "graph_terminal_unapplied": 0,
+      "graph_solve_wall_s": {
+        "n": 183,
+        "median": 0.057571089011617005,
+        "p95": 0.10560359282535506,
+        "min": 0.04219224402913824,
+        "max": 0.18800799699965864
+      },
+      "graph_corrected_control_fraction": 0.6567987957852484,
+      "rigid_applied": 0,
+      "rigid_rejected": 0
+    },
+    {
+      "method": "GRAPH-NO-PREV",
+      "valid": 8,
+      "endpoint_clamp_fraction": 0.6610947230416256,
+      "curvature_saturated_fraction": 0.1543756145526057,
+      "circling_runs": 7,
+      "cumulative_abs_yaw_rad": {
+        "n": 8,
+        "median": 8.051799291279107,
+        "p95": 29.785851819773406,
+        "min": 5.671171656042581,
+        "max": 30.242088274022407
+      },
+      "executed_path_staleness": {
+        "n": 589,
+        "median": 0.2106453580831058,
+        "p95": 0.5968544173870965,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "corrected_path_staleness": {
+        "n": 256,
+        "median": 0.19174798852284525,
+        "p95": 0.6037016625096483,
+        "min": 0.0,
+        "max": 0.8778333714465035
+      },
+      "switch_abs_dw": {
+        "n": 325,
+        "median": 0.4,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "margin_violation_mean_s": 0.08506944444444686,
+      "graph_calls": 333,
+      "graph_accepted": 256,
+      "graph_nonconverged": 30,
+      "graph_constraint_failure": 30,
+      "graph_superseded": 0,
+      "graph_stale": 0,
+      "graph_initialization_rejected": 46,
+      "graph_terminal_unapplied": 1,
+      "graph_solve_wall_s": {
+        "n": 286,
+        "median": 0.05502692048321478,
+        "p95": 0.13247129649971612,
+        "min": 0.01555917802033946,
+        "max": 0.2071538500022143
+      },
+      "graph_corrected_control_fraction": 0.6866391184573003,
+      "rigid_applied": 0,
+      "rigid_rejected": 0
+    },
+    {
+      "method": "GRAPH-NO-SDF",
+      "valid": 7,
+      "endpoint_clamp_fraction": 0.6870860927152318,
+      "curvature_saturated_fraction": 0.10430463576158941,
+      "circling_runs": 5,
+      "cumulative_abs_yaw_rad": {
+        "n": 7,
+        "median": 7.484256880526523,
+        "p95": 10.563436758992896,
+        "min": 5.38960751318098,
+        "max": 10.83369862241927
+      },
+      "executed_path_staleness": {
+        "n": 332,
+        "median": 0.2684244505146275,
+        "p95": 0.6688966480131445,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "corrected_path_staleness": {
+        "n": 138,
+        "median": 0.28260397727600467,
+        "p95": 0.6548822098224907,
+        "min": 0.0,
+        "max": 0.8943089953692428
+      },
+      "switch_abs_dw": {
+        "n": 187,
+        "median": 0.3464301177905374,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "margin_violation_mean_s": 0.13492063492063874,
+      "graph_calls": 194,
+      "graph_accepted": 138,
+      "graph_nonconverged": 17,
+      "graph_constraint_failure": 16,
+      "graph_superseded": 0,
+      "graph_stale": 0,
+      "graph_initialization_rejected": 39,
+      "graph_terminal_unapplied": 0,
+      "graph_solve_wall_s": {
+        "n": 155,
+        "median": 0.055216610024217516,
+        "p95": 0.11701617728685951,
+        "min": 0.040130728972144425,
+        "max": 0.1827198079554364
+      },
+      "graph_corrected_control_fraction": 0.6350710900473934,
+      "rigid_applied": 0,
+      "rigid_rejected": 0
+    },
+    {
+      "method": "GRAPH-NO-KB",
+      "valid": 8,
+      "endpoint_clamp_fraction": 0.6724518775639002,
+      "curvature_saturated_fraction": 0.15462290943515306,
+      "circling_runs": 8,
+      "cumulative_abs_yaw_rad": {
+        "n": 8,
+        "median": 9.167234427970506,
+        "p95": 29.775020584463977,
+        "min": 6.576545584536845,
+        "max": 29.87849713121839
+      },
+      "executed_path_staleness": {
+        "n": 607,
+        "median": 0.21640825137297906,
+        "p95": 0.6335400953873856,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "corrected_path_staleness": {
+        "n": 263,
+        "median": 0.2272870777954138,
+        "p95": 0.6394240532826536,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "switch_abs_dw": {
+        "n": 336,
+        "median": 0.3802603486029925,
+        "p95": 0.8,
+        "min": 0.0,
+        "max": 0.8
+      },
+      "margin_violation_mean_s": 0.0,
+      "graph_calls": 344,
+      "graph_accepted": 263,
+      "graph_nonconverged": 32,
+      "graph_constraint_failure": 31,
+      "graph_superseded": 0,
+      "graph_stale": 0,
+      "graph_initialization_rejected": 49,
+      "graph_terminal_unapplied": 0,
+      "graph_solve_wall_s": {
+        "n": 295,
+        "median": 0.05893197300611064,
+        "p95": 0.13469377939472918,
+        "min": 0.04438160598510876,
+        "max": 0.1959468920249492
+      },
+      "graph_corrected_control_fraction": 0.6781343036718491,
+      "rigid_applied": 0,
+      "rigid_rejected": 0
+    }
+  ],
+  "decision": {
+    "success_counts": {
+      "CURV": 3,
+      "RIGID-ENTRY": 3,
+      "GRAPH": 7,
+      "GRAPH-NO-PREV": 4,
+      "GRAPH-NO-SDF": 6,
+      "GRAPH-NO-KB": 5
+    },
+    "C1": true,
+    "C2": true,
+    "C3": {
+      "GRAPH-NO-PREV": {
+        "difference": 3,
+        "verdict": "CONTRIBUTES"
+      },
+      "GRAPH-NO-SDF": {
+        "difference": 1,
+        "verdict": "NOT_SHOWN"
+      },
+      "GRAPH-NO-KB": {
+        "difference": 2,
+        "verdict": "CONTRIBUTES"
+      }
+    },
+    "verdict": "GRAPH_SUPPORTED",
+    "fisher_exact_two_sided_p": {
+      "CURV": 0.11888111888111888,
+      "RIGID-ENTRY": 0.11888111888111888,
+      "GRAPH-NO-PREV": 0.2820512820512821,
+      "GRAPH-NO-SDF": 1.0,
+      "GRAPH-NO-KB": 0.5692307692307692
+    },
+    "complete_technical_evidence": false,
+    "technical_failure_count": 1
+  },
+  "overlay_index": 9
+}
