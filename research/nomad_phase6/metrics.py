@@ -12,6 +12,19 @@ from .config import protocol, base_method
 from .selection import select
 
 
+def compare_selection(actual, logged):
+    """Exact discrete decisions, 1e-12 absolute tolerance for float diagnostics."""
+    if isinstance(actual,dict):
+        assert actual.keys()==logged.keys()
+        for key in actual:compare_selection(actual[key],logged[key])
+    elif isinstance(actual,list):
+        assert len(actual)==len(logged)
+        for a,b in zip(actual,logged):compare_selection(a,b)
+    elif isinstance(actual,float):
+        np.testing.assert_allclose(actual,logged,atol=1e-12,rtol=0)
+    else:assert actual==logged
+
+
 def audit(run, run_id, offset, delay):
     run=Path(run);c=json.loads((run/'summary.json').read_text())['scenario']
     method=c['phase6_method'];p=protocol();prov=json.loads((run/'provenance.json').read_text())
@@ -27,7 +40,7 @@ def audit(run, run_id, offset, delay):
                 samples=f['metric']
                 np.testing.assert_array_equal(e['phase6_metric_samples'],samples)
                 xy,detail=select(samples,e['observation_pose'],b,c)
-            assert detail==e['phase6_selection']
+            compare_selection(detail,e['phase6_selection'])
             decisions.append(detail)
         switched[e['id']]=xy
         return xy
