@@ -30,7 +30,10 @@ class ExecutionThread:
         self.chunk_executor = None
         self.phase2 = None
         self.stage2 = None
-        if config.get("phase5_method"):
+        if config.get("phase6_method"):
+            from nomad_phase6.execution import Phase6Execution
+            self.stage2=Phase6Execution(config,out)
+        elif config.get("phase5_method"):
             from nomad_phase5.execution import Phase5Execution
             self.stage2=Phase5Execution(config,out)
         elif config.get("phase4c_method"):
@@ -99,6 +102,8 @@ class ExecutionThread:
         if self.chunk_executor is not None or self.stage2 is not None:
             from nomad_phase0.chunk_execution import describe_chunk
             row["chunk"] = describe_chunk(arrays["metric"][0], row["observation_pose"])
+        if self.config.get("phase6_method") == "SELECT":
+            row["phase6_metric_samples"] = arrays["metric"].tolist()
         self.received.append(row)
         append(self.rf, row)
         self.monitor.plan(row["id"], arrays["metric"], row)

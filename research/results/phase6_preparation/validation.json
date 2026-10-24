@@ -1,0 +1,25 @@
+{
+  "base_commit": "8fe4678518b230d04c627af33a85cda0c37f8adf",
+  "tests": {
+    "passed": 19,
+    "total": 19,
+    "new_phase6": 7,
+    "existing_regression": 12
+  },
+  "navigation_starts": 0,
+  "inference_starts": 0,
+  "graph_solves": 0,
+  "dry_run_new_attempts": 56,
+  "phase5_references": 24,
+  "checks": [
+    "CURV/GRAPH actual commands and SE2 poses identical to Phase5 in synthetic replacement and timeout checks",
+    "SELECT whole-path safety, actual B projection/remaining length, lower-index ties and ALL_UNSAFE fallback",
+    "Original sample0 chunk/nominal PD preserved; selected execution path separate",
+    "Fixed paired indices9..16 and delay/method opt-in gates; existing Phase5 gate unchanged",
+    "Batch serial launch mocked:56 attempts, no retries; per-job delay passed to audit",
+    "Mechanism projection agrees with stored Phase5 applications; invalid short-segment heading remains null",
+    "Synthetic80-record automatic report, three independent decisions, two figures, no overwrite",
+    "Scenario/Topomap/checkpoint hashes verified by dry-run; protected model/PP/PD/Graph/plant hashes unchanged"
+  ],
+  "limitation": "No Isaac navigation or GPU inference executed. Runtime behavior awaits user execution; no Phase6 scientific results yet."
+}

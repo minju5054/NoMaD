@@ -21,6 +21,7 @@ parser.add_argument("--pure-pursuit", action="store_true")
 parser.add_argument("--s0-delay-sweep", action="store_true", help="Frozen Phase 3 S0 RAW+PP delay sweep")
 parser.add_argument("--s0-stage2-method", choices=["CURV-SPEED", "HORIZON-SPEED", "GRAPH"], help="Frozen selected S0 speed/Graph experiment")
 parser.add_argument("--phase4-method", choices=["RAW", "CURV-SPEED", "GRAPH-v5"])
+parser.add_argument("--phase6-method", choices=["CURV","GRAPH","SELECT"])
 parser.add_argument("--phase5-method", choices=["CURV","RIGID-ENTRY","GRAPH","GRAPH-NO-PREV","GRAPH-NO-SDF","GRAPH-NO-KB"])
 parser.add_argument("--phase4d-confirm", action="store_true")
 parser.add_argument("--phase4c-method", choices=["CURV", "CURV+ACC", "GRAPH"])
@@ -151,6 +152,8 @@ def build_scene(config):
 
 
 def main():
+    if args.phase6_method and not args.phase4c_method:
+        raise ValueError("Phase6 requires Phase4c execution method and alpha")
     if args.phase5_method and not args.phase4c_method:
         raise ValueError("Phase5 requires Phase4c execution method and alpha")
     if args.phase4d_confirm and not args.phase4c_method:
