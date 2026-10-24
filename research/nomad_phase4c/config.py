@@ -11,6 +11,9 @@ def protocol():return json.loads((HERE/'protocol.json').read_text())
 
 
 def validate_options(a):
+    if getattr(a,"phase5_method",None):
+        from nomad_phase5.config import validate_options as validate_phase5
+        return validate_phase5(a)
     p=protocol();confirm=getattr(a,'phase4d_confirm',False)
     if confirm and a.phase4c_method not in ('CURV','GRAPH'):raise ValueError('Phase4d excludes CURV+ACC')
     if not (a.phase4c_method in METHODS and a.asynchronous and a.pure_pursuit and a.topomap):raise ValueError('Phase4c requires static S0 asynchronous PP')
@@ -31,6 +34,7 @@ def validate_options(a):
 def runtime_config(source,a):
     config={**source,'timeout_sim_s':90,'phase4c_method':a.phase4c_method,'plant_alpha':a.plant_alpha,'execution_v_max_m_s':.3}
     if getattr(a,'phase4d_confirm',False):config['phase4d_confirm']=True
+    if getattr(a,'phase5_method',None):config['phase5_method']=a.phase5_method
     return config
 
 

@@ -1,0 +1,113 @@
+{
+  "scenario": "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+  "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+  "topomap": "artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "topomap_nodes": 14,
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "SUCCESS": "goal entry AND no confirmed geometric overlap AND no footprint outside corridor",
+  "SAFETY_FAILURE": "confirmed geometric overlap OR footprint outside corridor (existing SE2 arcs, axis extrema checked)",
+  "MARGIN_VIOLATION": "Separate sum of positive-duration 72Hz intervals with any obstacle swept lower bound <.02m; no change to SUCCESS/SAFETY_FAILURE",
+  "label": "PHASE5_ABLATION",
+  "base_commit": "5e89eda",
+  "protected_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+    "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463",
+    "research/nomad_phase2/graph_worker.py": "2ffc21b0bd7d1469c123ce10e9647d7241f49cfcbf8833036d5dd9b01daef0e0",
+    "research/nomad_phase3_stage2/execution.py": "6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0",
+    "research/nomad_phase4c/execution.py": "9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232",
+    "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d",
+    "research/nomad_phase4c/protocol.json": "12b56f55d88c01101ef9ecd397723276260c5f11212a96418c04be4ab200cf00",
+    "research/nomad_phase4c/base_metrics.py": "12257847bfb605950a172add5f79b87af1434e1586530c139519128cacaa1497",
+    "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86"
+  },
+  "methods": [
+    "CURV",
+    "RIGID-ENTRY",
+    "GRAPH",
+    "GRAPH-NO-PREV",
+    "GRAPH-NO-SDF",
+    "GRAPH-NO-KB"
+  ],
+  "display_names": {
+    "GRAPH-NO-PREV": "GRAPH − PREV",
+    "GRAPH-NO-SDF": "GRAPH − SDF",
+    "GRAPH-NO-KB": "GRAPH − κB"
+  },
+  "graph_flags": {
+    "GRAPH": {
+      "previous_prior": true,
+      "obstacle_sdf": true,
+      "boundary_curvature": true
+    },
+    "GRAPH-NO-PREV": {
+      "previous_prior": false,
+      "obstacle_sdf": true,
+      "boundary_curvature": true
+    },
+    "GRAPH-NO-SDF": {
+      "previous_prior": true,
+      "obstacle_sdf": false,
+      "boundary_curvature": true
+    },
+    "GRAPH-NO-KB": {
+      "previous_prior": true,
+      "obstacle_sdf": true,
+      "boundary_curvature": false
+    }
+  },
+  "graph_protocol_source": "research/nomad_phase0/graph_v4_protocol.json",
+  "new_runs": 48,
+  "indices": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "alpha": "inf",
+  "delay_s": 0.75,
+  "timeout_sim_s": 90,
+  "execution_v_max_m_s": 0.3,
+  "metric_scaling_m": 0.05,
+  "seed_rule": "101 + 10000*index + 2*request_id; DDPM +1. Same index across six methods.",
+  "seed_provenance": "Indices9/10 offsets90000/100000 already appear in historical s0_paired_n10_01; not globally unseen seeds. Requested9..16 retained without changes. New Phase5 runs, no Phase4 outcomes reused.",
+  "execution_order": "index9..16, then methods in the listed order; serial; no retries",
+  "rigid_entry": "Existing XYPath nearest projection and v2 fixed_entry; v2 >=20mm outgoing/incoming chords and interpolated entry heading (shortest angle). One rigid transform maps entry pose to actual B; no optimization. NumPy-only mirror verified against v2. Invalid chord => recorded rejection and native CURV fallback. Native observation anchor is preserved separately.",
+  "graph": "Original Phase4c AccelExecution and original Stage2 decision/single serial worker semantics; immediately native RAW, corrected result next eligible controller tick,0.5s stale and superseded unchanged. GRAPH uses original worker/v4 directly; only ablations use subclass with base protocol plus flags. No restarts/tuning.",
+  "ablation_details": "PREV passes no previous_xy; SDF removes only obstacle inequality rows and obstacle acceptance certificate, retains corridor certificate and definite-side residual; KB removes only boundary-curvature equality and its post-solve tolerance, retains entry-forward inequality. Original initialization guards (including previous v>0) are retained for all. Existing analytic derivatives/scales/bounds unchanged.",
+  "safety": "All actual obstacle/corridor monitoring and collision termination remain enabled including NO-SDF. Native obstacle clearance remains a diagnostic in NO-SDF and cannot be claimed certified safe.",
+  "circling": "Literal cumulative absolute wrapped actual yaw change from run start >=2*pi; record total and first threshold-reaching prefix. Existence over any unrestricted contiguous interval is equivalent to total>=2*pi. This may include oscillatory steering and does not prove a spatial loop; no unstated window/threshold.",
+  "staleness": "At every actual path application (fresh RAW/RIGID or accepted Graph replacement), nearest projected arclength / actual applied path total length, independent of follower progress. Report all and correction-only distributions; no reanchoring.",
+  "classification": {
+    "C1": "GRAPH successes >= CURV successes+3",
+    "C2": "GRAPH successes >= RIGID-ENTRY successes+2",
+    "C3": ">=2 difference CONTRIBUTES;0 or1 NOT_SHOWN;negative ABLATION_BETTER",
+    "overall": "C1 and C2 => GRAPH_SUPPORTED; C1 only => RIGID_SUFFICIENT_POSSIBLE; otherwise NOT_REPLICATED",
+    "technical": "Technical failures separate, success counts literal; completeness flagged separately. No technical run is counted as a navigation collision/timeout."
+  },
+  "fisher": "Two-sided success/non-success among technically valid runs, descriptive only; not used in any decision; paired seed dependence not modeled by Fisher.",
+  "plots": "Exactly success-count bars plus path overlay for lowest index with technical-PASS CURV failure and GRAPH success. If none, second figure states no qualifying index and draws no substitute paths.",
+  "output_root": "artifacts/isaac6/phase5_ablation_01",
+  "report": "docs/PHASE5_ABLATION.md",
+  "results": "research/results/phase5",
+  "scope": "Oracle geometry; SE(2) kinematic Isaac Sim; N8 per method; closed-loop RGB can differ despite paired seed.",
+  "preparation": "No navigation or NoMaD inference by Codex. Minimal synthetic tests only; freeze before user execution.",
+  "git_state": "Keep tracked source clean. Existing untracked research/results/phase4_pilot is retained and hashed as in Phase4c."
+}

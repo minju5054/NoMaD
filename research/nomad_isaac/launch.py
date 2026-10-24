@@ -24,6 +24,7 @@ def main():
     parser.add_argument("--s0-delay-sweep", action="store_true", help="Frozen Phase 3 S0 RAW+PP delay sweep")
     parser.add_argument("--s0-stage2-method", choices=["CURV-SPEED", "HORIZON-SPEED", "GRAPH"], help="Frozen selected S0 speed/Graph experiment")
     parser.add_argument("--phase4-method", choices=["RAW", "CURV-SPEED", "GRAPH-v5"])
+    parser.add_argument("--phase5-method", choices=["CURV","RIGID-ENTRY","GRAPH","GRAPH-NO-PREV","GRAPH-NO-SDF","GRAPH-NO-KB"])
     parser.add_argument("--phase4d-confirm", action="store_true", help="Frozen Phase4d extension: indices4..8, CURV/GRAPH, alpha inf/2")
     parser.add_argument("--phase4c-method", choices=["CURV", "CURV+ACC", "GRAPH"])
     parser.add_argument("--plant-alpha", choices=["inf", "2.0", "1.0"])
@@ -43,6 +44,8 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.phase5_method and not args.phase4c_method:
+        parser.error("Phase5 requires Phase4c execution method and alpha")
     if args.phase4d_confirm and not args.phase4c_method:
         parser.error("Phase4d requires Phase4c method and plant alpha")
     if bool(args.phase4c_method)!=bool(args.plant_alpha):
@@ -139,6 +142,10 @@ def main():
             ("nomad_phase3_stage2",("execution.py",)),("nomad_phase2",("execution.py","graph_worker.py")),
             ("nomad_phase0",("graph_v4.py","graph_v4_protocol.json"))) for name in names]
         write_json(out/"phase4c_protocol.json",protocol())
+    if args.phase5_method:
+        from nomad_phase5.config import HERE, protocol
+        sources += list(HERE.glob("*.py"))+[HERE/"protocol.json"]
+        write_json(out/"phase5_protocol.json",protocol())
     if args.phase4d_confirm:
         from nomad_phase4d.config import HERE, protocol
         sources += list(HERE.glob("*.py"))+[HERE/"protocol.json"]
@@ -179,7 +186,7 @@ def main():
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
         "diagnostic_condition": args.diagnostic_condition, "phase2_method": args.phase2_method, "phase2_distance_m": args.phase2_distance_m,
-        "pure_pursuit": args.pure_pursuit, "s0_delay_sweep": args.s0_delay_sweep, "s0_stage2_method": args.s0_stage2_method, "phase4_method": args.phase4_method, "phase4c_method":args.phase4c_method,"plant_alpha":args.plant_alpha,"phase4d_confirm":args.phase4d_confirm,
+        "pure_pursuit": args.pure_pursuit, "s0_delay_sweep": args.s0_delay_sweep, "s0_stage2_method": args.s0_stage2_method, "phase4_method": args.phase4_method, "phase4c_method":args.phase4c_method,"plant_alpha":args.plant_alpha,"phase4d_confirm":args.phase4d_confirm,"phase5_method":args.phase5_method,
         "s1_v2_mode": args.s1_v2_mode, "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
         "run_id": args.run_id, "seed_offset": args.seed_offset,
         "source_scenario_sha256": sha256_file(scenario_path),
@@ -233,6 +240,8 @@ def main():
                 command.append("--asynchronous")
             if args.pure_pursuit:
                 command.append("--pure-pursuit")
+            if args.phase5_method:
+                command += ["--phase5-method",args.phase5_method]
             if args.phase4d_confirm:
                 command.append("--phase4d-confirm")
             if args.phase4c_method:

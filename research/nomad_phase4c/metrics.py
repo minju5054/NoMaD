@@ -37,7 +37,7 @@ def corridor_breach_axes(pose, v, w, dt, corridor, radius):
     return [name for name,value in bounds.items() if value < 0]
 
 
-def audit(run, run_id, offset, delay, legacy=False):
+def audit(run, run_id, offset, delay, legacy=False, switch_world_xy=None):
     run = Path(run)
     result = extract_run(run, 'PP', run_id, offset, delay_sweep=not legacy)
     s = json.loads((run/'summary.json').read_text()); c = s['scenario']
@@ -108,7 +108,8 @@ def audit(run, run_id, offset, delay, legacy=False):
             np.testing.assert_allclose(pose,e['agent_pose_at_switch'],rtol=0,atol=1e-12)
             assert ctrl['monotonic_ns']>=e['received_monotonic_ns']
             if index: assert control[index-1]['monotonic_ns']<e['received_monotonic_ns']
-            try: follower=PurePursuit(worlds[e['id']],follower_protocol()['follower'])
+            applied_xy=worlds[e['id']] if switch_world_xy is None else switch_world_xy(worlds[e['id']],pose,e)
+            try: follower=PurePursuit(applied_xy,follower_protocol()['follower'])
             except ValueError: follower=None
             start=round(e['observation_sim_s']*72); path=follower.path if follower else None
             projected,distance=path.project(pose[:2]) if path else (None,None)

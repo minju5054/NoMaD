@@ -30,7 +30,10 @@ class ExecutionThread:
         self.chunk_executor = None
         self.phase2 = None
         self.stage2 = None
-        if config.get("phase4c_method"):
+        if config.get("phase5_method"):
+            from nomad_phase5.execution import Phase5Execution
+            self.stage2=Phase5Execution(config,out)
+        elif config.get("phase4c_method"):
             from nomad_phase4c.execution import AccelExecution
             self.stage2=AccelExecution(config,out)
         elif config.get("phase4_method"):
