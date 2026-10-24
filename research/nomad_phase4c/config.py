@@ -39,6 +39,7 @@ def runtime_config(source,a):
     if getattr(a,'phase4d_confirm',False):config['phase4d_confirm']=True
     if getattr(a,'phase5_method',None):config['phase5_method']=a.phase5_method
     if getattr(a,'phase6_method',None):config['phase6_method']=a.phase6_method
+    if getattr(a,'phase7_method',None):config['phase7_method']=a.phase7_method
     return config
 
 

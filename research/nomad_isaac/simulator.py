@@ -21,6 +21,7 @@ parser.add_argument("--pure-pursuit", action="store_true")
 parser.add_argument("--s0-delay-sweep", action="store_true", help="Frozen Phase 3 S0 RAW+PP delay sweep")
 parser.add_argument("--s0-stage2-method", choices=["CURV-SPEED", "HORIZON-SPEED", "GRAPH"], help="Frozen selected S0 speed/Graph experiment")
 parser.add_argument("--phase4-method", choices=["RAW", "CURV-SPEED", "GRAPH-v5"])
+parser.add_argument("--phase7-method", choices=["CURV","GRAPH","SELECT"])
 parser.add_argument("--phase6-method", choices=["CURV","GRAPH","SELECT"])
 parser.add_argument("--phase5-method", choices=["CURV","RIGID-ENTRY","GRAPH","GRAPH-NO-PREV","GRAPH-NO-SDF","GRAPH-NO-KB"])
 parser.add_argument("--phase4d-confirm", action="store_true")
@@ -39,7 +40,7 @@ parser.add_argument("--early-obstacle-mode", choices=["raw", "graph"])
 parser.add_argument("--topomap", type=Path)
 parser.add_argument("--render-topomap-reference", type=Path)
 parser.add_argument("--controlled-delivery-delay", action="store_true")
-parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .75])
+parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .625, .75])
 args, _ = parser.parse_known_args()
 out = args.output.resolve()
 runtime = out / "isaac_runtime"
@@ -152,6 +153,10 @@ def build_scene(config):
 
 
 def main():
+    if args.phase7_method and args.phase6_method != args.phase7_method:
+        raise ValueError("Phase7 requires matching Phase6 execution hook")
+    if args.uniform_delivery_delay_s == .625 and not args.phase7_method:
+        raise ValueError("625ms is restricted to Phase7")
     if args.phase6_method and not args.phase4c_method:
         raise ValueError("Phase6 requires Phase4c execution method and alpha")
     if args.phase5_method and not args.phase4c_method:

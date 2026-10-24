@@ -243,6 +243,9 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     elif uniform_delivery_delay_s is not None:
         from .delivery_delay import UniformDeliveryDelay
         delay_protocol = json.loads(Path(__file__).with_name("uniform_latency_protocol.json").read_text())
+        if uniform_delivery_delay_s == .625:
+            assert config.get("phase7_method") in ("CURV","GRAPH")
+            delay_protocol = {**delay_protocol, "conditions_delay_s": {**delay_protocol["conditions_delay_s"], "D625": .625}}
         assert uniform_delivery_delay_s in delay_protocol["conditions_delay_s"].values()
         delay_protocol = {**delay_protocol, "mode": "uniform", "configured_additional_s": uniform_delivery_delay_s}
         write_json(out/"delivery_delay_protocol.json", delay_protocol)

@@ -27,10 +27,15 @@ def compare_selection(actual, logged):
 
 def audit(run, run_id, offset, delay):
     run=Path(run);c=json.loads((run/'summary.json').read_text())['scenario']
-    method=c['phase6_method'];p=protocol();prov=json.loads((run/'provenance.json').read_text())
+    method=c['phase6_method'];p=protocol();protocol_file='phase6_protocol.json'
+    if c.get('phase7_method'):
+        from nomad_phase7.config import protocol as phase7_protocol
+        p=phase7_protocol();protocol_file='phase7_protocol.json'
+        assert c['phase7_method']==method
+    prov=json.loads((run/'provenance.json').read_text())
     assert prov['phase6_method']==method and c['phase4c_method']==base_method(method) and c['plant_alpha']=='inf'
-    assert delay in ((.75,) if method=='SELECT' else tuple(p['delay_sweep']))
-    assert json.loads((run/'phase6_protocol.json').read_text())==p
+    assert delay in ((.75,) if method=='SELECT' else ((.625,) if c.get('phase7_method') else tuple(p['delay_sweep'])))
+    assert json.loads((run/protocol_file).read_text())==p
     assert int(run_id[-2:]) in p['indices'] and offset==10000*int(run_id[-2:])
     switched={};decisions=[]
     def switch_path(raw,b,e):
@@ -69,7 +74,7 @@ def audit(run, run_id, offset, delay):
         np.testing.assert_array_equal(a['before_vw'],before)
     r.update(method=method,label=p['label'],selection=dict(switches=len(decisions),
         replacements=sum(x['selected_sample']!=0 for x in decisions),all_unsafe=sum(x['all_unsafe'] for x in decisions)))
-    for n in ('phase6_protocol.json','phase6_applications.jsonl'):
+    for n in (protocol_file,'phase6_applications.jsonl'):
         r['input_log_sha256'][n]=sha256_file(run/n)
     # Preserve raw sample evidence as well as command/timing hashes for report verification.
     for e in rows(run/'received.jsonl'):

@@ -76,6 +76,9 @@ def decide(records):
             [b['success'],b['valid']-b['success']]]).pvalue) if a['valid'] and b['valid'] else None
     g=gs[.75,'GRAPH'];fisher['750_GRAPH_SELECT']=float(fisher_exact([[g['success'],g['valid']-g['success']],
         [select['success'],select['valid']-select['success']]]).pvalue) if g['valid'] and select['valid'] else None
+    if min(gs[0.,m]['valid'] for m in ('CURV','GRAPH'))<7:d0=None
+    if any(g['valid']<7 for g in gs.values()):trend=None
+    if min(gs[.75,'GRAPH']['valid'],select['valid'])<7:beats=None
     return dict(D0_NO_HARM=d0,TREND_SUPPORTED=trend,BEATS_SELECT=beats,delta_success_counts=delta,
         fisher_two_sided_descriptive=fisher,technical_failures=sum(r.get('technical_validation')!='PASS' for r in records),
         complete_technical_evidence=all(r.get('technical_validation')=='PASS' for r in records),
@@ -99,9 +102,9 @@ METRICS=('heading_abs_rad_median','heading_abs_rad_p95','cross_track_m_median','
          'time_abs_y_over1_s','minimum_wall_footprint_clearance_lower_m')
 
 
-def aggregate_mechanisms(flat):
+def aggregate_mechanisms(flat, delay_values=(0.,.25,.5,.75)):
     groups=[]
-    for delay in (None,0.,.25,.5,.75):
+    for delay in (None,*delay_values):
         for method in ('CURV','RIGID-ENTRY','SELECT','GRAPH'):
             for success in (True,False):
                 for window in ('full','last3s'):
@@ -189,7 +192,7 @@ def generate(root,out,doc):
     text+=['','Per-run and delay-stratified metrics, valid denominators and last3s failure precursors are in the companion CSV files. Table3 values are means of run statistics; distributions are not pooled across controller ticks. RIGID/SELECT have D750 only.',
         '', '|Independent preregistered criterion|Result|','|---|---|']
     for key in ('D0_NO_HARM','TREND_SUPPORTED','BEATS_SELECT'):
-        text.append(f"|{key}|{'INSUFFICIENT_EVIDENCE' if decision[key] is None else 'PASS' if decision[key] else 'FAIL'}|")
+        text.append(f"|{key}|{'INCONCLUSIVE' if decision[key] is None else 'PASS' if decision[key] else 'FAIL'}|")
     text += ['',f"Δ(D), GRAPH−CURV success counts: `{decision['delta_success_counts']}`.",
         'TREND uses the literal preregistered chained inequality Δ750 ≥ Δ500−1 ≥ Δ250−2 and Δ750 ≥ Δ0+2. No combined verdict.',
         f"Technical evidence complete: `{decision['complete_technical_evidence']}`; technical failures: {decision['technical_failures']}.",

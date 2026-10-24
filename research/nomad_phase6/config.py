@@ -16,6 +16,9 @@ def base_method(method):
 
 
 def validate_options(a):
+    if getattr(a,"phase7_method",None):
+        from nomad_phase7.config import validate_options as phase7_validate
+        return phase7_validate(a)
     p = protocol()
     method = a.phase6_method
     if method not in METHODS or a.phase4c_method != base_method(method):
