@@ -61,7 +61,7 @@ def verify(plan):
     for name,h in plan['fixed_input_sha256'].items():assert sha256_file(Path(name))==h,'Frozen input changed: '+name
 
 
-def execute(plan,root):
+def execute(plan,root,audit_fn=audit):
     sha=git_state()['git_sha'];results=[]
     with (root/'execution.jsonl').open('x') as journal:
         def record(row):journal.write(json.dumps({'monotonic_ns':time.monotonic_ns(),'git_sha':sha,**row})+'\n');journal.flush()
@@ -72,7 +72,7 @@ def execute(plan,root):
             try:
                 code=launch_one(job,root/'launcher_logs'/f"{job['key']}.log")
                 if code:raise RuntimeError(f'Launcher exit {code}')
-                phase='audit';metric=audit(Path(job['output']),job['run_id'],job['seed_offset'],.75)
+                phase='audit';metric=audit_fn(Path(job['output']),job['run_id'],job['seed_offset'],.75)
             except Exception as e:
                 metric={'classification':'TECHNICAL_FAILURE','technical_validation':'FAIL','success':False,
                     'error':repr(e),'traceback':traceback.format_exc(),'failure_stage':phase}

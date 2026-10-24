@@ -1,0 +1,44 @@
+{
+  "label": "PREPARATION_ONLY",
+  "base_git_sha": "ba65d31",
+  "tests": {
+    "phase4c_regression": 5,
+    "phase4d": 5,
+    "passed": 10,
+    "total": 10
+  },
+  "dry_run": {
+    "new_runs": 20,
+    "reused_runs": 12,
+    "new_indices": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "alphas": [
+      "inf",
+      "2.0"
+    ],
+    "methods": [
+      "CURV",
+      "GRAPH"
+    ]
+  },
+  "reference_checks": "12 technical-PASS records and their stored input log hashes verified",
+  "protected_graph_curv_plant": "unchanged hashes verified",
+  "protocol_sha256": "7585e1f2569ef4806ef22a18e7429e4fddad800f6740e960ad76d0d812e3bdf8",
+  "new_navigation": 0,
+  "new_inference": 0,
+  "new_graph_solve": 0,
+  "report_test": "synthetic records only, temporary outputs removed",
+  "estimated_batch_minutes": {
+    "from_prior_mean": 49.9,
+    "recommended_range": [
+      50,
+      70
+    ]
+  },
+  "notes": "Existing phase4c results and user untracked phase4_pilot results preserved."
+}
