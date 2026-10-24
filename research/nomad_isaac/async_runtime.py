@@ -30,7 +30,10 @@ class ExecutionThread:
         self.chunk_executor = None
         self.phase2 = None
         self.stage2 = None
-        if config.get("phase6_method"):
+        if config.get("overnight_phase"):
+            from nomad_phase8.execution import OvernightExecution
+            self.stage2=OvernightExecution(config,out)
+        elif config.get("phase6_method"):
             from nomad_phase6.execution import Phase6Execution
             self.stage2=Phase6Execution(config,out)
         elif config.get("phase5_method"):
@@ -45,7 +48,7 @@ class ExecutionThread:
         elif config.get("s0_stage2_method"):
             from nomad_phase3_stage2.execution import Stage2Execution
             self.stage2 = Stage2Execution(config, out)
-        if config.get("experiment_mode") == "phase2_s1_v2":
+        if config.get("experiment_mode") == "phase2_s1_v2" and not config.get("overnight_phase"):
             from nomad_phase2.execution import Phase2Execution
             self.phase2 = Phase2Execution(config,out)
         if pure_pursuit and self.phase2 is None and self.stage2 is None:
@@ -67,7 +70,7 @@ class ExecutionThread:
         if config.get("experiment_mode") in ("phase1_s1_v2_straight", "phase2_s1_v2"):
             from nomad_phase1.s1_v2 import CorridorOnlyMonitor
             monitor_config = config
-            if self.phase2 is not None:
+            if config.get("experiment_mode")=="phase2_s1_v2":
                 monitor_config = json.loads(Path(__file__).parents[1].joinpath("nomad_phase1/s1_v2_scenario.json").read_text())
             self.monitor = CorridorOnlyMonitor(monitor_config, out)
         else:
@@ -90,7 +93,7 @@ class ExecutionThread:
 
     def snapshot(self):
         with self.lock:
-            return {**self.state, "pose": list(self.state["pose"])}
+            return {**self.state, "pose": list(self.state["pose"]), "snapshot_monotonic_ns":time.monotonic_ns()}
 
     def accept(self, result, sim_time, terminal=False):
         metadata, arrays = result
@@ -102,6 +105,8 @@ class ExecutionThread:
         if self.chunk_executor is not None or self.stage2 is not None:
             from nomad_phase0.chunk_execution import describe_chunk
             row["chunk"] = describe_chunk(arrays["metric"][0], row["observation_pose"])
+        if self.config.get("overnight_phase"):
+            row["overnight_metric_samples"]=arrays["metric"].tolist()
         if self.config.get("phase6_method") == "SELECT":
             row["phase6_metric_samples"] = arrays["metric"].tolist()
         self.received.append(row)
@@ -171,7 +176,8 @@ class ExecutionThread:
                     # Publish this tick only after its placement is resolved. Never hold
                     # the snapshot lock during placement, rendering, or inference.
                     with self.lock:
-                        self.state = {"pose": pose.tolist(), "sim_s": sim_time, "monotonic_ns": now, "tick": tick,
+                        old_path=self.state.get("old_world_xy");old_app_ns=self.state.get("path_application_monotonic_ns")
+                        self.state = {"old_world_xy":old_path,"path_application_monotonic_ns":old_app_ns,"actual_vw":[incoming_v,incoming_w],"pose": pose.tolist(), "sim_s": sim_time, "monotonic_ns": now, "tick": tick,
                                       "applied_id": incoming_id, "command_valid": incoming_valid}
                         if self.dynamic is not None and self.dynamic.adaptive:
                             self.state.update({"resolved_dynamic_obstacle": self.dynamic.obstacle,
@@ -209,6 +215,11 @@ class ExecutionThread:
                     with self.lock:
                         self.state["applied_id"] = self.core.applied_id
                         self.state["command_valid"] = self.core.command_valid
+                        if c.get("overnight_phase"):
+                            path=self.stage2.follower.path if self.stage2.follower is not None else None
+                            self.state["old_world_xy"]=path.points.tolist() if path else None
+                            self.state["path_application_monotonic_ns"]=self.stage2.last_application_ns
+                            self.state["actual_vw"]=[self.core.v,self.stage2.plant.actual_w]
         except BaseException as exc:
             self.error = exc
             (self.out/"async_thread_failure.txt").write_text(traceback.format_exc())
@@ -315,6 +326,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                     dynamic_history.append(diagnostic)
                 if oracle_gate is not None:
                     record["oracle_information"] = oracle_gate.observe(record)
+                    if config.get("overnight_phase"):
+                        engine.stage2.publish(record["oracle_information"], engine.dynamic.obstacle)
                     if engine.phase2 is not None:
                         engine.phase2.publish(record["oracle_information"], engine.dynamic.obstacle)
                 if diagnostic_schedule is not None:
@@ -329,6 +342,10 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                         request.update(run_id=config.get("run_id"), seed_offset=config.get("seed_offset", 0))
                     if engine.dynamic is not None:
                         request["history_dynamic"] = list(dynamic_history)
+                    if config.get("overnight_method") in ("RTC-soft","RTC-hard"):
+                        from nomad_phase8.request import rtc_target
+                        request["rtc_target"]=rtc_target(snap)
+                        request["rtc_snapshot"]={k:snap.get(k) for k in ("pose","tick","applied_id","command_valid","actual_vw","old_world_xy","snapshot_monotonic_ns","path_application_monotonic_ns")}
                     inputs = {"history": np.stack(history)}
                     if config.get("goal_mode") != "topomap":
                         inputs["goal"] = goal
@@ -441,5 +458,7 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
     if config.get("phase4c_method"):
         summary.update(experiment_label="PHASE4C_ACCEL_LIMIT",phase4c_method=config["phase4c_method"],plant_alpha=config["plant_alpha"],
             command_semantics="commanded_v/w are9Hz targets; plant.jsonl and72Hz trace contain actual angular-rate-limited motion; controller applied_w is boundary state")
+    if config.get("overnight_phase"):
+        summary.update(experiment_label=f"PHASE{config['overnight_phase']}_OVERNIGHT",overnight_method=config["overnight_method"])
     write_json(out/"summary.json", summary)
     print("ASYNC_NAVIGATION_RESULT "+json.dumps(summary), flush=True)

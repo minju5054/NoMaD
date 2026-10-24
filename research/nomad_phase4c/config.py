@@ -11,6 +11,9 @@ def protocol():return json.loads((HERE/'protocol.json').read_text())
 
 
 def validate_options(a):
+    if getattr(a,"overnight_phase",None):
+        from nomad_phase8.config import validate_options as validate_overnight
+        return validate_overnight(a)
     if getattr(a,"phase6_method",None):
         from nomad_phase6.config import validate_options as validate_phase6
         return validate_phase6(a)
@@ -35,6 +38,9 @@ def validate_options(a):
 
 
 def runtime_config(source,a):
+    if getattr(a,"overnight_phase",None):
+        from nomad_phase8.config import runtime_config as overnight_config
+        return overnight_config(source,a)
     config={**source,'timeout_sim_s':90,'phase4c_method':a.phase4c_method,'plant_alpha':a.plant_alpha,'execution_v_max_m_s':.3}
     if getattr(a,'phase4d_confirm',False):config['phase4d_confirm']=True
     if getattr(a,'phase5_method',None):config['phase5_method']=a.phase5_method

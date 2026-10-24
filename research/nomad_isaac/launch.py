@@ -24,6 +24,8 @@ def main():
     parser.add_argument("--s0-delay-sweep", action="store_true", help="Frozen Phase 3 S0 RAW+PP delay sweep")
     parser.add_argument("--s0-stage2-method", choices=["CURV-SPEED", "HORIZON-SPEED", "GRAPH"], help="Frozen selected S0 speed/Graph experiment")
     parser.add_argument("--phase4-method", choices=["RAW", "CURV-SPEED", "GRAPH-v5"])
+    parser.add_argument("--overnight-phase",type=int,choices=[8,9])
+    parser.add_argument("--overnight-method")
     parser.add_argument("--phase7-method", choices=["CURV","GRAPH","SELECT"])
     parser.add_argument("--phase6-method", choices=["CURV","GRAPH","SELECT"])
     parser.add_argument("--phase5-method", choices=["CURV","RIGID-ENTRY","GRAPH","GRAPH-NO-PREV","GRAPH-NO-SDF","GRAPH-NO-KB"])
@@ -46,6 +48,8 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .625, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if bool(args.overnight_phase)!=bool(args.overnight_method) or (args.overnight_phase and not args.phase4c_method):
+        raise ValueError("Overnight phase/method require explicit execution hook")
     if args.phase7_method and args.phase6_method != args.phase7_method:
         parser.error("Phase7 requires matching Phase6 execution hook")
     if args.uniform_delivery_delay_s == .625 and not args.phase7_method:
@@ -150,6 +154,10 @@ def main():
             ("nomad_phase3_stage2",("execution.py",)),("nomad_phase2",("execution.py","graph_worker.py")),
             ("nomad_phase0",("graph_v4.py","graph_v4_protocol.json"))) for name in names]
         write_json(out/"phase4c_protocol.json",protocol())
+    if args.overnight_phase:
+        from nomad_phase8.config import protocol as overnight_protocol
+        for n in (8,9):sources += list((ROOT/f"research/nomad_phase{n}").glob("*.py"))+[ROOT/f"research/nomad_phase{n}/protocol.json"]
+        write_json(out/"overnight_protocol.json",overnight_protocol(args.overnight_phase))
     if args.phase7_method:
         from nomad_phase7.config import HERE, protocol
         sources += list(HERE.glob("*.py"))+[HERE/"protocol.json",HERE/"readiness.json"]
@@ -202,7 +210,7 @@ def main():
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
         "diagnostic_condition": args.diagnostic_condition, "phase2_method": args.phase2_method, "phase2_distance_m": args.phase2_distance_m,
-        "pure_pursuit": args.pure_pursuit, "s0_delay_sweep": args.s0_delay_sweep, "s0_stage2_method": args.s0_stage2_method, "phase4_method": args.phase4_method, "phase4c_method":args.phase4c_method,"plant_alpha":args.plant_alpha,"phase4d_confirm":args.phase4d_confirm,"phase5_method":args.phase5_method,"phase6_method":args.phase6_method,"phase7_method":args.phase7_method,
+        "pure_pursuit": args.pure_pursuit, "s0_delay_sweep": args.s0_delay_sweep, "s0_stage2_method": args.s0_stage2_method, "phase4_method": args.phase4_method, "phase4c_method":args.phase4c_method,"plant_alpha":args.plant_alpha,"phase4d_confirm":args.phase4d_confirm,"phase5_method":args.phase5_method,"phase6_method":args.phase6_method,"phase7_method":args.phase7_method,"overnight_phase":args.overnight_phase,"overnight_method":args.overnight_method,
         "s1_v2_mode": args.s1_v2_mode, "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
         "run_id": args.run_id, "seed_offset": args.seed_offset,
         "source_scenario_sha256": sha256_file(scenario_path),
@@ -230,6 +238,9 @@ def main():
                     worker_command += ["--topomap", str(args.topomap.resolve())]
                 if args.diagnostic_condition:
                     worker_command += ["--diagnostic"]
+                if args.overnight_method in ("RTC-soft","RTC-hard"):
+                    worker_command[worker_command.index("nomad_isaac.worker")]="nomad_phase8.worker"
+                    worker_command += ["--rtc-mode", "hard" if args.overnight_method=="RTC-hard" else "soft"]
                 worker = subprocess.Popen(worker_command,
                     cwd=ROOT, env=worker_env, stdout=worker_log, stderr=subprocess.STDOUT, start_new_session=True)
                 deadline = time.monotonic() + 90
@@ -256,6 +267,8 @@ def main():
                 command.append("--asynchronous")
             if args.pure_pursuit:
                 command.append("--pure-pursuit")
+            if args.overnight_phase:
+                command += ["--overnight-phase",str(args.overnight_phase),"--overnight-method",args.overnight_method]
             if args.phase7_method:
                 command += ["--phase7-method",args.phase7_method]
             if args.phase6_method:

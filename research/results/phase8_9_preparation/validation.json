@@ -1,0 +1,59 @@
+{
+  "base_commit": "2214f88",
+  "navigation_started": 0,
+  "tests": {
+    "passed": 41,
+    "total": 41
+  },
+  "phase9_smoke": {
+    "placement_left_right_clamp": "PASS",
+    "heuristic_waypoint": "PASS",
+    "Hermite_C1": "PASS",
+    "intent_analytic_complex_step": "PASS"
+  },
+  "cpu_graph_worker_handshake": "PASS_NO_SOLVE",
+  "read_only_original_trace_adapters": {
+    "CURV": "PASS",
+    "SELECT": "PASS",
+    "GRAPH": "PASS",
+    "max_pose_error": 0.0,
+    "max_command_error": 2.1441182163073336e-15,
+    "max_clearance_error": 4.440892098500626e-16
+  },
+  "report_empty_aborted_smoke": "PASS",
+  "dry_run_counts": {
+    "phase8": 56,
+    "phase9": 40
+  },
+  "rtc_hard_offline_summary_sha256": "24a3dcdb3052b7f365dd97f3135a9232ec5caacc9f5217312d50e1113ce9b171",
+  "protected_original_files_unchanged": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+    "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463",
+    "research/nomad_phase2/graph_worker.py": "2ffc21b0bd7d1469c123ce10e9647d7241f49cfcbf8833036d5dd9b01daef0e0",
+    "research/nomad_phase3_stage2/execution.py": "6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0",
+    "research/nomad_phase4c/execution.py": "9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232",
+    "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d",
+    "research/nomad_phase4c/protocol.json": "12b56f55d88c01101ef9ecd397723276260c5f11212a96418c04be4ab200cf00",
+    "research/nomad_phase4c/base_metrics.py": "12257847bfb605950a172add5f79b87af1434e1586530c139519128cacaa1497",
+    "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86"
+  },
+  "cuda_preflight": {
+    "processed_inputs": 0,
+    "failure": "sandbox CUDA not visible",
+    "preserved_path": "artifacts/isaac6/phase8_rtc_hard_preflight_cuda_unavailable"
+  },
+  "phase9_live_gate": "NOT_RUN_UNTIL_USER_OVERNIGHT_EXECUTION"
+}

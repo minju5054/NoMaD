@@ -21,6 +21,8 @@ parser.add_argument("--pure-pursuit", action="store_true")
 parser.add_argument("--s0-delay-sweep", action="store_true", help="Frozen Phase 3 S0 RAW+PP delay sweep")
 parser.add_argument("--s0-stage2-method", choices=["CURV-SPEED", "HORIZON-SPEED", "GRAPH"], help="Frozen selected S0 speed/Graph experiment")
 parser.add_argument("--phase4-method", choices=["RAW", "CURV-SPEED", "GRAPH-v5"])
+parser.add_argument("--overnight-phase",type=int,choices=[8,9])
+parser.add_argument("--overnight-method")
 parser.add_argument("--phase7-method", choices=["CURV","GRAPH","SELECT"])
 parser.add_argument("--phase6-method", choices=["CURV","GRAPH","SELECT"])
 parser.add_argument("--phase5-method", choices=["CURV","RIGID-ENTRY","GRAPH","GRAPH-NO-PREV","GRAPH-NO-SDF","GRAPH-NO-KB"])
@@ -153,6 +155,8 @@ def build_scene(config):
 
 
 def main():
+    if bool(args.overnight_phase)!=bool(args.overnight_method) or (args.overnight_phase and not args.phase4c_method):
+        raise ValueError("Overnight phase/method require explicit execution hook")
     if args.phase7_method and args.phase6_method != args.phase7_method:
         raise ValueError("Phase7 requires matching Phase6 execution hook")
     if args.uniform_delivery_delay_s == .625 and not args.phase7_method:
@@ -211,7 +215,7 @@ def main():
         assert args.topomap and args.asynchronous and not args.prepare_only
         assert not args.controlled_delivery_delay and args.uniform_delivery_delay_s is None
         assert "placement" in config.get("dynamic_obstacle", {})
-    if "dynamic_obstacle" in config and not (args.s1_mode or args.phase2_method) and (not args.asynchronous or args.controlled_delivery_delay or
+    if "dynamic_obstacle" in config and not (args.s1_mode or args.phase2_method or args.overnight_phase==9) and (not args.asynchronous or args.controlled_delivery_delay or
                                          args.uniform_delivery_delay_s not in (None, 0.)):
         raise ValueError("Sudden obstacle requires asynchronous execution with zero additional delay")
     if args.phase2_method:
@@ -222,7 +226,7 @@ def main():
     if args.topomap:
         from nomad_isaac.common import sha256_file
         assert args.asynchronous
-        if "dynamic_obstacle" in config and not args.early_obstacle_mode and not args.s1_mode and not args.phase2_method:
+        if "dynamic_obstacle" in config and not args.early_obstacle_mode and not args.s1_mode and not args.phase2_method and args.overnight_phase!=9:
             from nomad_isaac.topomap import validate_dynamic_combination
             validate_dynamic_combination(config, args.topomap, args.asynchronous, args.prepare_only,
                                          args.controlled_delivery_delay, args.uniform_delivery_delay_s)
@@ -249,7 +253,7 @@ def main():
         nonlocal resolved_dynamic
         assert threading.get_ident() == main_thread_id
         box = snapshot.get("resolved_dynamic_obstacle")
-        if not (args.s1_mode or args.phase2_method) and snapshot["tick"] >= config["dynamic_obstacle"]["spawn_tick"]:
+        if not (args.s1_mode or args.phase2_method or args.overnight_phase==9) and snapshot["tick"] >= config["dynamic_obstacle"]["spawn_tick"]:
             assert snapshot.get("dynamic_placement_status") != "PENDING"
         if box is None:
             return
@@ -319,7 +323,7 @@ def main():
         elif adaptive or args.early_obstacle_mode:
             from nomad_isaac.old_rollout_placement import magenta_mask
             tick = round(sim_time*config["integration_hz"])
-            active = resolved_dynamic is not None and (tick >= resolved_dynamic["spawn_tick"] if (args.s1_mode or args.phase2_method) else active_at_tick(config, tick))
+            active = resolved_dynamic is not None and (tick >= resolved_dynamic["spawn_tick"] if (args.s1_mode or args.phase2_method or args.overnight_phase==9) else active_at_tick(config, tick))
             visibility = UsdGeom.Imageable(dynamic_prim).ComputeVisibility(Usd.TimeCode(tick))
             assert (visibility == UsdGeom.Tokens.inherited) == active
             mask = magenta_mask(rgb)
@@ -382,7 +386,7 @@ def main():
     elif adaptive:
         render_check["dynamic_initial"] = capture.dynamic_metadata
         render_check["dynamic_placement"] = ("Pending S1 world-region entry; hidden placeholder is not collision geometry"
-                                              if (args.s1_mode or args.phase2_method) else "Pending tick 970; hidden placeholder is not collision geometry")
+                                              if (args.s1_mode or args.phase2_method or args.overnight_phase==9) else "Pending tick 970; hidden placeholder is not collision geometry")
     if obstacles:
         green = (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 0]) & (rgb_float[:, :, 1] > 1.5*rgb_float[:, :, 2])
         assert int(green.sum()) > 100, "Obstacle must be visible in actual starting RGB before inference"
@@ -399,13 +403,13 @@ def main():
             render_check["obstacles_actual_world_aabb"] = actual_bounds
         else:
             render_check["obstacle_actual_world_aabb"] = actual_bounds["StaticObstacle"]
-    if args.s1_v2_mode or args.phase2_method:
+    if args.s1_v2_mode or args.phase2_method or args.overnight_phase==9:
         cache = UsdGeom.BBoxCache(0, [UsdGeom.Tokens.default_])
         bounds = cache.ComputeWorldBound(stage.GetPrimAtPath("/World/Floor")).ComputeAlignedRange()
         np.testing.assert_allclose(list(bounds.GetMin())[:2], [-1., -1.5], atol=1e-10, rtol=0)
         np.testing.assert_allclose(list(bounds.GetMax())[:2], [9., 1.5], atol=1e-10, rtol=0)
         assert not obstacles
-        assert args.phase2_method or "dynamic_obstacle" not in config
+        assert args.phase2_method or args.overnight_phase==9 or "dynamic_obstacle" not in config
         render_check["straight_corridor_floor_xy_bounds"] = [[-1., -1.5], [9., 1.5]]
         render_check["obstacle_count"] = 0
     write_json(out / "render_check.json", render_check)
