@@ -1,0 +1,126 @@
+{
+  "base_commit": "af2f5b0",
+  "label": "PHASE10B_NO_OBSTACLE_CONTROL",
+  "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim; no claim of identical paired RGB",
+  "phase9_protocol": "research/nomad_phase9/protocol.json",
+  "phase9_results": "research/results/phase9/runs.json",
+  "phase9_hashes": "research/results/phase9/input_hashes.json",
+  "methods": [
+    "CURV",
+    "GRAPH-v6"
+  ],
+  "indices": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "delays_s": [
+    0.0,
+    0.75
+  ],
+  "run_order": "index, delay 0 then750ms, CURV then GRAPH-v6",
+  "seed_rule": "101+10000*index+2*request_id; DDPM seed +1",
+  "attempts": 16,
+  "retry": false,
+  "timeout_sim_s": 90.0,
+  "max_v_m_s": 0.3,
+  "metric_scaling_m": 0.05,
+  "rates_hz": [
+    4,
+    9,
+    72
+  ],
+  "waypoint_timeout_wall_s": 1.0,
+  "obstacle_flag": "--phase10b-no-obstacle: only Phase9 CURV/GRAPH-v6, indices1..4, D0/D750",
+  "disabled": [
+    "spawn trigger",
+    "placement",
+    "dynamic collision monitor",
+    "oracle publication",
+    "heuristic intent"
+  ],
+  "unchanged": [
+    "NoMaD",
+    "Topomap",
+    "CURV",
+    "GraphV6",
+    "GraphV4 factors and weights",
+    "FreeField",
+    "Graph scheduling",
+    "fallback",
+    "geometry helpers"
+  ],
+  "c6": {
+    "short_threshold_m": 0.25,
+    "progress_soft_target_m": 0.25,
+    "x_source": "actual B at Graph dispatch; retain observation x separately",
+    "x_bins_m": [
+      0,
+      2,
+      4,
+      6,
+      8
+    ],
+    "x_bins_rule": "[0,2),[2,4),[4,6),[6,8]; outside retained in separate bin and pooled statistics",
+    "population": "all GRAPH-v6 calls in Phase9 D750 indices1..8 and D0 indices1..4 plus Phase10B all8 Graph runs",
+    "nonconvergence_denominator": "all submitted calls; independent solver success flag, initialization rejection and terminal-unapplied separate; also report solver-only denominator",
+    "endpoint_edit": "(solver endpoint minus FRESH endpoint) dot B-forward; solver output vs accepted application distinguished",
+    "failure_window_s": 10,
+    "condition_a": "short nonconvergence rate >= 2*long rate; if long=0 then short must be >0; missing length class => INCONCLUSIVE",
+    "condition_b": "at least half of valid failed GRAPH-v6 runs have strictly more than half of last10s submitted calls short; zero calls count as not demonstrated",
+    "interpretation": "descriptive association; endpoint progress is a soft cost, length is not endpoint forward projection; no causal proof"
+  },
+  "route_metrics": {
+    "backtracking_yaw_deg": 150,
+    "backtracking_min_s": 2,
+    "interval_convention": "72Hz pose at interval start held until next pose; final sample has no duration",
+    "near_goal_x_min_m": 6.5,
+    "left_wall_y_min_m": 1.0,
+    "curv_slow_fraction": "CURV target<0.2 over valid non-endpoint PP control duration; actual v<0.2 separately",
+    "topomap": "all actual inference IDs at observation time; optional switch time; count closest and subgoal backward steps separately"
+  },
+  "decisions": {
+    "valid_min_per_method_delay": 3,
+    "ROUTE_FAILURE_WITHOUT_OBSTACLE": "SUPPORTED if any of four method-delay groups has >=2 valid navigation failures; all four groups require >=3 valid runs else INCONCLUSIVE",
+    "GRAPH_SPECIFIC_ROUTE_FAILURE": "SUPPORTED if Graph valid failures >= CURV valid failures+2 at either delay; all four groups require >=3 valid runs else INCONCLUSIVE",
+    "C6_SHORT_CHUNK_CONFLICT": "conditions a AND b; each Phase9 and Phase10B GRAPH delay group requires >=3 valid runs, both length bins nonempty and at least one valid Graph failure; otherwise INCONCLUSIVE",
+    "technical_failures": "excluded from scientific failure counts; never imputed SUCCESS/timeout; no retry",
+    "conservative_stop": "preserve explicit non-overlap conservative stop category, count as navigation failure, not geometric collision"
+  },
+  "plot_selection": "First failed Phase10B GRAPH by delay/index; otherwise first failed Phase9 GRAPH; if none, first GRAPH trajectory labeled no failure",
+  "output_root": "artifacts/isaac6/phase10b_noobs_01",
+  "results": "research/results/phase10b",
+  "report": "docs/PHASE10B_NOOBS_CONTROL.md",
+  "protected_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+    "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463",
+    "research/nomad_phase2/graph_worker.py": "2ffc21b0bd7d1469c123ce10e9647d7241f49cfcbf8833036d5dd9b01daef0e0",
+    "research/nomad_phase3_stage2/execution.py": "6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0",
+    "research/nomad_phase4c/execution.py": "9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232",
+    "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d",
+    "research/nomad_phase4c/protocol.json": "12b56f55d88c01101ef9ecd397723276260c5f11212a96418c04be4ab200cf00",
+    "research/nomad_phase4c/base_metrics.py": "12257847bfb605950a172add5f79b87af1434e1586530c139519128cacaa1497",
+    "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86",
+    "research/nomad_phase9/graph.py": "46821647ac389697e50045cd260bfca5cca9e394c027c591c2ca29df0f8045bb",
+    "research/nomad_phase9/worker.py": "4d229bd0d2feca0836045f847f08aaddaf9eec59994a40a4c52dccee7b11e290",
+    "research/nomad_phase9/intent.py": "0c7efc7acfd2325f10794ba37941119563bfbd765c08868672884f05343419aa",
+    "research/nomad_phase8/execution.py": "883f6416f6090dfb723a850eb39e3321f04c097eafd3fbb3647600d09567143c",
+    "research/nomad_phase5/graph.py": "f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a",
+    "research/nomad_phase9/protocol.json": "60932b0be1572e1cfb43004d0548079004cf521e29bfd4fc1d84af720cef629d",
+    "research/nomad_phase0/graph_v3.py": "83b05538d51eda2896bc9612ef55c595702b3a211dc1c3be58ec19d0d3e80ae0"
+  }
+}

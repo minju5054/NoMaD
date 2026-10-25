@@ -53,7 +53,12 @@ def audit(run,run_id,offset,delay):
     placement=json.loads((run/'dynamic/placement.json').read_text()) if (run/'dynamic/placement.json').exists() else None
     publications=rows(run/'overnight_oracle.jsonl');publication=publications[0] if publications else None
     assert len(publications)<=1
-    if phase==9:
+    if c.get('phase10b_no_obstacle'):
+        assert phase==9 and c['overnight_method'] in ('CURV','GRAPH-v6')
+        assert c['obstacles']==[] and 'dynamic_obstacle' not in c
+        assert spawn is None and placement is None and publication is None
+        assert all('oracle_information' not in o and 'dynamic' not in o for o in observations)
+    elif phase==9:
         gate=VisibilityGate();available=None
         for o in observations:
             expected=gate.observe(o);assert o['oracle_information']==expected
