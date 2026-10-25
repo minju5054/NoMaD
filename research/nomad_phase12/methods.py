@@ -27,7 +27,7 @@ def hermite_splice(xy,b):
     tail=path.points[path.s>sj+1e-12];out=np.vstack([curve,tail])
     XYPath(out)
     return out,dict(kind='HERMITE-SPLICE',projected_s_m=s,join_s_m=sj,join_xy=j.tolist(),join_tangent=(tj/length).tolist(),
-        tangent_start=ta.tolist(),tangent_end=tj.tolist(),curve_points=len(curve),join_endpoint_clamped=s+.30>path.s[-1],
+        tangent_start=ta.tolist(),tangent_end=tj.tolist(),curve_points=len(curve),join_endpoint_clamped=bool(s+.30>path.s[-1]),
         analytic_c1=True,sampling_step_m=.02,quadrature_points=4097)
 
 
