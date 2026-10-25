@@ -1,0 +1,2886 @@
+{
+  "execution_git_sha": "524f063e48c27b83b027de7a5f1055b171a84ab7",
+  "state": {
+    "state": "COMPLETE",
+    "completed": 20,
+    "expected": 20,
+    "current": null,
+    "technical_passes": 20
+  },
+  "protocol": {
+    "base_commit": "e3fc4c7",
+    "label": "PHASE11_ADAPTIVE_PROGRESS_V61",
+    "scope": "Oracle geometry evaluation; SE(2) kinematic Isaac Sim; no claim of identical paired RGB",
+    "attempts": 20,
+    "retry": false,
+    "output_root": "artifacts/isaac6/phase11_v61_01",
+    "results": "research/results/phase11",
+    "report": "docs/PHASE11_V61.md",
+    "seed_rule": "101+10000*index+2*request_id; DDPM seed +1",
+    "timeout_sim_s": 90,
+    "max_v_m_s": 0.3,
+    "metric_scaling_m": 0.05,
+    "rates_hz": [
+      4,
+      9,
+      72
+    ],
+    "waypoint_timeout_wall_s": 1.0,
+    "matrix": [
+      {
+        "scene": "sudden",
+        "delay_s": 0.75,
+        "indices": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      {
+        "scene": "sudden",
+        "delay_s": 0.0,
+        "indices": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "scene": "noobs",
+        "delay_s": 0.75,
+        "indices": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "scene": "noobs",
+        "delay_s": 0.0,
+        "indices": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    ],
+    "run_order": "index 1..8; sudden D750 then D0, noobs D750 then D0 when eligible; serial; no retry",
+    "graph": {
+      "method": "GRAPH-v6.1",
+      "internal_method": "GRAPH-v6 plus phase11_v61 opt-in",
+      "p_native": "(native observation-anchored FRESH endpoint - actual dispatch B.xy) dot B-forward",
+      "progress_target": "min(0.25, 0.9*max(p_native,0))",
+      "zero_target": "remove endpoint_progress residual row",
+      "normalization_m": 0.25,
+      "normalization_note": "keep original residual scale/weight; only hinge target changes, fixed per job before solve",
+      "unchanged": "v6 intent/side, SDF, curvature, boundary curvature, prior, initialization rejection, solver, acceptance, timing, CURV fallback",
+      "graph_stale_s": 0.5
+    },
+    "reference_sets": {
+      "9": {
+        "results": "research/results/phase9/runs.json",
+        "hashes": "research/results/phase9/input_hashes.json"
+      },
+      "10B": {
+        "results": "research/results/phase10b/runs.json",
+        "hashes": "research/results/phase10b/input_hashes.json"
+      }
+    },
+    "protected_sha256": {
+      "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+      "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+      "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+      "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+      "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+      "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+      "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+      "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+      "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+      "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+      "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+      "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+      "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+      "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+      "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463",
+      "research/nomad_phase2/graph_worker.py": "2ffc21b0bd7d1469c123ce10e9647d7241f49cfcbf8833036d5dd9b01daef0e0",
+      "research/nomad_phase3_stage2/execution.py": "6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0",
+      "research/nomad_phase4c/execution.py": "9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232",
+      "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d",
+      "research/nomad_phase4c/protocol.json": "12b56f55d88c01101ef9ecd397723276260c5f11212a96418c04be4ab200cf00",
+      "research/nomad_phase4c/base_metrics.py": "12257847bfb605950a172add5f79b87af1434e1586530c139519128cacaa1497",
+      "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86",
+      "research/nomad_phase9/graph.py": "46821647ac389697e50045cd260bfca5cca9e394c027c591c2ca29df0f8045bb",
+      "research/nomad_phase9/worker.py": "4d229bd0d2feca0836045f847f08aaddaf9eec59994a40a4c52dccee7b11e290",
+      "research/nomad_phase9/intent.py": "0c7efc7acfd2325f10794ba37941119563bfbd765c08868672884f05343419aa",
+      "research/nomad_phase8/execution.py": "883f6416f6090dfb723a850eb39e3321f04c097eafd3fbb3647600d09567143c",
+      "research/nomad_phase5/graph.py": "f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a",
+      "research/nomad_phase9/protocol.json": "60932b0be1572e1cfb43004d0548079004cf521e29bfd4fc1d84af720cef629d",
+      "research/nomad_phase0/graph_v3.py": "83b05538d51eda2896bc9612ef55c595702b3a211dc1c3be58ec19d0d3e80ae0"
+    },
+    "metrics": {
+      "safe_passage": "first actual72Hz pose after spawn with robot_x-radius > box rear; no dynamic geometric overlap from spawn through that tick (including swept intervals). Conservative contact is not overlap; passage does not imply 2cm margin or goal success.",
+      "backtracking": "reuse Phase10B: |wrapped yaw|>=150deg for >=2s",
+      "topomap_phase": "classify backwards transition by newer inference observation pose/time; active iff geometry published by observation_monotonic_ns and unchanged intention(config,pose) is non-null; no world pose used for localization",
+      "graph_population": "all submitted jobs; nonconverged uses independent solver success, not rejection disposition; initialization rejection/terminal missing separately; solver-only rate also report",
+      "progress_cost": "zero if disabled; missing if no solve; old v6 fixed target .25",
+      "x_bins_m": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    "decisions": {
+      "valid_fraction_min": 0.875,
+      "group": "scene x delay x method; each involved group independently requires ceil(.875*planned); PLACEMENT_INVALID and technical invalid excluded",
+      "V61_SAFE_PASSAGE": "sudden D750+D0 safe passage >=11/12",
+      "V61_GOAL_IMPROVES": "sudden goal successes >= historical v6 successes +3 (reference7/12)",
+      "V61_VS_SPLICE": "sudden D750 goals >= historical SPLICE+2 (reference5/8)",
+      "C6_FIXED": "pooled v6.1 short native length <.25 nonconverged/all submissions <= .61/2=.305; missing short calls -> INCONCLUSIVE; all four scene/delay groups required",
+      "NO_HARM_NOOBS": "noobs D750+D0 goals >=7/8",
+      "verdicts": [
+        "SUPPORTED",
+        "NOT_SUPPORTED",
+        "INCONCLUSIVE"
+      ],
+      "fixed_v6_short_rate": 0.61
+    },
+    "figures": [
+      "sudden D750 index1,2 v6 vs v6.1 actual worldXY overlay",
+      "boundary x bin acceptance v6 vs v6.1, separated sudden/noobs"
+    ]
+  },
+  "decisions": {
+    "V61_SAFE_PASSAGE": {
+      "verdict": "SUPPORTED",
+      "valid_groups": [
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 750,
+          "planned": 8,
+          "valid": 8,
+          "required_valid": 7
+        },
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 0,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        }
+      ],
+      "actual": 12,
+      "target": 11,
+      "planned": 12
+    },
+    "V61_GOAL_IMPROVES": {
+      "verdict": "SUPPORTED",
+      "valid_groups": [
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 750,
+          "planned": 8,
+          "valid": 8,
+          "required_valid": 7
+        },
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 0,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        },
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6",
+          "delay_ms": 750,
+          "planned": 8,
+          "valid": 8,
+          "required_valid": 7
+        },
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6",
+          "delay_ms": 0,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        }
+      ],
+      "actual": 10,
+      "reference": 7,
+      "required_increment": 3
+    },
+    "V61_VS_SPLICE": {
+      "verdict": "SUPPORTED",
+      "valid_groups": [
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 750,
+          "planned": 8,
+          "valid": 8,
+          "required_valid": 7
+        },
+        {
+          "scene": "sudden",
+          "method": "INTENT-SPLICE",
+          "delay_ms": 750,
+          "planned": 8,
+          "valid": 8,
+          "required_valid": 7
+        }
+      ],
+      "actual": 7,
+      "reference": 5,
+      "required_increment": 2
+    },
+    "C6_FIXED": {
+      "verdict": "NOT_SUPPORTED",
+      "valid_groups": [
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 750,
+          "planned": 8,
+          "valid": 8,
+          "required_valid": 7
+        },
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 0,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        },
+        {
+          "scene": "noobs",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 750,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        },
+        {
+          "scene": "noobs",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 0,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        },
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6",
+          "delay_ms": 750,
+          "planned": 8,
+          "valid": 8,
+          "required_valid": 7
+        },
+        {
+          "scene": "sudden",
+          "method": "GRAPH-v6",
+          "delay_ms": 0,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        },
+        {
+          "scene": "noobs",
+          "method": "GRAPH-v6",
+          "delay_ms": 750,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        },
+        {
+          "scene": "noobs",
+          "method": "GRAPH-v6",
+          "delay_ms": 0,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        }
+      ],
+      "short_calls": 470,
+      "short_nonconverged": 292,
+      "short_rate": 0.6212765957446809,
+      "fixed_reference": 0.61,
+      "threshold": 0.305
+    },
+    "NO_HARM_NOOBS": {
+      "verdict": "NOT_SUPPORTED",
+      "valid_groups": [
+        {
+          "scene": "noobs",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 750,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        },
+        {
+          "scene": "noobs",
+          "method": "GRAPH-v6.1",
+          "delay_ms": 0,
+          "planned": 4,
+          "valid": 4,
+          "required_valid": 4
+        }
+      ],
+      "actual": 4,
+      "target": 7,
+      "planned": 8
+    }
+  },
+  "groups": [
+    {
+      "dataset": "11",
+      "scene": "sudden",
+      "method": "GRAPH-v6.1",
+      "delay_ms": 750,
+      "planned": 8,
+      "attempts": 8,
+      "valid": 8,
+      "required_valid": 7,
+      "success": 7,
+      "safe_passage": 8,
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 1,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": 0.030778936846421277,
+      "goal_time_median_s": 48.013888888888886,
+      "mean_speed_m_s": 0.1700484698687193,
+      "backtracking_events": 5,
+      "near_goal_max_abs_y_m": 1.068128565025103,
+      "near_goal_left_time_mean_s": 0.0
+    },
+    {
+      "dataset": "11",
+      "scene": "sudden",
+      "method": "GRAPH-v6.1",
+      "delay_ms": 0,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 3,
+      "safe_passage": 4,
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 0,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": 0.052675218258181854,
+      "goal_time_median_s": 32.0,
+      "mean_speed_m_s": 0.24291063896653287,
+      "backtracking_events": 0,
+      "near_goal_max_abs_y_m": 1.410389736909153,
+      "near_goal_left_time_mean_s": 1.4895833333333321
+    },
+    {
+      "dataset": "11",
+      "scene": "noobs",
+      "method": "GRAPH-v6.1",
+      "delay_ms": 750,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 2,
+      "safe_passage": null,
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 2,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": null,
+      "goal_time_median_s": 44.38194444444444,
+      "mean_speed_m_s": 0.17386232273723082,
+      "backtracking_events": 5,
+      "near_goal_max_abs_y_m": 0.9378487696509825,
+      "near_goal_left_time_mean_s": 0.0
+    },
+    {
+      "dataset": "11",
+      "scene": "noobs",
+      "method": "GRAPH-v6.1",
+      "delay_ms": 0,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 2,
+      "safe_passage": null,
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 1,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": null,
+      "goal_time_median_s": 30.92361111111111,
+      "mean_speed_m_s": 0.22411584656910533,
+      "backtracking_events": 4,
+      "near_goal_max_abs_y_m": 1.4103512613621105,
+      "near_goal_left_time_mean_s": 2.4826388888888893
+    },
+    {
+      "dataset": "9",
+      "scene": "sudden",
+      "method": "CURV",
+      "delay_ms": 750,
+      "planned": 8,
+      "attempts": 8,
+      "valid": 8,
+      "required_valid": 7,
+      "success": 3,
+      "safe_passage": 4,
+      "collision": 4,
+      "corridor": 0,
+      "timeout": 1,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": -0.0030316859618165627,
+      "goal_time_median_s": 52.59722222222222,
+      "mean_speed_m_s": 0.1516926287921834,
+      "backtracking_events": 4,
+      "near_goal_max_abs_y_m": 0.5277185648292702,
+      "near_goal_left_time_mean_s": 0.0
+    },
+    {
+      "dataset": "9",
+      "scene": "sudden",
+      "method": "CURV",
+      "delay_ms": 0,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 2,
+      "safe_passage": 2,
+      "collision": 2,
+      "corridor": 0,
+      "timeout": 0,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": -0.0020813645133034935,
+      "goal_time_median_s": 31.72222222222222,
+      "mean_speed_m_s": 0.25372035253648156,
+      "backtracking_events": 0,
+      "near_goal_max_abs_y_m": 0.38911340687955304,
+      "near_goal_left_time_mean_s": 0.0
+    },
+    {
+      "dataset": "9",
+      "scene": "sudden",
+      "method": "SELECT",
+      "delay_ms": 750,
+      "planned": 8,
+      "attempts": 8,
+      "valid": 8,
+      "required_valid": 7,
+      "success": 3,
+      "safe_passage": 4,
+      "collision": 4,
+      "corridor": 0,
+      "timeout": 1,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": -0.0011413958540404067,
+      "goal_time_median_s": 43.5,
+      "mean_speed_m_s": 0.15917010759792188,
+      "backtracking_events": 3,
+      "near_goal_max_abs_y_m": 0.7362519059620439,
+      "near_goal_left_time_mean_s": 0.0
+    },
+    {
+      "dataset": "9",
+      "scene": "sudden",
+      "method": "INTENT-SPLICE",
+      "delay_ms": 750,
+      "planned": 8,
+      "attempts": 8,
+      "valid": 8,
+      "required_valid": 7,
+      "success": 5,
+      "safe_passage": 8,
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 2,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": 0.02282653001718222,
+      "goal_time_median_s": 45.81944444444444,
+      "mean_speed_m_s": 0.13851416992384963,
+      "backtracking_events": 1,
+      "near_goal_max_abs_y_m": 1.4106355707419094,
+      "near_goal_left_time_mean_s": 0.8923611111111116
+    },
+    {
+      "dataset": "9",
+      "scene": "sudden",
+      "method": "GRAPH-v6",
+      "delay_ms": 750,
+      "planned": 8,
+      "attempts": 8,
+      "valid": 8,
+      "required_valid": 7,
+      "success": 6,
+      "safe_passage": 8,
+      "collision": 0,
+      "corridor": 1,
+      "timeout": 1,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": 0.024021872444549404,
+      "goal_time_median_s": 49.15972222222222,
+      "mean_speed_m_s": 0.1636214081925358,
+      "backtracking_events": 3,
+      "near_goal_max_abs_y_m": 1.4109614688040613,
+      "near_goal_left_time_mean_s": 2.458333333333334
+    },
+    {
+      "dataset": "9",
+      "scene": "sudden",
+      "method": "GRAPH-v6",
+      "delay_ms": 0,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 1,
+      "safe_passage": 4,
+      "collision": 0,
+      "corridor": 2,
+      "timeout": 1,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": 0.04358958005874248,
+      "goal_time_median_s": 31.72222222222222,
+      "mean_speed_m_s": 0.22013588198267298,
+      "backtracking_events": 2,
+      "near_goal_max_abs_y_m": 1.4103752973187962,
+      "near_goal_left_time_mean_s": 5.347222222222221
+    },
+    {
+      "dataset": "10B",
+      "scene": "noobs",
+      "method": "CURV",
+      "delay_ms": 750,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 2,
+      "safe_passage": null,
+      "collision": 0,
+      "corridor": 2,
+      "timeout": 0,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": null,
+      "goal_time_median_s": 46.3125,
+      "mean_speed_m_s": 0.15735697363601486,
+      "backtracking_events": 0,
+      "near_goal_max_abs_y_m": 1.4105446720763635,
+      "near_goal_left_time_mean_s": 2.3333333333333357
+    },
+    {
+      "dataset": "10B",
+      "scene": "noobs",
+      "method": "CURV",
+      "delay_ms": 0,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 4,
+      "safe_passage": null,
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 0,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": null,
+      "goal_time_median_s": 31.493055555555554,
+      "mean_speed_m_s": 0.25565261490394553,
+      "backtracking_events": 0,
+      "near_goal_max_abs_y_m": 0.356875776536752,
+      "near_goal_left_time_mean_s": 0.0
+    },
+    {
+      "dataset": "10B",
+      "scene": "noobs",
+      "method": "GRAPH-v6",
+      "delay_ms": 750,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 4,
+      "safe_passage": null,
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 0,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": null,
+      "goal_time_median_s": 45.375,
+      "mean_speed_m_s": 0.17651120222267908,
+      "backtracking_events": 0,
+      "near_goal_max_abs_y_m": 0.5090730735083872,
+      "near_goal_left_time_mean_s": 0.0
+    },
+    {
+      "dataset": "10B",
+      "scene": "noobs",
+      "method": "GRAPH-v6",
+      "delay_ms": 0,
+      "planned": 4,
+      "attempts": 4,
+      "valid": 4,
+      "required_valid": 4,
+      "success": 4,
+      "safe_passage": null,
+      "collision": 0,
+      "corridor": 0,
+      "timeout": 0,
+      "other_stop": 0,
+      "technical": 0,
+      "placement_invalid": 0,
+      "dynamic_minimum_clearance_m": null,
+      "goal_time_median_s": 31.65972222222222,
+      "mean_speed_m_s": 0.2544469154050373,
+      "backtracking_events": 0,
+      "near_goal_max_abs_y_m": 0.39322230407945363,
+      "near_goal_left_time_mean_s": 0.0
+    }
+  ],
+  "length_classes": [
+    {
+      "method": "GRAPH-v6",
+      "scene": "sudden",
+      "length_class": "<0.25",
+      "calls": 348,
+      "solver_calls": 328,
+      "nonconverged": 223,
+      "nonconverged_rate": 0.6408045977011494,
+      "solver_only_nonconverged_rate": 0.6798780487804879,
+      "accepted": 102,
+      "acceptance_rate": 0.29310344827586204,
+      "initialization_rejected": 18,
+      "terminal_unapplied": 2,
+      "dispositions": {
+        "ACCEPTED": 102,
+        "NONCONVERGED": 144,
+        "INITIALIZATION_REJECTED": 18,
+        "SUPERSEDED": 82,
+        "TERMINAL_UNAPPLIED": 2
+      },
+      "length_m": {
+        "n": 348,
+        "median": 0.17190902998018326,
+        "p95": 0.2431450303042639,
+        "min": 0.02561023057071461,
+        "max": 0.24998606863198683
+      },
+      "progress_cost": {
+        "n": 328,
+        "median": 0.1582600050311628,
+        "p95": 0.613360398527079,
+        "min": 0.0,
+        "max": 5.67726896571964
+      },
+      "endpoint_edit_forward_m": {
+        "n": 328,
+        "median": 0.03425594178240174,
+        "p95": 0.1440790316531226,
+        "min": -0.6263879262770278,
+        "max": 0.2676439901730361
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 102,
+        "median": 0.03409347662831082,
+        "p95": 0.16279375260242168,
+        "min": -0.00955971811015088,
+        "max": 0.24303811655890625
+      },
+      "p_native_m": {
+        "n": 348,
+        "median": 0.07422563480023237,
+        "p95": 0.22506650342355541,
+        "min": -0.20601302271691999,
+        "max": 0.28650938582689073
+      },
+      "progress_target_m": {
+        "n": 348,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "disabled_progress": 0
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "sudden",
+      "length_class": ">=0.25",
+      "calls": 916,
+      "solver_calls": 832,
+      "nonconverged": 77,
+      "nonconverged_rate": 0.08406113537117904,
+      "solver_only_nonconverged_rate": 0.09254807692307693,
+      "accepted": 721,
+      "acceptance_rate": 0.787117903930131,
+      "initialization_rejected": 82,
+      "terminal_unapplied": 2,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 82,
+        "ACCEPTED": 721,
+        "NONCONVERGED": 60,
+        "SUPERSEDED": 51,
+        "TERMINAL_UNAPPLIED": 2
+      },
+      "length_m": {
+        "n": 916,
+        "median": 0.3735162231170006,
+        "p95": 0.4610468831922773,
+        "min": 0.2508735451640629,
+        "max": 0.4834288494095539
+      },
+      "progress_cost": {
+        "n": 832,
+        "median": 0.0,
+        "p95": 0.15863700175321566,
+        "min": 0.0,
+        "max": 4.4871418815355595
+      },
+      "endpoint_edit_forward_m": {
+        "n": 832,
+        "median": 0.008356178194116192,
+        "p95": 0.08710039077522971,
+        "min": -0.4341267126677448,
+        "max": 0.29005024831233583
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 721,
+        "median": 0.009288099465629241,
+        "p95": 0.09223517915523557,
+        "min": -0.0584884848795585,
+        "max": 0.25391131105418313
+      },
+      "p_native_m": {
+        "n": 916,
+        "median": 0.3186499845291492,
+        "p95": 0.47319598200196433,
+        "min": -0.131212904011138,
+        "max": 0.5039110129012809
+      },
+      "progress_target_m": {
+        "n": 916,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "disabled_progress": 0
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "noobs",
+      "length_class": "<0.25",
+      "calls": 109,
+      "solver_calls": 99,
+      "nonconverged": 55,
+      "nonconverged_rate": 0.5045871559633027,
+      "solver_only_nonconverged_rate": 0.5555555555555556,
+      "accepted": 41,
+      "acceptance_rate": 0.3761467889908257,
+      "initialization_rejected": 7,
+      "terminal_unapplied": 3,
+      "dispositions": {
+        "ACCEPTED": 41,
+        "SUPERSEDED": 19,
+        "NONCONVERGED": 39,
+        "TERMINAL_UNAPPLIED": 3,
+        "INITIALIZATION_REJECTED": 7
+      },
+      "length_m": {
+        "n": 109,
+        "median": 0.19426239479938234,
+        "p95": 0.2455962942545451,
+        "min": 0.07833876899500379,
+        "max": 0.2488255717062504
+      },
+      "progress_cost": {
+        "n": 99,
+        "median": 0.06824774037083513,
+        "p95": 0.28763210751483315,
+        "min": 0.0,
+        "max": 0.4004955079436183
+      },
+      "endpoint_edit_forward_m": {
+        "n": 99,
+        "median": 0.01873454858421004,
+        "p95": 0.06513475459485574,
+        "min": -0.023979865558372764,
+        "max": 0.1555350829016226
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 41,
+        "median": 0.016253817107588057,
+        "p95": 0.051804335814653664,
+        "min": -0.018297816979308205,
+        "max": 0.07297382074077166
+      },
+      "p_native_m": {
+        "n": 109,
+        "median": 0.13708279050236977,
+        "p95": 0.24711991636440914,
+        "min": -0.10858071257828132,
+        "max": 0.27911949720596374
+      },
+      "progress_target_m": {
+        "n": 109,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "disabled_progress": 0
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "noobs",
+      "length_class": ">=0.25",
+      "calls": 555,
+      "solver_calls": 516,
+      "nonconverged": 15,
+      "nonconverged_rate": 0.02702702702702703,
+      "solver_only_nonconverged_rate": 0.029069767441860465,
+      "accepted": 485,
+      "acceptance_rate": 0.8738738738738738,
+      "initialization_rejected": 39,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 38,
+        "ACCEPTED": 485,
+        "SUPERSEDED": 20,
+        "NONCONVERGED": 12
+      },
+      "length_m": {
+        "n": 555,
+        "median": 0.38117452218995673,
+        "p95": 0.45420538534321026,
+        "min": 0.25087937714836106,
+        "max": 0.46948357903915916
+      },
+      "progress_cost": {
+        "n": 516,
+        "median": 0.0,
+        "p95": 0.06071495599949659,
+        "min": 0.0,
+        "max": 0.30718845584564913
+      },
+      "endpoint_edit_forward_m": {
+        "n": 516,
+        "median": 0.006008379496188786,
+        "p95": 0.02976307909752461,
+        "min": -0.03224952204555833,
+        "max": 0.1348981018219623
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 485,
+        "median": 0.005875948454618804,
+        "p95": 0.02644721019047311,
+        "min": -0.03224952204555833,
+        "max": 0.1348981018219623
+      },
+      "p_native_m": {
+        "n": 555,
+        "median": 0.34955425133495355,
+        "p95": 0.4704885780094833,
+        "min": -0.08085359927152645,
+        "max": 0.4924348152953212
+      },
+      "progress_target_m": {
+        "n": 555,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "disabled_progress": 0
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "POOLED",
+      "length_class": "<0.25",
+      "calls": 457,
+      "solver_calls": 427,
+      "nonconverged": 278,
+      "nonconverged_rate": 0.6083150984682714,
+      "solver_only_nonconverged_rate": 0.6510538641686182,
+      "accepted": 143,
+      "acceptance_rate": 0.31291028446389496,
+      "initialization_rejected": 25,
+      "terminal_unapplied": 5,
+      "dispositions": {
+        "ACCEPTED": 143,
+        "NONCONVERGED": 183,
+        "INITIALIZATION_REJECTED": 25,
+        "SUPERSEDED": 101,
+        "TERMINAL_UNAPPLIED": 5
+      },
+      "length_m": {
+        "n": 457,
+        "median": 0.17683325701995517,
+        "p95": 0.24497884803749756,
+        "min": 0.02561023057071461,
+        "max": 0.24998606863198683
+      },
+      "progress_cost": {
+        "n": 427,
+        "median": 0.1217215618378997,
+        "p95": 0.5450933573933615,
+        "min": 0.0,
+        "max": 5.67726896571964
+      },
+      "endpoint_edit_forward_m": {
+        "n": 427,
+        "median": 0.029062106003484304,
+        "p95": 0.13657471048340414,
+        "min": -0.6263879262770278,
+        "max": 0.2676439901730361
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 143,
+        "median": 0.023654584408870964,
+        "p95": 0.15437266175822587,
+        "min": -0.018297816979308205,
+        "max": 0.24303811655890625
+      },
+      "p_native_m": {
+        "n": 457,
+        "median": 0.09563103368573889,
+        "p95": 0.23287749267809935,
+        "min": -0.20601302271691999,
+        "max": 0.28650938582689073
+      },
+      "progress_target_m": {
+        "n": 457,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "disabled_progress": 0
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "POOLED",
+      "length_class": ">=0.25",
+      "calls": 1471,
+      "solver_calls": 1348,
+      "nonconverged": 92,
+      "nonconverged_rate": 0.06254248810333107,
+      "solver_only_nonconverged_rate": 0.06824925816023739,
+      "accepted": 1206,
+      "acceptance_rate": 0.8198504418762746,
+      "initialization_rejected": 121,
+      "terminal_unapplied": 2,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 120,
+        "ACCEPTED": 1206,
+        "NONCONVERGED": 72,
+        "SUPERSEDED": 71,
+        "TERMINAL_UNAPPLIED": 2
+      },
+      "length_m": {
+        "n": 1471,
+        "median": 0.3760897375078356,
+        "p95": 0.4589879884244761,
+        "min": 0.2508735451640629,
+        "max": 0.4834288494095539
+      },
+      "progress_cost": {
+        "n": 1348,
+        "median": 0.0,
+        "p95": 0.13504375040547054,
+        "min": 0.0,
+        "max": 4.4871418815355595
+      },
+      "endpoint_edit_forward_m": {
+        "n": 1348,
+        "median": 0.007128378791078109,
+        "p95": 0.059994502266266875,
+        "min": -0.4341267126677448,
+        "max": 0.29005024831233583
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 1206,
+        "median": 0.0077130331688818445,
+        "p95": 0.058928029963834956,
+        "min": -0.0584884848795585,
+        "max": 0.25391131105418313
+      },
+      "p_native_m": {
+        "n": 1471,
+        "median": 0.3285126331425875,
+        "p95": 0.47184519308725975,
+        "min": -0.131212904011138,
+        "max": 0.5039110129012809
+      },
+      "progress_target_m": {
+        "n": 1471,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.25,
+        "max": 0.25
+      },
+      "disabled_progress": 0
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "sudden",
+      "length_class": "<0.25",
+      "calls": 221,
+      "solver_calls": 203,
+      "nonconverged": 126,
+      "nonconverged_rate": 0.5701357466063348,
+      "solver_only_nonconverged_rate": 0.6206896551724138,
+      "accepted": 74,
+      "acceptance_rate": 0.334841628959276,
+      "initialization_rejected": 15,
+      "terminal_unapplied": 3,
+      "dispositions": {
+        "NONCONVERGED": 85,
+        "INITIALIZATION_REJECTED": 15,
+        "ACCEPTED": 74,
+        "SUPERSEDED": 44,
+        "TERMINAL_UNAPPLIED": 3
+      },
+      "length_m": {
+        "n": 221,
+        "median": 0.18399295252790956,
+        "p95": 0.24476058755143887,
+        "min": 0.03837583811231504,
+        "max": 0.24952598831858824
+      },
+      "progress_cost": {
+        "n": 203,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.03384422764639026
+      },
+      "endpoint_edit_forward_m": {
+        "n": 203,
+        "median": 0.031102455960085318,
+        "p95": 0.14097759136845334,
+        "min": -0.14419980787891892,
+        "max": 0.24113706681892624
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 74,
+        "median": 0.037272412715375694,
+        "p95": 0.16491625716349925,
+        "min": -0.017871630728491218,
+        "max": 0.24113706681892624
+      },
+      "p_native_m": {
+        "n": 221,
+        "median": 0.10901097940565037,
+        "p95": 0.22485825341625346,
+        "min": -0.13681381595574021,
+        "max": 0.2625518955047902
+      },
+      "progress_target_m": {
+        "n": 221,
+        "median": 0.09810988146508533,
+        "p95": 0.2023724280746281,
+        "min": 0.0,
+        "max": 0.23629670595431118
+      },
+      "disabled_progress": 27
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "sudden",
+      "length_class": ">=0.25",
+      "calls": 736,
+      "solver_calls": 652,
+      "nonconverged": 25,
+      "nonconverged_rate": 0.033967391304347824,
+      "solver_only_nonconverged_rate": 0.03834355828220859,
+      "accepted": 615,
+      "acceptance_rate": 0.8355978260869565,
+      "initialization_rejected": 84,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 84,
+        "ACCEPTED": 615,
+        "NONCONVERGED": 16,
+        "SUPERSEDED": 21
+      },
+      "length_m": {
+        "n": 736,
+        "median": 0.37013383958906204,
+        "p95": 0.4574975711492669,
+        "min": 0.2506506475151442,
+        "max": 0.4817802866146707
+      },
+      "progress_cost": {
+        "n": 652,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 1.6418790764921514
+      },
+      "endpoint_edit_forward_m": {
+        "n": 652,
+        "median": 0.011576859481382328,
+        "p95": 0.12675205042584037,
+        "min": -0.47866119763327836,
+        "max": 0.26353808196253614
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 615,
+        "median": 0.011759576912983747,
+        "p95": 0.13038993942739585,
+        "min": -0.031632225844207135,
+        "max": 0.26353808196253614
+      },
+      "p_native_m": {
+        "n": 736,
+        "median": 0.30662474711217286,
+        "p95": 0.46793624729503464,
+        "min": -0.17247275455570732,
+        "max": 0.49155739603789295
+      },
+      "progress_target_m": {
+        "n": 736,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.0,
+        "max": 0.25
+      },
+      "disabled_progress": 6
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "noobs",
+      "length_class": "<0.25",
+      "calls": 249,
+      "solver_calls": 236,
+      "nonconverged": 166,
+      "nonconverged_rate": 0.6666666666666666,
+      "solver_only_nonconverged_rate": 0.7033898305084746,
+      "accepted": 65,
+      "acceptance_rate": 0.26104417670682734,
+      "initialization_rejected": 11,
+      "terminal_unapplied": 2,
+      "dispositions": {
+        "NONCONVERGED": 97,
+        "ACCEPTED": 65,
+        "INITIALIZATION_REJECTED": 11,
+        "SUPERSEDED": 74,
+        "TERMINAL_UNAPPLIED": 2
+      },
+      "length_m": {
+        "n": 249,
+        "median": 0.1740160703545237,
+        "p95": 0.24519079987419634,
+        "min": 0.0382575166601867,
+        "max": 0.2496477804705279
+      },
+      "progress_cost": {
+        "n": 236,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.000990265873383464
+      },
+      "endpoint_edit_forward_m": {
+        "n": 236,
+        "median": 0.029412368960498807,
+        "p95": 0.0963861984401214,
+        "min": -0.041350379459499015,
+        "max": 0.1675518715856177
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 65,
+        "median": 0.015215494839404488,
+        "p95": 0.07890384003380718,
+        "min": -0.03363520506303858,
+        "max": 0.14966019727338456
+      },
+      "p_native_m": {
+        "n": 249,
+        "median": 0.09750811075498995,
+        "p95": 0.23803584641217687,
+        "min": -0.1691126487773772,
+        "max": 0.26881367185725086
+      },
+      "progress_target_m": {
+        "n": 249,
+        "median": 0.08775729967949096,
+        "p95": 0.2142322617709592,
+        "min": 0.0,
+        "max": 0.24193230467152577
+      },
+      "disabled_progress": 59
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "noobs",
+      "length_class": ">=0.25",
+      "calls": 827,
+      "solver_calls": 780,
+      "nonconverged": 31,
+      "nonconverged_rate": 0.037484885126964934,
+      "solver_only_nonconverged_rate": 0.03974358974358974,
+      "accepted": 719,
+      "acceptance_rate": 0.8694074969770254,
+      "initialization_rejected": 44,
+      "terminal_unapplied": 3,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 44,
+        "ACCEPTED": 719,
+        "SUPERSEDED": 36,
+        "NONCONVERGED": 25,
+        "TERMINAL_UNAPPLIED": 3
+      },
+      "length_m": {
+        "n": 827,
+        "median": 0.38466133077587483,
+        "p95": 0.46270071628583254,
+        "min": 0.2500199025681093,
+        "max": 0.48838218256352606
+      },
+      "progress_cost": {
+        "n": 780,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 780,
+        "median": 0.004651457439690839,
+        "p95": 0.03572919284945163,
+        "min": -0.05260124313638522,
+        "max": 0.2528199761249577
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 719,
+        "median": 0.004658938071626203,
+        "p95": 0.03008777334495462,
+        "min": -0.04180971970967236,
+        "max": 0.2528199761249577
+      },
+      "p_native_m": {
+        "n": 827,
+        "median": 0.33717314655771624,
+        "p95": 0.47442901418061517,
+        "min": -0.23184152346641662,
+        "max": 0.5274382213754572
+      },
+      "progress_target_m": {
+        "n": 827,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.0,
+        "max": 0.25
+      },
+      "disabled_progress": 18
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "POOLED",
+      "length_class": "<0.25",
+      "calls": 470,
+      "solver_calls": 439,
+      "nonconverged": 292,
+      "nonconverged_rate": 0.6212765957446809,
+      "solver_only_nonconverged_rate": 0.6651480637813212,
+      "accepted": 139,
+      "acceptance_rate": 0.2957446808510638,
+      "initialization_rejected": 26,
+      "terminal_unapplied": 5,
+      "dispositions": {
+        "NONCONVERGED": 182,
+        "INITIALIZATION_REJECTED": 26,
+        "ACCEPTED": 139,
+        "SUPERSEDED": 118,
+        "TERMINAL_UNAPPLIED": 5
+      },
+      "length_m": {
+        "n": 470,
+        "median": 0.1780694716460104,
+        "p95": 0.24517384074166843,
+        "min": 0.0382575166601867,
+        "max": 0.2496477804705279
+      },
+      "progress_cost": {
+        "n": 439,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.03384422764639026
+      },
+      "endpoint_edit_forward_m": {
+        "n": 439,
+        "median": 0.0297292189070791,
+        "p95": 0.12670062410314212,
+        "min": -0.14419980787891892,
+        "max": 0.24113706681892624
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 139,
+        "median": 0.021739561458833923,
+        "p95": 0.15003502276396313,
+        "min": -0.03363520506303858,
+        "max": 0.24113706681892624
+      },
+      "p_native_m": {
+        "n": 470,
+        "median": 0.10263241620381092,
+        "p95": 0.22856617626394155,
+        "min": -0.1691126487773772,
+        "max": 0.26881367185725086
+      },
+      "progress_target_m": {
+        "n": 470,
+        "median": 0.09236917458342983,
+        "p95": 0.20570955863754742,
+        "min": 0.0,
+        "max": 0.24193230467152577
+      },
+      "disabled_progress": 86
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "POOLED",
+      "length_class": ">=0.25",
+      "calls": 1563,
+      "solver_calls": 1432,
+      "nonconverged": 56,
+      "nonconverged_rate": 0.03582853486884197,
+      "solver_only_nonconverged_rate": 0.03910614525139665,
+      "accepted": 1334,
+      "acceptance_rate": 0.853486884197057,
+      "initialization_rejected": 128,
+      "terminal_unapplied": 3,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 128,
+        "ACCEPTED": 1334,
+        "NONCONVERGED": 41,
+        "SUPERSEDED": 57,
+        "TERMINAL_UNAPPLIED": 3
+      },
+      "length_m": {
+        "n": 1563,
+        "median": 0.3790354571145843,
+        "p95": 0.4608928768315415,
+        "min": 0.2500199025681093,
+        "max": 0.48838218256352606
+      },
+      "progress_cost": {
+        "n": 1432,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 1.6418790764921514
+      },
+      "endpoint_edit_forward_m": {
+        "n": 1432,
+        "median": 0.007731126209385321,
+        "p95": 0.06848892577351362,
+        "min": -0.47866119763327836,
+        "max": 0.26353808196253614
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 1334,
+        "median": 0.007974942070223652,
+        "p95": 0.06335959221261096,
+        "min": -0.04180971970967236,
+        "max": 0.26353808196253614
+      },
+      "p_native_m": {
+        "n": 1563,
+        "median": 0.3222449422004411,
+        "p95": 0.4711412154262636,
+        "min": -0.23184152346641662,
+        "max": 0.5274382213754572
+      },
+      "progress_target_m": {
+        "n": 1563,
+        "median": 0.25,
+        "p95": 0.25,
+        "min": 0.0,
+        "max": 0.25
+      },
+      "disabled_progress": 24
+    }
+  ],
+  "x_bins": [
+    {
+      "method": "GRAPH-v6",
+      "scene": "sudden",
+      "x_bin": "0\u20132",
+      "calls": 247,
+      "solver_calls": 208,
+      "nonconverged": 35,
+      "nonconverged_rate": 0.1417004048582996,
+      "solver_only_nonconverged_rate": 0.16826923076923078,
+      "accepted": 168,
+      "acceptance_rate": 0.680161943319838,
+      "initialization_rejected": 39,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 39,
+        "ACCEPTED": 168,
+        "NONCONVERGED": 24,
+        "SUPERSEDED": 16
+      },
+      "length_m": {
+        "n": 247,
+        "median": 0.3240291702083438,
+        "p95": 0.42787187772908,
+        "min": 0.10351518730554232,
+        "max": 0.4581048128632957
+      },
+      "progress_cost": {
+        "n": 208,
+        "median": 0.0,
+        "p95": 0.16746097999838028,
+        "min": 0.0,
+        "max": 0.38936157781513947
+      },
+      "endpoint_edit_forward_m": {
+        "n": 208,
+        "median": 0.01144472644219541,
+        "p95": 0.026082282308998974,
+        "min": -0.02488835847356221,
+        "max": 0.06520635251597702
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 168,
+        "median": 0.012064003633298948,
+        "p95": 0.02377117641998808,
+        "min": -0.01891708758748725,
+        "max": 0.06520635251597702
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "sudden",
+      "x_bin": "2\u20134",
+      "calls": 246,
+      "solver_calls": 230,
+      "nonconverged": 20,
+      "nonconverged_rate": 0.08130081300813008,
+      "solver_only_nonconverged_rate": 0.08695652173913043,
+      "accepted": 202,
+      "acceptance_rate": 0.8211382113821138,
+      "initialization_rejected": 16,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 202,
+        "INITIALIZATION_REJECTED": 16,
+        "NONCONVERGED": 15,
+        "SUPERSEDED": 13
+      },
+      "length_m": {
+        "n": 246,
+        "median": 0.38033164765561767,
+        "p95": 0.45913923570942117,
+        "min": 0.08660373330607854,
+        "max": 0.47945343868364143
+      },
+      "progress_cost": {
+        "n": 230,
+        "median": 0.0,
+        "p95": 0.06801175925266431,
+        "min": 0.0,
+        "max": 0.42320000693369036
+      },
+      "endpoint_edit_forward_m": {
+        "n": 230,
+        "median": 0.013973346896571124,
+        "p95": 0.17396718563227173,
+        "min": -0.03408199585946498,
+        "max": 0.29005024831233583
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 202,
+        "median": 0.016515501168272398,
+        "p95": 0.17033694909418778,
+        "min": -0.03408199585946498,
+        "max": 0.25391131105418313
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "sudden",
+      "x_bin": "4\u20136",
+      "calls": 219,
+      "solver_calls": 207,
+      "nonconverged": 0,
+      "nonconverged_rate": 0.0,
+      "solver_only_nonconverged_rate": 0.0,
+      "accepted": 201,
+      "acceptance_rate": 0.9178082191780822,
+      "initialization_rejected": 12,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 201,
+        "INITIALIZATION_REJECTED": 12,
+        "SUPERSEDED": 6
+      },
+      "length_m": {
+        "n": 219,
+        "median": 0.4401978215179694,
+        "p95": 0.46738841059768854,
+        "min": 0.3221817718621064,
+        "max": 0.4834288494095539
+      },
+      "progress_cost": {
+        "n": 207,
+        "median": 0.0,
+        "p95": 0.010464218773407162,
+        "min": 0.0,
+        "max": 0.159555791205711
+      },
+      "endpoint_edit_forward_m": {
+        "n": 207,
+        "median": 0.0047701661091245785,
+        "p95": 0.031215976607629117,
+        "min": -0.026666920083141928,
+        "max": 0.11237458445734877
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 201,
+        "median": 0.004840430434449232,
+        "p95": 0.03140401369781509,
+        "min": -0.026666920083141928,
+        "max": 0.11237458445734877
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "sudden",
+      "x_bin": "6\u20138",
+      "calls": 385,
+      "solver_calls": 354,
+      "nonconverged": 137,
+      "nonconverged_rate": 0.35584415584415585,
+      "solver_only_nonconverged_rate": 0.3870056497175141,
+      "accepted": 203,
+      "acceptance_rate": 0.5272727272727272,
+      "initialization_rejected": 30,
+      "terminal_unapplied": 1,
+      "dispositions": {
+        "ACCEPTED": 203,
+        "NONCONVERGED": 97,
+        "INITIALIZATION_REJECTED": 30,
+        "SUPERSEDED": 54,
+        "TERMINAL_UNAPPLIED": 1
+      },
+      "length_m": {
+        "n": 385,
+        "median": 0.24201525746795774,
+        "p95": 0.4427499402586753,
+        "min": 0.02561023057071461,
+        "max": 0.47387273871986857
+      },
+      "progress_cost": {
+        "n": 354,
+        "median": 0.03535295900368375,
+        "p95": 0.36382423624659377,
+        "min": 0.0,
+        "max": 1.0148621763996024
+      },
+      "endpoint_edit_forward_m": {
+        "n": 354,
+        "median": 0.013530034883097432,
+        "p95": 0.09606268472851388,
+        "min": -0.027025774273623265,
+        "max": 0.2676439901730361
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 203,
+        "median": 0.011113769940484564,
+        "p95": 0.06616399427684183,
+        "min": -0.027025774273623265,
+        "max": 0.11801086605215663
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "sudden",
+      "x_bin": "OUTSIDE",
+      "calls": 167,
+      "solver_calls": 161,
+      "nonconverged": 108,
+      "nonconverged_rate": 0.6467065868263473,
+      "solver_only_nonconverged_rate": 0.6708074534161491,
+      "accepted": 49,
+      "acceptance_rate": 0.2934131736526946,
+      "initialization_rejected": 3,
+      "terminal_unapplied": 3,
+      "dispositions": {
+        "NONCONVERGED": 68,
+        "INITIALIZATION_REJECTED": 3,
+        "ACCEPTED": 49,
+        "SUPERSEDED": 44,
+        "TERMINAL_UNAPPLIED": 3
+      },
+      "length_m": {
+        "n": 167,
+        "median": 0.2154088262164995,
+        "p95": 0.38432650973888466,
+        "min": 0.060958687846944144,
+        "max": 0.4588263955961613
+      },
+      "progress_cost": {
+        "n": 161,
+        "median": 0.25389318675738193,
+        "p95": 0.7886897520254149,
+        "min": 0.0,
+        "max": 5.67726896571964
+      },
+      "endpoint_edit_forward_m": {
+        "n": 161,
+        "median": 0.0336124591245565,
+        "p95": 0.10769706203691559,
+        "min": -0.6263879262770278,
+        "max": 0.13460699949383653
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 49,
+        "median": 0.01488918069276431,
+        "p95": 0.06436422440114623,
+        "min": -0.0584884848795585,
+        "max": 0.106498909996085
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "noobs",
+      "x_bin": "0\u20132",
+      "calls": 157,
+      "solver_calls": 136,
+      "nonconverged": 0,
+      "nonconverged_rate": 0.0,
+      "solver_only_nonconverged_rate": 0.0,
+      "accepted": 133,
+      "acceptance_rate": 0.8471337579617835,
+      "initialization_rejected": 21,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 20,
+        "ACCEPTED": 133,
+        "SUPERSEDED": 4
+      },
+      "length_m": {
+        "n": 157,
+        "median": 0.3145644845190061,
+        "p95": 0.3835286991812296,
+        "min": 0.24458216700380006,
+        "max": 0.436409224534455
+      },
+      "progress_cost": {
+        "n": 136,
+        "median": 0.0,
+        "p95": 0.12049946715964033,
+        "min": 0.0,
+        "max": 0.4004955079436183
+      },
+      "endpoint_edit_forward_m": {
+        "n": 136,
+        "median": 0.011570443590035649,
+        "p95": 0.0202865091759829,
+        "min": -0.013172775925259488,
+        "max": 0.035566877056306144
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 133,
+        "median": 0.011525766140376908,
+        "p95": 0.020407653616616967,
+        "min": -0.013172775925259488,
+        "max": 0.035566877056306144
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "noobs",
+      "x_bin": "2\u20134",
+      "calls": 149,
+      "solver_calls": 142,
+      "nonconverged": 0,
+      "nonconverged_rate": 0.0,
+      "solver_only_nonconverged_rate": 0.0,
+      "accepted": 137,
+      "acceptance_rate": 0.9194630872483222,
+      "initialization_rejected": 7,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 137,
+        "SUPERSEDED": 5,
+        "INITIALIZATION_REJECTED": 7
+      },
+      "length_m": {
+        "n": 149,
+        "median": 0.4072501851386014,
+        "p95": 0.4489806490803752,
+        "min": 0.17549356169166597,
+        "max": 0.4640083780594243
+      },
+      "progress_cost": {
+        "n": 142,
+        "median": 0.0,
+        "p95": 0.014826735614751669,
+        "min": 0.0,
+        "max": 0.20992669208453957
+      },
+      "endpoint_edit_forward_m": {
+        "n": 142,
+        "median": 0.003430356914328119,
+        "p95": 0.026500606094575763,
+        "min": -0.021505696043691593,
+        "max": 0.07402280263174904
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 137,
+        "median": 0.0031915254639062448,
+        "p95": 0.0273446143876036,
+        "min": -0.021505696043691593,
+        "max": 0.07402280263174904
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "noobs",
+      "x_bin": "4\u20136",
+      "calls": 142,
+      "solver_calls": 137,
+      "nonconverged": 1,
+      "nonconverged_rate": 0.007042253521126761,
+      "solver_only_nonconverged_rate": 0.0072992700729927005,
+      "accepted": 132,
+      "acceptance_rate": 0.9295774647887324,
+      "initialization_rejected": 5,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 132,
+        "SUPERSEDED": 4,
+        "NONCONVERGED": 1,
+        "INITIALIZATION_REJECTED": 5
+      },
+      "length_m": {
+        "n": 142,
+        "median": 0.43832847373121614,
+        "p95": 0.4632748944990338,
+        "min": 0.3470818271470131,
+        "max": 0.46948357903915916
+      },
+      "progress_cost": {
+        "n": 137,
+        "median": 0.0,
+        "p95": 0.0055038645030103545,
+        "min": 0.0,
+        "max": 0.04311685196350825
+      },
+      "endpoint_edit_forward_m": {
+        "n": 137,
+        "median": 0.0017087103291358787,
+        "p95": 0.024949349318515862,
+        "min": -0.01945299939228863,
+        "max": 0.055086980092040744
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 132,
+        "median": 0.002201913053471542,
+        "p95": 0.0251581373776293,
+        "min": -0.01945299939228863,
+        "max": 0.055086980092040744
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "noobs",
+      "x_bin": "6\u20138",
+      "calls": 216,
+      "solver_calls": 200,
+      "nonconverged": 69,
+      "nonconverged_rate": 0.3194444444444444,
+      "solver_only_nonconverged_rate": 0.345,
+      "accepted": 124,
+      "acceptance_rate": 0.5740740740740741,
+      "initialization_rejected": 13,
+      "terminal_unapplied": 3,
+      "dispositions": {
+        "ACCEPTED": 124,
+        "SUPERSEDED": 26,
+        "NONCONVERGED": 50,
+        "TERMINAL_UNAPPLIED": 3,
+        "INITIALIZATION_REJECTED": 13
+      },
+      "length_m": {
+        "n": 216,
+        "median": 0.25534439685760313,
+        "p95": 0.40777908999720264,
+        "min": 0.07833876899500379,
+        "max": 0.45184344322302034
+      },
+      "progress_cost": {
+        "n": 200,
+        "median": 0.010766412071167849,
+        "p95": 0.20967807768733976,
+        "min": 0.0,
+        "max": 0.3298202218463266
+      },
+      "endpoint_edit_forward_m": {
+        "n": 200,
+        "median": 0.01228983989485296,
+        "p95": 0.05312607995188955,
+        "min": -0.03224952204555833,
+        "max": 0.1555350829016226
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 124,
+        "median": 0.009745822475929644,
+        "p95": 0.05172067158584792,
+        "min": -0.03224952204555833,
+        "max": 0.1348981018219623
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "noobs",
+      "x_bin": "OUTSIDE",
+      "calls": 0,
+      "solver_calls": 0,
+      "nonconverged": 0,
+      "nonconverged_rate": null,
+      "solver_only_nonconverged_rate": null,
+      "accepted": 0,
+      "acceptance_rate": null,
+      "initialization_rejected": 0,
+      "terminal_unapplied": 0,
+      "dispositions": {},
+      "length_m": {
+        "n": 0
+      },
+      "progress_cost": {
+        "n": 0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 0
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 0
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "POOLED",
+      "x_bin": "0\u20132",
+      "calls": 404,
+      "solver_calls": 344,
+      "nonconverged": 35,
+      "nonconverged_rate": 0.08663366336633663,
+      "solver_only_nonconverged_rate": 0.10174418604651163,
+      "accepted": 301,
+      "acceptance_rate": 0.745049504950495,
+      "initialization_rejected": 60,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 59,
+        "ACCEPTED": 301,
+        "NONCONVERGED": 24,
+        "SUPERSEDED": 20
+      },
+      "length_m": {
+        "n": 404,
+        "median": 0.3195227048609387,
+        "p95": 0.4117328894257401,
+        "min": 0.10351518730554232,
+        "max": 0.4581048128632957
+      },
+      "progress_cost": {
+        "n": 344,
+        "median": 0.0,
+        "p95": 0.15502964138027184,
+        "min": 0.0,
+        "max": 0.4004955079436183
+      },
+      "endpoint_edit_forward_m": {
+        "n": 344,
+        "median": 0.011520315463880576,
+        "p95": 0.02254289858782814,
+        "min": -0.02488835847356221,
+        "max": 0.06520635251597702
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 301,
+        "median": 0.011746942441963181,
+        "p95": 0.022150136485055177,
+        "min": -0.01891708758748725,
+        "max": 0.06520635251597702
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "POOLED",
+      "x_bin": "2\u20134",
+      "calls": 395,
+      "solver_calls": 372,
+      "nonconverged": 20,
+      "nonconverged_rate": 0.05063291139240506,
+      "solver_only_nonconverged_rate": 0.053763440860215055,
+      "accepted": 339,
+      "acceptance_rate": 0.8582278481012658,
+      "initialization_rejected": 23,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 339,
+        "INITIALIZATION_REJECTED": 23,
+        "NONCONVERGED": 15,
+        "SUPERSEDED": 18
+      },
+      "length_m": {
+        "n": 395,
+        "median": 0.3991297220063523,
+        "p95": 0.4536833281606679,
+        "min": 0.08660373330607854,
+        "max": 0.47945343868364143
+      },
+      "progress_cost": {
+        "n": 372,
+        "median": 0.0,
+        "p95": 0.033358450877337936,
+        "min": 0.0,
+        "max": 0.42320000693369036
+      },
+      "endpoint_edit_forward_m": {
+        "n": 372,
+        "median": 0.0068737668768815135,
+        "p95": 0.1587069586356211,
+        "min": -0.03408199585946498,
+        "max": 0.29005024831233583
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 339,
+        "median": 0.008385334092231312,
+        "p95": 0.15809690098685034,
+        "min": -0.03408199585946498,
+        "max": 0.25391131105418313
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "POOLED",
+      "x_bin": "4\u20136",
+      "calls": 361,
+      "solver_calls": 344,
+      "nonconverged": 1,
+      "nonconverged_rate": 0.002770083102493075,
+      "solver_only_nonconverged_rate": 0.0029069767441860465,
+      "accepted": 333,
+      "acceptance_rate": 0.9224376731301939,
+      "initialization_rejected": 17,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 333,
+        "INITIALIZATION_REJECTED": 17,
+        "SUPERSEDED": 10,
+        "NONCONVERGED": 1
+      },
+      "length_m": {
+        "n": 361,
+        "median": 0.4393099995916925,
+        "p95": 0.46589416220739105,
+        "min": 0.3221817718621064,
+        "max": 0.4834288494095539
+      },
+      "progress_cost": {
+        "n": 344,
+        "median": 0.0,
+        "p95": 0.006419870641342498,
+        "min": 0.0,
+        "max": 0.159555791205711
+      },
+      "endpoint_edit_forward_m": {
+        "n": 344,
+        "median": 0.0029918033186327265,
+        "p95": 0.029770647097505022,
+        "min": -0.026666920083141928,
+        "max": 0.11237458445734877
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 333,
+        "median": 0.003707983841886336,
+        "p95": 0.03018544094672824,
+        "min": -0.026666920083141928,
+        "max": 0.11237458445734877
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "POOLED",
+      "x_bin": "6\u20138",
+      "calls": 601,
+      "solver_calls": 554,
+      "nonconverged": 206,
+      "nonconverged_rate": 0.3427620632279534,
+      "solver_only_nonconverged_rate": 0.37184115523465705,
+      "accepted": 327,
+      "acceptance_rate": 0.5440931780366056,
+      "initialization_rejected": 43,
+      "terminal_unapplied": 4,
+      "dispositions": {
+        "ACCEPTED": 327,
+        "NONCONVERGED": 147,
+        "INITIALIZATION_REJECTED": 43,
+        "SUPERSEDED": 80,
+        "TERMINAL_UNAPPLIED": 4
+      },
+      "length_m": {
+        "n": 601,
+        "median": 0.24747771159824766,
+        "p95": 0.43388367688750396,
+        "min": 0.02561023057071461,
+        "max": 0.47387273871986857
+      },
+      "progress_cost": {
+        "n": 554,
+        "median": 0.02681871085245714,
+        "p95": 0.3153904545853872,
+        "min": 0.0,
+        "max": 1.0148621763996024
+      },
+      "endpoint_edit_forward_m": {
+        "n": 554,
+        "median": 0.012725622255513014,
+        "p95": 0.08670429016455417,
+        "min": -0.03224952204555833,
+        "max": 0.2676439901730361
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 327,
+        "median": 0.010528531980608682,
+        "p95": 0.06453345237436382,
+        "min": -0.03224952204555833,
+        "max": 0.1348981018219623
+      }
+    },
+    {
+      "method": "GRAPH-v6",
+      "scene": "POOLED",
+      "x_bin": "OUTSIDE",
+      "calls": 167,
+      "solver_calls": 161,
+      "nonconverged": 108,
+      "nonconverged_rate": 0.6467065868263473,
+      "solver_only_nonconverged_rate": 0.6708074534161491,
+      "accepted": 49,
+      "acceptance_rate": 0.2934131736526946,
+      "initialization_rejected": 3,
+      "terminal_unapplied": 3,
+      "dispositions": {
+        "NONCONVERGED": 68,
+        "INITIALIZATION_REJECTED": 3,
+        "ACCEPTED": 49,
+        "SUPERSEDED": 44,
+        "TERMINAL_UNAPPLIED": 3
+      },
+      "length_m": {
+        "n": 167,
+        "median": 0.2154088262164995,
+        "p95": 0.38432650973888466,
+        "min": 0.060958687846944144,
+        "max": 0.4588263955961613
+      },
+      "progress_cost": {
+        "n": 161,
+        "median": 0.25389318675738193,
+        "p95": 0.7886897520254149,
+        "min": 0.0,
+        "max": 5.67726896571964
+      },
+      "endpoint_edit_forward_m": {
+        "n": 161,
+        "median": 0.0336124591245565,
+        "p95": 0.10769706203691559,
+        "min": -0.6263879262770278,
+        "max": 0.13460699949383653
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 49,
+        "median": 0.01488918069276431,
+        "p95": 0.06436422440114623,
+        "min": -0.0584884848795585,
+        "max": 0.106498909996085
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "sudden",
+      "x_bin": "0\u20132",
+      "calls": 202,
+      "solver_calls": 160,
+      "nonconverged": 1,
+      "nonconverged_rate": 0.0049504950495049506,
+      "solver_only_nonconverged_rate": 0.00625,
+      "accepted": 158,
+      "acceptance_rate": 0.7821782178217822,
+      "initialization_rejected": 42,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 42,
+        "ACCEPTED": 158,
+        "SUPERSEDED": 1,
+        "NONCONVERGED": 1
+      },
+      "length_m": {
+        "n": 202,
+        "median": 0.3158628866073494,
+        "p95": 0.3856673006062125,
+        "min": 0.22037885009815003,
+        "max": 0.4577745756398677
+      },
+      "progress_cost": {
+        "n": 160,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 160,
+        "median": 0.012284479674317561,
+        "p95": 0.021299926135487614,
+        "min": -0.009286454482622305,
+        "max": 0.04949784168924039
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 158,
+        "median": 0.012308177416450985,
+        "p95": 0.02130812404817796,
+        "min": -0.009286454482622305,
+        "max": 0.04949784168924039
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "sudden",
+      "x_bin": "2\u20134",
+      "calls": 204,
+      "solver_calls": 186,
+      "nonconverged": 10,
+      "nonconverged_rate": 0.049019607843137254,
+      "solver_only_nonconverged_rate": 0.053763440860215055,
+      "accepted": 170,
+      "acceptance_rate": 0.8333333333333334,
+      "initialization_rejected": 18,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 170,
+        "INITIALIZATION_REJECTED": 18,
+        "NONCONVERGED": 7,
+        "SUPERSEDED": 9
+      },
+      "length_m": {
+        "n": 204,
+        "median": 0.3872619334260979,
+        "p95": 0.4548857075157098,
+        "min": 0.15682655208580448,
+        "max": 0.4817802866146707
+      },
+      "progress_cost": {
+        "n": 186,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 1.6418790764921514
+      },
+      "endpoint_edit_forward_m": {
+        "n": 186,
+        "median": 0.025992762269925335,
+        "p95": 0.17478741994551641,
+        "min": -0.47866119763327836,
+        "max": 0.26353808196253614
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 170,
+        "median": 0.029845022880763825,
+        "p95": 0.17684290987660403,
+        "min": -0.023723691686411447,
+        "max": 0.26353808196253614
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "sudden",
+      "x_bin": "4\u20136",
+      "calls": 190,
+      "solver_calls": 182,
+      "nonconverged": 2,
+      "nonconverged_rate": 0.010526315789473684,
+      "solver_only_nonconverged_rate": 0.01098901098901099,
+      "accepted": 176,
+      "acceptance_rate": 0.9263157894736842,
+      "initialization_rejected": 8,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 8,
+        "ACCEPTED": 176,
+        "SUPERSEDED": 6
+      },
+      "length_m": {
+        "n": 190,
+        "median": 0.4377783914758461,
+        "p95": 0.46480485534859006,
+        "min": 0.27707237586107125,
+        "max": 0.47512495964684587
+      },
+      "progress_cost": {
+        "n": 182,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 182,
+        "median": 0.007343863031266497,
+        "p95": 0.036878328301318056,
+        "min": -0.018973322373805442,
+        "max": 0.09605654151829783
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 176,
+        "median": 0.007562316989511977,
+        "p95": 0.03720319948839447,
+        "min": -0.018973322373805442,
+        "max": 0.09605654151829783
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "sudden",
+      "x_bin": "6\u20138",
+      "calls": 316,
+      "solver_calls": 286,
+      "nonconverged": 117,
+      "nonconverged_rate": 0.370253164556962,
+      "solver_only_nonconverged_rate": 0.4090909090909091,
+      "accepted": 165,
+      "acceptance_rate": 0.5221518987341772,
+      "initialization_rejected": 28,
+      "terminal_unapplied": 2,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 28,
+        "ACCEPTED": 165,
+        "NONCONVERGED": 81,
+        "SUPERSEDED": 40,
+        "TERMINAL_UNAPPLIED": 2
+      },
+      "length_m": {
+        "n": 316,
+        "median": 0.24805047664108484,
+        "p95": 0.4226832387379765,
+        "min": 0.03837583811231504,
+        "max": 0.4610411242428279
+      },
+      "progress_cost": {
+        "n": 286,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 286,
+        "median": 0.015479202374000259,
+        "p95": 0.06429770492697132,
+        "min": -0.031632225844207135,
+        "max": 0.19498519900338052
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 165,
+        "median": 0.011704762627556813,
+        "p95": 0.05592056045544106,
+        "min": -0.031632225844207135,
+        "max": 0.19498519900338052
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "sudden",
+      "x_bin": "OUTSIDE",
+      "calls": 45,
+      "solver_calls": 41,
+      "nonconverged": 21,
+      "nonconverged_rate": 0.4666666666666667,
+      "solver_only_nonconverged_rate": 0.5121951219512195,
+      "accepted": 20,
+      "acceptance_rate": 0.4444444444444444,
+      "initialization_rejected": 3,
+      "terminal_unapplied": 1,
+      "dispositions": {
+        "ACCEPTED": 20,
+        "NONCONVERGED": 12,
+        "SUPERSEDED": 9,
+        "TERMINAL_UNAPPLIED": 1,
+        "INITIALIZATION_REJECTED": 3
+      },
+      "length_m": {
+        "n": 45,
+        "median": 0.20426629709434851,
+        "p95": 0.36021974504157794,
+        "min": 0.054847589751256906,
+        "max": 0.3804835660507846
+      },
+      "progress_cost": {
+        "n": 41,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.03384422764639026
+      },
+      "endpoint_edit_forward_m": {
+        "n": 41,
+        "median": 0.06231345526054488,
+        "p95": 0.11657892889232835,
+        "min": -0.14419980787891892,
+        "max": 0.1407140113669153
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 20,
+        "median": 0.031312123567908676,
+        "p95": 0.10543132177872114,
+        "min": -0.009419314051983539,
+        "max": 0.11657892889232835
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "noobs",
+      "x_bin": "0\u20132",
+      "calls": 236,
+      "solver_calls": 211,
+      "nonconverged": 7,
+      "nonconverged_rate": 0.029661016949152543,
+      "solver_only_nonconverged_rate": 0.03317535545023697,
+      "accepted": 193,
+      "acceptance_rate": 0.8177966101694916,
+      "initialization_rejected": 24,
+      "terminal_unapplied": 1,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 24,
+        "ACCEPTED": 193,
+        "SUPERSEDED": 14,
+        "NONCONVERGED": 4,
+        "TERMINAL_UNAPPLIED": 1
+      },
+      "length_m": {
+        "n": 236,
+        "median": 0.3295936916476895,
+        "p95": 0.43067878297463286,
+        "min": 0.12425745101647391,
+        "max": 0.4752172231971997
+      },
+      "progress_cost": {
+        "n": 211,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 211,
+        "median": 0.011008714781114343,
+        "p95": 0.02447420620989252,
+        "min": -0.029532434209397072,
+        "max": 0.07145683599866187
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 193,
+        "median": 0.009712043537928644,
+        "p95": 0.02054955866356055,
+        "min": -0.029532434209397072,
+        "max": 0.07050612486156509
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "noobs",
+      "x_bin": "2\u20134",
+      "calls": 209,
+      "solver_calls": 200,
+      "nonconverged": 5,
+      "nonconverged_rate": 0.023923444976076555,
+      "solver_only_nonconverged_rate": 0.025,
+      "accepted": 190,
+      "acceptance_rate": 0.9090909090909091,
+      "initialization_rejected": 9,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 190,
+        "INITIALIZATION_REJECTED": 9,
+        "NONCONVERGED": 5,
+        "SUPERSEDED": 5
+      },
+      "length_m": {
+        "n": 209,
+        "median": 0.40177400563856003,
+        "p95": 0.4785792035906837,
+        "min": 0.12367350672573267,
+        "max": 0.48838218256352606
+      },
+      "progress_cost": {
+        "n": 200,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 200,
+        "median": 0.004463103748348923,
+        "p95": 0.03229562127247828,
+        "min": -0.04180971970967236,
+        "max": 0.2528199761249577
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 190,
+        "median": 0.004464106940659051,
+        "p95": 0.02729571222172098,
+        "min": -0.04180971970967236,
+        "max": 0.2528199761249577
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "noobs",
+      "x_bin": "4\u20136",
+      "calls": 211,
+      "solver_calls": 204,
+      "nonconverged": 3,
+      "nonconverged_rate": 0.014218009478672985,
+      "solver_only_nonconverged_rate": 0.014705882352941176,
+      "accepted": 194,
+      "acceptance_rate": 0.919431279620853,
+      "initialization_rejected": 7,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 194,
+        "INITIALIZATION_REJECTED": 7,
+        "SUPERSEDED": 7,
+        "NONCONVERGED": 3
+      },
+      "length_m": {
+        "n": 211,
+        "median": 0.43348045595013157,
+        "p95": 0.4653572989133505,
+        "min": 0.22837931216790977,
+        "max": 0.48544994247399853
+      },
+      "progress_cost": {
+        "n": 204,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 204,
+        "median": 0.0016798845601614285,
+        "p95": 0.03785167836992396,
+        "min": -0.029488086623903936,
+        "max": 0.15877335883978375
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 194,
+        "median": 0.0020829950082549157,
+        "p95": 0.03905360121879788,
+        "min": -0.029488086623903936,
+        "max": 0.15877335883978375
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "noobs",
+      "x_bin": "6\u20138",
+      "calls": 295,
+      "solver_calls": 279,
+      "nonconverged": 102,
+      "nonconverged_rate": 0.34576271186440677,
+      "solver_only_nonconverged_rate": 0.3655913978494624,
+      "accepted": 168,
+      "acceptance_rate": 0.5694915254237288,
+      "initialization_rejected": 14,
+      "terminal_unapplied": 2,
+      "dispositions": {
+        "ACCEPTED": 168,
+        "NONCONVERGED": 69,
+        "INITIALIZATION_REJECTED": 14,
+        "SUPERSEDED": 42,
+        "TERMINAL_UNAPPLIED": 2
+      },
+      "length_m": {
+        "n": 295,
+        "median": 0.25713101455888643,
+        "p95": 0.4551303281242026,
+        "min": 0.04954108904624871,
+        "max": 0.47608571228478513
+      },
+      "progress_cost": {
+        "n": 279,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.000990265873383464
+      },
+      "endpoint_edit_forward_m": {
+        "n": 279,
+        "median": 0.011156819981644238,
+        "p95": 0.06080473408087553,
+        "min": -0.03363520506303858,
+        "max": 0.1675518715856177
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 168,
+        "median": 0.009151823855834745,
+        "p95": 0.04555052533454348,
+        "min": -0.03363520506303858,
+        "max": 0.14966019727338456
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "noobs",
+      "x_bin": "OUTSIDE",
+      "calls": 125,
+      "solver_calls": 122,
+      "nonconverged": 80,
+      "nonconverged_rate": 0.64,
+      "solver_only_nonconverged_rate": 0.6557377049180327,
+      "accepted": 39,
+      "acceptance_rate": 0.312,
+      "initialization_rejected": 1,
+      "terminal_unapplied": 2,
+      "dispositions": {
+        "NONCONVERGED": 41,
+        "SUPERSEDED": 42,
+        "ACCEPTED": 39,
+        "INITIALIZATION_REJECTED": 1,
+        "TERMINAL_UNAPPLIED": 2
+      },
+      "length_m": {
+        "n": 125,
+        "median": 0.19200599673409724,
+        "p95": 0.3627718533388277,
+        "min": 0.0382575166601867,
+        "max": 0.4617519734931481
+      },
+      "progress_cost": {
+        "n": 122,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 122,
+        "median": 0.04133910643643963,
+        "p95": 0.10103394545311722,
+        "min": -0.05260124313638522,
+        "max": 0.13168265109972965
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 39,
+        "median": 0.004734197277444954,
+        "p95": 0.06919094563842079,
+        "min": -0.018831940312817517,
+        "max": 0.08377235023361525
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "POOLED",
+      "x_bin": "0\u20132",
+      "calls": 438,
+      "solver_calls": 371,
+      "nonconverged": 8,
+      "nonconverged_rate": 0.0182648401826484,
+      "solver_only_nonconverged_rate": 0.0215633423180593,
+      "accepted": 351,
+      "acceptance_rate": 0.8013698630136986,
+      "initialization_rejected": 66,
+      "terminal_unapplied": 1,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 66,
+        "ACCEPTED": 351,
+        "SUPERSEDED": 15,
+        "NONCONVERGED": 5,
+        "TERMINAL_UNAPPLIED": 1
+      },
+      "length_m": {
+        "n": 438,
+        "median": 0.32334022396441886,
+        "p95": 0.42067065605496623,
+        "min": 0.12425745101647391,
+        "max": 0.4752172231971997
+      },
+      "progress_cost": {
+        "n": 371,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 371,
+        "median": 0.011546039276548249,
+        "p95": 0.022109818484488786,
+        "min": -0.029532434209397072,
+        "max": 0.07145683599866187
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 351,
+        "median": 0.011350180220173298,
+        "p95": 0.021063645311515812,
+        "min": -0.029532434209397072,
+        "max": 0.07050612486156509
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "POOLED",
+      "x_bin": "2\u20134",
+      "calls": 413,
+      "solver_calls": 386,
+      "nonconverged": 15,
+      "nonconverged_rate": 0.03631961259079903,
+      "solver_only_nonconverged_rate": 0.038860103626943004,
+      "accepted": 360,
+      "acceptance_rate": 0.8716707021791767,
+      "initialization_rejected": 27,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "ACCEPTED": 360,
+        "INITIALIZATION_REJECTED": 27,
+        "NONCONVERGED": 12,
+        "SUPERSEDED": 14
+      },
+      "length_m": {
+        "n": 413,
+        "median": 0.3943859389671399,
+        "p95": 0.4620688390800504,
+        "min": 0.12367350672573267,
+        "max": 0.48838218256352606
+      },
+      "progress_cost": {
+        "n": 386,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 1.6418790764921514
+      },
+      "endpoint_edit_forward_m": {
+        "n": 386,
+        "median": 0.009299496291856092,
+        "p95": 0.15719039501203538,
+        "min": -0.47866119763327836,
+        "max": 0.26353808196253614
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 360,
+        "median": 0.00947976177536959,
+        "p95": 0.15867793099380997,
+        "min": -0.04180971970967236,
+        "max": 0.26353808196253614
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "POOLED",
+      "x_bin": "4\u20136",
+      "calls": 401,
+      "solver_calls": 386,
+      "nonconverged": 5,
+      "nonconverged_rate": 0.012468827930174564,
+      "solver_only_nonconverged_rate": 0.012953367875647668,
+      "accepted": 370,
+      "acceptance_rate": 0.9226932668329177,
+      "initialization_rejected": 15,
+      "terminal_unapplied": 0,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 15,
+        "ACCEPTED": 370,
+        "SUPERSEDED": 13,
+        "NONCONVERGED": 3
+      },
+      "length_m": {
+        "n": 401,
+        "median": 0.43635812912483446,
+        "p95": 0.4649981914382722,
+        "min": 0.22837931216790977,
+        "max": 0.48544994247399853
+      },
+      "progress_cost": {
+        "n": 386,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "endpoint_edit_forward_m": {
+        "n": 386,
+        "median": 0.0038262520181717,
+        "p95": 0.03772443679295852,
+        "min": -0.029488086623903936,
+        "max": 0.15877335883978375
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 370,
+        "median": 0.003951526782634918,
+        "p95": 0.03853266094968546,
+        "min": -0.029488086623903936,
+        "max": 0.15877335883978375
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "POOLED",
+      "x_bin": "6\u20138",
+      "calls": 611,
+      "solver_calls": 565,
+      "nonconverged": 219,
+      "nonconverged_rate": 0.35842880523731585,
+      "solver_only_nonconverged_rate": 0.38761061946902653,
+      "accepted": 333,
+      "acceptance_rate": 0.5450081833060556,
+      "initialization_rejected": 42,
+      "terminal_unapplied": 4,
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 42,
+        "ACCEPTED": 333,
+        "NONCONVERGED": 150,
+        "SUPERSEDED": 82,
+        "TERMINAL_UNAPPLIED": 4
+      },
+      "length_m": {
+        "n": 611,
+        "median": 0.2523150990788695,
+        "p95": 0.4407311861041582,
+        "min": 0.03837583811231504,
+        "max": 0.47608571228478513
+      },
+      "progress_cost": {
+        "n": 565,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.000990265873383464
+      },
+      "endpoint_edit_forward_m": {
+        "n": 565,
+        "median": 0.013390858014852803,
+        "p95": 0.06383233947054776,
+        "min": -0.03363520506303858,
+        "max": 0.19498519900338052
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 333,
+        "median": 0.010231773389458177,
+        "p95": 0.0515857021390318,
+        "min": -0.03363520506303858,
+        "max": 0.19498519900338052
+      }
+    },
+    {
+      "method": "GRAPH-v6.1",
+      "scene": "POOLED",
+      "x_bin": "OUTSIDE",
+      "calls": 170,
+      "solver_calls": 163,
+      "nonconverged": 101,
+      "nonconverged_rate": 0.5941176470588235,
+      "solver_only_nonconverged_rate": 0.6196319018404908,
+      "accepted": 59,
+      "acceptance_rate": 0.34705882352941175,
+      "initialization_rejected": 4,
+      "terminal_unapplied": 3,
+      "dispositions": {
+        "ACCEPTED": 59,
+        "NONCONVERGED": 53,
+        "SUPERSEDED": 51,
+        "TERMINAL_UNAPPLIED": 3,
+        "INITIALIZATION_REJECTED": 4
+      },
+      "length_m": {
+        "n": 170,
+        "median": 0.19960132651638296,
+        "p95": 0.3609143588446219,
+        "min": 0.0382575166601867,
+        "max": 0.4617519734931481
+      },
+      "progress_cost": {
+        "n": 163,
+        "median": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.03384422764639026
+      },
+      "endpoint_edit_forward_m": {
+        "n": 163,
+        "median": 0.043710505163115934,
+        "p95": 0.10430261073465069,
+        "min": -0.14419980787891892,
+        "max": 0.1407140113669153
+      },
+      "accepted_endpoint_edit_forward_m": {
+        "n": 59,
+        "median": 0.013255324843599543,
+        "p95": 0.08411684089170514,
+        "min": -0.018831940312817517,
+        "max": 0.11657892889232835
+      }
+    }
+  ]
+}
