@@ -27,6 +27,7 @@ def main():
     parser.add_argument("--overnight-phase",type=int,choices=[8,9])
     parser.add_argument("--overnight-method")
     parser.add_argument("--phase10b-no-obstacle", action="store_true", help="Frozen Phase10B Phase9 control: disable dynamic obstacle creation only")
+    parser.add_argument("--phase11-v61", action="store_true", help="Phase11 adaptive progress Graph subclass only")
     parser.add_argument("--phase7-method", choices=["CURV","GRAPH","SELECT"])
     parser.add_argument("--phase6-method", choices=["CURV","GRAPH","SELECT"])
     parser.add_argument("--phase5-method", choices=["CURV","RIGID-ENTRY","GRAPH","GRAPH-NO-PREV","GRAPH-NO-SDF","GRAPH-NO-KB"])
@@ -49,6 +50,9 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .625, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.phase11_v61:
+        from nomad_phase11.config import validate_flag
+        validate_flag(args)
     if args.phase10b_no_obstacle and args.overnight_phase != 9:
         parser.error("Phase10B no-obstacle flag requires Phase9 execution")
     if bool(args.overnight_phase)!=bool(args.overnight_method) or (args.overnight_phase and not args.phase4c_method):
@@ -165,6 +169,10 @@ def main():
             from nomad_phase10b.config import protocol as phase10b_protocol
             sources += list((ROOT/"research/nomad_phase10b").glob("*.py"))+[ROOT/"research/nomad_phase10b/protocol.json"]
             write_json(out/"phase10b_protocol.json",phase10b_protocol())
+    if args.phase11_v61:
+        from nomad_phase11.config import protocol as phase11_protocol
+        sources += list((ROOT/"research/nomad_phase11").glob("*.py"))+[ROOT/"research/nomad_phase11/protocol.json"]
+        write_json(out/"phase11_protocol.json",phase11_protocol())
     if args.phase7_method:
         from nomad_phase7.config import HERE, protocol
         sources += list(HERE.glob("*.py"))+[HERE/"protocol.json",HERE/"readiness.json"]
@@ -217,6 +225,7 @@ def main():
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
         "phase10b_no_obstacle": args.phase10b_no_obstacle,
+        "phase11_v61": args.phase11_v61,
         "diagnostic_condition": args.diagnostic_condition, "phase2_method": args.phase2_method, "phase2_distance_m": args.phase2_distance_m,
         "pure_pursuit": args.pure_pursuit, "s0_delay_sweep": args.s0_delay_sweep, "s0_stage2_method": args.s0_stage2_method, "phase4_method": args.phase4_method, "phase4c_method":args.phase4c_method,"plant_alpha":args.plant_alpha,"phase4d_confirm":args.phase4d_confirm,"phase5_method":args.phase5_method,"phase6_method":args.phase6_method,"phase7_method":args.phase7_method,"overnight_phase":args.overnight_phase,"overnight_method":args.overnight_method,
         "s1_v2_mode": args.s1_v2_mode, "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
@@ -279,6 +288,8 @@ def main():
                 command += ["--overnight-phase",str(args.overnight_phase),"--overnight-method",args.overnight_method]
             if args.phase10b_no_obstacle:
                 command.append("--phase10b-no-obstacle")
+            if args.phase11_v61:
+                command.append("--phase11-v61")
             if args.phase7_method:
                 command += ["--phase7-method",args.phase7_method]
             if args.phase6_method:

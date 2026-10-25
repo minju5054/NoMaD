@@ -1,0 +1,44 @@
+{
+  "base_commit": "e3fc4c7591e8669e834d3e5632dfb2341162a6a6",
+  "validation_scope": "implementation and offline functional checks only",
+  "tests": {
+    "passed": 28,
+    "total": 28,
+    "new_v61": 7,
+    "phase10b_regression": 6,
+    "phase8_regression": 15,
+    "command": "PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -m unittest nomad_phase11.test_v61 nomad_phase10b.test_noobs nomad_phase8.test_overnight"
+  },
+  "dry_run": {
+    "attempts": 20,
+    "sudden_D750": 8,
+    "sudden_D0": 4,
+    "noobs_D750": 4,
+    "noobs_D0": 4,
+    "unique_output_paths": 20,
+    "seed_offset": "10000*index",
+    "navigation_started": 0
+  },
+  "protected_original_files": 29,
+  "reference_reader": {
+    "historical_runs": 56,
+    "graph_calls": 1928,
+    "hash_verification": "PASS",
+    "historical_graph_goals": {
+      "sudden": "7/12",
+      "noobs": "8/8"
+    },
+    "comparable20_launch_and_audit_minutes": 55.0
+  },
+  "new_navigation": 0,
+  "new_gpu_inference": 0,
+  "real_graph_solves": 0,
+  "report_smoke": "temporary synthetic fixtures only; two plots, all five decisions, no-overwrite guard",
+  "run_result": "NOT_EXECUTED",
+  "notes": [
+    "Original v4/v6 factor and solver files unchanged; v6.1 subclass replaces progress hinge target only.",
+    "Keep original residual normalization0.25m; remove endpoint_progress only for zero target.",
+    "Worker test uses mocked solve, runtime test uses mocked client; no Isaac launch.",
+    "Existing unrelated untracked phase4_pilot directory remains excluded."
+  ]
+}

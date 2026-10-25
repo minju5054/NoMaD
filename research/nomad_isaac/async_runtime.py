@@ -30,7 +30,10 @@ class ExecutionThread:
         self.chunk_executor = None
         self.phase2 = None
         self.stage2 = None
-        if config.get("overnight_phase"):
+        if config.get("phase11_v61"):
+            from nomad_phase11.execution import AdaptiveExecution
+            self.stage2=AdaptiveExecution(config,out)
+        elif config.get("overnight_phase"):
             from nomad_phase8.execution import OvernightExecution
             self.stage2=OvernightExecution(config,out)
         elif config.get("phase6_method"):

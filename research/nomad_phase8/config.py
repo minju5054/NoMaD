@@ -8,6 +8,9 @@ from nomad_isaac.common import ROOT,sha256_file
 def protocol(phase=8):return json.loads((ROOT/f'research/nomad_phase{phase}/protocol.json').read_text())
 def base_method(method):return 'GRAPH' if method in ('GRAPH','SELECT+GRAPH','GRAPH-v6') else 'CURV'
 def validate_options(a):
+    if getattr(a,'phase11_v61',False):
+        from nomad_phase11.config import validate_flag
+        validate_flag(a)
     phase=a.overnight_phase;p=protocol(phase);m=a.overnight_method
     assert phase in (8,9) and m in p['methods'] and a.phase4c_method==base_method(m)
     assert a.asynchronous and a.pure_pursuit and a.topomap and a.plant_alpha=='inf'
@@ -39,6 +42,7 @@ def runtime_config(source,a):
         else:
             c.update(experiment_mode='phase2_s1_v2',phase2_distance_m=1.2,diagnostic_y_offset_m=.15 if int(a.run_id[-2:])%2 else -.15)
             c['dynamic_obstacle']={'id':'DynamicObstacle','size_xyz_m':[.35,.35,.8],'color_rgb':[.65,.04,.65],'minimum_visible_pixels':20,'spawn_tick':0,'placement':{'mode':'phase2_world_x','distance_m':1.2}}
+    if getattr(a,'phase11_v61',False):c['phase11_v61']=True
     return c
 
 def readiness():
