@@ -1,0 +1,78 @@
+{
+  "source_commit": "097c7e6f11bc6de3a5e1c7724342238113635980",
+  "tests": {
+    "passed": 25,
+    "total": 25,
+    "modules": [
+      "nomad_phase12.test_baselines",
+      "nomad_phase12.test_graph_gf",
+      "nomad_phase8.test_overnight"
+    ]
+  },
+  "offline_count": 30,
+  "offline_checks": {
+    "HERMITE": true,
+    "TEMPORAL-ENSEMBLE": true,
+    "BID": true,
+    "GRAPH-GF_GEOMETRY_FIREWALL": true
+  },
+  "graph_gf": {
+    "n": 30,
+    "solver_executed": 29,
+    "initialization_rejected": 1,
+    "converged": 29,
+    "solver_accepted": 29,
+    "solver_time_s": {
+      "n": 29,
+      "median": 0.046869575046002865,
+      "p95": 0.05043077261652797,
+      "min": 0.04140079801436514,
+      "max": 0.05114741809666157
+    },
+    "worker_time_s": {
+      "n": 30,
+      "median": 0.0476267275,
+      "p95": 0.0512680799,
+      "min": 0.000520204,
+      "max": 0.0520429
+    },
+    "online_accepted": null
+  },
+  "phase8_graph": {
+    "n": 30,
+    "solver_executed": 29,
+    "initialization_rejected": 1,
+    "converged": 29,
+    "solver_accepted": 29,
+    "solver_time_s": {
+      "n": 29,
+      "median": 0.05644352303352207,
+      "p95": 0.06061363503104076,
+      "min": 0.04951246397104114,
+      "max": 0.06195437500718981
+    },
+    "worker_time_s": {
+      "n": 30,
+      "median": 0.057855941,
+      "p95": 0.06219641175,
+      "min": 0.000774902,
+      "max": 0.063799503
+    },
+    "online_accepted": 29
+  },
+  "navigation_runs": 0,
+  "inference_runs": 0,
+  "prior_phase12": {
+    "commit": null,
+    "completed_runs": [],
+    "marker": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_01/ABORTED_SUPERSEDED.json",
+    "source_archive": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_01/superseded_implementation.tar.gz",
+    "marker_sha256": "d19a95e33984e44d7e582283182e145d5f9111dfc42b8a98b38b2ce7d260a401",
+    "source_archive_sha256": "5aa64fe48713f8c987a3d8cc7b8e5efa35af9177adb9eceaa8a9371651cacad5"
+  },
+  "limitations": [
+    "Offline acceptance excludes stale/superseded/waypoint expiry; online validation gate remains at index25.",
+    "Phase8 previous corrected trajectories/actual commands have privileged provenance; geometry objects never enter GF.",
+    "No new navigation; seven-method batch contains70 planned slots."
+  ]
+}
