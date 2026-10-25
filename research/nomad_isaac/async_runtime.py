@@ -30,7 +30,10 @@ class ExecutionThread:
         self.chunk_executor = None
         self.phase2 = None
         self.stage2 = None
-        if config.get("phase12_method") == "FRESHEST+GRAPH-GF":
+        if config.get("phase13_method"):
+            from nomad_phase13.execution import make_execution
+            self.stage2=make_execution(config,out)
+        elif config.get("phase12_method") == "FRESHEST+GRAPH-GF":
             from nomad_phase12.gf_execution import GFExecution
             self.stage2=GFExecution(config,out)
         elif config.get("phase12_method") in ("HERMITE-SPLICE","TEMPORAL-ENSEMBLE","BID-COHERENCE"):

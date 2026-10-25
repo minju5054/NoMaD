@@ -28,7 +28,7 @@ from .methods import NEW,PATH_BASELINES,GF,TransitionState,freshest
 from .gf_worker import validate_job
 from .config import protocol as phase12_protocol
 
-def baseline_audit(run,run_id,offset,delay):
+def baseline_audit(run,run_id,offset,delay,*,transition_factory=TransitionState,path_baselines=PATH_BASELINES):
     run=Path(run);summary=json.loads((run/'summary.json').read_text());c=summary['scenario'];phase=c['overnight_phase'];p=protocol(phase)
     prov=json.loads((run/'provenance.json').read_text());env=json.loads((run/'model/environment.json').read_text())
     assert prov['overnight_phase']==phase and prov['overnight_method']==c['overnight_method']
@@ -117,7 +117,7 @@ def baseline_audit(run,run_id,offset,delay):
     assert len(jobs)==(len(events) if c['phase4c_method']=='GRAPH' else 0)
     apps=rows(run/'phase6_applications.jsonl');app_at={a['tick']:a for a in apps};ev_at={round(e['application_sim_s']*72):e for e in events}
     assert len(apps)==len(ev_at)+len(accepted) and set(app_at)==set(ev_at)|set(accepted)
-    state=TransitionState(c['phase12_method']) if c['phase12_method'] in PATH_BASELINES else None
+    state=transition_factory(c['phase12_method']) if c['phase12_method'] in path_baselines else None
     follower=None;previous_v=0.;command_error=0.;selections=[];graph_ticks=0;valid_ticks=0;clamps=0;curvatures=[]
     for j,control in enumerate(ctrl):
         tick=j*8;b=poses[tick];event=ev_at.get(tick)
