@@ -8,6 +8,9 @@ from nomad_isaac.common import ROOT,sha256_file
 def protocol(phase=8):return json.loads((ROOT/f'research/nomad_phase{phase}/protocol.json').read_text())
 def base_method(method):return 'GRAPH' if method in ('GRAPH','SELECT+GRAPH','GRAPH-v6') else 'CURV'
 def validate_options(a):
+    if getattr(a,'phase12_method',None):
+        from nomad_phase12.config import validate_options as validate_phase12
+        return validate_phase12(a)
     if getattr(a,'phase11_v61',False):
         from nomad_phase11.config import validate_flag
         validate_flag(a)
@@ -30,6 +33,9 @@ def validate_options(a):
     for name,h in p['protected_sha256'].items():assert sha256_file(ROOT/name)==h,name
 
 def runtime_config(source,a):
+    if getattr(a,'phase12_method',None):
+        from nomad_phase12.config import runtime_config as phase12_config
+        return phase12_config(source,a)
     validate_options(a);c=copy.deepcopy(source)
     c.update(overnight_phase=a.overnight_phase,overnight_method=a.overnight_method,phase4c_method=a.phase4c_method,plant_alpha='inf',execution_v_max_m_s=.3,timeout_sim_s=90)
     if a.overnight_phase==9:

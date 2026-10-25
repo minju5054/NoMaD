@@ -25,6 +25,7 @@ parser.add_argument("--overnight-phase",type=int,choices=[8,9])
 parser.add_argument("--overnight-method")
 parser.add_argument("--phase10b-no-obstacle", action="store_true")
 parser.add_argument("--phase11-v61", action="store_true", help="Phase11 adaptive progress Graph subclass only")
+parser.add_argument("--phase12-method", choices=["CURV","HERMITE-SPLICE","TEMPORAL-ENSEMBLE","BID-COHERENCE","RTC-hard","FRESHEST+GRAPH-GF","SELECT+GRAPH"])
 parser.add_argument("--phase7-method", choices=["CURV","GRAPH","SELECT"])
 parser.add_argument("--phase6-method", choices=["CURV","GRAPH","SELECT"])
 parser.add_argument("--phase5-method", choices=["CURV","RIGID-ENTRY","GRAPH","GRAPH-NO-PREV","GRAPH-NO-SDF","GRAPH-NO-KB"])
@@ -157,6 +158,9 @@ def build_scene(config):
 
 
 def main():
+    if args.phase12_method:
+        from nomad_phase12.config import validate_options as validate_phase12
+        validate_phase12(args)
     if args.phase11_v61:
         from nomad_phase11.config import validate_flag
         validate_flag(args)

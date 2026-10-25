@@ -1,0 +1,175 @@
+{
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "scenario": "research/nomad_isaac/two_obstacles_wide_wall_scenario.json",
+  "scenario_sha256": "f2090961b1699285f6c5986abaeed6c3fb28516c582f11cd5fa6d6c2d7ce3a27",
+  "topomap": "artifacts/isaac6/topomap_reference_2s_01/topomap/manifest.json",
+  "topomap_manifest_sha256": "5b720e71b03b9809488ca81c340bfe691f39542371bad03eddf7a40246285f36",
+  "topomap_nodes": 14,
+  "protected_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+    "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463",
+    "research/nomad_phase2/graph_worker.py": "2ffc21b0bd7d1469c123ce10e9647d7241f49cfcbf8833036d5dd9b01daef0e0",
+    "research/nomad_phase3_stage2/execution.py": "6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0",
+    "research/nomad_phase4c/execution.py": "9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232",
+    "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d",
+    "research/nomad_phase4c/protocol.json": "12b56f55d88c01101ef9ecd397723276260c5f11212a96418c04be4ab200cf00",
+    "research/nomad_phase4c/base_metrics.py": "12257847bfb605950a172add5f79b87af1434e1586530c139519128cacaa1497",
+    "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86",
+    "research/nomad_phase8/execution.py": "883f6416f6090dfb723a850eb39e3321f04c097eafd3fbb3647600d09567143c",
+    "research/nomad_phase8/inference.py": "1be01ac7e197ee88f4e227179bc3c077385e9e9d5d4f987b6c46d53477acd816",
+    "research/nomad_phase8/rtc_hard.py": "f8d2b25de87b092a43973cf0830923783bef970720005516399ddc8a0e69d7a6",
+    "research/nomad_phase8/request.py": "3fad51192bba2456b7273c8281038f85efa14d7cacd201c4b2af8b3e3505e46d",
+    "research/nomad_phase8/metrics.py": "94c40cc615764c61e8795141eb95d7b1bf14564477d0ea160ba894a6034896f3",
+    "research/nomad_phase8/protocol.json": "7f0b97256a6899faa96963eb694dfb91bca5dcf9b5251e79e3ad083e21630376",
+    "research/nomad_phase9/intent.py": "0c7efc7acfd2325f10794ba37941119563bfbd765c08868672884f05343419aa",
+    "research/nomad_phase5/graph.py": "f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a"
+  },
+  "seed_rule": "101+10000*index+2*request_id; DDPM+1",
+  "timeout_sim_s": 90,
+  "alpha": "inf",
+  "execution_v_max_m_s": 0.3,
+  "metric_scaling_m": 0.05,
+  "base_commit": "7f51e9b",
+  "label": "PHASE12_ORACLE_FREE_BASELINES_R2",
+  "scope": "SE(2) kinematic Isaac Sim; oracle only SELECT+GRAPH control; all methods use oracle for post-hoc safety evaluation.",
+  "methods": [
+    "CURV",
+    "HERMITE-SPLICE",
+    "TEMPORAL-ENSEMBLE",
+    "BID-COHERENCE",
+    "RTC-hard",
+    "FRESHEST+GRAPH-GF",
+    "SELECT+GRAPH"
+  ],
+  "indices": [
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "delay_s": 0.75,
+  "attempts": 70,
+  "run_order": "index ascending, methods in protocol order; serial; no retries",
+  "rates_hz": [
+    4,
+    9,
+    72
+  ],
+  "waypoint_timeout_wall_s": 1.0,
+  "executor": "unchanged PP lookahead .25; CURV target clip(.4/abs(kappa),.05,.3), |dv/dt|<=.5, omega clip(v*kappa,+/-.4); original endpoint and timeout stops",
+  "hermite": {
+    "join_ahead_m": 0.3,
+    "sampling_step_m": 0.02,
+    "arclength_quadrature_points": 4097,
+    "tangent": "B yaw; outgoing segment tangent at J, last incoming at endpoint; both magnitudes Euclidean |J-B|",
+    "degenerate": "J=B or invalid native path: invalid path stop until next valid chunk; never choose a different join",
+    "continuity": "analytic cubic C1 at boundaries; executed samples approximate it, no exact sampled secant-heading claim"
+  },
+  "temporal": {
+    "label": "ACT temporal ensembling (spatial adaptation)",
+    "max_chunks": 3,
+    "decay": 0.5,
+    "weights": "exp(-.5*k), oldest k=0; normalize",
+    "validity": "each own controller receive/release monotonic timestamp; age<1s; at most last3 valid XY chunks",
+    "progress": "independent unchanged PP monotonic progress per chunk",
+    "endpoint": "stop iff all live component followers endpoint-stop; no live path or latest waypoint timeout => stop",
+    "clamp": "control tick clamped if any live component clamps; weighted fraction also logged",
+    "mechanisms": "ensemble has no single path: Phase6 per-component projection cross-track weighted mean; heading absolute error weighted mean only if all component tangents valid (20mm); latest native path only labeled diagnostic, never misreported as averaged path"
+  },
+  "bid": {
+    "label": "BID backward-coherence only",
+    "grid_m": 0.01,
+    "minimum_common_m": 0.02,
+    "score": "mean Euclidean position difference at 1cm arclength offsets including0 and common endpoint; project independently from B",
+    "eligible": "current OLD received <1s ago; per-candidate common length>=2cm; invalid paths excluded",
+    "fallback": "sample0 if no eligible candidate/no valid OLD; lower index exact ties; no forward contrast"
+  },
+  "rtc_label": "RTC hard-masking ablation (DDPM adaptation)",
+  "technical_gate": {
+    "index": 25,
+    "attempts": 7,
+    "new_methods": [
+      "HERMITE-SPLICE",
+      "TEMPORAL-ENSEMBLE",
+      "BID-COHERENCE",
+      "FRESHEST+GRAPH-GF"
+    ],
+    "action": "TECHNICAL_FAILURE disables only that new method for indices26–34; no retry; other methods continue"
+  },
+  "decisions": {
+    "valid_min": 9,
+    "BEATS": "FRESHEST+GRAPH-GF successes >= comparator +3; otherwise FAIL; invalid methods INCONCLUSIVE",
+    "SPEED": "both successful pairs>=5 and each method>=9 valid: mean speed difference; 20,000 paired bootstrap replicates seed20261026; lower>0 FASTER, upper<0 SLOWER, otherwise NOT_SHOWN",
+    "bootstrap_seed": 20261026,
+    "replicates": 20000,
+    "reference": "FRESHEST+GRAPH-GF",
+    "comparators": [
+      "CURV",
+      "HERMITE-SPLICE",
+      "TEMPORAL-ENSEMBLE",
+      "BID-COHERENCE",
+      "RTC-hard"
+    ],
+    "oracle_gap": "SELECT+GRAPH minus FRESHEST+GRAPH-GF: successes and both-success paired mean speed; descriptive only"
+  },
+  "offline": {
+    "source_results": "research/results/phase8/runs.json",
+    "source_hashes": "research/results/phase8/input_hashes.json",
+    "count": 30,
+    "selection": "First eligible chronological actual SELECT+GRAPH handoffs, round-robin across index17–24; no filtering on solver success or navigation outcome. Earlier three-kernel30-case check retained separately.",
+    "validation_file": "research/nomad_phase12/offline_validation_r2.json",
+    "graph_comparison": "Same recorded B/previous actual command/eight samples; FRESHEST chosen without safety; previous accepted Phase8 path reused as OLD path (privileged provenance, no geometry input). One GF solve/case, compare recorded Phase8 result. Offline solver acceptance differs from online stale/superseded."
+  },
+  "output_root": "artifacts/isaac6/phase12_baselines_02",
+  "results": "research/results/phase12",
+  "report": "docs/PHASE12_BASELINES.md",
+  "revision": 2,
+  "proposed_method": "FRESHEST+GRAPH-GF",
+  "privileged_reference": "SELECT+GRAPH",
+  "fairness": [
+    "Main methods1–6 use only RGB + Topomap for NoMaD, actual robot state, OLD/FRESH chunks and eight samples.",
+    "Obstacle and wall coordinates are never used by main-method control; identical oracle geometry is used only for collision/corridor evaluation.",
+    "SELECT+GRAPH alone uses oracle control and is a privileged reference, excluded from main decisions.",
+    "All methods share executor, delay, seed and timeout; computation latency is real and outputs are applied only after completion."
+  ],
+  "graph_gf": {
+    "selection": "longest remaining sample after B nearest projection, no safety filter; ties lower index; all invalid -> sample0 invalid-path stop",
+    "graph": "FlagGraphV4 subclass; inherited numerical residual and SLSQP, original weights unchanged; no scene config or field parameters",
+    "flags": {
+      "previous_prior": true,
+      "obstacle_sdf": false,
+      "corridor": false,
+      "exact_certificate": false,
+      "boundary_curvature": true
+    },
+    "side_labels": "empty: impossible to derive obstacle sides without forbidden geometry",
+    "acceptance": "solver converged AND retained constraints satisfied; no obstacle/corridor certificate",
+    "online": "unchanged Phase8 immediate selected path, every switched FRESH submitted FIFO, next eligible tick, SUPERSEDED, >0.5s STALE, waypoint timeout1s, fallback CURV",
+    "assertions": "strict numeric selector shapes; worker allowlist; protocol exact unchanged constants plus fixed flags"
+  },
+  "superseded": {
+    "root": "artifacts/isaac6/phase12_baselines_01",
+    "completed_runs": [],
+    "reuse": false,
+    "reason": "프로토콜 개정(oracle 공정성)"
+  }
+}
