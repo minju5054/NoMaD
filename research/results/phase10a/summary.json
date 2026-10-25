@@ -1,0 +1,413 @@
+{
+  "source_git_sha": "f33f5b1ecb1468c74f8541062aef2eaf43c7bd77",
+  "analysis_source_sha256": "f46cb25e43022759f27059cfbe225b14a2cba0459cf2b7dbe8ffda0b936013ed",
+  "part1": {
+    "pair": "SELECT+GRAPH minus SELECT",
+    "indices": [
+      9,
+      11,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24
+    ],
+    "n": 12,
+    "exclusions": [
+      {
+        "index": 10,
+        "SELECT+GRAPH": "SAFETY_FAILURE",
+        "SELECT": "SUCCESS"
+      },
+      {
+        "index": 12,
+        "SELECT+GRAPH": "SUCCESS",
+        "SELECT": "SAFETY_FAILURE"
+      },
+      {
+        "index": 13,
+        "SELECT+GRAPH": "SUCCESS",
+        "SELECT": "TECHNICAL_FAILURE"
+      },
+      {
+        "index": 21,
+        "SELECT+GRAPH": "SUCCESS",
+        "SELECT": "SAFETY_FAILURE"
+      }
+    ],
+    "metrics": {
+      "goal_time_s": {
+        "n": 12,
+        "mean": -5.390046296296298,
+        "median": -3.4374999999999982,
+        "mean_ci95": [
+          -19.553819444444446,
+          8.806828703703692
+        ],
+        "median_ci95": [
+          -7.861111111111114,
+          3.2569444444444446
+        ],
+        "differences": [
+          0.19444444444444642,
+          1.25,
+          5.263888888888889,
+          -10.291666666666671,
+          7.944444444444446,
+          -3.1111111111111107,
+          -48.22222222222223,
+          50.43055555555555,
+          -3.7638888888888857,
+          -4.347222222222221,
+          -5.430555555555557,
+          -54.59722222222222
+        ]
+      },
+      "mean_speed_m_s": {
+        "n": 12,
+        "mean": 0.015407320024124128,
+        "median": 0.01717419096117498,
+        "mean_ci95": [
+          0.0033501449056788503,
+          0.02743943812155302
+        ],
+        "median_ci95": [
+          -0.00019955986308493878,
+          0.03138580298031607
+        ],
+        "differences": [
+          6.969208370233293e-06,
+          -0.00040608893454011086,
+          0.0007336645938582909,
+          0.036826017608075495,
+          -0.020885073101825608,
+          0.018047458112017023,
+          0.05687916263349807,
+          -0.011402134355475824,
+          0.016300923810332935,
+          0.028092442132461565,
+          0.026015334754546898,
+          0.03467916382817057
+        ]
+      },
+      "kappa_over2_fraction": {
+        "n": 12,
+        "mean": -0.08008594002305754,
+        "median": -0.032444963932579535,
+        "mean_ci95": [
+          -0.1561868831063717,
+          -0.005574792537781815
+        ],
+        "median_ci95": [
+          -0.19586087025844579,
+          -0.0014005295521140049
+        ],
+        "differences": [
+          0.0005730339248960492,
+          -0.012005761824969707,
+          -0.003374093029124059,
+          -0.23913221981059968,
+          0.11654949414610799,
+          -0.14102251823992262,
+          -0.3257764766070999,
+          0.10652190120920119,
+          -0.011392497583180283,
+          -0.05288416604018936,
+          -0.1525895207062919,
+          -0.24649845571551798
+        ]
+      },
+      "endpoint_clamp_fraction": {
+        "n": 12,
+        "mean": 0.04766688413103512,
+        "median": 0.059146228219291,
+        "mean_ci95": [
+          0.019070387392073857,
+          0.07417214150707037
+        ],
+        "median_ci95": [
+          0.011383590078269779,
+          0.0813351987082705
+        ],
+        "differences": [
+          -0.057976809276289565,
+          0.05786291905472252,
+          0.09378129117259548,
+          0.06042953738385948,
+          -0.009739085507620815,
+          0.04706227151429143,
+          0.08090478859206673,
+          -0.009914980526265826,
+          0.03250626566416037,
+          0.08176560882447426,
+          0.074673069372716,
+          0.12064773330371137
+        ]
+      },
+      "curv_target_below_point2_fraction": {
+        "n": 12,
+        "mean": -0.08008594002305754,
+        "median": -0.032444963932579535,
+        "mean_ci95": [
+          -0.1561868831063717,
+          -0.005574792537781815
+        ],
+        "median_ci95": [
+          -0.19586087025844579,
+          -0.0014005295521140049
+        ],
+        "differences": [
+          0.0005730339248960492,
+          -0.012005761824969707,
+          -0.003374093029124059,
+          -0.23913221981059968,
+          0.11654949414610799,
+          -0.14102251823992262,
+          -0.3257764766070999,
+          0.10652190120920119,
+          -0.011392497583180283,
+          -0.05288416604018936,
+          -0.1525895207062919,
+          -0.24649845571551798
+        ]
+      },
+      "actual_speed_below_point2_fraction": {
+        "n": 12,
+        "mean": -0.08633017083119869,
+        "median": -0.057103075584232416,
+        "mean_ci95": [
+          -0.1619070555800442,
+          -0.01226515813974385
+        ],
+        "median_ci95": [
+          -0.20344467725374676,
+          0.005891782269460022
+        ],
+        "differences": [
+          0.0049512706544389,
+          -0.01702286111846052,
+          0.006832293884481144,
+          -0.2280125072615795,
+          0.10229752825159655,
+          -0.11849583896078303,
+          -0.3429997092649814,
+          0.0957858037351409,
+          -0.02358163795825996,
+          -0.09062451321020487,
+          -0.17887684724591402,
+          -0.24621503147985857
+        ]
+      },
+      "switch_heading_median_rad": {
+        "n": 12,
+        "mean": 0.00038342313117702603,
+        "median": -0.004815717388581331,
+        "mean_ci95": [
+          -0.028777395259903492,
+          0.03188265729174086
+        ],
+        "median_ci95": [
+          -0.0267908914359819,
+          0.02927428442833846
+        ],
+        "differences": [
+          0.025926506288924234,
+          0.032622062567752685,
+          -0.04893818469830524,
+          -0.023290540244790714,
+          0.1263614376855675,
+          -0.024622542942995818,
+          -0.09892520606926869,
+          -0.0039989747162363365,
+          0.05071425349709058,
+          0.0033439661962804124,
+          -0.005632460060926325,
+          -0.028959239928967984
+        ]
+      },
+      "switch_cross_track_median_m": {
+        "n": 12,
+        "mean": 0.001547411087520915,
+        "median": 0.0013850677356057025,
+        "mean_ci95": [
+          -0.0002989937003222859,
+          0.0036725846738404305
+        ],
+        "median_ci95": [
+          -0.000746985740220401,
+          0.002619667257559478
+        ],
+        "differences": [
+          0.0014355194224131528,
+          0.001454487330239975,
+          0.0013346160487982522,
+          0.01043474164750207,
+          0.0004084461581419542,
+          -0.0019024176385827561,
+          0.0004524562901716267,
+          -0.003293089917640638,
+          0.001764418113623288,
+          0.005198563895633878,
+          -0.002193724701545491,
+          0.003474916401495668
+        ]
+      }
+    },
+    "verdict": "SPEED_NOT_SHOWN"
+  },
+  "part2": {
+    "C1_PRIOR_DRAG": {
+      "verdict": "SUPPORTED",
+      "evidence": [
+        {
+          "key": "S1_06_D750_GRAPH-v6",
+          "job_id": 24
+        }
+      ],
+      "causal_isolation": "not possible without new ablation"
+    },
+    "C2_SIDE_FACTOR_PERSISTS": {
+      "verdict": "NOT_SUPPORTED",
+      "inactive_calls": 767,
+      "heuristic_factor_remaining": 0,
+      "recomputed_native_side_defined": 0
+    },
+    "C3_NO_RECENTER": {
+      "verdict": "NOT_SUPPORTED",
+      "evidence_runs": []
+    },
+    "C4_D0_NONCONVERGENCE": {
+      "verdict": "SUPPORTED",
+      "peak_stage": "INTENT_INACTIVE",
+      "total": {
+        "calls": 810,
+        "solver_calls": 800,
+        "nonconverged": 244,
+        "nonconvergence_per_call": 0.3012345679012346,
+        "nonconvergence_per_solve": 0.305,
+        "initialization_rejected": 6,
+        "zero_speed_rejected": 4,
+        "superseded": 133,
+        "superseded_fraction": 0.16419753086419753,
+        "sdf_enforced": 690,
+        "dispositions": {
+          "INITIALIZATION_REJECTED": 6,
+          "ACCEPTED": 519,
+          "NONCONVERGED": 148,
+          "SUPERSEDED": 133,
+          "TERMINAL_UNAPPLIED": 4
+        },
+        "nonconverged_messages": {
+          "Positive directional derivative for linesearch": 222,
+          "Iteration limit reached": 22
+        }
+      },
+      "stages": [
+        {
+          "stage": "BEFORE_PUBLIC",
+          "calls": 120,
+          "solver_calls": 116,
+          "nonconverged": 1,
+          "nonconvergence_per_call": 0.008333333333333333,
+          "nonconvergence_per_solve": 0.008620689655172414,
+          "initialization_rejected": 4,
+          "zero_speed_rejected": 4,
+          "superseded": 5,
+          "superseded_fraction": 0.041666666666666664,
+          "sdf_enforced": 0,
+          "dispositions": {
+            "INITIALIZATION_REJECTED": 4,
+            "ACCEPTED": 110,
+            "NONCONVERGED": 1,
+            "SUPERSEDED": 5
+          },
+          "nonconverged_messages": {
+            "Positive directional derivative for linesearch": 1
+          }
+        },
+        {
+          "stage": "INTENT_ACTIVE",
+          "calls": 193,
+          "solver_calls": 192,
+          "nonconverged": 58,
+          "nonconvergence_per_call": 0.3005181347150259,
+          "nonconvergence_per_solve": 0.3020833333333333,
+          "initialization_rejected": 0,
+          "zero_speed_rejected": 0,
+          "superseded": 28,
+          "superseded_fraction": 0.14507772020725387,
+          "sdf_enforced": 193,
+          "dispositions": {
+            "ACCEPTED": 125,
+            "NONCONVERGED": 39,
+            "SUPERSEDED": 28,
+            "TERMINAL_UNAPPLIED": 1
+          },
+          "nonconverged_messages": {
+            "Positive directional derivative for linesearch": 54,
+            "Iteration limit reached": 4
+          }
+        },
+        {
+          "stage": "INTENT_INACTIVE",
+          "calls": 497,
+          "solver_calls": 492,
+          "nonconverged": 185,
+          "nonconvergence_per_call": 0.3722334004024145,
+          "nonconvergence_per_solve": 0.37601626016260165,
+          "initialization_rejected": 2,
+          "zero_speed_rejected": 0,
+          "superseded": 100,
+          "superseded_fraction": 0.2012072434607646,
+          "sdf_enforced": 497,
+          "dispositions": {
+            "ACCEPTED": 284,
+            "SUPERSEDED": 100,
+            "NONCONVERGED": 108,
+            "INITIALIZATION_REJECTED": 2,
+            "TERMINAL_UNAPPLIED": 3
+          },
+          "nonconverged_messages": {
+            "Positive directional derivative for linesearch": 167,
+            "Iteration limit reached": 18
+          }
+        }
+      ]
+    },
+    "C5_INTENT_CONFLICT": {
+      "verdict": "NOT_SUPPORTED",
+      "conflict_calls": 0,
+      "runs": [],
+      "causal_success_attribution": "UNCLEAR"
+    }
+  },
+  "static_valid": 62,
+  "static_exclusions": [
+    {
+      "key": "S0_13_D750_SELECT",
+      "reason": "TECHNICAL_FAILURE"
+    },
+    {
+      "key": "S0_23_D750_GRAPH",
+      "reason": "TECHNICAL_FAILURE"
+    }
+  ],
+  "graph_runs": 12,
+  "graph_failures": 5,
+  "validation": {
+    "prior_provenance_hashes": 596,
+    "run_duration_matches": 94,
+    "logged_curv_targets": 19336,
+    "application_poses": 3056,
+    "previous_accepted_identity": 1264,
+    "graph_observation_anchor_and_boundary": 1264,
+    "graph_count_matches": 12,
+    "inputs_unchanged_after_analysis": 616
+  },
+  "scope": "Saved logs only; oracle geometry; SE(2) kinematic execution; observational diagnosis"
+}

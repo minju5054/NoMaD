@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase10a/analyze.py", line 530, in <module>
+    main()
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase10a/analyze.py", line 349, in main
+    if valid(r): mechanisms_by[r['key']]=mechanisms(Run(r,hashes8))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase10a/analyze.py", line 144, in mechanisms
+    kappa_over2_fraction=fraction(k>2),endpoint_clamp_fraction=fraction(clamp),
+                                                               ^^^^^^^^^^^^^^^
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase10a/analyze.py", line 128, in fraction
+    def fraction(mask): return float(dt[active & mask].sum()/den) if den else None
+                                        ~~~~~~~^~~~~~
+TypeError: unsupported operand type(s) for &: 'bool' and 'NoneType'

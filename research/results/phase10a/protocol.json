@@ -1,0 +1,48 @@
+{
+  "base_commit": "f33f5b1",
+  "execution": "One offline analysis; no navigation, inference, optimizer construction or solve",
+  "bootstrap": {
+    "replicates": 20000,
+    "seed": 20261025,
+    "unit": "paired run index",
+    "interval": "percentile 95% for mean and median of paired differences"
+  },
+  "primary": {
+    "pair": [
+      "SELECT+GRAPH",
+      "SELECT"
+    ],
+    "indices": [
+      9,
+      24
+    ],
+    "delay_s": 0.75,
+    "population": "both technically valid and SUCCESS",
+    "minimum_pairs": 10,
+    "criterion": "upper 95% CI for mean goal-time difference < 0"
+  },
+  "mechanisms": {
+    "curvature_threshold_m_inv": 2.0,
+    "note": "The requested |kappa|>2 indicator is not the executor's |kappa|>8 saturation flag.",
+    "time_weighting": "Logged controller command intervals clipped to actual termination; active valid non-endpoint PP intervals as denominator. Also report whole-run low-speed fraction.",
+    "slowdown": "Separate CURV target<0.2 from actual commanded speed<0.2 (acceleration can explain their difference).",
+    "heading": "Reuse application_measure, 20mm nearest-projection tangent validity. FRESH switch and Graph replacement populations reported separately."
+  },
+  "dynamic": {
+    "public_time": "Host publication monotonic timestamp mapped to first recorded 72Hz pose timestamp >= it; also retain original timestamp and capture pose time.",
+    "passage": "First world x > dynamic rear + robot radius; x-axis footprint cleared, not a claim of safe passage. Record subsequent recrossings.",
+    "intent": "Published geometry and current x <= rear + 0.30, verified against SUBMIT public_intent. Reactivation is retained.",
+    "post_pass_window_s": 3.0,
+    "prior_window": "First five INTENT_INACTIVE Graph jobs after first deactivation; all jobs also retained.",
+    "prior_correspondence": "Reuse Graph v4 previous_stencil: B nearest projection on prior then normalized current-path arclength; no new correspondence.",
+    "side": "Reuse side_labels world-X intersection with footprint-expanded halfwidth. Short/non-crossing/ambiguous paths are SIDE_UNDEFINED, not intent conflicts.",
+    "numerical_epsilon": 1e-06,
+    "C1": "SUPPORTED candidate only if a corridor-failure run has an accepted post-deactivation first-five correction shifted toward a side-offset prior, closer in lateral RMS to prior than RAW, with actual subsequent outward y motion; otherwise UNCLEAR when prior was applied, NOT_SUPPORTED if absent. Observational association cannot isolate prior causality.",
+    "C2": "SUPPORTED only if forced heuristic side/intent factor remains in inactive jobs; NOT_SUPPORTED if source rebuilds factors each call and logged inactive results contain no heuristic factor. Native side recomputation is separately counted.",
+    "C3": "SUPPORTED candidate if a failed post-passage 3s window moves outward and more than half of valid FRESH endpoints in that window do not point toward the centerline; UNCLEAR if no usable window; otherwise NOT_SUPPORTED. Endpoint direction is a geometric diagnostic, not a counterfactual controller.",
+    "C4": "SUPPORTED descriptive concentration if one adequately observed stage has the greatest nonconvergence count, greater nonconvergence rate than every other observed stage, and failure share > call share. Otherwise NOT_SUPPORTED; insufficient stages => UNCLEAR. SDF enabled is not proof that SDF caused failure.",
+    "C5": "SUPPORTED local conflict if any s=-1 GRAPH job during active intent has a definite native side opposite heuristic side. Undefined paths give no contrary evidence. Attribution of success differences remains UNCLEAR."
+  },
+  "plots": "Exactly two: first failure by D descending/index ascending y timeline; primary paired goal-time differences.",
+  "limitations": "Success-conditioned selection; different closed-loop RGB; no prior ablation; solver active constraint row not logged; no causal or online improvement claim."
+}
