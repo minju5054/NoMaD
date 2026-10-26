@@ -367,6 +367,25 @@ def publish():
     subprocess.run(['git','push','origin',branch],cwd=ROOT,check=True)
 
 
+def protocol_snapshot():
+    """Publish the user's confirmed measurement semantics, no re-evaluation."""
+    statement=('Each cell is updated at most once per depth frame: any eligible occupied endpoint gives +0.85; '
+        'otherwise a traversing free ray gives -0.40. Occupied wins within a frame. V2 counts three distinct '
+        'occupied frames. V3/V4 apply their occupied distance limit to each point before frame aggregation. '
+        'V0 does not use these rules and remains the unmodified Phase15-A implementation.')
+    snapshot=dict(json.loads(PROTOCOL.read_text()),confirmed_measurement_rules=statement)
+    target=OUT/'protocol.json'
+    if target.exists():assert json.loads(target.read_text())==snapshot
+    else:write_json(target,snapshot)
+    text=DOC.read_text()
+    if statement not in text:
+        text=text.replace('## Implementation and limits\n','## Implementation and limits\n\n'+statement+'\n')
+        DOC.write_text(text)
+    manifest=OUT/'complete.json';complete=json.loads(manifest.read_text())
+    for path in (target,DOC):complete['output_hashes'][str(path.relative_to(ROOT))]=sha256_file(path)
+    manifest.write_text(json.dumps(complete,indent=2)+'\n')
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--publish',action='store_true')
@@ -376,6 +395,7 @@ def main():
             assert sha256_file(ROOT/path)==digest,path
         summary=json.loads((OUT/'selection.json').read_text())
     else:summary=run()
+    protocol_snapshot()
     if args.publish:publish()
     judgment=summary['judgment']
     print(json.dumps(dict(selected=summary['selected_variant'],label=summary['final_label'],
