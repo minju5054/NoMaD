@@ -92,7 +92,7 @@
   "source_sha256": {
     "research/nomad_phase15b/worker.py": "61c830b22fa2bde4eb197389d952d9fca79c31c847d737baf356687f25d0e43e",
     "research/nomad_phase15b/__init__.py": "13e5688df8b88dc1b79b6a93cfc20638bee075709a6dd28c34caa8b8f68501af",
-    "research/nomad_phase15b/metrics.py": "106aa70c7006e228dad76c96a05c59e744226200549edc359bdfd74742dadc2a",
+    "research/nomad_phase15b/metrics.py": "55777deb6739b2c804e105694e6e0cbd070160c5ea208f80baba96c3dc3285b8",
     "research/nomad_phase15b/batch.py": "dde19184e7560b6f12a8f79cb2515ed79f059044cd2f24294d0962de07c1255b",
     "research/nomad_phase15b/graph.py": "46f20a442464fe37076071d2237c42c04b3bce1ceb75a964d59d8862cd862d69",
     "research/nomad_phase15b/report.py": "ee18b4bd2ff80c797b626a16c67667c5d9cf592794b7ee92f4285953bfb50f86",
@@ -105,5 +105,21 @@
     "research/nomad_isaac/launch.py": "07328ef70c71984af43d83be2f4f3e4b36bbf43ef52a1b9f6b6eeecb420f77b0",
     "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c",
     "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58"
+  },
+  "import_boundary_validation": {
+    "base_commit": "6a16ae4cd832aee4aa1830c32a02de1c4746428f",
+    "previous_metrics_sha256": "106aa70c7006e228dad76c96a05c59e744226200549edc359bdfd74742dadc2a",
+    "batch_python": "../.venv/bin/python",
+    "cpu_report_python": "/usr/bin/python3",
+    "batch_and_audit_import_without_scipy": true,
+    "dry_run_attempts": 48,
+    "cpu_report_import_and_missing_input_error": true,
+    "audit_computation_ast_unchanged": true,
+    "existing_unit_tests_passed": 6,
+    "protocol_changed": false,
+    "new_navigation": 0,
+    "new_render": 0,
+    "new_inference": 0,
+    "new_graph_solve": 0
   }
 }

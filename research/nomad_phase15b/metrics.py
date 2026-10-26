@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 from nomad_isaac.async_report import rows,stats
-from nomad_isaac.common import integrate_se2,local_to_world,sha256_file
+from nomad_isaac.common import ROOT,integrate_se2,local_to_world,sha256_file
 from nomad_isaac.clearance import swept_clearance,obstacle_bounds,single_obstacle_config
 from nomad_isaac.topomap import candidate_range,select_subgoal
 from nomad_phase0.chunk_report import trace
@@ -18,12 +18,28 @@ from nomad_phase3_stage2.execution import decision
 from nomad_phase13.metrics import extra_metrics
 from nomad_phase12.methods import freshest,TransitionState
 from nomad_phase8.execution import select
-from nomad_phase15.evaluate import suffix,oracle_clearance
 from .config import METHODS,SAFE,protocol
-from .depth import Snapshot,evaluate_samples
-from .execution import capped_command
 
 def audit(run,run_id,offset,delay):
+    """Keep the NoMaD batch venv free of SciPy; audit in the existing CPU runtime."""
+    import os
+    import subprocess
+    env=os.environ.copy()
+    for key in ('LD_LIBRARY_PATH','LD_PRELOAD','PYTHONHOME','VIRTUAL_ENV'):
+        env.pop(key,None)
+    env.update(PYTHONPATH=str(ROOT/'research'),OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1')
+    result=subprocess.run(['/usr/bin/python3','-m','nomad_phase15b.metrics',
+        str(Path(run).resolve()),run_id,str(offset),str(delay)],cwd=ROOT,env=env,
+        check=False,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    if result.returncode:
+        raise RuntimeError(f'CPU post-run audit exit {result.returncode}:\n{result.stderr}')
+    return json.loads(result.stdout)
+
+def _audit(run,run_id,offset,delay):
+    # Only the post-run CPU reporting process imports depth/Graph dependencies.
+    from nomad_phase15.evaluate import suffix,oracle_clearance
+    from .depth import Snapshot,evaluate_samples
+    from .execution import capped_command
     run=Path(run);summary=json.loads((run/'summary.json').read_text());c=summary['scenario'];p=protocol();m=c['phase15b_method']
     prov=json.loads((run/'provenance.json').read_text());env=json.loads((run/'model/environment.json').read_text())
     assert m in METHODS and c['run_id']==run_id and c['seed_offset']==offset==int(run_id[-2:])*10000
@@ -137,3 +153,14 @@ def audit(run,run_id,offset,delay):
     paths=[f for pat in ('*.json','*.jsonl','*.csv','depth/*','model/*.json','model/*.jsonl','model/raw/*.npz','model/derived/*.npz') for f in run.glob(pat) if f.is_file()]
     result['input_log_sha256']={str(f.relative_to(run)):sha256_file(f) for f in paths}
     return result
+
+
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser(description='Read-only Phase15B post-run CPU audit')
+    parser.add_argument('run',type=Path)
+    parser.add_argument('run_id')
+    parser.add_argument('offset',type=int)
+    parser.add_argument('delay',type=float)
+    args=parser.parse_args()
+    print(json.dumps(_audit(args.run,args.run_id,args.offset,args.delay)))
