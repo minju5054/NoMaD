@@ -152,6 +152,8 @@ The rows use the originating FRESH switch of the active path at collision, match
 
 ## Implementation and limits
 
+Each cell is updated at most once per depth frame: any eligible occupied endpoint gives +0.85; otherwise a traversing free ray gives -0.40. Occupied wins within a frame. V2 counts three distinct occupied frames. V3/V4 apply their occupied distance limit to each point before frame aggregation. V0 does not use these rules and remains the unmodified Phase15-A implementation.
+
 V1–V4 update each cell once per captured frame, with occupied precedence over free. V2 counts distinct occupied frames. Log-odds uses exact integer hundredths (+85/−40, clipped −200..350, occupied >85). These fixed evidence semantics avoid treating correlated pixels in one image as independent confirmations.
 
 Bresenham uses a serial C kernel; duplicate endpoint/type rays are removed without changing the union of traversed cells. Height/range filtering, noise realizations, grid allocation, EDT, radius, interpolation and path-clearance bound remain those of Phase15-A. V0 is the original class without changes. The map has no oracle obstacle/half-plane input.
