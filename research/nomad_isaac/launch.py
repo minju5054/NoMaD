@@ -11,6 +11,7 @@ import time
 from zoneinfo import ZoneInfo
 
 from .common import ROOT, SCENARIO_PATH, read_scenario, sha256_file, write_json
+from .socket_path import socket_path_for_run, validate_socket_path
 
 
 def main():
@@ -142,6 +143,9 @@ def main():
     if args.uniform_delivery_delay_s is not None and (not args.asynchronous or args.prepare_only or args.controlled_delivery_delay):
         parser.error("Uniform delivery delay requires asynchronous navigation without single-trigger mode")
     out = args.output.resolve()
+    socket_path = socket_path_for_run(out)
+    if socket_path.exists() or socket_path.is_symlink():
+        raise FileExistsError(f'Refusing to replace existing socket path: {socket_path}')
     out.mkdir(parents=True, exist_ok=False)
     isaac = args.isaac_root.resolve()
     version = (isaac / "VERSION").read_text().strip()
@@ -251,6 +255,8 @@ def main():
         "time_kst": datetime.now(ZoneInfo("Asia/Seoul")).isoformat(), "isaac_root": str(isaac),
         "isaac_version": version, "git_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "git_status": subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True),
+        "socket_path": str(socket_path), "socket_path_bytes": validate_socket_path(socket_path),
+        "socket_path_shortened": socket_path != out / "ipc.sock",
         "source_sha256": {str(p.relative_to(ROOT)): sha256_file(p) for p in sources},
         "prepare_only": args.prepare_only, "asynchronous": args.asynchronous,
         "oracle_safety_stop": args.oracle_safety_stop,
@@ -271,7 +277,6 @@ def main():
         "gpu": subprocess.check_output(["nvidia-smi", "--query-gpu=name,driver_version,memory.total", "--format=csv,noheader"], text=True).strip()})
     worker = None
     simulator = None
-    socket_path = out / "ipc.sock"
     with (out / "worker.log").open("x") as worker_log, (out / "simulator.log").open("x") as sim_log:
         try:
             # Spawn both from this clean parent, never from Isaac's library environment.
@@ -391,7 +396,7 @@ def main():
                         process.wait(timeout=10)
                     except subprocess.TimeoutExpired:
                         os.killpg(process.pid, signal.SIGKILL); process.wait()
-            if socket_path.exists():
+            if worker is not None and socket_path.exists():
                 socket_path.unlink()
 
 

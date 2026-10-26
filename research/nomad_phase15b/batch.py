@@ -7,10 +7,24 @@ import traceback
 from pathlib import Path
 from types import SimpleNamespace
 from nomad_isaac.common import ROOT, sha256_file, write_json
+from nomad_isaac.socket_path import socket_path_for_run, validate_socket_path
 from nomad_phase0.s0_batch import exclusive_batch, git_state, save_plan, launch_one
 from nomad_phase8.batch import verify
 from .config import HERE, protocol, validate_options
 from .config import base_method
+
+
+def preflight_sockets(jobs):
+    paths = set()
+    for job in jobs:
+        path = socket_path_for_run(job['output'])
+        size = validate_socket_path(path)
+        if path in paths:
+            raise ValueError(f'Duplicate planned socket path: {path}')
+        paths.add(path)
+        job['socket_path'] = str(path)
+        job['socket_path_bytes'] = size
+    return jobs
 
 
 def matrix(root):
@@ -34,7 +48,7 @@ def matrix(root):
             jobs.append(dict(key=key,method=m,index=i,run_id=rid,seed_offset=a.seed_offset,delay_s=.75,
                 output=str(root/key),argv=argv,shell_command=shlex.join(argv)))
     assert len(jobs) == len({j['key'] for j in jobs}) == 48
-    return jobs
+    return preflight_sockets(jobs)
 
 
 def build_plan(root):
@@ -79,6 +93,7 @@ def completion(root):
 
 
 def execute(plan, root):
+    preflight_sockets(plan['jobs'])
     from .metrics import audit
     results = []
     with (root/'execution.jsonl').open('x') as journal:
