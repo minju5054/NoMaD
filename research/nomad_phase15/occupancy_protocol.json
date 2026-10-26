@@ -5,13 +5,38 @@
   "immutable_reference_protocol": "research/nomad_phase15/protocol.json",
   "no_new_render_navigation_inference": true,
   "variants": {
-    "V0": {"implementation": "Unmodified DepthSDF from Phase15-A"},
-    "V1": {"log_odds": true, "minimum_occupied_observations": 0, "occupied_max_range_m": 3.0},
-    "V2": {"log_odds": true, "minimum_occupied_observations": 3, "occupied_max_range_m": 3.0},
-    "V3": {"log_odds": true, "minimum_occupied_observations": 0, "occupied_max_range_m": 2.0},
-    "V4": {"log_odds": true, "minimum_occupied_observations": 3, "occupied_max_range_m": 2.0}
+    "V0": {
+      "implementation": "Unmodified DepthSDF from Phase15-A"
+    },
+    "V1": {
+      "log_odds": true,
+      "minimum_occupied_observations": 0,
+      "occupied_max_range_m": 3.0
+    },
+    "V2": {
+      "log_odds": true,
+      "minimum_occupied_observations": 3,
+      "occupied_max_range_m": 3.0
+    },
+    "V3": {
+      "log_odds": true,
+      "minimum_occupied_observations": 0,
+      "occupied_max_range_m": 2.0
+    },
+    "V4": {
+      "log_odds": true,
+      "minimum_occupied_observations": 3,
+      "occupied_max_range_m": 2.0
+    }
   },
-  "log_odds": {"occupied":0.85,"free":-0.40,"minimum":-2.0,"maximum":3.5,"initial":0.0,"occupied_strict_threshold":0.85},
+  "log_odds": {
+    "occupied": 0.85,
+    "free": -0.4,
+    "minimum": -2.0,
+    "maximum": 3.5,
+    "initial": 0.0,
+    "occupied_strict_threshold": 0.85
+  },
   "numeric_representation": "Exact integer hundredths, algebraically identical fixed log-odds; strict >85 threshold",
   "evidence_unit": "One update per cell per actual captured frame; occupied wins over free in that frame; V2 counts distinct occupied frames, cumulative not consecutive",
   "rays": "Integer Bresenham at nearest 1cm cells. Height-valid hits: free interior, occupied endpoint if within occupied range. Floor z<=0.03: entire ray including endpoint free. Surfaces at 2..3m for V3/V4: free interior, endpoint observed but no log-odds update. Points above 0.6m or beyond 3m produce no rays, preserving the old height/max-range input filter. No extrapolation beyond measured endpoints.",
@@ -19,11 +44,24 @@
   "range": "Euclidean camera-to-point, unchanged from Phase15-A",
   "sdf": "Same EDT, radius 0.09, bilinear query/gradient, h/sqrt(2) bound, empty-field convention, path sampling and safety threshold as Phase15-A",
   "noise": "Both none/gaussian; exact same per-run/frame SeedSequence and float16 inputs as Phase15-A",
-  "selection_split": {"method":"FRESHEST","runs":12,"condition":"gaussian"},
-  "judgment_split": {"method":"FRESHEST+GRAPH-GF","runs":12,"condition":"gaussian"},
+  "selection_split": {
+    "method": "FRESHEST",
+    "runs": 12,
+    "condition": "gaussian"
+  },
+  "judgment_split": {
+    "method": "FRESHEST+GRAPH-GF",
+    "runs": 12,
+    "condition": "gaussian"
+  },
   "selection": "Eligible if dangerous sample fraction <=0.02 AND update p95<=50ms. Minimize conservative fraction, tie lower variant number. Freeze selection before computing held-out metrics. If none, NO_VARIANT.",
   "held_out": "Only selected variant gets a decision label. All other held-out metrics are descriptive as requested and cannot change selection.",
-  "decision_order": ["dangerous>0.02: DEPTH_NOT_READY","update p95>50ms: TIMING_NOT_READY","conservative>0.20: DEPTH_CONSERVATIVE","otherwise: DEPTH_READY"],
+  "decision_order": [
+    "dangerous>0.02: DEPTH_NOT_READY",
+    "update p95>50ms: TIMING_NOT_READY",
+    "conservative>0.20: DEPTH_CONSERVATIVE",
+    "otherwise: DEPTH_READY"
+  ],
   "denominators": "Dangerous/conservative fractions use all evaluated sample decisions; pooled updates for p95, not mean of per-run percentiles",
   "execution_order": "Selection split first, then held-out; index ascending, variant V0..V4, noise none then gaussian; serial CPU, no retries or tuning",
   "v0_regression": "Every saved sample clearance/decision/selection/unknown statistic and every frame's non-clock map statistics must exactly equal Phase15-A; wall-clock times are necessarily remeasured and reported next to the saved reference",
@@ -32,5 +70,9 @@
   "phantom": "Noisy occupied lattice cells with exact oracle obstacle/corridor footprint clearance >0.20m. Per observation plus final/peak per run; independent run maps are not merged.",
   "collision_cases": "P13 GF39/GF45, originating FRESH of the path active at the saved collision, same switch as Phase15-A",
   "plot_snapshot": "Same Phase15-A spatial instant: GF index35, first switch B.x>=1.0; gaussian condition; V0 vs selected vs oracle",
-  "next_navigation_default": {"variant":null,"status":"PENDING_SELECTION; no navigation authorized"}
+  "next_navigation_default": {
+    "variant": "V1",
+    "status": "DEPTH_READY",
+    "scope": "Offline selection only; no new navigation performed or authorized"
+  }
 }
