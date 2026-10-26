@@ -5,6 +5,7 @@ last three FRESH switches before contact, union the originating FRESH of the
 path actually active at contact. Replacements are separate execution intervals.
 """
 import argparse
+import hashlib
 import json
 import subprocess
 import time
@@ -244,34 +245,40 @@ def collision_figure(data,row,detail,cf,out):
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     from matplotlib.patches import Rectangle,Circle
-    fig,ax=plt.subplots(figsize=(10,5));c=data['config'];r=data['source']['record']
-    for box in configured_obstacles(c):
-        x,y=box['center_xy_m'];sx,sy=box['size_xyz_m'][:2]
-        ax.add_patch(Rectangle((x-sx/2,y-sy/2),sx,sy,color='#999999',alpha=.45))
-        ax.text(x,y,box['id'],fontsize=8,ha='center')
-    for y in (-c['corridor']['half_width'],c['corridor']['half_width']):ax.axhline(y,color='gray',lw=1)
-    for x in (c['corridor']['xmin'],c['corridor']['xmax']):ax.axvline(x,color='gray',lw=1)
-    for i,xy in enumerate(detail['world_samples']):
-        xy=np.asarray(xy);ax.plot(xy[:,0],xy[:,1],color='#aaaaaa',lw=.9,label='8 original samples' if i==0 else None)
-    raw=np.array(detail['raw_world']);ax.plot(raw[:,0],raw[:,1],'--',color='#1565c0',lw=1.8,label='Selected original (full)')
-    if detail['corrected_world'] is not None:
-        xy=np.array(detail['corrected_world']);ax.plot(xy[:,0],xy[:,1],color='#1565c0',lw=2,label='Applied GF (full)')
-    if cf['accepted']:
-        xy=np.array(cf['world_xy']);ax.plot(xy[:,0],xy[:,1],color='#8e24aa',lw=2,label='Oracle v4 (offline ACCEPTED)')
-    else:
-        ax.text(.02,.03,'Oracle v4: '+cf['disposition']+' (no accepted path)',transform=ax.transAxes,fontsize=8)
-    pose=data['poses'];ax.plot(pose[:,0],pose[:,1],color='black',lw=1.3,label='Actual robot trajectory')
-    b=row['B'];ax.plot(b[0],b[1],'o',color='#ef8b21',label='B (FRESH switch)')
-    ax.arrow(b[0],b[1],.15*np.cos(b[2]),.15*np.sin(b[2]),width=.004,color='#ef8b21',length_includes_head=True)
+    fig,axes=plt.subplots(1,2,figsize=(12,5));c=data['config'];r=data['source']['record']
+    raw=np.array(detail['raw_world']);pose=data['poses'];b=row['B']
     contact=data['summary']['obstacle_evaluation']['first_contact']['detected_pose']
-    ax.plot(*contact[:2],'rx',ms=9,mew=2,label='Detected collision')
-    ax.add_patch(Circle(contact[:2],c['agent_radius_m'],fill=False,color='red',lw=.8))
-    ax.set(xlabel='World X (m)',ylabel='World Y (m)',title=f"Phase {row['phase']} index {r['index']} / FRESH {row['id']} / {row['cause']}")
-    points=np.vstack([pose[:,:2],np.asarray(detail['world_samples']).reshape(-1,2),np.asarray(cf['world_xy']) if cf['accepted'] else raw])
-    ax.set_xlim(min(-.2,float(points[:,0].min())-.2),max(3.55,float(points[:,0].max())+.2))
-    ax.set_ylim(-c['corridor']['half_width']-.12,c['corridor']['half_width']+.12)
-    ax.set_aspect('equal');ax.legend(fontsize=7,loc='lower left',ncol=2)
-    fig.tight_layout();fig.savefig(out/f"collision_{row['phase']}_{row['index']}.png",dpi=160);plt.close(fig)
+    for ax in axes:
+        for box in configured_obstacles(c):
+            x,y=box['center_xy_m'];sx,sy=box['size_xyz_m'][:2]
+            ax.add_patch(Rectangle((x-sx/2,y-sy/2),sx,sy,color='#999999',alpha=.45))
+        for y in (-c['corridor']['half_width'],c['corridor']['half_width']):ax.axhline(y,color='gray',lw=1)
+        for x in (c['corridor']['xmin'],c['corridor']['xmax']):ax.axvline(x,color='gray',lw=1)
+        for i,xy in enumerate(detail['world_samples']):
+            xy=np.asarray(xy);ax.plot(xy[:,0],xy[:,1],color='#aaaaaa',lw=.9,label='8 original samples' if i==0 else None)
+        ax.plot(raw[:,0],raw[:,1],'--',color='#1565c0',lw=1.8,label='Selected original (full)')
+        if detail['corrected_world'] is not None:
+            xy=np.array(detail['corrected_world']);ax.plot(xy[:,0],xy[:,1],color='#1565c0',lw=2,label='Applied GF (full)')
+        if cf['accepted']:
+            xy=np.array(cf['world_xy']);ax.plot(xy[:,0],xy[:,1],color='#8e24aa',lw=2,label='Oracle v4 (offline ACCEPTED)')
+        ax.plot(pose[:,0],pose[:,1],color='black',lw=1.3,label='Actual robot trajectory')
+        ax.plot(b[0],b[1],'o',color='#ef8b21',label='B (FRESH switch)')
+        ax.arrow(b[0],b[1],.08*np.cos(b[2]),.08*np.sin(b[2]),width=.002,color='#ef8b21',length_includes_head=True)
+        ax.plot(*contact[:2],'rx',ms=9,mew=2,label='Detected collision')
+        ax.add_patch(Circle(contact[:2],c['agent_radius_m'],fill=False,color='red',lw=.8))
+        ax.set(xlabel='World X (m)',ylabel='World Y (m)');ax.set_aspect('equal')
+    axes[0].set(title='Scene and actual route',xlim=(-.2,3.55),ylim=(-1.62,1.62))
+    focus=np.vstack([np.asarray(detail['world_samples']).reshape(-1,2),b[:2],contact[:2],
+                     np.asarray(cf['world_xy']) if cf['accepted'] else raw,
+                     np.asarray(detail['corrected_world']) if detail['corrected_world'] is not None else raw])
+    lower=focus.min(axis=0)-.12;upper=focus.max(axis=0)+.12
+    axes[1].set(title='Active collision switch (zoom)',xlim=(lower[0],upper[0]),ylim=(lower[1],upper[1]))
+    if not cf['accepted']:
+        axes[1].text(.02,.97,'Oracle v4: '+cf['disposition']+'\nNo accepted counterfactual path',
+                     transform=axes[1].transAxes,va='top',fontsize=8,bbox=dict(facecolor='white',alpha=.8,edgecolor='none'))
+    handles,labels=axes[0].get_legend_handles_labels();fig.legend(handles,labels,loc='lower center',ncol=4,fontsize=8)
+    fig.suptitle(f"Phase {row['phase']} index {r['index']} / FRESH {row['id']} / {row['cause']}")
+    fig.tight_layout(rect=(0,.14,1,.94));fig.savefig(out/f"collision_{row['phase']}_{row['index']}.png",dpi=160);plt.close(fig)
 
 
 def histogram(switches,out):
@@ -336,6 +343,40 @@ def publish():
     return git('rev-parse','--short','HEAD')
 
 
+def verify_sources(meta):
+    for name,h in meta['input_sha256'].items():assert sha256_file(Path(name))==h,name
+    for name,h in meta['source_sha256'].items():
+        if sha256_file(Path(name))==h:continue
+        # A reporting-only repair does not rewrite the original solve provenance.
+        original=subprocess.check_output(['git','show',meta['analysis_git_sha']+':'+str(Path(name).relative_to(ROOT))],cwd=ROOT)
+        assert hashlib.sha256(original).hexdigest()==h,name
+    for name,h in PROTECTED.items():assert sha256_file(ROOT/name)==h,name
+
+
+def finish_files(meta, recovery=False):
+    """Seal already-persisted results; never constructs a Graph or calls solve."""
+    verify_sources(meta)
+    journal=rows(OUT/'counterfactuals.jsonl')
+    starts=[(r['phase'],r['index'],r['id']) for r in journal if r['event']=='START']
+    ends=[r for r in journal if r['event']=='END']
+    assert starts==[(r['phase'],r['index'],r['id']) for r in ends]
+    assert len(starts)==len(set(starts))==meta['counterfactual_attempts']
+    assert sum(r['result']['solve_calls'] for r in ends)==meta['solver_calls']
+    required=['switches.csv','collisions.csv','control_summary.csv','summary.json','provenance.json',
+              'evidence.json','delta_hist.png',*[f'collision_{p}_{i}.png' for p,ids in TARGETS.items() for i in ids]]
+    assert DOC.exists() and all((OUT/f).exists() for f in required)
+    if recovery:
+        write_json(OUT/'completion_repair.json',dict(reason='FileExistsError writing exclusive completion state after all results were saved',
+            action='Preserve initial RUNNING record as started.json; seal completed outputs without recomputing',
+            additional_solver_calls=0,original_analysis_git_sha=meta['analysis_git_sha'],
+            finalizer_source_sha256=sha256_file(Path(__file__))))
+        if (OUT/'state.json').exists():
+            assert json.loads((OUT/'state.json').read_text())['state']=='RUNNING' and not (OUT/'started.json').exists()
+            (OUT/'state.json').rename(OUT/'started.json')
+    write_json(OUT/'state.json',dict(state='COMPLETE',label=meta['label'],solver_calls=meta['solver_calls'],attempts=meta['counterfactual_attempts'],retries=0))
+    write_json(OUT/'report_files.json',{str(f.relative_to(ROOT)):sha256_file(f) for f in [DOC,*sorted(OUT.iterdir())] if f.is_file()})
+
+
 def execute():
     assert not OUT.exists() and not DOC.exists(),'Outputs preserved; no repeated solves'
     for name,h in PROTECTED.items():assert sha256_file(ROOT/name)==h,name
@@ -344,7 +385,7 @@ def execute():
         ROOT/'research/nomad_isaac/handoff_audit.py',ROOT/'research/nomad_phase0/pure_pursuit.py',
         ROOT/'research/nomad_phase0/graph_v2.py',ROOT/'research/nomad_phase0/graph_v3.py']}
     OUT.mkdir(parents=True,exist_ok=False)
-    write_json(OUT/'state.json',dict(state='RUNNING',rules=RULES,retries=0))
+    write_json(OUT/'started.json',dict(state='RUNNING',rules=RULES,retries=0))
     switches=[];collisions=[];evidence=[];fields={};attempts=0;solves=0;max_pose=0.;max_gap=0.
     protocol=json.loads((ROOT/'research/nomad_phase0/graph_v4_protocol.json').read_text())
     with (OUT/'counterfactuals.jsonl').open('x') as journal:
@@ -384,19 +425,23 @@ def execute():
     for name,records in (('switches',switches),('collisions',collisions),('control_summary',summary)):write_csv(OUT/f'{name}.csv',records)
     write_json(OUT/'evidence.json',evidence);write_json(OUT/'summary.json',dict(metadata=metadata,collisions=collisions,controls=summary))
     write_json(OUT/'provenance.json',metadata);histogram(switches,OUT);report(collisions,summary,label,metadata)
-    write_json(OUT/'state.json',dict(state='COMPLETE',label=label,solver_calls=solves,attempts=attempts,retries=0))
-    write_json(OUT/'report_files.json',{str(f.relative_to(ROOT)):sha256_file(f) for f in [DOC,*sorted(OUT.iterdir())] if f.is_file()})
+    finish_files(metadata)
     return label
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--publish',action='store_true');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--publish',action='store_true')
+    ap.add_argument('--finalize-only',action='store_true',help='Seal fully saved outputs only; no repeated solves')
+    args=ap.parse_args()
+    if args.finalize_only:
+        assert OUT.exists() and not (OUT/'report_files.json').exists()
+        finish_files(json.loads((OUT/'provenance.json').read_text()),recovery=True)
     if OUT.exists():
-        assert args.publish and (OUT/'report_files.json').exists(),'Partial/previous output preserved; no repeated solves'
+        assert (args.publish or args.finalize_only) and (OUT/'report_files.json').exists(),'Partial/previous output preserved; no repeated solves'
         assert json.loads((OUT/'state.json').read_text())['state']=='COMPLETE'
         for name,h in json.loads((OUT/'report_files.json').read_text()).items():assert sha256_file(ROOT/name)==h,name
         meta=json.loads((OUT/'provenance.json').read_text())
-        for name,h in {**meta['input_sha256'],**meta['source_sha256']}.items():assert sha256_file(Path(name))==h,name
+        verify_sources(meta)
         label=meta['label']
     else:label=execute()
     sha=publish() if args.publish else None

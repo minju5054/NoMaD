@@ -1,0 +1,28 @@
+{
+  "state": "RUNNING",
+  "rules": {
+    "collision_switches": "last 3 actual FRESH switches union active path origin; deduplicate by FRESH ID",
+    "raw": "nearest B projection + original remaining polyline; no B-to-projection connector",
+    "corrected": "entire actually ACCEPTED GF path, as requested (not suffix)",
+    "execution": "corrected path: actual GF application to next path application; otherwise original FRESH interval",
+    "path_vs_footprint": "executed minimum minus active polyline minimum; negative means actual motion came closer",
+    "thresholds": {
+      "safety_m": 0.025,
+      "graph_drop_m": -0.02
+    },
+    "counterfactual": "one protected GraphV4 initialization/solve per collision switch; original sample, dispatch B, previous command/prior unchanged; full oracle SDF/corridor, no online latency gate or rollout",
+    "cause_precedence": [
+      "SELECTION",
+      "GRAPH_SHIFT",
+      "EXECUTION",
+      "OTHER"
+    ],
+    "conclusion_precedence": [
+      "ADD_CONSTRAINT",
+      "FIX_SELECTION",
+      "FIX_EXECUTION",
+      "MIXED"
+    ]
+  },
+  "retries": 0
+}
