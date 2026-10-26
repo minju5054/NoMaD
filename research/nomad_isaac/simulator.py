@@ -25,6 +25,7 @@ parser.add_argument("--overnight-phase",type=int,choices=[8,9])
 parser.add_argument("--overnight-method")
 parser.add_argument("--phase10b-no-obstacle", action="store_true")
 parser.add_argument("--phase11-v61", action="store_true", help="Phase11 adaptive progress Graph subclass only")
+parser.add_argument("--phase15b-method", choices=["FRESHEST","FRESHEST-SAFE","FRESHEST-SAFE+GRAPH-GF","FRESHEST-SAFE+GRAPH-depth","TEMPORAL-ENSEMBLE","SELECT+GRAPH"])
 parser.add_argument("--phase13-method", choices=["FRESHEST","FRESHEST+SMOOTH","FRESHEST+GRAPH-GF","TEMPORAL-ENSEMBLE"])
 parser.add_argument("--phase12-method", choices=["CURV","HERMITE-SPLICE","TEMPORAL-ENSEMBLE","BID-COHERENCE","RTC-hard","FRESHEST+GRAPH-GF","SELECT+GRAPH"])
 parser.add_argument("--phase7-method", choices=["CURV","GRAPH","SELECT"])
@@ -50,9 +51,9 @@ parser.add_argument("--depth-replay-manifest", type=Path)
 parser.add_argument("--controlled-delivery-delay", action="store_true")
 parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .625, .75])
 args, _ = parser.parse_known_args()
-if args.depth_camera != bool(args.depth_replay_manifest):
+if not args.phase15b_method and args.depth_camera != bool(args.depth_replay_manifest):
     parser.error("--depth-camera requires --depth-replay-manifest and vice versa")
-if args.depth_camera and (args.socket or args.prepare_only or args.asynchronous or args.render_topomap_reference):
+if args.depth_camera and not args.phase15b_method and (args.socket or args.prepare_only or args.asynchronous or args.render_topomap_reference):
     parser.error("Depth replay cannot run navigation or RGB preparation")
 out = args.output.resolve()
 runtime = out / "isaac_runtime"
@@ -160,7 +161,7 @@ def build_scene(config):
     camera.CreateClippingRangeAttr(Gf.Vec2f(.02, 100.))
     product = rep.create.render_product(str(camera.GetPath()), (320, 240))
     annotator = rep.AnnotatorRegistry.get_annotator(
-        "distance_to_image_plane" if args.depth_camera else "rgb", device="cpu")
+        "distance_to_image_plane" if args.depth_camera and not args.phase15b_method else "rgb", device="cpu")
     annotator.attach([product])
     return stage, agent, translate, rotate, camera, annotator, product
 
@@ -192,7 +193,11 @@ def main():
     config = read_scenario(args.scenario or SCENARIO_PATH)
     if bool(args.phase4c_method)!=bool(args.plant_alpha):
         raise ValueError("Phase4c requires method and alpha together")
-    if args.phase4c_method:
+    if args.phase15b_method:
+        from nomad_phase15b.config import validate_options, runtime_config
+        validate_options(args)
+        config=runtime_config(config,args)
+    elif args.phase4c_method:
         from nomad_phase4c.config import validate_options, runtime_config
         validate_options(args)
         config=runtime_config(config,args)
@@ -223,10 +228,11 @@ def main():
     elif args.s1_distance_m is not None:
         raise ValueError("S1 distance requires S1 mode")
     from nomad_isaac.seed_offset import validate_seed_options
-    validate_seed_options(args)
+    if not args.phase15b_method:
+        validate_seed_options(args)
     if args.seed_offset or args.run_id is not None:
         config = {**config, "seed_offset": args.seed_offset, "run_id": args.run_id}
-    if args.pure_pursuit:
+    if args.pure_pursuit and not args.phase15b_method:
         from nomad_phase0.chunk_execution import validate_mode
         validate_mode(args)
     if args.early_obstacle_mode:
@@ -258,6 +264,10 @@ def main():
     write_json(out / "scenario.json", config)
     rep.orchestrator.set_capture_on_play(False)
     stage, agent, translate, rotate, camera, annotator, product = build_scene(config)
+    depth_annotator = None
+    if args.phase15b_method:
+        depth_annotator = rep.AnnotatorRegistry.get_annotator("distance_to_image_plane", device="cpu")
+        depth_annotator.attach([product])
     timeline = omni.timeline.get_timeline_interface()
     timeline.pause()
     dynamic_annotator = None
@@ -312,12 +322,17 @@ def main():
         for _ in range(20):
             rep.orchestrator.step(rt_subframes=4, delta_time=0.0, pause_timeline=True)
             array = np.asarray(annotator.get_data())
+            depth = np.asarray(depth_annotator.get_data()) if depth_annotator is not None else None
+            depth_valid = depth is None or (depth.shape == (240,320) and np.isfinite(depth).any())
             segmentation = dynamic_annotator.get_data() if dynamic_annotator is not None else None
             segmentation_valid = (dynamic_annotator is None or
                 isinstance(segmentation, dict) and np.shape(segmentation.get("data")) == (240, 320))
-            if array.shape == (240, 320, 4) and segmentation_valid:
+            if array.shape == (240, 320, 4) and segmentation_valid and depth_valid:
                 break
         assert array.shape == (240, 320, 4) and array.dtype == np.uint8, (array.shape, array.dtype)
+        if depth_annotator is not None:
+            assert depth.shape == (240,320) and np.isfinite(depth).any(), "Invalid paired depth"
+            capture.depth_frame = depth.copy()
         rgb = np.ascontiguousarray(array[:, :, :3])  # RGB annotator is RGBA, never BGR.
         assert rgb.std() > 5 and rgb.max() > 50, "Invalid/dark rendered camera"
         assert abs(timeline.get_current_time() - sim_time) < 1e-6
@@ -576,7 +591,7 @@ def main():
 
 
 try:
-    if args.depth_camera:
+    if args.depth_camera and not args.phase15b_method:
         from nomad_phase15.replay_render import render_isaac
         render_isaac(args, build_scene, app, rep, omni.usd, Gf, UsdGeom)
     else:

@@ -28,6 +28,8 @@ def main():
     parser.add_argument("--overnight-method")
     parser.add_argument("--phase10b-no-obstacle", action="store_true", help="Frozen Phase10B Phase9 control: disable dynamic obstacle creation only")
     parser.add_argument("--phase11-v61", action="store_true", help="Phase11 adaptive progress Graph subclass only")
+    parser.add_argument("--phase15b-method", choices=["FRESHEST","FRESHEST-SAFE","FRESHEST-SAFE+GRAPH-GF","FRESHEST-SAFE+GRAPH-depth","TEMPORAL-ENSEMBLE","SELECT+GRAPH"])
+    parser.add_argument("--depth-camera", action="store_true")
     parser.add_argument("--phase13-method", choices=["FRESHEST","FRESHEST+SMOOTH","FRESHEST+GRAPH-GF","TEMPORAL-ENSEMBLE"])
     parser.add_argument("--phase12-method", choices=["CURV","HERMITE-SPLICE","TEMPORAL-ENSEMBLE","BID-COHERENCE","RTC-hard","FRESHEST+GRAPH-GF","SELECT+GRAPH"])
     parser.add_argument("--phase7-method", choices=["CURV","GRAPH","SELECT"])
@@ -52,6 +54,8 @@ def main():
     parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .625, .75],
                         help="Hold every accepted result after packet receive")
     args = parser.parse_args()
+    if args.depth_camera and not args.phase15b_method:
+        parser.error("Online depth requires Phase15B")
     if args.phase13_method:
         from nomad_phase13.config import validate_options as validate_phase13
         validate_phase13(args)
@@ -77,7 +81,10 @@ def main():
         parser.error("Phase4d requires Phase4c method and plant alpha")
     if bool(args.phase4c_method)!=bool(args.plant_alpha):
         parser.error("Phase4c method and plant alpha must be supplied together")
-    if args.phase4c_method:
+    if args.phase15b_method:
+        from nomad_phase15b.config import validate_options
+        validate_options(args)
+    elif args.phase4c_method:
         from nomad_phase4c.config import validate_options
         validate_options(args)
     if args.phase4_method:
@@ -105,8 +112,9 @@ def main():
     elif args.s1_distance_m is not None:
         parser.error("--s1-distance-m requires --s1-mode")
     from .seed_offset import validate_seed_options
-    validate_seed_options(args)
-    if args.pure_pursuit:
+    if not args.phase15b_method:
+        validate_seed_options(args)
+    if args.pure_pursuit and not args.phase15b_method:
         from nomad_phase0.chunk_execution import validate_mode
         validate_mode(args)
     if args.early_obstacle_mode:
@@ -177,6 +185,11 @@ def main():
             from nomad_phase10b.config import protocol as phase10b_protocol
             sources += list((ROOT/"research/nomad_phase10b").glob("*.py"))+[ROOT/"research/nomad_phase10b/protocol.json"]
             write_json(out/"phase10b_protocol.json",phase10b_protocol())
+    if args.phase15b_method:
+        from nomad_phase15b.config import protocol as depth_protocol
+        for package in ("nomad_phase15b","nomad_phase15","nomad_phase13","nomad_phase12"):
+            sources += list((ROOT/"research"/package).glob("*.py"))+list((ROOT/"research"/package).glob("*.json"))+list((ROOT/"research"/package).glob("*.c"))
+        write_json(out/"phase15b_protocol.json",depth_protocol())
     if args.phase13_method:
         from nomad_phase13.config import protocol as phase13_protocol
         for package in ("nomad_phase13", "nomad_phase12"):
@@ -243,7 +256,7 @@ def main():
         "oracle_safety_stop": args.oracle_safety_stop,
         "phase10b_no_obstacle": args.phase10b_no_obstacle,
         "phase11_v61": args.phase11_v61,
-        "phase12_method": args.phase12_method, "phase13_method": args.phase13_method,
+        "phase12_method": args.phase12_method, "phase13_method": args.phase13_method, "phase15b_method": args.phase15b_method, "depth_camera": args.depth_camera,
         "diagnostic_condition": args.diagnostic_condition, "phase2_method": args.phase2_method, "phase2_distance_m": args.phase2_distance_m,
         "pure_pursuit": args.pure_pursuit, "s0_delay_sweep": args.s0_delay_sweep, "s0_stage2_method": args.s0_stage2_method, "phase4_method": args.phase4_method, "phase4c_method":args.phase4c_method,"plant_alpha":args.plant_alpha,"phase4d_confirm":args.phase4d_confirm,"phase5_method":args.phase5_method,"phase6_method":args.phase6_method,"phase7_method":args.phase7_method,"overnight_phase":args.overnight_phase,"overnight_method":args.overnight_method,
         "s1_v2_mode": args.s1_v2_mode, "s1_mode": args.s1_mode, "s1_distance_m": args.s1_distance_m,
@@ -308,6 +321,8 @@ def main():
                 command.append("--phase10b-no-obstacle")
             if args.phase11_v61:
                 command.append("--phase11-v61")
+            if args.phase15b_method:
+                command += ["--phase15b-method",args.phase15b_method,"--depth-camera"]
             if args.phase13_method:
                 command += ["--phase13-method",args.phase13_method]
             if args.phase12_method:

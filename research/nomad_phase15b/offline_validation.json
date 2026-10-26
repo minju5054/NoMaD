@@ -1,0 +1,109 @@
+{
+  "passed": true,
+  "infrastructure": {
+    "depth_fifo": true,
+    "immutable_snapshot": true,
+    "worker_ipc": true,
+    "zero_speed_v4_rejection_preserved": true,
+    "navigation": 0
+  },
+  "new_navigation": 0,
+  "new_render": 0,
+  "new_inference": 0,
+  "saved_depth": {
+    "run": "S0_35_D750_FRESHEST",
+    "fresh_ids": [
+      6,
+      7,
+      8
+    ],
+    "samples": 24,
+    "depth_frames": 40,
+    "max_clearance_error_m": 0.0,
+    "selected": [
+      5,
+      1,
+      0
+    ],
+    "input_sha256": {
+      "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase15a_depth_01/S0_35_D750_FRESHEST/depth.npz": "e73713ddc72f7313321b6d4ae5a7712aca49f4ec9a5908f169e9272fcc870022",
+      "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase15a_depth_01/S0_35_D750_FRESHEST/frames.json": "4da41feba5f2613393428e938010a3d60c596159c56d0f07205225394b18be1d",
+      "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase15a2/unknown_risk.csv": "66feb2aa4f9ae4157de45ab28f707df30bedba118114b4b33377ec7ce62002f4"
+    }
+  },
+  "synthetic_graph": {
+    "solves": 1,
+    "initial_clearance_m": 0.0200000000000001,
+    "corrected_clearance_m": 0.03845343167601731,
+    "solver": {
+      "success": true,
+      "status": 0,
+      "message": "Optimization terminated successfully",
+      "solver_wall_s": 0.05671159701887518,
+      "solve_and_certificate_wall_s": 0.057225601049140096,
+      "iterations": 37,
+      "objective_evaluations": 89,
+      "objective_calls": 89,
+      "constraint_calls": 89,
+      "objective": 3.3679639463098954,
+      "factor_costs": {
+        "fresh_prior_xy": 1.1617684470969047,
+        "fresh_prior_heading": 0.011555726151170214,
+        "relative_translation": 0.16829600484241233,
+        "relative_heading": 0.015946802495760713,
+        "boundary_position": 2.000000020408632,
+        "boundary_heading": 0.00942032686480887,
+        "heading_tangent": 0.0009766184502061558,
+        "endpoint_progress": 0.0
+      },
+      "minimum_scaled_inequality": 4.5665096704006203e-10,
+      "scaled_equality_error": 4.663089603631066e-25,
+      "entry_curvature_m_inv": 4.663089556047426e-23,
+      "previous_curvature_m_inv": 0.0,
+      "maximum_node_curvature_m_inv": 0.2162364938502596,
+      "constraints_satisfied": true,
+      "exact_path_certificate": {
+        "depth_site_clearance_m": 0.03845343167601731,
+        "oracle_used": false,
+        "corridor_halfplanes": false
+      },
+      "exact_certificate_pass": true,
+      "feasible": true,
+      "selection_score": {
+        "total": 0.29044211177422613,
+        "modification": 0.29044211177422613,
+        "progress_cost": 0.0,
+        "endpoint_forward_progress_m": 0.7530594147079182
+      },
+      "previous_prior_applied": false,
+      "phase5_flags": {
+        "previous_prior": true,
+        "obstacle_sdf": true,
+        "corridor": false,
+        "exact_certificate": true,
+        "boundary_curvature": true
+      },
+      "certificate_scope": "DEPTH_OCCUPIED_SITES_ONLY",
+      "derivatives": "unchanged explicit analytic v4 Jacobians; flag-selected rows only",
+      "minimum_sdf_slack_m": 2.28325483520031e-11,
+      "sdf_active_within_1mm": true
+    }
+  },
+  "source_sha256": {
+    "research/nomad_phase15b/worker.py": "61c830b22fa2bde4eb197389d952d9fca79c31c847d737baf356687f25d0e43e",
+    "research/nomad_phase15b/__init__.py": "13e5688df8b88dc1b79b6a93cfc20638bee075709a6dd28c34caa8b8f68501af",
+    "research/nomad_phase15b/metrics.py": "106aa70c7006e228dad76c96a05c59e744226200549edc359bdfd74742dadc2a",
+    "research/nomad_phase15b/batch.py": "dde19184e7560b6f12a8f79cb2515ed79f059044cd2f24294d0962de07c1255b",
+    "research/nomad_phase15b/graph.py": "46f20a442464fe37076071d2237c42c04b3bce1ceb75a964d59d8862cd862d69",
+    "research/nomad_phase15b/report.py": "ee18b4bd2ff80c797b626a16c67667c5d9cf592794b7ee92f4285953bfb50f86",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase15b/config.py": "b157533916a670e37fcbce8ef8ac25a0ce2e381df1750c77658141dedfe81e73",
+    "research/nomad_phase15b/execution.py": "3b0ec36d95c49eb8d7267d252cca593fb5c8e4e402b843918bb2bea20234fe00",
+    "research/nomad_phase15b/test_depth_pilot.py": "1f72eff4c97a3ee4a17606c0dac80753aff0ca2e896a63a33cc138544886b1e4",
+    "research/nomad_phase15b/offline.py": "96f5ac10340a7f26e0c93f34662a6cd4f9240e0cd62e7c8cc164d73d20ad8e94",
+    "research/nomad_phase15b/protocol.json": "17b99f595bbdf18ecf7b0741961823071a836207f146260846ba8670eb732245",
+    "research/nomad_isaac/launch.py": "07328ef70c71984af43d83be2f4f3e4b36bbf43ef52a1b9f6b6eeecb420f77b0",
+    "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c",
+    "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58"
+  }
+}

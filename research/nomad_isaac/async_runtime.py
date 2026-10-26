@@ -30,7 +30,10 @@ class ExecutionThread:
         self.chunk_executor = None
         self.phase2 = None
         self.stage2 = None
-        if config.get("phase13_method"):
+        if config.get("phase15b_method"):
+            from nomad_phase15b.execution import make_execution
+            self.stage2=make_execution(config,out)
+        elif config.get("phase13_method"):
             from nomad_phase13.execution import make_execution
             self.stage2=make_execution(config,out)
         elif config.get("phase12_method") == "FRESHEST+GRAPH-GF":
@@ -212,6 +215,9 @@ class ExecutionThread:
                         refresh, switch = self.core.control(tick, time.monotonic_ns())
                     if refresh is not None and self.chunk_executor is not None:
                         self.chunk_executor.apply(self.core, refresh, switch)
+                    if switch is not None and c.get("phase15b_method"):
+                        switch["depth_snapshot"] = dict(self.stage2.depth_maps.snapshot().metadata)
+                        switch["phase15b_selection_monotonic_ns"] = time.monotonic_ns()
                     if refresh is not None and self.stage2 is not None:
                         self.stage2.apply(self.core, refresh, switch)
                     if refresh is not None and self.safety is not None:
@@ -280,6 +286,11 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
         assert not controlled_delivery_delay and uniform_delivery_delay_s is None
     engine = ExecutionThread(config, out, oracle_safety_stop=oracle_safety_stop, online_graph=online_graph,
                              pure_pursuit=pure_pursuit)
+    depth_maps = None
+    if config.get("phase15b_method"):
+        from nomad_phase15b.depth import DepthMapThread
+        depth_maps = DepthMapThread(out, config["camera"], config["seed_offset"])
+        engine.stage2.depth_maps = depth_maps
     if pure_pursuit:
         write_json(out/"chunk_pilot_protocol.json", (engine.stage2 or engine.phase2 or engine.chunk_executor).settings)
     history, times, hashes, frame_ids = (deque(maxlen=4) for _ in range(4))
@@ -320,6 +331,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
                 capture_start = time.monotonic_ns()
                 rgb = capture(snap["sim_s"])
                 capture_end = time.monotonic_ns()
+                if depth_maps is not None:
+                    depth_maps.submit(capture.depth_frame, snap["pose"], snap["sim_s"], capture_end, observation_id)
                 np.testing.assert_allclose(get_pose(), snap["pose"], atol=1e-10, rtol=0)
                 digest = hashlib.sha256(rgb.tobytes()).hexdigest()
                 history.append(rgb); times.append(snap["sim_s"]); hashes.append(digest); frame_ids.append(observation_id)
@@ -396,6 +409,8 @@ def run_async(config, out, socket_path, goal, capture, set_pose, get_pose, rende
             engine.cancel.set()
             engine.thread.join(5)
             engine.rf.close()
+            if depth_maps is not None:
+                depth_maps.close()
             if engine.stage2 is not None:
                 engine.stage2.close()
             if engine.phase2 is not None:
