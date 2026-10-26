@@ -45,9 +45,15 @@ parser.add_argument("--oracle-safety-stop", action="store_true")
 parser.add_argument("--early-obstacle-mode", choices=["raw", "graph"])
 parser.add_argument("--topomap", type=Path)
 parser.add_argument("--render-topomap-reference", type=Path)
+parser.add_argument("--depth-camera", action="store_true", help="Opt-in Phase15 depth-only offline pose replay")
+parser.add_argument("--depth-replay-manifest", type=Path)
 parser.add_argument("--controlled-delivery-delay", action="store_true")
 parser.add_argument("--uniform-delivery-delay-s", type=float, choices=[0., .25, .5, .625, .75])
 args, _ = parser.parse_known_args()
+if args.depth_camera != bool(args.depth_replay_manifest):
+    parser.error("--depth-camera requires --depth-replay-manifest and vice versa")
+if args.depth_camera and (args.socket or args.prepare_only or args.asynchronous or args.render_topomap_reference):
+    parser.error("Depth replay cannot run navigation or RGB preparation")
 out = args.output.resolve()
 runtime = out / "isaac_runtime"
 runtime.mkdir(exist_ok=False)
@@ -153,7 +159,8 @@ def build_scene(config):
     camera.CreateVerticalApertureAttr(config["camera"]["vertical_aperture_mm"])
     camera.CreateClippingRangeAttr(Gf.Vec2f(.02, 100.))
     product = rep.create.render_product(str(camera.GetPath()), (320, 240))
-    annotator = rep.AnnotatorRegistry.get_annotator("rgb", device="cpu")
+    annotator = rep.AnnotatorRegistry.get_annotator(
+        "distance_to_image_plane" if args.depth_camera else "rgb", device="cpu")
     annotator.attach([product])
     return stage, agent, translate, rotate, camera, annotator, product
 
@@ -569,7 +576,11 @@ def main():
 
 
 try:
-    main()
+    if args.depth_camera:
+        from nomad_phase15.replay_render import render_isaac
+        render_isaac(args, build_scene, app, rep, omni.usd, Gf, UsdGeom)
+    else:
+        main()
 except Exception:
     import traceback
     (out / "FAILED.txt").write_text(traceback.format_exc())
