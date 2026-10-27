@@ -10,6 +10,8 @@ from nomad_phase0.chunk_report import trace
 from nomad_phase0.s0_batch_metrics import corridor_arc_minimum
 from nomad_phase15.evaluate import sample_path,suffix
 from nomad_phase15b.depth import Snapshot,evaluate_samples
+from nomad_phase4c.plant import control_command
+from .execution import stop_command
 from .config import SAFE
 from .geometry import centered,shifted,path_safety,point_box_distance,rect
 
@@ -24,6 +26,24 @@ def audit(run):
     run=Path(run);s=json.loads((run/'summary.json').read_text());c=s['scenario'];m=c['phase15b_method'];rec,poses=trace(run)
     ctr=rows(run/'controller.jsonl');events=rows(run/'events.jsonl');requests=rows(run/'requests.jsonl');received=rows(run/'received.jsonl');inference=rows(run/'model/inference.jsonl');gaps=rows(run/'clearance.jsonl');graph=rows(run/'stage2_graph.jsonl')
     assert len(rec)==len(gaps);assert len(requests)==len(received)==len(inference)
+    np.testing.assert_allclose([float(r['simulation_time_s']) for r in rec],np.arange(len(rec))/72,atol=1e-12,rtol=0)
+    np.testing.assert_allclose([r['simulation_time_s'] for r in ctr],np.arange(len(ctr))/9,atol=1e-12,rtol=0)
+    previous_v=0.;command_error=0.
+    for control in ctr:
+        expected=[0.,0.];diag=control['pure_pursuit']
+        if control['valid']:
+            if control.get('phase16_fallback_mode')=='STOP_WAIT':expected=stop_command(previous_v)
+            elif diag['stop_reason'] is None:
+                x,y=diag['target_local_x_m'],diag['target_local_y_m'];k=2*y/(x*x+y*y) if x*x+y*y>1e-24 else 0.
+                expected=control_command('CURV',k,previous_v,0.,float('inf'))[0]
+        actual=[control['commanded_v_m_s'],control['commanded_w_rad_s']]
+        command_error=max(command_error,float(np.max(np.abs(np.array(expected)-actual))));previous_v=actual[0]
+        ensemble=control.get('phase16_ensemble') or control.get('phase12_ensemble')
+        if ensemble and ensemble['components']:
+            weights=np.exp(-.5*np.arange(len(ensemble['components'])));weights/=weights.sum()
+            np.testing.assert_allclose(ensemble['weights'],weights,atol=1e-12,rtol=0)
+            assert all(0<=control['monotonic_ns']-x['received_ns']<1e9 for x in ensemble['components'])
+    assert command_error<1e-12
     pose_error=0.;gap_error=0.;oracle_min=float('inf');wall_min=float('inf');margin=0.;collision=False;crossed=False
     cc,off=centered(c)
     for tick in range(1,len(rec)):
@@ -48,6 +68,9 @@ def audit(run):
     for k,(q,r,inf) in enumerate(zip(requests,received,inference)):
         assert q['id']==r['id']==inf['id']==k and q['seed']==101+c['seed_offset']+2*k and inf['seed']==q['seed']
         assert inf['ddpm_seed']==q['seed']+1
+        delay=s['delivery_delay']['configured_additional_s']
+        assert r['release_deadline_monotonic_ns']==r['packet_received_monotonic_ns']+round(delay*1e9)
+        assert r['release_monotonic_ns']==r['received_monotonic_ns'] and r['release_monotonic_ns']>=r['release_deadline_monotonic_ns']
         assert hashlib.sha256(np.stack([frames[i] for i in q['history_observation_ids']]).tobytes()).hexdigest()==inf['history_sha256']
         np.testing.assert_allclose(q['observation_pose'],poses[round(q['observation_sim_s']*72)],rtol=0,atol=1e-12)
         top=inf['topomap'];a,b=candidate_range(closest,len(manifest['nodes'])-1)
@@ -64,9 +87,13 @@ def audit(run):
     kind='SAFETY_FAILURE' if collision or crossed else 'SUCCESS' if success else 'STUCK' if 'timeout' in reason else 'OTHER_TERMINATION'
     distance=float(np.linalg.norm(np.diff(poses[:,:2],axis=0),axis=1).sum());checkpoint=np.flatnonzero(poses[:,c['checkpoint']['axis']]>=c['checkpoint']['threshold_m']);tick=int(checkpoint[0]) if len(checkpoint) else None
     fallback=rows(run/'fallback.jsonl');apps=rows(run/'phase16_applications.jsonl') or rows(run/'phase6_applications.jsonl')
-    dangerous=total=unknown_risky=0;unknown=[];snapshot_age=[];fallback_modes=Counter(x['mode'] for x in fallback)
+    dangerous=total=unknown_risky=0;unknown=[];rejected_unknown=[];snapshot_age=[];fallback_modes=Counter(x['mode'] for x in fallback)
     for e in events:
-        snap=Snapshot.load(e['depth_snapshot']['file']);worlds=np.array([local_to_world(np.array(x),e['observation_pose']) for x in e['overnight_metric_samples']]);B=e['agent_pose_at_switch']
+        # The execution wrapper takes its own immutable pointer after the core's
+        # preliminary capture. Use the actual selector input if publication raced.
+        meta=e.get('phase16',{}).get('selection',{}).get('snapshot',e['depth_snapshot'])
+        assert meta.get('publication_monotonic_ns',0)<=e.get('phase16_selection_ns',e.get('phase15b_selection_monotonic_ns',e['application_monotonic_ns']))
+        snap=Snapshot.load(meta['file']);worlds=np.array([local_to_world(np.array(x),e['observation_pose']) for x in e['overnight_metric_samples']]);B=e['agent_pose_at_switch']
         _,decision=evaluate_samples(worlds,B,snap);snapshot_age.append(e['application_sim_s']-snap.metadata['sim_s'])
         if m in SAFE:
             logged=e['phase16']['selection'];assert decision['selected_sample']==logged['selected_sample'] and decision['all_unsafe']==logged['all_unsafe']
@@ -74,17 +101,27 @@ def audit(run):
         for i,candidate in enumerate(decision['candidates']):
             p,_=suffix(worlds[i],B);safety=path_safety(p,c);oracle=min(safety['obstacle_clearance_m'],safety['corridor_clearance_m'])
             dangerous+=bool(candidate['safe'] and oracle<.025);total+=1
-        q,_=sample_path(suffix(worlds[selected],B)[0]);unknown.append(snap.unknown_fraction(q))
-    app_risk=[]
+        q,_=sample_path(suffix(worlds[selected],B)[0])
+        (rejected_unknown if m in SAFE and decision['all_unsafe'] else unknown).append(snap.unknown_fraction(q))
+    app_risk=[];applied_unknown=[];event_by_id={e['id']:e for e in events}
     for app in apps:
-        if not app.get('world_xy') or not app.get('depth_snapshot'):continue
-        snap=Snapshot.load(app['depth_snapshot']['file']);p,_=suffix(np.array(app['world_xy']),app['pose']);q,_=sample_path(p);cells,ok=snap.cells(q);is_unknown=np.ones(len(q),bool)
+        if app.get('fallback_mode')=='STOP_WAIT':continue  # No path-following command while braking/waiting.
+        meta=app.get('depth_snapshot') or event_by_id.get(app['id'],{}).get('depth_snapshot')
+        if not meta:continue
+        component_paths=[x['world_xy'] for x in app.get('ensemble_components',[])] or ([app['world_xy']] if app.get('world_xy') else [])
+        if not component_paths:continue
+        snap=Snapshot.load(meta['file']);q=np.vstack([sample_path(suffix(np.array(path),app['pose'])[0])[0] for path in component_paths]);cells,ok=snap.cells(q);is_unknown=np.ones(len(q),bool)
         x,y=cells[ok].T;is_unknown[ok]=~snap.observed[y,x]
+        applied_unknown.append(float(is_unknown.mean()))
         xmin,xmax,ymin,ymax=rect(c);d=np.minimum.reduce([q[:,0]-xmin,xmax-q[:,0],q[:,1]-ymin,ymax-q[:,1]])-c['agent_radius_m']
         for box in c['obstacles']:d=np.minimum(d,point_box_distance(q,box)-c['agent_radius_m'])
         risk=is_unknown & (d<.025);count=int(risk.sum());unknown_risky+=count
         app_risk.append(dict(tick=app['tick'],unknown_risky_points=count,near_terminal_risky_points=int(np.sum(risk & (np.linalg.norm(q-poses[-1,:2],axis=1)<=.12)))))
     jobs=[g for g in graph if g['event']=='SUBMIT'];results=[g for g in graph if g['event']=='RESULT'];accepted=[g for g in results if g['disposition']=='ACCEPTED'];solve=[g['solver']['solver_wall_s'] for g in results if 'solver' in g]
+    for job in jobs:assert not any(k in job for k in ('public_config','obstacles','corridor')),'Oracle configuration leaked into a Phase16 Graph job'
+    if m.endswith('GRAPH-depth'):
+        for result in accepted:
+            snap=Snapshot.load(result['depth_snapshot_file']);assert snap.exact_clearance(np.array(result['applied_world_xy']))>=.025-1e-8
     depth=rows(run/'depth/updates.jsonl');mode_times={mode:float(sum(t for t,x in zip(dt,ctr) if x.get('phase16_fallback_mode')==mode)) for mode in ('KEEP_ACTIVE','STOP_WAIT')}
     result=dict(technical_validation='PASS',classification=kind,success=success,collision=bool(collision),corridor=bool(crossed),stuck=kind=='STUCK',termination_reason=reason,
         duration_s=duration,goal_time_s=duration if success else None,distance_m=distance,reference_length_m=c['reference_length_m'],no_detour_success=success and distance<=1.3*c['reference_length_m'],
@@ -97,10 +134,10 @@ def audit(run):
         graph_initialization_rejected=sum(bool(g.get('initialization_rejected')) for g in results),solve_time_s=stats(solve),
         sdf_active_count=sum(bool(g['solver'].get('sdf_active_within_1mm')) for g in accepted) if m.endswith('GRAPH-depth') else None,
         depth_update_ms=stats([r['update_ms'] for r in depth]),snapshot_age_s=stats(snapshot_age),dangerous_false_safe_count=dangerous,depth_sample_decisions=total,
-        selected_unknown_fraction=stats(unknown),unknown_risky_path_points=unknown_risky,
-        unknown_associated_safety_failure=bool((collision or crossed) and app_risk and app_risk[-1]['near_terminal_risky_points']>0),unknown_causal_failure_count=None,
+        selected_unknown_fraction=stats(unknown),rejected_candidate_unknown_fraction=stats(rejected_unknown),applied_path_unknown_fraction=stats(applied_unknown),unknown_risky_path_points=unknown_risky,
+        unknown_associated_safety_failure=bool((collision or crossed) and app_risk and apps and app_risk[-1]['tick']==apps[-1]['tick'] and app_risk[-1]['near_terminal_risky_points']>0),unknown_causal_failure_count=None,
         inference_ms=stats([r['inference_ms'] for r in inference]),actual_delivery_delay_s=stats([(r['release_monotonic_ns']-r['packet_received_monotonic_ns'])/1e9 for r in received]),
-        pose_replay_error=pose_error,clearance_replay_error=gap_error,request_count=len(requests),switch_count=len(events),
+        pose_replay_error=pose_error,command_replay_error=command_error,clearance_replay_error=gap_error,pacing_error_s=stats([abs(float(r['pacing_error_s'])) for r in rec]),request_count=len(requests),switch_count=len(events),
         input_sha256={p:sha256_file(run/p) for p in ('summary.json','agent_trajectory.csv','controller.jsonl','events.jsonl','stage2_graph.jsonl','scenario.json')})
     return result
 

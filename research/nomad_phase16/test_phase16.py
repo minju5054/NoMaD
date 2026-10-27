@@ -1,4 +1,5 @@
-import copy,json,tempfile,unittest
+import copy,json,tempfile,unittest,signal
+from unittest.mock import patch
 from pathlib import Path
 from types import SimpleNamespace
 import numpy as np
@@ -94,5 +95,54 @@ class Tests(unittest.TestCase):
         path,diag=reference_path(c)
         self.assertTrue(diag['narrow_centerline_used']);np.testing.assert_allclose(path[:,1],0.,atol=1e-12)
         self.assertAlmostEqual(diag['minimum_center_distance_m'],.23,places=10)
+    def test_keep_active_preserves_follower_and_relabels_fresh_clock(self):
+        class SplitField:
+            error_bound=0.;metadata={'file':'synthetic','sim_s':0.,'frame_id':0}
+            def query(self,q):return np.where(q[:,1]<0.,.5,-.1),np.zeros_like(q)
+            def unknown_fraction(self,q):return 0.
+        run=ROOT.parent/'artifacts/isaac6/phase15b_depth_02/S0_47_D750_FRESHEST-SAFE'
+        e=json.loads((run/'events.jsonl').read_text().splitlines()[1]);ctr=next(json.loads(l) for l in (run/'controller.jsonl').read_text().splitlines() if json.loads(l)['simulation_time_s']==e['application_sim_s'])
+        e['observation_pose']=[0,0,0];e['overnight_metric_samples']=[np.column_stack([np.linspace(.1,.8,8),np.full(8,.25)]).tolist()]*8
+        with tempfile.TemporaryDirectory() as tmp:
+            obj=SafeExecution(METHODS[0],Path(tmp));obj.depth_maps=SimpleNamespace(snapshot=lambda:SplitField())
+            old=PurePursuit([[0.,-.1],[1.,-.1]],pp_protocol()['follower']);old.progress=.1
+            obj.follower=old;obj.path_source_id=0;obj.active_id=0;obj.last_command=[.2,0.]
+            core=SimpleNamespace(pose=np.array([0.,0.,0.]),v=.2,w=0.,latest={'id':e['id']},applied_id=e['id'])
+            obj.apply(core,ctr,e)
+            self.assertEqual(obj.mode,'KEEP_ACTIVE');self.assertIs(obj.follower,old);self.assertEqual(obj.path_source_id,0)
+            self.assertEqual(obj.active_id,e['id']);self.assertGreaterEqual(old.progress,.1);self.assertGreater(core.v,0);self.assertLess(core.w,0);obj.close()
+    def test_campaign_resume_does_not_retry_interrupted_run(self):
+        from . import campaign as module
+        launches=[];interrupted=[False]
+        class FakeProcess:
+            pid=123456789
+            def __init__(self,argv,**kwargs):
+                self.argv=argv;self.output=None
+                if 'nomad_phase16.launch' in argv:
+                    self.output=Path(argv[argv.index('--output')+1]);self.output.mkdir(parents=True,exist_ok=False)
+                    launches.append(str(self.output));self.main='/main/' in str(self.output)
+                    if argv[argv.index('--mode')+1]=='reference':
+                        (self.output/'topomap').mkdir();(self.output/'topomap/manifest.json').write_text('{}')
+            def wait(self,**kwargs):
+                if self.output and self.main and not interrupted[0]:interrupted[0]=True;raise KeyboardInterrupt
+                if self.output:(self.output/'launch_complete.json').write_text('{}')
+                return 0
+        def audit(path):
+            success='SL_' in Path(path).name
+            return dict(technical_validation='PASS',success=success,classification='SUCCESS' if success else 'STUCK')
+        def git(args,**kwargs):return '' if 'diff' in args else 'synthetic-sha\n'
+        handlers={s:signal.getsignal(s) for s in (signal.SIGTERM,signal.SIGINT)}
+        try:
+            with tempfile.TemporaryDirectory() as tmp,patch.object(module.subprocess,'Popen',FakeProcess),patch.object(module.subprocess,'check_output',git),patch('nomad_isaac.topomap.load_map',side_effect=lambda path:([None]*(18 if path.parents[1].name=='SL' else 15),[])),patch('nomad_phase16.metrics.audit',side_effect=audit):
+                root=Path(tmp)/'campaign'
+                with self.assertRaises(KeyboardInterrupt):module.campaign(root)
+                module.campaign(root)
+                self.assertEqual(len(launches),len(set(launches)))
+                self.assertEqual(sum('/main/' in x for x in launches),36)
+                records=[json.loads(f.read_text()) for f in (root/'metrics').glob('main_*.json')]
+                self.assertEqual(len(records),36);self.assertEqual(sum(r['classification']=='TECHNICAL_FAILURE' for r in records),1)
+                before=len(launches);module.campaign(root);self.assertEqual(len(launches),before)
+        finally:
+            for s,h in handlers.items():signal.signal(s,h)
 
 if __name__=='__main__':unittest.main()

@@ -16,10 +16,12 @@ def clean_env():
 def plan_jobs(root):
     jobs=[]
     for item in protocol()['main_order']:
-        j=dict(item);j['key']=f"{j['scene']}_{j['index']:03d}_D750_{j['method']}";j['output']=str(root/'main'/j['key']);j['delay']=.75;jobs.append(j)
+        j=dict(item);j['key']=f"{j['scene']}_{j['index']:03d}_D750_{j['method']}";j['output']=str(root/'main'/j['key']);j['delay']=.75
+        j['seed_offset']=10000*j['index'];j['run_id']=f"{j['scene']}_{j['index']}";jobs.append(j)
     assert len(jobs)==108 and len({j['key'] for j in jobs})==108
     for j in jobs:
         p=socket_path_for_run(j['output']);j['socket_path']=str(p);j['socket_bytes']=validate_socket_path(p)
+    assert len({j['socket_path'] for j in jobs})==len(jobs),'Socket hash collision'
     for scene in ('SL','LC','CL'):
         for index in (901,902):validate_socket_path(socket_path_for_run(root/'gate'/f'{scene}_{index}_GRAPH-depth'))
     return jobs
@@ -33,6 +35,9 @@ def status(root):
 
 def campaign(root):
     p=verify_sources();assert p['status']=='FROZEN','User choices/protocol must be frozen before campaign'
+    ready=read(ROOT/'research/results/phase16_preflight/readiness.json',{})
+    assert ready.get('passed'),'Three excluded smokes and depth validation must pass before campaign'
+    for name,h in ready['runtime_source_sha256'].items():assert sha256_file(ROOT/name)==h,name
     assert not subprocess.check_output(['git','diff','--name-only'],cwd=ROOT,text=True).strip(),'Tracked edits must be committed'
     jobs=plan_jobs(root);env=clean_env();root.mkdir(parents=True,exist_ok=True)
     if read(root/'complete.json',{}).get('report_complete'):
@@ -85,7 +90,8 @@ def campaign(root):
                 r=stage('topomap',scene,argv,output);manifest=output/'topomap/manifest.json'
                 if r['exit_code']==0:
                     from nomad_isaac.topomap import load_map
-                    images,_=load_map(manifest);maps[scene]=dict(manifest=str(manifest),node_count=len(images),manifest_sha256=sha256_file(manifest));print(f'[topomap] {scene} done ({len(images)} nodes)',flush=True)
+                    images,_=load_map(manifest);assert len(images)==p['reference']['expected_topomap_nodes'][scene]
+                    maps[scene]=dict(manifest=str(manifest),node_count=len(images),manifest_sha256=sha256_file(manifest));print(f'[topomap] {scene} done ({len(images)} nodes)',flush=True)
                 else:gate[scene]='TOPOMAP_TECHNICAL_FAILURE';print(f'[topomap] {scene} TECHNICAL_FAILURE',flush=True)
             resolved=dict(p,topomaps=maps,execution_git_sha=state['created_git_sha']);write(root/'resolved_protocol.json',resolved)
             def nav(kind,j,manifest):
@@ -102,7 +108,7 @@ def campaign(root):
             for scene in maps:
                 rr=[]
                 for i in (901,902):
-                    key=f'{scene}_{i}_GRAPH-depth';j=dict(key=key,scene=scene,index=i,method='FRESHEST-SAFE+GRAPH-depth',delay=0.,output=str(root/'gate'/key))
+                    key=f'{scene}_{i}_GRAPH-depth';j=dict(key=key,scene=scene,index=i,seed_offset=10000*i,run_id=f'{scene}_{i}',method='FRESHEST-SAFE+GRAPH-depth',delay=0.,output=str(root/'gate'/key))
                     rr.append(nav('gate',j,maps[scene]['manifest']))
                 gate[scene]='PASS' if any(r['success'] for r in rr) else 'NOMAD_INFEASIBLE' if all(r['technical_validation']=='PASS' for r in rr) else 'GATE_TECHNICAL_FAILURE'
                 print(f'[gate] {scene} {gate[scene]}',flush=True)

@@ -1,0 +1,384 @@
+{
+  "passed": true,
+  "unit_tests_passed": 8,
+  "smoke_count": 3,
+  "main_count": 0,
+  "protected_unchanged": true,
+  "source_sha256": {
+    "research/nomad_phase16/launch.py": "54c992938fccc922c626df93e6a10ad528235e65a9af6d8310afee5b8b62f974",
+    "research/nomad_phase16/preflight.py": "acd52885b723958c24b33b56f1c9d7f95aca5670727ad3d58a7667130ce6a054",
+    "research/nomad_phase16/test_phase16.py": "eb82aac9b738a732ec4f00d437501bf5fbf8e7d98c6bc2780160f9617e86ebde",
+    "research/nomad_phase16/__init__.py": "7bc234538ecea766982206061798bdc053e69e2a1c073eea130728a9ab76f157",
+    "research/nomad_phase16/campaign.py": "12cc3e7190a3a0202c7f5c30caa88d0212179e81909c000d124041a100213b29",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase16/metrics.py": "f25616df410f1188f61e726f6ddc7af928a70314e71531feea304e56a1beacdc",
+    "research/nomad_phase16/report.py": "e66789b07054cf87d291245f094af33e05abce6208a19a94dcb05d9a891d2529",
+    "research/nomad_phase16/simulator.py": "a20b59d0e7f3401e97cb974a17efbea1ffe7e1961aa5c60be2fc035eafe0e7bd",
+    "research/nomad_phase16/depth.py": "020174e93cd7d2de1135cfbba3afff50d3833602e77d447d08845db286ba6ac3",
+    "research/nomad_phase16/config.py": "f9c46887c9f23805f783a84be505497ce8a91739bf83538257341d85293aa806",
+    "research/nomad_phase16/execution.py": "9a65369472647e3c25c3636cfffb296aa544ea4c61d5135e201c2c2de87e1f02"
+  },
+  "read_only_enhanced_audit": [
+    {
+      "method": "FRESHEST-SAFE+HERMITE",
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_preflight_01/smoke/SL_901_D750_FRESHEST-SAFE+HERMITE",
+      "technical_validation": "PASS",
+      "pose_replay_error": 0.0,
+      "command_replay_error": 0.0,
+      "clearance_replay_error": 4.440892098500626e-16,
+      "pacing_error_s": {
+        "n": 1481,
+        "median": 0.0001359,
+        "p95": 0.020258788
+      },
+      "classification": "SAFETY_FAILURE",
+      "socket_removed": true,
+      "metric": {
+        "technical_validation": "PASS",
+        "classification": "SAFETY_FAILURE",
+        "success": false,
+        "collision": false,
+        "corridor": true,
+        "stuck": false,
+        "termination_reason": "corridor_footprint_stop",
+        "duration_s": 20.555555555555557,
+        "goal_time_s": null,
+        "distance_m": 1.7795888625970535,
+        "reference_length_m": 6.906954180660328,
+        "no_detour_success": false,
+        "checkpoint_time_s": null,
+        "checkpoint_mean_speed_m_s": null,
+        "minimum_oracle_clearance_m": -8.43667712468188e-05,
+        "minimum_obstacle_clearance_m": 0.1666817473422496,
+        "minimum_wall_clearance_m": -8.43667712468188e-05,
+        "margin_violation_s": 0.0,
+        "curv_slow_fraction": 0.5833333333333334,
+        "endpoint_clamp_fraction": 0.6648648648648648,
+        "stop_duration_s": 9.777777777777779,
+        "fallback_events": {
+          "STOP_WAIT": 6
+        },
+        "fallback_time_s": {
+          "KEEP_ACTIVE": 0.0,
+          "STOP_WAIT": 6.0
+        },
+        "te_removed_chunks": 0,
+        "te_expired_chunks_at_fallback": 0,
+        "fallback_time_fraction": {
+          "KEEP_ACTIVE": 0.0,
+          "STOP_WAIT": 0.29189189189189185
+        },
+        "graph_calls": 0,
+        "graph_accepted": 0,
+        "graph_dispositions": {},
+        "graph_initialization_rejected": 0,
+        "solve_time_s": {
+          "n": 0,
+          "median": null,
+          "p95": null
+        },
+        "sdf_active_count": null,
+        "depth_update_ms": {
+          "n": 79,
+          "median": 28.058942000825482,
+          "p95": 34.99473650017534
+        },
+        "snapshot_age_s": {
+          "n": 18,
+          "median": 0.375,
+          "p95": 0.3916666666666665
+        },
+        "dangerous_false_safe_count": 0,
+        "depth_sample_decisions": 144,
+        "selected_unknown_fraction": {
+          "n": 12,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "rejected_candidate_unknown_fraction": {
+          "n": 6,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "applied_path_unknown_fraction": {
+          "n": 12,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "unknown_risky_path_points": 0,
+        "unknown_associated_safety_failure": false,
+        "unknown_causal_failure_count": null,
+        "inference_ms": {
+          "n": 19,
+          "median": 38.857808,
+          "p95": 105.07340979999923
+        },
+        "actual_delivery_delay_s": {
+          "n": 19,
+          "median": 0.750078475,
+          "p95": 0.7500893255
+        },
+        "pose_replay_error": 0.0,
+        "command_replay_error": 0.0,
+        "clearance_replay_error": 4.440892098500626e-16,
+        "pacing_error_s": {
+          "n": 1481,
+          "median": 0.0001359,
+          "p95": 0.020258788
+        },
+        "request_count": 19,
+        "switch_count": 18,
+        "input_sha256": {
+          "summary.json": "fe8ca47de779a10ffa072a0d7e7f1e47cae43883cfc93b7c93c8d268fd278e9e",
+          "agent_trajectory.csv": "7062575e96f68f302a46f9c84063f7042dc256e0f1d3d80ff40250d54a506cac",
+          "controller.jsonl": "0ccd7fb6d59195e3d81f02ef62c9a7237b882bbd8e0bdb5edd05d3727fb81f3f",
+          "events.jsonl": "dae147d7effb9d529dab560e3860a1b42e22499bcef1526f9f12f76c203e5d81",
+          "stage2_graph.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "scenario.json": "45fc64dfd980758ea388d4bac50cac1b54dcb7dd6fecab28f8b6c1ce9b00ba66"
+        }
+      }
+    },
+    {
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_preflight_01/smoke/SL_901_D750_FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "technical_validation": "PASS",
+      "pose_replay_error": 0.0,
+      "command_replay_error": 0.0,
+      "clearance_replay_error": 4.440892098500626e-16,
+      "pacing_error_s": {
+        "n": 803,
+        "median": 0.000139794,
+        "p95": 0.4561087107999997
+      },
+      "classification": "SAFETY_FAILURE",
+      "socket_removed": true,
+      "metric": {
+        "technical_validation": "PASS",
+        "classification": "SAFETY_FAILURE",
+        "success": false,
+        "collision": false,
+        "corridor": true,
+        "stuck": false,
+        "termination_reason": "corridor_footprint_stop",
+        "duration_s": 11.13888888888889,
+        "goal_time_s": null,
+        "distance_m": 1.8829257476284427,
+        "reference_length_m": 6.906954180660328,
+        "no_detour_success": false,
+        "checkpoint_time_s": null,
+        "checkpoint_mean_speed_m_s": null,
+        "minimum_oracle_clearance_m": -0.000757266930941608,
+        "minimum_obstacle_clearance_m": 0.14110949438255227,
+        "minimum_wall_clearance_m": -0.000757266930941608,
+        "margin_violation_s": 0.0,
+        "curv_slow_fraction": 0.2535211267605634,
+        "endpoint_clamp_fraction": 0.504950495049505,
+        "stop_duration_s": 3.0,
+        "fallback_events": {
+          "STOP_WAIT": 1
+        },
+        "fallback_time_s": {
+          "KEEP_ACTIVE": 0.0,
+          "STOP_WAIT": 0.25
+        },
+        "te_removed_chunks": 0,
+        "te_expired_chunks_at_fallback": 1,
+        "fallback_time_fraction": {
+          "KEEP_ACTIVE": 0.0,
+          "STOP_WAIT": 0.022443890274314215
+        },
+        "graph_calls": 0,
+        "graph_accepted": 0,
+        "graph_dispositions": {},
+        "graph_initialization_rejected": 0,
+        "solve_time_s": {
+          "n": 0,
+          "median": null,
+          "p95": null
+        },
+        "sdf_active_count": null,
+        "depth_update_ms": {
+          "n": 41,
+          "median": 28.52912100024696,
+          "p95": 30.369812000571983
+        },
+        "snapshot_age_s": {
+          "n": 9,
+          "median": 0.40277777777777857,
+          "p95": 0.40277777777777857
+        },
+        "dangerous_false_safe_count": 0,
+        "depth_sample_decisions": 72,
+        "selected_unknown_fraction": {
+          "n": 8,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "rejected_candidate_unknown_fraction": {
+          "n": 1,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "applied_path_unknown_fraction": {
+          "n": 8,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "unknown_risky_path_points": 0,
+        "unknown_associated_safety_failure": false,
+        "unknown_causal_failure_count": null,
+        "inference_ms": {
+          "n": 10,
+          "median": 46.103336999999996,
+          "p95": 184.80502304999976
+        },
+        "actual_delivery_delay_s": {
+          "n": 10,
+          "median": 0.750079245,
+          "p95": 0.7500938698999999
+        },
+        "pose_replay_error": 0.0,
+        "command_replay_error": 0.0,
+        "clearance_replay_error": 4.440892098500626e-16,
+        "pacing_error_s": {
+          "n": 803,
+          "median": 0.000139794,
+          "p95": 0.4561087107999997
+        },
+        "request_count": 10,
+        "switch_count": 9,
+        "input_sha256": {
+          "summary.json": "5a9b5112c66847ee8e8ba3ba546a54903680b300c193558656463c8ca08b73a1",
+          "agent_trajectory.csv": "ca722103edf3cfb703bee807545b1345bdd8a52e3af3195b49d316a276959956",
+          "controller.jsonl": "07e371e641ff13b380fac91f35cdf732e7ff50057f1481e446e5d70fe9212ac3",
+          "events.jsonl": "35d0bc62b1e663d78f9d1683d519ee5c6f2f690aaf2cba231d8776bfa3e2618c",
+          "stage2_graph.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "scenario.json": "cd961546df3e49bbc31998f531c87e884110e75c253314fa11cc8df5bf3ead7a"
+        }
+      }
+    },
+    {
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_preflight_01/smoke/SL_901_D750_FRESHEST-SAFE+GRAPH-depth",
+      "technical_validation": "PASS",
+      "pose_replay_error": 0.0,
+      "command_replay_error": 0.0,
+      "clearance_replay_error": 4.440892098500626e-16,
+      "pacing_error_s": {
+        "n": 2161,
+        "median": 0.000135724,
+        "p95": 0.0011391
+      },
+      "classification": "STUCK",
+      "socket_removed": true,
+      "metric": {
+        "technical_validation": "PASS",
+        "classification": "STUCK",
+        "success": false,
+        "collision": false,
+        "corridor": false,
+        "stuck": true,
+        "termination_reason": "simulation_timeout",
+        "duration_s": 30.0,
+        "goal_time_s": null,
+        "distance_m": 2.817455085177091,
+        "reference_length_m": 6.906954180660328,
+        "no_detour_success": false,
+        "checkpoint_time_s": null,
+        "checkpoint_mean_speed_m_s": null,
+        "minimum_oracle_clearance_m": 0.0852492498676071,
+        "minimum_obstacle_clearance_m": 0.0852492498676071,
+        "minimum_wall_clearance_m": 0.12422536734402365,
+        "margin_violation_s": 0.0,
+        "curv_slow_fraction": 0.535031847133758,
+        "endpoint_clamp_fraction": 0.7407407407407407,
+        "stop_duration_s": 12.0,
+        "fallback_events": {
+          "STOP_WAIT": 9
+        },
+        "fallback_time_s": {
+          "KEEP_ACTIVE": 0.0,
+          "STOP_WAIT": 8.777777777777779
+        },
+        "te_removed_chunks": 0,
+        "te_expired_chunks_at_fallback": 0,
+        "fallback_time_fraction": {
+          "KEEP_ACTIVE": 0.0,
+          "STOP_WAIT": 0.2925925925925926
+        },
+        "graph_calls": 19,
+        "graph_accepted": 9,
+        "graph_dispositions": {
+          "INITIALIZATION_REJECTED": 5,
+          "ACCEPTED": 9,
+          "NONCONVERGED": 5
+        },
+        "graph_initialization_rejected": 5,
+        "solve_time_s": {
+          "n": 14,
+          "median": 0.07428926100010358,
+          "p95": 0.17132532700034062
+        },
+        "sdf_active_count": 0,
+        "depth_update_ms": {
+          "n": 117,
+          "median": 28.23014899968257,
+          "p95": 32.89265199964575
+        },
+        "snapshot_age_s": {
+          "n": 28,
+          "median": 0.40277777777777857,
+          "p95": 0.45833333333333215
+        },
+        "dangerous_false_safe_count": 0,
+        "depth_sample_decisions": 224,
+        "selected_unknown_fraction": {
+          "n": 19,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "rejected_candidate_unknown_fraction": {
+          "n": 9,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "applied_path_unknown_fraction": {
+          "n": 28,
+          "median": 0.0,
+          "p95": 0.0
+        },
+        "unknown_risky_path_points": 0,
+        "unknown_associated_safety_failure": false,
+        "unknown_causal_failure_count": null,
+        "inference_ms": {
+          "n": 29,
+          "median": 40.842204,
+          "p95": 59.250730799999985
+        },
+        "actual_delivery_delay_s": {
+          "n": 29,
+          "median": 0.750079341,
+          "p95": 0.7500946398
+        },
+        "pose_replay_error": 0.0,
+        "command_replay_error": 0.0,
+        "clearance_replay_error": 4.440892098500626e-16,
+        "pacing_error_s": {
+          "n": 2161,
+          "median": 0.000135724,
+          "p95": 0.0011391
+        },
+        "request_count": 29,
+        "switch_count": 28,
+        "input_sha256": {
+          "summary.json": "f9f443f5b48840c1ecdc65eaff51829f38133184bff80ea65876a34dbb76b8eb",
+          "agent_trajectory.csv": "2cabdf46a05df515f5f04ca6c49317a713548512cb655d31cd9a1c95810a870c",
+          "controller.jsonl": "076f94dc96ab01ff5d9b81c8d20d969b25b1ad434c2ae43d6edc35f8a53bc02a",
+          "events.jsonl": "9d08b8b3d2d0d1829cbe3022514279ed1893cd049f26c93304ca30d75695f49b",
+          "stage2_graph.jsonl": "166f70fd9623f6be9204ec31cee96cc7cf38f547a5ceb2e4bd708626b9c4e7d1",
+          "scenario.json": "75568736f49ce6181defca81f13100c1a098a442bd54951a97a290bf69f086ea"
+        }
+      }
+    }
+  ]
+}
