@@ -1,0 +1,367 @@
+{
+  "A": {
+    "MARGINAL_DEADLOCK": 2,
+    "TRUE_BLOCK": 6,
+    "OTHER": 1,
+    "NEAR_START_POSE": 1
+  },
+  "B": {
+    "55": "DIFFERENT_ROUTE",
+    "56": "DIFFERENT_ROUTE",
+    "58": "GRAPH_APPROACH_CLOSER",
+    "59": "DIFFERENT_ROUTE"
+  },
+  "C": {
+    "901": "NOMAD_BLOCKED",
+    "902": "NOMAD_BLOCKED"
+  },
+  "selected_runs": 10,
+  "main_selected": 8,
+  "gate_selected": 2,
+  "stop_events": 1110,
+  "selection": {
+    "candidate": "E1",
+    "escape_fraction": 0.109009009009009,
+    "penetrating_selections": 0,
+    "label": "INSUFFICIENT",
+    "eligible": [
+      "E0",
+      "E1",
+      "E2"
+    ],
+    "next_step": "Consider in-place-rotation recovery in a new study",
+    "scope": "Offline same-data path selection, not execution safety, intervention causality, or navigation success. Nonpenetration is weaker than the 2.5cm margin. New-seed closed-loop validation required."
+  },
+  "B_details": [
+    {
+      "row_type": "run_summary",
+      "index": 55,
+      "run": "CL_055_D750_FRESHEST-SAFE+GRAPH-depth",
+      "cause": "DIFFERENT_ROUTE",
+      "first_stop_id": 20,
+      "first_stop_time_s": 22.88888888888889,
+      "B": [
+        2.8952844841053462,
+        -0.5527445547423895,
+        -0.6658384199071659
+      ],
+      "B_oracle_clearance_m": 0.018643648686253872,
+      "B_depth_clearance_m": 0.01018437744574505,
+      "prior_active_path_kind": "ORIGINAL",
+      "prior_application_tick": 1576,
+      "prior_path_source_id": 19,
+      "safe_closest_minus_graph_B_m": null,
+      "safe_entry_minus_graph_B_m": null,
+      "certificate_revert": false,
+      "comparisons": [
+        {
+          "comparator_run": "CL_055_D750_FRESHEST-SAFE",
+          "comparator_method": "FRESHEST-SAFE",
+          "comparator_result": "SUCCESS",
+          "entered_radius": false,
+          "minimum_distance_to_B_m": 1.4650475653146144
+        },
+        {
+          "comparator_run": "CL_055_D750_FRESHEST-SAFE+GRAPH-GF",
+          "comparator_method": "FRESHEST-SAFE+GRAPH-GF",
+          "comparator_result": "SUCCESS",
+          "entered_radius": false,
+          "minimum_distance_to_B_m": 1.4575291787462288
+        }
+      ]
+    },
+    {
+      "row_type": "run_summary",
+      "index": 56,
+      "run": "CL_056_D750_FRESHEST-SAFE+GRAPH-depth",
+      "cause": "DIFFERENT_ROUTE",
+      "first_stop_id": 49,
+      "first_stop_time_s": 51.666666666666664,
+      "B": [
+        4.348461395105307,
+        -1.3627124725857258,
+        -2.7448140853954417
+      ],
+      "B_oracle_clearance_m": 0.047287527414274194,
+      "B_depth_clearance_m": 0.04021645960240881,
+      "prior_active_path_kind": "CORRECTED",
+      "prior_application_tick": 3656,
+      "prior_path_source_id": 48,
+      "safe_closest_minus_graph_B_m": null,
+      "safe_entry_minus_graph_B_m": null,
+      "certificate_revert": false,
+      "comparisons": [
+        {
+          "comparator_run": "CL_056_D750_FRESHEST-SAFE",
+          "comparator_method": "FRESHEST-SAFE",
+          "comparator_result": "SUCCESS",
+          "entered_radius": false,
+          "minimum_distance_to_B_m": 1.8095263733042768
+        },
+        {
+          "comparator_run": "CL_056_D750_FRESHEST-SAFE+GRAPH-GF",
+          "comparator_method": "FRESHEST-SAFE+GRAPH-GF",
+          "comparator_result": "SUCCESS",
+          "entered_radius": false,
+          "minimum_distance_to_B_m": 1.6038473953095191
+        }
+      ]
+    },
+    {
+      "row_type": "run_summary",
+      "index": 58,
+      "run": "CL_058_D750_FRESHEST-SAFE+GRAPH-depth",
+      "cause": "GRAPH_APPROACH_CLOSER",
+      "first_stop_id": 13,
+      "first_stop_time_s": 15.444444444444445,
+      "B": [
+        1.3164241662618787,
+        0.29022004649641636,
+        -0.2867452769233303
+      ],
+      "B_oracle_clearance_m": 0.0867828652097474,
+      "B_depth_clearance_m": 0.07650476592625642,
+      "prior_active_path_kind": "CORRECTED",
+      "prior_application_tick": 1040,
+      "prior_path_source_id": 12,
+      "safe_closest_minus_graph_B_m": 0.16977259153797267,
+      "safe_entry_minus_graph_B_m": 0.25763766011803957,
+      "certificate_revert": false,
+      "comparisons": [
+        {
+          "comparator_run": "CL_058_D750_FRESHEST-SAFE",
+          "comparator_method": "FRESHEST-SAFE",
+          "comparator_result": "SUCCESS",
+          "entered_radius": true,
+          "minimum_distance_to_B_m": 0.25795328485062397,
+          "entry_time_s": 12.805555555555555,
+          "entry_pose": [
+            1.1132955109285132,
+            0.0697261179067814,
+            -0.14796104475971994
+          ],
+          "entry_heading_deg": -8.477543397078218,
+          "entry_distance_to_B_m": 0.29979797057757457,
+          "entry_oracle_clearance_m": 0.344420525327787,
+          "entry_depth_clearance_m": 0.32565198140851787,
+          "closest_time_s": 13.305555555555555,
+          "closest_pose": [
+            1.2399320830040639,
+            0.043868958891537566,
+            -0.2993790611474676
+          ],
+          "closest_heading_deg": -17.153156678338895,
+          "closest_distance_to_B_m": 0.25795328485062397,
+          "closest_oracle_clearance_m": 0.25655545674772007,
+          "closest_depth_clearance_m": 0.2396824218974771,
+          "minimum_oracle_within_radius_m": 0.2216871125862029
+        },
+        {
+          "comparator_run": "CL_058_D750_FRESHEST-SAFE+GRAPH-GF",
+          "comparator_method": "FRESHEST-SAFE+GRAPH-GF",
+          "comparator_result": "SUCCESS",
+          "entered_radius": true,
+          "minimum_distance_to_B_m": 0.1488017024446805,
+          "entry_time_s": 13.48611111111111,
+          "entry_pose": [
+            1.0189077383693406,
+            0.3248438155184539,
+            0.386667165687677
+          ],
+          "entry_heading_deg": 22.154396670189612,
+          "entry_distance_to_B_m": 0.2995243399913057,
+          "entry_oracle_clearance_m": 0.3842992931022856,
+          "entry_depth_clearance_m": 0.3640211938187941,
+          "closest_time_s": 17.125,
+          "closest_pose": [
+            1.2291012113421182,
+            0.4107051003185262,
+            0.6290964158273828
+          ],
+          "closest_heading_deg": 36.04456953371608,
+          "closest_distance_to_B_m": 0.1488017024446805,
+          "closest_oracle_clearance_m": 0.1741058201295079,
+          "closest_depth_clearance_m": 0.16382772084601704,
+          "minimum_oracle_within_radius_m": 0.0573877987922827
+        }
+      ]
+    },
+    {
+      "row_type": "run_summary",
+      "index": 59,
+      "run": "CL_059_D750_FRESHEST-SAFE+GRAPH-depth",
+      "cause": "DIFFERENT_ROUTE",
+      "first_stop_id": 12,
+      "first_stop_time_s": 14.88888888888889,
+      "B": [
+        1.2707294643760445,
+        0.3567407120566256,
+        0.4792167810297343
+      ],
+      "B_oracle_clearance_m": 0.13247756709558164,
+      "B_depth_clearance_m": 0.12219946781209051,
+      "prior_active_path_kind": "CORRECTED",
+      "prior_application_tick": 1008,
+      "prior_path_source_id": 11,
+      "safe_closest_minus_graph_B_m": null,
+      "safe_entry_minus_graph_B_m": null,
+      "certificate_revert": false,
+      "comparisons": [
+        {
+          "comparator_run": "CL_059_D750_FRESHEST-SAFE",
+          "comparator_method": "FRESHEST-SAFE",
+          "comparator_result": "SUCCESS",
+          "entered_radius": false,
+          "minimum_distance_to_B_m": 0.3021938675804105
+        },
+        {
+          "comparator_run": "CL_059_D750_FRESHEST-SAFE+GRAPH-GF",
+          "comparator_method": "FRESHEST-SAFE+GRAPH-GF",
+          "comparator_result": "STUCK",
+          "entered_radius": true,
+          "minimum_distance_to_B_m": 0.047334464881667634,
+          "entry_time_s": 9.972222222222221,
+          "entry_pose": [
+            0.9787338001866202,
+            0.291295892643734,
+            0.29622275453810154
+          ],
+          "entry_heading_deg": 16.972313630772973,
+          "entry_distance_to_B_m": 0.29923985746121634,
+          "entry_oracle_clearance_m": 0.424473231285006,
+          "entry_depth_clearance_m": 0.39428371532511386,
+          "closest_time_s": 14.291666666666666,
+          "closest_pose": [
+            1.2513074903550256,
+            0.3999071167107162,
+            0.42400053231587886
+          ],
+          "closest_heading_deg": 24.29344101300013,
+          "closest_distance_to_B_m": 0.047334464881667634,
+          "closest_oracle_clearance_m": 0.1518995411166005,
+          "closest_depth_clearance_m": 0.14162144183310948,
+          "minimum_oracle_within_radius_m": 0.017438299437626176
+        }
+      ]
+    }
+  ],
+  "plot_records": [
+    {
+      "run": "CL_055_D750_FRESHEST-SAFE+GRAPH-depth",
+      "split": "main",
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "index": 55,
+      "representative_id": 54,
+      "in_A": true
+    },
+    {
+      "run": "CL_056_D750_FRESHEST-SAFE+GRAPH-depth",
+      "split": "main",
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "index": 56,
+      "representative_id": 68,
+      "in_A": true
+    },
+    {
+      "run": "CL_058_D750_FRESHEST-SAFE+GRAPH-depth",
+      "split": "main",
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "index": 58,
+      "representative_id": 50,
+      "in_A": true
+    },
+    {
+      "run": "CL_058_D750_FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "split": "main",
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "index": 58,
+      "representative_id": 24,
+      "in_A": false
+    },
+    {
+      "run": "CL_059_D750_FRESHEST-SAFE+GRAPH-GF",
+      "split": "main",
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-GF",
+      "index": 59,
+      "representative_id": 52,
+      "in_A": true
+    },
+    {
+      "run": "CL_059_D750_FRESHEST-SAFE+GRAPH-depth",
+      "split": "main",
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "index": 59,
+      "representative_id": 64,
+      "in_A": true
+    },
+    {
+      "run": "CL_059_D750_FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "split": "main",
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "index": 59,
+      "representative_id": 52,
+      "in_A": true
+    },
+    {
+      "run": "LC_055_D750_FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "split": "main",
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "index": 55,
+      "representative_id": 55,
+      "in_A": true
+    },
+    {
+      "run": "LC_055_D750_FRESHEST-SAFE",
+      "split": "main",
+      "scene": "LC",
+      "method": "FRESHEST-SAFE",
+      "index": 55,
+      "representative_id": 76,
+      "in_A": true
+    },
+    {
+      "run": "LC_056_D750_FRESHEST-SAFE+GRAPH-GF",
+      "split": "main",
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-GF",
+      "index": 56,
+      "representative_id": 87,
+      "in_A": false
+    },
+    {
+      "run": "LC_059_D750_FRESHEST-SAFE+HERMITE",
+      "split": "main",
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE",
+      "index": 59,
+      "representative_id": 87,
+      "in_A": false
+    },
+    {
+      "run": "SL_901_GRAPH-depth",
+      "split": "gate",
+      "scene": "SL",
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "index": 901,
+      "representative_id": 187,
+      "in_A": true
+    },
+    {
+      "run": "SL_902_GRAPH-depth",
+      "split": "gate",
+      "scene": "SL",
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "index": 902,
+      "representative_id": 190,
+      "in_A": true
+    }
+  ]
+}

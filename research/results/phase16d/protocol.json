@@ -1,0 +1,42 @@
+{
+  "base_commit": "18de5fa",
+  "main_inventory": 72,
+  "gate_inventory": 6,
+  "stop_fraction_strict_min": 0.2,
+  "always_include_gates": [
+    "SL_901_GRAPH-depth",
+    "SL_902_GRAPH-depth"
+  ],
+  "target_clearance_m": 0.025,
+  "depth_path": "unchanged suffix/evaluate_samples: sampled SDF minimum - h/sqrt(2) - max sample spacing/2",
+  "depth_B": "SDF.query(B) - h/sqrt(2); nominal and exact occupied-site distance also reported; no segment spacing penalty at a single point",
+  "oracle": "exact inherited polyline footprint clearance, minimum over static boxes AND outer rectangle; evaluation only",
+  "best_sample_for_A": "maximum oracle clearance among all eight; depth-best oracle clearance is an additional field",
+  "sample_change": "mean world XY distance over 8x8 same-index points, descriptive array change; sample indices are not physical correspondences",
+  "near_start_radius_m": 0.3,
+  "risk_location": "Euclidean radius from actual B; query points use the same conservative spacing allowance as the native selector; near/far can both be unsafe",
+  "consecutive": "consecutive applied FRESH decisions, broken by NORMAL or KEEP_ACTIVE; median change during consecutive STOP_WAIT pairs, plus all-STOP-pair statistic",
+  "B_neighborhood_m": 0.3,
+  "B_matching": "first entry recorded; GRAPH_APPROACH_CLOSER compares point oracle clearance at B with SAFE closest recorded pose inside radius; prior active lineage must be corrected",
+  "B_certificate": "sole exact certificate rejection: solver success + constraints_satisfied + exact_certificate_pass false + actual CONSTRAINT_FAILED; nonconvergence/stale alone is not certificate rejection",
+  "B_different_route": "either SAFE or GF never enters the 0.30m neighborhood; tested after first two label conditions",
+  "E1": "threshold=min(.025,c_B-.005), with no clamp at zero; eligible longest remaining suffix, then lower index",
+  "E2": "threshold=.010; eligible longest remaining suffix, then lower index",
+  "E3": "maximum depth clearance, then lower index (same Phase15B implementation)",
+  "tie_order": [
+    "E1",
+    "E2",
+    "E3",
+    "E0"
+  ],
+  "speed_cap_m_s": 0.1,
+  "selection": "pooled A STOP_WAIT events including D0 SL gates; retain candidates with zero oracle-negative selected paths, maximize escape fraction, require >=.50; descriptive main/gate strata also reported",
+  "figure_event": "middle event of the earliest longest consecutive STOP_WAIT chain; never selected by escape-rule outcomes",
+  "figure_scope": "all main STUCK runs plus the two SL gates; runs outside A are explicitly plot-only and use their last FRESH if no STOP_WAIT chain exists",
+  "scope": "Offline same-data path selection, not execution safety, intervention causality, or navigation success. Nonpenetration is weaker than the 2.5cm margin. New-seed closed-loop validation required.",
+  "navigation": 0,
+  "inference": 0,
+  "render": 0,
+  "graph_solves": 0,
+  "rollouts": 0
+}
