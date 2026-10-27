@@ -1,0 +1,133 @@
+{
+  "name": "phase16_LC",
+  "start_pose": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "goal_pose": [
+    3.3,
+    3.2,
+    0.0
+  ],
+  "goal_tolerance_m": 0.3,
+  "timeout_sim_s": 90.0,
+  "timeout_navigation_wall_s": 180.0,
+  "timeout_process_wall_s": 600.0,
+  "integration_hz": 72,
+  "observation_hz": 4,
+  "controller_hz": 9,
+  "controller_dt_s": 0.25,
+  "max_v": 0.2,
+  "max_w": 0.4,
+  "seed": 101,
+  "context_size": 3,
+  "num_samples": 8,
+  "selected_sample": 0,
+  "selected_waypoint_index": 2,
+  "camera": {
+    "width": 320,
+    "height": 240,
+    "height_m": 0.5,
+    "horizontal_fov_deg": 90.0,
+    "focal_length_mm": 18.0,
+    "horizontal_aperture_mm": 36.0,
+    "vertical_aperture_mm": 27.0
+  },
+  "corridor": {
+    "xmin": -1.0,
+    "xmax": 4.2,
+    "half_width": 2.6,
+    "height": 2.6,
+    "ymin": -1.0,
+    "ymax": 4.2
+  },
+  "boundary_stop_margin_m": 0.1,
+  "synchronous": false,
+  "smoothing": false,
+  "waypoint_modification": false,
+  "agent_radius_m": 0.09,
+  "required_clearance_m": 0.02,
+  "obstacles": [
+    {
+      "id": "InnerCorner",
+      "center_xy_m": [
+        0.7,
+        2.55
+      ],
+      "size_xyz_m": [
+        3.4,
+        3.3,
+        1.0
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "AfterCorner",
+      "center_xy_m": [
+        3.6,
+        1.9
+      ],
+      "size_xyz_m": [
+        0.5,
+        0.4,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    }
+  ],
+  "phase16_scene": "LC",
+  "checkpoint": {
+    "axis": 1,
+    "threshold_m": 2.4,
+    "meaning": "after-corner obstacle far Y face + 0.30m"
+  },
+  "reference_length_m": 5.693360086869726,
+  "grid_feasibility": {
+    "grid_m": 0.02,
+    "connectivity": 8,
+    "no_corner_cut": true,
+    "expanded": 12007,
+    "length_m": 5.551025971044414,
+    "goal": "exact center; no terminal yaw",
+    "obstacle_center_margin_m": 0.11,
+    "wall_center_margin_m": 0.11
+  },
+  "oracle_shortest_grid_length_m": 5.551025971044414,
+  "reference_preparation": {
+    "grid_m": 0.02,
+    "cost": "edge_length*(1+(.25/min(endpoint_center_clearance))^2)",
+    "cost_weight": 1.0,
+    "target_center_distance_m": 0.25,
+    "obstacles_and_outer_walls": true,
+    "expanded": 17540,
+    "smoothing_passes": 20,
+    "narrow_centerline_used": false,
+    "narrow_grid_nodes": 0,
+    "reference_length_m": 5.693360086869726,
+    "minimum_center_distance_m": 0.41012193308819866,
+    "minimum_footprint_clearance_m": 0.3201219330881987,
+    "minimum_box_center_distance_m": 0.41012193308819866,
+    "minimum_wall_center_distance_m": 0.9000000000000004
+  },
+  "reference_offline_pp_check": {
+    "reason": "goal_entry",
+    "minimum_obstacle_clearance_m": 0.3196821138554272,
+    "minimum_wall_clearance_m": 0.8989003088392814,
+    "minimum_center_distance_m": 0.4096821138554272,
+    "minimum_footprint_clearance_m": 0.3196821138554272,
+    "duration_s": 26.805555555555557,
+    "goal": true,
+    "execution_distance_m": 5.3611101899882705
+  },
+  "reference_file": "research/nomad_phase16/references/LC.json",
+  "reference_sha256": "5518dc9da485dbc823df79fcf1064e6739cab926786000f29248803a6af9dc99"
+}

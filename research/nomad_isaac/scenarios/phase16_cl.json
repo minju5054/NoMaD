@@ -1,0 +1,196 @@
+{
+  "name": "phase16_CL",
+  "start_pose": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "goal_pose": [
+    5.0,
+    0.0,
+    0.0
+  ],
+  "goal_tolerance_m": 0.3,
+  "timeout_sim_s": 90.0,
+  "timeout_navigation_wall_s": 180.0,
+  "timeout_process_wall_s": 600.0,
+  "integration_hz": 72,
+  "observation_hz": 4,
+  "controller_hz": 9,
+  "controller_dt_s": 0.25,
+  "max_v": 0.2,
+  "max_w": 0.4,
+  "seed": 101,
+  "context_size": 3,
+  "num_samples": 8,
+  "selected_sample": 0,
+  "selected_waypoint_index": 2,
+  "camera": {
+    "width": 320,
+    "height": 240,
+    "height_m": 0.5,
+    "horizontal_fov_deg": 90.0,
+    "focal_length_mm": 18.0,
+    "horizontal_aperture_mm": 36.0,
+    "vertical_aperture_mm": 27.0
+  },
+  "corridor": {
+    "xmin": -1.0,
+    "xmax": 6.0,
+    "half_width": 1.5,
+    "height": 2.6
+  },
+  "boundary_stop_margin_m": 0.1,
+  "synchronous": false,
+  "smoothing": false,
+  "waypoint_modification": false,
+  "agent_radius_m": 0.09,
+  "required_clearance_m": 0.02,
+  "obstacles": [
+    {
+      "id": "Clutter1",
+      "center_xy_m": [
+        2.963573907345342,
+        -0.8367568564991026
+      ],
+      "size_xyz_m": [
+        0.30480955819356836,
+        0.3507373061409184,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "Clutter2",
+      "center_xy_m": [
+        3.036561881308136,
+        0.2321949522210025
+      ],
+      "size_xyz_m": [
+        0.46811194452916505,
+        0.3186420746223474,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "Clutter3",
+      "center_xy_m": [
+        1.7783323771358202,
+        0.579238368806452
+      ],
+      "size_xyz_m": [
+        0.5702506913283882,
+        0.5976532669733732,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "Clutter4",
+      "center_xy_m": [
+        3.9662147923133424,
+        -0.1884018151915653
+      ],
+      "size_xyz_m": [
+        0.4617287623264886,
+        0.4140707577097103,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "Clutter5",
+      "center_xy_m": [
+        1.5956469849083215,
+        -0.7560456548472863
+      ],
+      "size_xyz_m": [
+        0.30531985087309316,
+        0.5156168596902888,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    }
+  ],
+  "phase16_scene": "CL",
+  "placement": {
+    "seed": 20261028,
+    "trials": 30,
+    "size_uniform_m": [
+      0.3,
+      0.6
+    ],
+    "center_x_uniform_m": [
+      1.0,
+      4.0
+    ],
+    "minimum_box_and_wall_gap_m": 0.45,
+    "start_goal_surface_exclusion_m": 0.8
+  },
+  "checkpoint": {
+    "axis": 0,
+    "threshold_m": 4.497079173476586,
+    "meaning": "last box far X face + 0.30m"
+  },
+  "reference_length_m": 5.839123880126611,
+  "grid_feasibility": {
+    "grid_m": 0.02,
+    "connectivity": 8,
+    "no_corner_cut": true,
+    "expanded": 5157,
+    "length_m": 5.149116882454317,
+    "goal": "exact center; no terminal yaw",
+    "obstacle_center_margin_m": 0.11,
+    "wall_center_margin_m": 0.11
+  },
+  "oracle_shortest_grid_length_m": 5.149116882454317,
+  "reference_preparation": {
+    "grid_m": 0.02,
+    "cost": "edge_length*(1+(.25/min(endpoint_center_clearance))^2)",
+    "cost_weight": 1.0,
+    "target_center_distance_m": 0.25,
+    "obstacles_and_outer_walls": true,
+    "expanded": 22672,
+    "smoothing_passes": 20,
+    "narrow_centerline_used": false,
+    "narrow_grid_nodes": 0,
+    "reference_length_m": 5.839123880126611,
+    "minimum_center_distance_m": 0.30193499770686383,
+    "minimum_footprint_clearance_m": 0.21193499770686383,
+    "minimum_box_center_distance_m": 0.30193499770686383,
+    "minimum_wall_center_distance_m": 0.3199999999999976
+  },
+  "reference_offline_pp_check": {
+    "reason": "goal_entry",
+    "minimum_obstacle_clearance_m": 0.20829701619753624,
+    "minimum_wall_clearance_m": 0.22193930829557904,
+    "minimum_center_distance_m": 0.29829701619753624,
+    "minimum_footprint_clearance_m": 0.20829701619753624,
+    "duration_s": 27.84722222222222,
+    "goal": true,
+    "execution_distance_m": 5.569442744147168
+  },
+  "reference_file": "research/nomad_phase16/references/CL.json",
+  "reference_sha256": "814479317639616b01e3331209e39815df2026f620854b5b919da1b095aeb08c"
+}

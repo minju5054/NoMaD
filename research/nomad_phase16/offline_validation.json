@@ -1,0 +1,102 @@
+{
+  "unit_tests_passed": 7,
+  "synthetic_report": "PASS",
+  "socket_jobs": 108,
+  "max_socket_bytes": 28,
+  "protected_hashes_match": true,
+  "new_navigation": 0,
+  "new_inference": 0,
+  "new_render": 0,
+  "reference_checks": {
+    "SL": {
+      "path": {
+        "grid_m": 0.02,
+        "cost": "edge_length*(1+(.25/min(endpoint_center_clearance))^2)",
+        "cost_weight": 1.0,
+        "target_center_distance_m": 0.25,
+        "obstacles_and_outer_walls": true,
+        "expanded": 9733,
+        "smoothing_passes": 20,
+        "narrow_centerline_used": false,
+        "narrow_grid_nodes": 0,
+        "reference_length_m": 6.906954180660328,
+        "minimum_center_distance_m": 0.2999999999999987,
+        "minimum_footprint_clearance_m": 0.20999999999999872,
+        "minimum_box_center_distance_m": 0.29999999999999977,
+        "minimum_wall_center_distance_m": 0.2999999999999987
+      },
+      "offline_pp": {
+        "reason": "goal_entry",
+        "minimum_obstacle_clearance_m": 0.19803088752959216,
+        "minimum_wall_clearance_m": 0.19631860409212373,
+        "minimum_center_distance_m": 0.28631860409212373,
+        "minimum_footprint_clearance_m": 0.19631860409212373,
+        "duration_s": 32.68055555555556,
+        "goal": true,
+        "execution_distance_m": 6.536106970632271
+      }
+    },
+    "LC": {
+      "path": {
+        "grid_m": 0.02,
+        "cost": "edge_length*(1+(.25/min(endpoint_center_clearance))^2)",
+        "cost_weight": 1.0,
+        "target_center_distance_m": 0.25,
+        "obstacles_and_outer_walls": true,
+        "expanded": 17540,
+        "smoothing_passes": 20,
+        "narrow_centerline_used": false,
+        "narrow_grid_nodes": 0,
+        "reference_length_m": 5.693360086869726,
+        "minimum_center_distance_m": 0.41012193308819866,
+        "minimum_footprint_clearance_m": 0.3201219330881987,
+        "minimum_box_center_distance_m": 0.41012193308819866,
+        "minimum_wall_center_distance_m": 0.9000000000000004
+      },
+      "offline_pp": {
+        "reason": "goal_entry",
+        "minimum_obstacle_clearance_m": 0.3196821138554272,
+        "minimum_wall_clearance_m": 0.8989003088392814,
+        "minimum_center_distance_m": 0.4096821138554272,
+        "minimum_footprint_clearance_m": 0.3196821138554272,
+        "duration_s": 26.805555555555557,
+        "goal": true,
+        "execution_distance_m": 5.3611101899882705
+      }
+    },
+    "CL": {
+      "path": {
+        "grid_m": 0.02,
+        "cost": "edge_length*(1+(.25/min(endpoint_center_clearance))^2)",
+        "cost_weight": 1.0,
+        "target_center_distance_m": 0.25,
+        "obstacles_and_outer_walls": true,
+        "expanded": 22672,
+        "smoothing_passes": 20,
+        "narrow_centerline_used": false,
+        "narrow_grid_nodes": 0,
+        "reference_length_m": 5.839123880126611,
+        "minimum_center_distance_m": 0.30193499770686383,
+        "minimum_footprint_clearance_m": 0.21193499770686383,
+        "minimum_box_center_distance_m": 0.30193499770686383,
+        "minimum_wall_center_distance_m": 0.3199999999999976
+      },
+      "offline_pp": {
+        "reason": "goal_entry",
+        "minimum_obstacle_clearance_m": 0.20829701619753624,
+        "minimum_wall_clearance_m": 0.22193930829557904,
+        "minimum_center_distance_m": 0.29829701619753624,
+        "minimum_footprint_clearance_m": 0.20829701619753624,
+        "duration_s": 27.84722222222222,
+        "goal": true,
+        "execution_distance_m": 5.569442744147168
+      }
+    }
+  },
+  "reference_files_sha256": {
+    "research/nomad_phase16/references/SL.json": "53e9715147215951619b6952eadc76109feda2dcf08fae8819894dd9b80b9448",
+    "research/nomad_phase16/references/LC.json": "5518dc9da485dbc823df79fcf1064e6739cab926786000f29248803a6af9dc99",
+    "research/nomad_phase16/references/CL.json": "814479317639616b01e3331209e39815df2026f620854b5b919da1b095aeb08c"
+  },
+  "scope": "Offline preparation only; live depth and 3 excluded smokes still required"
+}
