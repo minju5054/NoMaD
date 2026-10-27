@@ -1,0 +1,67 @@
+{
+  "expected_jobs": {
+    "FRESHEST-SAFE+GRAPH-depth": 209,
+    "FRESHEST-SAFE+GRAPH-GF": 460
+  },
+  "safety_m": 0.025,
+  "path_match_m": 1e-06,
+  "variants": [
+    "NEITHER",
+    "CERT_ONLY",
+    "CONSTRAINT_ONLY",
+    "FULL"
+  ],
+  "sigma_variants": {
+    "prior_x0.5": {
+      "prior": 0.5
+    },
+    "prior_x2": {
+      "prior": 2.0
+    },
+    "relative_x0.5": {
+      "relative": 0.5
+    },
+    "relative_x2": {
+      "relative": 2.0
+    },
+    "boundary_x0.5": {
+      "boundary": 0.5
+    },
+    "boundary_x2": {
+      "boundary": 2.0
+    },
+    "all_x0.5": {
+      "prior": 0.5,
+      "relative": 0.5,
+      "boundary": 0.5
+    },
+    "all_x2": {
+      "prior": 2.0,
+      "relative": 2.0,
+      "boundary": 2.0
+    }
+  },
+  "sigma_path_statistic": "median of per-job median point distances; all pairs with finite returned iterates, including rejected iterates; accepted-only also reported",
+  "sigma_acceptance": "absolute change in fraction accepted; all 209 jobs including initialization rejections",
+  "certificate_tolerance_m": 1e-08,
+  "regression": "A FULL/NEITHER baseline solve reused for depth/GF regression; stored scheduling dispositions retained separately; no new wall-time deadline imposed offline",
+  "ablation_label_priority": [
+    "NO_DANGEROUS_CORRECTIONS (<5)",
+    "CONSTRAINT_MATTERS",
+    "CERTIFICATE_SUFFICES",
+    "MIXED"
+  ],
+  "wall_scope": "last three FRESH switches, all replacement applications within them, and final active application; full and B-suffix path metrics; exact stop-site wall cell plus 2-cell neighborhood diagnostics",
+  "wall_site_band_m": 0.1,
+  "wall_unknown_rule": "exact nearest wall cell in latest snapshot published by stop timestamp; neighborhood status also reported",
+  "detour_window_s": 5.0,
+  "detour_rule": "first x < running_max_x - .30; otherwise first cumulative absolute unwrapped yaw change > 2pi; no interpolation",
+  "dispersion": "population std (ddof=0); scalar is RMS of x/y std, comparable to per-coordinate sigma=.10; radial std and per-axis std also retained",
+  "oracle": "posthoc evaluation only; never passed into any solver",
+  "navigation": 0,
+  "inference": 0,
+  "render": 0,
+  "retries": 0,
+  "tuning": 0,
+  "scope": "Offline path-level counterfactuals, not closed-loop or causal performance evidence"
+}

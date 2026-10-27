@@ -1,5 +1,6 @@
 """Report saved offline diagnostics; never performs a Graph solve."""
 import json
+import csv
 import subprocess
 from pathlib import Path
 import numpy as np
@@ -115,9 +116,39 @@ def render(out,data,summary,ablation,sensitivity,dispersion,walls,detours):
     text+='## Frozen measurement rules\n\n```json\n'+json.dumps(RULES,indent=2)+'\n```\n\n'
     text+='Labels: '+json.dumps({k:summary[k] for k in ('A','B','C','D')})+'\n'
     DOC.write_text(text)
+    add_interpretation_notes(out)
+
+
+def add_interpretation_notes(out):
+    """Explain recorded failure/fallback semantics without any new solve or label change."""
+    marker='## Interpretation limits from the recorded execution'
+    text=DOC.read_text()
+    if marker in text:return
+    summary=json.loads((out/'summary.json').read_text())
+    walls=list(csv.DictReader((out/'wall_failures.csv').open()))
+    notes=marker+'\n\n'
+    a=summary['ablation_summary'][0]
+    notes+=f"A contains {a['dangerous_neither']} dangerous accepted NEITHER paths, not zero. The <5 evidence rule controls the label. CERT_ONLY rejects {a.get('CERT_ONLY_rejected',0)}; constraints recover {a.get('CONSTRAINT_ONLY_safe',0)}; this sample is too small for CONSTRAINT_MATTERS under the frozen rule.\n\n"
+    for r in walls:
+        if r['is_final_active']!='True':continue
+        notes+=f"Seed {r['index']}: the final active path is **{r['kind']} F{r['id']}**, not an accepted Graph replacement; ALL_UNSAFE={r['all_unsafe']}. "
+        if r['run_cause']=='EXECUTION':
+            notes+=f"Path-to-motion maximum cross-track is {float(r['max_cross_track_m']):.3f}m. Path safety therefore does not certify the actual PP arc or its connection from the current robot pose. "
+        if r['run_cause']=='DEPTH_ERROR' and float(r['depth_clearance_m'])<.025:
+            notes+='The depth map already marks this path unsafe: this is **not a depth-only-safe false acceptance**. ALL_UNSAFE still executes the least-unsafe original sample under its speed cap. In addition, occupied-site distance is not signed penetration into a solid wall: its minimum is bounded below by −robot_radius, whereas oracle half-plane clearance continues decreasing outside the corridor. The requested DEPTH_ERROR label includes this representation discrepancy and does not isolate sensor noise as the cause. '
+        notes+='\n\n'
+    notes+='C labels follow the requested priority in the ±5s onset window. OTHER does not establish that Graph was uninvolved; no causal intervention was run.\n\n'
+    combined=[r for r in summary['sigma_summary'] if r['sigma'].startswith('all_') and not r['within_threshold']]
+    notes+='D ROBUST refers only to the six single-family settings and the specified aggregate median. '
+    if combined:notes+='Combined changes exceeding a descriptive threshold: '+', '.join(f"{r['sigma']} ({r['acceptance_change_pp']:.2f}pp acceptance)" for r in combined)+'. '
+    notes+='Individual path tails and combined perturbations are not guaranteed robust.\n\n'
+    # Preserve all existing tables, numerical output and final label line.
+    before,labels=text.rsplit('Labels: ',1)
+    DOC.write_text(before+notes+'Labels: '+labels)
 
 
 def publish():
+    add_interpretation_notes(ROOT/'research/results/phase15c')
     paths=['research/nomad_phase15c','research/results/phase15c','docs/PHASE15C_DIAGNOSIS.md']
     assert not subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip()
     subprocess.run(['git','add','--',*paths],cwd=ROOT,check=True)

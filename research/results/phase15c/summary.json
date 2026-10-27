@@ -1,0 +1,694 @@
+{
+  "A": "NO_DANGEROUS_CORRECTIONS",
+  "B": {
+    "47": "EXECUTION",
+    "49": "DEPTH_ERROR"
+  },
+  "C": {
+    "48": "CORRECTION_DIVERGES",
+    "49": "SHORT_REMAINING",
+    "51": "OTHER",
+    "52": "OTHER",
+    "54": "OTHER"
+  },
+  "D": "ROBUST",
+  "sigma_exceeded": [],
+  "solve_attempts": 4348,
+  "regression_comparable": 668,
+  "regression_mismatches": 0,
+  "regression_unavailable": 1,
+  "ablation_summary": [
+    {
+      "source_method": "ALL",
+      "variant": "NEITHER",
+      "jobs": 669,
+      "accepted": 578,
+      "oracle_unsafe_accepted": 2,
+      "dangerous_neither": 2,
+      "CERT_ONLY_rejected": 2,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 1,
+      "CONSTRAINT_ONLY_safe": 1,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 1,
+      "FULL_safe": 1,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.0484339849999742
+    },
+    {
+      "source_method": "ALL",
+      "variant": "CERT_ONLY",
+      "jobs": 669,
+      "accepted": 576,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 2,
+      "CERT_ONLY_rejected": 2,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 1,
+      "CONSTRAINT_ONLY_safe": 1,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 1,
+      "FULL_safe": 1,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.05095688000028531
+    },
+    {
+      "source_method": "ALL",
+      "variant": "CONSTRAINT_ONLY",
+      "jobs": 669,
+      "accepted": 574,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 2,
+      "CERT_ONLY_rejected": 2,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 1,
+      "CONSTRAINT_ONLY_safe": 1,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 1,
+      "FULL_safe": 1,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.06836091199966177
+    },
+    {
+      "source_method": "ALL",
+      "variant": "FULL",
+      "jobs": 669,
+      "accepted": 574,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 2,
+      "CERT_ONLY_rejected": 2,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 1,
+      "CONSTRAINT_ONLY_safe": 1,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 1,
+      "FULL_safe": 1,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.07117288500012364
+    },
+    {
+      "source_method": "FRESHEST-SAFE+GRAPH-depth",
+      "variant": "NEITHER",
+      "jobs": 209,
+      "accepted": 173,
+      "oracle_unsafe_accepted": 1,
+      "dangerous_neither": 1,
+      "CERT_ONLY_rejected": 1,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 1,
+      "CONSTRAINT_ONLY_safe": 0,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 1,
+      "FULL_safe": 0,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.04823060599983364
+    },
+    {
+      "source_method": "FRESHEST-SAFE+GRAPH-depth",
+      "variant": "CERT_ONLY",
+      "jobs": 209,
+      "accepted": 172,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 1,
+      "CERT_ONLY_rejected": 1,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 1,
+      "CONSTRAINT_ONLY_safe": 0,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 1,
+      "FULL_safe": 0,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.050311069000144926
+    },
+    {
+      "source_method": "FRESHEST-SAFE+GRAPH-depth",
+      "variant": "CONSTRAINT_ONLY",
+      "jobs": 209,
+      "accepted": 172,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 1,
+      "CERT_ONLY_rejected": 1,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 1,
+      "CONSTRAINT_ONLY_safe": 0,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 1,
+      "FULL_safe": 0,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.06830608400014171
+    },
+    {
+      "source_method": "FRESHEST-SAFE+GRAPH-depth",
+      "variant": "FULL",
+      "jobs": 209,
+      "accepted": 172,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 1,
+      "CERT_ONLY_rejected": 1,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 1,
+      "CONSTRAINT_ONLY_safe": 0,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 1,
+      "FULL_safe": 0,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.07055709099995511
+    },
+    {
+      "source_method": "FRESHEST-SAFE+GRAPH-GF",
+      "variant": "NEITHER",
+      "jobs": 460,
+      "accepted": 405,
+      "oracle_unsafe_accepted": 1,
+      "dangerous_neither": 1,
+      "CERT_ONLY_rejected": 1,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 0,
+      "CONSTRAINT_ONLY_safe": 1,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 0,
+      "FULL_safe": 1,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.04846712199991998
+    },
+    {
+      "source_method": "FRESHEST-SAFE+GRAPH-GF",
+      "variant": "CERT_ONLY",
+      "jobs": 460,
+      "accepted": 404,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 1,
+      "CERT_ONLY_rejected": 1,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 0,
+      "CONSTRAINT_ONLY_safe": 1,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 0,
+      "FULL_safe": 1,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.051224839499809605
+    },
+    {
+      "source_method": "FRESHEST-SAFE+GRAPH-GF",
+      "variant": "CONSTRAINT_ONLY",
+      "jobs": 460,
+      "accepted": 402,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 1,
+      "CERT_ONLY_rejected": 1,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 0,
+      "CONSTRAINT_ONLY_safe": 1,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 0,
+      "FULL_safe": 1,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.06843502099991383
+    },
+    {
+      "source_method": "FRESHEST-SAFE+GRAPH-GF",
+      "variant": "FULL",
+      "jobs": 460,
+      "accepted": 402,
+      "oracle_unsafe_accepted": 0,
+      "dangerous_neither": 1,
+      "CERT_ONLY_rejected": 1,
+      "CERT_ONLY_safe": 0,
+      "CERT_ONLY_unsafe_accepted": 0,
+      "CONSTRAINT_ONLY_rejected": 0,
+      "CONSTRAINT_ONLY_safe": 1,
+      "CONSTRAINT_ONLY_unsafe_accepted": 0,
+      "FULL_rejected": 0,
+      "FULL_safe": 1,
+      "FULL_unsafe_accepted": 0,
+      "label": "NO_DANGEROUS_CORRECTIONS",
+      "solve_median_s": 0.0713976739998543
+    }
+  ],
+  "sigma_summary": [
+    {
+      "sigma": "baseline",
+      "jobs": 209,
+      "accepted": 172,
+      "acceptance_change_pp": 0.0,
+      "changed_acceptance": 0,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.0,
+      "path_difference_max_m": 0,
+      "accepted_pairs": 172,
+      "accepted_pair_path_median_m": 0.0,
+      "within_threshold": true
+    },
+    {
+      "sigma": "prior_x0.5",
+      "jobs": 209,
+      "accepted": 167,
+      "acceptance_change_pp": -2.392344497607657,
+      "changed_acceptance": 5,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.007371839003152802,
+      "path_difference_max_m": 0.1173640172195221,
+      "accepted_pairs": 167,
+      "accepted_pair_path_median_m": 0.0071826368488893556,
+      "within_threshold": true
+    },
+    {
+      "sigma": "prior_x2",
+      "jobs": 209,
+      "accepted": 170,
+      "acceptance_change_pp": -0.9569377990430561,
+      "changed_acceptance": 2,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.009305372532342367,
+      "path_difference_max_m": 0.1453083011406615,
+      "accepted_pairs": 170,
+      "accepted_pair_path_median_m": 0.0089623868371112,
+      "within_threshold": true
+    },
+    {
+      "sigma": "relative_x0.5",
+      "jobs": 209,
+      "accepted": 168,
+      "acceptance_change_pp": -1.9138755980861233,
+      "changed_acceptance": 4,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.00298996690643746,
+      "path_difference_max_m": 0.032255950767575856,
+      "accepted_pairs": 168,
+      "accepted_pair_path_median_m": 0.002853056267275756,
+      "within_threshold": true
+    },
+    {
+      "sigma": "relative_x2",
+      "jobs": 209,
+      "accepted": 171,
+      "acceptance_change_pp": -0.4784688995215225,
+      "changed_acceptance": 3,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.005961838568090917,
+      "path_difference_max_m": 0.0449368223939065,
+      "accepted_pairs": 170,
+      "accepted_pair_path_median_m": 0.0059087445719300715,
+      "within_threshold": true
+    },
+    {
+      "sigma": "boundary_x0.5",
+      "jobs": 209,
+      "accepted": 166,
+      "acceptance_change_pp": -2.8708133971291794,
+      "changed_acceptance": 6,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.006313533833891738,
+      "path_difference_max_m": 0.08486157885912493,
+      "accepted_pairs": 166,
+      "accepted_pair_path_median_m": 0.005978173658997714,
+      "within_threshold": true
+    },
+    {
+      "sigma": "boundary_x2",
+      "jobs": 209,
+      "accepted": 172,
+      "acceptance_change_pp": 0.0,
+      "changed_acceptance": 2,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.007480620106593691,
+      "path_difference_max_m": 0.08258701868112102,
+      "accepted_pairs": 171,
+      "accepted_pair_path_median_m": 0.007228640018836917,
+      "within_threshold": true
+    },
+    {
+      "sigma": "all_x0.5",
+      "jobs": 209,
+      "accepted": 160,
+      "acceptance_change_pp": -5.741626794258369,
+      "changed_acceptance": 12,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.0016607121695511918,
+      "path_difference_max_m": 0.022318844450539867,
+      "accepted_pairs": 160,
+      "accepted_pair_path_median_m": 0.001613182592162515,
+      "within_threshold": false
+    },
+    {
+      "sigma": "all_x2",
+      "jobs": 209,
+      "accepted": 176,
+      "acceptance_change_pp": 1.9138755980861233,
+      "changed_acceptance": 4,
+      "path_pairs": 178,
+      "path_difference_median_m": 0.005250979595921176,
+      "path_difference_max_m": 0.0679558894455377,
+      "accepted_pairs": 172,
+      "accepted_pair_path_median_m": 0.005250979595921176,
+      "within_threshold": true
+    }
+  ],
+  "wall_comparisons": [
+    {
+      "index": 47,
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "classification": "SAFETY_FAILURE",
+      "nearest_time_s": 14.625,
+      "nearest_pose": [
+        1.8974921041975599,
+        1.4113258507548556,
+        1.166042291524131
+      ],
+      "distance_to_diagnostic_location_m": 0.0,
+      "pose_at_same_elapsed_time": [
+        1.8974921041975599,
+        1.4113258507548556,
+        1.166042291524131
+      ],
+      "minimum_corridor_clearance_m": -0.001325850754855612
+    },
+    {
+      "index": 47,
+      "method": "FRESHEST-SAFE+GRAPH-GF",
+      "classification": "SUCCESS",
+      "nearest_time_s": 11.083333333333334,
+      "nearest_pose": [
+        1.5429506585228199,
+        0.5771226087022049,
+        -0.40078242266793795
+      ],
+      "distance_to_diagnostic_location_m": 0.9064186040413601,
+      "pose_at_same_elapsed_time": [
+        2.203381735267422,
+        0.1156681141458331,
+        -0.8072465935085082
+      ],
+      "minimum_corridor_clearance_m": 0.7938750642233836
+    },
+    {
+      "index": 47,
+      "method": "TEMPORAL-ENSEMBLE",
+      "classification": "SUCCESS",
+      "nearest_time_s": 13.652777777777779,
+      "nearest_pose": [
+        1.8444676269202267,
+        0.7364332307676231,
+        -0.07834738007575925
+      ],
+      "distance_to_diagnostic_location_m": 0.6769724098541723,
+      "pose_at_same_elapsed_time": [
+        1.9649690733391505,
+        0.7313907518438245,
+        0.10728722253588341
+      ],
+      "minimum_corridor_clearance_m": 0.5752246566489594
+    },
+    {
+      "index": 47,
+      "method": "SELECT+GRAPH",
+      "classification": "SUCCESS",
+      "nearest_time_s": 11.569444444444445,
+      "nearest_pose": [
+        1.5792999997696744,
+        0.5837853192187705,
+        -0.3674751605304811
+      ],
+      "distance_to_diagnostic_location_m": 0.8866056319780924,
+      "pose_at_same_elapsed_time": [
+        2.0538888019980974,
+        0.18771882279331167,
+        -0.9582557894442623
+      ],
+      "minimum_corridor_clearance_m": 0.7872846325981808
+    },
+    {
+      "index": 47,
+      "method": "FRESHEST",
+      "classification": "SAFETY_FAILURE",
+      "nearest_time_s": 19.52777777777778,
+      "nearest_pose": [
+        2.0117030546560755,
+        1.2690429934274985,
+        0.684614411263679
+      ],
+      "distance_to_diagnostic_location_m": 0.18245150778734215,
+      "pose_at_same_elapsed_time": [
+        1.6254724778848566,
+        0.9997120870582887,
+        0.46302845543791893
+      ],
+      "minimum_corridor_clearance_m": -0.0005917120701731948
+    },
+    {
+      "index": 47,
+      "method": "FRESHEST-SAFE",
+      "classification": "SUCCESS",
+      "nearest_time_s": 18.84722222222222,
+      "nearest_pose": [
+        1.9100113197761925,
+        1.290132644764765,
+        0.10770844801316404
+      ],
+      "distance_to_diagnostic_location_m": 0.12183810543857296,
+      "pose_at_same_elapsed_time": [
+        1.716709395464512,
+        1.1345318768032011,
+        0.7854862257909394
+      ],
+      "minimum_corridor_clearance_m": 0.11914298657082409
+    },
+    {
+      "index": 49,
+      "method": "FRESHEST-SAFE",
+      "classification": "SAFETY_FAILURE",
+      "nearest_time_s": 0.0,
+      "nearest_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "distance_to_diagnostic_location_m": 1.6168394318629604,
+      "pose_at_same_elapsed_time": [
+        1.9911265007076302,
+        1.4107681103222933,
+        1.4683316211930793
+      ],
+      "minimum_corridor_clearance_m": -0.0007681103222933194
+    },
+    {
+      "index": 49,
+      "method": "FRESHEST",
+      "classification": "STUCK",
+      "nearest_time_s": 62.90277777777778,
+      "nearest_pose": [
+        -0.327960458863155,
+        0.38257024522069544,
+        0.4259390486119967
+      ],
+      "distance_to_diagnostic_location_m": 1.1270714468363432,
+      "pose_at_same_elapsed_time": [
+        2.3947789943752764,
+        -1.1644305830089752,
+        -2.3109521713926897
+      ],
+      "minimum_corridor_clearance_m": 0.18259469382253476
+    },
+    {
+      "index": 49,
+      "method": "FRESHEST-SAFE+GRAPH-GF",
+      "classification": "SUCCESS",
+      "nearest_time_s": 32.013888888888886,
+      "nearest_pose": [
+        -0.6807099103428196,
+        1.2376484576688624,
+        -2.57272512477424
+      ],
+      "distance_to_diagnostic_location_m": 0.20473831886394775,
+      "pose_at_same_elapsed_time": [
+        -0.7842342042759941,
+        1.089902788634051,
+        -1.8930132745365549
+      ],
+      "minimum_corridor_clearance_m": 0.05320097681369926
+    },
+    {
+      "index": 49,
+      "method": "TEMPORAL-ENSEMBLE",
+      "classification": "SUCCESS",
+      "nearest_time_s": 0.0,
+      "nearest_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "distance_to_diagnostic_location_m": 1.6168394318629604,
+      "pose_at_same_elapsed_time": [
+        4.210285172009894,
+        -0.07510837623050357,
+        0.4979614276632267
+      ],
+      "minimum_corridor_clearance_m": 0.6179752794790448
+    },
+    {
+      "index": 49,
+      "method": "SELECT+GRAPH",
+      "classification": "STUCK",
+      "nearest_time_s": 42.486111111111114,
+      "nearest_pose": [
+        -0.6527240795854409,
+        1.3258479678463242,
+        1.0201988747808217
+      ],
+      "distance_to_diagnostic_location_m": 0.16196803407045743,
+      "pose_at_same_elapsed_time": [
+        0.19988625591836154,
+        0.9231952626795135,
+        -3.037561655431257
+      ],
+      "minimum_corridor_clearance_m": 0.004905428261917283
+    },
+    {
+      "index": 49,
+      "method": "FRESHEST-SAFE+GRAPH-depth",
+      "classification": "SAFETY_FAILURE",
+      "nearest_time_s": 33.736111111111114,
+      "nearest_pose": [
+        -0.7910474057986556,
+        1.410111254549143,
+        2.1475855793711007
+      ],
+      "distance_to_diagnostic_location_m": 0.0,
+      "pose_at_same_elapsed_time": [
+        -0.7910474057986556,
+        1.410111254549143,
+        2.1475855793711007
+      ],
+      "minimum_corridor_clearance_m": -0.00011125454914298616
+    }
+  ],
+  "detour_comparisons": [
+    {
+      "index": 48,
+      "detour_start_s": 29.916666666666668,
+      "detour_rule": "X_BACKTRACK_0.30M",
+      "cause": "CORRECTION_DIVERGES",
+      "gf_distance_m": 13.277945452257828,
+      "depth_result": "SUCCESS",
+      "depth_distance_m": 4.714527380109432,
+      "depth_nearest_time_s": 16.5,
+      "depth_nearest_pose": [
+        2.2864902280841104,
+        -0.010148628604863203,
+        -0.2931459235389511
+      ],
+      "depth_nearest_distance_m": 0.822168973315096,
+      "depth_same_elapsed_pose": [
+        4.202730205752697,
+        -0.003102820486761354,
+        0.41562860720426453
+      ]
+    },
+    {
+      "index": 49,
+      "detour_start_s": 20.65277777777778,
+      "detour_rule": "X_BACKTRACK_0.30M",
+      "cause": "SHORT_REMAINING",
+      "gf_distance_m": 10.754535770206171,
+      "depth_result": "SAFETY_FAILURE",
+      "depth_distance_m": 5.213940650560743,
+      "depth_nearest_time_s": 19.75,
+      "depth_nearest_pose": [
+        1.4349073109250021,
+        1.27004301744029,
+        -2.7702211565237516
+      ],
+      "depth_nearest_distance_m": 0.09295057561552797,
+      "depth_same_elapsed_pose": [
+        1.1887029353334597,
+        1.1574604510533286,
+        -2.6682622876701503
+      ]
+    },
+    {
+      "index": 51,
+      "detour_start_s": 27.72222222222222,
+      "detour_rule": "X_BACKTRACK_0.30M",
+      "cause": "OTHER",
+      "gf_distance_m": 12.381346689628934,
+      "depth_result": "SUCCESS",
+      "depth_distance_m": 5.168179660444154,
+      "depth_nearest_time_s": 18.194444444444443,
+      "depth_nearest_pose": [
+        2.2854331581153895,
+        -0.10729062143012894,
+        -0.9359533735268091
+      ],
+      "depth_nearest_distance_m": 0.6274025770413806,
+      "depth_same_elapsed_pose": [
+        3.9060046322747275,
+        -0.22554248674274516,
+        0.39941575093010684
+      ]
+    },
+    {
+      "index": 52,
+      "detour_start_s": 34.111111111111114,
+      "detour_rule": "X_BACKTRACK_0.30M",
+      "cause": "OTHER",
+      "gf_distance_m": 13.71175868284269,
+      "depth_result": "SUCCESS",
+      "depth_distance_m": 4.772103738573003,
+      "depth_nearest_time_s": 15.541666666666666,
+      "depth_nearest_pose": [
+        2.4080805977212636,
+        -0.09425447286370114,
+        -0.3781747855887394
+      ],
+      "depth_nearest_distance_m": 1.0104642466804434,
+      "depth_same_elapsed_pose": [
+        4.246313808222378,
+        -0.15660096395543055,
+        0.4670376931696971
+      ]
+    },
+    {
+      "index": 54,
+      "detour_start_s": 23.194444444444443,
+      "detour_rule": "X_BACKTRACK_0.30M",
+      "cause": "OTHER",
+      "gf_distance_m": 12.578100188900695,
+      "depth_result": "SUCCESS",
+      "depth_distance_m": 4.914698763038656,
+      "depth_nearest_time_s": 17.48611111111111,
+      "depth_nearest_pose": [
+        2.2877397162346496,
+        -0.08555340804237915,
+        -0.8184353178422996
+      ],
+      "depth_nearest_distance_m": 0.5930860164685908,
+      "depth_same_elapsed_pose": [
+        3.2398539590660786,
+        -0.3236830924173208,
+        -0.08333736291998939
+      ]
+    }
+  ]
+}
