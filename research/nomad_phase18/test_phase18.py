@@ -21,6 +21,16 @@ def fake_runs():
 
 
 class Tests(unittest.TestCase):
+    def test_shared_wrapper_defers_scientific_imports_until_kit(self):
+        import ast
+        file=Path(__file__).with_name('simulator.py');tree=ast.parse(file.read_text())
+        imports=[n for n in tree.body if isinstance(n,(ast.Import,ast.ImportFrom))]
+        self.assertEqual([n.names[0].name if isinstance(n,ast.Import) else n.module for n in imports],['ast','pathlib'])
+        self.assertNotIn('runpy',file.read_text())
+        launcher=Path(__file__).with_name('launch.py').read_text()
+        self.assertEqual(launcher.count("str(ROOT/'research/nomad_phase18/simulator.py')"),1)
+        self.assertNotIn('simulator_'+str(METHODS[0]),launcher)
+
     def test_rtc_eight_samples_reach_shared_safe_selector(self):
         from .execution import make_execution
         from nomad_phase17.execution import SafeExecution

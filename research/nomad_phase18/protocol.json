@@ -1146,5 +1146,15 @@
     "selection": "lowest Phase12 RTC-hard seed index, first request with d>0",
     "max_error": 1e-06,
     "attempts": 1
+  },
+  "runtime_isolation": "AST redirects only Phase17 config/execution imports after unchanged SimulationApp initialization; no scientific imports before Kit",
+  "preflight_startup_failure": {
+    "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase18_preflight_01/CL_901_SAFE_RTC",
+    "navigation_ticks": 0,
+    "observations": 0,
+    "inferences": 0,
+    "fix": "defer config/executor SciPy imports until protected SimulationApp startup; method constants and decision rules unchanged",
+    "retained": true,
+    "second_launch": "explicitly authorized by user; same CL SAFE+RTC-hard 30s smoke"
   }
 }

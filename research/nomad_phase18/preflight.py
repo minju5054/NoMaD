@@ -28,7 +28,7 @@ def main():
             except Exception as e:r.update(technical_validation='FAIL',error=repr(e))
         else:r.update(technical_validation='FAIL',error=f'Launcher exit {code}')
         verify_sources();r['passed']=r['technical_validation']=='PASS'
-        write(out/'smoke.json',r);write(root/'complete.json',r)
+        write(out/f'smoke_{root.name}.json',r);write(root/'complete.json',r)
         if not r['passed']:raise RuntimeError('RTC smoke technical failure; preserve output, no retry/main campaign')
         write(out/'readiness.json',dict(passed=True,smoke=r,
             protocol_sha256=sha256_file(Path(__file__).with_name('protocol.json')),
