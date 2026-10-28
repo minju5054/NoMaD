@@ -1,0 +1,1150 @@
+{
+  "status": "FROZEN",
+  "base_commit": "f1059ab",
+  "experiment_label": "사전 등록 확인 실험",
+  "methods": [
+    "FRESHEST-SAFE",
+    "FRESHEST-SAFE+HERMITE",
+    "FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+    "FRESHEST-SAFE+RTC-hard",
+    "FRESHEST-SAFE+GRAPH-depth",
+    "FRESHEST-SAFE+GRAPH-depth-CLR"
+  ],
+  "scenes": {
+    "SLW": "research/nomad_isaac/scenarios/phase17_slw.json",
+    "LC": "research/nomad_isaac/scenarios/phase16_lc.json",
+    "CL": "research/nomad_isaac/scenarios/phase16_cl.json"
+  },
+  "topomaps": {
+    "SLW": {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/manifest.json",
+      "node_count": 16,
+      "manifest_sha256": "5d667992e2bb0f3f3f4cece8c8745355c8a36a997b5dfda8ce46f3856655db57"
+    },
+    "LC": {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/manifest.json",
+      "node_count": 15,
+      "manifest_sha256": "f1c4f080632b69f1e6e39eddbe9f8f0284f9a4ba44ff8f51be9c300db1a3045f"
+    },
+    "CL": {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/manifest.json",
+      "node_count": 15,
+      "manifest_sha256": "358f4fa519cb9577b0a5e4ad25ea55cabc11e1cf2737e3022c33f5095678c5fa"
+    }
+  },
+  "gate_metric_files": [
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_CL_901_SAFE.json",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_CL_902_SAFE.json",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_LC_901_SAFE.json",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_LC_902_SAFE.json",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_SLW_901_SAFE.json",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_SLW_902_SAFE.json"
+  ],
+  "gate_reuse": "six Phase17 successful gates, no new gates or reference rendering",
+  "reused_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/complete.json": "e061d0ce6b3c340b470fed75ffbfe885e3ae7bef657cfa08fccdf5e4c347f727",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/gates.json": "9d755cdd85ebfce3e2c144ea8776fd603c4b990d3eec1ccd8da618cabcb3c246",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/resolved_protocol.json": "d807d78515e98b6b10a2950de24ce09a0d9320111c420aa1b06e999fc6d47e74",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_CL_901_SAFE.json": "b293a6bca2038c70bcaec065fb7d4118cd64c68abee3e8dce40e35f26ecb303e",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_CL_902_SAFE.json": "966830dec1fe357c1ed4cb17623430d2eab1a94bb57f3ee6ff123ae2c6ca27eb",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_LC_901_SAFE.json": "20bb20801123b3adf9a53bf05d69fa0811d3cacc8d67a347ef212f169e9a8bcb",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_LC_902_SAFE.json": "56688eb6addcb59db948996a695d2e1215b11d44ee1bf3062e2e89d4f40dfe6a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_SLW_901_SAFE.json": "6a04e0204c4392fcf0eeb108740b2b30b26aa42304e4914d56687eea1da6064d",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_SLW_902_SAFE.json": "1a94215bc426c61d128bfda89b6af2ba7ef03a73a213e9fb2785c7483174fbab",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase17_slw.json": "57c277287204730d30119e45e122cb9051ffe005f3fcefcc2df43e00d332c718",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase17/references/SLW.json": "44abcb27edd1d5b76d8ca74e9f7d68b2f28a67c705b06b2cc713111587412039",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase16_lc.json": "1c18c5be6a9b04996f31e3ab6164be0133ee9b2a06667a3e7f27693731ef2cf3",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase16/references/LC.json": "5518dc9da485dbc823df79fcf1064e6739cab926786000f29248803a6af9dc99",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase16_cl.json": "d86b222cdcf44095a5a6b83428b7764df7e6913eda63bee3e4bc4e0286c800b3",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase16/references/CL.json": "814479317639616b01e3331209e39815df2026f620854b5b919da1b095aeb08c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/manifest.json": "5d667992e2bb0f3f3f4cece8c8745355c8a36a997b5dfda8ce46f3856655db57",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0000.png": "b8b841ebb0b3fed9ee8114924f95b2ea92dc0e625ec8ff8a20f8d93306516c21",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0001.png": "cf4a86591cff1d89e7cf9dc4e6c9c6bcae4180146244a604349d317c18389d8a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0002.png": "2ba332e3af6630c2f108d2c58f08baf4ad75475007ce4c36e87db8c06dd3dc8b",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0003.png": "d304f7b028cbbf3409b07272eeaaa9318c6d01be6540ee3f6407fd1fa394a5e5",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0004.png": "7e77af97f7b6f303ac22f3cee30708245b0d8907d7504083bac28c7f5cf6fe43",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0005.png": "1b1ef9c5f08f2ac20d8616dcc76d7765d0c0eda2d0d41bc4a9bb3932af8b75fe",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0006.png": "8181e642e4bd8d506fa7c15e3caeb415961ea343d7374f8631d734876f413fed",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0007.png": "93e5b8169cc52d1d7d1d37c0b94fe500dd4e84bfeb34eb2e0cf71768ab79fcb6",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0008.png": "755c17c78fab4fcc239e5c9bb706c8ba876e99fc98bdf1ea6237d01491b15299",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0009.png": "c69b2f108af26270c9181ed4e72f56115711fbdc3ca719dc77ecde5555eaf11c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0010.png": "051ee7d918c92e45fd4da0b39c427c794dc729da95c6d7135affe58379546252",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0011.png": "5f535e805f31f314115f7a679065e054f68769d6beb116de4f1349a161a9685a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0012.png": "dbb95133418cfcd908c6d8f2faf5e9d9934735043ebe7c339901981a6af0eab1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0013.png": "1eb1aa57ef341d55bd346635d63ec6a8f5fe77438dcaa737b51aa3da96edf710",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0014.png": "3a41f9a92c7b0cc219e8771b68bc48c304a5d6ed8cbdfd7cfd2e58fb40672fff",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0015.png": "b2685822170af598b51f5f7856a81c2ac4bc413a484ad8a32f85412664b951d2",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/manifest.json": "f1c4f080632b69f1e6e39eddbe9f8f0284f9a4ba44ff8f51be9c300db1a3045f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0000.png": "5845d910b326f80b001202965c438c8fa66937d04c53fcc627e3149ed147a056",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0001.png": "da5336c42e7ec80826913249addf9054b57b42c6e6e2fa789fe8ded00121636e",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0002.png": "d4849e3cc433e04a3e1e12032801ea867893e3c33b0a57de8fcd9d10e3c5fbbd",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0003.png": "4cc0b7ed96bff290d69992afde7e23a412f946f33e00e1e1eef7dcd5a51ffd59",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0004.png": "ac75794bfe1852cc11b468f8557b14fb4ebc9264fbc343fc9e431b295ef598c7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0005.png": "1476f83f4fa2f4436de728e8afd88e2429213ceb9a1e8fd3b32c1f8f80123621",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0006.png": "8371329a90d990c0d2e5530d1e2488de211baa52170f1a26a706a5d5ff8a337c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0007.png": "b748a0c4204c4148e610d86a55e09b7cd58e9cffae78051eb03953ac5354bf29",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0008.png": "44b58384a8e4a90d4f60afff5616468aa9b7689f8fff74b7ca14c51e1b256c53",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0009.png": "a52fef8da021b2beb87268497dda2da1dfcbacac382d3117fbec2aee18486ab6",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0010.png": "cb64811d97c0b1c1b67406c02b8e196bfc4fb5354c45cfbfbe6947317e124eca",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0011.png": "0c33302546b385030d5875eef094f9d937445325b5b710afb99d45ec32b03620",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0012.png": "477f15ee4b7e1cde36a17da4a20ea51a1f97f2930e1c412dd2f665e68e9ff5cc",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0013.png": "e88bbbe853b5801570739f90d9c0e8134ff0c0d413154f62ced4c7a9dd18d1e3",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0014.png": "8d34aaf912267eb5da390ba091146b430ec4083936f8e341109b7d9bd12efde7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/manifest.json": "358f4fa519cb9577b0a5e4ad25ea55cabc11e1cf2737e3022c33f5095678c5fa",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0000.png": "e10c53056a42bbeb97c704d8b1923349ba93739665203f4f8e106db84ef838d2",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0001.png": "a8e4db096ecaf198667a06af88660a4220b349e2b98f0ec5089e8362e89edaed",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0002.png": "44e63116987ca830738d98fb9233841dd91e19bfde0899cbdb4b539af845a780",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0003.png": "7bd6b8e95121ba7d276dc40e8abcd51d471a2e7351f216363ce58f8ea2c9f4a9",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0004.png": "6a06a360da2758c75ddb22e6d6ae2355ab43cfcc2cbc83da18f4d65cfb4a7962",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0005.png": "750acff8a904f2be2cf6b4b617ded64c02c2ba22e709c08045ee945dd2ab4168",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0006.png": "8457301b3e42963b4c65c3848c517c1134c33d0ee2d0d2b697d9eaea9fe4c94b",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0007.png": "2296d3a88af627266cff84cad2364aa9fd69d835f35b4151b1adfcfaa0603218",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0008.png": "7a6fa2dd3397bd0ac9cdb7d876ea270d7add52a5ec9aacbdd605f88271c6d5f8",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0009.png": "007da533fbf72f952236cac875e7b02b78da3db000bce6929afa3c6b71c3eac8",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0010.png": "4e8adc84a373b5391074eac6d9a4ac1bcca1d0ce5bce258aa7bc94129685890b",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0011.png": "c77b23789010dc7d9e2b6c43aa6835fc898a206dd5e84ba7d3b19bc1ae2f7ba1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0012.png": "6b6d7d8c16c9511a0ad98c9fac88a968df74c1162d44bbf48188d8ca02a51393",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0013.png": "974a1ad1d287f3df520419fb0e4098294ad26a24ef0f01717fa769254b7ea446",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0014.png": "70709b639b24e8d8080d2a259846dbe883fcfce70384856a9d3debd01319c711",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/requests.jsonl": "b1d2d04a2cdf32dbd819954f37d7766be5d7c3008daebbeec50838a1cc46c1f1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations.jsonl": "05dc0f8103f23d4b2944c032df3b7bc1fa0a4a9e868eddd9e52dfe11ed9688a2",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/model/inference.jsonl": "2d0aaeea7114d6805bf1524eded3561244a77aa39dee4d2d8ccd3517681090f7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/scenario.json": "ca8ae98358d46c0e5a19070daec014d7753db83ce8c37251c9058364562d4ff3",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/model/raw/0001.npz": "3c6957e3e65e28db673951d9831bf06e24c8a6908a06815ade8b734d35bee46d",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/model/derived/0001.npz": "fe20b96167afdb8c0eab448405b7bf61343b68d09709c81b10f3ad122d4af981",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations/0005.png": "122e8cbdc5911e882ab7798d3b0f8af9453f90193987b620fe8fa7868f20abbb",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations/0006.png": "721e26dff0ea34b7c9d20834bc6c422de99ea58362dacaad0d3780fe3d8fa6db",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations/0007.png": "151a2ca169f082fae88d89b67f62553849cef4102a56a830a826064f3da5f27f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations/0008.png": "ff405f4b71bba92a15a063314fc311efa4aac4d167660bdceab41975ced88096"
+  },
+  "protected_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+    "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463",
+    "research/nomad_phase2/graph_worker.py": "2ffc21b0bd7d1469c123ce10e9647d7241f49cfcbf8833036d5dd9b01daef0e0",
+    "research/nomad_phase3_stage2/execution.py": "6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0",
+    "research/nomad_phase4c/execution.py": "9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232",
+    "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d",
+    "research/nomad_phase4c/protocol.json": "12b56f55d88c01101ef9ecd397723276260c5f11212a96418c04be4ab200cf00",
+    "research/nomad_phase4c/base_metrics.py": "12257847bfb605950a172add5f79b87af1434e1586530c139519128cacaa1497",
+    "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86",
+    "research/nomad_phase8/execution.py": "883f6416f6090dfb723a850eb39e3321f04c097eafd3fbb3647600d09567143c",
+    "research/nomad_phase8/inference.py": "1be01ac7e197ee88f4e227179bc3c077385e9e9d5d4f987b6c46d53477acd816",
+    "research/nomad_phase8/rtc_hard.py": "f8d2b25de87b092a43973cf0830923783bef970720005516399ddc8a0e69d7a6",
+    "research/nomad_phase8/request.py": "3fad51192bba2456b7273c8281038f85efa14d7cacd201c4b2af8b3e3505e46d",
+    "research/nomad_phase8/metrics.py": "94c40cc615764c61e8795141eb95d7b1bf14564477d0ea160ba894a6034896f3",
+    "research/nomad_phase8/protocol.json": "7f0b97256a6899faa96963eb694dfb91bca5dcf9b5251e79e3ad083e21630376",
+    "research/nomad_phase9/intent.py": "0c7efc7acfd2325f10794ba37941119563bfbd765c08868672884f05343419aa",
+    "research/nomad_phase5/graph.py": "f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a",
+    "research/nomad_phase12/config.py": "cbd45df40faed3bc2c89a4a010cb2bf4c39ac213c14d7f94d033234e2175d1e3",
+    "research/nomad_phase12/execution.py": "321d689729d8a90d13de606c2b1c7b662b87d5db1233485e2a99bc878e249704",
+    "research/nomad_phase12/gf_execution.py": "6a20c5be8cb140bba432636aa4a901c5ce3dd2774201c612d33161c4983ca45e",
+    "research/nomad_phase12/gf_worker.py": "f05a71a9d8ca614a069c54c64a2db81e0030085560e7b9b0d640053a6680db04",
+    "research/nomad_phase12/graph_gf.py": "c7b2e234302b07f894bdcaa6515ede9657d002869e4f462758880acd03a5a403",
+    "research/nomad_phase12/methods.py": "e752ab9ee57f91ceee9338722e05814f60f2047a51eecc00b6316fd8c19df8cb",
+    "research/nomad_phase12/protocol.json": "79acccfc6a6c4c5faf8c2b90dc796738cd67cb3a19bc0565b599749f9f035560",
+    "research/nomad_phase13/__init__.py": "44aa71b97e687753369955f9722976e89ccd398b919ae3ac3f894408915e8064",
+    "research/nomad_phase13/offline_validation.json": "1add90c57b0a37870a7ae6aaac1af90a1c7e0307940746c1500388185a77d0c7",
+    "research/nomad_phase13/methods.py": "d312c92041bf15b6157f59541d09f0397c2725e26b6df1f5c40e382a32fd6bb3",
+    "research/nomad_phase13/metrics.py": "283ba31acc0fc3bbca71141aa9eb28d9b850bbb0a84facefb7e84b618e8d7869",
+    "research/nomad_phase13/batch.py": "ca2ed96dc9ac0effdf31e908f0126d507ccc3756dbed2d5e0715bffc470b6ef6",
+    "research/nomad_phase13/report.py": "285324e39570f681ba71e9672ab46ab6a9021725fd1774d317d00829360711c6",
+    "research/nomad_phase13/protocol.json": "7f6ea7170327d001c545d628f2a9b29579f7ed557512fce5f4ccaf59756ab8f0",
+    "research/nomad_phase13/config.py": "e763af6471132d71c2b5b4a197d144643c7c764f4518a5fcfd8bd6b80ccf6317",
+    "research/nomad_phase13/test_phase13.py": "e6a8f7c6e94c65712a74c4a511c62afb6e1d00f8dc0ff9f0344f15360d661a3a",
+    "research/nomad_phase13/execution.py": "4342bd849e2451cb7a0c8be9b1905dd71a5c6d5a3498a9c9dc8ea61ca59505c9",
+    "research/nomad_phase13/offline.py": "b0494f96a6aed0b92f2480e3862a839454b131032ed9d0172010045a80e7ea9a",
+    "research/nomad_phase15/test_occupancy.py": "f4689c6db134f05e28bffcb387404480af8f6c9090995393e928108a2893c0dd",
+    "research/nomad_phase15/occupancy_protocol.json": "b4654bd801d72273669e4878bc8faaa96171b4032f224e34e3b027da1fa6f6ad",
+    "research/nomad_phase15/occupancy_report.py": "7f4006309c34997824c3344efaa3b8a388cd8570f25b073885627d93c84ce6d0",
+    "research/nomad_phase15/__init__.py": "5fa3b5c55ff121d5e4b7f1ba25e435bb727b2de272d101c23dec541f79637f15",
+    "research/nomad_phase15/test_depth_sdf.py": "5bc3179f3103b060595ac038cd9aa41a18268a743e8d6cb1eb44dda9b651578b",
+    "research/nomad_phase15/depth_sdf.py": "12f48eb36abbc5cdec32ba974f86a9dca943448ff43bec0114552351ce7b5a26",
+    "research/nomad_phase15/report.py": "1b8ea63f6dd2dc7f3271f1c2777f30976f2fe3a0d893b4ec066ccc78240358e1",
+    "research/nomad_phase15/protocol.json": "5adc417cdb8d827ca2d3b608486bb15453e7ab1ed76d26fbdb4cceed161957ef",
+    "research/nomad_phase15/replay_render.py": "07c8006f6571d4e5a8d99f4a66a243e6e2b4786b45283c435f8802881272b5a8",
+    "research/nomad_phase15/occupancy.py": "5cd5c399467f4ffc657231110b4af21d74e05eee756974763dd5bdc898df72ec",
+    "research/nomad_phase15/evaluate.py": "b1147d50f0a7dce3e2146fe66981caad7ec7366d5a096b3bd99eb37e0224e8f4",
+    "research/nomad_phase15/occupancy_rays.c": "2af80e0f9302270a73de2ad1f2551630e921bbe19a0c8742f7f96c6dd7f1f423",
+    "research/nomad_phase12/__init__.py": "2c133be31d1c8501caef6559f85ecba0cbe502fa105a73ee08f1777cac6c2fa4",
+    "research/nomad_phase12/batch.py": "62759a9bd68571e872204fba0e982d79324c88b7941cd9aa23eea0a89110fa11",
+    "research/nomad_phase12/metrics.py": "cb76019a4e1213865fe951eecf60bed8f6312f35dd8e8aadcbca409ee18b5579",
+    "research/nomad_phase12/offline.py": "90f009454bef59929503b913c1240f6909e392bd48d9632e89ca54e4b7b30ebd",
+    "research/nomad_phase12/offline_cases_r2.json": "4ee61f399fdbe7c6d9da787692d26cf277eb5ea55515b20544b4727c0aac2341",
+    "research/nomad_phase12/offline_validation.json": "d877fc2c2e128da59df42c534abd76626832de6bf6d3189c3aa68e9caeaff3bf",
+    "research/nomad_phase12/offline_validation_r2.json": "bc83bad0da1ac400cd6bad3032cadff15a9ff3a182fd5b0bcd9be6431ebeb22a",
+    "research/nomad_phase12/report.py": "6bc5a779b305f6eb8c0e16b2860ed7f64834eeb1eb6a33fa4749be4c21f59c4e",
+    "research/nomad_phase12/test_baselines.py": "5eb0536125136830e43820bbdd80af86304a84ec6d08b1db4b7f887d70a0b289",
+    "research/nomad_phase12/test_graph_gf.py": "df243bdd21d0fcb6b030e1464f7ecc6217cd8c4170caf9cee3e18011e84a7e4b",
+    "research/nomad_phase12/validation_r2.json": "c59c420b38e0f28936fe32200940157b6996d4887ae8284790e8a403d3bcdd87",
+    "research/nomad_phase12h/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/nomad_phase12h/batch.py": "3c181e05fae0d38172035a7c30c703ce03f55f5a421185679c65ae4f8a297d68",
+    "research/nomad_phase12h/config.py": "f665f806d3c5b6d455edd2d30cb67af02c756a99a1c4078c2c092260e0805405",
+    "research/nomad_phase12h/offline.py": "65da19cff24e5533319ec6f42e017bfb2f7fc005fac7533a8f007aa856c090b7",
+    "research/nomad_phase12h/offline_validation.json": "7851f7c45897965d65251465fbbc23a9c9ad75596c8c81da17ebe57d8b971d8d",
+    "research/nomad_phase12h/protocol.json": "ecc7bab1b30090b82702c3353ddbf61828859ba38dd9b3045e8183ee48b82a72",
+    "research/nomad_phase12h/report.py": "6e1f8744ece6b052bfca8dd03b9a06eb6dc0c8b7fec1b04e385562a8926d711f",
+    "research/nomad_phase12h/test_hermite.py": "b1695b0688d4d063e1b6c78b483d2209e14d6006d8b372e07ae3a300e747d3f5",
+    "research/nomad_phase12h/validation.json": "345ad1fc82b3524da948cb9765d0351df3a738703fd7409c7ceeb462533ba811",
+    "research/nomad_phase14d/__init__.py": "444751810bd3d955885ea2023b1ecc74b8fdb3bd069c25826dfcb12c9da6f69d",
+    "research/nomad_phase14d/diagnose.py": "16d26875ae641b4c7a2efa70fb443e2b1455e45b5a7c2f76cb9752ea7d956d8f",
+    "research/nomad_phase14d/test_diagnose.py": "525a29e5550d1d98c42dfdc64a39e0f2d278a876b35904883f483dbe6564efc1",
+    "research/nomad_phase15b/__init__.py": "13e5688df8b88dc1b79b6a93cfc20638bee075709a6dd28c34caa8b8f68501af",
+    "research/nomad_phase15b/batch.py": "6ba92e3935a4bcaf5371fb8ef8c64b71b3db0ca33defff0ff3c7602770bc43cc",
+    "research/nomad_phase15b/config.py": "b157533916a670e37fcbce8ef8ac25a0ce2e381df1750c77658141dedfe81e73",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase15b/execution.py": "3b0ec36d95c49eb8d7267d252cca593fb5c8e4e402b843918bb2bea20234fe00",
+    "research/nomad_phase15b/graph.py": "46f20a442464fe37076071d2237c42c04b3bce1ceb75a964d59d8862cd862d69",
+    "research/nomad_phase15b/metrics.py": "55777deb6739b2c804e105694e6e0cbd070160c5ea208f80baba96c3dc3285b8",
+    "research/nomad_phase15b/offline.py": "96f5ac10340a7f26e0c93f34662a6cd4f9240e0cd62e7c8cc164d73d20ad8e94",
+    "research/nomad_phase15b/offline_validation.json": "9721b27ac40b76eef309a124cbf4c8e0bc157d70f504e934efa5e11b945016d7",
+    "research/nomad_phase15b/protocol.json": "17b99f595bbdf18ecf7b0741961823071a836207f146260846ba8670eb732245",
+    "research/nomad_phase15b/report.py": "ee18b4bd2ff80c797b626a16c67667c5d9cf592794b7ee92f4285953bfb50f86",
+    "research/nomad_phase15b/socket_smoke_validation.json": "bb474d73d315561aefec4d066edbbe5b0cc3b60fd9c10dbcf062ca429b81d89e",
+    "research/nomad_phase15b/test_depth_pilot.py": "1f72eff4c97a3ee4a17606c0dac80753aff0ca2e896a63a33cc138544886b1e4",
+    "research/nomad_phase15b/test_socket_paths.py": "b17cf00aa4fd349ba53ccb4063ad1fbf05516bf80ff0dc20f125f84136b1aa12",
+    "research/nomad_phase15b/worker.py": "61c830b22fa2bde4eb197389d952d9fca79c31c847d737baf356687f25d0e43e",
+    "research/nomad_phase15c/__init__.py": "b448582ba3fb9bab13cf6da76e5c4fcce9aacbecc3dd22b284984b17ea6e739e",
+    "research/nomad_phase15c/diagnose.py": "1f57f69c78a6086e0739cfd12b2413dc67453c40f569ce9bc777ba7fb02d7c90",
+    "research/nomad_phase15c/report.py": "7a0ac3b6f31325a0657ce557de1adcca2d775776eceb14df91e4ddd1c1684be4",
+    "research/nomad_phase15c/test_diagnose.py": "bcfdcb6140429fdb79c64d4f7ea6ee08bd5c0d73aa488c761692ed7e21424c8a",
+    "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c",
+    "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58",
+    "research/nomad_isaac/launch.py": "6eb4f701ae9e2bc51f7e2f80a2aeaa18a0901639184704bf4570d482a3d781b9",
+    "research/nomad_phase0/graph_v2.py": "a8b57749f482ba775356c6ca025255053659c7e8b202501ed1dd8d5372102ad1",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase16/protocol.json": "26dc7556a7471d48dd859c177bcf0876a137ecefa7aec3455b63e1ed1599cffb",
+    "research/nomad_phase16/launch.py": "54c992938fccc922c626df93e6a10ad528235e65a9af6d8310afee5b8b62f974",
+    "research/nomad_phase16/preflight.py": "acd52885b723958c24b33b56f1c9d7f95aca5670727ad3d58a7667130ce6a054",
+    "research/nomad_phase16/test_phase16.py": "e9efe82b4ba80d8740a4ab6b7f0a91acc8c2134368c907fd3064aa83b2ad9f4a",
+    "research/nomad_phase16/__init__.py": "7bc234538ecea766982206061798bdc053e69e2a1c073eea130728a9ab76f157",
+    "research/nomad_phase16/campaign.py": "343b29223a9d310e4dbfafa27fd2ade8aeae17347bafeb34a372473c8f7c4e1d",
+    "research/nomad_phase16/metrics.py": "b5df5077518b9cf22b83cd61ec6b9650d20244a0db01f4e762a4ff365fed1015",
+    "research/nomad_phase16/report.py": "373126c82d0b2524adeea7abaa3c7b90e3fcb2102cb5bc60f04c39672f56095f",
+    "research/nomad_phase16/simulator.py": "a20b59d0e7f3401e97cb974a17efbea1ffe7e1961aa5c60be2fc035eafe0e7bd",
+    "research/nomad_phase16/depth.py": "020174e93cd7d2de1135cfbba3afff50d3833602e77d447d08845db286ba6ac3",
+    "research/nomad_phase16/config.py": "f9c46887c9f23805f783a84be505497ce8a91739bf83538257341d85293aa806",
+    "research/nomad_phase16/execution.py": "9a65369472647e3c25c3636cfffb296aa544ea4c61d5135e201c2c2de87e1f02",
+    "research/nomad_phase16d/diagnose.py": "e0fd752e9f0eca7f20b33d90e925ee1ee8b8df386d468032eae2cff2854566df",
+    "research/nomad_phase16d/__init__.py": "b38a4ec84b39f3c9e716fc8efd7a81adfe345b1dde994de35a2b02209afa9804",
+    "research/nomad_phase16d/test_diagnose.py": "50dc48b9a84d71cb3a2cbcee1c350ba09c8bca556033cb5039e0db2031170bb2",
+    "research/nomad_phase16d/report.py": "0dcb038e89299392c621d4d63cd826bfb2b103fa31d927c74819ffe3cef8dcb5",
+    "research/nomad_phase17/launch.py": "296ee25d128152d97880ff7981aaa353b781eda9aeca914cf00f30adde80921f",
+    "research/nomad_phase17/preflight.py": "ebe19a61bd5279f8a448252c50101213006c1327e9dd55006f0dc248a46c4c8c",
+    "research/nomad_phase17/worker.py": "8fff27d841421394fe2901c227cbd53813f3b01114f0f4c4cf719c94c50afccb",
+    "research/nomad_phase17/__init__.py": "68601db537bb12ff924a4941cb6f78ea400cbb0fd4691dcaa6c561e7fdb4e970",
+    "research/nomad_phase17/campaign.py": "54b4a31384ec7d7d9da69fff279ccd144f552b5b6613cf24f082adb4ca558ebd",
+    "research/nomad_phase17/metrics.py": "b45a4ac7654fee8056ef3d70ccc4bb583db55ebfd039567fe3f41482d211805e",
+    "research/nomad_phase17/test_offline.py": "29d2e6b964de3ed51b2f77e76f4bb9167418bd70cea01178fa1d8ccd63bcbf0a",
+    "research/nomad_phase17/graph.py": "168757f96f39023923b72e9f861263375f8cb55cdb0f87f03df466e0ce7c635e",
+    "research/nomad_phase17/report.py": "ffd9e1c2097e2aaffc5fefdcd7fd92c66678446f2e5401e1ae99d938804f10aa",
+    "research/nomad_phase17/simulator.py": "0273e0d6853178926e462efdd6f1785a7fa24933b70f21a29ce037207ad345cd",
+    "research/nomad_phase17/recovery.py": "a0d610e4a6c31028b83768086097c3fb0e8f858df55041e68203d463c3f4f503",
+    "research/nomad_phase17/config.py": "c4bd7debfbb9d448910ab78c6073c9d7c7b78f5946e5443a828c139719145ca3",
+    "research/nomad_phase17/test_runtime.py": "d745b5b1128e9cc391601d77cf47b5431f4bdcb77f6af3b5723651b2d8e1aacd",
+    "research/nomad_phase17/execution.py": "6f2fbeaad9be6684159276da53b010a1604b8d70f72443cddbbac8ba7b926fa5",
+    "research/nomad_phase17/offline_report.py": "d38072207571dfae23dc5d69d8f496619299337b69920acb85d7a57880d6ffd5",
+    "research/nomad_phase17/offline.py": "575f857cc0f6e9f74ac62c287d6d0f8e43bf243914fcf17518834c47b69ca284",
+    "research/nomad_phase8/worker.py": "131e9a80ad1fef6a8f37f01d114e55f4f2c5ae7e4fa1fdcda408f4d2b1b042c9",
+    "research/nomad_phase8/__init__.py": "84d85c167209322773a47c51004916331abb841d973fe00965390c7a4d48e428",
+    "research/nomad_phase8/batch.py": "d3bc65f57245f2b8946eedd9d2b942a962c3f09ecd16c9ff83da99f65615a5e6",
+    "research/nomad_phase8/test_overnight.py": "e8135c7de96eb42061fe15e23d49b0e5848401094d9337b1533eba04f6a0a12b",
+    "research/nomad_phase8/report.py": "aa9a606444902c354615fbfbeed28dfe9796d6e4d9e4827595aecb3375eb776f",
+    "research/nomad_phase8/config.py": "02e114456197ba999453d476d9506ec0a4c9f4b173be1bf10acac43cf20eaf92",
+    "research/nomad_phase8/overnight.py": "1dd70547020582fed2e668529daf1609ba7922af267cc6caba5f4291de3064a7",
+    "research/nomad_phase8/offline.py": "7fa72e4d1e84a49d94f8123d40c8365e5eb914ba793f16d54d60901a42b63a3e",
+    "research/nomad_phase17/protocol.json": "be911cf1f9e139090aca37c6156c8cb23a2a1e2289afa3fb410bec89b3e529d7",
+    "research/nomad_phase7/rtc.py": "446bbbd2bbe8db3c0639fa6829167030de84f1b24b90ebcdd2eb5316b05ff4ae"
+  },
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "depth_bounds_m": [
+    -4.0,
+    -3.5,
+    8.0,
+    6.2
+  ],
+  "depth": {
+    "variant": "V1",
+    "noise": "sigma=.01*d^2",
+    "odometry": "exact simulator",
+    "all_methods": true,
+    "updated_in_thread": true,
+    "oracle_control": false
+  },
+  "control": {
+    "lookahead_m": 0.25,
+    "max_v_m_s": 0.3,
+    "max_w_rad_s": 0.4,
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "integration_hz": 72,
+    "waypoint_timeout_s": 1.0,
+    "timeout_sim_s": 90.0,
+    "seed_base": 101,
+    "seed_offset_multiplier": 10000
+  },
+  "reference": {
+    "center_to_obstacle_m": 0.25,
+    "distance_interpretation": "robot center to box/wall surface; not footprint; same for inner and outer walls",
+    "wall_footprint_margin_m": 0.16,
+    "spacing_s": 2.0,
+    "speed_m_s": 0.2,
+    "lookahead_m": 0.25,
+    "grid_m": 0.02,
+    "algorithm": "2cm clearance-weighted A*: edge_length*(1+(.25/clearance)^2); >=.25m first, then only opposing-surface centerlines of sub-.5m passages if disconnected; 20 local clearance-preserving smoothing passes; no parameter tuning or navigation retry",
+    "timeout_s": 120.0,
+    "center_to_wall_m": 0.25,
+    "narrow_fallback": "local nearest two opposing surfaces dot<=-.9, separation<.5m, one-cell medial band projected to exact surface midpoint; physical footprint margin >=.02m",
+    "reference_length_definition": "length of frozen smoothed clearance-weighted geometric route; shortest-grid length retained separately",
+    "expected_topomap_nodes": {
+      "SLW": 16,
+      "LC": 15,
+      "CL": 15
+    }
+  },
+  "main_indices": [
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73
+  ],
+  "main_max": 144,
+  "main_delay_s": 0.75,
+  "shuffle_seed": 20261030,
+  "main_order": [
+    {
+      "index": 66,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 66,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 66,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 66,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 66,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 66,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 66,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 66,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 66,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 66,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 66,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 66,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 66,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 66,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 66,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 66,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 66,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 66,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 67,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 67,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 67,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 67,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 67,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 67,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 67,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 67,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 67,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 67,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 67,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 67,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 67,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 67,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 67,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 67,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 67,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 67,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 68,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 68,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 68,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 68,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 68,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 68,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 68,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 68,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 68,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 68,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 68,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 68,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 68,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 68,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 68,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 68,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 68,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 68,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 69,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 69,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 69,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 69,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 69,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 69,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 69,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 69,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 69,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 69,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 69,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 69,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 69,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 69,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 69,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 69,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 69,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 69,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 70,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 70,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 70,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 70,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 70,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 70,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 70,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 70,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 70,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 70,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 70,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 70,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 70,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 70,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 70,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 70,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 70,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 70,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 71,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 71,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 71,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 71,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 71,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 71,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 71,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 71,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 71,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 71,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 71,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 71,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 71,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 71,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 71,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 71,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 71,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 71,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 72,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 72,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 72,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 72,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 72,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 72,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 72,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 72,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 72,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 72,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 72,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 72,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 72,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 72,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 72,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 72,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 72,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 72,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 73,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 73,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 73,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 73,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 73,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 73,
+      "scene": "SLW",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 73,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 73,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 73,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 73,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+HERMITE"
+    },
+    {
+      "index": 73,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 73,
+      "scene": "LC",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 73,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth"
+    },
+    {
+      "index": 73,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+RTC-hard"
+    },
+    {
+      "index": 73,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+TEMPORAL-ENSEMBLE"
+    },
+    {
+      "index": 73,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+GRAPH-depth-CLR"
+    },
+    {
+      "index": 73,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE"
+    },
+    {
+      "index": 73,
+      "scene": "CL",
+      "method": "FRESHEST-SAFE+HERMITE"
+    }
+  ],
+  "seed_rule": "101 + 10000*index + 2*request_id; DDPM seed +1",
+  "retries": 0,
+  "skip_on_failure": false,
+  "tuning": false,
+  "oracle_scope": "evaluation only; methods use depth snapshots and exact simulator odometry (no odometry error)",
+  "rtc": {
+    "label": "RTC hard-masking ablation (DDPM adaptation)",
+    "worker": "nomad_phase8.worker --rtc-mode hard",
+    "generation": "nomad_phase8.rtc_hard.diffuse unchanged",
+    "beta": 5,
+    "T_est_s": 0.888536777,
+    "target": "nomad_phase8.request.rtc_target unchanged; active OLD path at observation snapshot A",
+    "samples": 8,
+    "post_generation": "all eight metric XY samples -> common observation-anchored FRESHEST-SAFE selection at B",
+    "d_zero": "unchanged: soft guidance when W nonzero, normal DDPM when W zero; no special replacement",
+    "extra_inference_cost": "measured, never subtracted"
+  },
+  "recovery": {
+    "stop_wait_fresh_streak": 2,
+    "actual_speed_below_m_s": 0.01,
+    "v_m_s": 0,
+    "omega_rad_s": 0.3,
+    "rotation_deg": 30,
+    "max_per_run": 12,
+    "depth_ray_threshold_m": 0.025,
+    "ray_max_m": 2,
+    "tie": "left",
+    "direction_sampling_m": 0.01,
+    "unknown": "same Snapshot semantics: not occupied",
+    "trigger": "two consecutive STOP_WAIT FRESH decisions AND actual v<.01 at control tick; resets after recovery",
+    "rotation_finish": "30deg exactly; final 72Hz interval shortened angular command only; unchanged AngularPlant used",
+    "during_rotation": "RGB/inference continue; FRESH marked deferred; pending Graph results discarded, no path tracking",
+    "after_rotation": "wait for next actual FRESH switch, normal selection; existing timeout clock unchanged",
+    "no_oracle": true,
+    "zero_previous_v_graph_rejection": "unchanged"
+  },
+  "fallback": {
+    "keep_clearance_m": 0.025,
+    "keep_remaining_m": 0.25,
+    "stop_target_v": 0.0,
+    "stop_w": 0.0,
+    "linear_accel_m_s2": 0.5,
+    "clock": "unchanged NoMaD latest release validity; retained path/source id explicitly logged",
+    "no_unsafe_chunk_added": true
+  },
+  "te_keep_rule": "ALL_UNSAFE only: add no new chunk; expire normally; evaluate each valid component suffix with latest depth >=.025m and remaining >=.25m; discard failed components; retain chronological order and renormalize exp(-.5k); KEEP_ACTIVE iff at least one survivor, otherwise STOP_WAIT; record safety-removal and expiry counts separately",
+  "metrics": {
+    "checkpoint": "first saved72Hz pose meeting scene.checkpoint axis/threshold; no imputation",
+    "minimum_oracle_clearance": "min exact swept footprint clearance across scene boxes AND outer walls; box-only minimum additionally reported",
+    "safety_failure": "geometric overlap OR corridor intrusion; count each run once",
+    "inference": "all inference inputs including initialization; run median/p95 and pooled method distribution",
+    "rtc_prefix": "all samples and all d-prefix waypoints, norm(metric-target_local_xy), same Phase12 rtc_prefix_error definition"
+  },
+  "statistics": {
+    "bootstrap_replicates": 20000,
+    "bootstrap_seed": 20261030,
+    "resampling": "paired seed clusters across scenes; within each draw sum differences/count matched pairs",
+    "main_comparators": [
+      "FRESHEST-SAFE+HERMITE",
+      "FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "FRESHEST-SAFE+RTC-hard"
+    ],
+    "main_alpha": 0.016666666666666666,
+    "main_confidence": 0.9833333333333333,
+    "main_min_pairs": 12,
+    "main_labels": {
+      "FASTER": "n>=12 and CI upper<0",
+      "SLOWER": "n>=12 and CI lower>0",
+      "INSUFFICIENT_PAIRS": "n<12",
+      "INCONCLUSIVE": "otherwise"
+    },
+    "H2_success_margin_count": 3,
+    "H2_safety_margin_count": 1,
+    "H2_denominator_per_method": 24,
+    "technical_failure_rule": "INCONCLUSIVE",
+    "composite": "CONFIRMED iff all3 flags true; PARTIAL iff exactly2; NOT_CONFIRMED otherwise; overall ALL_CONFIRMED only if all3 comparisons CONFIRMED",
+    "supplementary_confidence": 0.95,
+    "S1": "CLR vs GRAPH-depth: clearance paired CI lower>0 => CLEARANCE_LARGER; checkpoint and recovery/STOP_WAIT counts",
+    "S2": "CLR vs SAFE: checkpoint paired difference and success counts",
+    "S3": "scene-specific descriptive counts and pair estimates; no new scene-specific primary decision",
+    "technical_failure_rule_note": "Conservative default disclosed before execution; technical failures are neither collisions nor successes; H1 still uses observed valid checkpoint pairs."
+  },
+  "smoke": {
+    "scene": "CL",
+    "method": "FRESHEST-SAFE+RTC-hard",
+    "index": 901,
+    "delay_s": 0.75,
+    "timeout_s": 30,
+    "attempts": 1,
+    "excluded": true
+  },
+  "rtc_replay": {
+    "run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard",
+    "id": 1,
+    "selection": "lowest Phase12 RTC-hard seed index, first request with d>0",
+    "max_error": 1e-06,
+    "attempts": 1
+  }
+}
