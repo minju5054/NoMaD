@@ -1,0 +1,369 @@
+{
+  "passed": true,
+  "evidence": [
+    {
+      "stage": "inspect_SLW",
+      "exit_code": 0,
+      "wall_s": 105.71508291299688,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_preflight_01/inspect/SLW",
+      "excluded": true,
+      "inspection": {
+        "scene": "SLW",
+        "stationary_captures": 3,
+        "displayed_depth_frame": 0,
+        "noise": "sigma=.01*d^2",
+        "occupied_cells": 2620,
+        "stats": [
+          {
+            "points": 71972,
+            "obstacle_points": 23419,
+            "ray_count": 12210,
+            "occupied_update_cells": 2650,
+            "free_update_cells": 21310,
+            "occupied_cells": 0,
+            "unknown_fraction": 0.9794541280824167,
+            "pointcloud_ms": 2.949387999251485,
+            "accumulate_ms": 12.717278994387016,
+            "sdf_ms": 0.35484900581650436,
+            "update_ms": 16.021515999455005
+          },
+          {
+            "points": 71972,
+            "obstacle_points": 23365,
+            "ray_count": 12211,
+            "occupied_update_cells": 2647,
+            "free_update_cells": 21305,
+            "occupied_cells": 2136,
+            "unknown_fraction": 0.9792543289105972,
+            "pointcloud_ms": 2.863522997358814,
+            "accumulate_ms": 9.523764994810335,
+            "sdf_ms": 15.603537001879886,
+            "update_ms": 27.990824994049035
+          },
+          {
+            "points": 71972,
+            "obstacle_points": 23383,
+            "ray_count": 12248,
+            "occupied_update_cells": 2643,
+            "free_update_cells": 21267,
+            "occupied_cells": 2620,
+            "unknown_fraction": 0.9791617181356765,
+            "pointcloud_ms": 2.8055920120095834,
+            "accumulate_ms": 9.694030988612212,
+            "sdf_ms": 15.434733999427408,
+            "update_ms": 27.934357000049204
+          }
+        ],
+        "pose": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "box_depth_hits": {
+          "Slalom1": 12371,
+          "Slalom2": 1548,
+          "Slalom3": 0
+        },
+        "outer_wall_depth_hits": 10125,
+        "occlusion_note": "Not all objects must be visible at start; LC AfterCorner is expected to be occluded. Oracle surface labels are used only in this sensor validation."
+      }
+    },
+    {
+      "stage": "CL_CLR",
+      "exit_code": 0,
+      "wall_s": 137.8238085010089,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_preflight_01/smoke/CL_CLR",
+      "excluded": true,
+      "technical_validation": "PASS",
+      "classification": "STUCK",
+      "success": false,
+      "collision": false,
+      "corridor": false,
+      "stuck": true,
+      "termination_reason": "simulation_timeout",
+      "duration_s": 30.0,
+      "goal_time_s": null,
+      "distance_m": 4.387030587788568,
+      "reference_length_m": 5.839123880126611,
+      "no_detour_success": false,
+      "checkpoint_time_s": null,
+      "checkpoint_mean_speed_m_s": null,
+      "minimum_oracle_clearance_m": 0.0716203278279746,
+      "minimum_obstacle_clearance_m": 0.0716203278279746,
+      "minimum_wall_clearance_m": 0.11318396201400457,
+      "margin_violation_s": 0.0,
+      "curv_slow_fraction": 0.514423076923077,
+      "endpoint_clamp_fraction": 0.6037037037037037,
+      "stop_duration_s": 6.777777777777778,
+      "fallback_events": {
+        "STOP_WAIT": 2
+      },
+      "fallback_time_s": {
+        "KEEP_ACTIVE": 0.0,
+        "STOP_WAIT": 1.0
+      },
+      "te_removed_chunks": 0,
+      "te_expired_chunks_at_fallback": 0,
+      "fallback_time_fraction": {
+        "KEEP_ACTIVE": 0.0,
+        "STOP_WAIT": 0.03333333333333333
+      },
+      "graph_calls": 25,
+      "graph_accepted": 21,
+      "graph_dispositions": {
+        "INITIALIZATION_REJECTED": 4,
+        "ACCEPTED": 21
+      },
+      "graph_initialization_rejected": 4,
+      "solve_time_s": {
+        "n": 21,
+        "median": 0.08128394700179342,
+        "p95": 0.14986886800033972
+      },
+      "sdf_active_count": 0,
+      "depth_update_ms": {
+        "n": 117,
+        "median": 29.81086001091171,
+        "p95": 35.042805000557564
+      },
+      "snapshot_age_s": {
+        "n": 27,
+        "median": 0.43055555555555625,
+        "p95": 0.43055555555555713
+      },
+      "dangerous_false_safe_count": 0,
+      "depth_sample_decisions": 216,
+      "selected_unknown_fraction": {
+        "n": 25,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "rejected_candidate_unknown_fraction": {
+        "n": 2,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "applied_path_unknown_fraction": {
+        "n": 46,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "unknown_risky_path_points": 0,
+      "unknown_associated_safety_failure": false,
+      "unknown_causal_failure_count": null,
+      "inference_ms": {
+        "n": 29,
+        "median": 38.957784,
+        "p95": 55.6448238
+      },
+      "actual_delivery_delay_s": {
+        "n": 29,
+        "median": 0.750081529,
+        "p95": 0.7501342092
+      },
+      "pose_replay_error": 0.0,
+      "command_replay_error": 0.0,
+      "clearance_replay_error": 4.440892098500626e-16,
+      "pacing_error_s": {
+        "n": 2161,
+        "median": 0.000137753,
+        "p95": 0.001098985
+      },
+      "request_count": 29,
+      "switch_count": 28,
+      "input_sha256": {
+        "summary.json": "e836323b2f716566eab30938a5f9d3e41cc08643f87225df3235d2de1245a49a",
+        "agent_trajectory.csv": "8b6f7617982a783ce6ac766e3eacae808104a7d30505274da79eff2f3d48eaff",
+        "controller.jsonl": "61498d3f0be2d2edd13b98c3e9f282272dcadbecfc67ff6a14bd71cc61cc5d7d",
+        "events.jsonl": "3a429ed0a789ee3ba5f93b1c53f5daeec0c993cc46b93c126e4f1084d4f9f507",
+        "stage2_graph.jsonl": "f4e34f3d0870661e4e2798616d37aed9772f75558a4d0a5d5212f1016f473762",
+        "scenario.json": "a3078556df0c7ab76f9430338da9e01e944f4328a845daf2554eb3be275ce4f6"
+      },
+      "recovery_count": 1,
+      "recovery_completed": 1,
+      "recovery_time_s": 1.75,
+      "recovery_time_fraction": 0.058333333333333334,
+      "recovery_observed_outcomes": 1,
+      "recovery_safe_outcomes": 1,
+      "recovery_limit_reached": false,
+      "recovery_deferred_fresh": 1,
+      "accepted_clearance_delta_m": [
+        0.021594611974521394,
+        -0.034791934521884005,
+        -0.06039642451963845,
+        -0.09116457241277331,
+        -0.015634915489859846,
+        0.02098552424839406,
+        -0.007274704191987391,
+        -0.032809061226493325,
+        0.05595322267196212,
+        0.07034790776274114,
+        0.020166680324559705,
+        0.027254422979126502,
+        0.020979311018367586,
+        -0.008204663493107,
+        0.028927265172822764,
+        0.14072584750766015,
+        -0.027268076527750318,
+        -0.05795797375658174,
+        0.033130319014757825,
+        -0.027430078393928636,
+        -0.006005150985931129
+      ],
+      "clearance_solved_jobs": 21,
+      "clearance_active_jobs": 6
+    },
+    {
+      "stage": "CL_recovery",
+      "exit_code": 0,
+      "wall_s": 127.03410208200512,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_preflight_01/smoke/CL_recovery",
+      "excluded": true,
+      "start_source": {
+        "file": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/main/CL_058_D750_FRESHEST-SAFE+GRAPH-depth/events.jsonl",
+        "sha256": "ac317ba7ce344efd3addd1808e92d39d5ae11be015887d0d4f1b570b7ba47b7d",
+        "fresh_id": 13,
+        "pose": [
+          1.3164241662618787,
+          0.29022004649641636,
+          -0.2867452769233303
+        ]
+      },
+      "technical_validation": "PASS",
+      "classification": "SAFETY_FAILURE",
+      "success": false,
+      "collision": true,
+      "corridor": false,
+      "stuck": false,
+      "termination_reason": "geometric_collision",
+      "duration_s": 18.73611111111111,
+      "goal_time_s": null,
+      "distance_m": 0.7571627029091085,
+      "reference_length_m": 5.839123880126611,
+      "no_detour_success": false,
+      "checkpoint_time_s": null,
+      "checkpoint_mean_speed_m_s": null,
+      "minimum_oracle_clearance_m": -0.0002670824608509907,
+      "minimum_obstacle_clearance_m": -0.0002670824608509907,
+      "minimum_wall_clearance_m": 1.0014963862002357,
+      "margin_violation_s": 0.29166666666666674,
+      "curv_slow_fraction": 1.0,
+      "endpoint_clamp_fraction": 0.23076923076923078,
+      "stop_duration_s": 8.88888888888889,
+      "fallback_events": {
+        "STOP_WAIT": 4
+      },
+      "fallback_time_s": {
+        "KEEP_ACTIVE": 0.0,
+        "STOP_WAIT": 1.8888888888888893
+      },
+      "te_removed_chunks": 0,
+      "te_expired_chunks_at_fallback": 0,
+      "fallback_time_fraction": {
+        "KEEP_ACTIVE": 0.0,
+        "STOP_WAIT": 0.10081541882876206
+      },
+      "graph_calls": 0,
+      "graph_accepted": 0,
+      "graph_dispositions": {},
+      "graph_initialization_rejected": 0,
+      "solve_time_s": {
+        "n": 0,
+        "median": null,
+        "p95": null
+      },
+      "sdf_active_count": null,
+      "depth_update_ms": {
+        "n": 72,
+        "median": 29.68323849927401,
+        "p95": 35.2103874029126
+      },
+      "snapshot_age_s": {
+        "n": 14,
+        "median": 0.40277777777777857,
+        "p95": 0.40277777777777857
+      },
+      "dangerous_false_safe_count": 0,
+      "depth_sample_decisions": 112,
+      "selected_unknown_fraction": {
+        "n": 10,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "rejected_candidate_unknown_fraction": {
+        "n": 4,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "applied_path_unknown_fraction": {
+        "n": 10,
+        "median": 0.0,
+        "p95": 0.0
+      },
+      "unknown_risky_path_points": 0,
+      "unknown_associated_safety_failure": false,
+      "unknown_causal_failure_count": null,
+      "inference_ms": {
+        "n": 17,
+        "median": 39.623212,
+        "p95": 102.52194099999984
+      },
+      "actual_delivery_delay_s": {
+        "n": 17,
+        "median": 0.750078364,
+        "p95": 0.7501291554
+      },
+      "pose_replay_error": 0.0,
+      "command_replay_error": 0.0,
+      "clearance_replay_error": 4.440892098500626e-16,
+      "pacing_error_s": {
+        "n": 1350,
+        "median": 0.00015027550000000001,
+        "p95": 0.08566697479999939
+      },
+      "request_count": 17,
+      "switch_count": 16,
+      "input_sha256": {
+        "summary.json": "b2f76bdbc54134f9283003aeae2339cea98c6e04f8baf364dc7666866220d89c",
+        "agent_trajectory.csv": "fe44d67ddfb7f3223a1e58e7e5b53aa9b0536e75c216b0d97a6264f6ab3d2532",
+        "controller.jsonl": "490ad29f70d8a46a2454f4f7ef192a282938850f85ceaa8ede10afff57be826e",
+        "events.jsonl": "3cd5b15c47c0ea4623436921c3dbd8ad20875aee23a02e1f08c04cd6fe9afa39",
+        "stage2_graph.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scenario.json": "0e96cdefc93d2e8894125eeed02414b2cb04a5500755814515781a8c641ac9af"
+      },
+      "recovery_count": 2,
+      "recovery_completed": 2,
+      "recovery_time_s": 3.5,
+      "recovery_time_fraction": 0.18680504077094143,
+      "recovery_observed_outcomes": 2,
+      "recovery_safe_outcomes": 1,
+      "recovery_limit_reached": false,
+      "recovery_deferred_fresh": 2,
+      "accepted_clearance_delta_m": [],
+      "clearance_solved_jobs": 0,
+      "clearance_active_jobs": 0
+    }
+  ],
+  "navigation_attempts": 2,
+  "main_attempts": 0,
+  "scope": "EXCLUDED_TECHNICAL_SMOKES",
+  "runtime_source_sha256": {
+    "research/nomad_phase17/launch.py": "296ee25d128152d97880ff7981aaa353b781eda9aeca914cf00f30adde80921f",
+    "research/nomad_phase17/preflight.py": "ebe19a61bd5279f8a448252c50101213006c1327e9dd55006f0dc248a46c4c8c",
+    "research/nomad_phase17/worker.py": "8fff27d841421394fe2901c227cbd53813f3b01114f0f4c4cf719c94c50afccb",
+    "research/nomad_phase17/__init__.py": "68601db537bb12ff924a4941cb6f78ea400cbb0fd4691dcaa6c561e7fdb4e970",
+    "research/nomad_phase17/campaign.py": "54b4a31384ec7d7d9da69fff279ccd144f552b5b6613cf24f082adb4ca558ebd",
+    "research/nomad_phase17/metrics.py": "b45a4ac7654fee8056ef3d70ccc4bb583db55ebfd039567fe3f41482d211805e",
+    "research/nomad_phase17/test_offline.py": "29d2e6b964de3ed51b2f77e76f4bb9167418bd70cea01178fa1d8ccd63bcbf0a",
+    "research/nomad_phase17/graph.py": "168757f96f39023923b72e9f861263375f8cb55cdb0f87f03df466e0ce7c635e",
+    "research/nomad_phase17/report.py": "ffd9e1c2097e2aaffc5fefdcd7fd92c66678446f2e5401e1ae99d938804f10aa",
+    "research/nomad_phase17/simulator.py": "0273e0d6853178926e462efdd6f1785a7fa24933b70f21a29ce037207ad345cd",
+    "research/nomad_phase17/recovery.py": "a0d610e4a6c31028b83768086097c3fb0e8f858df55041e68203d463c3f4f503",
+    "research/nomad_phase17/config.py": "c4bd7debfbb9d448910ab78c6073c9d7c7b78f5946e5443a828c139719145ca3",
+    "research/nomad_phase17/test_runtime.py": "d745b5b1128e9cc391601d77cf47b5431f4bdcb77f6af3b5723651b2d8e1aacd",
+    "research/nomad_phase17/execution.py": "6f2fbeaad9be6684159276da53b010a1604b8d70f72443cddbbac8ba7b926fa5",
+    "research/nomad_phase17/offline_report.py": "d38072207571dfae23dc5d69d8f496619299337b69920acb85d7a57880d6ffd5",
+    "research/nomad_phase17/offline.py": "575f857cc0f6e9f74ac62c287d6d0f8e43bf243914fcf17518834c47b69ca284"
+  },
+  "protocol_sha256": "be911cf1f9e139090aca37c6156c8cb23a2a1e2289afa3fb410bec89b3e529d7"
+}

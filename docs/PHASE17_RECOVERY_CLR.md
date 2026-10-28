@@ -36,3 +36,10 @@ Oracle clearance는 robot radius를 포함한 상자/외곽 벽 거리의 최솟
 후속 처리: Continue recovery/campaign preparation
 
 최종 준비 판정: **READY**
+
+사전 기술 검증: 단위/오프라인 테스트 8/8, SLW depth 상자·벽 관측 PASS, 본 실험 계획 105개/socket 최대 28 bytes. LC·CL 기존 Topomap hash 검증 PASS. 본 실험은 실행하지 않았다.
+
+- CL_CLR: technical PASS; 종료 simulation_timeout (30.000000s); Graph 실제 수락/적용 21/25; 회복 완료 1회; pose/command 재현 오차 0.0/0.0.
+- CL_recovery: technical PASS; 종료 geometric_collision (18.736111s); Graph 실제 수락/적용 0/0; 회복 완료 2회; pose/command 재현 오차 0.0/0.0.
+
+두 smoke는 본 결과에서 제외한다. CL_recovery의 안전 실패를 주행 성공으로 해석하지 않는다. 정지→정확한 30° 회전 및 새 FRESH 수신·선택 재개만 기술적으로 확인했다. Mock campaign 중단/재개 검증에서 시작된 실패 run은 기술 실패로 보존되고 재시도되지 않았으며, 이미 완료된 campaign은 재실행하지 않았다.
