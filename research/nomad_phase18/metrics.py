@@ -6,6 +6,14 @@ import nomad_phase17.metrics as base
 from nomad_phase8.request import rtc_target
 from .config import METHODS,RTC
 
+def assert_target_equal(a,b):
+    """Discrete RTC choices exact; only float arithmetic permits roundoff."""
+    assert a.keys()==b.keys()
+    floating=('Y','W','target_local_xy_m','projected_arclength_m','v_now','T_est_s','frozen_distance_m')
+    for key in a:
+        if key in floating:np.testing.assert_allclose(a[key],b[key],rtol=0,atol=1e-12)
+        else:assert a[key]==b[key],key
+
 def audit(run):
     # The parent audit's SAFE membership affects only posthoc diagnostics, not
     # control. Extend it locally for the new RTC name without editing its source.
@@ -23,7 +31,7 @@ def audit(run):
     errors=[];d0=empty=zero_speed=0
     for q,inf in zip(requests,inference):
         target=q['rtc_target'];assert inf['rtc_target']==target
-        reproduced=rtc_target(q['rtc_snapshot']);assert reproduced==target
+        reproduced=rtc_target(q['rtc_snapshot']);assert_target_equal(reproduced,target)
         d=target['d'];d0+=d==0;empty+=target['H_old']==0
         zero_speed+=d==0 and q['rtc_snapshot'].get('actual_vw',[0,0])[0]==0
         with np.load(run/f"model/derived/{q['id']:04d}.npz") as z:metric=z['metric']

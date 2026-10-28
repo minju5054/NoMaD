@@ -21,6 +21,15 @@ def fake_runs():
 
 
 class Tests(unittest.TestCase):
+    def test_rtc_target_roundoff_does_not_relax_discrete_choices(self):
+        from .metrics import assert_target_equal
+        a=dict(Y=[[.1,.2]],W=[1.],d=1,H_old=1,old_waypoint_indices=[0])
+        b=copy.deepcopy(a);b['Y'][0][0]+=2.22e-16;assert_target_equal(a,b)
+        b['d']=0
+        with self.assertRaises(AssertionError):assert_target_equal(a,b)
+        b=copy.deepcopy(a);b['Y'][0][0]+=.001
+        with self.assertRaises(AssertionError):assert_target_equal(a,b)
+
     def test_shared_wrapper_defers_scientific_imports_until_kit(self):
         import ast
         file=Path(__file__).with_name('simulator.py');tree=ast.parse(file.read_text())
