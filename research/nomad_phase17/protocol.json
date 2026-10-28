@@ -1,0 +1,90 @@
+{
+  "base_commit": "797b7fe",
+  "stage": "OFFLINE_READINESS_FIRST",
+  "expected_jobs": 391,
+  "input": "research/results/phase16/runs.json",
+  "input_run_root": "../artifacts/isaac6/phase16_multiscene_01",
+  "method": "FRESHEST-SAFE+GRAPH-depth",
+  "clearance_residual": {
+    "d_pref_m": 0.15,
+    "sigma_m": 0.05,
+    "sampling": "unchanged DepthGraph.sample_matrix: 9 points per segment, shared endpoints repeated",
+    "distance": "Snapshot.query, same footprint SDF; no extra residual-only error allowance",
+    "jacobian": "explicit analytic, zero at hinge and inactive points"
+  },
+  "unchanged": [
+    "DepthGraph constraints",
+    "exact depth certificate",
+    "all other residuals",
+    "initialization",
+    "previous prior",
+    "SLSQP constants",
+    "online acceptance rules"
+  ],
+  "solve_attempts_per_job": 1,
+  "retries": 0,
+  "tuning": 0,
+  "oracle_scope": "post-solve path evaluation only; static boxes AND rectangle footprint clearance",
+  "baseline": "stored numerical accepted flag; runtime dispositions logged separately; never re-solve",
+  "missing_baseline": "record missing; lower and upper acceptance bounds; READY must pass upper bound comparison",
+  "timing": "constructor+solve+certificate, excluding snapshot disk read and posthoc oracle evaluation; all-attempt and solver-started p95, use larger for readiness",
+  "readiness": {
+    "max_acceptance_drop_pp": 10,
+    "max_p95_s": 0.15,
+    "not_ready": "stop, no recovery/campaign/smoke or navigation commands"
+  },
+  "requested_recovery": {
+    "stop_wait_fresh_streak": 2,
+    "actual_speed_below_m_s": 0.01,
+    "v_m_s": 0,
+    "omega_rad_s": 0.3,
+    "rotation_deg": 30,
+    "max_per_run": 12,
+    "depth_ray_threshold_m": 0.025,
+    "ray_max_m": 2,
+    "tie": "left"
+  },
+  "requested_campaign": {
+    "scenes": [
+      "SLW",
+      "LC",
+      "CL"
+    ],
+    "methods": [
+      "FRESHEST-SAFE",
+      "FRESHEST-SAFE+HERMITE",
+      "FRESHEST-SAFE+TEMPORAL-ENSEMBLE",
+      "FRESHEST-SAFE+GRAPH-GF",
+      "FRESHEST-SAFE+GRAPH-depth",
+      "FRESHEST-SAFE+GRAPH-depth-CLR",
+      "TEMPORAL-ENSEMBLE"
+    ],
+    "indices": [
+      61,
+      62,
+      63,
+      64,
+      65
+    ],
+    "shuffle_seed": 20261029,
+    "max_runs": 105,
+    "delay_ms": 750,
+    "gate_method": "FRESHEST-SAFE",
+    "gate_indices": [
+      901,
+      902
+    ],
+    "gate_delay_ms": 0
+  },
+  "protected_sha256": {
+    "research/nomad_phase15b/graph.py": "46f20a442464fe37076071d2237c42c04b3bce1ceb75a964d59d8862cd862d69",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase12/graph_gf.py": "c7b2e234302b07f894bdcaa6515ede9657d002869e4f462758880acd03a5a403",
+    "research/nomad_phase5/graph.py": "f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_phase0/graph_v2.py": "a8b57749f482ba775356c6ca025255053659c7e8b202501ed1dd8d5372102ad1",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase16/protocol.json": "26dc7556a7471d48dd859c177bcf0876a137ecefa7aec3455b63e1ed1599cffb"
+  }
+}
