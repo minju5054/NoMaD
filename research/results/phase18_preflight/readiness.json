@@ -1,0 +1,185 @@
+{
+  "passed": true,
+  "smoke": {
+    "technical_validation": "PASS",
+    "classification": "STUCK",
+    "success": false,
+    "collision": false,
+    "corridor": false,
+    "stuck": true,
+    "termination_reason": "simulation_timeout",
+    "duration_s": 30.0,
+    "goal_time_s": null,
+    "distance_m": 3.6298904395094254,
+    "reference_length_m": 5.839123880126611,
+    "no_detour_success": false,
+    "checkpoint_time_s": null,
+    "checkpoint_mean_speed_m_s": null,
+    "minimum_oracle_clearance_m": 0.025830929770150196,
+    "minimum_obstacle_clearance_m": 0.025830929770150196,
+    "minimum_wall_clearance_m": 0.19655498683078151,
+    "margin_violation_s": 0.0,
+    "curv_slow_fraction": 0.6127450980392156,
+    "endpoint_clamp_fraction": 0.5,
+    "stop_duration_s": 7.333333333333333,
+    "fallback_events": {
+      "STOP_WAIT": 2
+    },
+    "fallback_time_s": {
+      "KEEP_ACTIVE": 0.0,
+      "STOP_WAIT": 0.8888888888888893
+    },
+    "te_removed_chunks": 0,
+    "te_expired_chunks_at_fallback": 0,
+    "fallback_time_fraction": {
+      "KEEP_ACTIVE": 0.0,
+      "STOP_WAIT": 0.02962962962962964
+    },
+    "graph_calls": 0,
+    "graph_accepted": 0,
+    "graph_dispositions": {},
+    "graph_initialization_rejected": 0,
+    "solve_time_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "sdf_active_count": null,
+    "depth_update_ms": {
+      "n": 117,
+      "median": 31.243671997799538,
+      "p95": 39.81727099162526
+    },
+    "snapshot_age_s": {
+      "n": 27,
+      "median": 0.40277777777777857,
+      "p95": 0.40277777777777857
+    },
+    "dangerous_false_safe_count": 0,
+    "depth_sample_decisions": 216,
+    "selected_unknown_fraction": {
+      "n": 25,
+      "median": 0.0,
+      "p95": 0.0
+    },
+    "rejected_candidate_unknown_fraction": {
+      "n": 2,
+      "median": 0.0,
+      "p95": 0.0
+    },
+    "applied_path_unknown_fraction": {
+      "n": 25,
+      "median": 0.0,
+      "p95": 0.0
+    },
+    "unknown_risky_path_points": 0,
+    "unknown_associated_safety_failure": false,
+    "unknown_causal_failure_count": null,
+    "inference_ms": {
+      "n": 28,
+      "median": 74.514611,
+      "p95": 133.88533849999993
+    },
+    "actual_delivery_delay_s": {
+      "n": 28,
+      "median": 0.7500756845000001,
+      "p95": 0.75009123955
+    },
+    "pose_replay_error": 0.0,
+    "command_replay_error": 0.0,
+    "clearance_replay_error": 4.440892098500626e-16,
+    "pacing_error_s": {
+      "n": 2161,
+      "median": 0.000140068,
+      "p95": 0.001195246
+    },
+    "request_count": 28,
+    "switch_count": 28,
+    "input_sha256": {
+      "summary.json": "1e1cdcc6be3f75cc9048d0eea4d5b4497a0a492710fd8dd9ca0616e63c712ac4",
+      "agent_trajectory.csv": "545eb7bfca32ce99504b31621af4e17f45982481d0328bc9d2ef6abdb8879935",
+      "controller.jsonl": "a9ec3e6a00e132f6a72be9ff0680ddc0a3b2d0481a86813d14e1003b8657011f",
+      "events.jsonl": "4195814993e38239680a60e3f537ae6bf487c810a919e058cff2ab012045b89b",
+      "stage2_graph.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scenario.json": "f0e18070d067e01afc5797bf32cdba5a87411dad61fd3f966f802366debf5da1"
+    },
+    "recovery_count": 1,
+    "recovery_completed": 1,
+    "recovery_time_s": 1.75,
+    "recovery_time_fraction": 0.058333333333333334,
+    "recovery_observed_outcomes": 1,
+    "recovery_safe_outcomes": 1,
+    "recovery_limit_reached": false,
+    "recovery_deferred_fresh": 1,
+    "accepted_clearance_delta_m": [],
+    "clearance_solved_jobs": 0,
+    "clearance_active_jobs": 0,
+    "rtc_d0_count": 9,
+    "rtc_prefix_error_m": {
+      "n": 384,
+      "median": 8.100410666422019e-09,
+      "p95": 2.0300763504336994e-08
+    },
+    "rtc_inference_count": 28,
+    "inference_samples_ms": [
+      313.485529,
+      151.173074,
+      35.295529,
+      94.854239,
+      38.900162,
+      72.190873,
+      101.779544,
+      55.580174,
+      78.570275,
+      79.720712,
+      73.577712,
+      91.267291,
+      75.465345,
+      72.820867,
+      79.516763,
+      37.948505,
+      42.038626,
+      38.377204,
+      71.857647,
+      76.19577,
+      39.326436,
+      78.291523,
+      71.264244,
+      73.446932,
+      73.263401,
+      76.518847,
+      75.45151,
+      77.601426
+    ],
+    "graph_solve_samples_s": [],
+    "rtc_empty_old_count": 8,
+    "rtc_zero_speed_d0_count": 8,
+    "rtc_prefix_error_max_m": 2.2509602453627264e-08,
+    "rtc_label": "RTC hard-masking ablation (DDPM adaptation)",
+    "rtc_generation_sha256": "f8d2b25de87b092a43973cf0830923783bef970720005516399ddc8a0e69d7a6",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase18_preflight_03/CL_901_SAFE_RTC",
+    "excluded": true,
+    "passed": true,
+    "navigation_attempts": 1,
+    "main_attempts": 0,
+    "stored_run_reaudit": true,
+    "original_validation_failure": "strict JSON equality: max target roundoff 2.22e-16; discrete RTC decisions unchanged",
+    "verification_git_sha": "2bfba80f1f040c250fdeeff0fd442f9607a1c232"
+  },
+  "protocol_sha256": "a49ed0492b7cd646747784e436cc4e48a7db4075e6d09950d01be16d2bb0bbfa",
+  "runtime_source_sha256": {
+    "research/nomad_phase18/launch.py": "1a573330c43ead4a8a23f4065d01b85f6fa6f94e16b913cc8e6cd53ab37b10d0",
+    "research/nomad_phase18/replay.py": "ed8d36c050296e54114fa1666fe007b3d0d8fb72a357f2f8fa89b7c81a444a71",
+    "research/nomad_phase18/preflight.py": "5e93da9703bb8d1e079ee92ff93807c27df3227405c1844ea2bcf633a27f3df3",
+    "research/nomad_phase18/__init__.py": "958cc8b661ecce63402735ef765f6089f780e61de420adcc7bad6c802ee95387",
+    "research/nomad_phase18/campaign.py": "3492de134860e6c4c211bd43a2faba7db4bd7c2ddc16b9314994c2115e3709b2",
+    "research/nomad_phase18/metrics.py": "3e1ec6970e60cf9564dc6ab11c0177c6fdde5cdecbb297a84bad1d26d01d624a",
+    "research/nomad_phase18/test_phase18.py": "7ba16131f76d054a7c3b3d8b715f5140e35f7ebd2546d627c73e0a101c749eec",
+    "research/nomad_phase18/report.py": "f02d38e0df53e845448a7a8a8a19b4e43c95fa843a740d01612c8b1394aef248",
+    "research/nomad_phase18/simulator.py": "f604ac732293b2a4cc8de71a28c6f0fd581989cb7b913e9fbfd1592f7574b21d",
+    "research/nomad_phase18/statistics.py": "25bfd864af05fb5295894fc155a8b1a577d142d47b7cc660c562a1db26b34361",
+    "research/nomad_phase18/config.py": "350294dcc57b8d4e6a110cb26bac0234e92137d5d33beacbfb741091194cd39c",
+    "research/nomad_phase18/execution.py": "4834f9cb1a2a905d967b1b6c90e13226c88d9ce0df0e9087cbe65567548f2b35"
+  },
+  "scope": "EXCLUDED_TECHNICAL_SMOKE_ONLY; two failed zero-tick startups preserved separately"
+}
