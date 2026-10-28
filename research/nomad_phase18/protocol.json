@@ -1147,7 +1147,7 @@
     "max_error": 1e-06,
     "attempts": 1
   },
-  "runtime_isolation": "AST redirects only Phase17 config/execution imports after unchanged SimulationApp initialization; no scientific imports before Kit",
+  "runtime_isolation": "Standard-library-only wrapper imports; same sys.path[0] as protected Phase17 entry point prevents statistics.py shadowing; AST redirects two factories after SimulationApp initializes",
   "preflight_startup_failure": {
     "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase18_preflight_01/CL_901_SAFE_RTC",
     "navigation_ticks": 0,
@@ -1156,5 +1156,15 @@
     "fix": "defer config/executor SciPy imports until protected SimulationApp startup; method constants and decision rules unchanged",
     "retained": true,
     "second_launch": "explicitly authorized by user; same CL SAFE+RTC-hard 30s smoke"
+  },
+  "preflight_import_collision": {
+    "path": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase18_preflight_02/CL_901_SAFE_RTC",
+    "navigation_ticks": 0,
+    "observations": 0,
+    "inferences": 0,
+    "direct_cause": "Kit sampling.py imports stdlib statistics.mean but Phase18 script directory shadows statistics with package-relative analysis module",
+    "fix": "align wrapper sys.path[0] with protected Phase17 script directory",
+    "method_constants_and_decisions_unchanged": true,
+    "retained": true
   }
 }

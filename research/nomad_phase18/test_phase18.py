@@ -25,8 +25,14 @@ class Tests(unittest.TestCase):
         import ast
         file=Path(__file__).with_name('simulator.py');tree=ast.parse(file.read_text())
         imports=[n for n in tree.body if isinstance(n,(ast.Import,ast.ImportFrom))]
-        self.assertEqual([n.names[0].name if isinstance(n,ast.Import) else n.module for n in imports],['ast','pathlib'])
+        self.assertEqual([n.names[0].name if isinstance(n,ast.Import) else n.module for n in imports],['ast','sys','pathlib'])
         self.assertNotIn('runpy',file.read_text())
+        import sys
+        from importlib.machinery import PathFinder
+        fixed_path=[str(ROOT/'research/nomad_phase17'),*sys.path[1:]]
+        found=PathFinder.find_spec('statistics',fixed_path)
+        self.assertNotIn('nomad_phase18',found.origin)
+        self.assertIn('sys.path[0]=str(source.parent)',file.read_text())
         launcher=Path(__file__).with_name('launch.py').read_text()
         self.assertEqual(launcher.count("str(ROOT/'research/nomad_phase18/simulator.py')"),1)
         self.assertNotIn('simulator_'+str(METHODS[0]),launcher)

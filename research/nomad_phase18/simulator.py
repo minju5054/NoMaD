@@ -4,9 +4,14 @@ Only stdlib is imported here: importing SciPy/NumPy before Kit initialization
 can disturb Kit extension loading. The Phase17 script and runtime are unchanged.
 """
 import ast
+import sys
 from pathlib import Path
 
 source=Path(__file__).parents[1]/'nomad_phase17/simulator.py'
+# Match the protected entry point's search path. In particular, Kit's
+# `from statistics import mean` must resolve the stdlib, not this package's
+# qualified nomad_phase18.statistics analysis module.
+sys.path[0]=str(source.parent)
 tree=ast.parse(source.read_text())
 mapping={'nomad_phase17.config':'nomad_phase18.config',
          'nomad_phase17.execution':'nomad_phase18.execution'}
