@@ -1,0 +1,148 @@
+{
+  "name": "phase17_SLW",
+  "start_pose": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "goal_pose": [
+    5.0,
+    0.0,
+    0.0
+  ],
+  "goal_tolerance_m": 0.3,
+  "timeout_sim_s": 90.0,
+  "timeout_navigation_wall_s": 180.0,
+  "timeout_process_wall_s": 600.0,
+  "integration_hz": 72,
+  "observation_hz": 4,
+  "controller_hz": 9,
+  "controller_dt_s": 0.25,
+  "max_v": 0.2,
+  "max_w": 0.4,
+  "seed": 101,
+  "context_size": 3,
+  "num_samples": 8,
+  "selected_sample": 0,
+  "selected_waypoint_index": 2,
+  "camera": {
+    "width": 320,
+    "height": 240,
+    "height_m": 0.5,
+    "horizontal_fov_deg": 90.0,
+    "focal_length_mm": 18.0,
+    "horizontal_aperture_mm": 36.0,
+    "vertical_aperture_mm": 27.0
+  },
+  "corridor": {
+    "xmin": -1.0,
+    "xmax": 6.0,
+    "half_width": 0.9,
+    "height": 2.6
+  },
+  "boundary_stop_margin_m": 0.1,
+  "synchronous": false,
+  "smoothing": false,
+  "waypoint_modification": false,
+  "agent_radius_m": 0.09,
+  "required_clearance_m": 0.02,
+  "obstacles": [
+    {
+      "id": "Slalom1",
+      "center_xy_m": [
+        1.3,
+        0.4
+      ],
+      "size_xyz_m": [
+        0.4,
+        1.0,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "Slalom2",
+      "center_xy_m": [
+        2.7,
+        -0.4
+      ],
+      "size_xyz_m": [
+        0.4,
+        1.0,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    },
+    {
+      "id": "Slalom3",
+      "center_xy_m": [
+        4.1,
+        0.4
+      ],
+      "size_xyz_m": [
+        0.4,
+        1.0,
+        0.8
+      ],
+      "color_rgb": [
+        0.04,
+        0.65,
+        0.04
+      ]
+    }
+  ],
+  "phase16_scene": "SLW",
+  "checkpoint": {
+    "axis": 0,
+    "threshold_m": 4.6,
+    "meaning": "last box far X face + 0.30m"
+  },
+  "reference_length_m": 6.2970805213361265,
+  "grid_feasibility": {
+    "grid_m": 0.02,
+    "connectivity": 8,
+    "no_corner_cut": true,
+    "expanded": 10176,
+    "length_m": 5.546761902332486,
+    "goal": "exact center; no terminal yaw",
+    "obstacle_center_margin_m": 0.11,
+    "wall_center_margin_m": 0.11
+  },
+  "oracle_shortest_grid_length_m": 5.546761902332486,
+  "reference_preparation": {
+    "grid_m": 0.02,
+    "cost": "edge_length*(1+(.25/min(endpoint_center_clearance))^2)",
+    "cost_weight": 1.0,
+    "target_center_distance_m": 0.25,
+    "obstacles_and_outer_walls": true,
+    "expanded": 10987,
+    "smoothing_passes": 20,
+    "narrow_centerline_used": false,
+    "narrow_grid_nodes": 0,
+    "reference_length_m": 6.2970805213361265,
+    "minimum_center_distance_m": 0.35355339048790335,
+    "minimum_footprint_clearance_m": 0.2635533904879034,
+    "minimum_box_center_distance_m": 0.35355339048790335,
+    "minimum_wall_center_distance_m": 0.3999999999999988
+  },
+  "reference_offline_pp_check": {
+    "reason": "goal_entry",
+    "minimum_obstacle_clearance_m": 0.26614465687498634,
+    "minimum_wall_clearance_m": 0.296571566151576,
+    "minimum_center_distance_m": 0.3561446568749863,
+    "minimum_footprint_clearance_m": 0.26614465687498634,
+    "duration_s": 29.680555555555557,
+    "goal": true,
+    "execution_distance_m": 5.936108094155232
+  },
+  "reference_file": "research/nomad_phase17/references/SLW.json",
+  "reference_sha256": "44abcb27edd1d5b76d8ca74e9f7d68b2f28a67c705b06b2cc713111587412039"
+}
