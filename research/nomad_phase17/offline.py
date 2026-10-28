@@ -71,7 +71,7 @@ def run(out):
     records=[r for r in json.loads(source.read_text()) if r['method']==METHOD]
     jobs=[]
     for r in records:
-        run=Path(r['output']);assert run.parent==ROOT.parent/'artifacts/isaac6/phase16_multiscene_01'
+        run=Path(r['output']);assert run.parent==ROOT.parent/'artifacts/isaac6/phase16_multiscene_01/main'
         cfg=json.loads(track(run/'scenario.json',r['input_sha256'].get('scenario.json')).read_text())
         log=rows(track(run/'stage2_graph.jsonl',r['input_sha256'].get('stage2_graph.jsonl')))
         results={x['job_id']:x for x in log if x['event']=='RESULT'}
