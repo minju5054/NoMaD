@@ -8,7 +8,7 @@ from nomad_phase15b.depth import Snapshot
 from nomad_phase16.geometry import rect
 
 
-def render(out,summary,decision,recovery,examples,repairs,protocol,sha):
+def render(out,summary,decision,recovery,examples,repairs,protocol,sha,replace_presentation=False):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -37,15 +37,17 @@ def render(out,summary,decision,recovery,examples,repairs,protocol,sha):
             x,y=b['center_xy_m'];w,h=b['size_xyz_m'][:2];ax.add_patch(Rectangle((x-w/2,y-h/2),w,h,color='tab:orange',alpha=.2))
         xmin,xmax,ymin,ymax=rect(e['config']);ax.add_patch(Rectangle((xmin,ymin),xmax-xmin,ymax-ymin,fill=False,color='tab:orange',label='Oracle geometry (evaluation)'))
         ax.scatter(*B[:2],c='red',s=35,label='B');ax.set_xlim(B[0]-1.25,B[0]+1.25);ax.set_ylim(B[1]-1.25,B[1]+1.25);ax.set_aspect('equal')
-        ax.set_title(f"{cause}, fixed eval event {identifier}\n{event['scene']} {event['index']} FRESH {event['fresh_id']}",fontsize=10)
+        ax.set_title(f"{cause}, fixed eval event {identifier}\n{event['scene']} {event['index']} FRESH {event['fresh_id']}\n{event['method']}",fontsize=9)
         ax.set_xlabel('World x (m)');ax.set_ylabel('World y (m)');ax.legend(fontsize=6,loc='upper left')
     fig.tight_layout();fig.savefig(out/'repair_examples.png',dpi=150);plt.close(fig)
     fig,ax=plt.subplots(figsize=(8,4))
     # All accepted sample repairs, separate from the selected-event median gate.
+    all_edits=[r['mean_edit_m'] for r in repairs if r['accepted']]
+    upper=max(.2,np.ceil(max(all_edits,default=.2)*20)/20)
     for split in ('dev','eval'):
         values=[r['mean_edit_m'] for r in repairs if r['split']==split and r['accepted']]
-        if values:ax.hist(values,bins=np.linspace(0,1.1,45),histtype='step',lw=2,label=f'{split}: {len(values)} accepted sample repairs')
-    ax.axvline(.15,c='k',ls='--',label='0.15m selected-median criterion');ax.set_xlabel('Mean edit over 8 resampled points (m)');ax.set_ylabel('Accepted sample count');ax.legend(fontsize=8)
+        if values:ax.hist(values,bins=np.linspace(0,upper,41),histtype='step',density=True,lw=2,label=f'{split}: {len(values)} accepted sample repairs')
+    ax.axvline(.15,c='k',ls='--',label='0.15m selected-median criterion');ax.set_xlabel('Mean edit over 8 resampled points (m)');ax.set_ylabel('Probability density (1/m)');ax.legend(fontsize=8)
     fig.tight_layout();fig.savefig(out/'deviation_hist.png',dpi=150);plt.close(fig)
     fig,ax=plt.subplots(figsize=(8,4));causes=['MARGINAL','TRUE_BLOCK','NEAR_START','OTHER'];x=np.arange(4)
     for j,split in enumerate(('dev','eval')):
@@ -73,6 +75,7 @@ def render(out,summary,decision,recovery,examples,repairs,protocol,sha):
     text+='Per-event causes use Phase16-D priority: MARGINAL if the best original oracle suffix clearance is [0,0.025); otherwise TRUE_BLOCK if all8 penetrate; otherwise NEAR_START if B depth clearance<0.025; otherwise OTHER. The corresponding per-run 70% rule is also recorded in event CSVs. Oracle labels never enter the repair or selection function.\n\n'
     text+=f"Development contains exactly 1,110 Phase16-D listed events including SL gates. Evaluation contains 241 actual ALL_UNSAFE decisions from all Phase18 methods/scenes. {meta['phase18_deferred_without_selection']} FRESH packets deferred during recovery had no selection decision and are separately counted, not relabelled ALL_UNSAFE. Evaluation modes: {meta['eval_modes']}.\n\n"
     text+='## Evaluation-only decision\n\n```json\n'+json.dumps(decision,indent=2,ensure_ascii=False)+'\n```\n\n'
+    text+=f"Accepted-path oracle penetration: {decision['accepted_oracle_penetrations']}/{decision['accepted_sample_paths']}. Selected-path oracle penetration: {decision['selected_path_oracle_penetrations']}/{decision['selected_rollout_count']}. Selected SP rollout negative-clearance count: {decision['selected_rollout_overlaps']}/{decision['selected_rollout_count']}. Selected-path nonpenetration therefore did not imply safe execution in the fixed-path PP rollout.\n\n"
     text+='Path safety counts **all accepted sample repairs**, not only the selected one. Rollout safety counts one selected repair per successful event. Unaccepted solver iterates are preserved but are not executed or counted as accepted repair paths. The original FRESHEST-only reference reuses that sample’s one solve; it is never re-solved.\n\n'
     text+='One-sample timing includes initialization, optimizer and exact certificate; the decision p95 uses eligible solver attempts, with short/degenerate exclusions reported separately. Eight-sample timing is actual serial wall time including all8 decisions, excluding snapshot file I/O and oracle evaluation. No latency claim about an online worker is made.\n\n'
     text+='## Actual recovery reference (no offline recovery simulation)\n\n'+table(recovery)+'\n\n'
@@ -80,4 +83,5 @@ def render(out,summary,decision,recovery,examples,repairs,protocol,sha):
     text+='## Fixed examples\n\nThe first evaluation event of each cause was chosen and written to inventory.json before any saved-event repair solve. Examples remain even when no sample is repairable.\n\n'
     for name in ('repair_examples','deviation_hist','success_by_cause'):text+=f'![{name}](../research/results/phase19r/{name}.png)\n\n'
     text+='## Limits\n\nThis is a path-level offline counterfactual. The inherited Phase18-D SP rollout fixes one path for ≤1.5s, uses actual initial speed, and stops at an endpoint or oracle negative clearance. Its conservative swept lower-bound overlap count and exact negative witness are recorded separately. Future NoMaD responses, depth updates, next FRESH and recovery are absent. A fixed B that already violates the depth constraint cannot be repaired by moving only future points. Unknown cells remain free in depth and can conceal oracle obstacles. Effects can only be established in new closed-loop navigation experiments.\n'
-    with (ROOT/'docs/PHASE19R_REPAIR.md').open('x') as f:f.write(text)
+    text+='Event rates are event-weighted and include repeated stops near the same pose; they are not independent navigation trials. The full numerical path journal is retained locally; the committed per-sample CSV preserves all dispositions and metrics.\n'
+    with (ROOT/'docs/PHASE19R_REPAIR.md').open('w' if replace_presentation else 'x') as f:f.write(text)

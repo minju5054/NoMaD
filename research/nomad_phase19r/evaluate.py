@@ -245,15 +245,35 @@ def publish(out):
     assert (out/'complete.json').exists()
     assert not subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip()
     paths=['research/nomad_phase19r',str(out.relative_to(ROOT)),'docs/PHASE19R_REPAIR.md']
+    ignore=out/'.gitignore'
+    if ignore.exists():assert ignore.read_text()=='/repair_journal.jsonl\n'
+    else:ignore.write_text('/repair_journal.jsonl\n')
     subprocess.run(['git','add','--',*paths],cwd=ROOT,check=True)
     png=list(out.glob('*.png'))
     if png:subprocess.run(['git','add','-f','--',*[str(p.relative_to(ROOT)) for p in png]],cwd=ROOT,check=True)
     if subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip():subprocess.run(['git','-c','user.name=Codex','-c','user.email=codex@openai.com','commit','-m','Report Phase19R depth-only path repair offline validation'],cwd=ROOT,check=True)
     subprocess.run(['git','push','origin','HEAD:research/phase0-infrastructure'],cwd=ROOT,check=True)
 
+def report_saved(out):
+    assert (out/'complete.json').exists()
+    def parse(v):
+        if v=='':return None
+        if v in ('True','False'):return v=='True'
+        try:return json.loads(v)
+        except (ValueError,TypeError):return v
+    def read_csv(name):
+        with (out/name).open() as f:return [{k:parse(v) for k,v in r.items()} for r in csv.DictReader(f)]
+    from .report import render
+    sha=json.loads((out/'complete.json').read_text())['git_sha']
+    render(out,read_csv('summary.csv'),json.loads((out/'decision.json').read_text()),read_csv('recovery_reference.csv'),
+        json.loads((out/'examples.json').read_text()),read_csv('repairs.csv'),json.loads((out/'protocol.json').read_text()),sha,replace_presentation=True)
+    dump(out/'presentation.json',dict(numerical_execution_sha=sha,report_source_sha256=sha256_file(HERE/'report.py'),
+        changes='Label example methods; full-support density histogram; distinguish selected path safety from rollout safety',additional_solves=0,additional_rollouts=0))
+
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--publish',action='store_true');a=ap.parse_args()
-    if OUT.exists():assert (OUT/'complete.json').exists(),'Partial attempt preserved; no automatic restart'
+    ap=argparse.ArgumentParser();ap.add_argument('--publish',action='store_true');ap.add_argument('--report-only',action='store_true');a=ap.parse_args()
+    if a.report_only:report_saved(OUT)
+    elif OUT.exists():assert (OUT/'complete.json').exists(),'Partial attempt preserved; no automatic restart'
     else:run(OUT)
     if a.publish:publish(OUT)
 

@@ -1,0 +1,62 @@
+{
+  "label": "REPAIR_UNSAFE",
+  "eval_events": 241,
+  "repair_successes": 90,
+  "repair_success_fraction": 0.37344398340248963,
+  "accepted_sample_paths": 470,
+  "accepted_oracle_penetrations": 4,
+  "selected_rollout_overlaps": 10,
+  "selected_path_oracle_penetrations": 0,
+  "selected_rollout_count": 90,
+  "selected_rollout_overlap_fraction": 0.1111111111111111,
+  "selected_mean_edit_m": {
+    "n": 90,
+    "median": 0.036226903080457167,
+    "p95": 0.07415018315815318,
+    "max": 0.09195611711635132
+  },
+  "sample_solve_time_s": {
+    "n": 1005,
+    "median": 0.016330159996869043,
+    "p95": 0.05602310200338243,
+    "max": 0.10577529002330266
+  },
+  "eight_sample_wall_s": {
+    "n": 241,
+    "median": 0.08370156999444589,
+    "p95": 0.2691143300035037,
+    "max": 0.3902814629836939
+  },
+  "safety_evidence_available": true,
+  "no_repair_convention": "If no accepted repair: REPAIR_RARE, rollout rate unavailable; never claim safety validated",
+  "selected_rollout_progress_m": {
+    "n": 90,
+    "median": 0.24266818835587234,
+    "p95": 0.4028129975953948,
+    "max": 0.42256159853806186
+  },
+  "zero_progress_selections": 0,
+  "cause_success": {
+    "MARGINAL": {
+      "events": 86,
+      "successes": 26,
+      "fraction": 0.3023255813953488
+    },
+    "TRUE_BLOCK": {
+      "events": 107,
+      "successes": 48,
+      "fraction": 0.4485981308411215
+    },
+    "NEAR_START": {
+      "events": 27,
+      "successes": 0,
+      "fraction": 0.0
+    },
+    "OTHER": {
+      "events": 21,
+      "successes": 16,
+      "fraction": 0.7619047619047619
+    }
+  },
+  "scope": "Offline path repair and same-event short rollout; no subsequent NoMaD, depth update or FRESH; closed-loop confirmation required"
+}
