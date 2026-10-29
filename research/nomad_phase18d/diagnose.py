@@ -73,7 +73,7 @@ class Inputs:
         if selection is None:return None
         return local_to_world(metric[selection['selected_sample']],e['observation_pose'])
 
-def regression(records,inputs):
+def regression(records,inputs,reuse=None):
     candidates=[]
     for record in sorted(records,key=lambda r:r['key']):
         if record['technical_validation']!='PASS' or 'TEMPORAL-ENSEMBLE' in record['method']:continue
@@ -89,7 +89,15 @@ def regression(records,inputs):
             if end-start>=8:candidates.append((record['key'],i,start,end))
     assert len(candidates)>=20
     selected=np.random.default_rng(20261031).choice(len(candidates),20,replace=False);out=[]
+    if reuse is not None:
+        with Path(reuse).open() as f:out=list(csv.DictReader(f))
+        for r in out:
+            for key in ('application_index','start_tick','end_tick','actual_ticks','rollout_ticks'):r[key]=int(r[key])
+            for key in ('maximum_position_error_m','maximum_yaw_error_rad'):r[key]=float(r[key])
+            r['complete_comparison']=r['complete_comparison']=='True'
+        assert [(r['run'],r['application_index'],r['start_tick'],r['end_tick']) for r in out]==[candidates[n] for n in selected]
     for n in selected:
+        if reuse is not None:continue
         key,i,start,end=candidates[n];d=inputs.cache[key];a=d['apps'][i]
         result=rollout(a['pose'],a['world_xy'],a['before_vw'][0],'CURV',d['config'],ticks=end-start)
         count=min(len(result['poses']),end-start+1)
@@ -145,7 +153,8 @@ def attribution(records,inputs,journal):
         d=inputs.load(record)
         if not d['jobs']:continue
         job=max(d['jobs'].values(),key=lambda j:j['switch_sim_s']);field=inputs.field(job['depth_snapshot']['file'])
-        assert field.metadata['publication_monotonic_ns']<=job['dispatch_ns']
+        assert job['depth_snapshot']['publication_monotonic_ns']<=job['dispatch_ns']
+        assert field.metadata['sim_s']==job['depth_snapshot']['sim_s']
         assert field.metadata['sim_s']<=job['switch_sim_s']
         saved=d['results'].get(job['job_id']);case=[]
         for variant in ('CLR','NO_PROGRESS','NO_CLEARANCE','NO_BOTH'):
@@ -222,7 +231,8 @@ def combinations(records,inputs,journal,out):
                         solve_wall_s=saved.get('solver',{}).get('solve_and_certificate_wall_s'),solver=saved.get('solver'))
                 else:gresults['CLR']=dict(accepted=None,disposition='MISSING_STORED_WORKER_RESULT',poses=None,solve_wall_s=None)
                 field=inputs.field(job['depth_snapshot']['file'])
-                assert field.metadata['publication_monotonic_ns']<=job['dispatch_ns']
+                assert job['depth_snapshot']['publication_monotonic_ns']<=job['dispatch_ns']
+                assert field.metadata['sim_s']==job['depth_snapshot']['sim_s']
                 assert field.metadata['sim_s']<=job['switch_sim_s']
                 for variant in ('K','KP'):
                     result=solve(job,field,variant);gresults[variant]=result
@@ -295,8 +305,11 @@ def summarize_combos(data,solves,rule):
         same_data_selection=True,closed_loop_claim=False,acceptance_missing_baseline='conservative upper bound',scope='Common accepted-path intersection; unavailable/rejected events retained and acceptance rates use all submitted jobs')
     return primary+available,graph,selection
 
-def run(out):
-    assert not out.exists(),'Existing offline attempt preserved; do not restart solves'
+def run(out,resume_empty=False):
+    if resume_empty:
+        assert out.exists() and (out/'solve_results.jsonl').stat().st_size==0,'Only a pre-solve interruption may resume'
+        assert (out/'rollout_regression.csv').exists()
+    else:assert not out.exists(),'Existing offline attempt preserved; do not restart solves'
     assert not subprocess.check_output(['git','diff','--name-only','HEAD'],cwd=ROOT,text=True).strip(),'Commit code/protocol before execution'
     protocol=json.loads((HERE/'protocol.json').read_text());inputs=Inputs()
     source=inputs.track(ROOT/'research/results/phase18/runs.json');records=json.loads(source.read_text())
@@ -304,10 +317,15 @@ def run(out):
     for file,h in protocol['protected_sha256'].items():inputs.track(ROOT/file,h)
     for file in HERE.glob('*.py'):inputs.track(file)
     inputs.track(HERE/'protocol.json');sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
-    out.mkdir(parents=True);dump(out/'protocol.json',protocol)
-    regression_rows,reg=regression(records,inputs);csv_write(out/'rollout_regression.csv',regression_rows)
+    if resume_empty:
+        assert json.loads((out/'protocol.json').read_text())==protocol
+        dump(out/'resume.json',dict(reason='Publication timestamp lives in recorded job metadata, not snapshot npz metadata',
+            original_regression_sha='7f9575e',continued_graph_sha=sha,graph_attempts_before_resume=0,regression_preserved=True,method_and_parameters_unchanged=True))
+    else:out.mkdir(parents=True);dump(out/'protocol.json',protocol)
+    regression_rows,reg=regression(records,inputs,out/'rollout_regression.csv' if resume_empty else None)
+    if not resume_empty:csv_write(out/'rollout_regression.csv',regression_rows)
     print(f"[regression] {reg['label']}: max position error {reg['maximum_position_error_m']:.9g} m; {reg['complete_segments']}/20 complete",flush=True)
-    with (out/'solve_results.jsonl').open('x') as journal:
+    with (out/'solve_results.jsonl').open('a' if resume_empty else 'x') as journal:
         terms,term_lookup=attribution(records,inputs,journal)
         print(f'[attribution] {len(terms)} fixed attempts',flush=True)
         failures,final=analyze_A(records,inputs,term_lookup)
@@ -350,8 +368,9 @@ def publish(out):
     subprocess.run(['git','push','origin','HEAD:research/phase0-infrastructure'],cwd=ROOT,check=True)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--publish',action='store_true');a=p.parse_args()
-    if OUT.exists():assert (OUT/'complete.json').exists(),'Partial result preserved; no automatic restart'
+    p=argparse.ArgumentParser();p.add_argument('--publish',action='store_true');p.add_argument('--resume-before-solves',action='store_true');a=p.parse_args()
+    if a.resume_before_solves:run(OUT,resume_empty=True)
+    elif OUT.exists():assert (OUT/'complete.json').exists(),'Partial result preserved; no automatic restart'
     else:run(OUT)
     if a.publish:publish(OUT)
 
