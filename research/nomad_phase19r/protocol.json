@@ -1,0 +1,123 @@
+{
+  "base_commit": "6d5ec94",
+  "status": "FROZEN",
+  "scope": "saved-event offline path repair only",
+  "Isaac_navigation": 0,
+  "NoMaD_inference": 0,
+  "Isaac_render": 0,
+  "datasets": {
+    "development": "exact1110 entries of Phase16D stop_events.csv, including657 SL gate events",
+    "evaluation": "all241 Phase18 actual ALL_UNSAFE selection decisions: SLW210 LC19 CL12",
+    "evaluation_modes": {
+      "STOP_WAIT": 145,
+      "RECOVER_ROTATE": 87,
+      "KEEP_ACTIVE": 9
+    },
+    "recovery_deferred_without_selection": 89,
+    "ordering": "dev CSV order; eval Phase18 frozen main_order then FRESH event order",
+    "example_selection": "first eval event of TRUE_BLOCK and MARGINAL, chosen in inventory before any saved-event repair solve"
+  },
+  "initialization": {
+    "anchor": "native world XY transformed by its own observation pose; never rigid re-anchor the full sample",
+    "projection": "protected XYPath nearest projection of B",
+    "eligibility": "native remaining arclength before connector >=.25m",
+    "reference": "polyline [B, projected point, suffix original vertices], duplicates removed by XYPath; uniform arclength8 samples; q0=B",
+    "degenerate_segment_epsilon_m": 1e-10,
+    "objective_reference": "resampled qhat, not raw sample indices"
+  },
+  "variables": "p1..p7 XY (14 scalars), fixed p0=B position, no yaw/time variables",
+  "objective": {
+    "convention": ".5*sum squared residuals",
+    "sigma_position_m": 0.1,
+    "sigma_second_difference_m": 0.02,
+    "sigma_heading_rad": 0.5235987755982988,
+    "heading": "2*sin((atan2(p1-b)-theta_B)/2)/sigma_h; measured B yaw, no native yaw"
+  },
+  "constraints": {
+    "depth_margin_m": 0.025,
+    "segment_samples": 9,
+    "depth_formula": "d_depth(q)-h/sqrt(2)-L/16 >= .025",
+    "curvature_max_m_inv": 8,
+    "segment_length_ratio_min": 0.5,
+    "total_length_ratio_min": 0.7,
+    "coordinate_trust_m": 0.75,
+    "certificate": "Snapshot.exact_clearance to occupied cell centers minus radius >=.025, no oracle boxes/wall halfplanes",
+    "fixed_B": "never moved; an impossible fixed-B constraint is recorded but eligible samples still receive exactly one solve"
+  },
+  "solver": {
+    "method": "SLSQP",
+    "jacobian": "analytic for residuals and all constraints; inherited Menger derivative",
+    "maxiter": 100,
+    "ftol": 1e-08,
+    "acceptance": "success AND raw-unit max constraint/bound violation <=1e-7 AND exact depth certificate",
+    "constraint_tolerance": 1e-07,
+    "retries": 0,
+    "warm_restart": false,
+    "initialization": "single resampled intent only",
+    "SDF_out_of_domain": "failed attempt, no clipping/field extension"
+  },
+  "selection": {
+    "rule": "minimum mean Euclidean edit among accepted paths, then lowest sample index",
+    "mean_edit": "over all8 resampled-reference points including fixed zero-edit B; max over same8",
+    "freshest_only": "original largest remaining suffix length, ties lower index; reuse its one solve, no second solve"
+  },
+  "causes": {
+    "event": "Phase16D first-match with n=1: MARGINAL if max oracle suffix clearance in [0,.025), else TRUE_BLOCK if all8<0, else NEAR_START if query(B)-h/sqrt2<.025, else OTHER",
+    "run": "also record same70percent Phase16D aggregate rule, separately from event-cause success rates",
+    "oracle_scope": "posthoc labels, safety evaluation and plotting only; never repair or selection input"
+  },
+  "rollout": {
+    "source": "unchanged Phase18D.rollout",
+    "rule": "SP",
+    "initial_speed": "actual incoming 72Hz speed at B, before new decision command",
+    "horizon_ticks": 108,
+    "heading": "actual B yaw; no preparatory rotation",
+    "termination": "same endpoint/horizon/negative conservative oracle bound as Phase18D; exact negative witness separately",
+    "fixed_path": true,
+    "no_future_fresh_or_depth": true
+  },
+  "timing": {
+    "sample": "initialize + necessary-bound diagnostic + solve + exact certificate; no file I/O or oracle evaluation",
+    "decision_p95": "solver-started eligible samples; short/degenerate exclusions separate",
+    "eight": "actual serial wall time of all8 decisions, before oracle evaluation/rollout"
+  },
+  "decision": {
+    "population": "evaluation only",
+    "unsafe": "any accepted sample repair has oracle box/wall footprint clearance<0 OR selected-event rollout overlap fraction>.01",
+    "viable": "not unsafe AND success fraction>=.50 AND selected mean-edit median<=.15m AND eligible-sample solve p95<=.20s",
+    "rare": "not unsafe and success<.50",
+    "slow": "not unsafe and success>=.50 but timing or edit gate fails",
+    "order": [
+      "REPAIR_UNSAFE",
+      "REPAIR_VIABLE",
+      "REPAIR_RARE",
+      "REPAIR_SLOW"
+    ],
+    "zero_repairs": "REPAIR_RARE; rollout fraction unavailable and safety_evidence_available=false, no claim of safety validation"
+  },
+  "recovery_reference": "Phase17/18 saved main-run recovery summaries and exact Phase18 trigger-event links; not an offline replay or matched causal comparison",
+  "tests": {
+    "finite_difference_tolerance": 1e-05,
+    "finite_difference_step": 1e-07,
+    "free": "straight uniformly sampled x=0..0.7, y0, B(0,0,0)",
+    "blocking": "occupied grid box x[.55,.75], y[-.25,-.03], radius .09; robot footprint intersects a straight x0..1.4,y0 path",
+    "constants_never_tuned": true
+  },
+  "protected_sha256": {
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase15/depth_sdf.py": "12f48eb36abbc5cdec32ba974f86a9dca943448ff43bec0114552351ce7b5a26",
+    "research/nomad_phase15/evaluate.py": "b1147d50f0a7dce3e2146fe66981caad7ec7366d5a096b3bd99eb37e0224e8f4",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase16d/diagnose.py": "e0fd752e9f0eca7f20b33d90e925ee1ee8b8df386d468032eae2cff2854566df",
+    "research/nomad_phase18d/rollout.py": "1cd7b1bdbd3139369ef7c3c36839923afa8b09c0d09bcf55f4b0076d3728798f",
+    "research/nomad_phase18d/speed_profile.py": "912432a9458db68799f2a2603643f03c74cf5a254f5ee713104ab4ba3f572629",
+    "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_phase0/chunk_execution.py": "b93858c5a16818ea1c406f3b1c25142baeb6d2abc3c47a6c3222376961a142c8",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/s0_batch_metrics.py": "f01eef77549ccaf4b8609e5769da52402d875e930b9f1d039fbe9ae6d9390bec"
+  }
+}
