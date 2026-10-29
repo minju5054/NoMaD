@@ -1,0 +1,123 @@
+{
+  "base_commit": "5f1277a",
+  "source": "research/results/phase18/runs.json",
+  "Isaac_navigation": 0,
+  "NoMaD_inference": 0,
+  "render": 0,
+  "scope": "fixed-path offline counterfactuals",
+  "retries": 0,
+  "tuning": 0,
+  "regression": {
+    "seed": 20261031,
+    "n": 20,
+    "population": "all Phase18 actual single-path NORMAL/GRAPH applications; exclude TE ensembles, STOP/recovery and invalid paths; at least8 ticks; truncate at next application, timeout/stop or108 ticks",
+    "initial_state": "actual application pose, before_v, reset progress=0 for new path; no future commands supplied",
+    "threshold_m": 0.01
+  },
+  "rollout": {
+    "control_hz": 9,
+    "integration_hz": 72,
+    "max_ticks": 108,
+    "lookahead_m": 0.25,
+    "omega_max": 0.4,
+    "v_max": 0.3,
+    "v_min": 0.05,
+    "acceleration": 0.5,
+    "endpoint": "unchanged protected PP endpoint tolerance at control ticks",
+    "termination": "endpoint,108 ticks,or negative swept oracle footprint lower bound; exact negative witness counted separately",
+    "oracle": "passive evaluation only; boxes+outer wall; existing swept_clearance and exact corridor arc minimum reused",
+    "no_next_fresh": true,
+    "no_timeout_or_recovery": true
+  },
+  "SP": {
+    "curvature": "Menger at interior vertices; endpoint repeats nearest interior, zero for2-point path",
+    "limit": "min(.3,.4/abs(kappa)); no floor during planning",
+    "passes": "one backwards braking pass then one forwards acceleration pass, v_i^2 <= v_neighbor^2+2*.5*ds",
+    "terminal_speed": "no extra terminal speed constraint",
+    "initial_speed": "actual before_v applied through common temporal acceleration cap; not imposed as node0 profile speed",
+    "interpolation": "linear in geometric arclength, sampled at current nearest projection; execution target floor .05",
+    "clipping": "omega=clip(v*kappa_PP,+/- .4); curvature infeasibility never silently terminates"
+  },
+  "curvature": {
+    "after_B": "native Menger triple centered at a vertex whose arclength >= existing nearest B projection; no synthetic timestamps",
+    "turn_threshold_m_inv": 2.0,
+    "ratio": "max |curvature| afterB in executed/corrected path divided by native afterB maximum; no valid triple -> unavailable",
+    "sign": "signs of respective largest-magnitude remaining curvature; not physical turn correspondence",
+    "K": "max(0,abs(native_i)-abs(corrected_i))/.5, all6 native triples, exact inherited Menger XY derivative",
+    "KP": "remove endpoint_progress rows only when original afterB max>=2; all other factors/constraints and acceptance fixed"
+  },
+  "A": {
+    "target_methods": [
+      "FRESHEST-SAFE",
+      "FRESHEST-SAFE+HERMITE",
+      "FRESHEST-SAFE+GRAPH-depth",
+      "FRESHEST-SAFE+GRAPH-depth-CLR"
+    ],
+    "scene": "SLW",
+    "switch_window": 3,
+    "final_cause": "last actually tracked path at terminal interval; no path tracking during STOP/recovery -> OTHER",
+    "same_box": "nearest box x-center to each B; first contiguous SAFE passage through box x extent +/- .30m; different observation/pose paths, not a causal match",
+    "attribution": "last submitted job before failure, exactly one each CLR/NO_PROGRESS/NO_CLEARANCE/NO_BOTH; solver rejection retained; CLEARANCE_PUSH requires this job to be final active correction, off accepted, wall clearance gain>=.02",
+    "label_order": [
+      "UNDERTURN_PATH",
+      "UNDERTURN_EXECUTION",
+      "CLEARANCE_PUSH",
+      "OTHER"
+    ]
+  },
+  "B": {
+    "scenes": [
+      "SLW",
+      "CL"
+    ],
+    "source_method": "FRESHEST-SAFE+GRAPH-depth-CLR",
+    "all_fresh": 569,
+    "normal_jobs": 512,
+    "original": "actual depth-selected sample transformed by observation pose",
+    "B": "actual FRESH switch boundary",
+    "previous_prior": "same stored previous accepted path, no counterfactual propagation",
+    "stored_CLR": "numerical accepted solution; runtime scheduling disposition retained; no fabricated result for missing terminal job",
+    "unavailable": "STOP_WAIT/KEEP_ACTIVE/recovery with no graph job and rejected/missing solutions explicitly unavailable; all10 rows per event retained",
+    "primary_population": "all5 paths available/accepted at same event, to avoid comparing unmatched denominators; acceptance rates use all512 submitted inputs; method-available results descriptive",
+    "speed_example": "first sorted SLW common-valid turning event, saved CLR path, both speed rules"
+  },
+  "selection": {
+    "candidate_scope": "ALL_TEN",
+    "interpretation": "all10 combinations from user table are eligible; SAFE/HERMITE may win, making NO_CANDIDATE unlikely unless common evidence absent",
+    "safety": "SLW overlap count <= SAFE+CURV on common population",
+    "speed": "largest CL mean distance, common population",
+    "solve_p95_s": 0.2,
+    "timing": "new constructor+solve+certificate excluding snapshot I/O and oracle evaluation; p95 among started solves, all-attempt stats also retained; stored CLR solve+certificate times",
+    "acceptance": "new variant lower bound no10pp-or-greater drop from stored CLR upper bound; missing baseline worker result explicitly bounded",
+    "tie_path_order": [
+      "KP",
+      "K",
+      "CLR",
+      "HERMITE",
+      "FRESHEST-SAFE"
+    ],
+    "tie_speed_order": [
+      "SP",
+      "CURV"
+    ],
+    "same_data_selection": true
+  },
+  "figures": "CLR SLW failed seeds66-73, final active path or explicitly labelled last returned iterate; accepted-only factor ratio distribution; common-case combo scatter; same-path speed example",
+  "protected_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/chunk_execution.py": "b93858c5a16818ea1c406f3b1c25142baeb6d2abc3c47a6c3222376961a142c8",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_phase12/methods.py": "e752ab9ee57f91ceee9338722e05814f60f2047a51eecc00b6316fd8c19df8cb",
+    "research/nomad_phase17/graph.py": "168757f96f39023923b72e9f861263375f8cb55cdb0f87f03df466e0ce7c635e",
+    "research/nomad_phase15b/graph.py": "46f20a442464fe37076071d2237c42c04b3bce1ceb75a964d59d8862cd862d69",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase12/graph_gf.py": "c7b2e234302b07f894bdcaa6515ede9657d002869e4f462758880acd03a5a403",
+    "research/nomad_phase5/graph.py": "f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a",
+    "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase0/s0_batch_metrics.py": "f01eef77549ccaf4b8609e5769da52402d875e930b9f1d039fbe9ae6d9390bec"
+  }
+}

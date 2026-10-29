@@ -1,0 +1,230 @@
+{
+  "label": "CANDIDATE_FRESHEST-SAFE_SP",
+  "chosen": {
+    "path_type": "FRESHEST-SAFE",
+    "speed": "SP",
+    "safety_pass": true,
+    "timing_pass": true,
+    "acceptance_pass": true,
+    "slw_overlap": 2,
+    "slw_n": 85,
+    "cl_progress_m": 0.318528022953987,
+    "cl_n": 166
+  },
+  "checks": [
+    {
+      "path_type": "FRESHEST-SAFE",
+      "speed": "CURV",
+      "safety_pass": true,
+      "timing_pass": true,
+      "acceptance_pass": true,
+      "slw_overlap": 2,
+      "slw_n": 85,
+      "cl_progress_m": 0.23991817208265007,
+      "cl_n": 166
+    },
+    {
+      "path_type": "FRESHEST-SAFE",
+      "speed": "SP",
+      "safety_pass": true,
+      "timing_pass": true,
+      "acceptance_pass": true,
+      "slw_overlap": 2,
+      "slw_n": 85,
+      "cl_progress_m": 0.318528022953987,
+      "cl_n": 166
+    },
+    {
+      "path_type": "HERMITE",
+      "speed": "CURV",
+      "safety_pass": true,
+      "timing_pass": true,
+      "acceptance_pass": true,
+      "slw_overlap": 2,
+      "slw_n": 85,
+      "cl_progress_m": 0.23876429128516172,
+      "cl_n": 166
+    },
+    {
+      "path_type": "HERMITE",
+      "speed": "SP",
+      "safety_pass": true,
+      "timing_pass": true,
+      "acceptance_pass": true,
+      "slw_overlap": 1,
+      "slw_n": 85,
+      "cl_progress_m": 0.23210203347581224,
+      "cl_n": 166
+    },
+    {
+      "path_type": "CLR",
+      "speed": "CURV",
+      "safety_pass": true,
+      "timing_pass": true,
+      "acceptance_pass": true,
+      "slw_overlap": 1,
+      "slw_n": 85,
+      "cl_progress_m": 0.28527255573704036,
+      "cl_n": 166
+    },
+    {
+      "path_type": "CLR",
+      "speed": "SP",
+      "safety_pass": true,
+      "timing_pass": true,
+      "acceptance_pass": true,
+      "slw_overlap": 0,
+      "slw_n": 85,
+      "cl_progress_m": 0.28693151311165294,
+      "cl_n": 166
+    },
+    {
+      "path_type": "K",
+      "speed": "CURV",
+      "safety_pass": true,
+      "timing_pass": false,
+      "acceptance_pass": false,
+      "slw_overlap": 1,
+      "slw_n": 85,
+      "cl_progress_m": 0.283858253994948,
+      "cl_n": 166
+    },
+    {
+      "path_type": "K",
+      "speed": "SP",
+      "safety_pass": true,
+      "timing_pass": false,
+      "acceptance_pass": false,
+      "slw_overlap": 0,
+      "slw_n": 85,
+      "cl_progress_m": 0.28524908530267346,
+      "cl_n": 166
+    },
+    {
+      "path_type": "KP",
+      "speed": "CURV",
+      "safety_pass": true,
+      "timing_pass": false,
+      "acceptance_pass": false,
+      "slw_overlap": 1,
+      "slw_n": 85,
+      "cl_progress_m": 0.28373964049562644,
+      "cl_n": 166
+    },
+    {
+      "path_type": "KP",
+      "speed": "SP",
+      "safety_pass": true,
+      "timing_pass": false,
+      "acceptance_pass": false,
+      "slw_overlap": 0,
+      "slw_n": 85,
+      "cl_progress_m": 0.28523898694148,
+      "cl_n": 166
+    }
+  ],
+  "reference_slw_overlap": 2,
+  "reference_slw_n": 85,
+  "SP_FAIRNESS": [
+    {
+      "scene": "SLW",
+      "path_type": "FRESHEST-SAFE",
+      "speed": "SP",
+      "n": 85,
+      "scope": "ALL_PATHS_COMMON_VALID",
+      "overlap": 2,
+      "negative_witness": 2,
+      "conservative_only_negative": 0,
+      "margin_violation": 3,
+      "mean_progress_m": 0.3026297440354048,
+      "mean_speed_m_s": 0.22785430652660316,
+      "omega_saturation_fraction": 0.5767806267806268,
+      "maximum_cross_track_m": 0.33679072920737063,
+      "endpoint_stops": 19,
+      "curvature_ratio": {
+        "n": 36,
+        "median": 1.0,
+        "p10": 1.0,
+        "p90": 1.0,
+        "p95": 1.0
+      },
+      "minimum_clearance_m": -0.0018577073068685446
+    },
+    {
+      "scene": "CL",
+      "path_type": "FRESHEST-SAFE",
+      "speed": "SP",
+      "n": 166,
+      "scope": "ALL_PATHS_COMMON_VALID",
+      "overlap": 0,
+      "negative_witness": 0,
+      "conservative_only_negative": 0,
+      "margin_violation": 0,
+      "mean_progress_m": 0.318528022953987,
+      "mean_speed_m_s": 0.23100932398346216,
+      "omega_saturation_fraction": 0.5940976415374005,
+      "maximum_cross_track_m": 0.3394269938294209,
+      "endpoint_stops": 41,
+      "curvature_ratio": {
+        "n": 77,
+        "median": 1.0,
+        "p10": 1.0,
+        "p90": 1.0,
+        "p95": 1.0
+      },
+      "minimum_clearance_m": 0.07927184512127589
+    },
+    {
+      "scene": "SLW",
+      "path_type": "HERMITE",
+      "speed": "SP",
+      "n": 85,
+      "scope": "ALL_PATHS_COMMON_VALID",
+      "overlap": 1,
+      "negative_witness": 1,
+      "conservative_only_negative": 0,
+      "margin_violation": 1,
+      "mean_progress_m": 0.2067673977621661,
+      "mean_speed_m_s": 0.1677927336597749,
+      "omega_saturation_fraction": 0.3215734809852457,
+      "maximum_cross_track_m": 0.2716019082262508,
+      "endpoint_stops": 30,
+      "curvature_ratio": {
+        "n": 36,
+        "median": 1.6201474995695317,
+        "p10": 0.6357620402321209,
+        "p90": 3.275565960273268,
+        "p95": 3.7848873834976122
+      },
+      "minimum_clearance_m": -0.001855640003674358
+    },
+    {
+      "scene": "CL",
+      "path_type": "HERMITE",
+      "speed": "SP",
+      "n": 166,
+      "scope": "ALL_PATHS_COMMON_VALID",
+      "overlap": 0,
+      "negative_witness": 0,
+      "conservative_only_negative": 0,
+      "margin_violation": 0,
+      "mean_progress_m": 0.23210203347581224,
+      "mean_speed_m_s": 0.17474641358820486,
+      "omega_saturation_fraction": 0.4009518370964155,
+      "maximum_cross_track_m": 0.33332921253586256,
+      "endpoint_stops": 55,
+      "curvature_ratio": {
+        "n": 77,
+        "median": 1.632168990410658,
+        "p10": 0.8747949802091755,
+        "p90": 3.719429953548938,
+        "p95": 4.042739260484796
+      },
+      "minimum_clearance_m": 0.026840038496133815
+    }
+  ],
+  "same_data_selection": true,
+  "closed_loop_claim": false,
+  "acceptance_missing_baseline": "conservative upper bound",
+  "scope": "Common accepted-path intersection; unavailable/rejected events retained and acceptance rates use all submitted jobs"
+}

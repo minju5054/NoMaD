@@ -367,9 +367,30 @@ def publish(out):
         subprocess.run(['git','-c','user.name=Codex','-c','user.email=codex@openai.com','commit','-m','Report Phase18D fixed-path curvature and speed-plan diagnosis'],cwd=ROOT,check=True)
     subprocess.run(['git','push','origin','HEAD:research/phase0-infrastructure'],cwd=ROOT,check=True)
 
+def report_saved(out):
+    """Presentation refresh only: read saved tables; no rollout/solve calls."""
+    assert (out/'complete.json').exists()
+    def parse(v):
+        if v=='':return None
+        if v in ('True','False'):return v=='True'
+        try:return json.loads(v)
+        except (ValueError,TypeError):return v
+    def csv_rows(name):
+        with (out/name).open() as f:return [{k:parse(v) for k,v in r.items()} for r in csv.DictReader(f)]
+    summary=json.loads((out/'summary.json').read_text());selection=json.loads((out/'selection.json').read_text())
+    failures=csv_rows('slw_failures.csv');terms=csv_rows('term_attribution.csv');combos=csv_rows('combo_summary.csv')
+    inputs=Inputs();records=json.loads((ROOT/'research/results/phase18/runs.json').read_text())
+    for r in records:
+        if r['scene']=='SLW' and r['method']==CLR and not r['success']:inputs.load(r)
+    from .report import render
+    render(out,summary,inputs,failures,terms,combos,selection,replace_presentation=True)
+    dump(out/'presentation.json',dict(numerical_execution_sha=summary['git_sha'],presentation_source_sha256=sha256_file(HERE/'report.py'),
+        reason='Separate overlapping plot labels and expose already-computed paired attribution/active-path summaries',additional_solves=0,additional_rollouts=0))
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--publish',action='store_true');p.add_argument('--resume-before-solves',action='store_true');a=p.parse_args()
-    if a.resume_before_solves:run(OUT,resume_empty=True)
+    p=argparse.ArgumentParser();p.add_argument('--publish',action='store_true');p.add_argument('--resume-before-solves',action='store_true');p.add_argument('--report-only',action='store_true');a=p.parse_args()
+    if a.report_only:report_saved(OUT)
+    elif a.resume_before_solves:run(OUT,resume_empty=True)
     elif OUT.exists():assert (OUT/'complete.json').exists(),'Partial result preserved; no automatic restart'
     else:run(OUT)
     if a.publish:publish(OUT)

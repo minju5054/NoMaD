@@ -1,0 +1,801 @@
+{
+  "git_sha": "52e160b18f8b7bdbdb112d89a023699206f65175",
+  "protocol": {
+    "base_commit": "5f1277a",
+    "source": "research/results/phase18/runs.json",
+    "Isaac_navigation": 0,
+    "NoMaD_inference": 0,
+    "render": 0,
+    "scope": "fixed-path offline counterfactuals",
+    "retries": 0,
+    "tuning": 0,
+    "regression": {
+      "seed": 20261031,
+      "n": 20,
+      "population": "all Phase18 actual single-path NORMAL/GRAPH applications; exclude TE ensembles, STOP/recovery and invalid paths; at least8 ticks; truncate at next application, timeout/stop or108 ticks",
+      "initial_state": "actual application pose, before_v, reset progress=0 for new path; no future commands supplied",
+      "threshold_m": 0.01
+    },
+    "rollout": {
+      "control_hz": 9,
+      "integration_hz": 72,
+      "max_ticks": 108,
+      "lookahead_m": 0.25,
+      "omega_max": 0.4,
+      "v_max": 0.3,
+      "v_min": 0.05,
+      "acceleration": 0.5,
+      "endpoint": "unchanged protected PP endpoint tolerance at control ticks",
+      "termination": "endpoint,108 ticks,or negative swept oracle footprint lower bound; exact negative witness counted separately",
+      "oracle": "passive evaluation only; boxes+outer wall; existing swept_clearance and exact corridor arc minimum reused",
+      "no_next_fresh": true,
+      "no_timeout_or_recovery": true
+    },
+    "SP": {
+      "curvature": "Menger at interior vertices; endpoint repeats nearest interior, zero for2-point path",
+      "limit": "min(.3,.4/abs(kappa)); no floor during planning",
+      "passes": "one backwards braking pass then one forwards acceleration pass, v_i^2 <= v_neighbor^2+2*.5*ds",
+      "terminal_speed": "no extra terminal speed constraint",
+      "initial_speed": "actual before_v applied through common temporal acceleration cap; not imposed as node0 profile speed",
+      "interpolation": "linear in geometric arclength, sampled at current nearest projection; execution target floor .05",
+      "clipping": "omega=clip(v*kappa_PP,+/- .4); curvature infeasibility never silently terminates"
+    },
+    "curvature": {
+      "after_B": "native Menger triple centered at a vertex whose arclength >= existing nearest B projection; no synthetic timestamps",
+      "turn_threshold_m_inv": 2.0,
+      "ratio": "max |curvature| afterB in executed/corrected path divided by native afterB maximum; no valid triple -> unavailable",
+      "sign": "signs of respective largest-magnitude remaining curvature; not physical turn correspondence",
+      "K": "max(0,abs(native_i)-abs(corrected_i))/.5, all6 native triples, exact inherited Menger XY derivative",
+      "KP": "remove endpoint_progress rows only when original afterB max>=2; all other factors/constraints and acceptance fixed"
+    },
+    "A": {
+      "target_methods": [
+        "FRESHEST-SAFE",
+        "FRESHEST-SAFE+HERMITE",
+        "FRESHEST-SAFE+GRAPH-depth",
+        "FRESHEST-SAFE+GRAPH-depth-CLR"
+      ],
+      "scene": "SLW",
+      "switch_window": 3,
+      "final_cause": "last actually tracked path at terminal interval; no path tracking during STOP/recovery -> OTHER",
+      "same_box": "nearest box x-center to each B; first contiguous SAFE passage through box x extent +/- .30m; different observation/pose paths, not a causal match",
+      "attribution": "last submitted job before failure, exactly one each CLR/NO_PROGRESS/NO_CLEARANCE/NO_BOTH; solver rejection retained; CLEARANCE_PUSH requires this job to be final active correction, off accepted, wall clearance gain>=.02",
+      "label_order": [
+        "UNDERTURN_PATH",
+        "UNDERTURN_EXECUTION",
+        "CLEARANCE_PUSH",
+        "OTHER"
+      ]
+    },
+    "B": {
+      "scenes": [
+        "SLW",
+        "CL"
+      ],
+      "source_method": "FRESHEST-SAFE+GRAPH-depth-CLR",
+      "all_fresh": 569,
+      "normal_jobs": 512,
+      "original": "actual depth-selected sample transformed by observation pose",
+      "B": "actual FRESH switch boundary",
+      "previous_prior": "same stored previous accepted path, no counterfactual propagation",
+      "stored_CLR": "numerical accepted solution; runtime scheduling disposition retained; no fabricated result for missing terminal job",
+      "unavailable": "STOP_WAIT/KEEP_ACTIVE/recovery with no graph job and rejected/missing solutions explicitly unavailable; all10 rows per event retained",
+      "primary_population": "all5 paths available/accepted at same event, to avoid comparing unmatched denominators; acceptance rates use all512 submitted inputs; method-available results descriptive",
+      "speed_example": "first sorted SLW common-valid turning event, saved CLR path, both speed rules"
+    },
+    "selection": {
+      "candidate_scope": "ALL_TEN",
+      "interpretation": "all10 combinations from user table are eligible; SAFE/HERMITE may win, making NO_CANDIDATE unlikely unless common evidence absent",
+      "safety": "SLW overlap count <= SAFE+CURV on common population",
+      "speed": "largest CL mean distance, common population",
+      "solve_p95_s": 0.2,
+      "timing": "new constructor+solve+certificate excluding snapshot I/O and oracle evaluation; p95 among started solves, all-attempt stats also retained; stored CLR solve+certificate times",
+      "acceptance": "new variant lower bound no10pp-or-greater drop from stored CLR upper bound; missing baseline worker result explicitly bounded",
+      "tie_path_order": [
+        "KP",
+        "K",
+        "CLR",
+        "HERMITE",
+        "FRESHEST-SAFE"
+      ],
+      "tie_speed_order": [
+        "SP",
+        "CURV"
+      ],
+      "same_data_selection": true
+    },
+    "figures": "CLR SLW failed seeds66-73, final active path or explicitly labelled last returned iterate; accepted-only factor ratio distribution; common-case combo scatter; same-path speed example",
+    "protected_sha256": {
+      "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+      "research/nomad_phase0/chunk_execution.py": "b93858c5a16818ea1c406f3b1c25142baeb6d2abc3c47a6c3222376961a142c8",
+      "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+      "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+      "research/nomad_phase12/methods.py": "e752ab9ee57f91ceee9338722e05814f60f2047a51eecc00b6316fd8c19df8cb",
+      "research/nomad_phase17/graph.py": "168757f96f39023923b72e9f861263375f8cb55cdb0f87f03df466e0ce7c635e",
+      "research/nomad_phase15b/graph.py": "46f20a442464fe37076071d2237c42c04b3bce1ceb75a964d59d8862cd862d69",
+      "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+      "research/nomad_phase12/graph_gf.py": "c7b2e234302b07f894bdcaa6515ede9657d002869e4f462758880acd03a5a403",
+      "research/nomad_phase5/graph.py": "f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a",
+      "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86",
+      "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+      "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+      "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+      "research/nomad_phase0/s0_batch_metrics.py": "f01eef77549ccaf4b8609e5769da52402d875e930b9f1d039fbe9ae6d9390bec"
+    }
+  },
+  "regression": {
+    "candidate_segments": 5466,
+    "sample_seed": 20261031,
+    "segments": 20,
+    "maximum_position_error_m": 0.0,
+    "complete_segments": 20,
+    "label": "ROLLOUT_VALID"
+  },
+  "regression_rows": [
+    {
+      "run": "CL_069_D750_FRESHEST-SAFE+GRAPH-depth",
+      "application_index": 42,
+      "start_tick": 1992,
+      "end_tick": 2000,
+      "kind": "NORMAL",
+      "actual_ticks": 8,
+      "rollout_ticks": 8,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "LC_071_D750_FRESHEST-SAFE+GRAPH-depth",
+      "application_index": 3,
+      "start_tick": 352,
+      "end_tick": 360,
+      "kind": "NORMAL",
+      "actual_ticks": 8,
+      "rollout_ticks": 8,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "CL_071_D750_FRESHEST-SAFE",
+      "application_index": 5,
+      "start_tick": 568,
+      "end_tick": 640,
+      "kind": "NORMAL",
+      "actual_ticks": 72,
+      "rollout_ticks": 72,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "LC_068_D750_FRESHEST-SAFE+RTC-hard",
+      "application_index": 8,
+      "start_tick": 784,
+      "end_tick": 824,
+      "kind": "NORMAL",
+      "actual_ticks": 40,
+      "rollout_ticks": 40,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_069_D750_FRESHEST-SAFE+GRAPH-depth-CLR",
+      "application_index": 42,
+      "start_tick": 1928,
+      "end_tick": 1992,
+      "kind": "GRAPH",
+      "actual_ticks": 64,
+      "rollout_ticks": 64,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_072_D750_FRESHEST-SAFE+GRAPH-depth-CLR",
+      "application_index": 63,
+      "start_tick": 4104,
+      "end_tick": 4168,
+      "kind": "GRAPH",
+      "actual_ticks": 64,
+      "rollout_ticks": 64,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "CL_066_D750_FRESHEST-SAFE+HERMITE",
+      "application_index": 2,
+      "start_tick": 352,
+      "end_tick": 424,
+      "kind": "NORMAL",
+      "actual_ticks": 72,
+      "rollout_ticks": 72,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_070_D750_FRESHEST-SAFE+RTC-hard",
+      "application_index": 6,
+      "start_tick": 640,
+      "end_tick": 704,
+      "kind": "NORMAL",
+      "actual_ticks": 64,
+      "rollout_ticks": 64,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "LC_071_D750_FRESHEST-SAFE+GRAPH-depth-CLR",
+      "application_index": 13,
+      "start_tick": 712,
+      "end_tick": 720,
+      "kind": "NORMAL",
+      "actual_ticks": 8,
+      "rollout_ticks": 8,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_066_D750_FRESHEST-SAFE+GRAPH-depth",
+      "application_index": 29,
+      "start_tick": 1464,
+      "end_tick": 1536,
+      "kind": "NORMAL",
+      "actual_ticks": 72,
+      "rollout_ticks": 72,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_067_D750_FRESHEST-SAFE",
+      "application_index": 39,
+      "start_tick": 2960,
+      "end_tick": 3024,
+      "kind": "NORMAL",
+      "actual_ticks": 64,
+      "rollout_ticks": 64,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "LC_073_D750_FRESHEST-SAFE+RTC-hard",
+      "application_index": 30,
+      "start_tick": 2368,
+      "end_tick": 2440,
+      "kind": "NORMAL",
+      "actual_ticks": 72,
+      "rollout_ticks": 72,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "CL_067_D750_FRESHEST-SAFE+GRAPH-depth",
+      "application_index": 23,
+      "start_tick": 1144,
+      "end_tick": 1152,
+      "kind": "NORMAL",
+      "actual_ticks": 8,
+      "rollout_ticks": 8,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_066_D750_FRESHEST-SAFE",
+      "application_index": 2,
+      "start_tick": 352,
+      "end_tick": 424,
+      "kind": "NORMAL",
+      "actual_ticks": 72,
+      "rollout_ticks": 72,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_066_D750_FRESHEST-SAFE+HERMITE",
+      "application_index": 23,
+      "start_tick": 1864,
+      "end_tick": 1936,
+      "kind": "NORMAL",
+      "actual_ticks": 72,
+      "rollout_ticks": 72,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_070_D750_FRESHEST-SAFE+HERMITE",
+      "application_index": 34,
+      "start_tick": 2760,
+      "end_tick": 2824,
+      "kind": "NORMAL",
+      "actual_ticks": 64,
+      "rollout_ticks": 64,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "SLW_070_D750_FRESHEST-SAFE+GRAPH-depth",
+      "application_index": 84,
+      "start_tick": 5072,
+      "end_tick": 5136,
+      "kind": "GRAPH",
+      "actual_ticks": 64,
+      "rollout_ticks": 64,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "CL_073_D750_FRESHEST-SAFE+GRAPH-depth-CLR",
+      "application_index": 51,
+      "start_tick": 2136,
+      "end_tick": 2144,
+      "kind": "NORMAL",
+      "actual_ticks": 8,
+      "rollout_ticks": 8,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "LC_073_D750_FRESHEST-SAFE+RTC-hard",
+      "application_index": 20,
+      "start_tick": 1648,
+      "end_tick": 1720,
+      "kind": "NORMAL",
+      "actual_ticks": 72,
+      "rollout_ticks": 72,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    },
+    {
+      "run": "LC_066_D750_FRESHEST-SAFE+HERMITE",
+      "application_index": 13,
+      "start_tick": 1144,
+      "end_tick": 1216,
+      "kind": "NORMAL",
+      "actual_ticks": 72,
+      "rollout_ticks": 72,
+      "maximum_position_error_m": 0.0,
+      "maximum_yaw_error_rad": 0.0,
+      "complete_comparison": true,
+      "termination": "HORIZON"
+    }
+  ],
+  "A_labels": {
+    "UNDERTURN_EXECUTION": 12,
+    "OTHER": 9,
+    "UNDERTURN_PATH": 5
+  },
+  "A_by_method": {
+    "FRESHEST-SAFE": {
+      "OTHER": 4,
+      "UNDERTURN_EXECUTION": 1
+    },
+    "FRESHEST-SAFE+HERMITE": {
+      "OTHER": 2,
+      "UNDERTURN_PATH": 3,
+      "UNDERTURN_EXECUTION": 1
+    },
+    "FRESHEST-SAFE+GRAPH-depth": {
+      "UNDERTURN_EXECUTION": 6,
+      "UNDERTURN_PATH": 1
+    },
+    "FRESHEST-SAFE+GRAPH-depth-CLR": {
+      "OTHER": 3,
+      "UNDERTURN_EXECUTION": 4,
+      "UNDERTURN_PATH": 1
+    }
+  },
+  "term_contributions": [
+    {
+      "variant": "NO_PROGRESS",
+      "paired_n": 1,
+      "ratio_change": {
+        "n": 1,
+        "median": -1.2890151910305292e-05,
+        "p10": -1.2890151910305292e-05,
+        "p90": -1.2890151910305292e-05,
+        "p95": -1.2890151910305292e-05
+      },
+      "overlap_change": 0
+    },
+    {
+      "variant": "NO_CLEARANCE",
+      "paired_n": 2,
+      "ratio_change": {
+        "n": 2,
+        "median": -9.223083409226618e-07,
+        "p10": -1.6601550136607911e-06,
+        "p90": -1.844616681845323e-07,
+        "p95": -9.223083409226626e-08
+      },
+      "overlap_change": 0
+    },
+    {
+      "variant": "NO_BOTH",
+      "paired_n": 1,
+      "ratio_change": {
+        "n": 1,
+        "median": -2.155802802494833e-06,
+        "p10": -2.155802802494833e-06,
+        "p90": -2.155802802494833e-06,
+        "p95": -2.155802802494833e-06
+      },
+      "overlap_change": 0
+    }
+  ],
+  "coverage": [
+    {
+      "scene": "SLW",
+      "all_fresh": 329,
+      "common_valid": 85,
+      "availability": {
+        "INITIALIZATION_REJECTED": 61,
+        "AVAILABLE": 141,
+        "NO_GRAPH_INPUT_STOP_WAIT": 41,
+        "NONCONVERGED": 66,
+        "NO_GRAPH_INPUT_RECOVERY_DEFERRED": 15,
+        "MISSING_STORED_WORKER_RESULT": 4,
+        "NO_GRAPH_INPUT_KEEP_ACTIVE": 1
+      }
+    },
+    {
+      "scene": "CL",
+      "all_fresh": 240,
+      "common_valid": 166,
+      "availability": {
+        "INITIALIZATION_REJECTED": 49,
+        "AVAILABLE": 190,
+        "MISSING_STORED_WORKER_RESULT": 1
+      }
+    }
+  ],
+  "graph_summary": [
+    {
+      "variant": "CLR",
+      "attempts": 512,
+      "known": 507,
+      "accepted": 331,
+      "acceptance_lower": 0.646484375,
+      "acceptance_upper": 0.65625,
+      "solve_time_s": {
+        "n": 397,
+        "median": 0.07711256900802255,
+        "p10": 0.06985286940471269,
+        "p90": 0.14628400520887228,
+        "p95": 0.1964909767906647
+      },
+      "started_solve_time_s": {
+        "n": 397,
+        "median": 0.07711256900802255,
+        "p10": 0.06985286940471269,
+        "p90": 0.14628400520887228,
+        "p95": 0.1964909767906647
+      },
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 110,
+        "ACCEPTED": 331,
+        "MISSING_STORED_WORKER_RESULT": 5,
+        "NONCONVERGED": 66
+      }
+    },
+    {
+      "variant": "K",
+      "attempts": 512,
+      "known": 512,
+      "accepted": 265,
+      "acceptance_lower": 0.517578125,
+      "acceptance_upper": 0.517578125,
+      "solve_time_s": {
+        "n": 512,
+        "median": 0.09877054099342786,
+        "p10": 0.0003430899989325553,
+        "p90": 0.13404378649720458,
+        "p95": 0.19156803631485667
+      },
+      "started_solve_time_s": {
+        "n": 402,
+        "median": 0.10430053100571968,
+        "p10": 0.054129069202463145,
+        "p90": 0.15303110957902394,
+        "p95": 0.2121723480944637
+      },
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 110,
+        "ACCEPTED": 265,
+        "NONCONVERGED": 137
+      }
+    },
+    {
+      "variant": "KP",
+      "attempts": 512,
+      "known": 512,
+      "accepted": 260,
+      "acceptance_lower": 0.5078125,
+      "acceptance_upper": 0.5078125,
+      "solve_time_s": {
+        "n": 512,
+        "median": 0.09976420001476072,
+        "p10": 0.00025411901879124343,
+        "p90": 0.13635759430471808,
+        "p95": 0.20311661190789884
+      },
+      "started_solve_time_s": {
+        "n": 402,
+        "median": 0.10498637649288867,
+        "p10": 0.04812509730109014,
+        "p90": 0.1529292203864316,
+        "p95": 0.2415569461387349
+      },
+      "dispositions": {
+        "INITIALIZATION_REJECTED": 110,
+        "ACCEPTED": 260,
+        "NONCONVERGED": 142
+      }
+    }
+  ],
+  "selection": {
+    "label": "CANDIDATE_FRESHEST-SAFE_SP",
+    "chosen": {
+      "path_type": "FRESHEST-SAFE",
+      "speed": "SP",
+      "safety_pass": true,
+      "timing_pass": true,
+      "acceptance_pass": true,
+      "slw_overlap": 2,
+      "slw_n": 85,
+      "cl_progress_m": 0.318528022953987,
+      "cl_n": 166
+    },
+    "checks": [
+      {
+        "path_type": "FRESHEST-SAFE",
+        "speed": "CURV",
+        "safety_pass": true,
+        "timing_pass": true,
+        "acceptance_pass": true,
+        "slw_overlap": 2,
+        "slw_n": 85,
+        "cl_progress_m": 0.23991817208265007,
+        "cl_n": 166
+      },
+      {
+        "path_type": "FRESHEST-SAFE",
+        "speed": "SP",
+        "safety_pass": true,
+        "timing_pass": true,
+        "acceptance_pass": true,
+        "slw_overlap": 2,
+        "slw_n": 85,
+        "cl_progress_m": 0.318528022953987,
+        "cl_n": 166
+      },
+      {
+        "path_type": "HERMITE",
+        "speed": "CURV",
+        "safety_pass": true,
+        "timing_pass": true,
+        "acceptance_pass": true,
+        "slw_overlap": 2,
+        "slw_n": 85,
+        "cl_progress_m": 0.23876429128516172,
+        "cl_n": 166
+      },
+      {
+        "path_type": "HERMITE",
+        "speed": "SP",
+        "safety_pass": true,
+        "timing_pass": true,
+        "acceptance_pass": true,
+        "slw_overlap": 1,
+        "slw_n": 85,
+        "cl_progress_m": 0.23210203347581224,
+        "cl_n": 166
+      },
+      {
+        "path_type": "CLR",
+        "speed": "CURV",
+        "safety_pass": true,
+        "timing_pass": true,
+        "acceptance_pass": true,
+        "slw_overlap": 1,
+        "slw_n": 85,
+        "cl_progress_m": 0.28527255573704036,
+        "cl_n": 166
+      },
+      {
+        "path_type": "CLR",
+        "speed": "SP",
+        "safety_pass": true,
+        "timing_pass": true,
+        "acceptance_pass": true,
+        "slw_overlap": 0,
+        "slw_n": 85,
+        "cl_progress_m": 0.28693151311165294,
+        "cl_n": 166
+      },
+      {
+        "path_type": "K",
+        "speed": "CURV",
+        "safety_pass": true,
+        "timing_pass": false,
+        "acceptance_pass": false,
+        "slw_overlap": 1,
+        "slw_n": 85,
+        "cl_progress_m": 0.283858253994948,
+        "cl_n": 166
+      },
+      {
+        "path_type": "K",
+        "speed": "SP",
+        "safety_pass": true,
+        "timing_pass": false,
+        "acceptance_pass": false,
+        "slw_overlap": 0,
+        "slw_n": 85,
+        "cl_progress_m": 0.28524908530267346,
+        "cl_n": 166
+      },
+      {
+        "path_type": "KP",
+        "speed": "CURV",
+        "safety_pass": true,
+        "timing_pass": false,
+        "acceptance_pass": false,
+        "slw_overlap": 1,
+        "slw_n": 85,
+        "cl_progress_m": 0.28373964049562644,
+        "cl_n": 166
+      },
+      {
+        "path_type": "KP",
+        "speed": "SP",
+        "safety_pass": true,
+        "timing_pass": false,
+        "acceptance_pass": false,
+        "slw_overlap": 0,
+        "slw_n": 85,
+        "cl_progress_m": 0.28523898694148,
+        "cl_n": 166
+      }
+    ],
+    "reference_slw_overlap": 2,
+    "reference_slw_n": 85,
+    "SP_FAIRNESS": [
+      {
+        "scene": "SLW",
+        "path_type": "FRESHEST-SAFE",
+        "speed": "SP",
+        "n": 85,
+        "scope": "ALL_PATHS_COMMON_VALID",
+        "overlap": 2,
+        "negative_witness": 2,
+        "conservative_only_negative": 0,
+        "margin_violation": 3,
+        "mean_progress_m": 0.3026297440354048,
+        "mean_speed_m_s": 0.22785430652660316,
+        "omega_saturation_fraction": 0.5767806267806268,
+        "maximum_cross_track_m": 0.33679072920737063,
+        "endpoint_stops": 19,
+        "curvature_ratio": {
+          "n": 36,
+          "median": 1.0,
+          "p10": 1.0,
+          "p90": 1.0,
+          "p95": 1.0
+        },
+        "minimum_clearance_m": -0.0018577073068685446
+      },
+      {
+        "scene": "CL",
+        "path_type": "FRESHEST-SAFE",
+        "speed": "SP",
+        "n": 166,
+        "scope": "ALL_PATHS_COMMON_VALID",
+        "overlap": 0,
+        "negative_witness": 0,
+        "conservative_only_negative": 0,
+        "margin_violation": 0,
+        "mean_progress_m": 0.318528022953987,
+        "mean_speed_m_s": 0.23100932398346216,
+        "omega_saturation_fraction": 0.5940976415374005,
+        "maximum_cross_track_m": 0.3394269938294209,
+        "endpoint_stops": 41,
+        "curvature_ratio": {
+          "n": 77,
+          "median": 1.0,
+          "p10": 1.0,
+          "p90": 1.0,
+          "p95": 1.0
+        },
+        "minimum_clearance_m": 0.07927184512127589
+      },
+      {
+        "scene": "SLW",
+        "path_type": "HERMITE",
+        "speed": "SP",
+        "n": 85,
+        "scope": "ALL_PATHS_COMMON_VALID",
+        "overlap": 1,
+        "negative_witness": 1,
+        "conservative_only_negative": 0,
+        "margin_violation": 1,
+        "mean_progress_m": 0.2067673977621661,
+        "mean_speed_m_s": 0.1677927336597749,
+        "omega_saturation_fraction": 0.3215734809852457,
+        "maximum_cross_track_m": 0.2716019082262508,
+        "endpoint_stops": 30,
+        "curvature_ratio": {
+          "n": 36,
+          "median": 1.6201474995695317,
+          "p10": 0.6357620402321209,
+          "p90": 3.275565960273268,
+          "p95": 3.7848873834976122
+        },
+        "minimum_clearance_m": -0.001855640003674358
+      },
+      {
+        "scene": "CL",
+        "path_type": "HERMITE",
+        "speed": "SP",
+        "n": 166,
+        "scope": "ALL_PATHS_COMMON_VALID",
+        "overlap": 0,
+        "negative_witness": 0,
+        "conservative_only_negative": 0,
+        "margin_violation": 0,
+        "mean_progress_m": 0.23210203347581224,
+        "mean_speed_m_s": 0.17474641358820486,
+        "omega_saturation_fraction": 0.4009518370964155,
+        "maximum_cross_track_m": 0.33332921253586256,
+        "endpoint_stops": 55,
+        "curvature_ratio": {
+          "n": 77,
+          "median": 1.632168990410658,
+          "p10": 0.8747949802091755,
+          "p90": 3.719429953548938,
+          "p95": 4.042739260484796
+        },
+        "minimum_clearance_m": 0.026840038496133815
+      }
+    ],
+    "same_data_selection": true,
+    "closed_loop_claim": false,
+    "acceptance_missing_baseline": "conservative upper bound",
+    "scope": "Common accepted-path intersection; unavailable/rejected events retained and acceptance rates use all submitted jobs"
+  },
+  "approximation": false,
+  "scope": "Offline fixed-path same-data selection, not closed-loop navigation improvement"
+}
