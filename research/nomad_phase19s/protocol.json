@@ -1,0 +1,115 @@
+{
+  "phase": "19-S",
+  "base_commit": "87c3ef0",
+  "scope": "post-hoc saved-path offline counterfactual; no navigation, inference, render, Graph solve",
+  "controller": {
+    "protected_PP_lookahead_m": 0.25,
+    "maximum_v_m_s": 0.3,
+    "maximum_abs_w_rad_s": 0.4,
+    "acceleration_m_s2": 0.5,
+    "control_hz": 9,
+    "integration_hz": 72,
+    "horizon_s": 8,
+    "endpoint_tolerance_m": 0.01
+  },
+  "SP": "Import Phase18D speed profile unchanged; exact original execution calculation; extend to 8s. No new terminal speed constraint at final path endpoint.",
+  "SRG": {
+    "S": {
+      "initial_actual_v_less_than": 0.01,
+      "first_existing_path_point_distance_at_least_m": 0.05,
+      "heading_error_at_least_degrees": 20,
+      "frequency": "once at initial departure; scan stored path point order, no fabricated tangent/yaw"
+    },
+    "P": {
+      "direction_change_at_least_degrees": 45,
+      "merge_short_chord_m": 0.01,
+      "merge_scope": "turn detection only; retain native path vertices in each leg",
+      "exclude_pivots_behind_initial_projection": true,
+      "incoming_leg": "same SP limits and two passes, terminal speed limit zero; remove .05 execution floor on stopping leg",
+      "arrival_tolerance_m": 0.01,
+      "rotation_direction": "outgoing merged chord heading"
+    },
+    "rotation": "bounded braking to actual v=0 first; 9Hz command abs(w)=.4 except final command clipped to remaining angle/control_dt; 72Hz integration; no teleport",
+    "after_pivot": "new PP leg, reset geometric progress, resume SP from zero with the same acceleration cap",
+    "oracle_input": false
+  },
+  "evaluation": {
+    "oracle": "existing exact/swept box and corridor evaluator; circular radius .09m; never input to controller",
+    "collision_feedback": false,
+    "termination": "endpoint or 8s; oracle overlap never terminates command generation",
+    "unsafe_completion": "recorded as kinematic completion only, separately safe_completion false",
+    "time_pairs": "both completed; also separately both completed without overlap; no missing-time imputation",
+    "completion_average_speed": "full fixed path arclength / elapsed completion time; actual travelled distance/time separately"
+  },
+  "datasets": {
+    "D1": "Phase18D SLW common85 plus all available paths; RAW/FRESHEST-SAFE, HERMITE, stored accepted CLR",
+    "D2": "Phase18D CL common166 plus all available paths; same three paths",
+    "D3": "all90 selected Phase19R evaluation repairs",
+    "D4": "all755 selected Phase19R development repairs, descriptive only",
+    "unavailable": "retain exclusion reason; do not fabricate a CLR path or re-solve"
+  },
+  "decision": {
+    "priority": [
+      "SRG_NOT_ENOUGH",
+      "SRG_SAFE_BUT_SLOW",
+      "SRG_FIXES_EXECUTION"
+    ],
+    "safety": "D3 overlap fraction <=.01 AND for each D1 path type SRG overlaps <= SP, checked in BOTH original common and method-available scopes",
+    "timing": "D2 original common166 events, pooled three path types; median SRG/SP among paired completions <=1.10",
+    "empty_time_pairs": "INCONCLUSIVE_NO_COMPLETION_PAIRS (do not fabricate a ratio)",
+    "historical_D3_SP_overlap_1p5s": 10
+  },
+  "examples": {
+    "slw": {
+      "dataset": "EXAMPLE_ONLY",
+      "event_id": "SLW_066_D750_FRESHEST-SAFE+GRAPH-depth:F28",
+      "run": "SLW_066_D750_FRESHEST-SAFE+GRAPH-depth",
+      "scene": "SLW",
+      "index": 66,
+      "fresh_id": 28,
+      "path_type": "NORMAL",
+      "common": false,
+      "B": [
+        1.6977954215394235,
+        0.6706210298260761,
+        3.107802299757335
+      ],
+      "previous_v": 0.3
+    },
+    "repair": {
+      "dataset": "D3",
+      "event_id": 8,
+      "run": "SLW_066_D750_FRESHEST-SAFE+GRAPH-depth",
+      "scene": "SLW",
+      "index": 66,
+      "fresh_id": 8,
+      "path_type": "REPAIR",
+      "common": true,
+      "B": [
+        1.6664561889871812,
+        -0.7529137850081349,
+        -0.8435993125183927
+      ],
+      "previous_v": 0.0,
+      "cause": "TRUE_BLOCK",
+      "selected_sample": 1
+    }
+  },
+  "checks": "five unit tests; every SP path prefix compared with saved <=1.5s metrics; initial B and native observation frame preserved; bounds verified on every command",
+  "analysis_defaults": "Clarification offered before execution; no reply by freeze. Oracle-passive full-horizon evaluation and common/available reporting disclosed before data rollouts.",
+  "protected_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/chunk_execution.py": "b93858c5a16818ea1c406f3b1c25142baeb6d2abc3c47a6c3222376961a142c8",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase18d/rollout.py": "1cd7b1bdbd3139369ef7c3c36839923afa8b09c0d09bcf55f4b0076d3728798f",
+    "research/nomad_phase18d/speed_profile.py": "912432a9458db68799f2a2603643f03c74cf5a254f5ee713104ab4ba3f572629",
+    "research/nomad_phase18d/diagnose.py": "cadd6cf4dec7f985ba56374c7539512d5bb0dd60c60a85e9980e8dd90f189ee6",
+    "research/nomad_phase12/methods.py": "e752ab9ee57f91ceee9338722e05814f60f2047a51eecc00b6316fd8c19df8cb",
+    "research/nomad_phase19r/repair.py": "01314bdc267cfda557275f5ba5844e4433eea2ac86bfbdf9c8ea7f2b04eb516a",
+    "research/nomad_phase19r/evaluate.py": "7520b87af37728e5e192021ef9290183f866e9b91c6327a4937628a6ad2b2f3c",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_phase0/s0_batch_metrics.py": "f01eef77549ccaf4b8609e5769da52402d875e930b9f1d039fbe9ae6d9390bec"
+  }
+}
