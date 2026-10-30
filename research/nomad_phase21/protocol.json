@@ -1,7 +1,7 @@
 {
   "phase": "21",
   "base_commit": "3744de7",
-  "status": "GEOMETRY_PASS",
+  "status": "FROZEN",
   "SO": {
     "source_scenario": "research/nomad_phase2/scenario.json",
     "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
@@ -137,8 +137,7 @@
     111,
     112,
     113,
-    114,
-    115
+    114
   ],
   "method_order": [
     "B0_NOMAD_RAW",
@@ -420,7 +419,11 @@
     "curvature": "Menger on actually applied detour/repair paths; pooled RMS over internal vertices and max absolute; missing if no path applied",
     "angular_change": "9Hz actual-command first difference |delta omega| and second difference/dt^2 jerk; detour intervals only",
     "false_trigger": "B detour start with no new cells ahead (must0); A without cells separately descriptive, not misclassified",
-    "reblock": "new trigger after actual detour END and before footprint passage"
+    "reblock": "new trigger after actual detour END and before footprint passage",
+    "collision_scope": "Oracle box overlap OR outer-wall intrusion; report both separately. GRAPH_BEST zero-collision condition uses their union.",
+    "minimum_clearance": "Minimum of observed box and outer-wall footprint clearance.",
+    "curvature_aggregation": "Pool Menger vertex squared curvature across actually applied repair/detour paths; missing when no such path exists.",
+    "no_valid_pairs": "INCONCLUSIVE_NO_VALID_PAIRS, without a substantive performance conclusion."
   },
   "smoke": {
     "scene": "L2",
@@ -437,7 +440,16 @@
     "attempts_each": 1,
     "excluded": true,
     "estimate": "mean full launcher wall time of6 smokes *60; if>9000s use indices111..114 (48 planned); no further resize",
-    "technical_failure": "smoke failure blocks readiness until root cause addressed; do not interpret outcome"
+    "technical_failure": "smoke failure blocks readiness until root cause addressed; do not interpret outcome",
+    "measured_wall_s": {
+      "B0_NOMAD_RAW": 198.16090238594916,
+      "B1_SAFE_TE": 201.60915410896996,
+      "B2_SAFE_RTC": 204.2836935360101,
+      "B3_M1": 186.9655445010285,
+      "B4_ASTAR": 187.27179307799088,
+      "M3_GRAPH": 179.97267851402285
+    },
+    "estimated_60_s": 11582.637661239714
   },
   "geometry": {
     "poses": [
@@ -744,78 +756,8 @@
       "index": 114,
       "method": "M3_GRAPH",
       "seed_offset": 1140000
-    },
-    {
-      "scene": "L2",
-      "index": 115,
-      "method": "B0_NOMAD_RAW",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2",
-      "index": 115,
-      "method": "B1_SAFE_TE",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2",
-      "index": 115,
-      "method": "B2_SAFE_RTC",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2",
-      "index": 115,
-      "method": "B3_M1",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2",
-      "index": 115,
-      "method": "B4_ASTAR",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2",
-      "index": 115,
-      "method": "M3_GRAPH",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2A",
-      "index": 115,
-      "method": "B0_NOMAD_RAW",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2A",
-      "index": 115,
-      "method": "B1_SAFE_TE",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2A",
-      "index": 115,
-      "method": "B2_SAFE_RTC",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2A",
-      "index": 115,
-      "method": "B3_M1",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2A",
-      "index": 115,
-      "method": "B4_ASTAR",
-      "seed_offset": 1150000
-    },
-    {
-      "scene": "L2A",
-      "index": 115,
-      "method": "M3_GRAPH",
-      "seed_offset": 1150000
     }
-  ]
+  ],
+  "planned_runs": 48,
+  "estimated_main_s": 9266.110128991771
 }

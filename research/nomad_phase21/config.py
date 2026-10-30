@@ -13,6 +13,8 @@ def verify_sources():
     for f,h in p['protected_sha256'].items():assert sha256_file(ROOT/f)==h,f
     for f,h in p['reused_sha256'].items():assert sha256_file(f)==h,f
     assert sha256_file(ROOT.parent/'artifacts/checkpoints/nomad.pth')==p['checkpoint_sha256']
+    from nomad_isaac.topomap import load_map
+    images,_=load_map(p['SO']['topomap']);assert len(images)==21
     return p
 def runtime_config(method,index,timeout=90,level='L2'):
     p=protocol();assert method in METHODS and level in SCENES and index in [95,*range(111,116)] and timeout==90
