@@ -1,7 +1,7 @@
 {
   "phase": "21",
   "base_commit": "3744de7",
-  "status": "REGISTERED",
+  "status": "TUNED",
   "SO": {
     "source_scenario": "research/nomad_phase2/scenario.json",
     "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
@@ -356,7 +356,10 @@
       5,
       20
     ],
-    "selected": null,
+    "selected": {
+      "smoothing_iterations": 0,
+      "lambda": 4.0
+    },
     "resolution_m": 0.01,
     "connectivity": 8,
     "cost": "sum edge_length*(1+lambda*max(0,.15-depth_clearance)/.05)",
