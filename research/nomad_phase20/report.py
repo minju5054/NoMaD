@@ -2,6 +2,7 @@
 import json
 from nomad_isaac.common import ROOT,sha256_file
 from nomad_phase17.report import table
+from nomad_phase19r.evaluate import clean
 
 
 def preflight_report(out,verdict,six,sha,protocol,replace=False):
@@ -14,7 +15,7 @@ def preflight_report(out,verdict,six,sha,protocol,replace=False):
     text+='Exact depth certificate splits the continuous path at0.30m and reuses exact distance to occupied cell centers minus robot radius on both subpaths. The cut is included in both certificates: a continuous far-side path must satisfy0.025m in the limit at the cut. Acceptance still requires solver success, maximum constraint violation≤1e−7 and both exact certificates.\n\n'
     text+='Selected repair is the accepted sample with minimum mean edit (lower-index tie); all8 are considered once, with negative-depth-B rejection and unchanged Phase19R short/degenerate exclusion. Timing p95 uses eligible per-sample attempts including certificate. Eight-sample serial time and counts exceeding the planned0.5s online deadline are separately reported.\n\n'
     causes=[dict(cause=k,**v) for k,v in verdict['cause_success'].items()]
-    text+=table(causes)+'\n\n```json\n'+json.dumps(verdict,indent=2)+'\n```\n\n'
+    text+=table(causes)+'\n\n```json\n'+json.dumps(clean(verdict),indent=2)+'\n```\n\n'
     text+='READY requires zero **selected** repaired-path oracle penetrations, ≤7% oracle overlap among selected 1.5s SP+departure-alignment rollouts, and per-sample solve p95≤0.20s. All accepted sample-path penetrations are reported separately, including unselected paths. There is no minimum repair-success gate. No-selected-repair is not evidence of readiness.\n\n'
     text+='SP is unchanged. The revised departure trigger uses heading error≥45° regardless of speed, or≥20° when actual v<0.01m/s. Braking remains bounded by0.5m/s² before zero-v rotation at≤0.4rad/s. Trigger P stays disabled; actual initial v and heading are retained. The1.5s clock includes braking/rotation. The rollout is endpoint/horizon bounded and oracle-passive, so overlap is monitored but never changes control.\n\n'
     from nomad_phase19s.evaluate import csv_rows

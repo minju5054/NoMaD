@@ -153,9 +153,27 @@ def publish():
     subprocess.run(['git','push','origin','HEAD:research/phase0-infrastructure'],cwd=ROOT,check=True)
 
 
+def finish_saved():
+    assert not (OUT/'complete.json').exists()
+    events=csv_rows(OUT/'events.csv');repairs=csv_rows(OUT/'repairs.csv')
+    assert len(events)==241 and len(repairs)==1928
+    assert len({(r['event_id'],r['sample']) for r in repairs})==1928
+    meta=json.loads((OUT/'input_manifest.json').read_text())
+    for file,h in meta['sha256'].items():
+        if file not in (str(HERE/'preflight.py'),str(HERE/'report.py')):assert sha256_file(file)==h,file
+    p=json.loads((OUT/'protocol.json').read_text());verdict=json.loads((OUT/'readiness.json').read_text())
+    from .report import preflight_report
+    preflight_report(OUT,verdict,csv_rows(OUT/'srg_six_collisions.csv'),meta['git_sha'],p)
+    dump(OUT/'complete.json',dict(git_sha=meta['git_sha'],events=241,sample_decisions=1928,solver_attempts=sum(r['solver_started'] for r in repairs),
+        new_Isaac_navigation=0,new_NoMaD_inference=0,new_render=0,protected_and_input_hashes_unchanged=True,label=verdict['label'],
+        saved_only_report_recovery=True,additional_solves=0,additional_rollouts=0))
+    print('Saved-only report recovered; no additional solve or rollout',flush=True)
+
+
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--publish',action='store_true');a=ap.parse_args()
-    if OUT.exists():assert (OUT/'complete.json').exists(),'Partial attempt preserved'
+    ap=argparse.ArgumentParser();ap.add_argument('--publish',action='store_true');ap.add_argument('--finish-saved',action='store_true');a=ap.parse_args()
+    if a.finish_saved:finish_saved()
+    elif OUT.exists():assert (OUT/'complete.json').exists(),'Partial attempt preserved'
     else:run()
     if a.publish:publish()
 
