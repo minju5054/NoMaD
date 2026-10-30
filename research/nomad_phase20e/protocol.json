@@ -1,0 +1,339 @@
+{
+  "phase": "20E",
+  "base_commit": "f221a06",
+  "status": "FROZEN",
+  "assessment_label": "Stored-trigger descriptive comparison; no solve/no rollout",
+  "changes": {
+    "only_algorithm_change": "NO_PROGRESS AND at least one occupied cell center in the closed robot/u_ref rectangle: longitudinal[0,1.0]m, lateral[-.20,+.20]m. No oracle, inflation, recency or unknown mask added to this predicate.",
+    "logging_unit": "One OBSTACLE_CONDITION record for every eligible9Hz NO_PROGRESS check; a denied check does not start cooldown. NO_OBSTACLE_AHEAD count is control checks, not deduplicated episodes.",
+    "technical_binding": "20E wrapper supplies existing clean serializer in inherited R2 function globals; bytecode/repair algorithm/parameters unchanged;20D source remains untouched."
+  },
+  "common": {
+    "SO": {
+      "source_scenario": "research/nomad_phase2/scenario.json",
+      "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "nodes": 21,
+      "placement": {
+        "trigger_x": [
+          2.0,
+          2.1
+        ],
+        "distance_m": 1.2,
+        "size": [
+          0.35,
+          0.35,
+          0.8
+        ],
+        "y_offset_m": 0.15,
+        "y_clamp": [
+          -0.925,
+          0.925
+        ],
+        "s": "odd +1; even -1"
+      },
+      "oracle_publication": false,
+      "evaluation_dynamic_geometry": true,
+      "success_gate": false
+    },
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "control": {
+      "lookahead_m": 0.25,
+      "vmax_m_s": 0.3,
+      "omega_max_rad_s": 0.4,
+      "acceleration_m_s2": 0.5,
+      "observation_hz": 4,
+      "controller_hz": 9,
+      "integration_hz": 72,
+      "waypoint_timeout_s": 1,
+      "navigation_timeout_s": 90,
+      "delivery_delay_ms": 750,
+      "speed": "protected Phase18D SP; rebuild on path replacement",
+      "start_alignment": "On new path: heading error>=45deg at any speed; if v<.01 retain20deg; bounded braking then in-place |w|<=.4",
+      "pivot_trigger_P": false,
+      "fallback": "Phase16 KEEP_ACTIVE / STOP_WAIT",
+      "recovery": "Phase17 RECOVER_ROTATE (30deg, .3rad/s, maximum12 per run)"
+    },
+    "depth": {
+      "variant": "15A2 V1",
+      "noise_sigma": "0.01*d^2",
+      "unknown": "not occupied",
+      "odometry": "exact simulator pose",
+      "oracle_controller_input": false,
+      "allocation_bounds_m": [
+        -4.0,
+        -3.5,
+        12.0,
+        6.2
+      ],
+      "allocation_note": "SO x extent is longer than Phase16; extend xmax8 to12 to cover corridor and3m sensor range; map resolution, occupancy/noise rules unchanged; no oracle wall occupancy inserted"
+    },
+    "seed_rule": "inference=101+10000*index+2*request_id; DDPM=inference+1"
+  },
+  "levels": {
+    "L2": {
+      "size_xyz_m": [
+        0.4,
+        1.2,
+        0.8
+      ],
+      "center_y_m": 0.0,
+      "gaps_m": [
+        0.9,
+        0.9
+      ]
+    }
+  },
+  "methods": [
+    "M1_ROTATE",
+    "M3_DETOUR"
+  ],
+  "indices": [
+    89,
+    90,
+    91,
+    92,
+    93,
+    94
+  ],
+  "main_order": [
+    {
+      "scene": "L2",
+      "index": 89,
+      "method": "M3_DETOUR",
+      "seed_offset": 890000
+    },
+    {
+      "scene": "L2",
+      "index": 89,
+      "method": "M1_ROTATE",
+      "seed_offset": 890000
+    },
+    {
+      "scene": "L2",
+      "index": 90,
+      "method": "M1_ROTATE",
+      "seed_offset": 900000
+    },
+    {
+      "scene": "L2",
+      "index": 90,
+      "method": "M3_DETOUR",
+      "seed_offset": 900000
+    },
+    {
+      "scene": "L2",
+      "index": 91,
+      "method": "M3_DETOUR",
+      "seed_offset": 910000
+    },
+    {
+      "scene": "L2",
+      "index": 91,
+      "method": "M1_ROTATE",
+      "seed_offset": 910000
+    },
+    {
+      "scene": "L2",
+      "index": 92,
+      "method": "M3_DETOUR",
+      "seed_offset": 920000
+    },
+    {
+      "scene": "L2",
+      "index": 92,
+      "method": "M1_ROTATE",
+      "seed_offset": 920000
+    },
+    {
+      "scene": "L2",
+      "index": 93,
+      "method": "M3_DETOUR",
+      "seed_offset": 930000
+    },
+    {
+      "scene": "L2",
+      "index": 93,
+      "method": "M1_ROTATE",
+      "seed_offset": 930000
+    },
+    {
+      "scene": "L2",
+      "index": 94,
+      "method": "M1_ROTATE",
+      "seed_offset": 940000
+    },
+    {
+      "scene": "L2",
+      "index": 94,
+      "method": "M3_DETOUR",
+      "seed_offset": 940000
+    }
+  ],
+  "shuffle_seed": 20261104,
+  "navigation_count": 12,
+  "offline": {
+    "source": "research/results/phase20d/runs.json",
+    "scope": "All actual L2 M3 NO_PROGRESS triggers; use exactly saved job snapshot and B/u_ref; unchanged subsequent motion; descriptive only, never gates pilot",
+    "source_triggers": 23,
+    "reexecute_solvers": false
+  },
+  "online": {
+    "R2": "unchanged four-process R2,1s deadline",
+    "R3": "unchanged7 initializations/constraints/objective; start-relative u_ref; recent-field cache",
+    "one_outstanding": true,
+    "NO_PROGRESS": "same3s projected progress<.2, not aligning/recovering/waiting;3s cooldown after detour attempt or action ends",
+    "wait_limit_s": 1.0,
+    "detour_limit_s": 6.0,
+    "replacement": "defer NoMaD FRESH while R3 waits/executes; inference continues; independent detour action, not a late normal switch",
+    "recheck": "current map and current free-age at each9Hz tick, including every new depth publication; stop if remaining fixed detour fails; first.3m exception anchored to original detour arclength"
+  },
+  "decision": {
+    "order": [
+      "DETOUR_HELPS",
+      "DETOUR_PASSES_FASTER",
+      "DETOUR_WORSE",
+      "DETOUR_MIXED"
+    ],
+    "helps": "M3 goal successes>=M1+2",
+    "passes_faster": "M3 goal successes>=M1 AND M3 box passages>=M1 AND strictly more than half of nonempty jointly-passed seed pairs have M3 passage_time<M1",
+    "worse": "M3 goal successes<=M1-2",
+    "otherwise": "DETOUR_MIXED",
+    "technical_handling": "Keep all12 attempts; technical failures count as no observed goal/passage success, timings missing; show valid N and failure list, do not invent an extra label or impute time"
+  },
+  "smoke": {
+    "scene": "L2",
+    "method": "M3_DETOUR",
+    "index": 901,
+    "delay": 0.75,
+    "timeout": 60,
+    "count": 1,
+    "excluded": true
+  },
+  "protected_sha256": {
+    "research/nomad_phase20b/config.py": "ca3238ac3e3423e10616147171c739a11d039a2e702b424092e9d68af00290ca",
+    "research/nomad_phase20b/runtime.py": "9f914f993b905456235b92f5c91ed6f5fb7267c956c2f3f54cc6c371b3298268",
+    "research/nomad_phase20/runtime.py": "7dde2daadf04fcc92c5b8b1c65913a3f1352ace5b892b03fd80cd5c84e931246",
+    "research/nomad_phase20/execution.py": "89956a9310336dbb575d2651af9576732845262e5c531a83e45d3c203cab22e6",
+    "research/nomad_phase20/repair.py": "65a70b2f4fc597dfd6a47af38df8f4f7b4e6d6d1ae3aa9655025e3f8d8c6b70c",
+    "research/nomad_phase20c/detour.py": "0fbf4404017e6cba858a825c850f12b26b3cb66b32096daf9999d3c9968ab0f5",
+    "research/nomad_phase20c/detour_known.py": "8db6b56af8372d913e05f69ee4eb8cf54e9caea1e54691881e0580d639310704",
+    "research/nomad_phase20c/shadow.py": "ca52019f91b6702d8351c536cb889b5eb998eafca45895576be501b2c44c23f8",
+    "research/nomad_phase20c/shadow_rays.c": "131c579655540add9dffcd9da19749777758af7ea563d76bfd6c1becf6dba0a0",
+    "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58",
+    "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c",
+    "research/nomad_phase20d/__init__.py": "64a553f8722d40d97c44371a664926dfc83c59a9c90e90665ea29ea0c3529e22",
+    "research/nomad_phase20d/campaign.py": "3fe545c3cb82a389f66c0cd359ad5da11f02fae072dba0fa3e618d62d0f89b1d",
+    "research/nomad_phase20d/config.py": "f4b03cae310741349eaee55e63d33a353eb0e638d965c407e0248cd80e9d2e01",
+    "research/nomad_phase20d/depth.py": "3f1eba31aa5fbe2f2558b3cc354702f2047a94c562217c80c24a8d22b4ba881f",
+    "research/nomad_phase20d/diagnose.py": "3a08ca47c990a63df27f0fcb85b3423a6c2d1bee454976231cdf74acb5a08532",
+    "research/nomad_phase20d/launch.py": "032b0e8811f09ec3f680c934be89ae99f71d3b9aac10ae031179498a5da79ecf",
+    "research/nomad_phase20d/metrics.py": "4cb518127a07b851384071f9a4272516b854d1b475446e92c740857196f88e1b",
+    "research/nomad_phase20d/offline.py": "9e0e01e0969bbdc74458ee5488fa7b0852a735a804c16cb75561de76144df555",
+    "research/nomad_phase20d/pool.py": "6b8dac51721f90cc54acd129cf0fc427eed3c4ceb9c57279d813c0d693705b59",
+    "research/nomad_phase20d/preflight.py": "f6a03f181b090d365f63a47a768d10034a1385dc2d3b1e15c7d222268b325d24",
+    "research/nomad_phase20d/protocol.json": "79597cec578272741e1a1028cb66e814a2ddc37b1004d22defc69e842b5b48aa",
+    "research/nomad_phase20d/recent.py": "b3f0a191bad1e23899db01cb4adc6cc359bb66f8b357e196439ea0a8e4baab11",
+    "research/nomad_phase20d/report.py": "48bd70e0bc99b74072d96f3ad4a97d1099f49111808d1527f46515559592e26f",
+    "research/nomad_phase20d/runtime.py": "3edefe6acd1e9f998d92af15b2b362838a7380dc00c96cda47213cd85c3a82d8",
+    "research/nomad_phase20d/simulator.py": "9c628204f5e23b06f1cebd6fc8e5ee3859942ec3479651d9b132d3c13d81ad78",
+    "research/nomad_phase20d/test_recent.py": "63afcf10759d2781583c90788ca6a7343d7393c670867c33af7006c036b24027",
+    "research/nomad_phase20d/test_runtime.py": "7544c6facc0f196985cd55a81b0470c2467f28b10bebb8ee71cb44db75ba3765",
+    "research/nomad_phase20d/test_visualize.py": "dad3d2e1b30a99529d078acbee13cfd728b77f542d28a13d11c5ff4d26f9d6b1",
+    "research/nomad_phase20d/visualize.py": "3369725e3972952c5296d03d77a99e9d3f498742ed9cc6003921970f8b581221",
+    "research/nomad_phase20d/worker.py": "8f1524595a0ecd6f750b2070c3ebcfe53edcb7588419a3489d1ec4d9d93682cf",
+    "research/nomad_phase20c/__init__.py": "a7df27b9507159fc33c6ff9498d0d57128b1d333e53dd0a7798b4973b767c0a8",
+    "research/nomad_phase20c/map_replay.py": "eba629c1ecf4b53ccdeb6cb8265bcfc9024cade3b64410bcea9daa95501dfc63",
+    "research/nomad_phase20c/offline.py": "926a50fb5eef9559002992eab66fb166fd1fda1f986a853df4cc046a183d9e04",
+    "research/nomad_phase20c/pool.py": "51f5c0494fc0a178ccaf827fa1be6e9f949659da46d482e0dae06d8d40da8aee",
+    "research/nomad_phase20c/protocol.json": "e346313e5c9fac0374e59c754947364abf270ff1e6ef2629e9af1a93e03e4d1d",
+    "research/nomad_phase20c/recheck.py": "58fff1fde4116829baef7aee8d35d4b297cec394352a0b4597572f59dc52699b",
+    "research/nomad_phase20c/recheck_pool.py": "180303c60e49049902636056878e2506cfb62f807a98e5ecb9c64fd2d2eca63b",
+    "research/nomad_phase20c/recheck_report.py": "60d949de24d89811b9fc09b746f913396a4cb8d87b57017a5b9f97377d2d928f",
+    "research/nomad_phase20c/report.py": "d041ebf6d8485d8684ca2dbd5fcaab5b445ac3f8dd9c2a08326d5e063979e044",
+    "research/nomad_phase20c/shadow_protocol.json": "4e127a21e7da0a1f4385b0821ad454d73f80aff28ce9938adb14882058ec9926",
+    "research/nomad_phase20c/test_detour.py": "d3e425da34baa52e0dd030c41029338bb02722054fd9ef08d8e33ca7dabb8773",
+    "research/nomad_phase20c/test_shadow.py": "cc6b99c922260ed2975ed7bc2c7692f40347c93cef69a3ed40477d34e05f8d0b",
+    "research/nomad_phase20c/trigger.py": "a26d387dab70b89802e31df59d1ae51ed8c3429a29945b37940f97f1f802f090",
+    "research/nomad_phase20b/__init__.py": "9925d716da736aee3e16b81fe490fac8cd3cbee17a31d2444b2ed6adad9e45a0",
+    "research/nomad_phase20b/campaign.py": "ebc2fbb374618569401aa3adf5b92edf85f7212a16ad1de7d7b4a4b4dcd0712f",
+    "research/nomad_phase20b/launch.py": "25e351cd4065bd4eaf789e26c8f5c40677171b07415b2040ac9ddaac0c8291c7",
+    "research/nomad_phase20b/metrics.py": "83eb92d7b6a08d97853597f13a890a01b113ecc6a4a7c537b796476d1b0aefe1",
+    "research/nomad_phase20b/pool_server.py": "16f7e074dbcf7fb2fd3b0105d5031b9f6ffb77ea26084d9d7b8a82ac509c2b92",
+    "research/nomad_phase20b/protocol.json": "bd12270488dc3b602b4120d94bdbfdc3cbf2b8d02dd5d827337e99ddf5b483e6",
+    "research/nomad_phase20b/report.py": "ef9d6e7443d370fa925417122c1637e1e4fca0d5829054ed11bf0a9aa8f3be65",
+    "research/nomad_phase20b/simulator.py": "9fb46cbb757796a18f70dec02d5556eb4e1ad6553dd915a6fb03bc9267821cbf",
+    "research/nomad_phase20b/test_phase20b.py": "422a796e872d597836a552816f1ce91c815c842f09fa47eeb09308cc1af3ecd8",
+    "research/nomad_phase20b/visualize.py": "b80a07bad032a1ef88c0e052d5837bb9cf986c0ad62f00a61f8eac6e45f07be2",
+    "research/nomad_phase20b/worker.py": "6bce5cb34ae7c92779373818d0384acc3e71e7a298720f01a1d26a25728cd34c",
+    "research/nomad_phase20/__init__.py": "e8a593d853af74b2a59296d5180eff826850d77433f10779d29a2c39a3f69c98",
+    "research/nomad_phase20/campaign.py": "8b11efb45e9d5c5b5a67e328dc335906f5e07c643d644d56f1abd49191f5bf5b",
+    "research/nomad_phase20/config.py": "04fa01b46dc64fe4fba526c45043e801f71a5ac18091686e6446445d0bbc24d6",
+    "research/nomad_phase20/depth.py": "902b1c1ff43dea0bcd69906a85d2406687c8a7807d606af0ccea3d03c10a16bd",
+    "research/nomad_phase20/launch.py": "8121cd60d49c11c95b748c19d6f967f79d00f7ee8a41b6127376bfbc47157fb5",
+    "research/nomad_phase20/metrics.py": "066019d100504df30ea3d3929eaca0492ee561ab6b01e22263d60bfd11a5d927",
+    "research/nomad_phase20/preflight.py": "79c34c9c58527a516d5a2dd0673b97ff6ae449834a3dddace7ffefd90545782f",
+    "research/nomad_phase20/protocol.json": "8cac8cfee799a363872ae79805fd386309f905fadfedbf7aa4820b1573498119",
+    "research/nomad_phase20/report.py": "3baea142de426e6a49b6cb23eb33b4a71217e0c2ac8949f1c57cced23ac436a4",
+    "research/nomad_phase20/simulator.py": "6b9b0d8b889605ba5188ef9724cdd9748657b6f23d7e315ce695f98c0d8d3537",
+    "research/nomad_phase20/test_phase20.py": "267dbb2220fdddaeb81e52e74b2b735731101db579aff3a183e2447a67f4ca4a",
+    "research/nomad_phase20/worker.py": "a81f3936a9346204b524fde875ec29dad42e571ed6e3f4eb8a2bf6af8f56a18c"
+  },
+  "SO": {
+    "source_scenario": "research/nomad_phase2/scenario.json",
+    "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+    "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+    "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "nodes": 21,
+    "placement": {
+      "trigger_x": [
+        2.0,
+        2.1
+      ],
+      "distance_m": 1.2,
+      "size": [
+        0.35,
+        0.35,
+        0.8
+      ],
+      "y_offset_m": 0.15,
+      "y_clamp": [
+        -0.925,
+        0.925
+      ],
+      "s": "odd +1; even -1"
+    },
+    "oracle_publication": false,
+    "evaluation_dynamic_geometry": true,
+    "success_gate": false
+  },
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "topomaps": {
+    "L2": {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "node_count": 21
+    }
+  },
+  "reused_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20/runs.json": "221747d45202207339fddf3c625a0a1deec9a3213886446c94f2e638fc45de85",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20/summary.csv": "87e69a933121b8f5ba561658103e72549f053ed7a7b7aa4dd48c1f50fb1c7fe9",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase2/scenario.json": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20d/runs.json": "9bfe56a02cce6fb2205cf513dbfb1941a3dffc15821fb922cdc7f9d0e308ff6a"
+  },
+  "source_rule": "Phase20B level placement overrides legacy SO descriptor; new map publication shared by both methods; no oracle controller input",
+  "pilot_label": "파일럿",
+  "report_definitions": {
+    "detour_acceptance": "actual APPLIED event after current-map validation; numeric accepted results reported separately",
+    "post_detour_progress": "first nondeferred FRESH chosen sample endpoint relative to B projected on job u_ref >=0.2m; missing outcomes censored",
+    "post_detour_passage": "box not passed at detour application and first footprint passage after that application; descriptive association",
+    "collision_on_detour": "any geometric-overlap interval while detour action active (alignment included)",
+    "snapshot_age": "controller sim time minus latest published source frame sim time; unknown initial map excluded",
+    "passage_stage": "Before/after first footprint passage; if never passed all events are before, before spawn reported separately",
+    "paired_goal": "Only both-goal-success pairs, difference=M3-M1; missing times not imputed",
+    "paired_passage": "Only jointly-passed pairs, passage time measured from spawn",
+    "no_obstacle": "eligible9Hz NO_PROGRESS checks rejected by occupancy rectangle predicate"
+  }
+}
