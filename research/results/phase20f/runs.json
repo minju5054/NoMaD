@@ -1,0 +1,2207 @@
+[
+  {
+    "scene": "L2",
+    "index": 95,
+    "method": "M1_ROTATE",
+    "seed_offset": 950000,
+    "key": "L2_095_D750_M1_ROTATE",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_095_D750_M1_ROTATE",
+    "delay": 0.75,
+    "run_id": "L2_95",
+    "socket_path": "/tmp/nomad-cdb3f1cdd93e.sock",
+    "socket_bytes": 28,
+    "classification": "SUCCESS",
+    "technical_validation": "PASS",
+    "success": true,
+    "collision": false,
+    "corridor": false,
+    "stuck": false,
+    "safety_failure": false,
+    "termination_reason": "goal_entry",
+    "duration_s": 83.95833333333333,
+    "goal_time_s": 83.95833333333333,
+    "minimum_clearance_m": 0.09262929782987862,
+    "minimum_wall_clearance_m": 0.5318598491382384,
+    "minimum_monitor_wall_bound_m": 0.5318597624917317,
+    "distance_m": 8.480548269054593,
+    "stopped_fraction": 0.047642679900744306,
+    "actual_zero_speed_fraction": 0.3798180314309347,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.666666666666656,
+      "NORMAL": 39.06944444444362,
+      "ALIGN_BRAKE": 16.555555555555898,
+      "ALIGN_ROTATE": 20.666666666667126,
+      "STOP_WAIT": 1.999999999999995,
+      "RECOVER_ROTATE": 1.7777777777777735,
+      "WAIT_FRESH": 0.2222222222222223
+    },
+    "alignment_count": 38,
+    "alignment_braking_s": 16.555555555555898,
+    "alignment_rotation_s": 20.666666666667126,
+    "all_unsafe": 3,
+    "recovery_count": 1,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": 0.0,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 16.23611111111111,
+    "first_visible_s": 16.23611111111111,
+    "first_depth_observed_s": 16.23611111111111,
+    "first_depth_map_observed_s": 16.73611111111111,
+    "box_passage_time_s": 26.527777777777775,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 83,
+    "switches": 82,
+    "inference_ms": {
+      "n": 83,
+      "median": 37.556222,
+      "p95": 55.861493099999976
+    },
+    "delivery_s": {
+      "n": 83,
+      "median": 0.750074238,
+      "p95": 0.7501031992
+    },
+    "detour_triggers": {},
+    "detour_attempts": 0,
+    "detour_submitted": 0,
+    "detour_applied": 0,
+    "detour_dispositions": {},
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.0,
+    "detour_execution_s": 0,
+    "detour_moving_s": 0.0,
+    "detour_collision_count": 0,
+    "detour_intervals": [],
+    "detour_then_box_pass_count": 0,
+    "detour_before_box_pass_count": 0,
+    "post_detour_outcomes": [],
+    "post_detour_progress_recovered": 0,
+    "post_detour_outcome_count": 0,
+    "seven_solve_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "detour_job_timings": [],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 754,
+      "median": 0.23611111111111427,
+      "p95": 0.3472222222222232
+    },
+    "snapshot_max_age_s": 1.4027777777777777,
+    "publication_gaps": [
+      {
+        "start_s": 0.35319469119573477,
+        "end_s": 1.5888427167778048,
+        "wall_start_s": 0.353398328,
+        "wall_end_s": 1.589041614,
+        "length_s": 1.235643286
+      }
+    ],
+    "max_publication_gap_s": 1.235643286,
+    "depth_updates": 332,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 332,
+      "median": 65.8457295212429,
+      "p95": 79.34994241804813
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 0,
+    "new_obstacle_checks": 0,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {},
+    "detour_durations_s": [],
+    "detour_end_vs_passage": [],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": 0.2881911170335648,
+    "passage_absolute_s": 42.763888888888886,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 95,
+    "method": "M3_DETOUR",
+    "seed_offset": 950000,
+    "key": "L2_095_D750_M3_DETOUR",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_095_D750_M3_DETOUR",
+    "delay": 0.75,
+    "run_id": "L2_95",
+    "socket_path": "/tmp/nomad-cd27c70bf73c.sock",
+    "socket_bytes": 28,
+    "classification": "SUCCESS",
+    "technical_validation": "PASS",
+    "success": true,
+    "collision": false,
+    "corridor": false,
+    "stuck": false,
+    "safety_failure": false,
+    "termination_reason": "goal_entry",
+    "duration_s": 73.97222222222223,
+    "goal_time_s": 73.97222222222223,
+    "minimum_clearance_m": 0.13340246118450338,
+    "minimum_wall_clearance_m": 0.47637715600984687,
+    "minimum_monitor_wall_bound_m": 0.4763771030281439,
+    "distance_m": 8.684752403933535,
+    "stopped_fraction": 0.006008261359369133,
+    "actual_zero_speed_fraction": 0.31693578670672173,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.1111111111111023,
+      "NORMAL": 34.86111111111124,
+      "ALIGN_BRAKE": 16.444444444444784,
+      "ALIGN_ROTATE": 16.666666666667012,
+      "DETOUR_WAIT": 0.3333333333333334,
+      "DETOUR": 2.444444444444438,
+      "STOP_WAIT": 0.11111111111111113
+    },
+    "alignment_count": 33,
+    "alignment_braking_s": 16.444444444444784,
+    "alignment_rotation_s": 16.666666666667012,
+    "all_unsafe": 0,
+    "recovery_count": 0,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": null,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 16.0,
+    "first_visible_s": 16.23611111111111,
+    "first_depth_observed_s": 16.23611111111111,
+    "first_depth_map_observed_s": 16.73611111111111,
+    "box_passage_time_s": 16.861111111111114,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 73,
+    "switches": 72,
+    "inference_ms": {
+      "n": 73,
+      "median": 38.686102,
+      "p95": 56.98390939999996
+    },
+    "delivery_s": {
+      "n": 73,
+      "median": 0.750076948,
+      "p95": 0.7502556568000001
+    },
+    "detour_triggers": {
+      "B": 1
+    },
+    "detour_attempts": 1,
+    "detour_submitted": 1,
+    "detour_applied": 1,
+    "detour_dispositions": {
+      "ACCEPTED": 1
+    },
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.3333333333333334,
+    "detour_execution_s": 3.7777777777777786,
+    "detour_moving_s": 2.444444444444438,
+    "detour_collision_count": 0,
+    "detour_intervals": [
+      {
+        "job_id": 0,
+        "start_s": 23.0,
+        "end_s": 26.77777777777778,
+        "collision": false
+      }
+    ],
+    "detour_then_box_pass_count": 1,
+    "detour_before_box_pass_count": 1,
+    "post_detour_outcomes": [
+      {
+        "job_id": 0,
+        "fresh_id": 24,
+        "forward_endpoint_m": 0.15387827601492063,
+        "progress_recovered": false,
+        "safe_samples": 3
+      }
+    ],
+    "post_detour_progress_recovered": 0,
+    "post_detour_outcome_count": 1,
+    "seven_solve_s": {
+      "n": 1,
+      "median": 0.279605581,
+      "p95": 0.279605581
+    },
+    "detour_job_timings": [
+      {
+        "job_id": 0,
+        "sample_solve_s": [
+          0.015311003022361547,
+          0.07913870405172929,
+          0.11536467896075919,
+          0.08085692097665742,
+          0.05066515499493107,
+          0.052304791985079646,
+          0.08035685698268935
+        ],
+        "pool_wall_s": 0.279605581,
+        "dispatch_to_complete_s": 0.294807085,
+        "cache": {
+          "edt_computations": 1,
+          "build_s": 0.05269549699733034,
+          "blocked_cells": 1542976,
+          "evaluation_tick": 1632
+        }
+      }
+    ],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 664,
+      "median": 0.23611111111111427,
+      "p95": 0.375
+    },
+    "snapshot_max_age_s": 1.4027777777777777,
+    "publication_gaps": [
+      {
+        "start_s": 0.44412760543887725,
+        "end_s": 1.586084058190302,
+        "wall_start_s": 0.444261007,
+        "wall_end_s": 1.586265605,
+        "length_s": 1.142004598
+      }
+    ],
+    "max_publication_gap_s": 1.142004598,
+    "depth_updates": 292,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 292,
+      "median": 68.09890898875892,
+      "p95": 94.66160628944634
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 1,
+    "no_new_obstacle_ahead_count": 54,
+    "new_obstacle_checks": 55,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 1,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 1,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {
+      "NO_NEW_OBSTACLE_AHEAD": 1
+    },
+    "detour_durations_s": [
+      3.7777777777777786
+    ],
+    "detour_end_vs_passage": [
+      {
+        "job_id": 0,
+        "end_s": 26.77777777777778,
+        "end_pose": [
+          2.9348384967865955,
+          0.7716677621319828,
+          0.9857621747902137
+        ],
+        "passage_s": 32.861111111111114,
+        "after_physical_passage": false,
+        "reason": "NO_NEW_OBSTACLE_AHEAD"
+      }
+    ],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": 0.26309583346034104,
+    "passage_absolute_s": 32.861111111111114,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 96,
+    "method": "M1_ROTATE",
+    "seed_offset": 960000,
+    "key": "L2_096_D750_M1_ROTATE",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_096_D750_M1_ROTATE",
+    "delay": 0.75,
+    "run_id": "L2_96",
+    "socket_path": "/tmp/nomad-7ab792dbe636.sock",
+    "socket_bytes": 28,
+    "classification": "STUCK",
+    "technical_validation": "PASS",
+    "success": false,
+    "collision": false,
+    "corridor": false,
+    "stuck": true,
+    "safety_failure": false,
+    "termination_reason": "simulation_timeout",
+    "duration_s": 90.0,
+    "goal_time_s": null,
+    "minimum_clearance_m": 0.03166870978150685,
+    "minimum_wall_clearance_m": 0.4863388465384437,
+    "minimum_monitor_wall_bound_m": 0.4863375748087324,
+    "distance_m": 8.359681541063148,
+    "stopped_fraction": 0.04444444444444434,
+    "actual_zero_speed_fraction": 0.41728395061728396,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.1111111111111023,
+      "NORMAL": 39.111111111110276,
+      "ALIGN_BRAKE": 17.333333333333698,
+      "ALIGN_ROTATE": 26.111111111111725,
+      "ENDPOINT": 0.3333333333333334,
+      "STOP_WAIT": 1.999999999999995,
+      "RECOVER_ROTATE": 1.7777777777777735,
+      "WAIT_FRESH": 0.2222222222222223
+    },
+    "alignment_count": 44,
+    "alignment_braking_s": 17.333333333333698,
+    "alignment_rotation_s": 26.111111111111725,
+    "all_unsafe": 3,
+    "recovery_count": 1,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": 0.0,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 17.02777777777778,
+    "first_visible_s": 17.23611111111111,
+    "first_depth_observed_s": 17.23611111111111,
+    "first_depth_map_observed_s": 17.73611111111111,
+    "box_passage_time_s": 29.77777777777778,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 89,
+    "switches": 88,
+    "inference_ms": {
+      "n": 89,
+      "median": 38.592999,
+      "p95": 56.5659084
+    },
+    "delivery_s": {
+      "n": 89,
+      "median": 0.750078298,
+      "p95": 0.7501581794
+    },
+    "detour_triggers": {},
+    "detour_attempts": 0,
+    "detour_submitted": 0,
+    "detour_applied": 0,
+    "detour_dispositions": {},
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.0,
+    "detour_execution_s": 0,
+    "detour_moving_s": 0.0,
+    "detour_collision_count": 0,
+    "detour_intervals": [],
+    "detour_then_box_pass_count": 0,
+    "detour_before_box_pass_count": 0,
+    "post_detour_outcomes": [],
+    "post_detour_progress_recovered": 0,
+    "post_detour_outcome_count": 0,
+    "seven_solve_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "detour_job_timings": [],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 808,
+      "median": 0.26388888888888573,
+      "p95": 0.375
+    },
+    "snapshot_max_age_s": 1.4166666666666667,
+    "publication_gaps": [
+      {
+        "start_s": 0.3491493567258265,
+        "end_s": 1.6901355879303603,
+        "wall_start_s": 0.349431338,
+        "wall_end_s": 1.690285733,
+        "length_s": 1.340854395
+      }
+    ],
+    "max_publication_gap_s": 1.340854395,
+    "depth_updates": 357,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 357,
+      "median": 66.19273900287226,
+      "p95": 84.26369781373069
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 0,
+    "new_obstacle_checks": 0,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {},
+    "detour_durations_s": [],
+    "detour_end_vs_passage": [],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": null,
+    "passage_absolute_s": 46.80555555555556,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 96,
+    "method": "M3_DETOUR",
+    "seed_offset": 960000,
+    "key": "L2_096_D750_M3_DETOUR",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_096_D750_M3_DETOUR",
+    "delay": 0.75,
+    "run_id": "L2_96",
+    "socket_path": "/tmp/nomad-44011bfaabdd.sock",
+    "socket_bytes": 28,
+    "classification": "SUCCESS",
+    "technical_validation": "PASS",
+    "success": true,
+    "collision": false,
+    "corridor": false,
+    "stuck": false,
+    "safety_failure": false,
+    "termination_reason": "goal_entry",
+    "duration_s": 85.125,
+    "goal_time_s": 85.125,
+    "minimum_clearance_m": 0.04192035435444757,
+    "minimum_wall_clearance_m": 0.6024666252604821,
+    "minimum_monitor_wall_bound_m": 0.6024665798392582,
+    "distance_m": 8.494912042159813,
+    "stopped_fraction": 0.02610540055473972,
+    "actual_zero_speed_fraction": 0.37069668787730464,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.999999999999988,
+      "NORMAL": 39.12499999999916,
+      "ALIGN_BRAKE": 16.666666666667012,
+      "ALIGN_ROTATE": 22.000000000000497,
+      "DETOUR_WAIT": 0.7777777777777769,
+      "DETOUR": 0.2222222222222223,
+      "STOP_WAIT": 1.3333333333333306,
+      "REPAIR_WAIT": 0.11111111111111113,
+      "REPAIR": 0.8888888888888876
+    },
+    "alignment_count": 40,
+    "alignment_braking_s": 16.666666666667012,
+    "alignment_rotation_s": 22.000000000000497,
+    "all_unsafe": 1,
+    "recovery_count": 0,
+    "repair_attempts": 1,
+    "repair_accepted": 1,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {
+      "ACCEPTED": 1
+    },
+    "repair_acceptance": 1.0,
+    "repair_execution_s": 0.8888888888888876,
+    "repair_resolved_all_unsafe_fraction": 1.0,
+    "post_repair_safe_count": 1,
+    "post_repair_fresh_count": 1,
+    "repair_wall_s": {
+      "n": 1,
+      "median": 0.109630678,
+      "p95": 0.109630678
+    },
+    "spawn_s": 16.930555555555557,
+    "first_visible_s": 16.98611111111111,
+    "first_depth_observed_s": 16.98611111111111,
+    "first_depth_map_observed_s": 17.48611111111111,
+    "box_passage_time_s": 31.15277777777778,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 84,
+    "switches": 83,
+    "inference_ms": {
+      "n": 84,
+      "median": 38.5627255,
+      "p95": 56.60677759999999
+    },
+    "delivery_s": {
+      "n": 84,
+      "median": 0.7500840875,
+      "p95": 0.7508910226000001
+    },
+    "detour_triggers": {
+      "B": 2
+    },
+    "detour_attempts": 2,
+    "detour_submitted": 2,
+    "detour_applied": 2,
+    "detour_dispositions": {
+      "ACCEPTED": 2
+    },
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.7777777777777769,
+    "detour_execution_s": 2.0,
+    "detour_moving_s": 0.2222222222222223,
+    "detour_collision_count": 0,
+    "detour_intervals": [
+      {
+        "job_id": 0,
+        "start_s": 20.88888888888889,
+        "end_s": 22.666666666666668,
+        "collision": false
+      },
+      {
+        "job_id": 1,
+        "start_s": 26.11111111111111,
+        "end_s": 26.333333333333332,
+        "collision": false
+      }
+    ],
+    "detour_then_box_pass_count": 2,
+    "detour_before_box_pass_count": 2,
+    "post_detour_outcomes": [
+      {
+        "job_id": 0,
+        "fresh_id": 21,
+        "forward_endpoint_m": 0.22078531149806882,
+        "progress_recovered": true,
+        "safe_samples": 8
+      },
+      {
+        "job_id": 1,
+        "fresh_id": 24,
+        "forward_endpoint_m": -0.14516630767285413,
+        "progress_recovered": false,
+        "safe_samples": 8
+      }
+    ],
+    "post_detour_progress_recovered": 1,
+    "post_detour_outcome_count": 2,
+    "seven_solve_s": {
+      "n": 2,
+      "median": 0.338152401,
+      "p95": 0.3838828266
+    },
+    "detour_job_timings": [
+      {
+        "job_id": 0,
+        "sample_solve_s": [
+          0.059182074037380517,
+          0.06540038896491751,
+          0.0271021340158768,
+          0.07096281100530177,
+          0.11929014703491703,
+          0.10095432202797383,
+          0.03160217800177634
+        ],
+        "pool_wall_s": 0.287340817,
+        "dispatch_to_complete_s": 0.304945575,
+        "cache": {
+          "edt_computations": 1,
+          "build_s": 0.0616588739794679,
+          "blocked_cells": 1535682,
+          "evaluation_tick": 1480
+        }
+      },
+      {
+        "job_id": 1,
+        "sample_solve_s": [
+          0.043800772982649505,
+          0.03605013299966231,
+          0.0786288509843871,
+          0.043782107008155435,
+          0.030975129979196936,
+          0.1418246109969914,
+          0.04291162500157952
+        ],
+        "pool_wall_s": 0.388963985,
+        "dispatch_to_complete_s": 0.404162439,
+        "cache": {
+          "edt_computations": 1,
+          "build_s": 0.09935375896748155,
+          "blocked_cells": 1539874,
+          "evaluation_tick": 1848
+        }
+      }
+    ],
+    "repair_job_timings": [
+      {
+        "job_id": 2,
+        "sample_solve_s": [
+          0.0199753160122782,
+          0.01752868399489671,
+          0.018851740984246135,
+          0.01795436698012054,
+          0.018441677966620773,
+          0.027024467999581248,
+          0.01734308898448944,
+          0.020429112948477268
+        ],
+        "pool_wall_s": 0.060585327,
+        "dispatch_to_complete_s": 0.07721787
+      }
+    ],
+    "snapshot_age_s": {
+      "n": 765,
+      "median": 0.23611111111111427,
+      "p95": 0.375
+    },
+    "snapshot_max_age_s": 1.4027777777777777,
+    "publication_gaps": [
+      {
+        "start_s": 0.3610574062120885,
+        "end_s": 1.6093995031824075,
+        "wall_start_s": 0.361361838,
+        "wall_end_s": 1.61035495,
+        "length_s": 1.248993112
+      }
+    ],
+    "max_publication_gap_s": 1.248993112,
+    "depth_updates": 337,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 337,
+      "median": 66.09717395622283,
+      "p95": 82.18814497813581
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 87,
+    "new_obstacle_checks": 89,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 2,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 2,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {
+      "PATH_BECAME_UNSAFE": 2
+    },
+    "detour_durations_s": [
+      1.7777777777777786,
+      0.22222222222222143
+    ],
+    "detour_end_vs_passage": [
+      {
+        "job_id": 0,
+        "end_s": 22.666666666666668,
+        "end_pose": [
+          2.369028490282656,
+          0.1690407842156457,
+          0.5407081415837496
+        ],
+        "passage_s": 48.083333333333336,
+        "after_physical_passage": false,
+        "reason": "PATH_BECAME_UNSAFE"
+      },
+      {
+        "job_id": 1,
+        "end_s": 26.333333333333332,
+        "end_pose": [
+          2.4993746349871646,
+          0.221310583506374,
+          -0.0780301873906808
+        ],
+        "passage_s": 48.083333333333336,
+        "after_physical_passage": false,
+        "reason": "PATH_BECAME_UNSAFE"
+      }
+    ],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": 0.28364364135720854,
+    "passage_absolute_s": 48.083333333333336,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 97,
+    "method": "M3_DETOUR",
+    "seed_offset": 970000,
+    "key": "L2_097_D750_M3_DETOUR",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_097_D750_M3_DETOUR",
+    "delay": 0.75,
+    "run_id": "L2_97",
+    "socket_path": "/tmp/nomad-0cc6b872c508.sock",
+    "socket_bytes": 28,
+    "classification": "SUCCESS",
+    "technical_validation": "PASS",
+    "success": true,
+    "collision": false,
+    "corridor": false,
+    "stuck": false,
+    "safety_failure": false,
+    "termination_reason": "goal_entry",
+    "duration_s": 75.45833333333333,
+    "goal_time_s": 75.45833333333333,
+    "minimum_clearance_m": 0.13606577444583595,
+    "minimum_wall_clearance_m": 0.38380888244815414,
+    "minimum_monitor_wall_bound_m": 0.38380885861700065,
+    "distance_m": 8.570235673930355,
+    "stopped_fraction": 0.01766979569298728,
+    "actual_zero_speed_fraction": 0.3357261181667587,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.1111111111111023,
+      "NORMAL": 33.90277777777813,
+      "ALIGN_BRAKE": 17.11111111111147,
+      "ALIGN_ROTATE": 17.555555555555927,
+      "DETOUR_WAIT": 0.9999999999999983,
+      "STOP_WAIT": 0.3333333333333334,
+      "DETOUR": 2.444444444444438
+    },
+    "alignment_count": 35,
+    "alignment_braking_s": 17.11111111111147,
+    "alignment_rotation_s": 17.555555555555927,
+    "all_unsafe": 0,
+    "recovery_count": 0,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": null,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 17.23611111111111,
+    "first_visible_s": 17.23611111111111,
+    "first_depth_observed_s": 17.23611111111111,
+    "first_depth_map_observed_s": 17.73611111111111,
+    "box_passage_time_s": 18.819444444444446,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 2.220446049250313e-16,
+    "oracle_publications": 0,
+    "requests": 74,
+    "switches": 74,
+    "inference_ms": {
+      "n": 74,
+      "median": 38.218337,
+      "p95": 55.91275009999999
+    },
+    "delivery_s": {
+      "n": 74,
+      "median": 0.750075399,
+      "p95": 0.75011317755
+    },
+    "detour_triggers": {
+      "B": 2
+    },
+    "detour_attempts": 2,
+    "detour_submitted": 2,
+    "detour_applied": 1,
+    "detour_dispositions": {
+      "APPLICATION_UNSAFE": 1,
+      "ACCEPTED": 1
+    },
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.9999999999999983,
+    "detour_execution_s": 2.4444444444444464,
+    "detour_moving_s": 2.444444444444438,
+    "detour_collision_count": 0,
+    "detour_intervals": [
+      {
+        "job_id": 1,
+        "start_s": 25.333333333333332,
+        "end_s": 27.77777777777778,
+        "collision": false
+      }
+    ],
+    "detour_then_box_pass_count": 1,
+    "detour_before_box_pass_count": 1,
+    "post_detour_outcomes": [
+      {
+        "job_id": 1,
+        "fresh_id": 25,
+        "forward_endpoint_m": 0.287547203466021,
+        "progress_recovered": true,
+        "safe_samples": 6
+      }
+    ],
+    "post_detour_progress_recovered": 1,
+    "post_detour_outcome_count": 1,
+    "seven_solve_s": {
+      "n": 2,
+      "median": 0.41191226599999997,
+      "p95": 0.4785266957
+    },
+    "detour_job_timings": [
+      {
+        "job_id": 0,
+        "sample_solve_s": [
+          0.03261564497370273,
+          0.08730478503275663,
+          0.09558745700633153,
+          0.08480143296765164,
+          0.07838192000053823,
+          0.06774491001851857,
+          0.05337182403309271
+        ],
+        "pool_wall_s": 0.485928299,
+        "dispatch_to_complete_s": 0.504636707,
+        "cache": {
+          "edt_computations": 1,
+          "build_s": 0.09802069398574531,
+          "blocked_cells": 1541015,
+          "evaluation_tick": 1520
+        }
+      },
+      {
+        "job_id": 1,
+        "sample_solve_s": [
+          0.11403413600055501,
+          0.0720551639678888,
+          0.09015865699620917,
+          0.07747726299567148,
+          0.11052823899080977,
+          0.04733253800077364,
+          0.06299689103616402
+        ],
+        "pool_wall_s": 0.337896233,
+        "dispatch_to_complete_s": 0.352894634,
+        "cache": {
+          "edt_computations": 1,
+          "build_s": 0.10025102598592639,
+          "blocked_cells": 1543050,
+          "evaluation_tick": 1792
+        }
+      }
+    ],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 678,
+      "median": 0.23611111111111427,
+      "p95": 0.375
+    },
+    "snapshot_max_age_s": 1.3888888888888888,
+    "publication_gaps": [
+      {
+        "start_s": 0.37375837662999956,
+        "end_s": 1.5806186976199361,
+        "wall_start_s": 0.374501152,
+        "wall_end_s": 1.580891163,
+        "length_s": 1.206390011
+      }
+    ],
+    "max_publication_gap_s": 1.206390011,
+    "depth_updates": 298,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 298,
+      "median": 65.9796895342879,
+      "p95": 84.60046894615516
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 51,
+    "new_obstacle_checks": 53,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 2,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 2,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {
+      "NO_NEW_OBSTACLE_AHEAD": 1
+    },
+    "detour_durations_s": [
+      2.4444444444444464
+    ],
+    "detour_end_vs_passage": [
+      {
+        "job_id": 1,
+        "end_s": 27.77777777777778,
+        "end_pose": [
+          2.908441778492165,
+          0.745245893718792,
+          1.1239679254840045
+        ],
+        "passage_s": 36.05555555555556,
+        "after_physical_passage": false,
+        "reason": "NO_NEW_OBSTACLE_AHEAD"
+      }
+    ],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": 0.28159183740868593,
+    "passage_absolute_s": 36.05555555555556,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 97,
+    "method": "M1_ROTATE",
+    "seed_offset": 970000,
+    "key": "L2_097_D750_M1_ROTATE",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_097_D750_M1_ROTATE",
+    "delay": 0.75,
+    "run_id": "L2_97",
+    "socket_path": "/tmp/nomad-79a2ec82db56.sock",
+    "socket_bytes": 28,
+    "classification": "STUCK",
+    "technical_validation": "PASS",
+    "success": false,
+    "collision": false,
+    "corridor": false,
+    "stuck": true,
+    "safety_failure": false,
+    "termination_reason": "simulation_timeout",
+    "duration_s": 90.0,
+    "goal_time_s": null,
+    "minimum_clearance_m": 0.29681973637467385,
+    "minimum_wall_clearance_m": 0.37466394340448794,
+    "minimum_monitor_wall_bound_m": 0.37466346115071164,
+    "distance_m": 6.456669939029802,
+    "stopped_fraction": 0.0,
+    "actual_zero_speed_fraction": 0.4345679012345679,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.666666666666656,
+      "NORMAL": 42.333333333331765,
+      "ALIGN_BRAKE": 12.444444444444672,
+      "ALIGN_ROTATE": 31.555555555556325
+    },
+    "alignment_count": 46,
+    "alignment_braking_s": 12.444444444444672,
+    "alignment_rotation_s": 31.555555555556325,
+    "all_unsafe": 0,
+    "recovery_count": 0,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": null,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 19.041666666666668,
+    "first_visible_s": 19.23611111111111,
+    "first_depth_observed_s": 19.23611111111111,
+    "first_depth_map_observed_s": 19.75,
+    "box_passage_time_s": null,
+    "passed_box": false,
+    "pass_side": null,
+    "command_replay_error": 3.9968028886505635e-15,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 4.440892098500626e-16,
+    "oracle_publications": 0,
+    "requests": 89,
+    "switches": 89,
+    "inference_ms": {
+      "n": 89,
+      "median": 37.41438,
+      "p95": 53.84745199999998
+    },
+    "delivery_s": {
+      "n": 89,
+      "median": 0.750077893,
+      "p95": 0.7501398384
+    },
+    "detour_triggers": {},
+    "detour_attempts": 0,
+    "detour_submitted": 0,
+    "detour_applied": 0,
+    "detour_dispositions": {},
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.0,
+    "detour_execution_s": 0,
+    "detour_moving_s": 0.0,
+    "detour_collision_count": 0,
+    "detour_intervals": [],
+    "detour_then_box_pass_count": 0,
+    "detour_before_box_pass_count": 0,
+    "post_detour_outcomes": [],
+    "post_detour_progress_recovered": 0,
+    "post_detour_outcome_count": 0,
+    "seven_solve_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "detour_job_timings": [],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 808,
+      "median": 0.23611111111111427,
+      "p95": 0.3472222222222223
+    },
+    "snapshot_max_age_s": 1.4027777777777777,
+    "publication_gaps": [
+      {
+        "start_s": 0.37366946906460724,
+        "end_s": 1.5764279554053742,
+        "wall_start_s": 0.37493805,
+        "wall_end_s": 1.576611502,
+        "length_s": 1.201673452
+      }
+    ],
+    "max_publication_gap_s": 1.201673452,
+    "depth_updates": 357,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 357,
+      "median": 60.2688790531829,
+      "p95": 76.28235678421333
+    },
+    "depth_queue_max": 1,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 0,
+    "new_obstacle_checks": 0,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {},
+    "detour_durations_s": [],
+    "detour_end_vs_passage": [],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": null,
+    "passage_absolute_s": null,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 98,
+    "method": "M1_ROTATE",
+    "seed_offset": 980000,
+    "key": "L2_098_D750_M1_ROTATE",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_098_D750_M1_ROTATE",
+    "delay": 0.75,
+    "run_id": "L2_98",
+    "socket_path": "/tmp/nomad-8db130235163.sock",
+    "socket_bytes": 28,
+    "classification": "SUCCESS",
+    "technical_validation": "PASS",
+    "success": true,
+    "collision": false,
+    "corridor": false,
+    "stuck": false,
+    "safety_failure": false,
+    "termination_reason": "goal_entry",
+    "duration_s": 78.72222222222223,
+    "goal_time_s": 78.72222222222223,
+    "minimum_clearance_m": 0.0929371363969755,
+    "minimum_wall_clearance_m": 0.6052064429913768,
+    "minimum_monitor_wall_bound_m": 0.6052056097544758,
+    "distance_m": 8.368401325269586,
+    "stopped_fraction": 0.0381086803105151,
+    "actual_zero_speed_fraction": 0.3697953422724065,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.222222222222213,
+      "NORMAL": 35.94444444444433,
+      "ALIGN_BRAKE": 16.88888888888924,
+      "ALIGN_ROTATE": 19.666666666667098,
+      "STOP_WAIT": 0.9999999999999983,
+      "RECOVER_ROTATE": 1.7777777777777735,
+      "WAIT_FRESH": 0.2222222222222223
+    },
+    "alignment_count": 37,
+    "alignment_braking_s": 16.88888888888924,
+    "alignment_rotation_s": 19.666666666667098,
+    "all_unsafe": 2,
+    "recovery_count": 1,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": 0.0,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 15.958333333333334,
+    "first_visible_s": 15.98611111111111,
+    "first_depth_observed_s": 15.98611111111111,
+    "first_depth_map_observed_s": 16.5,
+    "box_passage_time_s": 22.375,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 78,
+    "switches": 77,
+    "inference_ms": {
+      "n": 78,
+      "median": 38.126670000000004,
+      "p95": 56.2523804
+    },
+    "delivery_s": {
+      "n": 78,
+      "median": 0.7500775725,
+      "p95": 0.7501536722000001
+    },
+    "detour_triggers": {},
+    "detour_attempts": 0,
+    "detour_submitted": 0,
+    "detour_applied": 0,
+    "detour_dispositions": {},
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.0,
+    "detour_execution_s": 0,
+    "detour_moving_s": 0.0,
+    "detour_collision_count": 0,
+    "detour_intervals": [],
+    "detour_then_box_pass_count": 0,
+    "detour_before_box_pass_count": 0,
+    "post_detour_outcomes": [],
+    "post_detour_progress_recovered": 0,
+    "post_detour_outcome_count": 0,
+    "seven_solve_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "detour_job_timings": [],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 707,
+      "median": 0.25,
+      "p95": 0.375
+    },
+    "snapshot_max_age_s": 1.4027777777777777,
+    "publication_gaps": [
+      {
+        "start_s": 0.37296601611484703,
+        "end_s": 1.5907820088887865,
+        "wall_start_s": 0.373102801,
+        "wall_end_s": 1.590930269,
+        "length_s": 1.217827468
+      }
+    ],
+    "max_publication_gap_s": 1.217827468,
+    "depth_updates": 311,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 311,
+      "median": 66.33071100804955,
+      "p95": 80.16909699654207
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 1,
+    "no_new_obstacle_ahead_count": 0,
+    "new_obstacle_checks": 0,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {},
+    "detour_durations_s": [],
+    "detour_end_vs_passage": [],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": 0.28955655929562424,
+    "passage_absolute_s": 38.333333333333336,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 98,
+    "method": "M3_DETOUR",
+    "seed_offset": 980000,
+    "key": "L2_098_D750_M3_DETOUR",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_098_D750_M3_DETOUR",
+    "delay": 0.75,
+    "run_id": "L2_98",
+    "socket_path": "/tmp/nomad-202243ba95c2.sock",
+    "socket_bytes": 28,
+    "classification": "SUCCESS",
+    "technical_validation": "PASS",
+    "success": true,
+    "collision": false,
+    "corridor": false,
+    "stuck": false,
+    "safety_failure": false,
+    "termination_reason": "goal_entry",
+    "duration_s": 88.80555555555556,
+    "goal_time_s": 88.80555555555556,
+    "minimum_clearance_m": 0.11004151830101108,
+    "minimum_wall_clearance_m": 0.5796168007051625,
+    "minimum_monitor_wall_bound_m": 0.5796166369268405,
+    "distance_m": 8.361053257438433,
+    "stopped_fraction": 0.017516421645292445,
+    "actual_zero_speed_fraction": 0.4178917735376916,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.1111111111111023,
+      "NORMAL": 36.66666666666639,
+      "ALIGN_BRAKE": 15.361111111111422,
+      "ALIGN_ROTATE": 29.666666666667382,
+      "DETOUR_WAIT": 0.5555555555555555,
+      "DETOUR": 1.555555555555552,
+      "STOP_WAIT": 0.8888888888888876,
+      "REPAIR_WAIT": 0.11111111111111113,
+      "REPAIR": 0.8888888888888876
+    },
+    "alignment_count": 46,
+    "alignment_braking_s": 15.361111111111422,
+    "alignment_rotation_s": 29.666666666667382,
+    "all_unsafe": 1,
+    "recovery_count": 0,
+    "repair_attempts": 1,
+    "repair_accepted": 1,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {
+      "ACCEPTED": 1
+    },
+    "repair_acceptance": 1.0,
+    "repair_execution_s": 0.8888888888888876,
+    "repair_resolved_all_unsafe_fraction": 1.0,
+    "post_repair_safe_count": 1,
+    "post_repair_fresh_count": 1,
+    "repair_wall_s": {
+      "n": 1,
+      "median": 0.11007838,
+      "p95": 0.11007838
+    },
+    "spawn_s": 15.972222222222221,
+    "first_visible_s": 15.98611111111111,
+    "first_depth_observed_s": 15.98611111111111,
+    "first_depth_map_observed_s": 16.48611111111111,
+    "box_passage_time_s": 33.375,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 88,
+    "switches": 87,
+    "inference_ms": {
+      "n": 88,
+      "median": 38.5031365,
+      "p95": 55.39116764999999
+    },
+    "delivery_s": {
+      "n": 88,
+      "median": 0.7500751139999999,
+      "p95": 0.75036012125
+    },
+    "detour_triggers": {
+      "B": 1
+    },
+    "detour_attempts": 1,
+    "detour_submitted": 1,
+    "detour_applied": 1,
+    "detour_dispositions": {
+      "ACCEPTED": 1
+    },
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.5555555555555555,
+    "detour_execution_s": 2.555555555555557,
+    "detour_moving_s": 1.555555555555552,
+    "detour_collision_count": 0,
+    "detour_intervals": [
+      {
+        "job_id": 0,
+        "start_s": 24.444444444444443,
+        "end_s": 27.0,
+        "collision": false
+      }
+    ],
+    "detour_then_box_pass_count": 1,
+    "detour_before_box_pass_count": 1,
+    "post_detour_outcomes": [
+      {
+        "job_id": 0,
+        "fresh_id": 25,
+        "forward_endpoint_m": 0.1656097094300672,
+        "progress_recovered": false,
+        "safe_samples": 8
+      }
+    ],
+    "post_detour_progress_recovered": 0,
+    "post_detour_outcome_count": 1,
+    "seven_solve_s": {
+      "n": 1,
+      "median": 0.469489185,
+      "p95": 0.469489185
+    },
+    "detour_job_timings": [
+      {
+        "job_id": 0,
+        "sample_solve_s": [
+          0.051509001990780234,
+          0.08064771100180224,
+          0.16954015096416697,
+          0.08006426598876715,
+          0.29374994698446244,
+          0.07650240900693461,
+          0.03954021801473573
+        ],
+        "pool_wall_s": 0.469489185,
+        "dispatch_to_complete_s": 0.486232384,
+        "cache": {
+          "edt_computations": 1,
+          "build_s": 0.0539630230050534,
+          "blocked_cells": 1530853,
+          "evaluation_tick": 1720
+        }
+      }
+    ],
+    "repair_job_timings": [
+      {
+        "job_id": 1,
+        "sample_solve_s": [
+          0.020757652004249394,
+          0.019087870023213327,
+          0.02158144605346024,
+          0.019658040022477508,
+          0.0180109619977884,
+          0.018050096987280995,
+          0.01860724203288555,
+          0.018012675980571657
+        ],
+        "pool_wall_s": 0.060493845,
+        "dispatch_to_complete_s": 0.079092069
+      }
+    ],
+    "snapshot_age_s": {
+      "n": 798,
+      "median": 0.23611111111111427,
+      "p95": 0.3631944444444468
+    },
+    "snapshot_max_age_s": 1.4027777777777777,
+    "publication_gaps": [
+      {
+        "start_s": 0.38330281051949744,
+        "end_s": 1.65604263926462,
+        "wall_start_s": 0.383502382,
+        "wall_end_s": 1.656211926,
+        "length_s": 1.272709544
+      }
+    ],
+    "max_publication_gap_s": 1.272709544,
+    "depth_updates": 352,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 352,
+      "median": 66.53390449355356,
+      "p95": 85.37466639536433
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 111,
+    "new_obstacle_checks": 112,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 1,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 1,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {
+      "NO_NEW_OBSTACLE_AHEAD": 1
+    },
+    "detour_durations_s": [
+      2.555555555555557
+    ],
+    "detour_end_vs_passage": [
+      {
+        "job_id": 0,
+        "end_s": 27.0,
+        "end_pose": [
+          2.48741592556928,
+          0.26363898989396173,
+          0.557435014119017
+        ],
+        "passage_s": 49.34722222222222,
+        "after_physical_passage": false,
+        "reason": "NO_NEW_OBSTACLE_AHEAD"
+      }
+    ],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": 0.22046307120446607,
+    "passage_absolute_s": 49.34722222222222,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 99,
+    "method": "M1_ROTATE",
+    "seed_offset": 990000,
+    "key": "L2_099_D750_M1_ROTATE",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_099_D750_M1_ROTATE",
+    "delay": 0.75,
+    "run_id": "L2_99",
+    "socket_path": "/tmp/nomad-6a91a06f444a.sock",
+    "socket_bytes": 28,
+    "classification": "STUCK",
+    "technical_validation": "PASS",
+    "success": false,
+    "collision": false,
+    "corridor": false,
+    "stuck": true,
+    "safety_failure": false,
+    "termination_reason": "simulation_timeout",
+    "duration_s": 90.0,
+    "goal_time_s": null,
+    "minimum_clearance_m": 0.19249467173553045,
+    "minimum_wall_clearance_m": 0.3068208486395737,
+    "minimum_monitor_wall_bound_m": 0.3068189157041622,
+    "distance_m": 9.424389543960281,
+    "stopped_fraction": 0.0,
+    "actual_zero_speed_fraction": 0.3419753086419753,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.555555555555545,
+      "NORMAL": 44.66666666666457,
+      "ALIGN_BRAKE": 18.66666666666707,
+      "ALIGN_ROTATE": 23.11111111111164
+    },
+    "alignment_count": 43,
+    "alignment_braking_s": 18.66666666666707,
+    "alignment_rotation_s": 23.11111111111164,
+    "all_unsafe": 0,
+    "recovery_count": 0,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": null,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 16.194444444444443,
+    "first_visible_s": 16.23611111111111,
+    "first_depth_observed_s": 16.23611111111111,
+    "first_depth_map_observed_s": 16.73611111111111,
+    "box_passage_time_s": 42.65277777777778,
+    "passed_box": true,
+    "pass_side": "-Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 89,
+    "switches": 88,
+    "inference_ms": {
+      "n": 89,
+      "median": 37.9369,
+      "p95": 54.24601579999998
+    },
+    "delivery_s": {
+      "n": 89,
+      "median": 0.750076208,
+      "p95": 0.7501428608
+    },
+    "detour_triggers": {},
+    "detour_attempts": 0,
+    "detour_submitted": 0,
+    "detour_applied": 0,
+    "detour_dispositions": {},
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.0,
+    "detour_execution_s": 0,
+    "detour_moving_s": 0.0,
+    "detour_collision_count": 0,
+    "detour_intervals": [],
+    "detour_then_box_pass_count": 0,
+    "detour_before_box_pass_count": 0,
+    "post_detour_outcomes": [],
+    "post_detour_progress_recovered": 0,
+    "post_detour_outcome_count": 0,
+    "seven_solve_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "detour_job_timings": [],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 808,
+      "median": 0.26388888888888573,
+      "p95": 0.375
+    },
+    "snapshot_max_age_s": 1.3888888888888888,
+    "publication_gaps": [
+      {
+        "start_s": 0.37380508168689597,
+        "end_s": 1.5829827958454412,
+        "wall_start_s": 0.37469137,
+        "wall_end_s": 1.583162377,
+        "length_s": 1.208471007
+      }
+    ],
+    "max_publication_gap_s": 1.208471007,
+    "depth_updates": 357,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 357,
+      "median": 66.51689496356994,
+      "p95": 81.59762761788441
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 0,
+    "new_obstacle_checks": 0,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {},
+    "detour_durations_s": [],
+    "detour_end_vs_passage": [],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": null,
+    "passage_absolute_s": 58.84722222222222,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 99,
+    "method": "M3_DETOUR",
+    "seed_offset": 990000,
+    "key": "L2_099_D750_M3_DETOUR",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_099_D750_M3_DETOUR",
+    "delay": 0.75,
+    "run_id": "L2_99",
+    "socket_path": "/tmp/nomad-6c38891de5e7.sock",
+    "socket_bytes": 28,
+    "classification": "SUCCESS",
+    "technical_validation": "PASS",
+    "success": true,
+    "collision": false,
+    "corridor": false,
+    "stuck": false,
+    "safety_failure": false,
+    "termination_reason": "goal_entry",
+    "duration_s": 70.44444444444444,
+    "goal_time_s": 70.44444444444444,
+    "minimum_clearance_m": 0.1403591220619208,
+    "minimum_wall_clearance_m": 0.3952484844925991,
+    "minimum_monitor_wall_bound_m": 0.3952458890146516,
+    "distance_m": 8.45331622201672,
+    "stopped_fraction": 0.014195583596214504,
+    "actual_zero_speed_fraction": 0.32334384858044163,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.1111111111111023,
+      "NORMAL": 32.33333333333404,
+      "ALIGN_BRAKE": 15.888888888889214,
+      "ALIGN_ROTATE": 16.11111111111144,
+      "DETOUR_WAIT": 0.3333333333333334,
+      "DETOUR": 1.999999999999995,
+      "STOP_WAIT": 0.6666666666666662
+    },
+    "alignment_count": 33,
+    "alignment_braking_s": 15.888888888889214,
+    "alignment_rotation_s": 16.11111111111144,
+    "all_unsafe": 0,
+    "recovery_count": 0,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": null,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 17.333333333333332,
+    "first_visible_s": 17.48611111111111,
+    "first_depth_observed_s": 17.48611111111111,
+    "first_depth_map_observed_s": 17.98611111111111,
+    "box_passage_time_s": 18.041666666666668,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 2.220446049250313e-16,
+    "oracle_publications": 0,
+    "requests": 69,
+    "switches": 69,
+    "inference_ms": {
+      "n": 69,
+      "median": 37.563079,
+      "p95": 58.2852022
+    },
+    "delivery_s": {
+      "n": 69,
+      "median": 0.750076429,
+      "p95": 0.7501701869999999
+    },
+    "detour_triggers": {
+      "B": 1
+    },
+    "detour_attempts": 1,
+    "detour_submitted": 1,
+    "detour_applied": 1,
+    "detour_dispositions": {
+      "ACCEPTED": 1
+    },
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.3333333333333334,
+    "detour_execution_s": 2.0,
+    "detour_moving_s": 1.999999999999995,
+    "detour_collision_count": 0,
+    "detour_intervals": [
+      {
+        "job_id": 0,
+        "start_s": 25.22222222222222,
+        "end_s": 27.22222222222222,
+        "collision": false
+      }
+    ],
+    "detour_then_box_pass_count": 1,
+    "detour_before_box_pass_count": 1,
+    "post_detour_outcomes": [
+      {
+        "job_id": 0,
+        "fresh_id": 25,
+        "forward_endpoint_m": 0.3325404762358114,
+        "progress_recovered": true,
+        "safe_samples": 8
+      }
+    ],
+    "post_detour_progress_recovered": 1,
+    "post_detour_outcome_count": 1,
+    "seven_solve_s": {
+      "n": 1,
+      "median": 0.305791453,
+      "p95": 0.305791453
+    },
+    "detour_job_timings": [
+      {
+        "job_id": 0,
+        "sample_solve_s": [
+          0.04905658803181723,
+          0.1617511630174704,
+          0.04962114698719233,
+          0.08273764600744471,
+          0.03427181800361723,
+          0.09343645599437878,
+          0.05503595696063712
+        ],
+        "pool_wall_s": 0.305791453,
+        "dispatch_to_complete_s": 0.321138779,
+        "cache": {
+          "edt_computations": 1,
+          "build_s": 0.07089436799287796,
+          "blocked_cells": 1539259,
+          "evaluation_tick": 1792
+        }
+      }
+    ],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 632,
+      "median": 0.2361111111111116,
+      "p95": 0.35347222222222263
+    },
+    "snapshot_max_age_s": 1.3888888888888888,
+    "publication_gaps": [
+      {
+        "start_s": 0.3977129310675725,
+        "end_s": 1.5710003710650609,
+        "wall_start_s": 0.397930505,
+        "wall_end_s": 1.571217138,
+        "length_s": 1.173286633
+      }
+    ],
+    "max_publication_gap_s": 1.173286633,
+    "depth_updates": 278,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 278,
+      "median": 64.25687749288045,
+      "p95": 84.13264806440564
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 35,
+    "new_obstacle_checks": 36,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 1,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 1,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {
+      "NO_NEW_OBSTACLE_AHEAD": 1
+    },
+    "detour_durations_s": [
+      2.0
+    ],
+    "detour_end_vs_passage": [
+      {
+        "job_id": 0,
+        "end_s": 27.22222222222222,
+        "end_pose": [
+          2.9670074953578713,
+          0.8003919869632742,
+          0.7618846012272922
+        ],
+        "passage_s": 35.375,
+        "after_physical_passage": false,
+        "reason": "NO_NEW_OBSTACLE_AHEAD"
+      }
+    ],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": 0.2893198184215487,
+    "passage_absolute_s": 35.375,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 100,
+    "method": "M1_ROTATE",
+    "seed_offset": 1000000,
+    "key": "L2_100_D750_M1_ROTATE",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_100_D750_M1_ROTATE",
+    "delay": 0.75,
+    "run_id": "L2_100",
+    "socket_path": "/tmp/nomad-162bf2b3cb33.sock",
+    "socket_bytes": 28,
+    "classification": "STUCK",
+    "technical_validation": "PASS",
+    "success": false,
+    "collision": false,
+    "corridor": false,
+    "stuck": true,
+    "safety_failure": false,
+    "termination_reason": "simulation_timeout",
+    "duration_s": 90.0,
+    "goal_time_s": null,
+    "minimum_clearance_m": 0.08781120244300479,
+    "minimum_wall_clearance_m": 0.5137182512261289,
+    "minimum_monitor_wall_bound_m": 0.5137181110194627,
+    "distance_m": 6.104959466764892,
+    "stopped_fraction": 0.0,
+    "actual_zero_speed_fraction": 0.5728395061728395,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 3.3333333333333237,
+      "NORMAL": 28.55555555555624,
+      "ALIGN_BRAKE": 11.8888888888891,
+      "ALIGN_ROTATE": 46.22222222221977
+    },
+    "alignment_count": 60,
+    "alignment_braking_s": 11.8888888888891,
+    "alignment_rotation_s": 46.22222222221977,
+    "all_unsafe": 0,
+    "recovery_count": 0,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": null,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 36.666666666666664,
+    "first_visible_s": 36.75,
+    "first_depth_observed_s": 36.75,
+    "first_depth_map_observed_s": 37.236111111111114,
+    "box_passage_time_s": 39.208333333333336,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 90,
+    "switches": 89,
+    "inference_ms": {
+      "n": 90,
+      "median": 37.421409499999996,
+      "p95": 52.83568915
+    },
+    "delivery_s": {
+      "n": 90,
+      "median": 0.7500783535,
+      "p95": 0.75227220955
+    },
+    "detour_triggers": {},
+    "detour_attempts": 0,
+    "detour_submitted": 0,
+    "detour_applied": 0,
+    "detour_dispositions": {},
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.0,
+    "detour_execution_s": 0,
+    "detour_moving_s": 0.0,
+    "detour_collision_count": 0,
+    "detour_intervals": [],
+    "detour_then_box_pass_count": 0,
+    "detour_before_box_pass_count": 0,
+    "post_detour_outcomes": [],
+    "post_detour_progress_recovered": 0,
+    "post_detour_outcome_count": 0,
+    "seven_solve_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "detour_job_timings": [],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 808,
+      "median": 0.23611111111111427,
+      "p95": 0.375
+    },
+    "snapshot_max_age_s": 1.3194444444444444,
+    "publication_gaps": [
+      {
+        "start_s": 0.38145262258707907,
+        "end_s": 1.6170598940998637,
+        "wall_start_s": 0.381593682,
+        "wall_end_s": 1.617204407,
+        "length_s": 1.235610725
+      }
+    ],
+    "max_publication_gap_s": 1.235610725,
+    "depth_updates": 357,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 357,
+      "median": 62.16300203232095,
+      "p95": 78.83279599482194
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 4,
+    "no_new_obstacle_ahead_count": 0,
+    "new_obstacle_checks": 0,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 0,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {},
+    "detour_durations_s": [],
+    "detour_end_vs_passage": [],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": null,
+    "passage_absolute_s": 75.875,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  },
+  {
+    "scene": "L2",
+    "index": 100,
+    "method": "M3_DETOUR",
+    "seed_offset": 1000000,
+    "key": "L2_100_D750_M3_DETOUR",
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_new_obstacle_01/main/L2_100_D750_M3_DETOUR",
+    "delay": 0.75,
+    "run_id": "L2_100",
+    "socket_path": "/tmp/nomad-21ce16b70ef7.sock",
+    "socket_bytes": 28,
+    "classification": "SUCCESS",
+    "technical_validation": "PASS",
+    "success": true,
+    "collision": false,
+    "corridor": false,
+    "stuck": false,
+    "safety_failure": false,
+    "termination_reason": "goal_entry",
+    "duration_s": 77.86111111111111,
+    "goal_time_s": 77.86111111111111,
+    "minimum_clearance_m": 0.14772177283118712,
+    "minimum_wall_clearance_m": 0.49384148413168805,
+    "minimum_monitor_wall_bound_m": 0.4938414589942049,
+    "distance_m": 8.431941841869973,
+    "stopped_fraction": 0.01855155190866926,
+    "actual_zero_speed_fraction": 0.4024259721726721,
+    "mode_seconds": {
+      "WAYPOINT_TIMEOUT": 4.222222222222216,
+      "NORMAL": 30.08333333333406,
+      "ALIGN_BRAKE": 14.444444444444729,
+      "ALIGN_ROTATE": 24.222222222222783,
+      "DETOUR_WAIT": 0.4444444444444446,
+      "DETOUR": 3.4444444444444344,
+      "STOP_WAIT": 0.9999999999999983
+    },
+    "alignment_count": 40,
+    "alignment_braking_s": 14.444444444444729,
+    "alignment_rotation_s": 24.222222222222783,
+    "all_unsafe": 0,
+    "recovery_count": 0,
+    "repair_attempts": 0,
+    "repair_accepted": 0,
+    "repair_rejected": 0,
+    "repair_timeout": 0,
+    "repair_dispositions": {},
+    "repair_acceptance": null,
+    "repair_execution_s": 0.0,
+    "repair_resolved_all_unsafe_fraction": null,
+    "post_repair_safe_count": 0,
+    "post_repair_fresh_count": 0,
+    "repair_wall_s": {
+      "n": 0,
+      "median": null,
+      "p95": null
+    },
+    "spawn_s": 18.65277777777778,
+    "first_visible_s": 18.73611111111111,
+    "first_depth_observed_s": 18.73611111111111,
+    "first_depth_map_observed_s": 19.23611111111111,
+    "box_passage_time_s": 21.263888888888886,
+    "passed_box": true,
+    "pass_side": "+Y",
+    "command_replay_error": 0.0,
+    "pose_replay_error": 0.0,
+    "clearance_replay_error": 1.1102230246251565e-16,
+    "oracle_publications": 0,
+    "requests": 77,
+    "switches": 76,
+    "inference_ms": {
+      "n": 77,
+      "median": 38.077304,
+      "p95": 55.33116780000001
+    },
+    "delivery_s": {
+      "n": 77,
+      "median": 0.75007766,
+      "p95": 0.7501683606
+    },
+    "detour_triggers": {
+      "B": 1
+    },
+    "detour_attempts": 1,
+    "detour_submitted": 1,
+    "detour_applied": 1,
+    "detour_dispositions": {
+      "ACCEPTED": 1
+    },
+    "detour_timeout": 0,
+    "detour_rejected": 0,
+    "detour_wait_s": 0.4444444444444446,
+    "detour_execution_s": 3.4444444444444464,
+    "detour_moving_s": 3.4444444444444344,
+    "detour_collision_count": 0,
+    "detour_intervals": [
+      {
+        "job_id": 0,
+        "start_s": 28.88888888888889,
+        "end_s": 32.333333333333336,
+        "collision": false
+      }
+    ],
+    "detour_then_box_pass_count": 1,
+    "detour_before_box_pass_count": 1,
+    "post_detour_outcomes": [
+      {
+        "job_id": 0,
+        "fresh_id": 31,
+        "forward_endpoint_m": 0.3716483058594893,
+        "progress_recovered": true,
+        "safe_samples": 8
+      }
+    ],
+    "post_detour_progress_recovered": 1,
+    "post_detour_outcome_count": 1,
+    "seven_solve_s": {
+      "n": 1,
+      "median": 0.333120373,
+      "p95": 0.333120373
+    },
+    "detour_job_timings": [
+      {
+        "job_id": 0,
+        "sample_solve_s": [
+          0.07707762898644432,
+          0.05433325096964836,
+          0.0696890460094437,
+          0.04285130900098011,
+          0.05517462798161432,
+          0.09325794799951836,
+          0.10627109598135576
+        ],
+        "pool_wall_s": 0.333120373,
+        "dispatch_to_complete_s": 0.348434879,
+        "cache": {
+          "edt_computations": 1,
+          "build_s": 0.08500142698176205,
+          "blocked_cells": 1528647,
+          "evaluation_tick": 2048
+        }
+      }
+    ],
+    "repair_job_timings": [],
+    "snapshot_age_s": {
+      "n": 699,
+      "median": 0.23611111111111427,
+      "p95": 0.3472222222222234
+    },
+    "snapshot_max_age_s": 1.3194444444444444,
+    "publication_gaps": [
+      {
+        "start_s": 0.37026888144601316,
+        "end_s": 1.623697938388305,
+        "wall_start_s": 0.37047082,
+        "wall_end_s": 1.624278735,
+        "length_s": 1.253807915
+      }
+    ],
+    "max_publication_gap_s": 1.253807915,
+    "depth_updates": 308,
+    "depth_dropped_frames": 0,
+    "depth_update_ms": {
+      "n": 308,
+      "median": 64.73747547715902,
+      "p95": 86.18837501271624
+    },
+    "depth_queue_max": 0,
+    "depth_archive_queue_max": 0,
+    "no_new_obstacle_ahead_count": 61,
+    "new_obstacle_checks": 62,
+    "trigger_stages": {
+      "BEFORE_PASSAGE": 1,
+      "AFTER_PASSAGE": 0
+    },
+    "no_progress_stages": {
+      "BEFORE_PASSAGE": 1,
+      "AFTER_PASSAGE": 0
+    },
+    "detour_applied_after_passage": 0,
+    "detour_end_reasons": {
+      "NO_NEW_OBSTACLE_AHEAD": 1
+    },
+    "detour_durations_s": [
+      3.4444444444444464
+    ],
+    "detour_end_vs_passage": [
+      {
+        "job_id": 0,
+        "end_s": 32.333333333333336,
+        "end_pose": [
+          2.8489606693357725,
+          0.6851269600235276,
+          0.8868281571314514
+        ],
+        "passage_s": 39.916666666666664,
+        "after_physical_passage": false,
+        "reason": "NO_NEW_OBSTACLE_AHEAD"
+      }
+    ],
+    "detour_terminal_active_count": 0,
+    "goal_y_m": 0.2408078981775924,
+    "passage_absolute_s": 39.916666666666664,
+    "execution_git_sha": "10e079d7ad1df3dbf44b8fc8a5292e1a8dda279f"
+  }
+]
