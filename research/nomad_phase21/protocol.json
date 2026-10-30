@@ -1,0 +1,817 @@
+{
+  "phase": "21",
+  "base_commit": "3744de7",
+  "status": "REGISTERED",
+  "SO": {
+    "source_scenario": "research/nomad_phase2/scenario.json",
+    "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+    "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+    "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "nodes": 21,
+    "placement": {
+      "trigger_x": [
+        2.0,
+        2.1
+      ],
+      "distance_m": 1.2,
+      "size": [
+        0.35,
+        0.35,
+        0.8
+      ],
+      "y_offset_m": 0.15,
+      "y_clamp": [
+        -0.925,
+        0.925
+      ],
+      "s": "odd +1; even -1"
+    },
+    "oracle_publication": false,
+    "evaluation_dynamic_geometry": true,
+    "success_gate": false
+  },
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "common": {
+    "SO": {
+      "source_scenario": "research/nomad_phase2/scenario.json",
+      "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "nodes": 21,
+      "placement": {
+        "trigger_x": [
+          2.0,
+          2.1
+        ],
+        "distance_m": 1.2,
+        "size": [
+          0.35,
+          0.35,
+          0.8
+        ],
+        "y_offset_m": 0.15,
+        "y_clamp": [
+          -0.925,
+          0.925
+        ],
+        "s": "odd +1; even -1"
+      },
+      "oracle_publication": false,
+      "evaluation_dynamic_geometry": true,
+      "success_gate": false
+    },
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "control": {
+      "lookahead_m": 0.25,
+      "vmax_m_s": 0.3,
+      "omega_max_rad_s": 0.4,
+      "acceleration_m_s2": 0.5,
+      "observation_hz": 4,
+      "controller_hz": 9,
+      "integration_hz": 72,
+      "waypoint_timeout_s": 1,
+      "navigation_timeout_s": 90,
+      "delivery_delay_ms": 750,
+      "speed": "protected Phase18D SP; rebuild on path replacement",
+      "start_alignment": "On new path: heading error>=45deg at any speed; if v<.01 retain20deg; bounded braking then in-place |w|<=.4",
+      "pivot_trigger_P": false,
+      "fallback": "Phase16 KEEP_ACTIVE / STOP_WAIT",
+      "recovery": "Phase17 RECOVER_ROTATE (30deg, .3rad/s, maximum12 per run)"
+    },
+    "depth": {
+      "variant": "15A2 V1",
+      "noise_sigma": "0.01*d^2",
+      "unknown": "not occupied",
+      "odometry": "exact simulator pose",
+      "oracle_controller_input": false,
+      "allocation_bounds_m": [
+        -4.0,
+        -3.5,
+        12.0,
+        6.2
+      ],
+      "allocation_note": "SO x extent is longer than Phase16; extend xmax8 to12 to cover corridor and3m sensor range; map resolution, occupancy/noise rules unchanged; no oracle wall occupancy inserted"
+    },
+    "seed_rule": "inference=101+10000*index+2*request_id; DDPM=inference+1"
+  },
+  "methods": [
+    "B0_NOMAD_RAW",
+    "B1_SAFE_TE",
+    "B2_SAFE_RTC",
+    "B3_M1",
+    "B4_ASTAR",
+    "M3_GRAPH"
+  ],
+  "scenes": {
+    "L2": {
+      "trigger_x": [
+        2.0,
+        2.1
+      ],
+      "size_xyz_m": [
+        0.4,
+        1.2,
+        0.8
+      ],
+      "d_m": 1.0,
+      "offset_m": 0.0
+    },
+    "L2A": {
+      "trigger_x": [
+        3.0,
+        3.1
+      ],
+      "size_xyz_m": [
+        0.4,
+        1.2,
+        0.8
+      ],
+      "d_m": 1.0,
+      "offset_m": 0.4,
+      "offset_rule": "odd positive, even negative",
+      "held_out": true,
+      "one_allowed_geometry_fallback": 0.35
+    }
+  },
+  "indices": [
+    111,
+    112,
+    113,
+    114,
+    115
+  ],
+  "method_order": [
+    "B0_NOMAD_RAW",
+    "B1_SAFE_TE",
+    "B2_SAFE_RTC",
+    "B3_M1",
+    "B4_ASTAR",
+    "M3_GRAPH"
+  ],
+  "order": "seed -> scene(L2,L2A) -> six methods fixed listed order; one technical retry immediately, same seed",
+  "protected_sha256": {
+    "research/nomad_phase20b/config.py": "ca3238ac3e3423e10616147171c739a11d039a2e702b424092e9d68af00290ca",
+    "research/nomad_phase20b/runtime.py": "9f914f993b905456235b92f5c91ed6f5fb7267c956c2f3f54cc6c371b3298268",
+    "research/nomad_phase20/runtime.py": "7dde2daadf04fcc92c5b8b1c65913a3f1352ace5b892b03fd80cd5c84e931246",
+    "research/nomad_phase20/execution.py": "89956a9310336dbb575d2651af9576732845262e5c531a83e45d3c203cab22e6",
+    "research/nomad_phase20/repair.py": "65a70b2f4fc597dfd6a47af38df8f4f7b4e6d6d1ae3aa9655025e3f8d8c6b70c",
+    "research/nomad_phase20c/detour.py": "0fbf4404017e6cba858a825c850f12b26b3cb66b32096daf9999d3c9968ab0f5",
+    "research/nomad_phase20c/detour_known.py": "8db6b56af8372d913e05f69ee4eb8cf54e9caea1e54691881e0580d639310704",
+    "research/nomad_phase20c/shadow.py": "ca52019f91b6702d8351c536cb889b5eb998eafca45895576be501b2c44c23f8",
+    "research/nomad_phase20c/shadow_rays.c": "131c579655540add9dffcd9da19749777758af7ea563d76bfd6c1becf6dba0a0",
+    "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58",
+    "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c",
+    "research/nomad_phase20d/__init__.py": "64a553f8722d40d97c44371a664926dfc83c59a9c90e90665ea29ea0c3529e22",
+    "research/nomad_phase20d/campaign.py": "3fe545c3cb82a389f66c0cd359ad5da11f02fae072dba0fa3e618d62d0f89b1d",
+    "research/nomad_phase20d/config.py": "f4b03cae310741349eaee55e63d33a353eb0e638d965c407e0248cd80e9d2e01",
+    "research/nomad_phase20d/depth.py": "3f1eba31aa5fbe2f2558b3cc354702f2047a94c562217c80c24a8d22b4ba881f",
+    "research/nomad_phase20d/diagnose.py": "3a08ca47c990a63df27f0fcb85b3423a6c2d1bee454976231cdf74acb5a08532",
+    "research/nomad_phase20d/launch.py": "032b0e8811f09ec3f680c934be89ae99f71d3b9aac10ae031179498a5da79ecf",
+    "research/nomad_phase20d/metrics.py": "4cb518127a07b851384071f9a4272516b854d1b475446e92c740857196f88e1b",
+    "research/nomad_phase20d/offline.py": "9e0e01e0969bbdc74458ee5488fa7b0852a735a804c16cb75561de76144df555",
+    "research/nomad_phase20d/pool.py": "6b8dac51721f90cc54acd129cf0fc427eed3c4ceb9c57279d813c0d693705b59",
+    "research/nomad_phase20d/preflight.py": "f6a03f181b090d365f63a47a768d10034a1385dc2d3b1e15c7d222268b325d24",
+    "research/nomad_phase20d/protocol.json": "79597cec578272741e1a1028cb66e814a2ddc37b1004d22defc69e842b5b48aa",
+    "research/nomad_phase20d/recent.py": "b3f0a191bad1e23899db01cb4adc6cc359bb66f8b357e196439ea0a8e4baab11",
+    "research/nomad_phase20d/report.py": "48bd70e0bc99b74072d96f3ad4a97d1099f49111808d1527f46515559592e26f",
+    "research/nomad_phase20d/runtime.py": "3edefe6acd1e9f998d92af15b2b362838a7380dc00c96cda47213cd85c3a82d8",
+    "research/nomad_phase20d/simulator.py": "9c628204f5e23b06f1cebd6fc8e5ee3859942ec3479651d9b132d3c13d81ad78",
+    "research/nomad_phase20d/test_recent.py": "63afcf10759d2781583c90788ca6a7343d7393c670867c33af7006c036b24027",
+    "research/nomad_phase20d/test_runtime.py": "7544c6facc0f196985cd55a81b0470c2467f28b10bebb8ee71cb44db75ba3765",
+    "research/nomad_phase20d/test_visualize.py": "dad3d2e1b30a99529d078acbee13cfd728b77f542d28a13d11c5ff4d26f9d6b1",
+    "research/nomad_phase20d/visualize.py": "3369725e3972952c5296d03d77a99e9d3f498742ed9cc6003921970f8b581221",
+    "research/nomad_phase20d/worker.py": "8f1524595a0ecd6f750b2070c3ebcfe53edcb7588419a3489d1ec4d9d93682cf",
+    "research/nomad_phase20c/__init__.py": "a7df27b9507159fc33c6ff9498d0d57128b1d333e53dd0a7798b4973b767c0a8",
+    "research/nomad_phase20c/map_replay.py": "eba629c1ecf4b53ccdeb6cb8265bcfc9024cade3b64410bcea9daa95501dfc63",
+    "research/nomad_phase20c/offline.py": "926a50fb5eef9559002992eab66fb166fd1fda1f986a853df4cc046a183d9e04",
+    "research/nomad_phase20c/pool.py": "51f5c0494fc0a178ccaf827fa1be6e9f949659da46d482e0dae06d8d40da8aee",
+    "research/nomad_phase20c/protocol.json": "e346313e5c9fac0374e59c754947364abf270ff1e6ef2629e9af1a93e03e4d1d",
+    "research/nomad_phase20c/recheck.py": "58fff1fde4116829baef7aee8d35d4b297cec394352a0b4597572f59dc52699b",
+    "research/nomad_phase20c/recheck_pool.py": "180303c60e49049902636056878e2506cfb62f807a98e5ecb9c64fd2d2eca63b",
+    "research/nomad_phase20c/recheck_report.py": "60d949de24d89811b9fc09b746f913396a4cb8d87b57017a5b9f97377d2d928f",
+    "research/nomad_phase20c/report.py": "d041ebf6d8485d8684ca2dbd5fcaab5b445ac3f8dd9c2a08326d5e063979e044",
+    "research/nomad_phase20c/shadow_protocol.json": "4e127a21e7da0a1f4385b0821ad454d73f80aff28ce9938adb14882058ec9926",
+    "research/nomad_phase20c/test_detour.py": "d3e425da34baa52e0dd030c41029338bb02722054fd9ef08d8e33ca7dabb8773",
+    "research/nomad_phase20c/test_shadow.py": "cc6b99c922260ed2975ed7bc2c7692f40347c93cef69a3ed40477d34e05f8d0b",
+    "research/nomad_phase20c/trigger.py": "a26d387dab70b89802e31df59d1ae51ed8c3429a29945b37940f97f1f802f090",
+    "research/nomad_phase20b/__init__.py": "9925d716da736aee3e16b81fe490fac8cd3cbee17a31d2444b2ed6adad9e45a0",
+    "research/nomad_phase20b/campaign.py": "ebc2fbb374618569401aa3adf5b92edf85f7212a16ad1de7d7b4a4b4dcd0712f",
+    "research/nomad_phase20b/launch.py": "25e351cd4065bd4eaf789e26c8f5c40677171b07415b2040ac9ddaac0c8291c7",
+    "research/nomad_phase20b/metrics.py": "83eb92d7b6a08d97853597f13a890a01b113ecc6a4a7c537b796476d1b0aefe1",
+    "research/nomad_phase20b/pool_server.py": "16f7e074dbcf7fb2fd3b0105d5031b9f6ffb77ea26084d9d7b8a82ac509c2b92",
+    "research/nomad_phase20b/protocol.json": "bd12270488dc3b602b4120d94bdbfdc3cbf2b8d02dd5d827337e99ddf5b483e6",
+    "research/nomad_phase20b/report.py": "ef9d6e7443d370fa925417122c1637e1e4fca0d5829054ed11bf0a9aa8f3be65",
+    "research/nomad_phase20b/simulator.py": "9fb46cbb757796a18f70dec02d5556eb4e1ad6553dd915a6fb03bc9267821cbf",
+    "research/nomad_phase20b/test_phase20b.py": "422a796e872d597836a552816f1ce91c815c842f09fa47eeb09308cc1af3ecd8",
+    "research/nomad_phase20b/visualize.py": "b80a07bad032a1ef88c0e052d5837bb9cf986c0ad62f00a61f8eac6e45f07be2",
+    "research/nomad_phase20b/worker.py": "6bce5cb34ae7c92779373818d0384acc3e71e7a298720f01a1d26a25728cd34c",
+    "research/nomad_phase20/__init__.py": "e8a593d853af74b2a59296d5180eff826850d77433f10779d29a2c39a3f69c98",
+    "research/nomad_phase20/campaign.py": "8b11efb45e9d5c5b5a67e328dc335906f5e07c643d644d56f1abd49191f5bf5b",
+    "research/nomad_phase20/config.py": "04fa01b46dc64fe4fba526c45043e801f71a5ac18091686e6446445d0bbc24d6",
+    "research/nomad_phase20/depth.py": "902b1c1ff43dea0bcd69906a85d2406687c8a7807d606af0ccea3d03c10a16bd",
+    "research/nomad_phase20/launch.py": "8121cd60d49c11c95b748c19d6f967f79d00f7ee8a41b6127376bfbc47157fb5",
+    "research/nomad_phase20/metrics.py": "066019d100504df30ea3d3929eaca0492ee561ab6b01e22263d60bfd11a5d927",
+    "research/nomad_phase20/preflight.py": "79c34c9c58527a516d5a2dd0673b97ff6ae449834a3dddace7ffefd90545782f",
+    "research/nomad_phase20/protocol.json": "8cac8cfee799a363872ae79805fd386309f905fadfedbf7aa4820b1573498119",
+    "research/nomad_phase20/report.py": "3baea142de426e6a49b6cb23eb33b4a71217e0c2ac8949f1c57cced23ac436a4",
+    "research/nomad_phase20/simulator.py": "6b9b0d8b889605ba5188ef9724cdd9748657b6f23d7e315ce695f98c0d8d3537",
+    "research/nomad_phase20/test_phase20.py": "267dbb2220fdddaeb81e52e74b2b735731101db579aff3a183e2447a67f4ca4a",
+    "research/nomad_phase20/worker.py": "a81f3936a9346204b524fde875ec29dad42e571ed6e3f4eb8a2bf6af8f56a18c",
+    "research/nomad_phase20e/__init__.py": "520a47214adc5e8ed0cd5745eb0df1eb1cad66a1e125f352f05ce35ef1c52807",
+    "research/nomad_phase20e/campaign.py": "984ea37fcb0926c2e7c808ffb1cfc4dea18fccb5bf22221704cb22d5dcebdec7",
+    "research/nomad_phase20e/config.py": "092f94e50617ad95a13e80395d11d188a4326d142311fab71c5391ee9e621813",
+    "research/nomad_phase20e/launch.py": "fb1e00780a49d5a2d16cd4ae5b35baa568ec27796d7fde5459ff7f8500c68f83",
+    "research/nomad_phase20e/metrics.py": "3836a20e9ab0b0867ed308c88cd073d7def2a222f5d9053cbc477834f9f89343",
+    "research/nomad_phase20e/offline.py": "208cb04644b7defe7aec04c409cb7c36e91a7588fee6bfb24cba87ee8326bf9b",
+    "research/nomad_phase20e/preflight.py": "c0895af683abe47790f10c99ec595869b3ea08ba7446fe231de8acbf28e2c08c",
+    "research/nomad_phase20e/protocol.json": "ab4e7a8b216139733520bcdf4537b9432c217393be6732e8f5b85b2b64ab8b82",
+    "research/nomad_phase20e/report.py": "e38130c1f9649a08d5f4967c43fb23bab8f12dd12e3860131850d2f58911ee8d",
+    "research/nomad_phase20e/runtime.py": "704976a4e169ddfbd92c7719a3e456cb59ef715e32d73acb114158ac3386fab0",
+    "research/nomad_phase20e/simulator.py": "84b63fe7f2a7687fe44191e471e80140844dbd9348543e32615141d1f93f39a4",
+    "research/nomad_phase20e/test_phase20e.py": "c0d112ff0cf7d4a427bacd0adc44d79e8c8bec08d28a5190e806415c0845b8c5",
+    "research/nomad_phase20e/trigger.py": "adb11fbf2c508f1af999fc2ad529e18702c4e8150eaf4e23dabac0e6afa7e502",
+    "research/nomad_phase20e/visualize.py": "5a05fc9b7cdbf7d1e1ff5b0be1c8923fc5a755583381a84c5adf063bff713d9c",
+    "research/nomad_phase20f/__init__.py": "fd4df1392bc9e7b2c2550bce5385f1db74f22cdf5ae1eeef40f9503e32cc8aab",
+    "research/nomad_phase20f/campaign.py": "3bfb3c29205db771634e3ba6bb5a01bac1b20fe8823744c59a7dddd7057f69ff",
+    "research/nomad_phase20f/config.py": "647708bcb268f3c046b94db6fc3258d151cfe2e2b9b92574524b632ccb4a1bd5",
+    "research/nomad_phase20f/depth.py": "b73e09dc3d69387d040c2f2550cfb6e67c87ddaa7923c36ed153769f3e0bb7bc",
+    "research/nomad_phase20f/direction.py": "565d79bc3e4622b086dd8648befed55738f51870b19b24c85479f5f5a8dffe02",
+    "research/nomad_phase20f/history.py": "cb02c70ba6307bda80a9fbac72e1d3813f6e589d3f10f0dca2814d6e4418fd5f",
+    "research/nomad_phase20f/launch.py": "87f7576c52923943104e24c1ca5d67eb3cd4ce1976be21eb64d5b95089635d1b",
+    "research/nomad_phase20f/metrics.py": "b7e981a62b245e669da83dd803efedaef3b04bba2ae7a5187ecb9f2b99005401",
+    "research/nomad_phase20f/offline.py": "f90c71ccb28cac7936b874043ec23ae9341a13c97ad375c722b91fcdfce59e2b",
+    "research/nomad_phase20f/preflight.py": "256132892b97deb7fcf44eed94cdfcad56c5e91e4ff50faf71eab35a261543ba",
+    "research/nomad_phase20f/protocol.json": "214e8814c63db85a7d2b7d3ffad1868d7fbd77c4bd1663964cf96498d3765a01",
+    "research/nomad_phase20f/report.py": "43aaf8aa02484e502d5abaa067734e2863ba77832140f163f0e171fdfe4f790b",
+    "research/nomad_phase20f/runtime.py": "aa08dfb898bd3ff5cc435bbfdd17776ef192adf1d0c2ba0a97ac2be59358c737",
+    "research/nomad_phase20f/simulator.py": "a5dfd7e55df06cb5de1f180caef1ca4256804880aa07fdfe1a83e02c94c1498c",
+    "research/nomad_phase20f/test_history.py": "3f19cefc8cce4b102e41c931a85f4867bd15535fdda46e05a16eb7624d21c70b",
+    "research/nomad_phase20f/test_map.py": "17048e7ad51ae53fe6e5959d5f8b95a41a85123c1c5b574cd832a752b1952a55",
+    "research/nomad_phase20f/test_runtime.py": "b8a922f5ca726ca5e18120945ffa854e5d856297beea6f338342edcd9c2db369",
+    "research/nomad_phase20f/trigger.py": "7a6eb6f3d8b77159647198bb29409483a56de05dafebd1e23cb3ccb8dbfdaadc",
+    "research/nomad_phase20f/visualize.py": "1ed3d2cec6d2d1a4719c9839140b6656f3dc7d49ac5d0a7acd223971880008eb",
+    "research/nomad_phase18/__init__.py": "958cc8b661ecce63402735ef765f6089f780e61de420adcc7bad6c802ee95387",
+    "research/nomad_phase18/campaign.py": "3492de134860e6c4c211bd43a2faba7db4bd7c2ddc16b9314994c2115e3709b2",
+    "research/nomad_phase18/config.py": "350294dcc57b8d4e6a110cb26bac0234e92137d5d33beacbfb741091194cd39c",
+    "research/nomad_phase18/execution.py": "4834f9cb1a2a905d967b1b6c90e13226c88d9ce0df0e9087cbe65567548f2b35",
+    "research/nomad_phase18/launch.py": "1a573330c43ead4a8a23f4065d01b85f6fa6f94e16b913cc8e6cd53ab37b10d0",
+    "research/nomad_phase18/metrics.py": "3e1ec6970e60cf9564dc6ab11c0177c6fdde5cdecbb297a84bad1d26d01d624a",
+    "research/nomad_phase18/preflight.py": "5e93da9703bb8d1e079ee92ff93807c27df3227405c1844ea2bcf633a27f3df3",
+    "research/nomad_phase18/protocol.json": "a49ed0492b7cd646747784e436cc4e48a7db4075e6d09950d01be16d2bb0bbfa",
+    "research/nomad_phase18/replay.py": "ed8d36c050296e54114fa1666fe007b3d0d8fb72a357f2f8fa89b7c81a444a71",
+    "research/nomad_phase18/report.py": "f02d38e0df53e845448a7a8a8a19b4e43c95fa843a740d01612c8b1394aef248",
+    "research/nomad_phase18/simulator.py": "f604ac732293b2a4cc8de71a28c6f0fd581989cb7b913e9fbfd1592f7574b21d",
+    "research/nomad_phase18/statistics.py": "25bfd864af05fb5295894fc155a8b1a577d142d47b7cc660c562a1db26b34361",
+    "research/nomad_phase18/test_phase18.py": "7ba16131f76d054a7c3b3d8b715f5140e35f7ebd2546d627c73e0a101c749eec",
+    "research/nomad_phase17/__init__.py": "68601db537bb12ff924a4941cb6f78ea400cbb0fd4691dcaa6c561e7fdb4e970",
+    "research/nomad_phase17/campaign.py": "54b4a31384ec7d7d9da69fff279ccd144f552b5b6613cf24f082adb4ca558ebd",
+    "research/nomad_phase17/config.py": "c4bd7debfbb9d448910ab78c6073c9d7c7b78f5946e5443a828c139719145ca3",
+    "research/nomad_phase17/execution.py": "6f2fbeaad9be6684159276da53b010a1604b8d70f72443cddbbac8ba7b926fa5",
+    "research/nomad_phase17/graph.py": "168757f96f39023923b72e9f861263375f8cb55cdb0f87f03df466e0ce7c635e",
+    "research/nomad_phase17/launch.py": "296ee25d128152d97880ff7981aaa353b781eda9aeca914cf00f30adde80921f",
+    "research/nomad_phase17/metrics.py": "b45a4ac7654fee8056ef3d70ccc4bb583db55ebfd039567fe3f41482d211805e",
+    "research/nomad_phase17/offline.py": "575f857cc0f6e9f74ac62c287d6d0f8e43bf243914fcf17518834c47b69ca284",
+    "research/nomad_phase17/offline_report.py": "d38072207571dfae23dc5d69d8f496619299337b69920acb85d7a57880d6ffd5",
+    "research/nomad_phase17/preflight.py": "ebe19a61bd5279f8a448252c50101213006c1327e9dd55006f0dc248a46c4c8c",
+    "research/nomad_phase17/protocol.json": "be911cf1f9e139090aca37c6156c8cb23a2a1e2289afa3fb410bec89b3e529d7",
+    "research/nomad_phase17/recovery.py": "a0d610e4a6c31028b83768086097c3fb0e8f858df55041e68203d463c3f4f503",
+    "research/nomad_phase17/report.py": "ffd9e1c2097e2aaffc5fefdcd7fd92c66678446f2e5401e1ae99d938804f10aa",
+    "research/nomad_phase17/simulator.py": "0273e0d6853178926e462efdd6f1785a7fa24933b70f21a29ce037207ad345cd",
+    "research/nomad_phase17/test_offline.py": "29d2e6b964de3ed51b2f77e76f4bb9167418bd70cea01178fa1d8ccd63bcbf0a",
+    "research/nomad_phase17/test_runtime.py": "d745b5b1128e9cc391601d77cf47b5431f4bdcb77f6af3b5723651b2d8e1aacd",
+    "research/nomad_phase17/worker.py": "8fff27d841421394fe2901c227cbd53813f3b01114f0f4c4cf719c94c50afccb",
+    "research/nomad_phase16/__init__.py": "7bc234538ecea766982206061798bdc053e69e2a1c073eea130728a9ab76f157",
+    "research/nomad_phase16/campaign.py": "343b29223a9d310e4dbfafa27fd2ade8aeae17347bafeb34a372473c8f7c4e1d",
+    "research/nomad_phase16/config.py": "f9c46887c9f23805f783a84be505497ce8a91739bf83538257341d85293aa806",
+    "research/nomad_phase16/depth.py": "020174e93cd7d2de1135cfbba3afff50d3833602e77d447d08845db286ba6ac3",
+    "research/nomad_phase16/execution.py": "9a65369472647e3c25c3636cfffb296aa544ea4c61d5135e201c2c2de87e1f02",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase16/launch.py": "54c992938fccc922c626df93e6a10ad528235e65a9af6d8310afee5b8b62f974",
+    "research/nomad_phase16/metrics.py": "b5df5077518b9cf22b83cd61ec6b9650d20244a0db01f4e762a4ff365fed1015",
+    "research/nomad_phase16/offline_validation.json": "16b68b2ca62ad32eb57cb8d726b5a2c29921fe13da90a3911f2900739c1dbe80",
+    "research/nomad_phase16/preflight.py": "acd52885b723958c24b33b56f1c9d7f95aca5670727ad3d58a7667130ce6a054",
+    "research/nomad_phase16/protocol.json": "26dc7556a7471d48dd859c177bcf0876a137ecefa7aec3455b63e1ed1599cffb",
+    "research/nomad_phase16/report.py": "373126c82d0b2524adeea7abaa3c7b90e3fcb2102cb5bc60f04c39672f56095f",
+    "research/nomad_phase16/simulator.py": "a20b59d0e7f3401e97cb974a17efbea1ffe7e1961aa5c60be2fc035eafe0e7bd",
+    "research/nomad_phase16/test_phase16.py": "e9efe82b4ba80d8740a4ab6b7f0a91acc8c2134368c907fd3064aa83b2ad9f4a",
+    "research/nomad_phase12/__init__.py": "2c133be31d1c8501caef6559f85ecba0cbe502fa105a73ee08f1777cac6c2fa4",
+    "research/nomad_phase12/batch.py": "62759a9bd68571e872204fba0e982d79324c88b7941cd9aa23eea0a89110fa11",
+    "research/nomad_phase12/config.py": "cbd45df40faed3bc2c89a4a010cb2bf4c39ac213c14d7f94d033234e2175d1e3",
+    "research/nomad_phase12/execution.py": "321d689729d8a90d13de606c2b1c7b662b87d5db1233485e2a99bc878e249704",
+    "research/nomad_phase12/gf_execution.py": "6a20c5be8cb140bba432636aa4a901c5ce3dd2774201c612d33161c4983ca45e",
+    "research/nomad_phase12/gf_worker.py": "f05a71a9d8ca614a069c54c64a2db81e0030085560e7b9b0d640053a6680db04",
+    "research/nomad_phase12/graph_gf.py": "c7b2e234302b07f894bdcaa6515ede9657d002869e4f462758880acd03a5a403",
+    "research/nomad_phase12/methods.py": "e752ab9ee57f91ceee9338722e05814f60f2047a51eecc00b6316fd8c19df8cb",
+    "research/nomad_phase12/metrics.py": "cb76019a4e1213865fe951eecf60bed8f6312f35dd8e8aadcbca409ee18b5579",
+    "research/nomad_phase12/offline.py": "90f009454bef59929503b913c1240f6909e392bd48d9632e89ca54e4b7b30ebd",
+    "research/nomad_phase12/offline_cases_r2.json": "4ee61f399fdbe7c6d9da787692d26cf277eb5ea55515b20544b4727c0aac2341",
+    "research/nomad_phase12/offline_validation.json": "d877fc2c2e128da59df42c534abd76626832de6bf6d3189c3aa68e9caeaff3bf",
+    "research/nomad_phase12/offline_validation_r2.json": "bc83bad0da1ac400cd6bad3032cadff15a9ff3a182fd5b0bcd9be6431ebeb22a",
+    "research/nomad_phase12/protocol.json": "79acccfc6a6c4c5faf8c2b90dc796738cd67cb3a19bc0565b599749f9f035560",
+    "research/nomad_phase12/report.py": "6bc5a779b305f6eb8c0e16b2860ed7f64834eeb1eb6a33fa4749be4c21f59c4e",
+    "research/nomad_phase12/test_baselines.py": "5eb0536125136830e43820bbdd80af86304a84ec6d08b1db4b7f887d70a0b289",
+    "research/nomad_phase12/test_graph_gf.py": "df243bdd21d0fcb6b030e1464f7ecc6217cd8c4170caf9cee3e18011e84a7e4b",
+    "research/nomad_phase12/validation_r2.json": "c59c420b38e0f28936fe32200940157b6996d4887ae8284790e8a403d3bcdd87",
+    "research/nomad_phase8/__init__.py": "84d85c167209322773a47c51004916331abb841d973fe00965390c7a4d48e428",
+    "research/nomad_phase8/batch.py": "d3bc65f57245f2b8946eedd9d2b942a962c3f09ecd16c9ff83da99f65615a5e6",
+    "research/nomad_phase8/config.py": "02e114456197ba999453d476d9506ec0a4c9f4b173be1bf10acac43cf20eaf92",
+    "research/nomad_phase8/execution.py": "883f6416f6090dfb723a850eb39e3321f04c097eafd3fbb3647600d09567143c",
+    "research/nomad_phase8/inference.py": "1be01ac7e197ee88f4e227179bc3c077385e9e9d5d4f987b6c46d53477acd816",
+    "research/nomad_phase8/metrics.py": "94c40cc615764c61e8795141eb95d7b1bf14564477d0ea160ba894a6034896f3",
+    "research/nomad_phase8/offline.py": "7fa72e4d1e84a49d94f8123d40c8365e5eb914ba793f16d54d60901a42b63a3e",
+    "research/nomad_phase8/overnight.py": "1dd70547020582fed2e668529daf1609ba7922af267cc6caba5f4291de3064a7",
+    "research/nomad_phase8/protocol.json": "7f0b97256a6899faa96963eb694dfb91bca5dcf9b5251e79e3ad083e21630376",
+    "research/nomad_phase8/readiness.json": "7da3431b30b7ea77dd9923725647f7d84f72e411ee6de25fdb44919a56020c36",
+    "research/nomad_phase8/report.py": "aa9a606444902c354615fbfbeed28dfe9796d6e4d9e4827595aecb3375eb776f",
+    "research/nomad_phase8/request.py": "3fad51192bba2456b7273c8281038f85efa14d7cacd201c4b2af8b3e3505e46d",
+    "research/nomad_phase8/rtc_hard.py": "f8d2b25de87b092a43973cf0830923783bef970720005516399ddc8a0e69d7a6",
+    "research/nomad_phase8/test_overnight.py": "e8135c7de96eb42061fe15e23d49b0e5848401094d9337b1533eba04f6a0a12b",
+    "research/nomad_phase8/worker.py": "131e9a80ad1fef6a8f37f01d114e55f4f2c5ae7e4fa1fdcda408f4d2b1b042c9"
+  },
+  "reused_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20/runs.json": "221747d45202207339fddf3c625a0a1deec9a3213886446c94f2e638fc45de85",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20/summary.csv": "87e69a933121b8f5ba561658103e72549f053ed7a7b7aa4dd48c1f50fb1c7fe9",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase2/scenario.json": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20d/runs.json": "9bfe56a02cce6fb2205cf513dbfb1941a3dffc15821fb922cdc7f9d0e308ff6a",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20e/runs.json": "9e19ed76ea3122599ae07693b2d29fe35d7cf02e75c890c89881dde66aa5259a"
+  },
+  "execution": {
+    "B0": "sample0 + PP/SP + start alignment; no depth render/map/filter/fallback/recovery; reference-only",
+    "B1": "Phase18 handoff rules +20F common executor: SAFE selection, TE lookahead steering,1s expiry/K3/KEEP rules unchanged; SP speed and start alignment on latest selected active chunk",
+    "B2": "Phase18 handoff rules +20F common executor: RTC-hard beta5 unchanged, generated8 samples enter SAFE; PP/SP/start alignment/recovery shared",
+    "B3": "20F M1 unchanged",
+    "B4": "20F M3 trigger/state-machine unchanged; stage-specific A* backend only",
+    "M3": "20F M3 unchanged"
+  },
+  "astar": {
+    "lambda_candidates": [
+      0.0,
+      0.25,
+      1.0,
+      4.0
+    ],
+    "smoothing_candidates": [
+      0,
+      5,
+      20
+    ],
+    "selected": null,
+    "resolution_m": 0.01,
+    "connectivity": 8,
+    "cost": "sum edge_length*(1+lambda*max(0,.15-depth_clearance)/.05)",
+    "deadline_s": 1.0,
+    "grid_padding": "h/sqrt2 plus conservative max-output-segment .20/16, final uses actual segment lengths",
+    "shortcut": "farthest safe LOS, sampled at h/2 with conservative Lipschitz bound; no extrapolation",
+    "smoothing": "update vertices with |Menger|>4 by .25/.5/.25, endpoints fixed; keep proposal only if safety/geometry holds; after fixed iterations keep remaining curvature and flag (not silently discard path)",
+    "R2": {
+      "unknown": "free, same R2",
+      "near_safety": "first.30m min(.025,max(0,cB-.005)); negativeB rejected",
+      "goal": "intent endpoint grid cell, nearest safe cell within.2m if blocked, tie y/x; failure if absent",
+      "output": "B plus7 nodes (same R28 points)",
+      "trust": "each output coordinate within.75m of original R2 resampled reference; search within union of reference .75m boxes",
+      "length": "same R2 per-segment>=.5 initial, whole>=.7 initial",
+      "selection": "accepted sample with smallest mean edit, tie lowest index"
+    },
+    "R3": {
+      "unknown": "blocked, free older than2s blocked,20C shadow.5m preserved",
+      "output": "B plus10 future nodes",
+      "goal": "1.2m forward half-plane; accepted progress>=.5m",
+      "disk_m": 1.6,
+      "segment_range_m": [
+        0.1,
+        0.2
+      ]
+    },
+    "tuning": {
+      "cases": "up to first6 jobs per phase20D/20E/20F and stage R2/R3, sorted seed/scene/job; no outcome selection; all8 intent samples in R2 jobs",
+      "selection": "maximum mean of stage-specific job acceptance fractions (R2 any accepted, R3 accepted), then greatest accepted-path median depth clearance, then smaller lambda, fewer iterations",
+      "oracle": "evaluation only; never selection or planner input; no L2A tuning data"
+    }
+  },
+  "analysis": {
+    "primary_methods": [
+      "B1_SAFE_TE",
+      "B2_SAFE_RTC",
+      "B3_M1",
+      "B4_ASTAR",
+      "M3_GRAPH"
+    ],
+    "technical_retry": 1,
+    "exclusion": "If primary method fails second attempt, exclude all5 primary methods for that scene×seed. B0 failures never exclude primary pairs.",
+    "success": "goal entry without geometric overlap/corridor intrusion",
+    "passage_time": "spawn-to-first footprint passage; nonpassage display/censor90s, censor flag retained; technical missing not imputed",
+    "goal_threshold_scene": 2,
+    "goal_threshold_pooled": 3,
+    "thresholds_unchanged_if_four_seeds": true,
+    "labels": [
+      "GRAPH_BEST",
+      "GRAPH_BEATS_HEURISTICS",
+      "NO_GRAPH_ADVANTAGE"
+    ],
+    "best": "heuristic threshold AND M3 goals>=ASTAR AND (strictly lower capped passage median OR path curvature RMS) AND M3 collisions=0",
+    "heuristic": "heuristic goal threshold only; ASTAR comparisons and collisions shown separately",
+    "final": "L2A label; add MIXED_HELDOUT if L2 label differs; pooled descriptive",
+    "astar_note": "ASTAR_BETTER if ASTAR goals>M3",
+    "sign_test": "paired goal win/loss; exact two-sided binomial among discordant pairs; technical reference only",
+    "curvature": "Menger on actually applied detour/repair paths; pooled RMS over internal vertices and max absolute; missing if no path applied",
+    "angular_change": "9Hz actual-command first difference |delta omega| and second difference/dt^2 jerk; detour intervals only",
+    "false_trigger": "B detour start with no new cells ahead (must0); A without cells separately descriptive, not misclassified",
+    "reblock": "new trigger after actual detour END and before footprint passage"
+  },
+  "smoke": {
+    "scene": "L2",
+    "index": 95,
+    "methods": [
+      "B0_NOMAD_RAW",
+      "B1_SAFE_TE",
+      "B2_SAFE_RTC",
+      "B3_M1",
+      "B4_ASTAR",
+      "M3_GRAPH"
+    ],
+    "timeout_s": 90,
+    "attempts_each": 1,
+    "excluded": true,
+    "estimate": "mean full launcher wall time of6 smokes *60; if>9000s use indices111..114 (48 planned); no further resize",
+    "technical_failure": "smoke failure blocks readiness until root cause addressed; do not interpret outcome"
+  },
+  "geometry": {
+    "poses": [
+      [
+        3.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "parities": [
+      "odd",
+      "even"
+    ],
+    "mode": "render only spawn frame depth, no method/inference/control",
+    "pass": "box USD AABB matches; no wall overlap; central point of wider gap projected inside90deg FOV and finite depth rays observe free gap beyond front face",
+    "offset_fallback": "one change .4->.35 only if geometry/FOV fails; no navigation feedback"
+  },
+  "main_order": [
+    {
+      "scene": "L2",
+      "index": 111,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2",
+      "index": 111,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2",
+      "index": 111,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2",
+      "index": 111,
+      "method": "B3_M1",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2",
+      "index": 111,
+      "method": "B4_ASTAR",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2",
+      "index": 111,
+      "method": "M3_GRAPH",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2A",
+      "index": 111,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2A",
+      "index": 111,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2A",
+      "index": 111,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2A",
+      "index": 111,
+      "method": "B3_M1",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2A",
+      "index": 111,
+      "method": "B4_ASTAR",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2A",
+      "index": 111,
+      "method": "M3_GRAPH",
+      "seed_offset": 1110000
+    },
+    {
+      "scene": "L2",
+      "index": 112,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2",
+      "index": 112,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2",
+      "index": 112,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2",
+      "index": 112,
+      "method": "B3_M1",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2",
+      "index": 112,
+      "method": "B4_ASTAR",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2",
+      "index": 112,
+      "method": "M3_GRAPH",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2A",
+      "index": 112,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2A",
+      "index": 112,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2A",
+      "index": 112,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2A",
+      "index": 112,
+      "method": "B3_M1",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2A",
+      "index": 112,
+      "method": "B4_ASTAR",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2A",
+      "index": 112,
+      "method": "M3_GRAPH",
+      "seed_offset": 1120000
+    },
+    {
+      "scene": "L2",
+      "index": 113,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2",
+      "index": 113,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2",
+      "index": 113,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2",
+      "index": 113,
+      "method": "B3_M1",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2",
+      "index": 113,
+      "method": "B4_ASTAR",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2",
+      "index": 113,
+      "method": "M3_GRAPH",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2A",
+      "index": 113,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2A",
+      "index": 113,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2A",
+      "index": 113,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2A",
+      "index": 113,
+      "method": "B3_M1",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2A",
+      "index": 113,
+      "method": "B4_ASTAR",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2A",
+      "index": 113,
+      "method": "M3_GRAPH",
+      "seed_offset": 1130000
+    },
+    {
+      "scene": "L2",
+      "index": 114,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2",
+      "index": 114,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2",
+      "index": 114,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2",
+      "index": 114,
+      "method": "B3_M1",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2",
+      "index": 114,
+      "method": "B4_ASTAR",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2",
+      "index": 114,
+      "method": "M3_GRAPH",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2A",
+      "index": 114,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2A",
+      "index": 114,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2A",
+      "index": 114,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2A",
+      "index": 114,
+      "method": "B3_M1",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2A",
+      "index": 114,
+      "method": "B4_ASTAR",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2A",
+      "index": 114,
+      "method": "M3_GRAPH",
+      "seed_offset": 1140000
+    },
+    {
+      "scene": "L2",
+      "index": 115,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2",
+      "index": 115,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2",
+      "index": 115,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2",
+      "index": 115,
+      "method": "B3_M1",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2",
+      "index": 115,
+      "method": "B4_ASTAR",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2",
+      "index": 115,
+      "method": "M3_GRAPH",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2A",
+      "index": 115,
+      "method": "B0_NOMAD_RAW",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2A",
+      "index": 115,
+      "method": "B1_SAFE_TE",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2A",
+      "index": 115,
+      "method": "B2_SAFE_RTC",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2A",
+      "index": 115,
+      "method": "B3_M1",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2A",
+      "index": 115,
+      "method": "B4_ASTAR",
+      "seed_offset": 1150000
+    },
+    {
+      "scene": "L2A",
+      "index": 115,
+      "method": "M3_GRAPH",
+      "seed_offset": 1150000
+    }
+  ]
+}
