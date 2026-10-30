@@ -1,0 +1,165 @@
+{
+  "phase": "20C",
+  "base_commit": "bfd2472",
+  "status": "POSTHOC_RECHECK_FROZEN",
+  "assessment_label": "\uc0ac\ud6c4 \uc218\uc815 \ud6c4 \uc7ac\uc810\uac80",
+  "only_changes": [
+    "0.5m occlusion-tail negative-evidence reset; unknown occupied for R3 far path only",
+    "start-to-current reference direction with0.5m start-heading fallback"
+  ],
+  "shadow": {
+    "base": "unchanged Phase15A2 V1",
+    "length_m": 0.5,
+    "input_points": "same height0.03<z<=0.6m and range<=3.0m occupied endpoints; floor/high/range-rejected rays do not extend",
+    "direction": "camera-to-hit XY direction; nearest1cm endpoint/start/end cells, Bresenham tail excludes hit cell",
+    "frame_order": "original frame-wise log-odds update first, then union of tails; reset only cells whose current log-odds<0",
+    "reset": "log-odds=0 and observed=False",
+    "positive": "preserved by reset; original per-frame evidence updates unchanged",
+    "other_cells": "original observation state/log-odds unchanged",
+    "occupied_threshold": "unchanged >0.85; positive subthreshold cells are not reclassified",
+    "common_methods": "selection/R2/fallback use base SDF, unknown nonoccupied"
+  },
+  "R3_unknown": {
+    "near_region": "existing first0.30m cumulative path arclength, not Euclidean radius",
+    "near_field": "shadow-reset base occupancy; original R2 start threshold",
+    "far_field": "occupied OR unknown",
+    "applies_to": [
+      "clearance preference",
+      "hard safety constraint",
+      "exact far-path certificate"
+    ],
+    "near_certificate": "base occupied cell centers",
+    "far_certificate": "base occupied and unknown cell centers",
+    "distance_formula": "unchanged EDT-to-cell-centers minus0.09m, bilinear derivatives and h/sqrt2 bound",
+    "near_region_clarification": "Offered before implementation; absent reply, retain original path-arclength interpretation"
+  },
+  "u_ref": {
+    "definition": "normalize(B_xy-start_xy)",
+    "minimum_displacement_m": 0.5,
+    "fallback": "start heading unit vector",
+    "NoMaD_endpoints_used": false,
+    "history_window_used": false,
+    "NoMaD_packet_required": false
+  },
+  "unchanged_graph": {
+    "variables": "p1..p10 XY, p0=B fixed",
+    "angles_deg": [
+      0,
+      30,
+      -30,
+      60,
+      -60,
+      90,
+      -90
+    ],
+    "initial_length_m": 1.5,
+    "objective": {
+      "progress_target_m": 1.2,
+      "sigma_progress_m": 0.1,
+      "sigma_smooth_m": 0.03,
+      "clearance_preference_m": 0.15,
+      "sigma_clearance_m": 0.05,
+      "sigma_heading_deg": 30
+    },
+    "constraints": {
+      "start_region_m": 0.3,
+      "start_threshold": "min(.025,max(0,c_B-.005))",
+      "c_B": "SDF(B)-h/sqrt(2)",
+      "negative_B": "reject without solve",
+      "far_clearance_m": 0.025,
+      "inspection_points_per_segment": 9,
+      "interpolation_margin": "h/sqrt(2)+L/16",
+      "menger_max_m_inv": 4.0,
+      "segment_length_m": [
+        0.1,
+        0.2
+      ],
+      "radius_from_B_m": 1.6,
+      "coordinate_bounds": "redundant B+-1.6m box implied by disk"
+    },
+    "solver": {
+      "method": "SLSQP",
+      "jacobian": "analytic; piecewise zone threshold as R2",
+      "maxiter": 100,
+      "ftol": 1e-08,
+      "restarts": 0
+    },
+    "acceptance": "solver success AND violation<=1e-7 AND piecewise exact depth certificate AND relative progress>=.5m",
+    "selection": "largest relative progress, then shortest length, then initialization index"
+  },
+  "unchanged_trigger": {
+    "control_hz": 9,
+    "recent_window_s": 3.0,
+    "minimum_progress_m": 0.2,
+    "minimum_history_s": 3.0,
+    "blocked_sources": [
+      "RECOVER_ROTATE",
+      "ALIGN_BRAKE",
+      "ALIGN_ROTATE",
+      "REPAIR_WAIT"
+    ],
+    "cooldown_after_actual_end_s": 3.0,
+    "offline_virtual_execution_s": 6.0,
+    "offline_earliest_retrigger_s": 9.0,
+    "offline_convention": "Proposed via clarification before solving; no answer received. Use virtual6s execution then3s cooldown, never use solve outcome to select next event."
+  },
+  "unchanged_gate": {
+    "accepted_trigger_fraction_min": 0.5,
+    "all_accepted_path_oracle_penetrations_max": 0,
+    "selected_rollout_overlap_fraction_max": 0.07,
+    "seven_parallel_p95_s_max": 1.0
+  },
+  "gate_scope": "all accepted initialization paths for penetration; selected path rollout per accepted trigger; selected penetration also reported",
+  "accuracy": {
+    "source": "Phase15-A stored float16 depth archives, same24 runs and original noise seeds",
+    "conditions": [
+      "none",
+      "gaussian"
+    ],
+    "replay_count_per_run_condition": 1,
+    "baseline": "stored Phase15A2 V1 rows, not replayed",
+    "query_view": "common unknown-nonoccupied view as Phase15A2; R3 strict policy is tested separately by gate",
+    "comparison": [
+      "dangerous false-safe fraction",
+      "conservative false-unsafe fraction"
+    ],
+    "original_splits_preserved": true,
+    "new_accuracy_gate": false
+  },
+  "recheck": {
+    "source": "same10 valid Phase20B L2/L3 saved runs; same2 technical exclusions",
+    "events": 69,
+    "negative_x_references": 1,
+    "example_event_ids": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "frame_availability": "same recorded published-frame eligibility; map processing times measured separately, no counterfactual clock invented",
+    "noise": "Phase20B SeedSequence(20261027,seed_offset,frame_id), unchanged raw depth and camera_to_world",
+    "pool_processes": 4,
+    "initializations_per_event": 7,
+    "retries": 0,
+    "timing": "includes strict-field construction/loading and unchanged exact cell-site certificate; no latency tuning",
+    "new_snapshot_root": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20c_shadow_replay_01"
+  },
+  "new_tests": {
+    "count": 5,
+    "log_sha256": "9dba3d065dda699002c6700e0740fb00e5184e83516519bdc79a2bac07f27713"
+  },
+  "next_stage": "Only if unchanged R3 gate is READY: online integration + one excluded L3 M3 smoke; otherwise stop",
+  "protected_sha256": {
+    "research/nomad_phase20c/detour.py": "0fbf4404017e6cba858a825c850f12b26b3cb66b32096daf9999d3c9968ab0f5",
+    "research/nomad_phase20c/trigger.py": "a26d387dab70b89802e31df59d1ae51ed8c3429a29945b37940f97f1f802f090",
+    "research/nomad_phase20c/offline.py": "926a50fb5eef9559002992eab66fb166fd1fda1f986a853df4cc046a183d9e04",
+    "research/nomad_phase20/repair.py": "65a70b2f4fc597dfd6a47af38df8f4f7b4e6d6d1ae3aa9655025e3f8d8c6b70c",
+    "research/nomad_phase20/execution.py": "89956a9310336dbb575d2651af9576732845262e5c531a83e45d3c203cab22e6",
+    "research/nomad_phase15/depth_sdf.py": "12f48eb36abbc5cdec32ba974f86a9dca943448ff43bec0114552351ce7b5a26",
+    "research/nomad_phase15/occupancy.py": "5cd5c399467f4ffc657231110b4af21d74e05eee756974763dd5bdc898df72ec",
+    "research/nomad_phase15/occupancy_rays.c": "2af80e0f9302270a73de2ad1f2551630e921bbe19a0c8742f7f96c6dd7f1f423",
+    "research/nomad_phase15/occupancy_report.py": "7f4006309c34997824c3344efaa3b8a388cd8570f25b073885627d93c84ce6d0",
+    "research/nomad_phase15/evaluate.py": "b1147d50f0a7dce3e2146fe66981caad7ec7366d5a096b3bd99eb37e0224e8f4",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919"
+  }
+}

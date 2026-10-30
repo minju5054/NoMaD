@@ -62,3 +62,40 @@ def render(out,events,solutions,verdict,examples,accuracy,excluded,sha,protocol)
     text+='This is a post-hoc saved-input recheck. Changed control, new NoMaD observations, future depth updates during the detour and online compute contention are absent. Only a new driving experiment can establish effects on navigation.\n\n'
     text+='## Fixed protocol\n\n```json\n'+json.dumps(protocol,indent=2,ensure_ascii=False)+'\n```\n'
     with (ROOT/'docs/PHASE20C_SHADOW_RECHECK.md').open('x') as f:f.write(text)
+    append_saved_diagnostics(out)
+
+
+def append_saved_diagnostics(out):
+    from nomad_phase19s.evaluate import csv_rows
+    from nomad_phase2.config import native_safety
+    from nomad_phase19r.evaluate import dump,stats
+    configs={e['event_id']:e['oracle_config'] for e in json.loads((out/'events_before_solve.json').read_text())}
+    events={e['event_id']:e for e in csv_rows(out/'events.csv')};accepted=[];bad=[];overheads=[]
+    with (out/'solutions.jsonl').open() as stream:
+        for line in stream:
+            r=json.loads(line)
+            if r.get('solver_wall_s') is not None:overheads.append(r['attempt_wall_s']-r['solver_wall_s'])
+            if not r['accepted']:continue
+            selected=events[r['event_id']]['selected_initialization']==r['initialization']
+            accepted.append(dict(selected=selected,unknown=r['unknown_fraction'],near_unknown=r['near_unknown_fraction'],far_unknown=r['far_unknown_fraction']))
+            if r['oracle_clearance_m']<0:
+                s=native_safety(r['path'],configs[r['event_id']]);box=s['minimum_clearance_m'] is not None and s['minimum_clearance_m']<0;wall=s['corridor_clearance_m']<0
+                bad.append(dict(event_id=r['event_id'],initialization=r['initialization'],selected=selected,
+                    kind='BOX_AND_CORRIDOR' if box and wall else 'BOX' if box else 'CORRIDOR',oracle_clearance_m=r['oracle_clearance_m'],
+                    depth_clearance_m=r['depth_clearance_m'],unknown_fraction=r['unknown_fraction'],near_unknown_fraction=r['near_unknown_fraction'],far_unknown_fraction=r['far_unknown_fraction']))
+    csv_write(out/'penetration_diagnostics.csv',bad)
+    summaries=[]
+    for scope,rr in [('all_accepted',accepted),('selected',[r for r in accepted if r['selected']])]:
+        summaries.append(dict(scope=scope,paths=len(rr),paths_with_unknown=sum(r['unknown']>0 for r in rr),
+            path_mean_unknown_fraction=float(np.mean([r['unknown'] for r in rr])) if rr else None,
+            maximum_unknown_fraction=max((r['unknown'] for r in rr),default=None),maximum_far_unknown_fraction=max((r['far_unknown'] for r in rr),default=None)))
+    dump(out/'unknown_summary.json',summaries)
+    text='## Saved-result diagnostics (no additional solves)\n\n'
+    text+=f"Accepted path failures: {dict(Counter(r['kind'] for r in bad))}; selected path failures: {dict(Counter(r['kind'] for r in bad if r['selected']))}.\n\n"
+    text+=table([r for r in bad if r['selected']])+'\n\n'+table(summaries)+'\n\n'
+    text+='The remaining penetrating paths have unknown fraction0 under the updated observation mask. Marking unknown as occupied therefore does not eliminate these observed-but-optimistic map errors; the data do not identify one unique cause of those errors.\n\n'
+    text+='Post-optimizer validation/statistics overhead per initialized solve: `'+json.dumps(stats(overheads))+'` seconds. This includes the unchanged exact certificate over the much denser occupied+unknown set; it is not an isolated certificate benchmark. No timing optimization was applied after seeing the result.\n\n'
+    doc=ROOT/'docs/PHASE20C_SHADOW_RECHECK.md';body=doc.read_text();marker='## Status and limits'
+    assert marker in body and '## Saved-result diagnostics' not in body
+    doc.write_text(body.replace(marker,text+marker))
+    dump(out/'presentation.json',dict(additional_solves=0,additional_rollouts=0,additional_map_replays=0,change='Separate remaining box failures, unknown ratios and postsolve overhead',report_sha256=sha256_file(__file__)))
