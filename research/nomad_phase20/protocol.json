@@ -1,7 +1,7 @@
 {
   "phase": 20,
   "base_commit": "385e086",
-  "status": "POSTHOC_RECHECK_FROZEN",
+  "status": "FROZEN",
   "label_scope": "파일럿",
   "scenes": [
     "SO"
@@ -143,7 +143,14 @@
     "noise_sigma": "0.01*d^2",
     "unknown": "not occupied",
     "odometry": "exact simulator pose",
-    "oracle_controller_input": false
+    "oracle_controller_input": false,
+    "allocation_bounds_m": [
+      -4.0,
+      -3.5,
+      12.0,
+      6.2
+    ],
+    "allocation_note": "SO x extent is longer than Phase16; extend xmax8 to12 to cover corridor and3m sensor range; map resolution, occupancy/noise rules unchanged; no oracle wall occupancy inserted"
   },
   "SO": {
     "source_scenario": "research/nomad_phase2/scenario.json",
@@ -202,7 +209,9 @@
       "depth observation",
       "ALL_UNSAFE",
       "repair attempt"
-    ]
+    ],
+    "delay_s": 0.0,
+    "index": 901
   },
   "campaign": "only after READY and smoke; reuse Phase18 serial/restart-without-retry/lock/socket checks; user launches main, no assistant main navigation",
   "protected_sha256": {
@@ -219,11 +228,34 @@
     "research/nomad_phase17/execution.py": "6f2fbeaad9be6684159276da53b010a1604b8d70f72443cddbbac8ba7b926fa5",
     "research/nomad_phase18/campaign.py": "3492de134860e6c4c211bd43a2faba7db4bd7c2ddc16b9314994c2115e3709b2",
     "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
-    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d"
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c",
+    "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58",
+    "research/nomad_isaac/sudden_obstacle.py": "b09df2ce44e7a8c097aebed342fe9493964cc8c63d5d845fd749eaa20dc21b02",
+    "research/nomad_phase2/config.py": "be623b0edd9359de14d18f4e86eaa6d1cae97970a62d4c8890eccea491bc6240",
+    "research/nomad_phase17/recovery.py": "a0d610e4a6c31028b83768086097c3fb0e8f858df55041e68203d463c3f4f503",
+    "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d"
   },
   "assessment_label": "사후 수정 후 재점검",
   "authorized_changes": [
     "Nonnegative near-start threshold and matching certificate; reject c_B<0",
     "Moving>=45deg departure alignment; retain stopped>=20deg, log braking/rotation"
-  ]
+  ],
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "topomaps": {
+    "SO": {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "node_count": 21
+    }
+  },
+  "online_repair_details": {
+    "one_outstanding": true,
+    "deadline_wall_s": 0.5,
+    "new_FRESH": "supersedes pending old repair; then normal shared selection",
+    "worker_still_busy": "do not queue another solve; apply common fallback and log WORKER_BUSY_FALLBACK",
+    "result_B": "dispatch actual pose; original world path never reanchored; actual application pose and displacement logged",
+    "oracle_gate": "not instantiated, no geometry publication calls; rendering/placement/collision monitoring only"
+  },
+  "timeout_execution": "unchanged1s core validity; expired path not followed, actual command decelerates to0 at0.5m/s2; alignment braking and rotation separately timed"
 }

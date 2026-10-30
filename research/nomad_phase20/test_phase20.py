@@ -1,4 +1,7 @@
 import unittest
+import tempfile,time,json
+from pathlib import Path
+from types import SimpleNamespace
 import numpy as np
 from nomad_phase19r.repair import RepairGraph,initialize
 from nomad_phase19r.test_repair import synthetic
@@ -72,6 +75,41 @@ class Tests(unittest.TestCase):
             old=simulate([0,0,0],xy,v,'SRG',ticks=108)
             np.testing.assert_array_equal(r['poses'],old['poses'])
             self.assertEqual(r['trigger_P'],0)
+
+    def test_repair_deadline_and_no_queued_retry(self):
+        from .worker import disposition
+        self.assertEqual(disposition(None,0,499_000_000),'WAIT')
+        self.assertEqual(disposition(None,0,501_000_000),'TIMEOUT')
+        self.assertEqual(disposition(dict(end_ns=499_000_000,selected_sample=0),0,555_000_000),'ACCEPTED')
+        self.assertEqual(disposition(dict(end_ns=501_000_000,selected_sample=0),0,555_000_000),'TIMEOUT')
+
+    def test_runtime_safe_path_and_timeout(self):
+        from .runtime import Execution
+        for method in ('M1_ROTATE','M2_REPAIR'):
+            with tempfile.TemporaryDirectory() as folder:
+                ex=Execution(method,Path(folder));field=synthetic();ex.depth_maps=SimpleNamespace(snapshot=lambda:field)
+                core=SimpleNamespace(pose=np.array([0.,0.,0.]),v=.1,w=0.)
+                refresh=dict(valid=True,monotonic_ns=time.monotonic_ns(),simulation_time_s=0.)
+                xy=np.c_[np.linspace(.05,.5,8),np.zeros(8)]
+                switch=dict(id=0,observation_pose=[0,0,0],observation_sim_s=0.,overnight_metric_samples=np.repeat(xy[None],8,axis=0).tolist())
+                ex.apply(core,refresh,switch);self.assertEqual(ex.mode,'NORMAL');self.assertEqual(ex.next_repair,0)
+                self.assertEqual(ex.sp.plan_generation,1);self.assertAlmostEqual(core.v,.5/9)
+                if method=='M2_REPAIR':
+                    ex.repair_pending=dict(job_id=0,id=0,dispatch_ns=time.monotonic_ns()-600_000_000,B=[0,0,0])
+                    status=ex.collect_repair(core,refresh,None);self.assertEqual(status,'TIMEOUT');self.assertIsNone(ex.repair_pending)
+                ex.close()
+
+    def test_main_matrix_sockets_and_fake_report(self):
+        from .campaign import plan_jobs
+        from .report import render_main,main_groups,main_decision
+        jobs=plan_jobs(Path('/tmp/phase20-test-'+'x'*90));self.assertEqual(len(jobs),12)
+        self.assertTrue(all(j['socket_bytes']<100 for j in jobs))
+        records=[dict(**j,technical_validation='PASS',success=(j['index']<77 if j['method']=='M1_ROTATE' else j['index']<79),
+            safety_failure=False,collision=False,corridor=False,stuck=False,stopped_fraction=.2,box_passage_time_s=12.,classification='STUCK') for j in jobs]
+        self.assertEqual(main_decision(main_groups(records))['label'],'REPAIR_BETTER_SO')
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);render_main(records,root,root/'result',root/'report.md',figures=False)
+            self.assertTrue((root/'result/decisions.json').exists());self.assertIn('REPAIR_BETTER_SO',(root/'report.md').read_text())
 
 
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,229 @@
+{
+  "phase": 20,
+  "base_commit": "385e086",
+  "status": "POSTHOC_RECHECK_FROZEN",
+  "label_scope": "\ud30c\uc77c\ub7ff",
+  "scenes": [
+    "SO"
+  ],
+  "methods": [
+    "M1_ROTATE",
+    "M2_REPAIR"
+  ],
+  "indices": [
+    74,
+    75,
+    76,
+    77,
+    78,
+    79
+  ],
+  "main_order": [
+    {
+      "scene": "SO",
+      "index": 74,
+      "method": "M2_REPAIR",
+      "seed_offset": 740000
+    },
+    {
+      "scene": "SO",
+      "index": 74,
+      "method": "M1_ROTATE",
+      "seed_offset": 740000
+    },
+    {
+      "scene": "SO",
+      "index": 75,
+      "method": "M1_ROTATE",
+      "seed_offset": 750000
+    },
+    {
+      "scene": "SO",
+      "index": 75,
+      "method": "M2_REPAIR",
+      "seed_offset": 750000
+    },
+    {
+      "scene": "SO",
+      "index": 76,
+      "method": "M2_REPAIR",
+      "seed_offset": 760000
+    },
+    {
+      "scene": "SO",
+      "index": 76,
+      "method": "M1_ROTATE",
+      "seed_offset": 760000
+    },
+    {
+      "scene": "SO",
+      "index": 77,
+      "method": "M1_ROTATE",
+      "seed_offset": 770000
+    },
+    {
+      "scene": "SO",
+      "index": 77,
+      "method": "M2_REPAIR",
+      "seed_offset": 770000
+    },
+    {
+      "scene": "SO",
+      "index": 78,
+      "method": "M1_ROTATE",
+      "seed_offset": 780000
+    },
+    {
+      "scene": "SO",
+      "index": 78,
+      "method": "M2_REPAIR",
+      "seed_offset": 780000
+    },
+    {
+      "scene": "SO",
+      "index": 79,
+      "method": "M1_ROTATE",
+      "seed_offset": 790000
+    },
+    {
+      "scene": "SO",
+      "index": 79,
+      "method": "M2_REPAIR",
+      "seed_offset": 790000
+    }
+  ],
+  "navigation_count": 12,
+  "shuffle_seed": 20261031,
+  "offline": {
+    "source_events": "research/results/phase19r/events_eval.csv",
+    "events": 241,
+    "order": "unchanged CSV order; samples 0 through 7",
+    "sample_attempts": 1,
+    "retries": 0,
+    "R2": "R inherited unchanged except piecewise start safety threshold and certificate",
+    "c_B": "depth SDF(B) minus h/sqrt(2), same conservative footprint convention as Phase16D/19R",
+    "near_region_m": 0.3,
+    "near_threshold": "min(.025,max(0,c_B-.005))",
+    "far_threshold_m": 0.025,
+    "zone_membership": "current optimized cumulative arclength at each of63 inspection points, not frozen initial mask",
+    "jacobian": "analytic within each zone; hard nonsmooth threshold at .30m, no smoothing/tuning",
+    "certificate": "continuous split at .30m; exact occupied-site distance minus radius; split point checked by both near and far certificates",
+    "selection": "minimum mean edit over8 resampled points among accepted; lower index tie",
+    "rollout": "SP + trigger S only, actual event speed and heading; 108 integration ticks; oracle-passive evaluation",
+    "readiness": {
+      "selected_oracle_penetrations_equal": 0,
+      "selected_rollout_overlap_fraction_max": 0.07,
+      "eligible_sample_solve_p95_s_max": 0.2
+    },
+    "missing_repair_evidence": "NOT_READY, no fabricated zero-risk rate",
+    "diagnosis_0b": "same six previously colliding repaired paths; original diagnosis retained, new alignment evaluated",
+    "negative_depth_B": "If c_B<0, reject before solve and use existing fallback"
+  },
+  "control": {
+    "lookahead_m": 0.25,
+    "vmax_m_s": 0.3,
+    "omega_max_rad_s": 0.4,
+    "acceleration_m_s2": 0.5,
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "integration_hz": 72,
+    "waypoint_timeout_s": 1,
+    "navigation_timeout_s": 90,
+    "delivery_delay_ms": 750,
+    "speed": "protected Phase18D SP; rebuild on path replacement",
+    "start_alignment": "On new path: heading error>=45deg at any speed; if v<.01 retain20deg; bounded braking then in-place |w|<=.4",
+    "pivot_trigger_P": false,
+    "fallback": "Phase16 KEEP_ACTIVE / STOP_WAIT",
+    "recovery": "Phase17 RECOVER_ROTATE (30deg, .3rad/s, maximum12 per run)"
+  },
+  "M1": "No ordinary Graph; shared depth FRESHEST-SAFE selection, SP+S, KEEP/STOP/ROTATE",
+  "M2": "ALL_UNSAFE -> serial eight-sample R2 in one CPU worker while STOP_WAIT; min-edit accepted repair, S alignment then follow; timeout .5s -> shared M1 fallback; no ordinary Graph",
+  "depth": {
+    "variant": "15A2 V1",
+    "noise_sigma": "0.01*d^2",
+    "unknown": "not occupied",
+    "odometry": "exact simulator pose",
+    "oracle_controller_input": false
+  },
+  "SO": {
+    "source_scenario": "research/nomad_phase2/scenario.json",
+    "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+    "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+    "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "nodes": 21,
+    "placement": {
+      "trigger_x": [
+        2.0,
+        2.1
+      ],
+      "distance_m": 1.2,
+      "size": [
+        0.35,
+        0.35,
+        0.8
+      ],
+      "y_offset_m": 0.15,
+      "y_clamp": [
+        -0.925,
+        0.925
+      ],
+      "s": "odd +1; even -1"
+    },
+    "oracle_publication": false,
+    "evaluation_dynamic_geometry": true,
+    "success_gate": false
+  },
+  "seed_rule": "inference=101+10000*index+2*request_id; DDPM=inference+1",
+  "navigation_verdict": {
+    "priority": [
+      "REPAIR_BETTER_SO",
+      "REPAIR_WORSE_SO",
+      "REPAIR_EQUAL_SO"
+    ],
+    "better": "success(M2)>=success(M1)+2 AND safety_failure(M2)<=safety_failure(M1)",
+    "worse": "success(M2)<=success(M1)-2 OR safety_failure(M2)>=safety_failure(M1)+2",
+    "safety_failure": "obstacle collision or corridor intrusion",
+    "auxiliary_noninferiority_removed": true,
+    "paired_descriptive": [
+      "SO stopped-time fraction M2-M1",
+      "SO box-passage time M2-M1"
+    ],
+    "bootstrap_replicates": 20000,
+    "bootstrap_seed": 20261031
+  },
+  "smoke": {
+    "scene": "SO",
+    "method": "M2_REPAIR",
+    "seconds": 30,
+    "count": 1,
+    "excluded_from_main": true,
+    "required_events": [
+      "spawn",
+      "depth observation",
+      "ALL_UNSAFE",
+      "repair attempt"
+    ]
+  },
+  "campaign": "only after READY and smoke; reuse Phase18 serial/restart-without-retry/lock/socket checks; user launches main, no assistant main navigation",
+  "protected_sha256": {
+    "research/nomad_phase19r/repair.py": "01314bdc267cfda557275f5ba5844e4433eea2ac86bfbdf9c8ea7f2b04eb516a",
+    "research/nomad_phase19r/evaluate.py": "7520b87af37728e5e192021ef9290183f866e9b91c6327a4937628a6ad2b2f3c",
+    "research/nomad_phase19s/srg.py": "865c8d457604da192bf86e1d911cec0ca006efe6c1143cbb361269c33ba70054",
+    "research/nomad_phase18d/rollout.py": "1cd7b1bdbd3139369ef7c3c36839923afa8b09c0d09bcf55f4b0076d3728798f",
+    "research/nomad_phase18d/speed_profile.py": "912432a9458db68799f2a2603643f03c74cf5a254f5ee713104ab4ba3f572629",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/chunk_execution.py": "b93858c5a16818ea1c406f3b1c25142baeb6d2abc3c47a6c3222376961a142c8",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase17/execution.py": "6f2fbeaad9be6684159276da53b010a1604b8d70f72443cddbbac8ba7b926fa5",
+    "research/nomad_phase18/campaign.py": "3492de134860e6c4c211bd43a2faba7db4bd7c2ddc16b9314994c2115e3709b2",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d"
+  },
+  "assessment_label": "\uc0ac\ud6c4 \uc218\uc815 \ud6c4 \uc7ac\uc810\uac80",
+  "authorized_changes": [
+    "Nonnegative near-start threshold and matching certificate; reject c_B<0",
+    "Moving>=45deg departure alignment; retain stopped>=20deg, log braking/rotation"
+  ]
+}
