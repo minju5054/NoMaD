@@ -5,7 +5,7 @@ from collections import Counter
 import numpy as np
 from PIL import Image
 from nomad_isaac.common import integrate_se2,local_to_world,sha256_file
-from nomad_isaac.clearance import obstacle_bounds,single_obstacle_config,swept_clearance
+from nomad_isaac.clearance import obstacle_bounds,single_obstacle_config,swept_clearance,corridor_clearance
 from nomad_phase0.chunk_report import trace
 from nomad_phase0.s0_batch_metrics import corridor_arc_minimum
 from nomad_isaac.topomap import candidate_range,select_subgoal
@@ -83,11 +83,14 @@ def audit(run):
             gap_error=max(gap_error,abs(g['lower_m']-gaps[i]['lower_m']))
         assert gap_error<1e-9
         minimum=min(r['lower_m'] for r in gaps);collision=any(r['geometric_overlap'] for r in gaps)
-    wall_min=min(r['corridor_lower_m'] for r in walls);corridor=wall_min<=0
+    wall_min=min(r['corridor_lower_m'] for r in walls);wall_exact_min=float('inf')
     for tick,r in enumerate(walls):
         v,w=(float(rec[tick][k]) for k in ('v_m_s','w_rad_s'))
+        bounded=corridor_clearance(poses[max(0,tick-1)],poses[tick],v,w,1/72 if tick else 0,c['corridor'],c['agent_radius_m'])
+        assert abs(bounded-r['corridor_lower_m'])<1e-12
         exact=corridor_arc_minimum(poses[max(0,tick-1)],v,w,1/72 if tick else 0,c['corridor'],c['agent_radius_m'])
-        assert abs(exact-r['corridor_lower_m'])<1e-9
+        wall_exact_min=min(wall_exact_min,exact)
+    corridor=wall_exact_min<=0
     visible=next((o for o in obs if o.get('dynamic',{}).get('visible')),None);depth_seen=None;map_seen=None
     if spawn:
         for o in obs:
@@ -107,21 +110,24 @@ def audit(run):
     attempts=[r for r in repairs if r['event']=='SUBMIT'];results=[r for r in repairs if r['event']=='RESULT'];counts=Counter(r['disposition'] for r in results)
     assert not any(r['disposition']=='ERROR' for r in results)
     outcomes=[r for r in repairs if r['event']=='FIRST_FRESH_AFTER_REPAIR']
-    duration=s['simulation_duration_s'];mode_seconds=Counter()
+    duration=s['simulation_duration_s'];mode_seconds=Counter();repair_follow_s=0.;active_kind=None
     for tick in range(1,len(rec)):
+        control_tick=((tick-1)//8)*8
+        if control_tick in apply:active_kind=apply[control_tick]['kind']
         source=commands[(tick-1)//8]['source'];mode_seconds[source]+=1/72
+        if active_kind=='REPAIR' and source in ('NORMAL','KEEP_ACTIVE','REPAIR'):repair_follow_s+=1/72
     stopped=sum(mode_seconds[k] for k in ('STOP_WAIT','REPAIR_WAIT','RECOVER_ROTATE','WAIT_FRESH'))
     success=bool(s['goal_entry'] and not collision and not corridor)
     invalid=placement and placement['status']=='PLACEMENT_INVALID'
     classification='PLACEMENT_INVALID' if invalid else 'SAFETY_FAILURE' if collision or corridor else 'SUCCESS' if success else 'STUCK' if s['termination_reason'] in ('simulation_timeout','navigation_wall_timeout') else 'STOPPED_NO_OVERLAP'
     return dict(technical_validation='PASS',success=success,classification=classification,collision=collision,corridor=corridor,stuck=classification=='STUCK',
         safety_failure=collision or corridor,termination_reason=s['termination_reason'],duration_s=duration,goal_time_s=duration if success else None,
-        minimum_clearance_m=minimum,minimum_wall_clearance_m=wall_min,distance_m=s['distance_travelled_m'],stopped_fraction=stopped/duration if duration else 0.,
+        minimum_clearance_m=minimum,minimum_wall_clearance_m=wall_exact_min,minimum_monitor_wall_bound_m=wall_min,distance_m=s['distance_travelled_m'],stopped_fraction=stopped/duration if duration else 0.,
         actual_zero_speed_fraction=sum(abs(float(r['v_m_s']))<.01 for r in rec[1:])/max(1,len(rec)-1),mode_seconds=dict(mode_seconds),
         alignment_count=sum(r['event']=='PATH_APPLIED' and r['alignment'] for r in repairs),alignment_braking_s=mode_seconds['ALIGN_BRAKE'],alignment_rotation_s=mode_seconds['ALIGN_ROTATE'],
         all_unsafe=sum(e.get('phase16',{}).get('selection',{}).get('all_unsafe',False) for e in events),recovery_count=sum(r['event']=='START' for r in recovery),
         repair_attempts=len(attempts),repair_accepted=counts['ACCEPTED'],repair_rejected=counts['REJECTED'],repair_timeout=counts['TIMEOUT'],repair_dispositions=dict(counts),
-        repair_acceptance=counts['ACCEPTED']/len(attempts) if attempts else None,repair_execution_s=mode_seconds['REPAIR'],
+        repair_acceptance=counts['ACCEPTED']/len(attempts) if attempts else None,repair_execution_s=repair_follow_s,
         repair_resolved_all_unsafe_fraction=counts['ACCEPTED']/sum(e.get('phase16',{}).get('selection',{}).get('all_unsafe',False) for e in events) if any(e.get('phase16',{}).get('selection',{}).get('all_unsafe',False) for e in events) else None,
         post_repair_safe_count=sum(r['safe_sample_count']>0 for r in outcomes),post_repair_fresh_count=len(outcomes),
         repair_wall_s=stats([r['wait_s'] for r in results]),spawn_s=spawn['simulation_time_s'] if spawn else None,

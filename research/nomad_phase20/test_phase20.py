@@ -111,5 +111,20 @@ class Tests(unittest.TestCase):
             root=Path(d);render_main(records,root,root/'result',root/'report.md',figures=False)
             self.assertTrue((root/'result/decisions.json').exists());self.assertIn('REPAIR_BETTER_SO',(root/'report.md').read_text())
 
+    def test_accepted_repair_drives_actual_plant(self):
+        from .runtime import Execution
+        with tempfile.TemporaryDirectory() as folder:
+            ex=Execution('M2_REPAIR',Path(folder));field=synthetic();ex.depth_maps=SimpleNamespace(snapshot=lambda:field);ex.snapshot=field
+            now=time.monotonic_ns();path=[[0,0],[.1,0],[.3,0]]
+            pending=[dict(job_id=0,start_ns=now-100_000_000,end_ns=now-1_000_000,selected_sample=0,results=[dict(path=path)])]
+            ex.repair_worker=SimpleNamespace(poll=lambda:pending.pop() if pending else None,close=lambda:None)
+            ex.repair_pending=dict(job_id=0,id=0,B=[0,0,0],dispatch_ns=now-100_000_000);ex.active_id=0
+            core=SimpleNamespace(pose=np.array([0.,0.,0.]),v=0.,w=0.)
+            refresh=dict(valid=True,monotonic_ns=now,simulation_time_s=0.)
+            ex.apply(core,refresh,None)
+            self.assertTrue(ex.repair_active);self.assertEqual(refresh['phase20']['source'],'REPAIR')
+            self.assertGreater(core.v,0.);ex.plant.integrate(core,1);self.assertGreater(core.pose[0],0.)
+            self.assertEqual(ex.sp.plan_generation,1);ex.close()
+
 
 if __name__=='__main__':unittest.main()
