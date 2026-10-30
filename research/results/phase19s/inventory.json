@@ -1,0 +1,53 @@
+{
+  "case_count": 2200,
+  "expected_rollouts": 4400,
+  "examples": {
+    "slw": {
+      "dataset": "EXAMPLE_ONLY",
+      "event_id": "SLW_066_D750_FRESHEST-SAFE+GRAPH-depth:F28",
+      "run": "SLW_066_D750_FRESHEST-SAFE+GRAPH-depth",
+      "scene": "SLW",
+      "index": 66,
+      "fresh_id": 28,
+      "path_type": "NORMAL",
+      "common": false,
+      "B": [
+        1.6977954215394235,
+        0.6706210298260761,
+        3.107802299757335
+      ],
+      "previous_v": 0.3
+    },
+    "repair": {
+      "dataset": "D3",
+      "event_id": 8,
+      "run": "SLW_066_D750_FRESHEST-SAFE+GRAPH-depth",
+      "scene": "SLW",
+      "index": 66,
+      "fresh_id": 8,
+      "path_type": "REPAIR",
+      "common": true,
+      "B": [
+        1.6664561889871812,
+        -0.7529137850081349,
+        -0.8435993125183927
+      ],
+      "previous_v": 0.0,
+      "cause": "TRUE_BLOCK",
+      "selected_sample": 1
+    }
+  },
+  "dataset_path_counts": {
+    "D2": 670,
+    "D1": 685,
+    "D3": 90,
+    "D4": 755
+  },
+  "common_event_counts": {
+    "D1": 85,
+    "D2": 166
+  },
+  "unavailable_path_rows": 352,
+  "slw_example_scope": "First Phase18D FINAL_CAUSE UNDERTURN_EXECUTION row; supplemental saved active path, not added to denominators",
+  "repair_example_scope": "First Phase19R evaluation success with saved 1.5s SP overlap, event order fixed before new execution"
+}

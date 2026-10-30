@@ -214,6 +214,9 @@ def run(out):
 def publish(out):
     assert (out/'complete.json').exists()
     assert not subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip()
+    ignore=out/'.gitignore'
+    if ignore.exists():assert ignore.read_text()=='/rollouts.jsonl\n'
+    else:ignore.write_text('/rollouts.jsonl\n')
     subprocess.run(['git','add','--','research/nomad_phase19s',str(out.relative_to(ROOT)),'docs/PHASE19S_STOP_ROTATE_GO.md'],cwd=ROOT,check=True)
     subprocess.run(['git','add','-f','--',*[str(p.relative_to(ROOT)) for p in out.glob('*.png')]],cwd=ROOT,check=True)
     if subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip():
@@ -228,6 +231,8 @@ def main():
         render(OUT,csv_rows(OUT/'rollouts.csv'),csv_rows(OUT/'summary.csv'),csv_rows(OUT/'time_pairs.csv'),csv_rows(OUT/'time_summary.csv'),
                json.loads((OUT/'decision.json').read_text()),json.loads((OUT/'examples.json').read_text()),json.loads((OUT/'protocol.json').read_text()),
                json.loads((OUT/'complete.json').read_text())['git_sha'],json.loads((OUT/'verification.json').read_text()),replace=True)
+        dump(OUT/'presentation.json',dict(additional_rollouts=0,changes='Shared figure scales; distinguish post-overlap continuation; expose trigger coverage and censored time pairs',
+                                        report_sha256=sha256_file(HERE/'report.py'),numerical_execution_sha=json.loads((OUT/'complete.json').read_text())['git_sha']))
     elif OUT.exists():assert (OUT/'complete.json').exists(),'Partial output preserved; no automatic restart'
     else:run(OUT)
     if args.publish:publish(OUT)
