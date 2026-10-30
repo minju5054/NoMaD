@@ -57,9 +57,10 @@ def render(records,out,doc,make_figures=True):
     out=Path(out);out.mkdir(parents=True,exist_ok=True);summary=groups(records);verdict=decisions(summary)
     for name,value in [('runs',records),('decisions',verdict)]: (out/f'{name}.json').write_text(json.dumps(clean(value),indent=2,ensure_ascii=False)+'\n')
     (out/'summary.csv').unlink(missing_ok=True);csv_write(out/'summary.csv',summary)
+    visualization=[]
     if make_figures:
         from .visualize import generate
-        generate(records,out)
+        visualization=generate(records,out)
     text='# Phase 20-D — recent-depth detour / '+protocol()['pilot_label']+'\n\n'
     text+=f"Protocol SHA256 `{sha256_file(ROOT/'research/nomad_phase20d/protocol.json')}`. New seeds86–88; D750; L2/L3;12 sequential trials, no retries.\n\n"
     text+=preflight_text()
@@ -69,8 +70,17 @@ def render(records,out,doc,make_figures=True):
     text+='## Technical failures\n\n'+table([r for r in records if r.get('technical_validation')!='PASS'],['scene','index','method','output','error'])+'\n\n'
     text+='R3 wait/execution defers new NoMaD path application while preserving all packets; the independent action ends at endpoint,6s or a failed current-depth check. R2/R3 share four CPU processes. The1s deadline includes serialization, EDT/cache preparation, scheduling and solving; late results are preserved but not applied. No oracle geometry is provided to the controller. Exact simulator pose is assumed (no odometry error).\n\n'
     text+='Detour outcomes are descriptive: box passage after an application is associated with that action, not attributed causally; first nondeferred FRESH progress recovery means selected endpoint projected on job u_ref≥0.2m. Missing outcomes are censored. Gray thick trajectory segments mark publication gaps≥0.5s, not proof of unsafe control. Orange dashed paths are actually applied detours; diamonds mark NO_PROGRESS.\n\n'
+    text+='## Visualization availability\n\n'
+    for case in visualization:
+        if case['missing']:
+            reason='; '.join(r['method']+': '+r['reason'] for r in case['missing'])
+            action='All seed figures skipped (both runs unavailable)' if case['skipped'] else 'Unavailable panels display TECHNICAL_FAILURE (no data)'
+            text+=f"- {case['scene']}/{case['index']}: {action}. {reason}\n"
+    text+='\n'
+    skipped={(r['scene'],r['index']) for r in visualization if r['skipped']}
     for level in ('L2','L3'):
         for i in (86,87,88):
+            if (level,i) in skipped:continue
             for ext in ('png','gif'):text+=f'![{level}/{i}](../research/results/phase20d/drive_{level}_{i}.{ext})\n\n'
     text+='This is an exploratory pilot after repeated offline changes on the same saved data, not a confirmatory study. Old Phase20/20B outcomes are not reinterpreted.\n'
     doc.parent.mkdir(exist_ok=True);doc.write_text(text);return verdict

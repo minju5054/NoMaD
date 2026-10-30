@@ -17,14 +17,40 @@ from .config import protocol,runtime_config,place
 
 COLORS={'M1_ROTATE':'tab:blue','M3_DETOUR':'tab:orange'}
 
-def load(record):
+NO_DATA='TECHNICAL_FAILURE (no data)'
+REQUIRED=('summary.json','agent_trajectory.csv','events.jsonl','repair.jsonl','recovery.jsonl',
+          'phase20_commands.jsonl','depth/updates.jsonl','detour.jsonl','observations.jsonl')
+
+
+def blank_panel(ax,method):
+    ax.clear();ax.set_axis_off();ax.set_title(method,fontsize=9)
+    ax.text(.5,.5,NO_DATA,transform=ax.transAxes,ha='center',va='center',fontsize=10)
+
+
+def load(record,issues=None):
     run=Path(record['output'])
-    if not (run/'agent_trajectory.csv').exists():return None
-    rr,poses=trace(run);t=np.array([float(r['simulation_time_s']) for r in rr])
-    spawn=json.loads((run/'dynamic/spawn.json').read_text()) if (run/'dynamic/spawn.json').exists() else None
-    return dict(record=record,run=run,poses=poses,t=t,spawn=spawn,events=rows(run/'events.jsonl'),repairs=rows(run/'repair.jsonl'),
-                recovery=rows(run/'recovery.jsonl'),commands=rows(run/'phase20_commands.jsonl'),updates=rows(run/'depth/updates.jsonl'),
-                detours=rows(run/'detour.jsonl'),observations=[r for r in rows(run/'observations.jsonl') if 'observation_id' in r],snapshot_cache={})
+    def unavailable(reason):
+        if issues is not None:issues.append(dict(method=record['method'],output=str(run),reason=reason))
+        return None
+    missing=[name for name in REQUIRED if not (run/name).is_file()]
+    if missing:return unavailable('Missing required files: '+', '.join(missing))
+    try:
+        summary=json.loads((run/'summary.json').read_text());epoch=int(summary['epoch_monotonic_ns'])
+        rr,poses=trace(run);t=np.array([float(r['simulation_time_s']) for r in rr])
+        if not len(t) or not np.isfinite(poses).all() or not np.isfinite(t).all():return unavailable('Empty or invalid pose trace')
+        spawn=json.loads((run/'dynamic/spawn.json').read_text()) if (run/'dynamic/spawn.json').exists() else None
+        data=dict(record=record,run=run,poses=poses,t=t,spawn=spawn,epoch_ns=epoch,events=rows(run/'events.jsonl'),repairs=rows(run/'repair.jsonl'),
+            recovery=rows(run/'recovery.jsonl'),commands=rows(run/'phase20_commands.jsonl'),updates=rows(run/'depth/updates.jsonl'),
+            detours=rows(run/'detour.jsonl'),observations=[r for r in rows(run/'observations.jsonl') if 'observation_id' in r],snapshot_cache={})
+        if not data['commands']:return unavailable('Empty command log')
+        if not data['observations']:return unavailable('No saved RGB observation records')
+        required=[Path(u['file']) for u in data['updates']]+[run/o['rgb_file'] for o in data['observations']]
+        absent=[str(f) for f in required if not f.is_file()]
+        if absent:return unavailable(f'Missing referenced depth/RGB files ({len(absent)}): '+', '.join(absent[:3]))
+        return data
+    except (OSError,ValueError,KeyError,TypeError) as exc:
+        return unavailable('Unreadable required visualization input: '+str(exc))
+
 
 def occupancy(data,update):
     if update is None:return np.empty((0,2))
@@ -76,11 +102,12 @@ def scene_levels(out):
     fig.savefig(out/'scene_levels.png',dpi=140);plt.close(fig)
 
 def pair_plot(level,seed,data,out):
+    if not any(data.get(m) for m in COLORS):return False
     fig,axes=plt.subplots(1,2,figsize=(16,5.4),constrained_layout=True)
     maximum=max((d['t'][-1] for d in data.values() if d),default=90.);norm=Normalize(0,maximum)
     for ax,method in zip(axes,COLORS):
         walls(ax);d=data.get(method)
-        if d is None:ax.set_title(f'{method}: no saved run');continue
+        if d is None:blank_panel(ax,method);continue
         cloud=occupancy(d,first_box_map(d))
         if len(cloud):ax.scatter(cloud[:,0],cloud[:,1],s=1,c='.65',alpha=.45,label='First map showing box')
         if d['spawn']:
@@ -121,11 +148,11 @@ def pair_plot(level,seed,data,out):
     fig.savefig(out/f'drive_{level}_{seed}.png',dpi=140);plt.close(fig)
 
 def pair_gif(level,seed,data,out):
+    if not any(data.get(m) for m in COLORS):return False
     fig,axes=plt.subplots(1,2,figsize=(12,3.4),dpi=90,constrained_layout=True);artists={}
     for ax,method in zip(axes,COLORS):
         walls(ax);d=data.get(method)
-        if d is None:ax.set_title(f'{method}: no saved run');continue
-        summary=json.loads((d['run']/'summary.json').read_text());d['epoch_ns']=summary['epoch_monotonic_ns']
+        if d is None:blank_panel(ax,method);continue
         cloud=ax.scatter([],[],s=1,c='.65',alpha=.4);route,=ax.plot([],[],'--',c='purple',lw=1);trail,=ax.plot([],[],c=COLORS[method],lw=1)
         circle=Circle(d['poses'][0,:2],.09,color=COLORS[method],alpha=.65);ax.add_patch(circle)
         arrow=FancyArrowPatch((0,0),(.2,0),arrowstyle='->',mutation_scale=12,color='black');ax.add_patch(arrow)
@@ -163,12 +190,14 @@ def pair_gif(level,seed,data,out):
     plt.close(fig)
 
 def rgb_strip(level,seed,data,out):
+    if not any(data.get(m) for m in COLORS):return False
     fig,axes=plt.subplots(2,6,figsize=(13,4.8),constrained_layout=True)
     for row,method in enumerate(COLORS):
         d=data.get(method)
         for k,ax in enumerate(axes[row]):
             ax.axis('off')
-            if d is None or not d['spawn']:ax.set_title(f'{method}\nno spawn/frame',fontsize=7);continue
+            if d is None:blank_panel(ax,method);continue
+            if not d['spawn']:ax.set_title(f'{method}\nno spawn/frame',fontsize=7);continue
             target=d['spawn']['simulation_time_s']+2*k
             o=next((o for o in d['observations'] if o['observation_sim_s']>=target-1e-12),None)
             if o:
@@ -182,8 +211,18 @@ def rgb_strip(level,seed,data,out):
 def generate(records,out,cases=None):
     out=Path(out);out.mkdir(parents=True,exist_ok=True);scene_levels(out)
     cases=cases or [(l,i) for l in ('L2','L3') for i in (86,87,88)]
+    status=[]
     for level,seed in cases:
-        selected={r['method']:load(r) for r in records if r['scene']==level and r['index']==seed}
+        issues=[];matched={r['method']:r for r in records if r['scene']==level and r['index']==seed}
+        selected={m:load(matched[m],issues) if m in matched else None for m in COLORS}
+        for m in COLORS:
+            if m not in matched:issues.append(dict(method=m,reason='No run record'))
+        skipped=not any(selected.values());status.append(dict(scene=level,index=seed,skipped=skipped,missing=issues))
+        if skipped:
+            # Remove only managed, derived images from an earlier partial report.
+            for name in (f'drive_{level}_{seed}.png',f'drive_{level}_{seed}.gif',f'rgb_strip_{level}_{seed}.png'):(out/name).unlink(missing_ok=True)
+            print(f'[figures] {level}/{seed} skipped: both runs have no usable data',flush=True);continue
         pair_plot(level,seed,selected,out);pair_gif(level,seed,selected,out);rgb_strip(level,seed,selected,out)
         print(f'[figures] {level}/{seed} png/gif/rgb done',flush=True)
-
+    (out/'visualization_status.json').write_text(json.dumps(status,indent=2)+'\n')
+    return status
