@@ -1,7 +1,7 @@
 {
   "phase": 20,
-  "base_commit": "78ee7e1",
-  "status": "OFFLINE_GATE_FROZEN",
+  "base_commit": "385e086",
+  "status": "POSTHOC_RECHECK_FROZEN",
   "label_scope": "파일럿",
   "scenes": [
     "SO"
@@ -103,7 +103,7 @@
     "R2": "R inherited unchanged except piecewise start safety threshold and certificate",
     "c_B": "depth SDF(B) minus h/sqrt(2), same conservative footprint convention as Phase16D/19R",
     "near_region_m": 0.3,
-    "near_threshold": "min(.025,c_B-.005)",
+    "near_threshold": "min(.025,max(0,c_B-.005))",
     "far_threshold_m": 0.025,
     "zone_membership": "current optimized cumulative arclength at each of63 inspection points, not frozen initial mask",
     "jacobian": "analytic within each zone; hard nonsmooth threshold at .30m, no smoothing/tuning",
@@ -116,7 +116,8 @@
       "eligible_sample_solve_p95_s_max": 0.2
     },
     "missing_repair_evidence": "NOT_READY, no fabricated zero-risk rate",
-    "diagnosis_0b": "six saved Phase19S D3 SRG legacy_1p5s_prefix overlaps; no result-driven changes"
+    "diagnosis_0b": "same six previously colliding repaired paths; original diagnosis retained, new alignment evaluated",
+    "negative_depth_B": "If c_B<0, reject before solve and use existing fallback"
   },
   "control": {
     "lookahead_m": 0.25,
@@ -130,7 +131,7 @@
     "navigation_timeout_s": 90,
     "delivery_delay_ms": 750,
     "speed": "protected Phase18D SP; rebuild on path replacement",
-    "start_alignment": "Phase19S S: v<.01; first stored path point >=.05m from B; heading error>=20deg; brake then in-place |w|<=.4",
+    "start_alignment": "On new path: heading error>=45deg at any speed; if v<.01 retain20deg; bounded braking then in-place |w|<=.4",
     "pivot_trigger_P": false,
     "fallback": "Phase16 KEEP_ACTIVE / STOP_WAIT",
     "recovery": "Phase17 RECOVER_ROTATE (30deg, .3rad/s, maximum12 per run)"
@@ -219,5 +220,10 @@
     "research/nomad_phase18/campaign.py": "3492de134860e6c4c211bd43a2faba7db4bd7c2ddc16b9314994c2115e3709b2",
     "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
     "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d"
-  }
+  },
+  "assessment_label": "사후 수정 후 재점검",
+  "authorized_changes": [
+    "Nonnegative near-start threshold and matching certificate; reject c_B<0",
+    "Moving>=45deg departure alignment; retain stopped>=20deg, log braking/rotation"
+  ]
 }

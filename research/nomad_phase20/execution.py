@@ -8,17 +8,21 @@ from nomad_phase19s.srg import wrap,evaluate
 
 
 class SPAlignment:
-    def __init__(self):self.plan_generation=0
+    def __init__(self):self.plan_generation=0;self.alignment_count=0
 
     def replace_path(self,xy,B,actual_v):
         self.follower=PurePursuit(xy,follower_protocol()['follower']);self.plan=make_profile(xy)
         self.plan_generation+=1;self.mode='GO';self.target_yaw=None;self.trigger_S=False
         B=np.asarray(B,dtype=float)
         first=next((q for q in self.follower.path.points if np.linalg.norm(q-B[:2])>=.05),None)
-        if actual_v<.01 and first is not None:
+        self.alignment_threshold_deg=20. if actual_v<.01 else 45.
+        self.initial_heading_error_deg=None
+        if first is not None:
             target=float(np.arctan2(*(first-B[:2])[::-1]))
-            if abs(wrap(target-B[2]))>=np.deg2rad(20)-1e-12:
+            self.initial_heading_error_deg=float(abs(wrap(target-B[2]))*180/np.pi)
+            if abs(wrap(target-B[2]))>=np.deg2rad(self.alignment_threshold_deg)-1e-12:
                 self.trigger_S=True;self.target_yaw=target;self.mode='BRAKE'
+                self.alignment_count+=1
 
     def control(self,pose,actual_v):
         if self.mode=='ROTATE' and abs(wrap(self.target_yaw-pose[2]))<1e-10:self.mode='GO'
@@ -48,7 +52,8 @@ def rollout(B,xy,previous_v,config,ticks=108):
         distance+=abs(v)/72;max_cte=max(max_cte,controller.follower.path.project(pose[:2])[1])
     if not completed and controller.mode=='GO' and np.linalg.norm(pose[:2]-controller.follower.path.points[-1])<=.01:completed=True
     result=dict(poses=np.array(poses),commands=commands,speeds=speeds,omegas=omegas,phases=phases,trigger_S=controller.trigger_S,trigger_P=0,
-        rotation_time_s=sum(p=='ROTATE' for p in phases)/72,distance_m=distance,arclength_progress_m=float(controller.follower.path.project(pose[:2])[0]),
+        alignment_count=controller.alignment_count,alignment_threshold_deg=controller.alignment_threshold_deg,initial_heading_error_deg=controller.initial_heading_error_deg,
+        braking_time_s=sum(p=='BRAKE' for p in phases)/72,rotation_time_s=sum(p=='ROTATE' for p in phases)/72,distance_m=distance,arclength_progress_m=float(controller.follower.path.project(pose[:2])[0]),
         max_cross_track_m=max_cte,duration_s=len(speeds)/72,completed=completed,termination='ENDPOINT' if completed else 'HORIZON',
         omega_saturation_fraction=float(np.mean(np.abs(omegas)>=.399)) if omegas else 0.)
     return evaluate(result,config)

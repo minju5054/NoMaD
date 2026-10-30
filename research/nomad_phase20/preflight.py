@@ -15,7 +15,7 @@ from nomad_phase18d.rollout import Evaluator
 from .repair import solve_sample
 from .execution import rollout
 
-HERE=ROOT/'research/nomad_phase20';OUT=ROOT/'research/results/phase20_preflight'
+HERE=ROOT/'research/nomad_phase20';OUT=ROOT/'research/results/phase20_preflight_02'
 
 
 def source_events(inputs):
@@ -44,6 +44,7 @@ def first_collision(r,config):
 
 
 def diagnose_six(inputs,objects,old):
+    baseline={r['event_id']:r for r in csv_rows(inputs.track(ROOT/'research/results/phase20_preflight/srg_six_collisions.csv'))}
     records=csv_rows(inputs.track(ROOT/'research/results/phase19s/rollouts.csv'))
     selected=[r for r in records if r['dataset']=='D3' and r['rule']=='SRG' and r['legacy_1p5s_prefix']['overlap']]
     assert len(selected)==6
@@ -58,18 +59,19 @@ def diagnose_six(inputs,objects,old):
     for saved in selected:
         e=old_by_id[saved['event_id']];obj=obj_by_id[e['event_id']];path=np.array(paths[e['event_id']]['path'])
         r=rollout(e['B'],path,e['previous_actual_v_m_s'],obj['config'])
-        np.testing.assert_allclose(r['legacy_1p5s_prefix']['minimum_clearance_m'],saved['legacy_1p5s_prefix']['minimum_clearance_m'],atol=1e-12,rtol=0)
-        assert r['overlap'];assert r['trigger_S']==bool(saved['trigger_S'])
+        before=baseline[e['event_id']]
         field=Snapshot.load(e['snapshot_file']);q,_=sample_path(path);unknown=field.unknown_fraction(q)
-        end=r['first_overlap_tick'];cte=max(XYPath(path).project(p[:2])[1] for p in r['poses'][:end+1])
+        end=r['first_overlap_tick'] if r['first_overlap_tick'] is not None else len(r['poses'])-1
+        cte=max(XYPath(path).project(p[:2])[1] for p in r['poses'][:end+1])
         target=next((p for p in path if np.linalg.norm(p-np.array(e['B'])[:2])>=.05),None)
         angle=float(abs((np.arctan2(*(target-np.array(e['B'])[:2])[::-1])-e['B'][2]+np.pi)%(2*np.pi)-np.pi)*180/np.pi) if target is not None else None
-        reason='Initial alignment completed/started; subsequent PP translation still overlapped.' if r['trigger_S'] else 'Start alignment inactive: actual v >=0.01m/s.' if e['previous_actual_v_m_s']>=.01 else 'Start alignment inactive: initial heading error <20deg (or no point >=5cm).'
+        reason='No overlap during revised 1.5s rollout.' if not r['overlap'] else 'Revised alignment active, but braking/tracking still overlapped.' if r['trigger_S'] else 'Revised alignment inactive: heading error below the applicable threshold.'
         data.append(dict(event_id=e['event_id'],run=e['run'],scene=e['scene'],fresh_id=e['fresh_id'],previous_v=e['previous_actual_v_m_s'],
-            initial_heading_error_deg=angle,departure_alignment=r['trigger_S'],rotation_s=r['rotation_time_s'],
+            initial_heading_error_deg=angle,old_departure_alignment=before['departure_alignment'],old_overlap=True,
+            departure_alignment=r['trigger_S'],new_overlap=r['overlap'],braking_s=r['braking_time_s'],rotation_s=r['rotation_time_s'],
             path_oracle_clearance_m=clearance(path,obj['config']),path_unknown_fraction=unknown,cross_track_until_collision_m=cte,
-            **first_collision(r,obj['config']),reason=reason+' Safe path clearance did not certify the executed PP arc.',
-            source_prefix_reproduced=True))
+            **(first_collision(r,obj['config']) if r['overlap'] else dict(collision_type=None,collision_boxes=[],collision_pose=None,collision_time_s=None)),
+            reason=reason,baseline_source_preserved=True))
     return data
 
 
@@ -88,7 +90,10 @@ def readiness(events,repairs):
         accepted_sample_paths=sum(r['accepted'] for r in repairs),all_accepted_path_oracle_penetrations=sum(r['accepted'] and r['oracle_clearance_m']<0 for r in repairs),
         cause_success=causes,per_sample_solve_s=timing,eight_sample_wall_s=stats([e['eight_sample_wall_s'] for e in events]),
         eight_sample_over_half_second=sum(e['eight_sample_wall_s']>.5 for e in events),
-        selected_mean_edit_m=stats([e['selected_mean_edit_m'] for e in chosen]),post_hoc=True)
+        selected_mean_edit_m=stats([e['selected_mean_edit_m'] for e in chosen]),post_hoc=True,
+        assessment_label='사후 수정 후 재점검',negative_depth_B_events=sum(e['B_depth_clearance_m']<0 for e in events),
+        alignment_events=sum(e.get('rollout_trigger_S',False) for e in events),
+        alignment_braking_total_s=sum(e.get('rollout_braking_s',0) for e in events),alignment_rotation_total_s=sum(e.get('rollout_rotation_s',0) for e in events))
 
 
 def run():
@@ -102,7 +107,7 @@ def run():
     # Before any R2 result is inspected, fix all 241 events and the six published cases.
     OUT.mkdir(parents=True);dump(OUT/'protocol.json',p);dump(OUT/'input_manifest.json',dict(git_sha=sha,sha256=inputs.hashes))
     six=diagnose_six(inputs,objects,old);csv_write(OUT/'srg_six_collisions.csv',six)
-    print('[diagnosis] six published 1.5s SRG collisions reproduced',flush=True)
+    print('[diagnosis] six published cases retained; revised alignment evaluated',flush=True)
     events=[];repairs=[];rollout_traces=[]
     with (OUT/'repair_journal.jsonl').open('x') as log:
         for obj in objects:
@@ -121,7 +126,8 @@ def run():
                     selected_depth_clearance_m=r['depth_clearance_m'],selected_near_threshold_m=r['near_threshold_m'],
                     rollout_overlap=roll['overlap'],rollout_negative_witness=roll['geometric_negative_witness'],
                     rollout_minimum_clearance_m=roll['minimum_clearance_m'],rollout_distance_m=roll['distance_m'],
-                    rollout_trigger_S=roll['trigger_S'],rollout_duration_s=roll['duration_s'],rollout_rotation_s=roll['rotation_time_s'])
+                    rollout_trigger_S=roll['trigger_S'],rollout_alignment_count=roll['alignment_count'],rollout_braking_s=roll['braking_time_s'],
+                    rollout_duration_s=roll['duration_s'],rollout_rotation_s=roll['rotation_time_s'])
                 rollout_traces.append(dict(event_id=e['event_id'],selected_sample=selected,**{k:v for k,v in roll.items() if k not in ('speeds','omegas','phases')}))
             events.append(e)
             if len(events)%20==0:print(f'[R2 offline] {len(events)}/241 events; eight samples each, no retry',flush=True)
@@ -141,7 +147,7 @@ def publish():
     ignore=OUT/'.gitignore'
     if not ignore.exists():ignore.write_text('/repair_journal.jsonl\n/rollout_traces.json\n')
     assert not subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip()
-    subprocess.run(['git','add','--','research/nomad_phase20',str(OUT.relative_to(ROOT)),'docs/PHASE20_REPAIR_DRIVE.md'],cwd=ROOT,check=True)
+    subprocess.run(['git','add','--','research/nomad_phase20',str(OUT.relative_to(ROOT)),'docs/PHASE20_REPAIR_DRIVE_RECHECK.md'],cwd=ROOT,check=True)
     if subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip():
         subprocess.run(['git','-c','user.name=Codex','-c','user.email=codex@openai.com','commit','-m','Record Phase20 R2 offline readiness and SRG collision diagnosis'],cwd=ROOT,check=True)
     subprocess.run(['git','push','origin','HEAD:research/phase0-infrastructure'],cwd=ROOT,check=True)

@@ -22,7 +22,7 @@ class RepairGraphR2(RepairGraph):
         super().__init__(reference,B,field)
         # Same c_B convention used in Phase16D E1 and Phase19R event records.
         self.cB=float(field.query(np.asarray(B)[None,:2])[0][0])-field.error_bound
-        self.near_threshold=min(SAFETY,self.cB-.005)
+        self.near_threshold=min(SAFETY,max(0.,self.cB-.005))
 
     def thresholds(self,x):
         p=self.points(x);lengths=norm(np.diff(p,axis=0));starts=np.r_[0.,np.cumsum(lengths)[:-1]]
@@ -45,6 +45,7 @@ class RepairGraphR2(RepairGraph):
                     depth_clearance_m=min(nc,fc) if fc is not None else nc)
 
     def solve(self):
+        if self.cB<0:raise ValueError('NEGATIVE_DEPTH_AT_B')
         start=time.perf_counter()
         solution=minimize(lambda x:self.objective(x)[0],self.initial,jac=lambda x:self.objective(x)[1],method='SLSQP',bounds=self.bounds,
             constraints=[dict(type='ineq',fun=lambda x:self.constraints(x)[0],jac=lambda x:self.constraints(x)[1])],
@@ -62,7 +63,12 @@ class RepairGraphR2(RepairGraph):
 
 
 def solve_sample(native,B,field):
-    start=time.perf_counter();q,init=initialize(native,B)
+    start=time.perf_counter()
+    cB=float(field.query(np.asarray(B)[None,:2])[0][0])-field.error_bound
+    if cB<0:
+        return dict(disposition='NEGATIVE_DEPTH_AT_B',cB_depth_clearance_m=cB,accepted=False,path=None,reference=None,
+                    attempt_wall_s=time.perf_counter()-start,solver_started=False)
+    q,init=initialize(native,B)
     if q is None:return dict(**init,accepted=False,path=None,reference=None,attempt_wall_s=time.perf_counter()-start,solver_started=False)
     try:
         graph=RepairGraphR2(q,B,field);path,result=graph.solve()

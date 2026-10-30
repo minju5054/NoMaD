@@ -43,8 +43,28 @@ class Tests(unittest.TestCase):
         c=SPAlignment();xy=[[0,0],[0,.15],[0,.3]]
         c.replace_path(xy,[0,0,0],0.);self.assertTrue(c.trigger_S)
         (v,w),_=c.control([0,0,0],0.);self.assertEqual(v,0.);self.assertEqual(w,.4)
-        c.replace_path(xy,[0,0,0],.01);self.assertFalse(c.trigger_S)
+        c.replace_path(xy,[0,0,0],.01);self.assertTrue(c.trigger_S)
+        c.replace_path(xy,[0,0,np.deg2rad(60)],.01);self.assertFalse(c.trigger_S)
+        c.replace_path(xy,[0,0,np.deg2rad(60)],0.);self.assertTrue(c.trigger_S)
         c.replace_path([[0,0],[.1,0],[.1,.1]],[0,0,0],0.);self.assertFalse(c.trigger_S)
+
+    def test_nonnegative_start_floor_and_negative_B_rejection(self):
+        xy=np.c_[np.linspace(0,.7,8),np.zeros(8)]
+        g=RepairGraphR2(xy,[0,0,0],Affine());self.assertEqual(g.near_threshold,0.)
+        class Negative(Affine):
+            def query(self,p):
+                d,j=super().query(p);return d-.02,j
+        result=solve_sample(xy,[0,0,0],Negative())
+        self.assertFalse(result['accepted']);self.assertFalse(result['solver_started'])
+        self.assertEqual(result['disposition'],'NEGATIVE_DEPTH_AT_B')
+
+    def test_moving_alignment_brakes_before_rotation(self):
+        xy=[[0,0],[0,.15],[0,.4]];r=rollout([0,0,0],xy,.2,scene('CL'))
+        self.assertTrue(r['trigger_S']);self.assertEqual(r['alignment_count'],1)
+        self.assertGreater(r['braking_time_s'],0.);self.assertGreater(r['rotation_time_s'],0.)
+        self.assertTrue(all(c['v']==0. for c in r['commands'] if c['mode']=='ROTATE'))
+        v=np.r_[.2,[c['v'] for c in r['commands']]]
+        self.assertLessEqual(np.max(np.abs(np.diff(v))),.5/9+1e-12)
 
     def test_s_only_matches_protected_s_without_pivots(self):
         for xy,v in [([[0,0],[.15,0],[.3,0]],.1),([[0,0],[0,.15],[0,.3]],0.)]:
