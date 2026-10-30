@@ -27,7 +27,9 @@ def groups(records):
                 repair_attempts=attempts,repair_accepted=accepted,repair_rejected=sum(r.get('repair_rejected',0) for r in valid),repair_timeout=sum(r.get('repair_timeout',0) for r in valid),
                 repair_acceptance=accepted/attempts if attempts else None,sample_solve_median_s=pooled('median','sample_solve_s'),sample_solve_p95_s=pooled('p95','sample_solve_s'),
                 eight_solve_median_s=pooled('median','pool_wall_s'),eight_solve_p95_s=pooled('p95','pool_wall_s'),
-                post_repair_safe=sum(r.get('post_repair_safe_count',0) for r in valid),post_repair_observed=sum(r.get('post_repair_fresh_count',0) for r in valid)))
+                dispatch_complete_median_s=pooled('median','dispatch_to_complete_s'),dispatch_complete_p95_s=pooled('p95','dispatch_to_complete_s'),
+                post_repair_safe=sum(r.get('post_repair_safe_count',0) for r in valid),post_repair_observed=sum(r.get('post_repair_fresh_count',0) for r in valid),
+                post_repair_safe_fraction=sum(r.get('post_repair_safe_count',0) for r in valid)/sum(r.get('post_repair_fresh_count',0) for r in valid) if sum(r.get('post_repair_fresh_count',0) for r in valid) else None))
     return result
 
 
@@ -66,6 +68,7 @@ def render(records,out,doc,make_figures=True):
     text='# Phase 20-B — blockage-level repair pilot / 파일럿\n\n'
     text+=f"Protocol hash: `{sha256_file(ROOT/'research/nomad_phase20b/protocol.json')}`. New runs: L2/L3 × M1/M2 × indices80–82. L1 is reused; no navigation retry.\n\n"
     text+='The Phase20 R2/SP/start-alignment/selection/fallback/recovery code is unchanged. M2 alone uses four CPU processes and a fixed1.0s wait limit. Processes initialize before the navigation clock without warmup solves; per-job timing includes snapshot loading and process scheduling, with sample solve/certificate times separately recorded. All late and terminal results retain timing logs. Oracle geometry is used only for placement/rendering and evaluation.\n\n'
+    text+='Per-sample attempt timings include initialization and certificate. Short-path/negative-B rejections do not run SLSQP: solver_started, disposition and optimizer-only time are preserved per sample to distinguish these from actual solves.\n\n'
     text+='Box center y is fixed in corridor coordinates (L2=0; L3 even+0.3/odd−0.3m), preserving the specified gaps despite robot lateral drift. d=1.0m is measured from footprint front to the front box face along +X. L3 narrow gap0.20m is smaller than the0.23m required by radius0.09 plus two0.025m margins; it is not a proof that a0.18m diameter circle geometrically cannot fit.\n\n'
     text+='## Per-level results\n\n'+table(summary)+'\n\n## Pilot labels and descriptive blockage trend\n\n'+table(verdict)+'\n\n'
     text+='REPAIR_HELPS follows the frozen success/acceptance rule, including the equal-success paired-passage alternative. An empty paired subset never counts as all-faster. Technical/missing trials are retained and make an interpreted per-level label inconclusive.\n\n'

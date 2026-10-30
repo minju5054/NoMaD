@@ -126,7 +126,7 @@ def pair_gif(level,seed,data,out):
         label=ax.text(.02,.02,'',transform=ax.transAxes,fontsize=7)
         artists[method]=(cloud,route,trail,circle,arrow,box,label)
     maximum=min(150.,max((d['t'][-1] for d in data.values() if d),default=0.));frames=[]
-    for t in np.arange(0,maximum+1e-10,1.):
+    for t in np.arange(0,maximum+1e-10,1.)[:150]:
         for ax,method in zip(axes,COLORS):
             d=data.get(method)
             if d is None:continue
