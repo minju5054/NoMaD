@@ -1,7 +1,7 @@
 {
   "phase": "20D",
   "base_commit": "2917e63",
-  "status": "OFFLINE_FROZEN",
+  "status": "FROZEN",
   "assessment_label": "사후 수정 후 재점검 2",
   "changes": {
     "publication": "immutable pointer published before asynchronous compressed archival; unbounded queues and no drops retained; exact processing/publication/archive/queue timestamps logged",
@@ -227,5 +227,61 @@
     "research/nomad_phase20c/shadow_rays.c": "131c579655540add9dffcd9da19749777758af7ea563d76bfd6c1becf6dba0a0",
     "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58",
     "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c"
+  },
+  "SO": {
+    "source_scenario": "research/nomad_phase2/scenario.json",
+    "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+    "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+    "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "nodes": 21,
+    "placement": {
+      "trigger_x": [
+        2.0,
+        2.1
+      ],
+      "distance_m": 1.2,
+      "size": [
+        0.35,
+        0.35,
+        0.8
+      ],
+      "y_offset_m": 0.15,
+      "y_clamp": [
+        -0.925,
+        0.925
+      ],
+      "s": "odd +1; even -1"
+    },
+    "oracle_publication": false,
+    "evaluation_dynamic_geometry": true,
+    "success_gate": false
+  },
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "topomaps": {
+    "L2": {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "node_count": 21
+    },
+    "L3": {
+      "manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "node_count": 21
+    }
+  },
+  "reused_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20/runs.json": "221747d45202207339fddf3c625a0a1deec9a3213886446c94f2e638fc45de85",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase20/summary.csv": "87e69a933121b8f5ba561658103e72549f053ed7a7b7aa4dd48c1f50fb1c7fe9",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase2/scenario.json": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a"
+  },
+  "source_rule": "Phase20B level placement overrides legacy SO descriptor; new map publication shared by both methods; no oracle controller input",
+  "pilot_label": "탐색적 파일럿",
+  "report_definitions": {
+    "detour_acceptance": "actual APPLIED event after current-map validation; numeric accepted results reported separately",
+    "post_detour_progress": "first nondeferred FRESH chosen sample endpoint relative to B projected on job u_ref >=0.2m; missing outcomes censored",
+    "post_detour_passage": "box not passed at detour application and first footprint passage after that application; descriptive association",
+    "collision_on_detour": "any geometric-overlap interval while detour action active (alignment included)",
+    "snapshot_age": "controller sim time minus latest published source frame sim time; unknown initial map excluded"
   }
 }

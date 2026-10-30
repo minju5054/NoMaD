@@ -44,7 +44,7 @@ class Tests(unittest.TestCase):
         f=RecentMap([-1,-1,2,1]);f.observed[:]=True;f.last_free_tick[:]=10
         x,y=f.cells([[1.,0]])[0][0];f.occupied[y,x]=True
         f.values=distance_transform_edt(~f.occupied,sampling=f.h)-f.radius
-        s=RecentSnapshot(f,{});cached,_=build_cache(s,10);p=[[0,0],[.2,.1],[.5,0]]
+        s=RecentSnapshot(f,{});cached,_=build_cache(s,10);p=np.array([[0,0],[.2,.1],[.5,0]])
         self.assertAlmostEqual(cached.exact_clearance(p),.41,places=12)
         self.assertAlmostEqual(cached.exact_clearance(p),Snapshot.exact_clearance(cached,p),places=12)
         self.assertTrue(local_certificate(s,p,10,.025,True))
