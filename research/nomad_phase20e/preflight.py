@@ -23,6 +23,7 @@ def main():
         (out/'readiness.json').write_text(json.dumps(ready,indent=2)+'\n')
     text='# Phase20E preflight / 파일럿\n\n'+offline_text()
     text+=f"Unit tests5/5. One excluded60s L2 M3 smoke: technical={r['technical_validation']}; NO_PROGRESS={r['detour_triggers'].get('B',0)}, before/after passage={r['no_progress_stages']}, detours applied={r['detour_applied']}; NO_OBSTACLE_AHEAD={r['no_obstacle_ahead_count']}; command/72Hz pose errors={r['command_replay_error']}/{r['pose_replay_error']}.\n\n"
+    if not r['detour_triggers'].get('B',0):text+='Smoke limitation: no actual obstacle-conditioned NO_PROGRESS trigger occurred. Trigger/rectangle unit tests and saved-trigger checks passed, but a new live trigger-to-detour chain was not observed in this smoke. No extra navigation was run.\n\n'
     text+='No retry or tuning. Main12 trials are reserved for the user.20D code/data remain unchanged; only the obstacle predicate and20E serialization import binding are new.\n\n'
     text+='![excluded L2 smoke](../research/results/phase20e_preflight/drive_L2_901.png)\n'
     (ROOT/'docs/PHASE20E_PREFLIGHT.md').write_text(text)

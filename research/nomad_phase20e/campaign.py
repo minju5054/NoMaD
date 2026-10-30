@@ -36,6 +36,7 @@ def campaign(root):
     ready=read(ROOT/'research/results/phase20e_preflight/readiness.json',{})
     assert ready.get('passed'),'Unit tests and excluded L2 M3 smoke must pass before campaign'
     print('[preflight] '+p['pilot_label']+'; saved-trigger recheck is descriptive, not an execution gate',flush=True)
+    if not ready.get('smoke_detour_chain_observed'):print('[preflight] Single smoke had no detour application; saved-trigger and unit checks passed; no retry or tuning.',flush=True)
     assert sha256_file(Path(__file__).with_name('protocol.json'))==ready['protocol_sha256']
     for name,h in ready['runtime_source_sha256'].items():assert sha256_file(ROOT/name)==h,name
     assert not subprocess.check_output(['git','diff','--name-only'],cwd=ROOT,text=True).strip(),'Tracked edits must be committed'

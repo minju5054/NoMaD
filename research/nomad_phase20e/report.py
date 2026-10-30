@@ -60,6 +60,10 @@ def render(records,out,doc,make_figures=True):
     text='# Phase20E — obstacle-conditional NO_PROGRESS / 파일럿\n\n'
     text+=f"Protocol SHA256 `{sha256_file(ROOT/'research/nomad_phase20e/protocol.json')}`. L2 × M1/M3 × indices89–94;12 attempts; no retries or parameter changes.\n\n"
     text+=offline_text()
+    smoke_file=ROOT/'research/results/phase20e_preflight/smoke.json'
+    if smoke_file.exists():
+        smoke=json.loads(smoke_file.read_text())
+        if not smoke['detour_triggers'].get('B',0):text+='Preflight limitation: the single excluded60s L2 M3 smoke had no obstacle-conditioned NO_PROGRESS trigger. Offline saved-trigger and unit checks passed; no trigger was forced by retry or tuning.\n\n'
     text+='The only algorithm change is NO_PROGRESS AND at least one occupied cell center in the closed1.0m×0.40m rectangle from the current robot position along u_ref. Unknown/stale cells do not count as occupied for this extra predicate. Phase20D asynchronous map publication, R3 recency rule, start-relative u_ref, R2, SP, alignment, fallback and recovery are reused. The20E wrapper binds the existing clean serialization helper missing in the inherited R2 logging globals; function bytecode and repair definition are unchanged.\n\n'
     text+='## Three primary outcomes and mechanism\n\n'+table(summary)+'\n\n## Frozen label\n\n'+table([v])+'\n\n'
     text+='Order: +2 goal successes → DETOUR_HELPS; no fewer goal successes or passages AND a strict majority of nonempty jointly-passed seed pairs faster → DETOUR_PASSES_FASTER; −2 goal successes → DETOUR_WORSE; otherwise DETOUR_MIXED. Technical failures remain in the12 attempts and provide no observed success/passage; valid N is explicit. No missing timing is imputed.\n\n'
