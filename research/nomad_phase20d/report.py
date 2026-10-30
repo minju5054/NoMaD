@@ -1,5 +1,5 @@
 """Frozen descriptive preflight and new-seed pilot report; no model/solver execution."""
-import argparse,json,subprocess
+import argparse,json,subprocess,csv
 from pathlib import Path
 import numpy as np
 from nomad_isaac.common import ROOT,sha256_file
@@ -40,6 +40,12 @@ def preflight_text():
     text='## Saved-log diagnosis / offline recheck\n\n'
     text+='Historical gap attribution is observational. CPU overlap is not proof of CPU causation; queue lengths and CPU utilization were not instrumented in the old logs. No old result is relabelled. The old FIFO preserved every recorded capture but synchronous compressed archival/hash delayed publication. The new immutable latest pointer is published before archival on a separate thread, for both methods. New logs record capture, processing, publication, archive, queue lengths and zero drops separately.\n\n'
     text+='Publication gaps and snapshot age differ: a regular stream can still deliver queued old frames. Saved22 runs yielded27 gaps≥0.5s (PUBLISH_BUG23, CPU_CONTENTION2, OTHER2), maxgap2.170357s and maxcapture-age14.430556s; two Phase20B runs lacked required technical artifacts and remain excluded from this diagnosis. Full gap intervals, states, repair overlap, evidence and per-run summaries are in phase20d_diagnosis CSVs.\n\n'
+    rr=list(csv.DictReader((ROOT/'research/results/phase20d_diagnosis/runs.csv').read_text().splitlines()))
+    by_method=[]
+    for method in sorted({r['method'] for r in rr}):
+        group=[r for r in rr if r['method']==method]
+        by_method.append(dict(method=method,runs=len(group),maximum_snapshot_age_s=max(float(r['max_snapshot_age_s']) for r in group),maximum_publication_gap_s=max(float(r['max_publication_gap_s']) for r in group),mean_gap_time_fraction=float(np.mean([float(r['gap_full_time_fraction']) for r in group])),mean_excess_gap_fraction=float(np.mean([float(r['no_update_after_0p5_fraction']) for r in group]))))
+    text+=table(by_method)+'\n\n'
     text+='Offline label: **사후 수정 후 재점검 2**. Exactly the same69 archived trigger events were solved once. Replayed occupancy/observed/SDF arrays were bitwise equal to20C shadow maps; only last-free evidence times were added. Old capture/publication eligibility is retained in this counterfactual, so it does not claim to predict the publication fix.\n\n'
     text+=table([{k:gate.get(k) for k in ('label','triggers','accepted_triggers','acceptance_fraction','accepted_initializations','accepted_path_oracle_penetrations','selected_path_oracle_penetrations','rollout_overlaps','rollout_count','seven_parallel_s','timeout_events')}])+'\n\n'
     text+='All accepted/selected penetrating paths are zero, so penetration-specific snapshot ages/recent-cell fractions have an empty denominator. Per-candidate recent-free/unknown fractions and snapshot ages are retained in offline CSVs. u_ref uses displacement from the run start (start heading within0.5m); the saved event list contains one negative-X u_ref. This recheck never gates the new-seed pilot.\n\n'

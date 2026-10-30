@@ -161,7 +161,8 @@ def audit(run):
     ages=[c['phase20d']['snapshot_age_s'] for c in ctrl if c['phase20d']['depth_frame']>=0]
     live=[u for u in updates if u['publication_monotonic_ns']<=epoch+round(s['navigation_wall_seconds']*1e9)]
     pubs=[epoch]+[u['publication_monotonic_ns'] for u in live]+[epoch+round(s['navigation_wall_seconds']*1e9)]
-    gaps=[dict(start_s=max(0.,(a-epoch)/1e9),end_s=(b-epoch)/1e9,length_s=(b-a)/1e9) for a,b in zip(pubs,pubs[1:]) if b-a>=500_000_000]
+    ns=np.array([int(r['monotonic_ns']) for r in rec]);sim=np.array([float(r['simulation_time_s']) for r in rec])
+    gaps=[dict(start_s=float(np.interp(a,ns,sim)),end_s=float(np.interp(b,ns,sim)),wall_start_s=max(0.,(a-epoch)/1e9),wall_end_s=(b-epoch)/1e9,length_s=(b-a)/1e9) for a,b in zip(pubs,pubs[1:]) if b-a>=500_000_000]
     dc=Counter(r['disposition'] for r in detours if r['event']=='RESULT');mode=result['mode_seconds']
     jd=[j for j in jobs if j['kind']=='R3'];jr=[j for j in jobs if j['kind']=='R2']
     assert not any(r.get('error') for r in jobs),'CPU planner transport error'
@@ -170,7 +171,7 @@ def audit(run):
     from .runtime import Execution
     for r in applied:
         cmd=next(c for c in ctrl if abs(c['simulation_time_s']-r['simulation_time_s'])<1e-12)
-        u=next(u for u in updates if u['frame_id']==cmd['phase20d']['depth_frame']);field=RecentSnapshot.load(u['file'])
+        u=next(u for u in updates if u['frame_id']==r.get('validation_frame_id',cmd['phase20d']['depth_frame']));field=RecentSnapshot.load(u['file'])
         assert Execution.certificate(None,field,r['pose'],round(r['simulation_time_s']*72),r['path'],r['B'])
     pass_time=spawn['simulation_time_s']+result['box_passage_time_s'] if spawn and result['passed_box'] else None
     result.update(detour_triggers=dict(Counter(r['trigger'] for r in trigger.values())),detour_attempts=len(trigger),detour_submitted=sum(r['event']=='SUBMIT' for r in detours),

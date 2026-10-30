@@ -102,7 +102,7 @@ class Execution(Base):
                 if status=='ACCEPTED':
                     self.new_path(path,core,refresh,job['id'],'DETOUR');self.repair_active=False;self.detour_active=True
                     job.update(path=path,apply_sim_s=refresh['simulation_time_s']);self.recovery.decision('NORMAL')
-                    self.drecord('APPLIED',job_id=job['job_id'],simulation_time_s=refresh['simulation_time_s'],pose=core.pose.tolist(),path=path,B=job['B'])
+                    self.drecord('APPLIED',job_id=job['job_id'],simulation_time_s=refresh['simulation_time_s'],pose=core.pose.tolist(),path=path,B=job['B'],validation_frame_id=field.metadata['frame_id'],validation_tick=tick)
                 else:self.end_detour(core,refresh,status)
         diag={};source='DETOUR_WAIT'
         if self.detour_active:
