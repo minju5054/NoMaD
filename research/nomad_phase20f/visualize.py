@@ -143,7 +143,7 @@ def pair_plot(level,seed,data,out):
         for r in d['detours']:
             if r['event']=='END':
                 ax.scatter(*r['pose'][:2],marker='s',s=32,facecolors='none',edgecolors='brown')
-                ax.annotate(r['reason'],r['pose'][:2],xytext=(3,5),textcoords='offset points',fontsize=5,color='brown')
+                ax.annotate(r['reason'],r['pose'][:2],xytext=(4,-14),textcoords='offset points',fontsize=6,color='brown',bbox=dict(facecolor='white',alpha=.8,edgecolor='none'))
         symbols={'NO_PROGRESS':('D','darkorange'),'ALL_UNSAFE':('x','red'),'Recovery start':('$↻$','darkorange'),'Repair applied':('*','magenta'),
                  'Repair rejected/timeout':('o','purple'),'Start alignment':('^','black')}
         for label,points in marks.items():

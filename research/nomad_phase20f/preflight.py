@@ -25,6 +25,8 @@ def main():
     text+=f"Unit tests7/7. One excluded60s L2 M3 smoke: technical={r['technical_validation']}; NO_PROGRESS={r['detour_triggers'].get('B',0)}, before/after passage={r['no_progress_stages']}, detours applied={r['detour_applied']}; NO_NEW_OBSTACLE_AHEAD={r['no_new_obstacle_ahead_count']}; command/72Hz pose errors={r['command_replay_error']}/{r['pose_replay_error']}.\n\n"
     if not r['detour_triggers'].get('B',0):text+='Smoke limitation: no actual obstacle-conditioned NO_PROGRESS trigger occurred. Trigger/rectangle unit tests and saved-trigger checks passed, but a new live trigger-to-detour chain was not observed in this smoke. No extra navigation was run.\n\n'
     text+=f"Detour ending reasons: {r['detour_end_reasons']}; execution durations: {r['detour_durations_s']}s.\n\n"
+    text+=f"Early end vs physical box passage: {r['detour_end_vs_passage']}.\n\n"
+    text+='The smoke map also logged qualifying free→occupied cells along existing wall regions; this is a grid-evidence proxy, not an object-identity detector. No parameter or cell rule was changed after observing this.\n\n'
     text+='No retry or tuning. Main12 trials are reserved for the user.20D/20E code/data remain unchanged; B uses new-cell history, fixed preappearance direction and early end. A remains20E.\n\n'
     text+='![excluded L2 smoke](../research/results/phase20f_preflight/drive_L2_901.png)\n'
     (ROOT/'docs/PHASE20F_PREFLIGHT.md').write_text(text)

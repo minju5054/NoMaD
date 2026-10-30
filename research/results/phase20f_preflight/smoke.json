@@ -1,0 +1,198 @@
+{
+  "technical_validation": "PASS",
+  "success": false,
+  "classification": "STUCK",
+  "collision": false,
+  "corridor": false,
+  "stuck": true,
+  "safety_failure": false,
+  "termination_reason": "simulation_timeout",
+  "duration_s": 60.0,
+  "goal_time_s": null,
+  "minimum_clearance_m": 0.23721994547272066,
+  "minimum_wall_clearance_m": 0.41606123446856,
+  "minimum_monitor_wall_bound_m": 0.41606115293612483,
+  "distance_m": 7.797459506689084,
+  "stopped_fraction": 0.014814814814814814,
+  "actual_zero_speed_fraction": 0.28888888888888886,
+  "mode_seconds": {
+    "WAYPOINT_TIMEOUT": 3.3333333333333237,
+    "NORMAL": 26.888888888889525,
+    "ALIGN_BRAKE": 15.0000000000003,
+    "ALIGN_ROTATE": 10.777777777777958,
+    "DETOUR_WAIT": 0.3333333333333334,
+    "DETOUR": 3.1111111111111023,
+    "STOP_WAIT": 0.5555555555555555
+  },
+  "alignment_count": 27,
+  "alignment_braking_s": 15.0000000000003,
+  "alignment_rotation_s": 10.777777777777958,
+  "all_unsafe": 0,
+  "recovery_count": 0,
+  "repair_attempts": 0,
+  "repair_accepted": 0,
+  "repair_rejected": 0,
+  "repair_timeout": 0,
+  "repair_dispositions": {},
+  "repair_acceptance": null,
+  "repair_execution_s": 0.0,
+  "repair_resolved_all_unsafe_fraction": null,
+  "post_repair_safe_count": 0,
+  "post_repair_fresh_count": 0,
+  "repair_wall_s": {
+    "n": 0,
+    "median": null,
+    "p95": null
+  },
+  "spawn_s": 15.86111111111111,
+  "first_visible_s": 15.98611111111111,
+  "first_depth_observed_s": 15.98611111111111,
+  "first_depth_map_observed_s": 16.48611111111111,
+  "box_passage_time_s": 15.01388888888889,
+  "passed_box": true,
+  "pass_side": "+Y",
+  "command_replay_error": 0.0,
+  "pose_replay_error": 0.0,
+  "clearance_replay_error": 1.1102230246251565e-16,
+  "oracle_publications": 0,
+  "requests": 58,
+  "switches": 58,
+  "inference_ms": {
+    "n": 58,
+    "median": 39.474516,
+    "p95": 60.45381675
+  },
+  "delivery_s": {
+    "n": 58,
+    "median": 0.7500779405,
+    "p95": 0.75051855535
+  },
+  "detour_triggers": {
+    "B": 1
+  },
+  "detour_attempts": 1,
+  "detour_submitted": 1,
+  "detour_applied": 1,
+  "detour_dispositions": {
+    "ACCEPTED": 1
+  },
+  "detour_timeout": 0,
+  "detour_rejected": 0,
+  "detour_wait_s": 0.3333333333333334,
+  "detour_execution_s": 3.1111111111111107,
+  "detour_moving_s": 3.1111111111111023,
+  "detour_collision_count": 0,
+  "detour_intervals": [
+    {
+      "job_id": 0,
+      "start_s": 19.22222222222222,
+      "end_s": 22.333333333333332,
+      "collision": false
+    }
+  ],
+  "detour_then_box_pass_count": 1,
+  "detour_before_box_pass_count": 1,
+  "post_detour_outcomes": [
+    {
+      "job_id": 0,
+      "fresh_id": 20,
+      "forward_endpoint_m": 0.2917917990593411,
+      "progress_recovered": true,
+      "safe_samples": 8
+    }
+  ],
+  "post_detour_progress_recovered": 1,
+  "post_detour_outcome_count": 1,
+  "seven_solve_s": {
+    "n": 1,
+    "median": 0.294197048,
+    "p95": 0.294197048
+  },
+  "detour_job_timings": [
+    {
+      "job_id": 0,
+      "sample_solve_s": [
+        0.056862191995605826,
+        0.04625271196709946,
+        0.09538576402701437,
+        0.047837083984632045,
+        0.09481016400968656,
+        0.05106884700944647,
+        0.06925280095310882
+      ],
+      "pool_wall_s": 0.294197048,
+      "dispatch_to_complete_s": 0.310152898,
+      "cache": {
+        "edt_computations": 1,
+        "build_s": 0.06379280402325094,
+        "blocked_cells": 1531286,
+        "evaluation_tick": 1360
+      }
+    }
+  ],
+  "repair_job_timings": [],
+  "snapshot_age_s": {
+    "n": 538,
+    "median": 0.25,
+    "p95": 0.375
+  },
+  "snapshot_max_age_s": 1.5416666666666665,
+  "publication_gaps": [
+    {
+      "start_s": 0.4410494244168927,
+      "end_s": 1.8106901929699588,
+      "wall_start_s": 0.441241443,
+      "wall_end_s": 1.810954836,
+      "length_s": 1.369713393
+    }
+  ],
+  "max_publication_gap_s": 1.369713393,
+  "depth_updates": 237,
+  "depth_dropped_frames": 0,
+  "depth_update_ms": {
+    "n": 237,
+    "median": 67.01903702924028,
+    "p95": 90.78232459723948
+  },
+  "depth_queue_max": 1,
+  "depth_archive_queue_max": 2,
+  "no_new_obstacle_ahead_count": 23,
+  "new_obstacle_checks": 24,
+  "trigger_stages": {
+    "BEFORE_PASSAGE": 1,
+    "AFTER_PASSAGE": 0
+  },
+  "no_progress_stages": {
+    "BEFORE_PASSAGE": 1,
+    "AFTER_PASSAGE": 0
+  },
+  "detour_applied_after_passage": 0,
+  "detour_end_reasons": {
+    "NO_NEW_OBSTACLE_AHEAD": 1
+  },
+  "detour_durations_s": [
+    3.1111111111111107
+  ],
+  "detour_end_vs_passage": [
+    {
+      "job_id": 0,
+      "end_s": 22.333333333333332,
+      "end_pose": [
+        2.798405641585567,
+        0.777069352009696,
+        0.7254612831736686
+      ],
+      "passage_s": 30.875,
+      "after_physical_passage": false,
+      "reason": "NO_NEW_OBSTACLE_AHEAD"
+    }
+  ],
+  "detour_terminal_active_count": 0,
+  "goal_y_m": null,
+  "passage_absolute_s": 30.875,
+  "scene": "L2",
+  "index": 901,
+  "method": "M3_DETOUR",
+  "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20f_smoke_01",
+  "excluded": true
+}
