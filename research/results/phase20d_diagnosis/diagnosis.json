@@ -1,0 +1,30 @@
+{
+  "runs": 22,
+  "unavailable": [
+    {
+      "phase": "phase20b",
+      "run": "L3_081_D750_M1_ROTATE",
+      "reason": "Missing summary or depth updates"
+    },
+    {
+      "phase": "phase20b",
+      "run": "L3_082_D750_M2_REPAIR",
+      "reason": "Missing summary or depth updates"
+    }
+  ],
+  "labels": {
+    "PUBLISH_BUG": 23,
+    "CPU_CONTENTION": 2,
+    "OTHER": 2
+  },
+  "maximum_publication_gap_s": 2.1703573130000002,
+  "maximum_snapshot_age_s": 14.430555555555557,
+  "total_missing_frames": 0,
+  "queue_drop_evidence": false,
+  "source_findings": [
+    "Unbounded FIFO; no full-queue/drop code",
+    "Snapshot/raw compressed persistence and SHA hashing precede publication pointer",
+    "Recorded publication timestamp precedes hash/log/pointer update"
+  ],
+  "interpretation": "Publication gap and capture-age/backlog are distinct; overlap label is not measured CPU causation; historical run classifications unchanged"
+}

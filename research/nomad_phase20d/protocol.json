@@ -1,0 +1,231 @@
+{
+  "phase": "20D",
+  "base_commit": "2917e63",
+  "status": "OFFLINE_FROZEN",
+  "assessment_label": "사후 수정 후 재점검 2",
+  "changes": {
+    "publication": "immutable pointer published before asynchronous compressed archival; unbounded queues and no drops retained; exact processing/publication/archive/queue timestamps logged",
+    "recency": "last_free_tick records the occupied-priority free-ray evidence frame at72Hz; initial-1; shadow unknown reset unchanged; R3 far mask=occupied OR unknown OR never free OR age>144ticks",
+    "cache": "one EDT per immutable R3 evaluation snapshot (source frame,evaluation tick); same mask/EDT used by all7 constraints and exact certificates; current-time rechecks use exact threshold masks without another EDT",
+    "exact_certificate": "EDT-derived upper bound restricts exact segment-to-cell-center projection candidates; mathematically same distance, no approximate safety substitution"
+  },
+  "common": {
+    "SO": {
+      "source_scenario": "research/nomad_phase2/scenario.json",
+      "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "nodes": 21,
+      "placement": {
+        "trigger_x": [
+          2.0,
+          2.1
+        ],
+        "distance_m": 1.2,
+        "size": [
+          0.35,
+          0.35,
+          0.8
+        ],
+        "y_offset_m": 0.15,
+        "y_clamp": [
+          -0.925,
+          0.925
+        ],
+        "s": "odd +1; even -1"
+      },
+      "oracle_publication": false,
+      "evaluation_dynamic_geometry": true,
+      "success_gate": false
+    },
+    "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "control": {
+      "lookahead_m": 0.25,
+      "vmax_m_s": 0.3,
+      "omega_max_rad_s": 0.4,
+      "acceleration_m_s2": 0.5,
+      "observation_hz": 4,
+      "controller_hz": 9,
+      "integration_hz": 72,
+      "waypoint_timeout_s": 1,
+      "navigation_timeout_s": 90,
+      "delivery_delay_ms": 750,
+      "speed": "protected Phase18D SP; rebuild on path replacement",
+      "start_alignment": "On new path: heading error>=45deg at any speed; if v<.01 retain20deg; bounded braking then in-place |w|<=.4",
+      "pivot_trigger_P": false,
+      "fallback": "Phase16 KEEP_ACTIVE / STOP_WAIT",
+      "recovery": "Phase17 RECOVER_ROTATE (30deg, .3rad/s, maximum12 per run)"
+    },
+    "depth": {
+      "variant": "15A2 V1",
+      "noise_sigma": "0.01*d^2",
+      "unknown": "not occupied",
+      "odometry": "exact simulator pose",
+      "oracle_controller_input": false,
+      "allocation_bounds_m": [
+        -4.0,
+        -3.5,
+        12.0,
+        6.2
+      ],
+      "allocation_note": "SO x extent is longer than Phase16; extend xmax8 to12 to cover corridor and3m sensor range; map resolution, occupancy/noise rules unchanged; no oracle wall occupancy inserted"
+    },
+    "seed_rule": "inference=101+10000*index+2*request_id; DDPM=inference+1"
+  },
+  "levels": {
+    "L2": {
+      "size_xyz_m": [
+        0.4,
+        1.2,
+        0.8
+      ],
+      "center_y_m": 0.0,
+      "gaps_m": [
+        0.9,
+        0.9
+      ]
+    },
+    "L3": {
+      "size_xyz_m": [
+        0.4,
+        2.0,
+        0.8
+      ],
+      "center_y_rule": "even +.3, odd -.3 (corridor frame)",
+      "gaps_m": [
+        0.8,
+        0.2
+      ]
+    }
+  },
+  "methods": [
+    "M1_ROTATE",
+    "M3_DETOUR"
+  ],
+  "indices": [
+    86,
+    87,
+    88
+  ],
+  "main_order": [
+    {
+      "scene": "L2",
+      "index": 86,
+      "method": "M1_ROTATE",
+      "seed_offset": 860000
+    },
+    {
+      "scene": "L2",
+      "index": 86,
+      "method": "M3_DETOUR",
+      "seed_offset": 860000
+    },
+    {
+      "scene": "L3",
+      "index": 86,
+      "method": "M3_DETOUR",
+      "seed_offset": 860000
+    },
+    {
+      "scene": "L3",
+      "index": 86,
+      "method": "M1_ROTATE",
+      "seed_offset": 860000
+    },
+    {
+      "scene": "L2",
+      "index": 87,
+      "method": "M3_DETOUR",
+      "seed_offset": 870000
+    },
+    {
+      "scene": "L2",
+      "index": 87,
+      "method": "M1_ROTATE",
+      "seed_offset": 870000
+    },
+    {
+      "scene": "L3",
+      "index": 87,
+      "method": "M1_ROTATE",
+      "seed_offset": 870000
+    },
+    {
+      "scene": "L3",
+      "index": 87,
+      "method": "M3_DETOUR",
+      "seed_offset": 870000
+    },
+    {
+      "scene": "L2",
+      "index": 88,
+      "method": "M1_ROTATE",
+      "seed_offset": 880000
+    },
+    {
+      "scene": "L2",
+      "index": 88,
+      "method": "M3_DETOUR",
+      "seed_offset": 880000
+    },
+    {
+      "scene": "L3",
+      "index": 88,
+      "method": "M1_ROTATE",
+      "seed_offset": 880000
+    },
+    {
+      "scene": "L3",
+      "index": 88,
+      "method": "M3_DETOUR",
+      "seed_offset": 880000
+    }
+  ],
+  "shuffle_seed": 20261103,
+  "navigation_count": 12,
+  "offline": {
+    "source_events": "research/results/phase20c_shadow_recheck/events_before_solve.json",
+    "events": 69,
+    "recompute_triggers": false,
+    "regression": "base occupancy/observed/SDF exactly equal20C shadows; timestamp field only added",
+    "gate": "unchanged oldR3 acceptance/penetration/7% rollout/1s p95, descriptive only; never blocks pilot",
+    "label_if_not_ready": "탐색적 파일럿"
+  },
+  "online": {
+    "R2": "unchanged four-process R2,1s deadline",
+    "R3": "unchanged7 initializations/constraints/objective; start-relative u_ref; recent-field cache",
+    "one_outstanding": true,
+    "NO_PROGRESS": "same3s projected progress<.2, not aligning/recovering/waiting;3s cooldown after detour attempt or action ends",
+    "wait_limit_s": 1.0,
+    "detour_limit_s": 6.0,
+    "replacement": "defer NoMaD FRESH while R3 waits/executes; inference continues; independent detour action, not a late normal switch",
+    "recheck": "current map and current free-age at each9Hz tick, including every new depth publication; stop if remaining fixed detour fails; first.3m exception anchored to original detour arclength"
+  },
+  "decision": {
+    "helps": "M3 success>=M1+1 AND detour applied>=2",
+    "unused": "detour applied<2",
+    "else": "DETOUR_NO_HELP"
+  },
+  "smoke": {
+    "scene": "L3",
+    "method": "M3_DETOUR",
+    "index": 901,
+    "delay": 0.75,
+    "timeout": 60,
+    "count": 1,
+    "excluded": true
+  },
+  "protected_sha256": {
+    "research/nomad_phase20b/config.py": "ca3238ac3e3423e10616147171c739a11d039a2e702b424092e9d68af00290ca",
+    "research/nomad_phase20b/runtime.py": "9f914f993b905456235b92f5c91ed6f5fb7267c956c2f3f54cc6c371b3298268",
+    "research/nomad_phase20/runtime.py": "7dde2daadf04fcc92c5b8b1c65913a3f1352ace5b892b03fd80cd5c84e931246",
+    "research/nomad_phase20/execution.py": "89956a9310336dbb575d2651af9576732845262e5c531a83e45d3c203cab22e6",
+    "research/nomad_phase20/repair.py": "65a70b2f4fc597dfd6a47af38df8f4f7b4e6d6d1ae3aa9655025e3f8d8c6b70c",
+    "research/nomad_phase20c/detour.py": "0fbf4404017e6cba858a825c850f12b26b3cb66b32096daf9999d3c9968ab0f5",
+    "research/nomad_phase20c/detour_known.py": "8db6b56af8372d913e05f69ee4eb8cf54e9caea1e54691881e0580d639310704",
+    "research/nomad_phase20c/shadow.py": "ca52019f91b6702d8351c536cb889b5eb998eafca45895576be501b2c44c23f8",
+    "research/nomad_phase20c/shadow_rays.c": "131c579655540add9dffcd9da19749777758af7ea563d76bfd6c1becf6dba0a0",
+    "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58",
+    "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c"
+  }
+}
