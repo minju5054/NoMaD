@@ -4,7 +4,7 @@ from nomad_isaac.common import ROOT,sha256_file
 from nomad_phase17.report import table
 
 
-def preflight_report(out,verdict,six,sha,protocol):
+def preflight_report(out,verdict,six,sha,protocol,replace=False):
     text='# Phase 20 — SO-only repair recovery pilot\n\n'
     text+=f"**파일럿 / Offline gate: {verdict['label']}**. Execution SHA: `{sha}`. Protocol hash: `{sha256_file(out/'protocol.json')}`.\n\n"
     text+='The revised main matrix is SO only, seed indices74–79, M1 ROTATE and M2 REPAIR, 12 serial trials. No SLW/LC/CL navigation or noninferiority judgment is planned in this phase. None of these pilot trials has been executed by this offline preflight.\n\n'
@@ -17,8 +17,14 @@ def preflight_report(out,verdict,six,sha,protocol):
     text+=table(causes)+'\n\n```json\n'+json.dumps(verdict,indent=2)+'\n```\n\n'
     text+='READY requires zero **selected** repaired-path oracle penetrations, ≤7% oracle overlap among selected 1.5s SP+departure-alignment rollouts, and per-sample solve p95≤0.20s. All accepted sample-path penetrations are reported separately, including unselected paths. There is no minimum repair-success gate. No-selected-repair is not evidence of readiness.\n\n'
     text+='SP and trigger S match Phase19S, with trigger P removed. Actual recorded initial v and heading are used; alignment is not forced when v≥0.01m/s. The1.5s clock includes braking/rotation. The rollout is endpoint/horizon bounded and oracle-passive, so overlap is monitored but never changes control.\n\n'
+    from nomad_phase19s.evaluate import csv_rows
+    penetrating=[e for e in csv_rows(out/'events.csv') if e['repair_success'] and e['selected_oracle_clearance_m']<0]
+    if penetrating:
+        text+='### Selected penetrating repairs\n\n'+table(penetrating,['event_id','run','cause','B_oracle_clearance_m','B_depth_clearance_m','selected_near_threshold_m','selected_depth_clearance_m','selected_oracle_clearance_m'])+'\n\n'
+        text+='The specified near-start threshold can be negative. In these recorded cases the accepted path has a negative depth clearance as well as negative oracle clearance: the relaxed rule itself permits slight depth-footprint penetration. A passing near-start certificate is therefore not a nonpenetration certificate. This is recorded without changing the threshold or adding a new acceptance rule.\n\n'
     text+='## 0-b. Six published Phase19S 1.5s collisions\n\n'+table(six)+'\n\n'
     text+='These six cases were selected from the previously published D3 SRG prefix-overlap flags before any R2 outcome. Their saved clearances are reproduced with S-only control. Unknown fractions are descriptions of the fixed repaired path, not evidence that unknown space caused the collision. The one-line reasons distinguish trigger inactivity from a subsequent tracking failure; no experiment setting is changed from this diagnosis.\n\n'
+    text+=f"Departure alignment fired in {sum(r['departure_alignment'] for r in six)}/{len(six)} cases: {sum(r['previous_v']>=.01 for r in six)} were already moving at ≥0.01m/s, and {sum(r['previous_v']<.01 and not r['departure_alignment'] for r in six)} did not meet the heading trigger. Nonpenetrating paths are distinguished from paths satisfying the full2.5cm margin. These are observed execution discrepancies, not proof of a unique causal mechanism.\n\n"
     text+='## Validation and execution status\n\n'
     text+='Five unit tests passed: R2 constraint/objective analytic Jacobians versus finite differences (≤1e−5 away from the hard zone boundary), exact split certificate, SP replacement/straight-speed/pre-turn braking, trigger S conditions without pivot, and equality to protected S-only behavior. Original code/raw/results remain unchanged. The frozen candidate protocol and deterministic12-job order are recorded below.\n\n'
     if verdict['label']=='NOT_READY':
@@ -26,4 +32,4 @@ def preflight_report(out,verdict,six,sha,protocol):
     else:text+='Offline READY permits further online integration and the single SO M2 smoke. READY alone is not a claim that the campaign is prepared or that driving is safe.\n\n'
     text+='## Limits\n\nSection0 is post-hoc analysis of Phase18 saved events. A fixed path rollout has no next FRESH, changing depth map or NoMaD response. Zero path penetration and short-horizon safety do not establish closed-loop driving safety. Simulation pose is assumed exact; oracle is restricted to evaluation.\n\n'
     text+='## Frozen SO pilot and offline protocol\n\n```json\n'+json.dumps(protocol,indent=2,ensure_ascii=False)+'\n```\n'
-    with (ROOT/'docs/PHASE20_REPAIR_DRIVE.md').open('x') as f:f.write(text)
+    with (ROOT/'docs/PHASE20_REPAIR_DRIVE.md').open('w' if replace else 'x') as f:f.write(text)
