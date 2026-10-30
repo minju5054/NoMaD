@@ -1,7 +1,7 @@
 {
   "phase": "21",
   "base_commit": "3744de7",
-  "status": "TUNED",
+  "status": "GEOMETRY_PASS",
   "SO": {
     "source_scenario": "research/nomad_phase2/scenario.json",
     "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
@@ -453,7 +453,8 @@
     ],
     "mode": "render only spawn frame depth, no method/inference/control",
     "pass": "box USD AABB matches; no wall overlap; central point of wider gap projected inside90deg FOV and finite depth rays observe free gap beyond front face",
-    "offset_fallback": "one change .4->.35 only if geometry/FOV fails; no navigation feedback"
+    "offset_fallback": "one change .4->.35 only if geometry/FOV fails; no navigation feedback",
+    "passed_offset_m": 0.4
   },
   "main_order": [
     {

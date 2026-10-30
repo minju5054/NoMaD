@@ -52,7 +52,7 @@ class TEExecution(Common):
     def use_fallback(self,core,refresh):
         self.snapshot=self.depth_maps.snapshot();self.mode,detail=filter_ensemble(self.transition.ensemble,core.pose,self.snapshot,refresh['monotonic_ns'])
         if self.transition.ensemble.chunks:
-            latest=self.transition.ensemble.chunks[-1];self.sp=latest['sp'];self.follower=self.sp.follower;self.path_source_id=latest['id']
+            latest=self.transition.ensemble.chunks[-1];self.sp=latest['sp'];self.sp.now_ns=self.now_ns;self.follower=self.sp.follower;self.path_source_id=latest['id']
         else:self.sp=self.follower=None;self.path_source_id=None
         self.repair_active=False
         self.fallback_log.write(json.dumps(dict(id=self.active_id,simulation_time_s=refresh['simulation_time_s'],mode=self.mode,path_source_id=self.path_source_id,**detail))+'\n');self.fallback_log.flush();self.recovery.decision(self.mode);return detail
