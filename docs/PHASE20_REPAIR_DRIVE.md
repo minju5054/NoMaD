@@ -1,57 +1,39 @@
-# Phase 20 — SO-only repair recovery pilot
+# Phase 20 — SO repair recovery 파일럿
 
-**파일럿 / Offline gate: NOT_READY**. Execution SHA: `5f0ada453bec0d935c8c8d90152811bea6a8a251`. Protocol hash: `50a31546ae91fd716970037752df42dd7478429330ba0bb546e6c1eef90cf9d3`.
+Protocol SHA256: `8cac8cfee799a363872ae79805fd386309f905fadfedbf7aa4820b1573498119`. Offline assessment: **사후 수정 후 재점검 / READY**.
 
-The revised main matrix is SO only, seed indices74–79, M1 ROTATE and M2 REPAIR, 12 serial trials. No SLW/LC/CL navigation or noninferiority judgment is planned in this phase. None of these pilot trials has been executed by this offline preflight.
+SP and revised stop–align–go are shared by M1/M2. R2 repair is used only at ALL_UNSAFE; it waits at STOP_WAIT, uses no oracle, and falls back after rejection or0.5s timeout. Main runs are seed74–79, SO only. This is a 파일럿, not a confirmatory experiment.
 
-## 0-a. R2 definition
-
-R2 inherits Phase19R initialization, 14 XY variables, fixed B, priors/smoothness/heading objective, curvature≤8, length preservation, trust region, analytic Jacobian, SLSQP(maxiter100, ftol1e−8) and single-attempt solve. Only the first0.30m clearance threshold is relaxed. Oracle geometry never enters optimization, selection or SP/alignment control.
-
-Let c_B = saved depth SDF(B) − h/√2 (the same conservative footprint clearance convention as Phase16D/19R). At each current optimized path sample q, cumulative arclength s(q)≤0.30m uses min(0.025,c_B−0.005); later samples use0.025m. The original per-segment nine-point bound d(q)−h/√2−L/16 is unchanged. Zone membership is recomputed from the optimized path, not the initial path. The piecewise-constant threshold has an analytic zero derivative away from s=0.30m; the zone boundary is explicitly nonsmooth. No smoothing, tuning or restart is introduced.
-
-Exact depth certificate splits the continuous path at0.30m and reuses exact distance to occupied cell centers minus robot radius on both subpaths. The cut is included in both certificates: a continuous far-side path must satisfy0.025m in the limit at the cut. Acceptance still requires solver success, maximum constraint violation≤1e−7 and both exact certificates.
-
-Selected repair is the accepted sample with minimum mean edit (lower-index tie); all8 are attempted once unless Phase19R short/degenerate exclusion applies. Timing p95 uses eligible per-sample attempts including certificate. Eight-sample serial time and counts exceeding the planned0.5s online deadline are separately reported.
-
-| cause | events | successes | fraction |
-| --- | --- | --- | --- |
-| MARGINAL | 86 | 55 | 0.63953 |
-| TRUE_BLOCK | 107 | 77 | 0.71963 |
-| NEAR_START | 27 | 14 | 0.51852 |
-| OTHER | 21 | 16 | 0.7619 |
+## Offline gate
 
 ```json
 {
-  "label": "NOT_READY",
-  "reasons": [
-    "SELECTED_PATH_ORACLE_PENETRATION",
-    "ROLLOUT_OVERLAP_EXCEEDS_7_PERCENT"
-  ],
+  "label": "READY",
+  "reasons": [],
   "events": 241,
-  "repair_successes": 162,
-  "repair_success_fraction": 0.6721991701244814,
-  "selected_path_oracle_penetrations": 2,
-  "selected_rollout_overlaps": 12,
-  "selected_rollout_count": 162,
-  "selected_rollout_overlap_fraction": 0.07407407407407407,
-  "accepted_sample_paths": 728,
-  "all_accepted_path_oracle_penetrations": 14,
+  "repair_successes": 141,
+  "repair_success_fraction": 0.5850622406639004,
+  "selected_path_oracle_penetrations": 0,
+  "selected_rollout_overlaps": 6,
+  "selected_rollout_count": 141,
+  "selected_rollout_overlap_fraction": 0.0425531914893617,
+  "accepted_sample_paths": 643,
+  "all_accepted_path_oracle_penetrations": 4,
   "cause_success": {
     "MARGINAL": {
       "events": 86,
-      "successes": 55,
-      "fraction": 0.6395348837209303
+      "successes": 44,
+      "fraction": 0.5116279069767442
     },
     "TRUE_BLOCK": {
       "events": 107,
-      "successes": 77,
-      "fraction": 0.719626168224299
+      "successes": 69,
+      "fraction": 0.6448598130841121
     },
     "NEAR_START": {
       "events": 27,
-      "successes": 14,
-      "fraction": 0.5185185185185185
+      "successes": 12,
+      "fraction": 0.4444444444444444
     },
     "OTHER": {
       "events": 21,
@@ -60,290 +42,89 @@ Selected repair is the accepted sample with minimum mean edit (lower-index tie);
     }
   },
   "per_sample_solve_s": {
-    "n": 1005,
-    "median": 0.016293168999254704,
-    "p95": 0.040575193607946855,
-    "max": 0.11149463697802275
+    "n": 914,
+    "median": 0.016204606989049353,
+    "p95": 0.04135010400932511,
+    "max": 0.11791799598722719
   },
   "eight_sample_wall_s": {
     "n": 241,
-    "median": 0.0777223749901168,
-    "p95": 0.2155656669929158,
-    "max": 0.3350750939862337
+    "median": 0.05706489199656062,
+    "p95": 0.2150250990234781,
+    "max": 0.43242758899577893
   },
   "eight_sample_over_half_second": 0,
   "selected_mean_edit_m": {
-    "n": 162,
-    "median": 0.02508100353499551,
-    "p95": 0.07369202861622366,
+    "n": 141,
+    "median": 0.026214602198188688,
+    "p95": 0.07411372784312453,
     "max": 0.11072891644468626
   },
-  "post_hoc": true
+  "post_hoc": true,
+  "assessment_label": "\uc0ac\ud6c4 \uc218\uc815 \ud6c4 \uc7ac\uc810\uac80",
+  "negative_depth_B_events": 27,
+  "alignment_events": 52,
+  "alignment_braking_total_s": 1.4444444444444444,
+  "alignment_rotation_total_s": 71.33333333333333
 }
 ```
 
-READY requires zero **selected** repaired-path oracle penetrations, ≤7% oracle overlap among selected 1.5s SP+departure-alignment rollouts, and per-sample solve p95≤0.20s. All accepted sample-path penetrations are reported separately, including unselected paths. There is no minimum repair-success gate. No-selected-repair is not evidence of readiness.
+[Original NOT_READY](../research/results/phase20_preflight/readiness.json) and [recheck diagnosis](PHASE20_REPAIR_DRIVE_RECHECK.md) remain available.
 
-SP and trigger S match Phase19S, with trigger P removed. Actual recorded initial v and heading are used; alignment is not forced when v≥0.01m/s. The1.5s clock includes braking/rotation. The rollout is endpoint/horizon bounded and oracle-passive, so overlap is monitored but never changes control.
+## Method summary
 
-### Selected penetrating repairs
+| method | planned | valid | success | collision | corridor | stuck | technical | safety_failure | goal_time_s | stopped_fraction | box_passage_time_s | passed_box | minimum_clearance_m | all_unsafe | recovery_count | repair_attempts | repair_accepted | repair_timeout | alignment_count | alignment_braking_s | alignment_rotation_s |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| M1_ROTATE | 6 | 6 | 5 | 0 | 0 | 1 | 0 | 0 | 67.842 | 0.013062 | 16.301 | 6 | 0.053367 | 5 | 2 | 0 | 0 | 0 | 212 | 17.981 | 16.815 |
+| M2_REPAIR | 6 | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 68.326 | 0.0077519 | 15.604 | 6 | 0.04455 | 2 | 1 | 2 | 0 | 2 | 204 | 17.37 | 16.111 |
 
-| event_id | run | cause | B_oracle_clearance_m | B_depth_clearance_m | selected_near_threshold_m | selected_depth_clearance_m | selected_oracle_clearance_m |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 11 | LC_066_D750_FRESHEST-SAFE+TEMPORAL-ENSEMBLE | TRUE_BLOCK | 0.0020891 | -0.004982 | -0.009982 | -0.0013839 | -0.0013909 |
-| 12 | LC_066_D750_FRESHEST-SAFE+TEMPORAL-ENSEMBLE | TRUE_BLOCK | 0.0020891 | -0.004982 | -0.009982 | -0.0011069 | -0.0011664 |
+## Seed × method
 
-The specified near-start threshold can be negative. In these recorded cases the accepted path has a negative depth clearance as well as negative oracle clearance: the relaxed rule itself permits slight depth-footprint penetration. A passing near-start certificate is therefore not a nonpenetration certificate. This is recorded without changing the threshold or adding a new acceptance rule.
+| index | method | classification | success | collision | corridor | stuck | goal_time_s | stopped_fraction | box_passage_time_s | minimum_clearance_m | all_unsafe | repair_attempts | repair_accepted | repair_timeout | recovery_count | alignment_count | alignment_braking_s | alignment_rotation_s | first_visible_s | first_depth_observed_s | first_depth_map_observed_s | pass_side |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 74 | M2_REPAIR | SUCCESS | True | False | False | False | 66.958 | 0 | 15.514 | 0.19403 | 0 | 0 | 0 | 0 | 0 | 33 | 17.556 | 14.889 | 15.986 | 15.986 | 16.75 | +Y |
+| 74 | M1_ROTATE | SUCCESS | True | False | False | False | 65.611 | 0 | 16.167 | 0.19343 | 0 | 0 | 0 | 0 | 0 | 33 | 17.778 | 15 | 15.486 | 15.486 | 16.236 | +Y |
+| 75 | M1_ROTATE | SUCCESS | True | False | False | False | 65.014 | 0 | 15.25 | 0.055167 | 0 | 0 | 0 | 0 | 0 | 32 | 17.111 | 14 | 16.236 | 16.236 | 16.986 | -Y |
+| 75 | M2_REPAIR | SUCCESS | True | False | False | False | 64.431 | 0 | 15.264 | 0.04455 | 0 | 0 | 0 | 0 | 0 | 31 | 17.111 | 13.556 | 15.986 | 15.986 | 16.736 | -Y |
+| 76 | M2_REPAIR | SUCCESS | True | False | False | False | 57.931 | 0 | 13.042 | 0.22572 | 0 | 0 | 0 | 0 | 0 | 29 | 17 | 11.333 | 15.736 | 15.736 | 16.486 | +Y |
+| 76 | M1_ROTATE | STUCK | False | False | False | True | — | 0 | 14.194 | 0.25695 | 0 | 0 | 0 | 0 | 0 | 47 | 21.889 | 23.778 | 15.986 | 15.986 | 16.75 | +Y |
+| 77 | M1_ROTATE | SUCCESS | True | False | False | False | 66.236 | 0 | 14.722 | 0.053367 | 0 | 0 | 0 | 0 | 0 | 33 | 17.444 | 15.111 | 18.736 | 18.736 | 19.486 | +Y |
+| 77 | M2_REPAIR | SUCCESS | True | False | False | False | 79.931 | 0 | 17.319 | 0.04598 | 0 | 0 | 0 | 0 | 0 | 41 | 18.111 | 22.333 | 17.236 | 17.236 | 17.986 | -Y |
+| 78 | M1_ROTATE | SUCCESS | True | False | False | False | 73.722 | 0.078372 | 23 | 0.064691 | 4 | 0 | 0 | 0 | 2 | 34 | 17.222 | 16.556 | 16.236 | 16.236 | 16.986 | +Y |
+| 78 | M2_REPAIR | SUCCESS | True | False | False | False | 69.042 | 0 | 14.958 | 0.16063 | 0 | 0 | 0 | 0 | 0 | 37 | 17.222 | 19.222 | 20.736 | 20.736 | 21.486 | +Y |
+| 79 | M1_ROTATE | SUCCESS | True | False | False | False | 68.625 | 0 | 14.472 | 0.057093 | 1 | 0 | 0 | 0 | 0 | 33 | 16.444 | 16.444 | 17.236 | 17.236 | 17.986 | -Y |
+| 79 | M2_REPAIR | SUCCESS | True | False | False | False | 71.667 | 0.046512 | 17.528 | 0.059868 | 2 | 2 | 0 | 2 | 1 | 33 | 17.222 | 15.333 | 17.486 | 17.486 | 18.236 | -Y |
 
-## 0-b. Six published Phase19S 1.5s collisions
-
-| event_id | run | scene | fresh_id | previous_v | initial_heading_error_deg | departure_alignment | rotation_s | path_oracle_clearance_m | path_unknown_fraction | cross_track_until_collision_m | collision_type | collision_boxes | collision_pose | collision_time_s | actual_v_at_collision | actual_w_at_collision | reason | source_prefix_reproduced |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 28 | SLW_067_D750_FRESHEST-SAFE | SLW | 8 | 0.098227 | 10.552 | False | 0 | 0.044777 | 0 | 0.08703 | WALL | [] | [1.7083177229791071, -0.8115381395807999, -0.6028874191079332] | 1.4444 | 0.3 | -0.28755 | Start alignment inactive: actual v >=0.01m/s. Safe path clearance did not certify the executed PP arc. | True |
-| 53 | SLW_068_D750_FRESHEST-SAFE+HERMITE | SLW | 56 | 0.05 | 42.811 | False | 0 | 0.034864 | 0 | 0.04545 | BOX | ['Slalom3'] | [3.8128569651142827, -0.11245106940688192, -0.3772245083502721] | 0.41667 | 0.25151 | -0.4 | Start alignment inactive: actual v >=0.01m/s. Safe path clearance did not certify the executed PP arc. | True |
-| 56 | SLW_068_D750_FRESHEST-SAFE+HERMITE | SLW | 60 | 0 | 15.766 | False | 0 | 0.0067776 | 0 | 0.036448 | BOX | ['Slalom3'] | [3.833701248832614, -0.16065314502392164, -0.5534283906319235] | 0.69444 | 0.14381 | 0.4 | Start alignment inactive: initial heading error <20deg (or no point >=5cm). Safe path clearance did not certify the executed PP arc. | True |
-| 167 | SLW_071_D750_FRESHEST-SAFE+TEMPORAL-ENSEMBLE | SLW | 42 | 0.055736 | 101 | False | 0 | 0.036621 | 0 | 0.069896 | WALL | [] | [2.738946266044807, 0.8106715528763534, 1.4504382991621299] | 1.4444 | 0.05 | 0.33797 | Start alignment inactive: actual v >=0.01m/s. Safe path clearance did not certify the executed PP arc. | True |
-| 183 | SLW_072_D750_FRESHEST-SAFE+GRAPH-depth-CLR | SLW | 28 | 0.05059 | 118.14 | False | 0 | 0.034495 | 0 | 0.066947 | WALL | [] | [2.819545598333406, 0.8101957578541565, 1.1512306538593569] | 1.3472 | 0.05 | 0.28541 | Start alignment inactive: actual v >=0.01m/s. Safe path clearance did not certify the executed PP arc. | True |
-| 217 | SLW_072_D750_FRESHEST-SAFE+TEMPORAL-ENSEMBLE | SLW | 10 | 0.05 | 21.02 | False | 0 | 0.045442 | 0 | 0.050346 | WALL | [] | [1.6878537945525163, -0.8101085849903952, -0.3523460594478234] | 0.91667 | 0.29301 | 0.4 | Start alignment inactive: actual v >=0.01m/s. Safe path clearance did not certify the executed PP arc. | True |
-
-These six cases were selected from the previously published D3 SRG prefix-overlap flags before any R2 outcome. Their saved clearances are reproduced with S-only control. Unknown fractions are descriptions of the fixed repaired path, not evidence that unknown space caused the collision. The one-line reasons distinguish trigger inactivity from a subsequent tracking failure; no experiment setting is changed from this diagnosis.
-
-Departure alignment fired in 0/6 cases: 5 were already moving at ≥0.01m/s, and 1 did not meet the heading trigger. Nonpenetrating paths are distinguished from paths satisfying the full2.5cm margin. These are observed execution discrepancies, not proof of a unique causal mechanism.
-
-## Validation and execution status
-
-Five unit tests passed: R2 constraint/objective analytic Jacobians versus finite differences (≤1e−5 away from the hard zone boundary), exact split certificate, SP replacement/straight-speed/pre-turn braking, trigger S conditions without pivot, and equality to protected S-only behavior. Original code/raw/results remain unchanged. The frozen candidate protocol and deterministic12-job order are recorded below.
-
-**Stopped at the mandatory offline gate.** Online repair-thread integration, SO smoke/technical gate, main batch and main result judgments were not executed. No campaign launch command is provided. Constants and thresholds were not changed to pass the gate. The main execution/report infrastructure is not claimed complete.
-
-## Limits
-
-Section0 is post-hoc analysis of Phase18 saved events. A fixed path rollout has no next FRESH, changing depth map or NoMaD response. Zero path penetration and short-horizon safety do not establish closed-loop driving safety. Simulation pose is assumed exact; oracle is restricted to evaluation.
-
-## Frozen SO pilot and offline protocol
+## Pilot decision
 
 ```json
 {
-  "phase": 20,
-  "base_commit": "78ee7e1",
-  "status": "OFFLINE_GATE_FROZEN",
-  "label_scope": "파일럿",
-  "scenes": [
-    "SO"
-  ],
-  "methods": [
-    "M1_ROTATE",
-    "M2_REPAIR"
-  ],
-  "indices": [
-    74,
-    75,
-    76,
-    77,
-    78,
-    79
-  ],
-  "main_order": [
-    {
-      "scene": "SO",
-      "index": 74,
-      "method": "M2_REPAIR",
-      "seed_offset": 740000
-    },
-    {
-      "scene": "SO",
-      "index": 74,
-      "method": "M1_ROTATE",
-      "seed_offset": 740000
-    },
-    {
-      "scene": "SO",
-      "index": 75,
-      "method": "M1_ROTATE",
-      "seed_offset": 750000
-    },
-    {
-      "scene": "SO",
-      "index": 75,
-      "method": "M2_REPAIR",
-      "seed_offset": 750000
-    },
-    {
-      "scene": "SO",
-      "index": 76,
-      "method": "M2_REPAIR",
-      "seed_offset": 760000
-    },
-    {
-      "scene": "SO",
-      "index": 76,
-      "method": "M1_ROTATE",
-      "seed_offset": 760000
-    },
-    {
-      "scene": "SO",
-      "index": 77,
-      "method": "M1_ROTATE",
-      "seed_offset": 770000
-    },
-    {
-      "scene": "SO",
-      "index": 77,
-      "method": "M2_REPAIR",
-      "seed_offset": 770000
-    },
-    {
-      "scene": "SO",
-      "index": 78,
-      "method": "M1_ROTATE",
-      "seed_offset": 780000
-    },
-    {
-      "scene": "SO",
-      "index": 78,
-      "method": "M2_REPAIR",
-      "seed_offset": 780000
-    },
-    {
-      "scene": "SO",
-      "index": 79,
-      "method": "M1_ROTATE",
-      "seed_offset": 790000
-    },
-    {
-      "scene": "SO",
-      "index": 79,
-      "method": "M2_REPAIR",
-      "seed_offset": 790000
-    }
-  ],
-  "navigation_count": 12,
-  "shuffle_seed": 20261031,
-  "offline": {
-    "source_events": "research/results/phase19r/events_eval.csv",
-    "events": 241,
-    "order": "unchanged CSV order; samples 0 through 7",
-    "sample_attempts": 1,
-    "retries": 0,
-    "R2": "R inherited unchanged except piecewise start safety threshold and certificate",
-    "c_B": "depth SDF(B) minus h/sqrt(2), same conservative footprint convention as Phase16D/19R",
-    "near_region_m": 0.3,
-    "near_threshold": "min(.025,c_B-.005)",
-    "far_threshold_m": 0.025,
-    "zone_membership": "current optimized cumulative arclength at each of63 inspection points, not frozen initial mask",
-    "jacobian": "analytic within each zone; hard nonsmooth threshold at .30m, no smoothing/tuning",
-    "certificate": "continuous split at .30m; exact occupied-site distance minus radius; split point checked by both near and far certificates",
-    "selection": "minimum mean edit over8 resampled points among accepted; lower index tie",
-    "rollout": "SP + trigger S only, actual event speed and heading; 108 integration ticks; oracle-passive evaluation",
-    "readiness": {
-      "selected_oracle_penetrations_equal": 0,
-      "selected_rollout_overlap_fraction_max": 0.07,
-      "eligible_sample_solve_p95_s_max": 0.2
-    },
-    "missing_repair_evidence": "NOT_READY, no fabricated zero-risk rate",
-    "diagnosis_0b": "six saved Phase19S D3 SRG legacy_1p5s_prefix overlaps; no result-driven changes"
-  },
-  "control": {
-    "lookahead_m": 0.25,
-    "vmax_m_s": 0.3,
-    "omega_max_rad_s": 0.4,
-    "acceleration_m_s2": 0.5,
-    "observation_hz": 4,
-    "controller_hz": 9,
-    "integration_hz": 72,
-    "waypoint_timeout_s": 1,
-    "navigation_timeout_s": 90,
-    "delivery_delay_ms": 750,
-    "speed": "protected Phase18D SP; rebuild on path replacement",
-    "start_alignment": "Phase19S S: v<.01; first stored path point >=.05m from B; heading error>=20deg; brake then in-place |w|<=.4",
-    "pivot_trigger_P": false,
-    "fallback": "Phase16 KEEP_ACTIVE / STOP_WAIT",
-    "recovery": "Phase17 RECOVER_ROTATE (30deg, .3rad/s, maximum12 per run)"
-  },
-  "M1": "No ordinary Graph; shared depth FRESHEST-SAFE selection, SP+S, KEEP/STOP/ROTATE",
-  "M2": "ALL_UNSAFE -> serial eight-sample R2 in one CPU worker while STOP_WAIT; min-edit accepted repair, S alignment then follow; timeout .5s -> shared M1 fallback; no ordinary Graph",
-  "depth": {
-    "variant": "15A2 V1",
-    "noise_sigma": "0.01*d^2",
-    "unknown": "not occupied",
-    "odometry": "exact simulator pose",
-    "oracle_controller_input": false
-  },
-  "SO": {
-    "source_scenario": "research/nomad_phase2/scenario.json",
-    "source_scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
-    "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
-    "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
-    "nodes": 21,
-    "placement": {
-      "trigger_x": [
-        2.0,
-        2.1
-      ],
-      "distance_m": 1.2,
-      "size": [
-        0.35,
-        0.35,
-        0.8
-      ],
-      "y_offset_m": 0.15,
-      "y_clamp": [
-        -0.925,
-        0.925
-      ],
-      "s": "odd +1; even -1"
-    },
-    "oracle_publication": false,
-    "evaluation_dynamic_geometry": true,
-    "success_gate": false
-  },
-  "seed_rule": "inference=101+10000*index+2*request_id; DDPM=inference+1",
-  "navigation_verdict": {
-    "priority": [
-      "REPAIR_BETTER_SO",
-      "REPAIR_WORSE_SO",
-      "REPAIR_EQUAL_SO"
-    ],
-    "better": "success(M2)>=success(M1)+2 AND safety_failure(M2)<=safety_failure(M1)",
-    "worse": "success(M2)<=success(M1)-2 OR safety_failure(M2)>=safety_failure(M1)+2",
-    "safety_failure": "obstacle collision or corridor intrusion",
-    "auxiliary_noninferiority_removed": true,
-    "paired_descriptive": [
-      "SO stopped-time fraction M2-M1",
-      "SO box-passage time M2-M1"
-    ],
-    "bootstrap_replicates": 20000,
-    "bootstrap_seed": 20261031
-  },
-  "smoke": {
-    "scene": "SO",
-    "method": "M2_REPAIR",
-    "seconds": 30,
-    "count": 1,
-    "excluded_from_main": true,
-    "required_events": [
-      "spawn",
-      "depth observation",
-      "ALL_UNSAFE",
-      "repair attempt"
-    ]
-  },
-  "campaign": "only after READY and smoke; reuse Phase18 serial/restart-without-retry/lock/socket checks; user launches main, no assistant main navigation",
-  "protected_sha256": {
-    "research/nomad_phase19r/repair.py": "01314bdc267cfda557275f5ba5844e4433eea2ac86bfbdf9c8ea7f2b04eb516a",
-    "research/nomad_phase19r/evaluate.py": "7520b87af37728e5e192021ef9290183f866e9b91c6327a4937628a6ad2b2f3c",
-    "research/nomad_phase19s/srg.py": "865c8d457604da192bf86e1d911cec0ca006efe6c1143cbb361269c33ba70054",
-    "research/nomad_phase18d/rollout.py": "1cd7b1bdbd3139369ef7c3c36839923afa8b09c0d09bcf55f4b0076d3728798f",
-    "research/nomad_phase18d/speed_profile.py": "912432a9458db68799f2a2603643f03c74cf5a254f5ee713104ab4ba3f572629",
-    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
-    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
-    "research/nomad_phase0/chunk_execution.py": "b93858c5a16818ea1c406f3b1c25142baeb6d2abc3c47a6c3222376961a142c8",
-    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
-    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
-    "research/nomad_phase17/execution.py": "6f2fbeaad9be6684159276da53b010a1604b8d70f72443cddbbac8ba7b926fa5",
-    "research/nomad_phase18/campaign.py": "3492de134860e6c4c211bd43a2faba7db4bd7c2ddc16b9314994c2115e3709b2",
-    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
-    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d"
-  }
+  "label": "REPAIR_EQUAL_SO",
+  "scope": "\ud30c\uc77c\ub7ff",
+  "success_M1": 5,
+  "success_M2": 6,
+  "safety_M1": 0,
+  "safety_M2": 0
 }
 ```
+
+## Paired descriptive differences (M2−M1)
+
+| metric | n | mean_difference | ci95 | paired_indices | interpretation |
+| --- | --- | --- | --- | --- | --- |
+| stopped_fraction | 6 | -0.0053101 | [-0.03918613413715137, 0.023255813953488327] | [74, 75, 76, 77, 78, 79] | descriptive only; paired seed resampling, one scene; missing times not imputed |
+| box_passage_time_s | 6 | -0.69676 | [-3.8958333333333317, 1.7777777777777761] | [74, 75, 76, 77, 78, 79] | descriptive only; paired seed resampling, one scene; missing times not imputed |
+
+Box passage is first tick with the entire footprint beyond box rear (+X); passage time starts at physical spawn. Missing passage times remain missing. Stopped fraction is the union of STOP_WAIT, repair wait, recovery rotation and WAIT_FRESH; departure-alignment braking/rotation and actual near-zero-speed fraction are separately recorded. A conservative contact stop without a geometric witness is not relabelled a collision. All technical failures are retained; missing valid trials prevent an interpreted six-pair verdict.
+
+## Technical failures
+
+None.
+
+![paths_SO](../research/results/phase20/paths_SO.png)
+
+![so_examples](../research/results/phase20/so_examples.png)
+
+![stop_fraction](../research/results/phase20/stop_fraction.png)
+
+NoMaD uses RGB only. Both methods use the same noisy V1 depth map and exact simulator odometry (no odometry error); oracle boxes/walls are used only for rendering, placement and evaluation. The physical box can differ across methods because placement depends on actual pose. Paired seeds therefore do not imply identical RGB, trajectories or box positions. Depth unknown remains free; neither short offline readiness nor a successful pilot establishes general safety.
