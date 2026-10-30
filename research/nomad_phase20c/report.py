@@ -85,3 +85,36 @@ def offline_report(out,events,solutions,verdict,examples,excluded,sha,protocol):
     text+='This is post-hoc offline analysis of correlated saved events, not a driving comparison. Future FRESH responses, changed depth maps, motion during a live solve and subsequent closed-loop behavior are absent.\n\n'
     text+='## Preregistered protocol\n\n```json\n'+json.dumps(protocol,indent=2,ensure_ascii=False)+'\n```\n'
     with (ROOT/'docs/PHASE20C_DETOUR.md').open('x') as f:f.write(text)
+    append_saved_diagnostics(out)
+
+
+def append_saved_diagnostics(out):
+    """Attribute the already evaluated failures; no new solve or rollout."""
+    from nomad_phase19s.evaluate import csv_rows
+    from nomad_phase2.config import native_safety
+    from nomad_phase19r.evaluate import dump
+    before={e['event_id']:e for e in json.loads((out/'events_before_solve.json').read_text())}
+    events={e['event_id']:e for e in csv_rows(out/'events.csv')};failures=[]
+    with (out/'solutions.jsonl').open() as stream:
+        for line in stream:
+            r=json.loads(line)
+            if not r['accepted'] or r['oracle_clearance_m']>=0:continue
+            safety=native_safety(r['path'],before[r['event_id']]['oracle_config'])
+            box=safety['minimum_clearance_m'] is not None and safety['minimum_clearance_m']<0;wall=safety['corridor_clearance_m']<0
+            failures.append(dict(event_id=r['event_id'],initialization=r['initialization'],
+                selected=events[r['event_id']]['selected_initialization']==r['initialization'],
+                kind='BOX_AND_CORRIDOR' if box and wall else 'BOX' if box else 'CORRIDOR',
+                oracle_clearance_m=r['oracle_clearance_m'],depth_clearance_m=r['depth_clearance_m'],unknown_fraction=r['unknown_fraction'],
+                phase=before[r['event_id']]['phase']))
+    csv_write(out/'penetration_diagnostics.csv',failures)
+    selected=[e for e in events.values() if e['accepted']]
+    text='## Saved-path failure detail\n\n'
+    text+=f"All accepted negative-clearance paths: {dict(Counter(r['kind'] for r in failures))}. Selected negative-clearance paths: {dict(Counter(r['kind'] for r in failures if r['selected']))}.\n\n"
+    text+=table([r for r in failures if r['selected']])+'\n\n'
+    if selected:
+        text+=f"The selected1.5s rollouts travelled a median {np.median([r['rollout_distance_m'] for r in selected]):.4f}m; {sum(r['rollout_distance_m']<=.01 for r in selected)}/{len(selected)} travelled≤1cm and {sum(r['rollout_alignment'] for r in selected)} triggered alignment. Zero short-horizon rollout overlap therefore does not establish safety of the entire detour.\n\n"
+    text+='Some oracle-penetrating selected paths have unknown fraction0. Unknown denotes cell observation coverage, not a proof that free/occupied classification or the whole solid obstacle is correct; these data do not support attributing all failures solely to unseen cells.\n\n'
+    doc=ROOT/'docs/PHASE20C_DETOUR.md';body=doc.read_text();marker='## Validation and next stage'
+    assert marker in body and '## Saved-path failure detail' not in body
+    doc.write_text(body.replace(marker,text+marker))
+    dump(out/'presentation.json',dict(additional_solves=0,additional_rollouts=0,change='Separate box penetration from corridor intrusion and expose short-horizon coverage',report_sha256=sha256_file(__file__)))

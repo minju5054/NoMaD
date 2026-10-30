@@ -1,0 +1,273 @@
+{
+  "phase": "20C",
+  "base_commit": "f0d2f7e",
+  "status": "OFFLINE_GATE_FROZEN",
+  "scope": "\ud30c\uc77c\ub7ff",
+  "graph": {
+    "variables": "p1..p10 XY, p0=B fixed",
+    "angles_deg": [
+      0,
+      30,
+      -30,
+      60,
+      -60,
+      90,
+      -90
+    ],
+    "initial_length_m": 1.5,
+    "objective": {
+      "progress_target_m": 1.2,
+      "sigma_progress_m": 0.1,
+      "sigma_smooth_m": 0.03,
+      "clearance_preference_m": 0.15,
+      "sigma_clearance_m": 0.05,
+      "sigma_heading_deg": 30
+    },
+    "constraints": {
+      "start_region_m": 0.3,
+      "start_threshold": "min(.025,max(0,c_B-.005))",
+      "c_B": "SDF(B)-h/sqrt(2)",
+      "negative_B": "reject without solve",
+      "far_clearance_m": 0.025,
+      "inspection_points_per_segment": 9,
+      "interpolation_margin": "h/sqrt(2)+L/16",
+      "menger_max_m_inv": 4.0,
+      "segment_length_m": [
+        0.1,
+        0.2
+      ],
+      "radius_from_B_m": 1.6,
+      "coordinate_bounds": "redundant B+-1.6m box implied by disk"
+    },
+    "solver": {
+      "method": "SLSQP",
+      "jacobian": "analytic; piecewise zone threshold as R2",
+      "maxiter": 100,
+      "ftol": 1e-08,
+      "restarts": 0
+    },
+    "acceptance": "solver success AND violation<=1e-7 AND piecewise exact depth certificate AND relative progress>=.5m",
+    "selection": "largest relative progress, then shortest length, then initialization index"
+  },
+  "reference_direction": {
+    "history_window_s": [
+      -8,
+      -3
+    ],
+    "minimum_displacement_m": 0.3,
+    "fallback": "normalize(mean(observation-anchored world endpoints)-current B)",
+    "incomplete_history": "sample fallback; no fabricated pre-start pose",
+    "undefined_mean": "skip with explicit reason; no arbitrary yaw"
+  },
+  "trigger": {
+    "control_hz": 9,
+    "recent_window_s": 3.0,
+    "minimum_progress_m": 0.2,
+    "minimum_history_s": 3.0,
+    "blocked_sources": [
+      "RECOVER_ROTATE",
+      "ALIGN_BRAKE",
+      "ALIGN_ROTATE",
+      "REPAIR_WAIT"
+    ],
+    "cooldown_after_actual_end_s": 3.0,
+    "offline_virtual_execution_s": 6.0,
+    "offline_earliest_retrigger_s": 9.0,
+    "offline_convention": "Proposed via clarification before solving; no answer received. Use virtual6s execution then3s cooldown, never use solve outcome to select next event."
+  },
+  "offline": {
+    "source": "research/results/phase20b/runs.json",
+    "valid_runs": 10,
+    "excluded_technical_runs": 2,
+    "expected_events": 66,
+    "ordering": "Phase20B frozen main_order, then actual controller tick",
+    "example_event_ids": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "samples": "latest latched packet as of controller monotonic time; world transform at observation pose",
+    "depth": "latest actually published snapshot as of controller time",
+    "include_phases": [
+      "PRE_SPAWN",
+      "BEFORE_BOX_PASSAGE",
+      "AFTER_BOX_PASSAGE"
+    ],
+    "oracle": "evaluation only; include dynamic box only after physical spawn",
+    "rollout": "protected Phase20 revised start alignment + SP, actual speed/yaw,1.5s, no pivot; passive oracle evaluation",
+    "empty_obstacle_evaluation": "reuse corridor arc evaluator with no fabricated obstacle",
+    "gate": {
+      "accepted_trigger_fraction_min": 0.5,
+      "all_accepted_path_oracle_penetrations_max": 0,
+      "selected_rollout_overlap_fraction_max": 0.07,
+      "seven_parallel_p95_s_max": 1.0
+    },
+    "gate_scope": "all accepted initialization paths for penetration; selected path rollout per accepted trigger; selected penetration also reported",
+    "timing": "four preinitialized CPU processes; includes dispatch, saved snapshot loading, solve/certificate and result transfer; excludes pool startup and oracle evaluation"
+  },
+  "online_planned": {
+    "methods": [
+      "M1_ROTATE",
+      "M3_DETOUR"
+    ],
+    "levels": {
+      "L2": {
+        "size_xyz_m": [
+          0.4,
+          1.2,
+          0.8
+        ],
+        "center_y_m": 0.0,
+        "gaps_m": [
+          0.9,
+          0.9
+        ]
+      },
+      "L3": {
+        "size_xyz_m": [
+          0.4,
+          2.0,
+          0.8
+        ],
+        "center_y_rule": "even +.3, odd -.3 (corridor frame)",
+        "gaps_m": [
+          0.8,
+          0.2
+        ]
+      }
+    },
+    "indices": [
+      83,
+      84,
+      85
+    ],
+    "shuffle_seed": 20261102,
+    "navigation_count": 12,
+    "main_order": [
+      {
+        "scene": "L2",
+        "index": 83,
+        "method": "M1_ROTATE"
+      },
+      {
+        "scene": "L2",
+        "index": 83,
+        "method": "M3_DETOUR"
+      },
+      {
+        "scene": "L3",
+        "index": 83,
+        "method": "M1_ROTATE"
+      },
+      {
+        "scene": "L3",
+        "index": 83,
+        "method": "M3_DETOUR"
+      },
+      {
+        "scene": "L2",
+        "index": 84,
+        "method": "M3_DETOUR"
+      },
+      {
+        "scene": "L2",
+        "index": 84,
+        "method": "M1_ROTATE"
+      },
+      {
+        "scene": "L3",
+        "index": 84,
+        "method": "M1_ROTATE"
+      },
+      {
+        "scene": "L3",
+        "index": 84,
+        "method": "M3_DETOUR"
+      },
+      {
+        "scene": "L2",
+        "index": 85,
+        "method": "M3_DETOUR"
+      },
+      {
+        "scene": "L2",
+        "index": 85,
+        "method": "M1_ROTATE"
+      },
+      {
+        "scene": "L3",
+        "index": 85,
+        "method": "M1_ROTATE"
+      },
+      {
+        "scene": "L3",
+        "index": 85,
+        "method": "M3_DETOUR"
+      }
+    ],
+    "common_control": {
+      "lookahead_m": 0.25,
+      "vmax_m_s": 0.3,
+      "omega_max_rad_s": 0.4,
+      "acceleration_m_s2": 0.5,
+      "observation_hz": 4,
+      "controller_hz": 9,
+      "integration_hz": 72,
+      "waypoint_timeout_s": 1,
+      "navigation_timeout_s": 90,
+      "delivery_delay_ms": 750,
+      "speed": "protected Phase18D SP; rebuild on path replacement",
+      "start_alignment": "On new path: heading error>=45deg at any speed; if v<.01 retain20deg; bounded braking then in-place |w|<=.4",
+      "pivot_trigger_P": false,
+      "fallback": "Phase16 KEEP_ACTIVE / STOP_WAIT",
+      "recovery": "Phase17 RECOVER_ROTATE (30deg, .3rad/s, maximum12 per run)"
+    },
+    "depth": {
+      "variant": "15A2 V1",
+      "noise_sigma": "0.01*d^2",
+      "unknown": "not occupied",
+      "odometry": "exact simulator pose",
+      "oracle_controller_input": false,
+      "allocation_bounds_m": [
+        -4.0,
+        -3.5,
+        12.0,
+        6.2
+      ],
+      "allocation_note": "SO x extent is longer than Phase16; extend xmax8 to12 to cover corridor and3m sensor range; map resolution, occupancy/noise rules unchanged; no oracle wall occupancy inserted"
+    },
+    "trigger_A": "ALL_UNSAFE -> R2 -> if failure R3 -> if failure unchanged fallback",
+    "detour": "STOP_WAIT during <=1s solve; align+SP selected path; suppress NoMaD replacement; recheck remaining path on each new depth snapshot; terminate endpoint/unsafe/6s, then3s cooldown",
+    "smoke": {
+      "level": "L3",
+      "method": "M3_DETOUR",
+      "limit_s": 60,
+      "excluded": true,
+      "only_after_offline_READY": true
+    }
+  },
+  "decisions": {
+    "helps": "M3 success>=M1+1 AND accepted detours>=2, OR equal success AND more box passages AND accepted detours>=2",
+    "unused": "accepted detours<2",
+    "otherwise": "DETOUR_NO_HELP"
+  },
+  "completed_unit_tests": {
+    "count": 4,
+    "log_sha256": "df0cda453c78a67e252001f2938cd315ba433b89bfd17f277d8341ff4570dfc1",
+    "repeat_after_interruption": false
+  },
+  "protected_sha256": {
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase20/repair.py": "65a70b2f4fc597dfd6a47af38df8f4f7b4e6d6d1ae3aa9655025e3f8d8c6b70c",
+    "research/nomad_phase20/execution.py": "89956a9310336dbb575d2651af9576732845262e5c531a83e45d3c203cab22e6",
+    "research/nomad_phase19s/srg.py": "865c8d457604da192bf86e1d911cec0ca006efe6c1143cbb361269c33ba70054",
+    "research/nomad_phase18d/rollout.py": "1cd7b1bdbd3139369ef7c3c36839923afa8b09c0d09bcf55f4b0076d3728798f",
+    "research/nomad_phase18d/speed_profile.py": "912432a9458db68799f2a2603643f03c74cf5a254f5ee713104ab4ba3f572629",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase2/config.py": "be623b0edd9359de14d18f4e86eaa6d1cae97970a62d4c8890eccea491bc6240",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c"
+  }
+}
