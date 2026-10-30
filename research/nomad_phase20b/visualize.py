@@ -109,7 +109,8 @@ def pair_plot(level,seed,data,out):
         ax.set_title(f"{method} · {r.get('classification','unavailable')}\ngoal {fmt(r.get('goal_time_s'))}, box pass {fmt(r.get('box_passage_time_s'))}\nALL_UNSAFE {r.get('all_unsafe',0)} · repair {r.get('repair_attempts',0)}/{r.get('repair_accepted',0)} applied · rotate {r.get('recovery_count',0)}",fontsize=9)
         ax.legend(fontsize=6,loc='upper left',ncol=2)
     fig.colorbar(plt.cm.ScalarMappable(norm=norm,cmap='viridis'),ax=axes,orientation='horizontal',fraction=.06,label='Simulation time (s)')
-    fig.suptitle(f'{level}, seed {seed}: each panel uses only its own box and depth observations',fontsize=11)
+    role='Excluded smoke / technical check' if any(d and d['record'].get('excluded') for d in data.values()) else 'Pilot main run'
+    fig.suptitle(f'{role} · {level}, seed {seed}: each panel uses only its own box and depth observations',fontsize=10)
     fig.savefig(out/f'drive_{level}_{seed}.png',dpi=140);plt.close(fig)
 
 def pair_gif(level,seed,data,out):
@@ -142,7 +143,8 @@ def pair_gif(level,seed,data,out):
             else:route.set_data([],[])
             ax.set_title(f"{method} · {level}/{seed} · t={min(t,d['t'][-1]):.1f}s",fontsize=9)
             label.set_text((control['source'] if control else 'initial')+(' · terminated (pose held)' if t>d['t'][-1] else ''))
-        fig.suptitle('Saved SE(2) replay · 10× · depth uses only already-published snapshots',fontsize=9)
+        role='Excluded smoke' if any(d and d['record'].get('excluded') for d in data.values()) else 'Pilot main run'
+        fig.suptitle(role+' · saved SE(2) replay · 10× · depth uses only already-published snapshots',fontsize=9)
         fig.canvas.draw();frame=Image.fromarray(np.asarray(fig.canvas.buffer_rgba())[:,:,:3].copy()).convert('P',palette=Image.Palette.ADAPTIVE,colors=128);frames.append(frame)
     if frames:frames[0].save(out/f'drive_{level}_{seed}.gif',save_all=True,append_images=frames[1:],duration=100,loop=0,optimize=False)
     plt.close(fig)
@@ -160,7 +162,8 @@ def rgb_strip(level,seed,data,out):
                 with Image.open(d['run']/o['rgb_file']) as im:ax.imshow(np.array(im))
                 ax.set_title(f"{method}\n{ o['observation_sim_s']:.2f}s (+{o['observation_sim_s']-d['spawn']['simulation_time_s']:.2f}s)",fontsize=7)
             else:ax.set_title(f'{method}\nframe unavailable',fontsize=7)
-    fig.suptitle(f'{level}/{seed}: first actual RGB captures at/after spawn + 0,2,4,6,8,10s',fontsize=10)
+    role='Excluded smoke' if any(d and d['record'].get('excluded') for d in data.values()) else 'Pilot main run'
+    fig.suptitle(f'{role} · {level}/{seed}: RGB at/after spawn + 0,2,4,6,8,10s',fontsize=10)
     fig.savefig(out/f'rgb_strip_{level}_{seed}.png',dpi=140);plt.close(fig)
 
 def generate(records,out,cases=None):

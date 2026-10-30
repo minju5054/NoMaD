@@ -67,6 +67,11 @@ def render(records,out,doc,make_figures=True):
         generate([r for r in records if r['scene'] in ('L2','L3')],out);trend(summary,out)
     text='# Phase 20-B — blockage-level repair pilot / 파일럿\n\n'
     text+=f"Protocol hash: `{sha256_file(ROOT/'research/nomad_phase20b/protocol.json')}`. New runs: L2/L3 × M1/M2 × indices80–82. L1 is reused; no navigation retry.\n\n"
+    ready_file=ROOT/'research/results/phase20b_preflight/readiness.json'
+    if ready_file.exists():
+        ready=json.loads(ready_file.read_text())
+        if not ready.get('smoke_repair_chain_observed'):
+            text+='Preflight limitation: the single40s L3 M2 smoke had zero ALL_UNSAFE events and no repair call, so in-navigation eight-sample timing was unavailable before the main runs. The four-process solver matched serial results and its real result reached the executor/plant in a CPU unit test. No scenario or seed was changed to force a repair event.\n\n'
     text+='The Phase20 R2/SP/start-alignment/selection/fallback/recovery code is unchanged. M2 alone uses four CPU processes and a fixed1.0s wait limit. Processes initialize before the navigation clock without warmup solves; per-job timing includes snapshot loading and process scheduling, with sample solve/certificate times separately recorded. All late and terminal results retain timing logs. Oracle geometry is used only for placement/rendering and evaluation.\n\n'
     text+='Per-sample attempt timings include initialization and certificate. Short-path/negative-B rejections do not run SLSQP: solver_started, disposition and optimizer-only time are preserved per sample to distinguish these from actual solves.\n\n'
     text+='Box center y is fixed in corridor coordinates (L2=0; L3 even+0.3/odd−0.3m), preserving the specified gaps despite robot lateral drift. d=1.0m is measured from footprint front to the front box face along +X. L3 narrow gap0.20m is smaller than the0.23m required by radius0.09 plus two0.025m margins; it is not a proof that a0.18m diameter circle geometrically cannot fit.\n\n'
@@ -91,6 +96,9 @@ def main():
     plan=json.loads((root/'plan.json').read_text());assert len(plan['jobs'])==12
     records=[json.loads((root/'metrics'/f"main_{j['key']}.json").read_text()) for j in plan['jobs']]
     reused=json.loads((ROOT/'research/results/phase20/runs.json').read_text());records=[{**r,'scene':'L1','reused':True} for r in reused]+records
+    for r in records:
+        provenance=Path(r['output'])/'provenance.json'
+        if provenance.exists():r['execution_git_sha']=json.loads(provenance.read_text())['git_sha']
     out=ROOT/'research/results/phase20b';doc=ROOT/'docs/PHASE20B_BLOCKAGE.md';v=render(records,out,doc)
     if a.publish:
         assert not subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip()

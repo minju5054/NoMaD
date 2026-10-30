@@ -35,6 +35,8 @@ def campaign(root):
     p=verify_sources();assert p['status']=='FROZEN','Protocol must be frozen before campaign'
     ready=read(ROOT/'research/results/phase20b_preflight/readiness.json',{})
     assert ready.get('passed'),'L2/L3 technical checks and single L3 M2 smoke must pass before campaign'
+    if not ready.get('smoke_repair_chain_observed'):
+        print('[preflight] Smoke had no ALL_UNSAFE: in-navigation repair timing remains unmeasured; no condition was changed or retried.',flush=True)
     assert sha256_file(Path(__file__).with_name('protocol.json'))==ready['protocol_sha256']
     for name,h in ready['runtime_source_sha256'].items():assert sha256_file(ROOT/name)==h,name
     assert not subprocess.check_output(['git','diff','--name-only'],cwd=ROOT,text=True).strip(),'Tracked edits must be committed'

@@ -79,5 +79,25 @@ class Tests(unittest.TestCase):
             p=Path(d);render(records,p/'out',p/'report.md',make_figures=False)
             self.assertTrue((p/'out/decisions.json').exists());self.assertIn('REPAIR_HELPS',(p/'report.md').read_text())
 
+    def test_real_pool_result_reaches_executor(self):
+        from .runtime import Execution
+        from types import SimpleNamespace,MappingProxyType
+        with tempfile.TemporaryDirectory() as d:
+            out=Path(d);field=synthetic(True);file=out/'snapshot.npz';field.save(file)
+            field.metadata=MappingProxyType({**field.metadata,'file':str(file)})
+            ex=Execution('M2_REPAIR',out);ex.depth_maps=SimpleNamespace(snapshot=lambda:field)
+            core=SimpleNamespace(pose=np.array([0.,0.,0.]),v=0.,w=0.)
+            xy=np.c_[np.linspace(0,1.4,8),np.zeros(8)]
+            switch=dict(id=0,observation_pose=[0,0,0],observation_sim_s=0.,overnight_metric_samples=np.repeat(xy[None],8,axis=0).tolist())
+            try:
+                ex.apply(core,dict(valid=True,monotonic_ns=time.monotonic_ns(),simulation_time_s=0.),switch)
+                self.assertTrue(switch['phase16']['selection']['all_unsafe']);self.assertEqual(ex.next_repair,1)
+                deadline=time.monotonic()+5;tick=1
+                while ex.repair_pending and time.monotonic()<deadline:
+                    time.sleep(.005);ex.apply(core,dict(valid=True,monotonic_ns=time.monotonic_ns(),simulation_time_s=tick/9),None);tick+=1
+                self.assertTrue(ex.repair_active);self.assertGreater(core.v,0.)
+                ex.plant.integrate(core,1);self.assertGreater(core.pose[0],0.)
+            finally:ex.close()
+
 
 if __name__=='__main__':unittest.main()
