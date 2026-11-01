@@ -1,0 +1,126 @@
+{
+  "final": "REFINE_HURTS",
+  "additional": "MIXED_HELDOUT",
+  "scenes": [
+    {
+      "scene": "L2",
+      "label": "REFINE_HELPS",
+      "n": 4,
+      "P0_goal": 3,
+      "P2F_goal": 4,
+      "P0_collision": 0,
+      "P2F_collision": 0,
+      "passage_within15percent": true,
+      "clearance_benefit": true,
+      "jerk_benefit": false,
+      "secondary_pair_n": {
+        "detour_minimum_clearance_m": 3,
+        "detour_execution_jerk_rms": 3
+      },
+      "secondary_medians": {
+        "detour_minimum_clearance_m": {
+          "P0": 0.05863545631952587,
+          "P2F": 0.1449567142616064
+        },
+        "detour_execution_jerk_rms": {
+          "P0": 0.6999811607723361,
+          "P2F": 0.9134608487647956
+        }
+      },
+      "conditions_met": [
+        "valid_pairs",
+        "zero_P2F_collisions",
+        "goal_not_lower",
+        "passage_within15percent",
+        "clearance_benefit",
+        "absolute_goal_difference_le1"
+      ],
+      "conditions_not_met": [
+        "jerk_benefit",
+        "no_secondary_benefit",
+        "goal_deficit_ge2",
+        "more_P2F_collisions"
+      ]
+    },
+    {
+      "scene": "L2B",
+      "label": "REFINE_HURTS",
+      "n": 4,
+      "P0_goal": 4,
+      "P2F_goal": 2,
+      "P0_collision": 0,
+      "P2F_collision": 0,
+      "passage_within15percent": true,
+      "clearance_benefit": false,
+      "jerk_benefit": false,
+      "secondary_pair_n": {
+        "detour_minimum_clearance_m": 0,
+        "detour_execution_jerk_rms": 0
+      },
+      "secondary_medians": {
+        "detour_minimum_clearance_m": {
+          "P0": null,
+          "P2F": null
+        },
+        "detour_execution_jerk_rms": {
+          "P0": null,
+          "P2F": null
+        }
+      },
+      "conditions_met": [
+        "valid_pairs",
+        "zero_P2F_collisions",
+        "passage_within15percent",
+        "no_secondary_benefit",
+        "goal_deficit_ge2"
+      ],
+      "conditions_not_met": [
+        "goal_not_lower",
+        "clearance_benefit",
+        "jerk_benefit",
+        "absolute_goal_difference_le1",
+        "more_P2F_collisions"
+      ]
+    },
+    {
+      "scene": "POOLED",
+      "label": "REFINE_INCONCLUSIVE",
+      "n": 8,
+      "P0_goal": 7,
+      "P2F_goal": 6,
+      "P0_collision": 0,
+      "P2F_collision": 0,
+      "passage_within15percent": true,
+      "clearance_benefit": true,
+      "jerk_benefit": false,
+      "secondary_pair_n": {
+        "detour_minimum_clearance_m": 3,
+        "detour_execution_jerk_rms": 3
+      },
+      "secondary_medians": {
+        "detour_minimum_clearance_m": {
+          "P0": 0.05863545631952587,
+          "P2F": 0.1449567142616064
+        },
+        "detour_execution_jerk_rms": {
+          "P0": 0.6999811607723361,
+          "P2F": 0.9134608487647956
+        }
+      },
+      "conditions_met": [
+        "valid_pairs",
+        "zero_P2F_collisions",
+        "passage_within15percent",
+        "clearance_benefit",
+        "absolute_goal_difference_le1"
+      ],
+      "conditions_not_met": [
+        "goal_not_lower",
+        "jerk_benefit",
+        "no_secondary_benefit",
+        "goal_deficit_ge2",
+        "more_P2F_collisions"
+      ]
+    }
+  ]
+}
