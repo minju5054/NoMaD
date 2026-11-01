@@ -31,24 +31,31 @@ def summary(rows):
     return result
 
 def figures(records,rows,examples):
-    by={r['case']['case_id']:r for r in records};fig,axes=plt.subplots(1,3,figsize=(18,6),constrained_layout=True)
-    for ax,identity in zip(axes,examples):
-        r=by[identity];case=r['case'];cfg=case['oracle_config'];half=cfg['corridor']['half_width']
-        ax.axhline(half,c='.4');ax.axhline(-half,c='.4');ax.axvline(cfg['corridor']['xmin'],c='.4');ax.axvline(cfg['corridor']['xmax'],c='.4')
-        for b in cfg['obstacles']:
-            center=np.array(b['center_xy_m']);size=np.array(b['size_xyz_m'][:2]);ax.add_patch(Rectangle(center-size/2,*size,color='.5',alpha=.35))
-        for method,color in COLORS.items():
-            plan=r['plans'][method]
-            if plan.get('path') is not None:
-                p=np.array(plan['path']);ax.plot(p[:,0],p[:,1],color=color,lw=1.5,alpha=1 if plan['accepted'] else .3,label=method+('' if plan['accepted'] else ' rejected'))
-            else:ax.plot([],[],color=color,label=method+' '+plan['disposition'])
-            trace=r['traces'].get(method)
-            if trace:
-                p=np.array(trace['poses']);ax.plot(p[:,0],p[:,1],'--',color=color,lw=1)
-        B=np.array(case['B']);u=np.array(case['u_ref']);ax.scatter(*B[:2],marker='^',color='black',s=40);ax.arrow(*B[:2],*(.25*u),width=.015,color='black')
-        ax.set_xlim(max(cfg['corridor']['xmin']-.1,B[0]-1),min(cfg['corridor']['xmax']+.1,B[0]+2.4));ax.set_ylim(-half-.2,half+.2);ax.set_aspect('equal');ax.legend(fontsize=6)
-        ax.set_title(f"{identity} / {case['scene']} seed{case['index']} / {case['method']}",fontsize=9)
-    fig.suptitle('Solid: planned path; dashed: fixed-path kinematic rollout. Cases fixed before evaluation.');fig.savefig(OUT/'representatives.png',dpi=140);plt.close(fig)
+    by={r['case']['case_id']:r for r in records};fig,axes=plt.subplots(3,2,figsize=(16,12),constrained_layout=True)
+    for row,identity in enumerate(examples):
+        r=by[identity];case=r['case'];cfg=case['oracle_config'];half=cfg['corridor']['half_width'];allpoints=[np.array(case['B'])[None,:2]]
+        for plan in r['plans'].values():
+            if plan.get('path') is not None:allpoints.append(np.array(plan['path']))
+        allpoints.extend(np.array(t['poses'])[:,:2] for t in r['traces'].values());extent=np.concatenate(allpoints)
+        for column,ax in enumerate(axes[row]):
+            ax.axhline(half,c='.4');ax.axhline(-half,c='.4');ax.axvline(cfg['corridor']['xmin'],c='.4');ax.axvline(cfg['corridor']['xmax'],c='.4')
+            for box in cfg['obstacles']:
+                center=np.array(box['center_xy_m']);size=np.array(box['size_xyz_m'][:2]);ax.add_patch(Rectangle(center-size/2,*size,color='.5',alpha=.35))
+            for method,color in COLORS.items():
+                plan=r['plans'][method]
+                if plan.get('path') is not None:
+                    q=np.array(plan['path']);ax.plot(q[:,0],q[:,1],color=color,lw=1.5,alpha=1 if plan['accepted'] else .3,label=method+('' if plan['accepted'] else ' rejected'))
+                else:ax.plot([],[],color=color,label=method+' '+plan['disposition'])
+                trace=r['traces'].get(method)
+                if trace:
+                    q=np.array(trace['poses']);ax.plot(q[:,0],q[:,1],'--',color=color,lw=1)
+            B=np.array(case['B']);u=np.array(case['u_ref']);ax.scatter(*B[:2],marker='^',color='black',s=30);ax.arrow(*B[:2],*(.25*u),width=.012,color='black')
+            if column==0:
+                ax.set_xlim(max(cfg['corridor']['xmin']-.1,B[0]-1),min(cfg['corridor']['xmax']+.1,B[0]+2.4));ax.set_ylim(-half-.2,half+.2)
+            else:
+                ax.set_xlim(min(cfg['corridor']['xmin']-.2,extent[:,0].min()-.2),max(cfg['corridor']['xmax']+.2,extent[:,0].max()+.2));ax.set_ylim(min(-half-.2,extent[:,1].min()-.2),max(half+.2,extent[:,1].max()+.2))
+            ax.set_aspect('equal');ax.legend(fontsize=6);ax.set_title(f"{identity} / {case['scene']} seed{case['index']} / {case['method']} — {'local detail' if column==0 else 'full rollout extent'}",fontsize=9)
+    fig.suptitle('Solid: plan; dashed: fixed-path rollout. Failed/censored trajectories are retained.');fig.savefig(OUT/'representatives.png',dpi=140);plt.close(fig)
     keys=['completion_time_s','jerk_rms','curvature_rms','heading_error_rad','lateral_error_m','compute_s'];fig,axes=plt.subplots(2,3,figsize=(14,8),constrained_layout=True)
     for ax,key in zip(axes.ravel(),keys):
         data=[];positions=[]
@@ -77,12 +84,15 @@ def generate():
     text+='P0 is frozen Phase21 A* R3. P1 is frozen20F seven-start R3, four CPU workers. P2 uses only resampled P0 as initialization plus the registered path-tube, curvature, curvature-change and terminal consistency terms. P3 uses the selected Chaikin strength with three halvings and P0 fallback. P2 failure behavior: '+str(p['p2_failure'])+'.\n\n'
     text+='Every method has the same1s planning budget. P2/P3 include P0 plus transfer/refinement; timings exceeding1s are reported and rejected. Worker initialization is outside the per-snapshot budget, matching the existing runtime. Planning is counterfactually applied at fixed B: solve latency does not move B.\n\n'
     text+='Anchor convention: '+str(p['anchor_mode'])+'. Spawn-preceding odometry is a logged experimental appearance-time input, not an online detector; the two pre-spawn training snapshots use current B rather than future pose. Oracle box/wall coordinates enter only passive evaluation.\n\n'
+    complete=OUT/'complete.json'
+    if complete.exists():text+='Evaluation frozen Git SHA: `'+json.loads(complete.read_text())['git_sha']+'`.\n\n'
+    text+='Summary tables and distribution plots use all available values per method. The registered comparison medians below use only the explicitly reported common safe-completion subset, which is3 snapshots here; these denominators must not be conflated.\n\n'
     text+='## By scene and overall\n\n'+table(stats)+'\n\n## Registered decision\n\n'+table([dict(label=verdict['label'],LOW_N=verdict['LOW_N'],snapshot_n=verdict['snapshot_n'],common_completion_n=verdict['common_completion_n'],side_n=verdict['side_n'],same_side=verdict['same_side'],**verdict['criteria'])])+'\n\n'
     text+='Criteria(iii–v) use the same jointly planned, collision-free completed snapshots across P0/P2/P3; the paired N is shown, no failed or censored time is imputed. Side matching excludes undefined P0 choices and counts missing P2 side as mismatch; no side denominator cannot pass. Wider-gap rates exclude equal-width ties. Front-face/gap intent and actual rear-footprint passage side are separately recorded.\n\n'
     text+=table([dict(method=m,**values) for m,values in verdict['medians'].items()])+'\n\n'
     text+='## All snapshots, including failures\n\n'+table(rows,['case_id','scene','index','source_method','method','disposition','completed','oracle_collision','oracle_minimum_clearance_m','side','side_source','executed_side','compute_s'])+'\n\n'
     for name in ('representatives.png','metric_distributions.png','paired_P2_P0.png'):text+=f'![{name}](../research/results/phase22o/{name})\n\n'
-    text+='The controller reuses protected SPAlignment at9/72Hz, with a60s diagnostic cap. Oracle evaluation is passive; collision does not shorten execution to make a method appear faster. The0.30m tube is a distance constraint, not a mathematical homotopy guarantee. There is no next FRESH, depth update,3D contact physics or NoMaD reaction. These results cannot establish closed-loop navigation improvement.\n\n'
+    text+='The controller reuses protected SPAlignment at9/72Hz, with a60s diagnostic cap. Oracle evaluation is passive; collision does not shorten execution to make a method appear faster. The0.30m tube is a distance constraint, not a mathematical homotopy guarantee. A first-stage ALL_UNSAFE snapshot is counterfactually evaluated at the R3 slot for every method; it is not a replay of the original R2 output. The fixed controller can miss its1cm endpoint tolerance and continue until the60s cap; incompletion and the full trajectory are preserved. There is no next FRESH, depth update,3D contact physics or NoMaD reaction. These results cannot establish closed-loop navigation improvement.\n\n'
     if verdict['label'] in ('REFINE_READY','REFINE_PARTIAL'):
         text+='## Draft only — next navigation comparison (DO NOT EXECUTE)\n\nMethods P0/P1/P2, shared frozen selection/fallback/SP/alignment/trigger stack. Scene L2 plus one newly preregistered held-out corridor/box placement; seeds121–124,2×3×4=24 runs, approximately1.3h using Phase21 measured per-run wall time. Freeze held-out geometry before any method run and prohibit tuning/retries except one registered technical retry. Primary goal success and box passage; paired time/jerk and collisions are co-reported. Candidate advancement rule: P2 goal count no worse than both baselines, zero oracle collisions, passage median≤1.05×P0 and jerk median≤.7×P0; otherwise no demonstrated live advantage. Prioritize held-out results and retain all failures. This is a proposal only; no navigation has been scheduled.\n\n'
     text+=verdict['label']+(' / LOW_N' if verdict['LOW_N'] else '')+'\n'

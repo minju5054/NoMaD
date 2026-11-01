@@ -8,6 +8,10 @@ Every method has the same1s planning budget. P2/P3 include P0 plus transfer/refi
 
 Anchor convention: spawn_pose. Spawn-preceding odometry is a logged experimental appearance-time input, not an online detector; the two pre-spawn training snapshots use current B rather than future pose. Oracle box/wall coordinates enter only passive evaluation.
 
+Evaluation frozen Git SHA: `6250433ea27c09f8a98918bda970070698df39e1`.
+
+Summary tables and distribution plots use all available values per method. The registered comparison medians below use only the explicitly reported common safe-completion subset, which is3 snapshots here; these denominators must not be conflated.
+
 ## By scene and overall
 
 | scene | method | n | plans | plan_failed | oracle_collisions | completed | safe_completion | depth_collisions | oracle_minimum_clearance_m | wide_choice | wide_choice_n | completion_median_s | jerk_median | omega_saturation_median | tracking_rms_median | tracking_max_median | curvature_rms_median | curvature_max_median | delta_curvature_rms_median | heading_error_median_rad | lateral_error_median_m | compute_p50_s | compute_p95_s | over_1s |
@@ -146,6 +150,6 @@ Criteria(iii–v) use the same jointly planned, collision-free completed snapsho
 
 ![paired_P2_P0.png](../research/results/phase22o/paired_P2_P0.png)
 
-The controller reuses protected SPAlignment at9/72Hz, with a60s diagnostic cap. Oracle evaluation is passive; collision does not shorten execution to make a method appear faster. The0.30m tube is a distance constraint, not a mathematical homotopy guarantee. There is no next FRESH, depth update,3D contact physics or NoMaD reaction. These results cannot establish closed-loop navigation improvement.
+The controller reuses protected SPAlignment at9/72Hz, with a60s diagnostic cap. Oracle evaluation is passive; collision does not shorten execution to make a method appear faster. The0.30m tube is a distance constraint, not a mathematical homotopy guarantee. A first-stage ALL_UNSAFE snapshot is counterfactually evaluated at the R3 slot for every method; it is not a replay of the original R2 output. The fixed controller can miss its1cm endpoint tolerance and continue until the60s cap; incompletion and the full trajectory are preserved. There is no next FRESH, depth update,3D contact physics or NoMaD reaction. These results cannot establish closed-loop navigation improvement.
 
 REFINE_NOT_BETTER
