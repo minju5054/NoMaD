@@ -1,0 +1,74 @@
+{
+  "phase": "22-O2",
+  "status": "FROZEN",
+  "frozen_commit": "6250433",
+  "scope": "Saved-plan reevaluation only; no optimizer or weight/decision change",
+  "stopping": {
+    "endpoint_tolerance_m": 0.1,
+    "projection": "monotone nearest-polyline arclength at every72Hz pose; stop at >=length",
+    "timeout": "elapsed > length/.05 + measured BRAKE/ROTATE alignment interval time",
+    "completed": "True for all three, TIMEOUT flag for timeout",
+    "priority": [
+      "ENDPOINT_0P10",
+      "PROJECTED_END",
+      "TIMEOUT"
+    ]
+  },
+  "criteria": "Import byte-identical6250433 decision; same common P0/P2/P3 planned, collision-free completed subset",
+  "LOW_N": "original snapshot N<15 OR corrected common completion N<10",
+  "plan_oracle": "Existing point_clearance and exact segment_clearance, radius.09, plus rectangular walls; descriptive only, not criterion(i)",
+  "heading_diagnostic": {
+    "sigma_heading": 0.52,
+    "new_solves": 0,
+    "new_weights": false,
+    "active_slack_tolerance": 1e-05,
+    "directional_tolerance": 1e-08,
+    "approach": "Compare P0/raw initialization/P2 headings, frozen factor costs and analytic gradient shares; test local heading descent against active constraints. No causal conclusion about a smaller sigma without counterfactual solve."
+  },
+  "figures": {
+    "cases": [
+      "E021",
+      "E019",
+      "E000"
+    ]
+  },
+  "frozen_files": {
+    "research/nomad_phase22/refine.py": "e25ac800c800287fdcf2e926975d0a3a88e1c2250f16ae134310c57f42022970",
+    "research/nomad_phase22/metrics.py": "7dc9cb62cbd6ad4cd0026e6548be79e86f701c7caa8f8615455cabce68515d18",
+    "research/nomad_phase22/protocol.json": "783d62bc92967215c3215deb1d8ac486b47182a8fbffde3f0b9c7efa81d0f912",
+    "research/nomad_phase22/rollout.py": "cfc70b49748f477056545ba53d88e66390d33f5264bdda049d74517adbb5203f",
+    "research/nomad_phase20/execution.py": "89956a9310336dbb575d2651af9576732845262e5c531a83e45d3c203cab22e6",
+    "research/nomad_phase18d/speed_profile.py": "912432a9458db68799f2a2603643f03c74cf5a254f5ee713104ab4ba3f572629",
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c"
+  },
+  "input_hashes": {
+    "research/results/phase22o/evaluation/E000.json": "a70c0ae53880a944d30e60c5287ced381bd0f12a32b902a8fd24100aeb06a8e5",
+    "research/results/phase22o/evaluation/E001.json": "ba21043563b56fa6a37adc1b3cdb2330a09b64d891d87800a365810378768287",
+    "research/results/phase22o/evaluation/E002.json": "1b69d2820d46576c6e405de0a49b437e4156807ed0b5fed2d5e884748450f902",
+    "research/results/phase22o/evaluation/E003.json": "aa59f3672cf59272e7e79086b60e9cba42320d54d908530c4e2a315fe7cbdd44",
+    "research/results/phase22o/evaluation/E004.json": "08641eeac045aaa9b72e6afa4116de0c64c946cad305f2c7f445aefce254b280",
+    "research/results/phase22o/evaluation/E005.json": "838230b72cd6527a7a757e104b775dd3a4117c6e75b7b7fd2fb151fcad63355a",
+    "research/results/phase22o/evaluation/E006.json": "7363c6c0135e8a2b1cc1363f215d5324bda703c8fb8b9c6ba264f49327710886",
+    "research/results/phase22o/evaluation/E007.json": "7616ab6e25104b85e7e74127b0caadc86b1efd85100283666d9d2351fc352052",
+    "research/results/phase22o/evaluation/E008.json": "08482a2e176ff3ce4f67e357a57d01f4bf8cd1033eec9693c482a812582a0cd9",
+    "research/results/phase22o/evaluation/E009.json": "e07ba9d892e9d0db3b0a33bc9094735e63f720b7c05d0eb21832a611b9f1047f",
+    "research/results/phase22o/evaluation/E010.json": "5d8c4b0ef845505b32e1e81294be14f07a5c76007c1b108c049296216773bb21",
+    "research/results/phase22o/evaluation/E011.json": "4f726a5c6ef75bd90c0f623e31b1ce49c80d6e49e6bdaf70e679c5666c624a04",
+    "research/results/phase22o/evaluation/E012.json": "1f9ed2b44451c1f18d1bab1d2a9a76d76a70c3522242d06f139ef90a3ead68d1",
+    "research/results/phase22o/evaluation/E013.json": "ffe42e7073ba0a467b65aed1c2741ebefe0f07b391b304ad839dc8588005c30c",
+    "research/results/phase22o/evaluation/E014.json": "5a35a7e97504251f5f877f6ac5848501899f5948c3cb0c5ae0e8bcf132dc6ccd",
+    "research/results/phase22o/evaluation/E015.json": "5fce1636ecd3e4347bc183a0c5a6e1478b7c366ad285a9869f70ed63947ad767",
+    "research/results/phase22o/evaluation/E016.json": "061f664154f72c8b764eb1adb4adf92755e7c0ec7c4db492ed79ed6ec78cd7db",
+    "research/results/phase22o/evaluation/E017.json": "55a31c51c36129c4e215cdfcff94eb64b0b19f0e2601f872a74003ade7e1e68e",
+    "research/results/phase22o/evaluation/E018.json": "1c3bc889a76e0d97a50901709ee929c8a02c4424add64a01242a1633480dc490",
+    "research/results/phase22o/evaluation/E019.json": "23ef870901a15a6c4ef8db4cfe3e884db34850ce07eff0ddefd6a2ff8aa9f934",
+    "research/results/phase22o/evaluation/E020.json": "ce84f03c77d008086a985b948d276428013a01eb50bd8ef9354b46ecbb603457",
+    "research/results/phase22o/evaluation/E021.json": "734b2addbe6c2566d3dc3bcb3439503d02634e784cbe1bdfeca3a76e51f2e85b",
+    "research/results/phase22o/evaluation/E022.json": "f8e0978aa6be678826b068d08c53d63d726aad4f9cb54b6010ffecf95467a441",
+    "research/results/phase22o/evaluation/E023.json": "9d9f380b103981c03d1d497e0053f8058b835b20aad37a00e12b03092e66f496",
+    "research/results/phase22o/decision.json": "d783aff67e65611717954946918a37e2254a335b5ea9258fe80da79822595dac",
+    "research/results/phase22o/manifest.json": "892ada6b73791e871a0f5c74cf012349ab33344357652bcdae632ad0c554b10a"
+  }
+}

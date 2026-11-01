@@ -1,5 +1,7 @@
 # Phase22-O — A* + Graph refinement / offline mechanism validation
 
+> **EVALUATION_DEFECT** — The original `REFINE_NOT_BETTER` label and results below are preserved. The1cm endpoint check could miss handover and count collisions during continued60s execution beyond the path. See [Phase22-O2 corrected reevaluation](PHASE22O2_REEVAL.md); methods and weights remain frozen.
+
 Frozen weights: `{'p3_strength': 0.5, 'p3_name': 'P3_01', 'p2_settings': {'sigma_k': 0.5, 'sigma_delta': 1.0, 'sigma_heading': 0.52, 'sigma_lateral': 0.3}, 'p2_candidate': 7}`. Training26 saved20D/E/F snapshots; evaluation24 final Phase21 B4/M3 A/B triggers. Disjoint run/seed/snapshot identities verified. No Isaac, new render or NoMaD inference. Original files and Phase21 parameters unchanged.
 
 P0 is frozen Phase21 A* R3. P1 is frozen20F seven-start R3, four CPU workers. P2 uses only resampled P0 as initialization plus the registered path-tube, curvature, curvature-change and terminal consistency terms. P3 uses the selected Chaikin strength with three halvings and P0 fallback. P2 failure behavior: reject.
