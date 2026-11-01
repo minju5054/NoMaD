@@ -1,0 +1,1198 @@
+{
+  "case": {
+    "case_id": "E008",
+    "phase": "21",
+    "index": 112,
+    "scene": "L2",
+    "method": "M3_GRAPH",
+    "run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_112_M3_GRAPH/attempt1",
+    "snapshot_file": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_112_M3_GRAPH/attempt1/depth/snapshot_0101.npz",
+    "snapshot_sha256": "57b3c7406211b4c497d5be0a140fd96e41983160036937816433a1db1f8061fe",
+    "tick": 1904,
+    "time_s": 26.444444444444443,
+    "B": [
+      2.855000555487099,
+      0.6032366872440615,
+      0.10180087755108147
+    ],
+    "u_ref": [
+      0.9783986457979388,
+      0.20672709038913936
+    ],
+    "u_ref_source": {
+      "source": "START_TO_CURRENT_POSITION",
+      "distance_from_start_m": 2.918034042410889
+    },
+    "previous_vw": [
+      0.0,
+      0.0
+    ],
+    "original_stage": "R2",
+    "trigger": "A",
+    "candidate_anchor_xy": [
+      1.999712998680067,
+      0.10538233406416343
+    ],
+    "candidate_anchor_tick": 1140,
+    "appearance_available": true,
+    "depth_component": null,
+    "oracle_config": {
+      "name": "phase2_s1_v2",
+      "start_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "goal_pose": [
+        8.0,
+        0.0,
+        0.0
+      ],
+      "goal_tolerance_m": 0.3,
+      "timeout_sim_s": 90,
+      "timeout_navigation_wall_s": 180.0,
+      "timeout_process_wall_s": 600.0,
+      "integration_hz": 72,
+      "observation_hz": 4,
+      "controller_hz": 9,
+      "controller_dt_s": 0.25,
+      "max_v": 0.2,
+      "max_w": 0.4,
+      "seed": 101,
+      "context_size": 3,
+      "num_samples": 8,
+      "selected_sample": 0,
+      "selected_waypoint_index": 2,
+      "camera": {
+        "width": 320,
+        "height": 240,
+        "height_m": 0.5,
+        "horizontal_fov_deg": 90.0,
+        "focal_length_mm": 18.0,
+        "horizontal_aperture_mm": 36.0,
+        "vertical_aperture_mm": 27.0
+      },
+      "corridor": {
+        "xmin": -1.0,
+        "xmax": 9.0,
+        "half_width": 1.5,
+        "height": 2.6
+      },
+      "boundary_stop_margin_m": 0.1,
+      "synchronous": false,
+      "smoothing": false,
+      "waypoint_modification": false,
+      "agent_radius_m": 0.09,
+      "required_clearance_m": 0.02,
+      "obstacles": [
+        {
+          "id": "DynamicObstacle",
+          "size_xyz_m": [
+            0.4,
+            1.2,
+            0.8
+          ],
+          "color_rgb": [
+            0.65,
+            0.04,
+            0.65
+          ],
+          "minimum_visible_pixels": 20,
+          "spawn_tick": 1141,
+          "placement": {
+            "mode": "phase2_world_x",
+            "distance_m": 1.0
+          },
+          "center_xy_m": [
+            3.293879093472231,
+            0.0
+          ]
+        }
+      ],
+      "experiment_mode": "phase2_s1_v2",
+      "phase21": true,
+      "phase21_method": "M3_GRAPH",
+      "phase20": true,
+      "phase20b": true,
+      "phase20d": true,
+      "phase20f": true,
+      "phase20_method": "M3_DETOUR",
+      "blockage_level": "L2",
+      "phase16_scene": "L2",
+      "phase15b_method": "M3_GRAPH",
+      "depth_camera": true,
+      "overnight_phase": 9,
+      "overnight_method": "CURV",
+      "phase4c_method": "CURV",
+      "plant_alpha": "inf",
+      "execution_v_max_m_s": 0.3,
+      "seed_offset": 1120000,
+      "run_id": "L2_112",
+      "goal_mode": "topomap",
+      "topomap_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "topomap_manifest_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "phase2_distance_m": 1.0,
+      "blockage_center_y_m": 0.0,
+      "oracle_publication": false,
+      "dynamic_obstacle": {
+        "id": "DynamicObstacle",
+        "size_xyz_m": [
+          0.4,
+          1.2,
+          0.8
+        ],
+        "color_rgb": [
+          0.65,
+          0.04,
+          0.65
+        ],
+        "minimum_visible_pixels": 20,
+        "spawn_tick": 0,
+        "placement": {
+          "mode": "phase2_world_x",
+          "distance_m": 1.0
+        }
+      }
+    },
+    "spawn": {
+      "tick": 1141,
+      "simulation_time_s": 15.847222222222221,
+      "active": true,
+      "collision_checked": true,
+      "monotonic_ns": 333349639631632,
+      "checked_duration_s": 0.0,
+      "clearance_row": 0,
+      "pose": [
+        2.003879093472231,
+        0.10545136469566534,
+        0.01667468523912241
+      ],
+      "old_id": 12,
+      "old_command_valid": true,
+      "old_command_vw": [
+        0.3,
+        0.015346895107172014
+      ],
+      "footprint_clearance_m": 0.9999999999989999,
+      "obstacle": {
+        "id": "DynamicObstacle",
+        "size_xyz_m": [
+          0.4,
+          1.2,
+          0.8
+        ],
+        "color_rgb": [
+          0.65,
+          0.04,
+          0.65
+        ],
+        "minimum_visible_pixels": 20,
+        "spawn_tick": 1141,
+        "placement": {
+          "mode": "phase2_world_x",
+          "distance_m": 1.0
+        },
+        "center_xy_m": [
+          3.293879093472231,
+          0.0
+        ]
+      },
+      "old_remaining_timeout_s": 0.0,
+      "old_received_monotonic_ns": 333348620667400
+    },
+    "anchor_xy": [
+      1.999712998680067,
+      0.10538233406416343
+    ],
+    "anchor_source": "SPAWN_PREVIOUS_ODOMETRY"
+  },
+  "plans": {
+    "P0": {
+      "accepted": false,
+      "path": null,
+      "disposition": "NO_ACCEPTED_INITIALIZATION",
+      "compute_s": 0.132258462,
+      "numeric_results": [
+        {
+          "index": 0,
+          "pid": 616249,
+          "accepted": false,
+          "disposition": "NO_PATH",
+          "path": null,
+          "expansions": 1779,
+          "total_attempt_s": 0.03673951
+        }
+      ]
+    },
+    "P1": {
+      "accepted": false,
+      "path": null,
+      "disposition": "NO_ACCEPTED_INITIALIZATION",
+      "compute_s": 0.329436592,
+      "numeric_results": [
+        {
+          "index": 0,
+          "pid": 616250,
+          "start_ns": 433151813369026,
+          "end_ns": 433151992966245,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.77258073936092,
+              0.5717048510886761
+            ],
+            [
+              2.891420649966792,
+              0.6021444507886767
+            ],
+            [
+              3.018404812029159,
+              0.6576942885475877
+            ],
+            [
+              3.113343808660822,
+              0.7287294073207442
+            ],
+            [
+              3.209631818861519,
+              0.7554683758808755
+            ],
+            [
+              3.330340623798864,
+              0.829212952240549
+            ],
+            [
+              3.465948200561313,
+              0.9062269451268741
+            ],
+            [
+              3.612567698265079,
+              0.9854685684055652
+            ],
+            [
+              3.7663416155213216,
+              1.0663117561038222
+            ],
+            [
+              3.9238437258605363,
+              1.1476647862927662
+            ]
+          ],
+          "initial_path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              3.00176035235679,
+              0.6342457508024324
+            ],
+            [
+              3.1485201492264805,
+              0.6652548143608034
+            ],
+            [
+              3.2952799460961715,
+              0.6962638779191742
+            ],
+            [
+              3.4420397429658625,
+              0.7272729414775452
+            ],
+            [
+              3.588799539835553,
+              0.758282005035916
+            ],
+            [
+              3.735559336705244,
+              0.7892910685942869
+            ],
+            [
+              3.882319133574935,
+              0.8203001321526578
+            ],
+            [
+              4.0290789304446255,
+              0.8513091957110288
+            ],
+            [
+              4.175838727314316,
+              0.8823182592693997
+            ],
+            [
+              4.3225985241840075,
+              0.9133273228277705
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 8,
+          "message": "Positive directional derivative for linesearch",
+          "iterations": 89,
+          "constraint_violation": 2.279221225832238,
+          "progress_m": 1.1583027473061756,
+          "length_m": 1.3830965042677499,
+          "maximum_abs_curvature_m_inv": 6.279221225832238,
+          "maximum_radius_m": 1.1995114329958372,
+          "minimum_segment_m": 0.08824558222145293,
+          "maximum_segment_m": 0.17727162853155434,
+          "unknown_fraction": 0.0,
+          "near_threshold_m": 0.025,
+          "cB": 0.13799724250744763,
+          "certificate_pass": false,
+          "near_clearance_m": 0.03293865240151557,
+          "far_clearance_m": -0.019240680378494412,
+          "depth_clearance_m": -0.019240680378494412,
+          "factor_costs": {
+            "progress": 0.08693304411063232,
+            "smoothness": 28.614524648614175,
+            "clearance": 81.30819767461783,
+            "heading": 7.169136614752955
+          },
+          "solver_wall_s": 0.15309676801552996,
+          "attempt_wall_s": 0.15608915901975706,
+          "total_attempt_s": 0.1565004339790903
+        },
+        {
+          "index": 1,
+          "pid": 616246,
+          "start_ns": 433151813409884,
+          "end_ns": 433151929249132,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              3.1464028159772286,
+              0.5651832984339504
+            ],
+            [
+              3.0033420707717005,
+              0.878834168695643
+            ],
+            [
+              3.0242538493451563,
+              0.5571742989134699
+            ],
+            [
+              3.1460304725290817,
+              0.9208905245525268
+            ],
+            [
+              3.498768458780823,
+              0.8820833425870691
+            ],
+            [
+              3.6389282626095154,
+              0.8673918823724025
+            ],
+            [
+              3.549183700220335,
+              0.8654117615845928
+            ],
+            [
+              3.6492560591412446,
+              0.8708118879171934
+            ],
+            [
+              3.7701075793192977,
+              0.8807469503413211
+            ],
+            [
+              3.9003461462119904,
+              0.8923315555335405
+            ]
+          ],
+          "initial_path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.9665937360513097,
+              0.7034712224680224
+            ],
+            [
+              3.0781869166155205,
+              0.8037057576919833
+            ],
+            [
+              3.189780097179731,
+              0.9039402929159441
+            ],
+            [
+              3.301373277743942,
+              1.004174828139905
+            ],
+            [
+              3.4129664583081527,
+              1.104409363363866
+            ],
+            [
+              3.5245596388723635,
+              1.2046438985878267
+            ],
+            [
+              3.636152819436574,
+              1.3048784338117878
+            ],
+            [
+              3.747746000000785,
+              1.4051129690357487
+            ],
+            [
+              3.8593391805649957,
+              1.5053475042597095
+            ],
+            [
+              3.9709323611292064,
+              1.6055820394836706
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 8,
+          "message": "Positive directional derivative for linesearch",
+          "iterations": 63,
+          "constraint_violation": 1.854066669177553,
+          "progress_m": 1.0825284513239957,
+          "length_m": 2.282303099273177,
+          "maximum_abs_curvature_m_inv": 5.854066669177553,
+          "maximum_radius_m": 1.0845843659758716,
+          "minimum_segment_m": 0.08976640438805515,
+          "maximum_segment_m": 0.38356099742700783,
+          "unknown_fraction": 0.025477707006369428,
+          "near_threshold_m": 0.025,
+          "cB": 0.13799724250744763,
+          "certificate_pass": false,
+          "near_clearance_m": -0.08993756826217145,
+          "far_clearance_m": -0.08983878319392857,
+          "depth_clearance_m": -0.08993756826217145,
+          "factor_costs": {
+            "progress": 0.6899782374169423,
+            "smoothness": 874.2554577845059,
+            "clearance": 273.5926932215556,
+            "heading": 0.09743308441717187
+          },
+          "solver_wall_s": 0.09003501600818709,
+          "attempt_wall_s": 0.09278696699766442,
+          "total_attempt_s": 0.0934375689830631
+        },
+        {
+          "index": 2,
+          "pid": 616251,
+          "start_ns": 433151813435372,
+          "end_ns": 433151955124701,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              1.5638945621876106,
+              0.981851929883874
+            ],
+            [
+              3.1711793080241155,
+              0.7638910555662048
+            ],
+            [
+              3.184969757272183,
+              0.7505322591716559
+            ],
+            [
+              4.051088361034308,
+              0.4528593542736323
+            ],
+            [
+              2.629027921079328,
+              0.36185108266822463
+            ],
+            [
+              2.7472892683671257,
+              -0.14645390304732542
+            ],
+            [
+              4.29499467444484,
+              -0.1414502110570234
+            ],
+            [
+              2.7787169388032993,
+              -0.1017537692835061
+            ],
+            [
+              2.7218143641333374,
+              1.445705865407553
+            ],
+            [
+              2.7736577944067795,
+              -0.03166400728988443
+            ]
+          ],
+          "initial_path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.997602799609681,
+              0.5567114255983316
+            ],
+            [
+              3.140205043732262,
+              0.5101861639526017
+            ],
+            [
+              3.282807287854844,
+              0.4636609023068718
+            ],
+            [
+              3.4254095319774254,
+              0.41713564066114184
+            ],
+            [
+              3.568011776100007,
+              0.37061037901541194
+            ],
+            [
+              3.7106140202225886,
+              0.32408511736968204
+            ],
+            [
+              3.8532162643451704,
+              0.2775598557239521
+            ],
+            [
+              3.995818508467752,
+              0.2310345940782222
+            ],
+            [
+              4.138420752590333,
+              0.1845093324324923
+            ],
+            [
+              4.281022996712915,
+              0.13798407078676234
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 4,
+          "message": "Inequality constraints incompatible",
+          "iterations": 42,
+          "constraint_violation": 1.4219960533034723,
+          "progress_m": -0.21083682055349626,
+          "length_m": 11.940661568953368,
+          "maximum_abs_curvature_m_inv": 1.374924253601138,
+          "maximum_radius_m": 1.621154415573721,
+          "minimum_segment_m": 0.019199841967436515,
+          "maximum_segment_m": 1.6219960533034723,
+          "unknown_fraction": 0.12817311693716188,
+          "near_threshold_m": 0.025,
+          "cB": 0.13799724250744763,
+          "certificate_pass": false,
+          "near_clearance_m": 0.145021733177355,
+          "far_clearance_m": -0.08999967731347615,
+          "depth_clearance_m": -0.08999967731347615,
+          "factor_costs": {
+            "progress": 99.5230267114749,
+            "smoothness": 25128.163625366346,
+            "clearance": 886.5384253418229,
+            "heading": 7.025299228987558
+          },
+          "solver_wall_s": 0.1143988500116393,
+          "attempt_wall_s": 0.11785166896879673,
+          "total_attempt_s": 0.1183254030183889
+        },
+        {
+          "index": 3,
+          "pid": 616249,
+          "start_ns": 433151813472313,
+          "end_ns": 433151943534483,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              3.0166990983717454,
+              0.7226295185148792
+            ],
+            [
+              3.21059154305405,
+              0.750345883807999
+            ],
+            [
+              3.375037291001262,
+              0.8917390579285046
+            ],
+            [
+              3.440638929994612,
+              0.9442127163039031
+            ],
+            [
+              3.4896504881299406,
+              1.0312448578136142
+            ],
+            [
+              3.651993333945154,
+              1.1415553378751022
+            ],
+            [
+              3.8412613812883087,
+              1.1156399946955822
+            ],
+            [
+              4.020367416525198,
+              1.145041316306414
+            ],
+            [
+              4.1316765586105815,
+              1.1250014756554423
+            ],
+            [
+              4.281974155528123,
+              1.1847441565277528
+            ]
+          ],
+          "initial_path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.901525817132829,
+              0.7458389313666431
+            ],
+            [
+              2.9480510787785588,
+              0.8884411754892247
+            ],
+            [
+              2.9945763404242887,
+              1.0310434196118066
+            ],
+            [
+              3.0411016020700186,
+              1.173645663734388
+            ],
+            [
+              3.0876268637157485,
+              1.3162479078569698
+            ],
+            [
+              3.134152125361479,
+              1.4588501519795514
+            ],
+            [
+              3.1806773870072087,
+              1.601452396102133
+            ],
+            [
+              3.2272026486529386,
+              1.7440546402247146
+            ],
+            [
+              3.2737279102986685,
+              1.8866568843472962
+            ],
+            [
+              3.3202531719443984,
+              2.029259128469878
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 4,
+          "message": "Inequality constraints incompatible",
+          "iterations": 47,
+          "constraint_violation": 0.1421965459418697,
+          "progress_m": 1.5163623850341164,
+          "length_m": 1.6412739969442778,
+          "maximum_abs_curvature_m_inv": 4.14219654594187,
+          "maximum_radius_m": 1.5409103127848691,
+          "minimum_segment_m": 0.08400630846497081,
+          "maximum_segment_m": 0.21687423476704085,
+          "unknown_fraction": 0.0,
+          "near_threshold_m": 0.025,
+          "cB": 0.13799724250744763,
+          "certificate_pass": true,
+          "near_clearance_m": 0.0417682110791614,
+          "far_clearance_m": 0.028842872875743844,
+          "depth_clearance_m": 0.028842872875743844,
+          "factor_costs": {
+            "progress": 0.0,
+            "smoothness": 51.741447185920364,
+            "clearance": 31.8461370228381,
+            "heading": 0.5082168834317592
+          },
+          "solver_wall_s": 0.10410379304084927,
+          "attempt_wall_s": 0.10687443002825603,
+          "total_attempt_s": 0.10733855701982975
+        },
+        {
+          "index": 4,
+          "pid": 616246,
+          "start_ns": 433151929387947,
+          "end_ns": 433151972766578,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.961686674722579,
+              0.5782542432060874
+            ],
+            [
+              2.988934734762211,
+              0.4856962030148121
+            ],
+            [
+              3.1260252993727904,
+              0.8123627495749245
+            ],
+            [
+              3.430958028085754,
+              0.8144862685093888
+            ],
+            [
+              3.6618526330480288,
+              0.8758420675905
+            ],
+            [
+              3.7360239125662873,
+              1.0681767913703988
+            ],
+            [
+              3.5355804584867694,
+              1.141244746127792
+            ],
+            [
+              3.436882692710602,
+              1.1079402915295051
+            ],
+            [
+              3.619850146318967,
+              1.3304293765782145
+            ],
+            [
+              3.6874151647486744,
+              1.933543995784961
+            ]
+          ],
+          "initial_path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.95523509071106,
+              0.4916435066798508
+            ],
+            [
+              3.0554696259350207,
+              0.38005032611564005
+            ],
+            [
+              3.155704161158982,
+              0.26845714555142935
+            ],
+            [
+              3.2559386963829424,
+              0.1568639649872186
+            ],
+            [
+              3.3561732316069035,
+              0.045270784423007804
+            ],
+            [
+              3.456407766830864,
+              -0.06632239614120283
+            ],
+            [
+              3.5566423020548252,
+              -0.1779155767054137
+            ],
+            [
+              3.6568768372787863,
+              -0.28950875726962433
+            ],
+            [
+              3.757111372502747,
+              -0.40110193783383497
+            ],
+            [
+              3.857345907726708,
+              -0.5126951183980459
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 8,
+          "message": "Positive directional derivative for linesearch",
+          "iterations": 32,
+          "constraint_violation": 5.760437312894801,
+          "progress_m": 1.089443885662013,
+          "length_m": 2.5227714056860253,
+          "maximum_abs_curvature_m_inv": 9.760437312894801,
+          "maximum_radius_m": 1.569277418708825,
+          "minimum_segment_m": 0.09648547859638328,
+          "maximum_segment_m": 0.6068873664991763,
+          "unknown_fraction": 0.14092664092664092,
+          "near_threshold_m": 0.025,
+          "cB": 0.13799724250744763,
+          "certificate_pass": false,
+          "near_clearance_m": -0.025246058959963305,
+          "far_clearance_m": -0.08996707980741708,
+          "depth_clearance_m": -0.08996707980741708,
+          "factor_costs": {
+            "progress": 0.6111327208757023,
+            "smoothness": 442.86816119598245,
+            "clearance": 211.46691130222095,
+            "heading": 0.1989755276560567
+          },
+          "solver_wall_s": 0.04015063104452565,
+          "attempt_wall_s": 0.04304865101585165,
+          "total_attempt_s": 0.04337588598718867
+        },
+        {
+          "index": 5,
+          "pid": 616249,
+          "start_ns": 433151943662347,
+          "end_ns": 433152057850746,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.504139566835929,
+              0.2523756985928915
+            ],
+            [
+              3.525861544138269,
+              1.2740976758952316
+            ],
+            [
+              3.525861544138269,
+              1.2740976758952316
+            ],
+            [
+              3.525861544138269,
+              0.2523756985928915
+            ],
+            [
+              3.525861544138269,
+              1.2740976758952316
+            ],
+            [
+              3.525861544138269,
+              1.2740976758952316
+            ],
+            [
+              3.525861544138269,
+              1.2740976758952316
+            ],
+            [
+              3.525861544138269,
+              1.2740976758952316
+            ],
+            [
+              3.525861544138269,
+              1.2740976758952316
+            ],
+            [
+              3.525861544138269,
+              1.2740976758952316
+            ]
+          ],
+          "initial_path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.823991491928728,
+              0.7499964841137523
+            ],
+            [
+              2.7929824283703573,
+              0.8967562809834432
+            ],
+            [
+              2.761973364811986,
+              1.043516077853134
+            ],
+            [
+              2.730964301253615,
+              1.1902758747228248
+            ],
+            [
+              2.6999552376952445,
+              1.3370356715925156
+            ],
+            [
+              2.6689461741368734,
+              1.4837954684622066
+            ],
+            [
+              2.6379371105785028,
+              1.6305552653318973
+            ],
+            [
+              2.6069280470201317,
+              1.777315062201588
+            ],
+            [
+              2.5759189834617606,
+              1.9240748590712788
+            ],
+            [
+              2.54490991990339,
+              2.0708346559409696
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 8,
+          "message": "Positive directional derivative for linesearch",
+          "iterations": 65,
+          "constraint_violation": 1.2449330772756249,
+          "progress_m": 0.795054623054409,
+          "length_m": 3.984569400544422,
+          "maximum_abs_curvature_m_inv": 6.52867232407975e-16,
+          "maximum_radius_m": 0.9487407086175077,
+          "minimum_segment_m": 1e-12,
+          "maximum_segment_m": 1.4449330772756248,
+          "unknown_fraction": 0.17423312883435582,
+          "near_threshold_m": 0.025,
+          "cB": 0.13799724250744763,
+          "certificate_pass": false,
+          "near_clearance_m": 0.145021733177355,
+          "far_clearance_m": -0.08875275680422895,
+          "depth_clearance_m": -0.08875275680422895,
+          "factor_costs": {
+            "progress": 8.199037915480337,
+            "smoothness": 6732.941326706833,
+            "clearance": 408.6930154393252,
+            "heading": 6.475538856269109
+          },
+          "solver_wall_s": 0.11091163498349488,
+          "attempt_wall_s": 0.11389305396005511,
+          "total_attempt_s": 0.11418361897813156
+        },
+        {
+          "index": 6,
+          "pid": 616251,
+          "start_ns": 433151955247776,
+          "end_ns": 433152003892326,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.884421182228077,
+              0.5158434221449724
+            ],
+            [
+              2.8513860970832856,
+              0.4675799287869899
+            ],
+            [
+              2.9336850065012157,
+              0.4482599693069167
+            ],
+            [
+              3.1154654719846415,
+              0.4727795615204443
+            ],
+            [
+              3.143941665712823,
+              0.5352668228205606
+            ],
+            [
+              3.2405302314473325,
+              0.7312700147403243
+            ],
+            [
+              3.3228506895031593,
+              0.8615649475408773
+            ],
+            [
+              3.4853833493897057,
+              1.1777255588965823
+            ],
+            [
+              3.6341783037338686,
+              1.3031759334555533
+            ],
+            [
+              3.8983089998126745,
+              1.329012910486677
+            ]
+          ],
+          "initial_path": [
+            [
+              2.855000555487099,
+              0.6032366872440615
+            ],
+            [
+              2.88600961904547,
+              0.4564768903743707
+            ],
+            [
+              2.9170186826038407,
+              0.3097170935046799
+            ],
+            [
+              2.9480277461622117,
+              0.16295729663498915
+            ],
+            [
+              2.979036809720583,
+              0.016197499765298273
+            ],
+            [
+              3.0100458732789535,
+              -0.1305622971043925
+            ],
+            [
+              3.0410549368373245,
+              -0.27732209397408325
+            ],
+            [
+              3.0720640003956956,
+              -0.42408189084377423
+            ],
+            [
+              3.1030730639540662,
+              -0.570841687713465
+            ],
+            [
+              3.1340821275124373,
+              -0.7176014845831558
+            ],
+            [
+              3.1650911910708084,
+              -0.8643612814528465
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 4,
+          "message": "Inequality constraints incompatible",
+          "iterations": 34,
+          "constraint_violation": 18.298747659970015,
+          "progress_m": 1.1708091759822616,
+          "length_m": 1.6754685101442928,
+          "maximum_abs_curvature_m_inv": 22.298747659970015,
+          "maximum_radius_m": 1.2709223564897139,
+          "minimum_segment_m": 0.05848659369154309,
+          "maximum_segment_m": 0.3554917688253961,
+          "unknown_fraction": 0.07449856733524356,
+          "near_threshold_m": 0.025,
+          "cB": 0.13799724250744763,
+          "certificate_pass": false,
+          "near_clearance_m": 0.0021831646224589607,
+          "far_clearance_m": -0.08935051433292805,
+          "depth_clearance_m": -0.08935051433292805,
+          "factor_costs": {
+            "progress": 0.0426052103417284,
+            "smoothness": 102.26945865233915,
+            "clearance": 287.4009733113299,
+            "heading": 2.8411355642779936
+          },
+          "solver_wall_s": 0.045274458010680974,
+          "attempt_wall_s": 0.04835554800229147,
+          "total_attempt_s": 0.04864162398735061
+        }
+      ]
+    },
+    "P3": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.14162949499656882
+    },
+    "P2": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.14162949499656882
+    }
+  },
+  "rows": [
+    {
+      "case_id": "E008",
+      "scene": "L2",
+      "index": 112,
+      "source_method": "M3_GRAPH",
+      "method": "P0",
+      "accepted": false,
+      "disposition": "NO_ACCEPTED_INITIALIZATION",
+      "compute_s": 0.132258462,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "E008",
+      "scene": "L2",
+      "index": 112,
+      "source_method": "M3_GRAPH",
+      "method": "P1",
+      "accepted": false,
+      "disposition": "NO_ACCEPTED_INITIALIZATION",
+      "compute_s": 0.329436592,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "E008",
+      "scene": "L2",
+      "index": 112,
+      "source_method": "M3_GRAPH",
+      "method": "P3",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.14162949499656882,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "E008",
+      "scene": "L2",
+      "index": 112,
+      "source_method": "M3_GRAPH",
+      "method": "P2",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.14162949499656882,
+      "over_1s": false,
+      "planning_failed": true
+    }
+  ],
+  "traces": {},
+  "wall_s": 0.47977740998612717
+}
