@@ -46,6 +46,7 @@ def main():
         p['main_order']=[j for j in p['main_order'] if j['index'] in p['indices']];p['planned_runs']=len(p['main_order']);p['estimated_main_s']=estimate*len(p['main_order'])/24
         p['status']='SMOKE_PASSED' if all(r['technical_validation']=='PASS' for r in results) else 'SMOKE_TECHNICAL_FAILURE';write(Path(__file__).with_name('drive_protocol.json'),p)
     if a.finalize:
+        assert all(p[k] is not None for k in ('anchor_mode','deadline_policy','unclassified_label')),'Pending registration choices'
         assert p['status'] in ('SMOKE_PASSED','FROZEN');p['status']='FROZEN';write(Path(__file__).with_name('drive_protocol.json'),p)
         files=[*Path(__file__).parent.glob('drive*.py'),Path(__file__).with_name('drive_protocol.json'),Path(__file__).with_name('test_drive.py')]
         write(out/'readiness.json',dict(passed=True,protocol_sha256=sha256_file(Path(__file__).with_name('drive_protocol.json')),source_sha256={str(f.relative_to(ROOT)):sha256_file(f) for f in files},main_navigation_started=0))
