@@ -172,7 +172,7 @@ def plots(records,rows,pairs,common):
                     p=np.array(plan['path']);extent.append(p);ax.plot(p[:,0],p[:,1],':',c=color,alpha=.6)
                 trace=record['traces'].get(method)
                 if trace:
-                    p=np.array(trace['poses']);extent.append(p);ax.plot(p[:,0],p[:,1],c=color,lw=1.4,label=f"{method}: {rr[method].get('duration_s',0):.2f}s / {rr[method].get('termination')}");ax.scatter(*p[-1,:2],marker='s',c=color,s=20)
+                    p=np.array(trace['poses']);extent.append(p[:,:2]);ax.plot(p[:,0],p[:,1],c=color,lw=1.4,label=f"{method}: {rr[method].get('duration_s',0):.2f}s / {rr[method].get('termination')}");ax.scatter(*p[-1,:2],marker='s',c=color,s=20)
                 else:ax.plot([],[],c=color,label=method+' planning failed')
             points=np.concatenate(extent);ax.set_xlim(min(cfg['corridor']['xmin']-.2,points[:,0].min()-.2),max(cfg['corridor']['xmax']+.2,points[:,0].max()+.2));ax.set_ylim(min(-half-.2,points[:,1].min()-.2),max(half+.2,points[:,1].max()+.2))
             ax.scatter(*case['B'][:2],marker='^',c='black',s=30);ax.set_aspect('equal');ax.legend(fontsize=6);ax.set_title(f'{identity} / {title}',fontsize=9)
@@ -201,13 +201,15 @@ def plots(records,rows,pairs,common):
 
 
 def generate_report(records,rows,pairs,diagnostics,verdict,original):
-    stats=summaries(rows);csv_write(OUT/'summary.csv',stats);plots(records,rows,pairs,verdict['common_ids'])
+    stats=summaries(rows);(OUT/'summary.csv').unlink(missing_ok=True);csv_write(OUT/'summary.csv',stats);plots(records,rows,pairs,verdict['common_ids'])
     available=[r for r in diagnostics if r['available']];worse=[r for r in available if r['worsened_vs_P0']]
     def med(rr,key):return float(np.median([r[key] for r in rr])) if rr else None
     diagnosis=dict(accepted_pairs=len(available),heading_worsened_pairs=len(worse),heading_gradient_share_median=med(worse,'heading_gradient_share'),heading_cost_fraction_median=med(worse,'heading_cost_fraction'),
         heading_descent_blocked_pairs=sum(bool(r['active_constraint_blockers']) for r in worse),other_cost_opposes_heading_descent_pairs=sum(r['other_cost_directional_derivative']>0 for r in worse),
         resampling_worsened_pairs=sum(r['delta_resampling_rad']>1e-8 for r in worse),optimization_worsened_pairs=sum(r['delta_optimization_rad']>1e-8 for r in worse),
         conclusion='Stored-solution factor/constraint trade-off only. The causal claim that sigma0.52 alone is too weak cannot be established without a forbidden changed-weight counterfactual solve.')
+    from collections import Counter
+    diagnosis['dominant_opposing_factors']=dict(Counter(max(((k,v) for k,v in r['heading_descent_directional_costs'].items() if k!='terminal_heading'),key=lambda item:item[1])[0] for r in worse))
     write(OUT/'heading_summary.json',diagnosis)
     text='# Phase22-O2 — evaluator correction and reevaluation\n\n'
     text+=f"Original label: **{original['label']} — EVALUATION_DEFECT**. Original report, numeric results and trajectories are retained. Corrected label: **{verdict['label']}**"+(' **LOW_N**' if verdict['LOW_N'] else '')+'.\n\n'
@@ -220,6 +222,10 @@ def generate_report(records,rows,pairs,diagnostics,verdict,original):
     text+=table([dict(method=m,**v) for m,v in verdict['medians'].items()])+'\n\n'
     text+='## Snapshot-wise P2−P0 reference pairs\n\n'+table(pairs)+'\n\n'
     text+='## Why terminal heading worsens: diagnostic only\n\n'+table([diagnosis])+'\n\n'
+    text+='Planned heading errors are unchanged snapshot by snapshot. The old common subset had'+str(original['common_completion_n'])+' snapshots; the corrected subset has'+str(verdict['common_completion_n'])+'. Thus the changed heading median is solely a conditioning/subset effect, not a changed path or weight. The earlier group-level degradation does not by itself establish that sigma0.52 is too weak.\n\n'
+    text+=table([dict(evaluation='original defective',method=m,heading_median_rad=v['heading_error_rad']) for m,v in original['medians'].items()]+[dict(evaluation='corrected',method=m,heading_median_rad=v['heading_error_rad']) for m,v in verdict['medians'].items()])+'\n\n'
+    if worse:
+        text+=f"Individual heading worsens in{len(worse)}/{len(available)} accepted P0/P2 pairs. In those cases, terminal-heading cost share median={100*diagnosis['heading_cost_fraction_median']:.2f}%, gradient share median={100*diagnosis['heading_gradient_share_median']:.2f}%. Other terms oppose heading descent in{diagnosis['other_cost_opposes_heading_descent_pairs']}/{len(worse)}; direct active-constraint blockers occur in{diagnosis['heading_descent_blocked_pairs']}/{len(worse)}. Dominant opposing terms: {diagnosis['dominant_opposing_factors']}. This supports a soft-objective trade-off at the existing weights, not a causal demonstration that changing sigma would improve the complete criterion set.\n\n"
     text+='The terminal heading factor is soft: r=2sin(error/2)/0.52, cost=r²/2. At30° its cost is about0.495; it is neither a hard heading tolerance nor a guarantee of improvement over P0. The table separates initialization resampling from optimization and compares heading cost/gradient contribution with other factors. At the saved solution, negative heading-gradient directions are checked against active frozen constraints (slack≤1e−5). No sigma was changed and no alternative optimum was computed.\n\n'
     text+=table(available,['case_id','P0_heading_rad','initial_heading_rad','P2_heading_rad','delta_resampling_rad','delta_optimization_rad','heading_cost_fraction','heading_gradient_share','other_cost_directional_derivative','total_directional_derivative','active_constraint_blockers'])+'\n\n'
     text+='Full factor costs, cost changes, gradients and blockers are in heading_diagnostics.csv/json. These can support a relative soft-objective trade-off or a constraint conflict, but cannot isolate sigma0.52 as a sufficient causal explanation.\n\n'
@@ -231,7 +237,26 @@ def generate_report(records,rows,pairs,diagnostics,verdict,original):
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--publish',action='store_true');a=ap.parse_args();run()
+    ap=argparse.ArgumentParser();ap.add_argument('--publish',action='store_true');ap.add_argument('--report-only',action='store_true');a=ap.parse_args()
+    if a.report_only:
+        import csv
+        records=json.loads((OUT/'records.json').read_text());rows=[r for record in records for r in record['rows']];pairs=[]
+        for raw in csv.DictReader((OUT/'paired_P2_P0.csv').read_text().splitlines()):
+            row={}
+            for k,v in raw.items():
+                if v=='':row[k]=None
+                elif v in ('True','False'):row[k]=v=='True'
+                else:
+                    try:row[k]=float(v)
+                    except ValueError:row[k]=v
+            pairs.append(row)
+        diagnostics=json.loads((OUT/'heading_diagnostics.json').read_text());verdict=json.loads((OUT/'decision.json').read_text());original=json.loads((SOURCE/'decision.json').read_text())
+        generate_report(records,rows,pairs,diagnostics,verdict,original)
+        if not (OUT/'provenance.json').exists():
+            execution_sha=subprocess.check_output(['git','log','-1','--format=%H','--',str(HERE.relative_to(ROOT)/'reeval_protocol.json')],cwd=ROOT,text=True).strip()
+            write(OUT/'provenance.json',dict(registration=json.loads((HERE/'reeval_protocol.json').read_text()),execution_git_sha=execution_sha,original_data_reused=True,new_graph_solves=0,new_navigation=0,report_only_regenerated=True))
+        print(json.dumps(verdict,ensure_ascii=False))
+    else:run()
     if a.publish:
         assert not subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip()
         subprocess.run(['git','add','--',str(OUT.relative_to(ROOT)),'docs/PHASE22O2_REEVAL.md'],cwd=ROOT,check=True)
