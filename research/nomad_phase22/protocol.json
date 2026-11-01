@@ -1,0 +1,71 @@
+{
+  "phase": "22-O",
+  "base_commit": "44b472d",
+  "status": "REGISTERED",
+  "p2_failure": "reject",
+  "anchor_mode": "spawn_pose",
+  "deadline_s": 1.0,
+  "budget_accounting": "Frozen Phase21/20D pool costs include snapshot read, EDT/cache, IPC and solve. P2/P3 add cache transfer and refinement to P0 time;1s end-to-end, overruns rejected. Rollout evaluation excluded from planner time.",
+  "rollout": {
+    "horizon_s": 60,
+    "control_hz": 9,
+    "integration_hz": 72,
+    "controller": "protected Phase20 SPAlignment",
+    "oracle": "passive swept evaluation; does not affect command generation or terminate the path",
+    "missing_time": "No completion time when incomplete; no imputation"
+  },
+  "dataset": {
+    "training_n": 26,
+    "evaluation_n": 24,
+    "source": "same Phase21 tuning manifest; all final Phase21 B4/M3 ALL_UNSAFE first-stage A plus NO_PROGRESS B snapshots; no optional additional methods",
+    "duplicate_policy": "Do not also count A-trigger R3 fallback boundary",
+    "representatives": [
+      "E019",
+      "E000",
+      "E021"
+    ]
+  },
+  "p3_strength_grid": [
+    0.25,
+    0.5,
+    1.0
+  ],
+  "p3": "one open Chaikin pass blended with arclength-resampled P0; fixed endpoints; strength halved for3 retries after initial attempt; depth/geometry failure then exact P0 fallback",
+  "p2_grid": {
+    "sigma_k": [
+      0.5,
+      1.0
+    ],
+    "sigma_delta": [
+      0.5,
+      1.0
+    ],
+    "sigma_heading": [
+      0.26,
+      0.52
+    ],
+    "sigma_lateral": [
+      0.15,
+      0.3
+    ]
+  },
+  "p2": "single P0 arclength-resampled11-point initialization; unchanged R3 factors/constraints/SLSQP100/ftol1e-8; analytic added factors; exact nearest-polyline distance tube<=.30m (not a mathematical homotopy proof)",
+  "comparison": {
+    "safety": "all snapshots, plan failure fraction and oracle geometric negative witness counts",
+    "side": "P0 planned side defined at first forward front-face crossing; otherwise endpoint in a clear lateral gap. Undefined P0 side omitted from side denominator, undefined P2 counts mismatch; zero denominator fails criterion(ii)",
+    "median_subset": "same snapshots where P0/P2/P3 all plan successfully and complete without oracle overlap; report N; zero subset fails(iii-v)",
+    "endpoint": "planned last chord heading absolute error and planned endpoint distance to anchor/u_ref line; actual terminal pose errors also reported",
+    "wide_gap": "unique larger gap only; equal-width gaps labelled TIE, not invented wide choices"
+  },
+  "tuning": {
+    "p3": "minimum collisions, plan failures, P0 side mismatches, jerk median, terminal heading+lateral, completion time; then smaller strength",
+    "p2": "first prefer satisfying(i)&(ii), then most satisfied(iii-v), then fewer collisions/failures, lower sum of jerk/heading/lateral ratios to P0, shorter completion time, grid index; no evaluation inputs"
+  },
+  "decision": {
+    "ready": "all five criteria",
+    "partial": "i and ii and at least one of iii-v",
+    "not_better": "i or ii fail, or iii-v all fail",
+    "low_n": "evaluation snapshot N<15"
+  },
+  "no_new_navigation": true
+}
