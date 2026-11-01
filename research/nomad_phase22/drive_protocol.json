@@ -1,7 +1,7 @@
 {
   "phase": "22-drive",
   "base_commit": "b358255",
-  "status": "REGISTERED",
+  "status": "GEOMETRY_PASS",
   "methods": [
     "P0_ASTAR",
     "P1_GRAPH",
@@ -161,14 +161,14 @@
   "analysis": {
     "primary": "P2F vs P0, held-out L2B first; P1 reference",
     "technical_retry": 1,
-    "exclusion": "Any final technical failure excludes the full scene\u00d7seed group of3 methods",
+    "exclusion": "Any final technical failure excludes the full scene×seed group of3 methods",
     "passage": "World+X rear support plus footprint radius; spawn-to-first passage; nonpassage90s censored display",
     "collision": "box geometric overlap OR wall intrusion",
-    "detour": "Actual APPLIED\u2192END or terminal run cutoff, including start alignment. No waiting intervals; terminal windows censored.",
+    "detour": "Actual APPLIED→END or terminal run cutoff, including start alignment. No waiting intervals; terminal windows censored.",
     "clearance": "per-run minimum exact swept oracle box/wall clearance within executed detour windows",
-    "jerk": "RMS second9Hz actual omega differences/dt\u00b2, only triplets within the same detour window",
+    "jerk": "RMS second9Hz actual omega differences/dt², only triplets within the same detour window",
     "curvature": "RMS actual w/v at72Hz while |v|>1e-6 within detour windows; in-place rotation has undefined curvature and is excluded, rotation duration reported",
-    "secondary_pairs": "Matched scene\u00d7seed with detour metrics present in both P0 and P2F; no imputation; report this N separately",
+    "secondary_pairs": "Matched scene×seed with detour metrics present in both P0 and P2F; no imputation; report this N separately",
     "handover": "Actual applied detour END; first subsequent trigger before box passage is reblock;3s projected displacement on that job u_ref, missing full3s marked censored",
     "branches": "R3 selections and actual applications separately; GRAPH_FALLBACK-used-run requires an actual application"
   },
