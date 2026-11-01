@@ -1,0 +1,1515 @@
+{
+  "case": {
+    "case_id": "T004",
+    "phase": "20d",
+    "index": 86,
+    "scene": "L2",
+    "method": "M3_DETOUR",
+    "run": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20d_recent_01/main/L2_086_D750_M3_DETOUR",
+    "snapshot_file": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase20d_recent_01/main/L2_086_D750_M3_DETOUR/repair_jobs/input_0004.npz",
+    "snapshot_sha256": "bbef75012c044aadfed26289b88d9d8337f65d63dc45d3d2290bd7e8965bd837",
+    "tick": 4816,
+    "time_s": 66.88888888888889,
+    "B": [
+      8.629305015943968,
+      1.2591467958229454,
+      2.488585894167227
+    ],
+    "u_ref": [
+      0.9895214096458903,
+      0.14438621766778872
+    ],
+    "u_ref_source": {},
+    "previous_vw": [
+      0.0,
+      0.4
+    ],
+    "original_stage": "R3",
+    "trigger": "B",
+    "candidate_anchor_xy": [
+      1.9974801174675574,
+      0.33848571646184045
+    ],
+    "candidate_anchor_tick": 944,
+    "appearance_available": true,
+    "depth_component": null,
+    "oracle_config": {
+      "name": "phase2_s1_v2",
+      "start_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "goal_pose": [
+        8.0,
+        0.0,
+        0.0
+      ],
+      "goal_tolerance_m": 0.3,
+      "timeout_sim_s": 90.0,
+      "timeout_navigation_wall_s": 180.0,
+      "timeout_process_wall_s": 600.0,
+      "integration_hz": 72,
+      "observation_hz": 4,
+      "controller_hz": 9,
+      "controller_dt_s": 0.25,
+      "max_v": 0.2,
+      "max_w": 0.4,
+      "seed": 101,
+      "context_size": 3,
+      "num_samples": 8,
+      "selected_sample": 0,
+      "selected_waypoint_index": 2,
+      "camera": {
+        "width": 320,
+        "height": 240,
+        "height_m": 0.5,
+        "horizontal_fov_deg": 90.0,
+        "focal_length_mm": 18.0,
+        "horizontal_aperture_mm": 36.0,
+        "vertical_aperture_mm": 27.0
+      },
+      "corridor": {
+        "xmin": -1.0,
+        "xmax": 9.0,
+        "half_width": 1.5,
+        "height": 2.6
+      },
+      "boundary_stop_margin_m": 0.1,
+      "synchronous": false,
+      "smoothing": false,
+      "waypoint_modification": false,
+      "agent_radius_m": 0.09,
+      "required_clearance_m": 0.02,
+      "obstacles": [
+        {
+          "id": "DynamicObstacle",
+          "size_xyz_m": [
+            0.4,
+            1.2,
+            0.8
+          ],
+          "color_rgb": [
+            0.65,
+            0.04,
+            0.65
+          ],
+          "minimum_visible_pixels": 20,
+          "spawn_tick": 945,
+          "placement": {
+            "mode": "phase2_world_x",
+            "distance_m": 1.0
+          },
+          "center_xy_m": [
+            3.291579530434486,
+            0.0
+          ]
+        }
+      ],
+      "experiment_mode": "phase2_s1_v2",
+      "phase20": true,
+      "phase20b": true,
+      "phase20d": true,
+      "phase20_method": "M3_DETOUR",
+      "blockage_level": "L2",
+      "phase16_scene": "L2",
+      "phase15b_method": "M3_DETOUR",
+      "depth_camera": true,
+      "overnight_phase": 9,
+      "overnight_method": "CURV",
+      "phase4c_method": "CURV",
+      "plant_alpha": "inf",
+      "execution_v_max_m_s": 0.3,
+      "seed_offset": 860000,
+      "run_id": "L2_86",
+      "goal_mode": "topomap",
+      "topomap_manifest": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "topomap_manifest_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+      "phase2_distance_m": 1.0,
+      "blockage_center_y_m": 0.0,
+      "oracle_publication": false,
+      "dynamic_obstacle": {
+        "id": "DynamicObstacle",
+        "size_xyz_m": [
+          0.4,
+          1.2,
+          0.8
+        ],
+        "color_rgb": [
+          0.65,
+          0.04,
+          0.65
+        ],
+        "minimum_visible_pixels": 20,
+        "spawn_tick": 0,
+        "placement": {
+          "mode": "phase2_world_x",
+          "distance_m": 1.0
+        }
+      }
+    },
+    "spawn": {
+      "tick": 945,
+      "simulation_time_s": 13.125,
+      "active": true,
+      "collision_checked": true,
+      "monotonic_ns": 292696316978806,
+      "checked_duration_s": 0.0,
+      "clearance_row": 0,
+      "pose": [
+        2.001579530434486,
+        0.33923131986693333,
+        0.17991394370398028
+      ],
+      "old_id": 10,
+      "old_command_valid": true,
+      "old_command_vw": [
+        0.3,
+        1.3113583992611117e-05
+      ],
+      "footprint_clearance_m": 0.9999999999989999,
+      "obstacle": {
+        "id": "DynamicObstacle",
+        "size_xyz_m": [
+          0.4,
+          1.2,
+          0.8
+        ],
+        "color_rgb": [
+          0.65,
+          0.04,
+          0.65
+        ],
+        "minimum_visible_pixels": 20,
+        "spawn_tick": 945,
+        "placement": {
+          "mode": "phase2_world_x",
+          "distance_m": 1.0
+        },
+        "center_xy_m": [
+          3.291579530434486,
+          0.0
+        ]
+      },
+      "old_remaining_timeout_s": 0.712038087,
+      "old_received_monotonic_ns": 292696029016893
+    },
+    "anchor_xy": [
+      1.9974801174675574,
+      0.33848571646184045
+    ],
+    "anchor_source": "SPAWN_PREVIOUS_ODOMETRY"
+  },
+  "plans": {
+    "P0": {
+      "accepted": false,
+      "path": null,
+      "disposition": "NO_ACCEPTED_INITIALIZATION",
+      "compute_s": 0.099762979,
+      "numeric_results": [
+        {
+          "index": 0,
+          "pid": 616250,
+          "accepted": false,
+          "disposition": "NO_PATH",
+          "path": null,
+          "expansions": 1681,
+          "total_attempt_s": 0.034158368
+        }
+      ]
+    },
+    "P1": {
+      "accepted": false,
+      "path": null,
+      "disposition": "NO_ACCEPTED_INITIALIZATION",
+      "compute_s": 0.420716766,
+      "numeric_results": [
+        {
+          "index": 0,
+          "pid": 616251,
+          "start_ns": 433087164386535,
+          "end_ns": 433087369632869,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.644257831417637,
+              1.1617201413965799
+            ],
+            [
+              8.690296583372788,
+              1.0802533656532909
+            ],
+            [
+              8.768877236613873,
+              1.018406127509663
+            ],
+            [
+              8.864654066245372,
+              0.9880438587548269
+            ],
+            [
+              8.976304543752407,
+              0.975447499290241
+            ],
+            [
+              9.091245760969564,
+              0.9741349288796507
+            ],
+            [
+              9.20212609441354,
+              0.9793847615754971
+            ],
+            [
+              9.300426804207786,
+              0.9877838091608415
+            ],
+            [
+              9.405202352204139,
+              0.9991123237667181
+            ],
+            [
+              9.531263827548441,
+              1.0138174372670765
+            ]
+          ],
+          "initial_path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.777733227390852,
+              1.2808047284731137
+            ],
+            [
+              8.926161438837735,
+              1.3024626611232821
+            ],
+            [
+              9.074589650284619,
+              1.3241205937734504
+            ],
+            [
+              9.223017861731503,
+              1.3457785264236186
+            ],
+            [
+              9.371446073178387,
+              1.367436459073787
+            ],
+            [
+              9.519874284625269,
+              1.3890943917239553
+            ],
+            [
+              9.668302496072153,
+              1.4107523243741236
+            ],
+            [
+              9.816730707519037,
+              1.4324102570242918
+            ],
+            [
+              9.96515891896592,
+              1.45406818967446
+            ],
+            [
+              10.113587130412803,
+              1.4757261223246285
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 9,
+          "message": "Iteration limit reached",
+          "iterations": 100,
+          "constraint_violation": 0.13000333378526896,
+          "progress_m": 0.8570853765366434,
+          "length_m": 1.061890678101455,
+          "maximum_abs_curvature_m_inv": 4.000000001658562,
+          "maximum_radius_m": 0.9347278705593342,
+          "minimum_segment_m": 0.09357564977917773,
+          "maximum_segment_m": 0.12691625557445596,
+          "unknown_fraction": 0.34801762114537443,
+          "near_threshold_m": 0.025,
+          "cB": 0.1437821363651887,
+          "certificate_pass": false,
+          "near_clearance_m": 0.10537518971169169,
+          "far_clearance_m": -0.08994268195433885,
+          "depth_clearance_m": -0.08994268195433885,
+          "factor_costs": {
+            "progress": 5.87952194925078,
+            "smoothness": 3.0002430385585708,
+            "clearance": 714.9655479390045,
+            "heading": 6.277585986984283
+          },
+          "solver_wall_s": 0.17556383600458503,
+          "attempt_wall_s": 0.1797603140003048,
+          "total_attempt_s": 0.18023300601635128
+        },
+        {
+          "index": 1,
+          "pid": 616249,
+          "start_ns": 433087164443013,
+          "end_ns": 433087309586423,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.629305015943789,
+              1.2591467958231242
+            ],
+            [
+              8.629305015943789,
+              1.2591467958227665
+            ],
+            [
+              8.629305015943789,
+              1.2591467958227665
+            ],
+            [
+              8.629305015944148,
+              1.2591467958227665
+            ],
+            [
+              8.629305015944148,
+              1.2591467958227665
+            ],
+            [
+              8.629305015944148,
+              1.2591467958227665
+            ],
+            [
+              8.629305015944148,
+              1.2591467958227665
+            ],
+            [
+              8.629305015944148,
+              1.2591467958227665
+            ],
+            [
+              8.629305015944148,
+              1.2591467958227665
+            ],
+            [
+              8.629305015944148,
+              1.2591467958227665
+            ]
+          ],
+          "initial_path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.747018651370174,
+              1.3521172214148853
+            ],
+            [
+              8.864732286796379,
+              1.4450876470068252
+            ],
+            [
+              8.982445922222585,
+              1.5380580725987651
+            ],
+            [
+              9.100159557648789,
+              1.6310284981907053
+            ],
+            [
+              9.217873193074995,
+              1.7239989237826452
+            ],
+            [
+              9.3355868285012,
+              1.816969349374585
+            ],
+            [
+              9.453300463927405,
+              1.9099397749665252
+            ],
+            [
+              9.57101409935361,
+              2.002910200558465
+            ],
+            [
+              9.688727734779816,
+              2.095880626150405
+            ],
+            [
+              9.80644137020602,
+              2.188851051742345
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 4,
+          "message": "Inequality constraints incompatible",
+          "iterations": 43,
+          "constraint_violation": 113568051298.10262,
+          "progress_m": 1.5169154988861993e-13,
+          "length_m": 1.0156053953150258e-11,
+          "maximum_abs_curvature_m_inv": 113568051302.10262,
+          "maximum_radius_m": 1.031609523058821e-12,
+          "minimum_segment_m": 1e-12,
+          "maximum_segment_m": 1.0624286900806813e-12,
+          "unknown_fraction": 0.0,
+          "near_threshold_m": 0.025,
+          "cB": 0.1437821363651887,
+          "certificate_pass": true,
+          "near_clearance_m": 0.1508542068661169,
+          "far_clearance_m": null,
+          "depth_clearance_m": 0.1508542068661169,
+          "factor_costs": {
+            "progress": 71.9999999999818,
+            "smoothness": 3.9191467109794233e-22,
+            "clearance": 0.0,
+            "heading": 0.03103035930742437
+          },
+          "solver_wall_s": 0.11319759400794283,
+          "attempt_wall_s": 0.11882915999740362,
+          "total_attempt_s": 0.11937403999036178
+        },
+        {
+          "index": 2,
+          "pid": 616246,
+          "start_ns": 433087164483971,
+          "end_ns": 433087363191337,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.651663756430972,
+              1.1616784039579051
+            ],
+            [
+              8.701158020125634,
+              1.074785837377128
+            ],
+            [
+              8.777152518080095,
+              1.0097871041121271
+            ],
+            [
+              8.871071800350624,
+              0.9709048276126837
+            ],
+            [
+              8.980004971801149,
+              0.9487476318984279
+            ],
+            [
+              9.089315056011378,
+              0.9396704391176715
+            ],
+            [
+              9.189314032278476,
+              0.9401283465129503
+            ],
+            [
+              9.326560683918892,
+              0.9475426146805144
+            ],
+            [
+              9.490522992697663,
+              0.9595356670525341
+            ],
+            [
+              9.668363116070637,
+              0.9737529646450257
+            ]
+          ],
+          "initial_path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.768676584020342,
+              1.2036890099680018
+            ],
+            [
+              8.908048152096715,
+              1.1482312241130583
+            ],
+            [
+              9.047419720173089,
+              1.0927734382581147
+            ],
+            [
+              9.186791288249463,
+              1.037315652403171
+            ],
+            [
+              9.326162856325835,
+              0.9818578665482275
+            ],
+            [
+              9.46553442440221,
+              0.926400080693284
+            ],
+            [
+              9.604905992478583,
+              0.8709422948383403
+            ],
+            [
+              9.744277560554956,
+              0.8154845089833967
+            ],
+            [
+              9.88364912863133,
+              0.7600267231284532
+            ],
+            [
+              10.023020696707704,
+              0.7045689372735096
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 9,
+          "message": "Iteration limit reached",
+          "iterations": 100,
+          "constraint_violation": 0.13322153743344772,
+          "progress_m": 0.9869633001118223,
+          "length_m": 1.2027544228119011,
+          "maximum_abs_curvature_m_inv": 3.4374444497133925,
+          "maximum_radius_m": 1.0775395001173984,
+          "minimum_segment_m": 0.09999999522702666,
+          "maximum_segment_m": 0.1784075139453157,
+          "unknown_fraction": 0.40234375,
+          "near_threshold_m": 0.025,
+          "cB": 0.1437821363651887,
+          "certificate_pass": false,
+          "near_clearance_m": 0.1038599514391571,
+          "far_clearance_m": -0.0899941140788188,
+          "depth_clearance_m": -0.0899941140788188,
+          "factor_costs": {
+            "progress": 2.2692317749622735,
+            "smoothness": 3.4750865243536206,
+            "clearance": 715.5158955178789,
+            "heading": 6.455392301459835
+          },
+          "solver_wall_s": 0.1689708560006693,
+          "attempt_wall_s": 0.17326439899625257,
+          "total_attempt_s": 0.17372932599391788
+        },
+        {
+          "index": 3,
+          "pid": 616250,
+          "start_ns": 433087164508147,
+          "end_ns": 433087294980012,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.629305015943803,
+              1.2591467958231108
+            ],
+            [
+              8.629305015943803,
+              1.2591467958231108
+            ],
+            [
+              8.629305015944134,
+              1.2591467958231108
+            ],
+            [
+              8.629305015944134,
+              1.2591467958227798
+            ],
+            [
+              8.629305015944134,
+              1.2591467958227798
+            ],
+            [
+              8.629305015944134,
+              1.2591467958227798
+            ],
+            [
+              8.629305015944134,
+              1.2591467958227798
+            ],
+            [
+              8.629305015944134,
+              1.2591467958227798
+            ],
+            [
+              8.629305015944134,
+              1.2591467958227798
+            ],
+            [
+              8.629305015944134,
+              1.2591467958227798
+            ]
+          ],
+          "initial_path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.684762801798913,
+              1.3985183638993188
+            ],
+            [
+              8.740220587653855,
+              1.5378899319756925
+            ],
+            [
+              8.7956783735088,
+              1.6772615000520659
+            ],
+            [
+              8.851136159363742,
+              1.8166330681284395
+            ],
+            [
+              8.906593945218686,
+              1.956004636204813
+            ],
+            [
+              8.96205173107363,
+              2.0953762042811865
+            ],
+            [
+              9.017509516928573,
+              2.23474777235756
+            ],
+            [
+              9.072967302783518,
+              2.374119340433934
+            ],
+            [
+              9.12842508863846,
+              2.513490908510307
+            ],
+            [
+              9.183882874493404,
+              2.6528624765866806
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 4,
+          "message": "Inequality constraints incompatible",
+          "iterations": 72,
+          "constraint_violation": 178626991473.35455,
+          "progress_m": 1.395532157380801e-13,
+          "length_m": 1.013351250992621e-11,
+          "maximum_abs_curvature_m_inv": 178626991477.35455,
+          "maximum_radius_m": 1.027000384175999e-12,
+          "minimum_segment_m": 1e-12,
+          "maximum_segment_m": 1.0533785433677093e-12,
+          "unknown_fraction": 0.0,
+          "near_threshold_m": 0.025,
+          "cB": 0.1437821363651887,
+          "certificate_pass": true,
+          "near_clearance_m": 0.15085420686612924,
+          "far_clearance_m": null,
+          "depth_clearance_m": 0.15085420686612924,
+          "factor_costs": {
+            "progress": 71.99999999998325,
+            "smoothness": 2.734446907740041e-22,
+            "clearance": 0.0,
+            "heading": 0.032243818259746135
+          },
+          "solver_wall_s": 0.10025076998863369,
+          "attempt_wall_s": 0.10576291801407933,
+          "total_attempt_s": 0.10652160499012098
+        },
+        {
+          "index": 4,
+          "pid": 616250,
+          "start_ns": 433087295116543,
+          "end_ns": 433087452550886,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.729057619419775,
+              1.2661771211955855
+            ],
+            [
+              8.818074450418955,
+              1.311739852563869
+            ],
+            [
+              8.886638625117174,
+              1.3845338862212213
+            ],
+            [
+              8.969548391032582,
+              1.4404444259724434
+            ],
+            [
+              9.0620732311353,
+              1.484507851130686
+            ],
+            [
+              9.163952013937674,
+              1.5215513944923158
+            ],
+            [
+              9.271615454125218,
+              1.5535602418474646
+            ],
+            [
+              9.37512924568824,
+              1.5797180817288863
+            ],
+            [
+              9.48922687094285,
+              1.6066605541247205
+            ],
+            [
+              9.612907668422983,
+              1.6343135921137388
+            ]
+          ],
+          "initial_path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.722275441535908,
+              1.1414331603967403
+            ],
+            [
+              8.815245867127848,
+              1.023719524970535
+            ],
+            [
+              8.908216292719787,
+              0.9060058895443299
+            ],
+            [
+              9.001186718311729,
+              0.7882922541181246
+            ],
+            [
+              9.094157143903669,
+              0.6705786186919194
+            ],
+            [
+              9.187127569495608,
+              0.5528649832657143
+            ],
+            [
+              9.280097995087548,
+              0.43515134783950904
+            ],
+            [
+              9.373068420679488,
+              0.3174377124133039
+            ],
+            [
+              9.466038846271427,
+              0.1997240769870987
+            ],
+            [
+              9.559009271863369,
+              0.08201044156089332
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 9,
+          "message": "Iteration limit reached",
+          "iterations": 100,
+          "constraint_violation": 0.12999197324448086,
+          "progress_m": 1.0274647979234404,
+          "length_m": 1.0739443308865586,
+          "maximum_abs_curvature_m_inv": 4.000010689870375,
+          "maximum_radius_m": 1.0527223294880992,
+          "minimum_segment_m": 0.09999979345416114,
+          "maximum_segment_m": 0.12673448692184577,
+          "unknown_fraction": 0.4329004329004329,
+          "near_threshold_m": 0.025,
+          "cB": 0.1437821363651887,
+          "certificate_pass": false,
+          "near_clearance_m": 0.023451938316921037,
+          "far_clearance_m": -0.089897520514736,
+          "depth_clearance_m": -0.089897520514736,
+          "factor_costs": {
+            "progress": 1.4884197977799627,
+            "smoothness": 2.186402658330893,
+            "clearance": 736.0364904640068,
+            "heading": 6.3817049363980125
+          },
+          "solver_wall_s": 0.15272945503238589,
+          "attempt_wall_s": 0.1570955160423182,
+          "total_attempt_s": 0.15742998500354588
+        },
+        {
+          "index": 5,
+          "pid": 616249,
+          "start_ns": 433087309707263,
+          "end_ns": 433087389955256,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.713818739947515,
+              1.2360318587830317
+            ],
+            [
+              8.81316020264533,
+              1.247488557700271
+            ],
+            [
+              8.82484081384574,
+              1.3441132703806749
+            ],
+            [
+              8.8143990131796,
+              1.2446600768788927
+            ],
+            [
+              8.853412674234574,
+              1.152584372488135
+            ],
+            [
+              8.935438032756878,
+              1.0771088173515966
+            ],
+            [
+              9.036448350091867,
+              1.0420186771032254
+            ],
+            [
+              9.143796927453797,
+              1.0301859736598522
+            ],
+            [
+              9.269926251469936,
+              1.0291169368858637
+            ],
+            [
+              9.390101535886734,
+              1.032552339280798
+            ]
+          ],
+          "initial_path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.6076470832938,
+              1.407575007269829
+            ],
+            [
+              8.585989150643632,
+              1.5560032187167125
+            ],
+            [
+              8.564331217993464,
+              1.7044314301635959
+            ],
+            [
+              8.542673285343295,
+              1.8528596416104794
+            ],
+            [
+              8.521015352693126,
+              2.001287853057363
+            ],
+            [
+              8.499357420042958,
+              2.1497160645042466
+            ],
+            [
+              8.47769948739279,
+              2.29814427595113
+            ],
+            [
+              8.456041554742622,
+              2.4465724873980137
+            ],
+            [
+              8.434383622092454,
+              2.5950006988448973
+            ],
+            [
+              8.412725689442285,
+              2.743428910291781
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 8,
+          "message": "Positive directional derivative for linesearch",
+          "iterations": 57,
+          "constraint_violation": 8.552780588307836,
+          "progress_m": 0.7201073283428441,
+          "length_m": 1.0577006433014073,
+          "maximum_abs_curvature_m_inv": 12.552780588307836,
+          "maximum_radius_m": 0.7938239052161717,
+          "minimum_segment_m": 0.08761774854050275,
+          "maximum_segment_m": 0.12613385436270594,
+          "unknown_fraction": 0.2026431718061674,
+          "near_threshold_m": 0.025,
+          "cB": 0.1437821363651887,
+          "certificate_pass": false,
+          "near_clearance_m": 0.06596187338608653,
+          "far_clearance_m": -0.08997665254559793,
+          "depth_clearance_m": -0.08997665254559793,
+          "factor_costs": {
+            "progress": 11.514848815512138,
+            "smoothness": 35.00648257955747,
+            "clearance": 713.5146827230282,
+            "heading": 7.026703992820845
+          },
+          "solver_wall_s": 0.07558904198231176,
+          "attempt_wall_s": 0.07993565598735586,
+          "total_attempt_s": 0.08024408598430455
+        },
+        {
+          "index": 6,
+          "pid": 616246,
+          "start_ns": 433087363321997,
+          "end_ns": 433087529781861,
+          "accepted": false,
+          "disposition": "NONCONVERGED",
+          "path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.64968655572492,
+              1.1612458616806631
+            ],
+            [
+              8.695901984190172,
+              1.0725659076203309
+            ],
+            [
+              8.767439947983256,
+              1.002692310424151
+            ],
+            [
+              8.856897914735082,
+              0.9579949527477107
+            ],
+            [
+              8.968210682675473,
+              0.9287003264952202
+            ],
+            [
+              9.09846326544529,
+              0.9106303223728079
+            ],
+            [
+              9.247760329277439,
+              0.9002804387466208
+            ],
+            [
+              9.408370349233566,
+              0.8956500688487928
+            ],
+            [
+              9.57992605888609,
+              0.8945710504520273
+            ],
+            [
+              9.757614071463623,
+              0.895228403745161
+            ]
+          ],
+          "initial_path": [
+            [
+              8.629305015943968,
+              1.2591467958229454
+            ],
+            [
+              8.650962948594136,
+              1.1107185843760619
+            ],
+            [
+              8.672620881244304,
+              0.9622903729291783
+            ],
+            [
+              8.694278813894474,
+              0.8138621614822948
+            ],
+            [
+              8.715936746544642,
+              0.6654339500354113
+            ],
+            [
+              8.73759467919481,
+              0.5170057385885277
+            ],
+            [
+              8.759252611844978,
+              0.36857752714164427
+            ],
+            [
+              8.780910544495146,
+              0.22014931569476048
+            ],
+            [
+              8.802568477145314,
+              0.07172110424787714
+            ],
+            [
+              8.824226409795484,
+              -0.07670710719900642
+            ],
+            [
+              8.845884342445652,
+              -0.22513531864588998
+            ]
+          ],
+          "solver_started": true,
+          "solver_success": false,
+          "solver_status": 9,
+          "message": "Iteration limit reached",
+          "iterations": 100,
+          "constraint_violation": 0.13317664459349898,
+          "progress_m": 1.0639411669621768,
+          "length_m": 1.3061864430629277,
+          "maximum_abs_curvature_m_inv": 3.1542191759271145,
+          "maximum_radius_m": 1.1855454107119368,
+          "minimum_segment_m": 0.0999999992439728,
+          "maximum_segment_m": 0.1776892285061357,
+          "unknown_fraction": 0.43884892086330934,
+          "near_threshold_m": 0.025,
+          "cB": 0.1437821363651887,
+          "certificate_pass": false,
+          "near_clearance_m": 0.11295730934101586,
+          "far_clearance_m": -0.08992760041517218,
+          "depth_clearance_m": -0.08992760041517218,
+          "factor_costs": {
+            "progress": 0.9256003023807122,
+            "smoothness": 2.5877275287686214,
+            "clearance": 715.0093825988849,
+            "heading": 6.407696507588672
+          },
+          "solver_wall_s": 0.16194399702362716,
+          "attempt_wall_s": 0.16616017202613875,
+          "total_attempt_s": 0.16645565599901602
+        }
+      ]
+    },
+    "P3_00": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P3_01": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P3_02": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_00": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_01": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_02": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_03": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_04": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_05": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_06": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_07": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_08": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_09": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_10": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_11": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_12": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_13": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_14": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    },
+    "P2_15": {
+      "accepted": false,
+      "path": null,
+      "disposition": "P0_FAILED",
+      "refinement_wall_s": 0.0,
+      "compute_s": 0.1103158850238041
+    }
+  },
+  "rows": [
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P0",
+      "accepted": false,
+      "disposition": "NO_ACCEPTED_INITIALIZATION",
+      "compute_s": 0.099762979,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P1",
+      "accepted": false,
+      "disposition": "NO_ACCEPTED_INITIALIZATION",
+      "compute_s": 0.420716766,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P3_00",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P3_01",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P3_02",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_00",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_01",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_02",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_03",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_04",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_05",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_06",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_07",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_08",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_09",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_10",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_11",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_12",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_13",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_14",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    },
+    {
+      "case_id": "T004",
+      "scene": "L2",
+      "index": 86,
+      "source_method": "M3_DETOUR",
+      "method": "P2_15",
+      "accepted": false,
+      "disposition": "P0_FAILED",
+      "compute_s": 0.1103158850238041,
+      "over_1s": false,
+      "planning_failed": true
+    }
+  ],
+  "traces": {},
+  "wall_s": 0.5347913439618424
+}

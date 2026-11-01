@@ -1,7 +1,7 @@
 {
   "phase": "22-O",
   "base_commit": "44b472d",
-  "status": "REGISTERED",
+  "status": "FROZEN",
   "p2_failure": "reject",
   "anchor_mode": "spawn_pose",
   "deadline_s": 1.0,
@@ -67,5 +67,16 @@
     "not_better": "i or ii fail, or iii-v all fail",
     "low_n": "evaluation snapshot N<15"
   },
-  "no_new_navigation": true
+  "no_new_navigation": true,
+  "selected": {
+    "p3_strength": 0.5,
+    "p3_name": "P3_01",
+    "p2_settings": {
+      "sigma_k": 0.5,
+      "sigma_delta": 1.0,
+      "sigma_heading": 0.52,
+      "sigma_lateral": 0.3
+    },
+    "p2_candidate": 7
+  }
 }
