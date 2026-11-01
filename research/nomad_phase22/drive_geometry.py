@@ -39,7 +39,7 @@ def ray_distance(pose,box,radius):
 class OrientedMonitor(ObstacleMonitor):
     def __init__(self,config,out):
         super().__init__(config,out);self.box=config['obstacle'];self.lower,self.upper=bounds(self.box)
-        write_json(out/'obstacle_geometry.json',dict(**self.box,world_corners=corners(self.box).tolist(),world_aabb=[self.lower.tolist(),self.upper.tolist()],collision='Exact OBB via rigid transform and existing swept AABB evaluator',agent_radius_m=self.radius))
+        write_json(out/'oriented_obstacle_geometry.json',dict(**self.box,world_corners=corners(self.box).tolist(),world_aabb=[self.lower.tolist(),self.upper.tolist()],collision='Exact OBB via rigid transform and existing swept AABB evaluator',agent_radius_m=self.radius))
     def observe_interval(self,start,end,v,w,time_start,duration):
         gap=swept_gap(start,v,w,duration,self.box,self.radius,self.config['required_clearance_m']);wall=corridor_clearance(start,end,v,w,duration,self.config['corridor'],self.radius)
         self.minimum=min(self.minimum,gap['lower_m']);self.minimum_upper=min(self.minimum_upper,gap['upper_m']);self.corridor_minimum=min(self.corridor_minimum,wall)
