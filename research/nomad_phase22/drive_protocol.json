@@ -1,7 +1,7 @@
 {
   "phase": "22-drive",
   "base_commit": "b358255",
-  "status": "GEOMETRY_PASS",
+  "status": "FROZEN",
   "methods": [
     "P0_ASTAR",
     "P1_GRAPH",
@@ -183,7 +183,13 @@
     "timeout_s": 90,
     "attempts_each": 1,
     "excluded": true,
-    "resize": "mean launch+audit wall seconds*24 >7200 => seeds121..123; no further reduction"
+    "resize": "mean launch+audit wall seconds*24 >7200 => seeds121..123; no further reduction",
+    "estimated_24_s": 4941.901324143633,
+    "measured_wall_s": {
+      "P0_ASTAR": 212.90607540297788,
+      "P1_GRAPH": 211.48453981499188,
+      "P2F_ASTAR_GRAPH": 193.3470502999844
+    }
   },
   "protected_sha256": {
     "research/nomad_phase20b/config.py": "ca3238ac3e3423e10616147171c739a11d039a2e702b424092e9d68af00290ca",
@@ -554,5 +560,7 @@
   ],
   "geometry_passed": true,
   "registration_status": "FROZEN",
-  "offline_anchor_difference": "22-O used spawn-previous odometry; online anchor is changed by user preregistration to depth-observable t_new (B) or current B (A); frozen6250433 weights/solver unchanged."
+  "offline_anchor_difference": "22-O used spawn-previous odometry; online anchor is changed by user preregistration to depth-observable t_new (B) or current B (A); frozen6250433 weights/solver unchanged.",
+  "planned_runs": 24,
+  "estimated_main_s": 4941.901324143633
 }
