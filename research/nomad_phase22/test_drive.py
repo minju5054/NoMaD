@@ -8,7 +8,7 @@ from nomad_isaac.common import integrate_se2
 from nomad_isaac.clearance import swept_clearance
 
 class Tests(unittest.TestCase):
-    def result(self,end=20,selected=0):return dict(job_id=1,kind='R3',end_ns=end,selected_sample=selected,results=[dict(path=np.c_[np.linspace(0,1.5,11),np.zeros(11)].tolist())])
+    def result(self,end=20,selected=0):return dict(job_id=1,kind='R3',start_ns=0,end_ns=end,selected_sample=selected,results=[dict(path=np.c_[np.linspace(0,1.5,11),np.zeros(11)].tolist())])
     def test_branch_order(self):
         a=self.result(20);r=self.result(50);g=self.result(70)
         self.assertEqual(select_final(a,r,g,100,80)[0],'REFINED')
@@ -20,7 +20,7 @@ class Tests(unittest.TestCase):
         a={**self.result(time.monotonic_ns()),'cache':{}}
         job=dict(job_id=1,dispatch_ns=time.monotonic_ns(),cache_file='synthetic',B=[0,0,0],u_ref=[1,0],anchor_xy=[0,0])
         with patch('nomad_phase22.drive_backend.astar_job',return_value=a),patch('nomad_phase22.drive_backend.load_cache',return_value=(None,None)),patch('nomad_phase22.drive_backend.graph_refine',side_effect=ValueError('injected backend failure')):
-            result=composite(None,job,lambda message:None,{},dict(lambda_=4,**{'lambda':4,'smoothing_iterations':0}))
+            result=composite(None,job,lambda message:None,{},dict(**{'lambda':4,'smoothing_iterations':0}))
         self.assertEqual(result['branch'],'A*_RAW');self.assertEqual(result['stage_results']['refine']['results'][0]['disposition'],'TECHNICAL_ERROR')
     def test_deadline_uses_cached_plan_not_late_refinement(self):
         w=object.__new__(Worker);w.lock=threading.Lock();w.event_lock=threading.Lock();w.events=io.StringIO();w.results=queue.SimpleQueue();w.delivered_ids=set();w.pending=dict(job_id=1,kind='R3',dispatch_ns=0);w.partial=self.result(500_000_000)
@@ -73,4 +73,19 @@ class Tests(unittest.TestCase):
             self.assertEqual(verdict['scenes'][1]['n'],1);self.assertEqual(verdict['additional'],'MIXED_HELDOUT')
             for name in ('outcomes.png','heldout_paths.png','clearance_jerk.png'):self.assertGreater((out/'results'/name).stat().st_size,1000)
             self.assertIn('All three methods by seed',(out/'report.md').read_text())
+    def test_depth_only_anchor_and_inconclusive_cases(self):
+        from .drive_execution import online_anchor
+        from .drive_report import decisions
+        poses=np.c_[np.linspace(0,2,433),np.zeros((433,2))]
+        job=dict(kind='R3',trigger='B',component=dict(t_new_tick=216),u_ref=[1.,0.],B=[2.,0.,0.],simulation_time_s=6.)
+        anchor=online_anchor(job,poses);self.assertEqual(anchor['anchor_xy'],[1.,0.]);self.assertEqual(anchor['anchor_tick'],216)
+        job['trigger']='A';job.pop('component');job['u_ref']=[0.,1.]
+        self.assertEqual(online_anchor(job,poses)['anchor_xy'],[2.,0.])
+        def check(a,b,secondary):
+            summary=[dict(scene=s,method=m,n=4,goal=g,collisions=c,passage_median_s=t) for s in ('L2','L2B','POOLED') for m,(g,c,t) in zip(('P0_ASTAR','P2F_ASTAR_GRAPH'),(a,b))]
+            paired=[dict(scene='L2B',P0_detour_minimum_clearance_m=.1,P2F_detour_minimum_clearance_m=.14 if secondary else .1,P0_detour_execution_jerk_rms=2.,P2F_detour_execution_jerk_rms=2.)]
+            r=decisions(summary,paired);self.assertEqual(r['final'],'REFINE_INCONCLUSIVE');self.assertTrue(r['scenes'][1]['conditions_not_met'])
+        check((3,1,10.),(3,1,10.),False)
+        check((4,0,10.),(3,0,10.),True)
+        check((4,0,10.),(4,0,12.),True)
 if __name__=='__main__':unittest.main()

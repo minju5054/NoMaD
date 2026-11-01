@@ -11,7 +11,7 @@ def env():
     e.update(PYTHONPATH=str(ROOT/'research'),OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MPLCONFIGDIR='/tmp/phase22-drive-mpl');return e
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--geometry-root',type=Path);ap.add_argument('--smoke-root',type=Path);ap.add_argument('--finalize',action='store_true');a=ap.parse_args();p=verify_sources();out=ROOT/'research/results/phase22_preflight'
+    ap=argparse.ArgumentParser();ap.add_argument('--geometry-root',type=Path);ap.add_argument('--verify-geometry',action='store_true');ap.add_argument('--smoke-root',type=Path);ap.add_argument('--finalize',action='store_true');a=ap.parse_args();p=verify_sources();out=ROOT/'research/results/phase22_preflight'
     if a.geometry_root:
         root=a.geometry_root.resolve();root.mkdir(parents=True,exist_ok=False);results=[]
         for attempt in (1,2):
@@ -29,6 +29,25 @@ def main():
         p['geometry_passed']=True
         if p['status']=='REGISTERED':p['status']='GEOMETRY_PASS'
         write(Path(__file__).with_name('drive_protocol.json'),p)
+    if a.verify_geometry:
+        # Revalidate the already rendered held-out scene. No new method outcomes
+        # or rendering are needed when geometry/camera code is unchanged.
+        from .drive_config import runtime_config,place
+        import hashlib
+        evidence=json.loads((out/'geometry.json').read_text());assert evidence['passed']
+        names=['research/nomad_phase22/'+n for n in ('drive_config.py','drive_geometry.py','drive_simulator.py')]
+        for name in names:
+            original=subprocess.check_output(['git','show','a516aa0:'+name],cwd=ROOT)
+            assert hashlib.sha256(original).hexdigest()==sha256_file(ROOT/name),name
+        checked=[]
+        for r in evidence['attempts'][-2:]:
+            root=Path(r['output']);c=runtime_config('P0_ASTAR',r['index'],90,'L2B')
+            assert c==json.loads((root/'scenario.json').read_text())
+            actual=place(c,r['spawn_pose']);expected=r['placement'];actual['obstacle']['spawn_tick']=0
+            assert actual==expected
+            checked.append(dict(index=r['index'],passed=r['passed'],wide_gap_m=r['wide_gap_m'],depth_sha256=sha256_file(root/'spawn_depth.npz'),source_output=str(root)))
+        write(out/'geometry_reuse.json',dict(passed=True,original_render_commit='a516aa0',source_sha256={n:sha256_file(ROOT/n) for n in names},checks=checked))
+        p['status']='GEOMETRY_PASS';write(Path(__file__).with_name('drive_protocol.json'),p);print('[geometry] both signed placements revalidated; existing depth evidence reused',flush=True)
     if a.smoke_root:
         assert p['status']=='GEOMETRY_PASS';root=a.smoke_root.resolve();root.mkdir(parents=True,exist_ok=False);results=[]
         for method in METHODS:

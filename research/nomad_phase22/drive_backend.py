@@ -25,22 +25,25 @@ def select_final(astar,refined,graph,deadline_ns,now_ns):
 def composite(pool,job,send,settings,astar_settings):
     start=time.monotonic_ns();deadline=job['dispatch_ns']+1_000_000_000
     a=astar_job(pool,job,astar_settings['lambda'],astar_settings['smoothing_iterations']);send(dict(message='ASTAR_READY',result=a))
-    selected=a['selected_sample'];refined=graph=None
+    selected=a['selected_sample'];refined=graph=None;stages=dict(astar=(a['end_ns']-a['start_ns'])/1e9,refine=None,graph_fallback=None)
     if selected is not None and a['end_ns']<=deadline:
+        stage_start=time.monotonic_ns()
         try:
             base,strict=load_cache(job['cache_file'])
             r=graph_refine(job['B'],job['u_ref'],base,strict,a['results'][selected]['path'],job['anchor_xy'],settings,deadline)
         except Exception as exc:
             r=dict(accepted=False,disposition='TECHNICAL_ERROR',error=repr(exc),refinement_wall_s=None)
-        ended=time.monotonic_ns();refined=dict(job_id=job['job_id'],kind='R3',start_ns=start,end_ns=ended,results=[r],selected_sample=0 if r['accepted'] else None,
+        ended=time.monotonic_ns();stages['refine']=(ended-stage_start)/1e9;refined=dict(job_id=job['job_id'],kind='R3',start_ns=stage_start,end_ns=ended,results=[r],selected_sample=0 if r['accepted'] else None,
             pool_wall_s=(ended-start)/1e9,dispatch_to_complete_s=(ended-job['dispatch_ns'])/1e9,sample_solve_s=[r['refinement_wall_s']],cache=a['cache'])
     elif time.monotonic_ns()<deadline:
+        stage_start=time.monotonic_ns()
         results=list(pool.map(graph_one,[('R3',i,job,job['cache_file']) for i in range(7)]));ended=time.monotonic_ns();which=select_detour(results)
-        graph=dict(job_id=job['job_id'],kind='R3',start_ns=start,end_ns=ended,results=results,selected_sample=which,pool_wall_s=(ended-start)/1e9,dispatch_to_complete_s=(ended-job['dispatch_ns'])/1e9,
+        stages['graph_fallback']=(ended-stage_start)/1e9
+        graph=dict(job_id=job['job_id'],kind='R3',start_ns=stage_start,end_ns=ended,results=results,selected_sample=which,pool_wall_s=(ended-start)/1e9,dispatch_to_complete_s=(ended-job['dispatch_ns'])/1e9,
             sample_solve_s=[r['total_attempt_s'] for r in results],cache=a['cache'])
     branch,result=select_final(a,refined,graph,deadline,time.monotonic_ns());ended=time.monotonic_ns()
     if result is None:result=dict(job_id=job['job_id'],kind='R3',start_ns=start,end_ns=ended,results=[],selected_sample=None,pool_wall_s=(ended-start)/1e9,dispatch_to_complete_s=(ended-job['dispatch_ns'])/1e9,sample_solve_s=[],cache=a['cache'])
-    return dict(**result,branch=branch,backend_end_ns=ended,decision_ns=ended,decision_wall_s=(ended-job['dispatch_ns'])/1e9,deadline_ns=deadline,stage_results=dict(astar=a,refine=refined,graph=graph))
+    return dict(**result,branch=branch,backend_end_ns=ended,decision_ns=ended,decision_wall_s=(ended-job['dispatch_ns'])/1e9,deadline_ns=deadline,stage_elapsed_s=stages,stage_results=dict(astar=a,refine=refined,graph=graph))
 
 
 def server():

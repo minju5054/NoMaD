@@ -48,6 +48,11 @@ def audit(run):
         if index in box_by_end:boxes.append(box_by_end[index]['lower_m'])
         if index in wall_by_end:walls.append(previous.corridor_arc_minimum(poses[index-1],v[index-1],w[index-1],1/72,summary['scenario']['corridor'],summary['scenario']['agent_radius_m']))
     backend=rows(run/'repair_pool_jobs.jsonl');branch_events=rows(run/'refinement_branches.jsonl');times=[]
+    if method=='P2F_ASTAR_GRAPH':
+        from .drive_execution import online_anchor
+        for f in (run/'repair_jobs').glob('transport_*.json'):
+            job=json.loads(f.read_text());expected=online_anchor(job,poses)
+            for key,value in expected.items():assert job[key]==value,(key,job[key],value)
     for job in backend:
         assert not job.get('error'),job.get('error')
         for stage in (job.get('stage_results') or {}).values():
@@ -61,6 +66,7 @@ def audit(run):
         detour_execution_jerk_rms=float(np.sqrt(np.mean(np.square(jerk)))) if jerk else None,detour_execution_curvature_rms=float(np.sqrt(np.mean(curvature*curvature))) if len(curvature) else None,
         handovers=handover,handover_reblock_count=sum(h['reblock'] for h in handover),handover_3s_progress_mean_m=float(np.mean([h['progress_m'] for h in handover if h['full3s']])) if any(h['full3s'] for h in handover) else None,
         branch_selections=dict(branch_selected),branch_applications=dict(branch_applied),branch_executed=dict(branch_executed),GRAPH_FALLBACK_used=bool(branch_executed['GRAPH_FALLBACK']),branch_decision_latency_s=previous.stats(times),
+        stage_time_s={stage:previous.stats([j['stage_elapsed_s'][stage] for j in backend if j.get('stage_elapsed_s',{}).get(stage) is not None]) for stage in ('astar','refine','graph_fallback')},
         branch_backend_times_s=[(j.get('backend_end_ns',j['end_ns'])-dispatch[j['job_id']])/1e9 for j in backend if j['kind']=='R3' and j['job_id'] in dispatch],branch_decision_times_s=times,
         branch_backend_time_s=previous.stats([(j.get('backend_end_ns',j['end_ns'])-dispatch[j['job_id']])/1e9 for j in backend if j['kind']=='R3' and j['job_id'] in dispatch]))
     return result

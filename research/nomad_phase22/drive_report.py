@@ -55,12 +55,13 @@ def decisions(summary,paired):
         clearance=counts['detour_minimum_clearance_m']>0 and med['detour_minimum_clearance_m']['P2F']>=med['detour_minimum_clearance_m']['P0']+.03
         jerk=counts['detour_execution_jerk_rms']>0 and med['detour_execution_jerk_rms']['P2F']<=.7*med['detour_execution_jerk_rms']['P0'];benefit=clearance or jerk
         speed=a['passage_median_s'] is not None and b['passage_median_s'] is not None and b['passage_median_s']<=1.15*a['passage_median_s']
-        if b['n']==0:label='INCONCLUSIVE_NO_VALID_PAIRS'
+        conditions=dict(valid_pairs=b['n']>0,zero_P2F_collisions=b['collisions']==0,goal_not_lower=b['goal']>=a['goal'],passage_within15percent=bool(speed),clearance_benefit=bool(clearance),jerk_benefit=bool(jerk),absolute_goal_difference_le1=abs(b['goal']-a['goal'])<=1,no_secondary_benefit=not benefit,goal_deficit_ge2=b['goal']<=a['goal']-2,more_P2F_collisions=b['collisions']>a['collisions'])
+        if b['n']==0:label=p['unclassified_label']
         elif b['collisions']==0 and b['goal']>=a['goal'] and speed and benefit:label='REFINE_HELPS'
         elif b['goal']<=a['goal']-2 or b['collisions']>a['collisions']:label='REFINE_HURTS'
         elif b['collisions']==0 and abs(b['goal']-a['goal'])<=1 and not benefit:label='REFINE_NEUTRAL'
         else:label=p['unclassified_label']
-        result.append(dict(scene=scene,label=label,n=b['n'],P0_goal=a['goal'],P2F_goal=b['goal'],P0_collision=a['collisions'],P2F_collision=b['collisions'],passage_within15percent=speed,clearance_benefit=bool(clearance),jerk_benefit=bool(jerk),secondary_pair_n=counts,secondary_medians=med))
+        result.append(dict(scene=scene,label=label,n=b['n'],P0_goal=a['goal'],P2F_goal=b['goal'],P0_collision=a['collisions'],P2F_collision=b['collisions'],passage_within15percent=speed,clearance_benefit=bool(clearance),jerk_benefit=bool(jerk),secondary_pair_n=counts,secondary_medians=med,conditions_met=[k for k,v in conditions.items() if v],conditions_not_met=[k for k,v in conditions.items() if not v]))
     return dict(final=result[1]['label'],additional='MIXED_HELDOUT' if result[0]['label']!=result[1]['label'] else None,scenes=result)
 
 
@@ -76,14 +77,15 @@ def render(records,out,doc,figures=True):
     text+=f"Protocol SHA256 `{sha256_file(Path(__file__).with_name('drive_protocol.json'))}`; seeds {p['indices']}; {len(p['main_order'])} planned runs. Final label: **{verdict['final']}**; additional: **{verdict['additional'] or 'none'}**. L2B takes priority; pooled results are descriptive.\n\n"
     text+='P0 is frozen Phase21 B4; P1 is frozen Phase21 M3. P2F keeps R2 as Phase21 A* and substitutes only the R3 composite: A* → frozen6250433 refinement; refinement failure/timeout uses its cached A* path; A* failure attempts the unchanged seven-start Graph only within the remaining1s. No remaining budget gives NONE. All use unchanged SP/alignment/selection/fallback/recovery/trigger/NoMaD timing. The22-O2 evaluator cutoff is not an online controller change.\n\n'
     text+='Anchor source: '+str(p['anchor_mode'])+'. Box/wall coordinates are not sent to planners. L2B uses actual±20° box rendering and exact rigid-transformed swept collision, not an enclosing-AABB collision approximation. Front placement follows the inherited world+X support-distance convention; the actual forward-ray distance is also logged.\n\n'
+    text+='Unlike22-O offline (spawn-previous odometry), the online return line uses observable depth history only. Trigger B uses the component first-occupied t_new pose and the frozen20-F u_ref from [t_new−216,t_new] (its existing heading fallback for displacement<0.3m). Trigger A uses its unchanged20-F u_ref through the trigger B pose. Weights and optimizer remain frozen; spawn timing is not supplied to the planner.\n\n'
     text+='## Outcomes and execution metrics\n\n'+table(summary)+'\n\n## Registered decisions\n\n'+table(verdict['scenes'])+'\n\n'
     text+='Secondary comparisons use matched seeds with both detour metrics observed, without imputation. All primary matched seeds contribute to goal and capped/censored90s passage medians. Actual applied-detour intervals include alignment; curvature uses actual w/v only while translating. Jerk uses consecutive9Hz omega samples within the same interval. No-passage/failed plans and technical exclusions are retained.\n\n'
     text+='## Seed pairs\n\n'+table(paired)+'\n\n## Technical exclusions\n\n'+table(excluded)+'\n\n'
     text+='## All three methods by seed\n\n'+table(records,['scene','index','method','success','passed_box','passage_time_capped_s','goal_time_s','collision','corridor','GRAPH_FALLBACK_used','technical_validation'])+'\n\n'
-    text+='## Branches and run provenance\n\n'+table(records,['scene','index','method','classification','attempt_count','execution_git_sha','GRAPH_FALLBACK_used','branch_selections','branch_applications','branch_executed','branch_backend_time_s','branch_decision_latency_s','handover_reblock_count','handover_3s_progress_mean_m','output','error'])+'\n\n'
+    text+='## Branches and run provenance\n\n'+table(records,['scene','index','method','classification','attempt_count','execution_git_sha','GRAPH_FALLBACK_used','branch_selections','branch_applications','branch_executed','branch_backend_time_s','branch_decision_latency_s','stage_time_s','handover_reblock_count','handover_3s_progress_mean_m','output','error'])+'\n\n'
     text+='Branch selections and applications are separate; GRAPH_FALLBACK-used requires at least one executed interval. Cached A* fallback preserves its real predeadline readiness timestamp, while decision/delivery/backend completion times remain separately recorded, including late refinement results. A terminal run before3s after handover is censored, not extrapolated.\n\n'
     for name in ('outcomes.png','heldout_paths.png','clearance_jerk.png'):text+=f'![{name}](../research/results/phase22/{name})\n\n'
-    text+='This is a small paired pilot. Same seeds do not imply identical closed-loop RGB/FRESH. Exact simulator odometry is assumed; oracle geometry is evaluation/placement only apart from the explicitly registered appearance-time odometry anchor.\n'
+    text+='This is a small paired pilot. Same seeds do not imply identical closed-loop RGB/FRESH. Exact simulator odometry is assumed; oracle geometry and appearance timing are evaluation/placement only.\n'
     doc.parent.mkdir(exist_ok=True);doc.write_text(text);return verdict
 
 

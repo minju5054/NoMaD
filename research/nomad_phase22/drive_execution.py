@@ -1,23 +1,24 @@
 """Reuse frozen21 execution; P2F changes only its CPU solver backend."""
-import threading
+import numpy as np
 from nomad_phase21.execution import make_execution as previous_factory
 from nomad_phase20f.runtime import Execution as Frozen,run_without_oracle
 
-class AnchorBus:
-    def __init__(self):self.lock=threading.Lock();self.value=None
-    def publish(self,previous,tick):
-        with self.lock:
-            if self.value is None:self.value=dict(anchor_xy=list(previous[:2]),anchor_tick=max(0,tick-1),anchor_source='SPAWN_PREVIOUS_ODOMETRY')
-    def get(self,job):
-        with self.lock:return dict(self.value) if self.value else dict(anchor_xy=job['B'][:2],anchor_tick=round(job['simulation_time_s']*72),anchor_source='CURRENT_B_PRE_SPAWN')
-ANCHOR=AnchorBus()
+def online_anchor(job,history):
+    if job.get('kind')=='R3' and job.get('trigger')=='B':
+        from nomad_phase20f.direction import component_direction
+        birth=int(job['component']['t_new_tick']);assert 0<=birth<len(history)
+        u,detail=component_direction(history,birth)
+        np.testing.assert_allclose(u,job['u_ref'],atol=1e-12,rtol=0)
+        return dict(anchor_xy=np.asarray(history[birth])[:2].tolist(),anchor_tick=birth,anchor_source='DEPTH_COMPONENT_T_NEW_ODOMETRY',anchor_direction=detail)
+    return dict(anchor_xy=list(job['B'][:2]),anchor_tick=round(job['simulation_time_s']*72),anchor_source='TRIGGER_B_POSE_COMPONENT_ABSENT')
 
 def make_execution(c,out):
     if c['phase22_method']!='P2F_ASTAR_GRAPH':return previous_factory(c,out)
     import nomad_phase20d.runtime as previous
     from .drive_backend import Worker
-    saved=previous.Worker;previous.Worker=lambda out:Worker(out,ANCHOR.get)
-    try:return Frozen('M3_DETOUR',out)
+    owner={};saved=previous.Worker;previous.Worker=lambda out:Worker(out,lambda job:online_anchor(job,owner['execution'].history))
+    try:
+        execution=Frozen('M3_DETOUR',out);owner['execution']=execution;return execution
     finally:previous.Worker=saved
 
 def install():
@@ -29,10 +30,3 @@ def install():
     from .drive_geometry import monitor
     from .drive_config import place,triggered
     factory.make_execution=make_execution;placement.place=place;placement.triggered=triggered;sudden.ObstacleMonitor=monitor
-    original=sudden.SuddenObstacleMonitor
-    class Monitor(original):
-        def observe_tick(self,tick,previous,pose,*args,**kwargs):
-            before=self.spawn;r=super().observe_tick(tick,previous,pose,*args,**kwargs)
-            if before is None and self.spawn is not None:ANCHOR.publish(previous,tick)
-            return r
-    sudden.SuddenObstacleMonitor=Monitor
