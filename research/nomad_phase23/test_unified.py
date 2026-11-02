@@ -73,10 +73,10 @@ class Tests(unittest.TestCase):
     def test_tuning_gate_rank_sum_and_p50(self):
         from .run import rank_weights
         def row(i,p95,p50,collision=0,static=1.,sudden=1.):return dict(index=i,weights={},collisions=collision,failure_fraction=0.,progress=dict(static=static,sudden=sudden),p95=p95,p50=p50)
-        winner,evidence=rank_weights([row(0,.251,.01),row(1,.24,.2,1)])
-        self.assertEqual(winner['index'],1);self.assertFalse(evidence['all_combinations_exceed_025'])
-        winner,evidence=rank_weights([row(0,.30,.01),row(1,.28,.2,5)])
-        self.assertEqual(winner['index'],1);self.assertTrue(evidence['all_combinations_exceed_025'])
+        winner,evidence=rank_weights([row(0,.501,.01),row(1,.49,.2,1)])
+        self.assertEqual(winner['index'],1);self.assertFalse(evidence['all_combinations_exceed_limit'])
+        winner,evidence=rank_weights([row(0,.60,.01),row(1,.58,.2,5)])
+        self.assertEqual(winner['index'],1);self.assertTrue(evidence['all_combinations_exceed_limit'])
         winner,evidence=rank_weights([row(0,.24,.1),row(1,.22,.15)])
         self.assertEqual(winner['index'],0)
     def test_four_worker_budget_on_synthetic_data(self):
@@ -90,10 +90,10 @@ class Tests(unittest.TestCase):
             file=Path(tmp)/'snapshot.npz';synthetic().save(file)
             samples=np.repeat(np.c_[np.linspace(0,1.,8),np.zeros(8)][None],8,0)
             c=dict(B=[0.,0.,0.],previous_vw=[.2,0.],samples_world=samples,snapshot_file=str(file),old_path=None)
-            r=plan(pool,c,dict(time=.1,goal=1.,curvature=.001),dict(short_policy='retain',kinematic_sigma=.03))
+            r=plan(pool,c,dict(time=.1,goal=1.,curvature=.001),dict(short_policy='retain',kinematic_sigma=.03,prediction_mode='continue_current_v_pp'))
             self.assertGreaterEqual(r['initialization_count'],8)
             if r['accepted']:
-                self.assertLessEqual(r['compute_s'],.25);self.assertEqual(np.shape(r['poses']),(11,3))
-            if r['deadline_overrun']:self.assertFalse(r['accepted']);self.assertIsNone(r['path'])
+                self.assertLessEqual(r['selected']['received_ns'],r['deadline_ns']);self.assertEqual(np.shape(r['poses']),(11,3));np.testing.assert_allclose(r['poses'][0],r['B_pred'])
+            self.assertLessEqual(r['initialization_count'],10);self.assertEqual(r['application_delay_s'],.5);self.assertFalse(r['late_results_used'])
 
 if __name__=='__main__':unittest.main()

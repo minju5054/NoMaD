@@ -102,10 +102,10 @@ def baseline_guarded(B,path,v0):
 
 
 def evaluate(result,case):
-    config=case['oracle_config'];cc,offset=centered(config);boxes=configured_obstacles(config);minimum=float('inf');collision=False
+    config=case['oracle_config'];cc,offset=centered(config);boxes=configured_obstacles(config);minimum=float('inf');collision=False;step_dt=result.get('step_dt_s')
     for i in range(len(result['poses'])):
         if i==0:p=result['poses'][0];v=w=duration=0.
-        else:p=result['poses'][i-1];v=result['speeds'][i-1];w=result['omegas'][i-1];duration=1/72
+        else:p=result['poses'][i-1];v=result['speeds'][i-1];w=result['omegas'][i-1];duration=step_dt[i-1] if step_dt is not None else 1/72
         wall=corridor_arc_minimum(shifted(p,offset),v,w,duration,cc['corridor'],cc['agent_radius_m']);minimum=min(minimum,wall);collision|=wall<0
         for box in boxes:
             gap=swept_gap(p,v,w,duration,box,config['agent_radius_m']);minimum=min(minimum,gap['lower_m']);collision|=gap['upper_m']<0

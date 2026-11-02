@@ -1,5 +1,6 @@
 """Independent group-level frozen comparisons; all failed plans remain in denominators."""
 import json
+from collections import Counter
 from pathlib import Path
 import numpy as np
 from nomad_phase17.report import table
@@ -16,7 +17,7 @@ def summaries(rows):
             rr=[r for r in rows if r['group']==group and r['method']==method]
             if not rr:continue
             median=lambda k:float(np.median([r[k] for r in rr if r.get(k) is not None])) if any(r.get(k) is not None for r in rr) else None
-            answer.append(dict(group=group,method=method,n=len(rr),oracle_collisions=sum(r['oracle_collision'] for r in rr),planning_failure_fraction=sum(not r['accepted'] for r in rr)/len(rr),progress_median=median('progress'),execution_time_median_s=median('execution_time_s'),compute_p50_s=median('compute_s'),compute_p95_s=float(np.quantile([r['compute_s'] for r in rr],.95)),over025=sum(r['compute_s']>.25 for r in rr),
+            answer.append(dict(group=group,method=method,n=len(rr),oracle_collisions=sum(r['oracle_collision'] for r in rr),planning_failure_fraction=sum(not r['accepted'] for r in rr)/len(rr),progress_median=median('progress'),execution_time_median_s=median('execution_time_s'),compute_p50_s=median('compute_s'),compute_p95_s=float(np.quantile([r['compute_s'] for r in rr],.95)),over05=sum(r['compute_s']>.5 for r in rr),
                 min_clearance_median=median('oracle_minimum_clearance_m'),omega_saturation_median=median('omega_saturation_fraction'),intent_error_fraction=float(np.mean([r['intent_error'] for r in rr if r.get('intent_error') is not None])) if any(r.get('intent_error') is not None for r in rr) else None,
                 passage_fraction=sum(r['box_passage'] for r in rr)/len(rr),active_switches=sum(r.get('active_switches',0) for r in rr),
                 active_native_short_fraction=float(np.mean([r['active_native_short'] for r in rr if r.get('active_native_short') is not None])) if any(r.get('active_native_short') is not None for r in rr) else None,
@@ -25,12 +26,42 @@ def summaries(rows):
                 still_short_graph_forward_median_m=float(np.median([r['graph_forward_m'] for r in rr if r.get('active_remaining_short')])) if any(r.get('active_remaining_short') for r in rr) else None,
                 warm_start_used=sum(r.get('warm_start_used',False) for r in rr),zero_motion_rollouts=sum(r.get('zero_motion_rollout',False) for r in rr),
                 active_switch_fraction=sum(r.get('active_switches',0) for r in rr)/max(1,sum(r.get('active_transition_opportunities',0) for r in rr))))
+    for item in answer:
+        rr=[r for r in rows if r['group']==item['group'] and r['method']==item['method']]
+        known=sum(r.get('completed_initializations',0) for r in rr)
+        item.update(stop_snapshot_fraction=sum(r.get('stop_requested',False) for r in rr)/len(rr),
+            deceleration_stop_fraction=sum(r.get('deceleration_stop_occurred',False) for r in rr)/len(rr),
+            observed_stationary_median_s=float(np.median([r.get('observed_stationary_s',0.) for r in rr])),
+            braking_duration_median_s=float(np.median([r.get('braking_duration_s',0.) for r in rr])),
+            iteration_limit_fraction_known=sum(r.get('iteration_limit_known',0) for r in rr)/known if known else None,
+            completed_initializations=known,pending_initializations=sum(r.get('pending_initializations',0) for r in rr),
+            failed_snapshots_obstacle_active=sum(not r['accepted'] and r.get('failure_obstacle_active',0)>0 for r in rr),
+            failed_snapshots_kinematic_active=sum(not r['accepted'] and r.get('failure_kinematic_active',0)>0 for r in rr),
+            selected_initializer_counts=dict(sorted(Counter(r['selected_initialization'] for r in rr if r.get('selected_initialization') is not None).items())))
     return answer
+
+def reaction_table(records):
+    """Earliest observed avoiding output per recorded run, not per-snapshot onset."""
+    groups={}
+    for record in records:
+        if record['case']['group']!='sudden':continue
+        for method,value in record['methods'].items():
+            groups.setdefault((record['case']['run'],method),[]).append(value['row'])
+    output=[]
+    for (run,method),rows in sorted(groups.items()):
+        observed=[r for r in rows if r.get('reaction_delay_s') is not None]
+        first=min(observed,key=lambda r:r['output_time_s']) if observed else None
+        output.append(dict(run=run,method=method,snapshots=len(rows),case_id=first['case_id'] if first else None,
+            reaction_delay_upper_bound_s=first['reaction_delay_s'] if first else None,
+            reaction_distance_upper_bound_m=first['reaction_distance_m'] if first else None,
+            status='SPARSE_OBSERVATION_UPPER_BOUND' if first else 'NO_QUALIFYING_OUTPUT_OBSERVED',
+            snapshot_status_counts=dict(Counter(r.get('reaction_status','UNKNOWN') for r in rows))))
+    return output
 def decision(summary):
     flags={}
     for group in ('static','sudden'):
         u=next(r for r in summary if r['group']==group and r['method']=='U');b=next(r for r in summary if r['group']==group and r['method']=='C0')
-        flags[group]=dict(safety=u['oracle_collisions']<=b['oracle_collisions'],planning=u['planning_failure_fraction']<=b['planning_failure_fraction']+.05+1e-12,progress=u['progress_median']>=.95*b['progress_median'],timing=u['compute_p95_s']<=.25)
+        flags[group]=dict(safety=u['oracle_collisions']<=b['oracle_collisions'],planning=u['planning_failure_fraction']<=b['planning_failure_fraction']+.05+1e-12,progress=u['progress_median']>=.95*b['progress_median'],timing=u['compute_p95_s']<=.5)
     passed={g:all(f.values()) for g,f in flags.items()}
     label='UNIFIED_NOT_READY' if not all(f['timing'] for f in flags.values()) else 'UNIFIED_READY' if all(passed.values()) else 'UNIFIED_PARTIAL' if any(passed.values()) else 'UNIFIED_NOT_READY'
     return dict(label=label,groups=flags,passed=passed)
@@ -40,7 +71,8 @@ FORMULAS=r'''
 
 | Component | Input / output |
 |---|---|
-| U input | Eight observation-anchored NoMaD XY candidates; available depth V1 SDF; actual B pose and linear speed; OLD remainder for short-candidate supplementation |
+| U input | Eight observation-anchored NoMaD XY candidates; available depth V1 SDF; current pose/speed and executing path; OLD remainder for short-candidate supplementation |
+| Computation motion | Continue the current path for0.5s; predict application pose and speed without future observations. The same prefix is included in rollout safety/progress evaluation. |
 | U solve | B-local poses $x_0\ldots x_{10}$ and ten $\Delta t$; four-worker SLSQP multi-start; no oracle, Topomap pose, trigger, progress history, u_ref or A* input |
 | U output | Eleven world SE(2) poses and ten time intervals; graph segment speeds → PP direction at lookahead0.25m; separately registered handling of pure graph rotations |
 | Evaluation only | Oracle rotated boxes/walls, Topomap next-node metadata, recorded trigger membership |
@@ -56,7 +88,7 @@ FORMULAS=r'''
 ## Factor definitions
 
 Let $p_i\in\mathbb R^2$, $\theta_i\in\mathbb R$, $\tau_i=\Delta t_i$;
-$p_0=0,\theta_0=0$ in B-local coordinates. The supplied SDF already subtracts radius0.09m; it is **not subtracted twice**.
+$p_0=0,\theta_0=0$ in the predicted application-pose frame. The prediction horizon is0.5s from the current snapshot. The supplied SDF already subtracts radius0.09m; it is **not subtracted twice**.
 All distances are metres and times seconds. $R_Bp_i+b$ transforms queries to world coordinates.
 
 F1: $j^*=\arg\min_{j\in0..7}\sum_{i=1}^{10}\|p_i-\hat p_{ji}\|^2/\sigma_p^2$ (ties: smallest index).
@@ -85,7 +117,7 @@ Total objective is F1+F2soft+F3soft+F4+F5+F6. Hard constraints are F2/F3.
 
 Eight policy starts plus up to two straight polylines through depth-component left/right edges offset0.25m; a missing intersecting component produces no fabricated side seed.
 Connected components use4-connectivity, within2m of B and intersecting a candidate footprint.
-SLSQP uses analytic Jacobians, maxiter100, ftol1e−8. Any observed feasible iterate (violation≤1e−7) before the shared250ms deadline can be selected by minimum objective; solver success and feasibility are recorded separately.
+SLSQP uses analytic Jacobians, maxiter100, ftol1e−8. Any observed feasible iterate (violation≤1e−7) before the shared500ms deadline can be selected by minimum objective; solver success and feasibility are recorded separately.
 The reported wall time includes initialization, IPC, worker SDF loading and result collection, including overruns.
 
 References: [Olson & Agarwal author manuscript](https://april.eecs.umich.edu/pdfs/olson2013ijrr.pdf) and [official TEB nonholonomic formulation](https://github.com/rst-tu-dortmund/teb_local_planner/blob/noetic-devel/include/teb_local_planner/g2o_types/edge_kinematics.h), [TEB acceleration](https://github.com/rst-tu-dortmund/teb_local_planner/blob/noetic-devel/include/teb_local_planner/g2o_types/edge_acceleration.h).
@@ -93,13 +125,25 @@ The max-mixture here is the user-specified equal-weight policy-candidate adaptat
 '''
 
 EXECUTION='''
+## Pre-evaluation amendment
+
+The user selected solver-check variant(ii): the shared cutoff and tuning/decision timing thresholds change from0.25s to0.5s before evaluation. Diagnostic feasible output was29/30without a limit, versus19/30delivered within0.25s. Eight policy starts plus available side starts,4workers, factor definitions, the8weight grid, maxiter100 and ftol1e-8 stay fixed. Optimized implementation SHA256:069f1c651640e5e32593825b819dffdfb4e6662d839d560047fbfc7bc1fd053d. Diagnostic results are not evaluation results.
+
+U fixes x0 to the predicted application pose0.5s ahead. The current-path computation prefix is included in collision, progress, duration and distance evaluation. Compute wall time is reported without rounding or clipping; it is separate from the scheduled0.5s application delay. Only feasible messages received before cutoff are eligible. Late paths are discarded, while worker exceptions still propagate. Exact prediction and comparator computation-motion modes are recorded in protocol policy; execution refuses unset modes.
+
+## Descriptive diagnostics
+
+Response origin is the first published saved depth snapshot with occupied cells in the evaluation box footprint (15mm localization tolerance). A qualifying avoiding output has nonnegative exact box clearance and reaches beyond a lateral box support plus footprint radius and25mm while making positive world-x progress. Oracle geometry is used only for these measurements. Among sparse selected snapshots, the earliest qualifying output gives an upper bound on response time/distance; it is not a densely observed onset. Missing qualifying output is censored, not zero. Distance includes historical pre-snapshot odometry and computation-prefix motion. reaction.csv has one row per recorded run/method.
+
+Stop fraction counts no-feasible-plan braking requests. Braking and stationary duration cover only the finite trace; waiting for missing future candidates is right-censored. Iteration-limit rate uses completed initializer diagnostics, with pending starts separately reported. Failed-plan obstacle/kinematic active constraints are nonexclusive counts from the last received iterates. Initializer adoption uses accepted outputs (0-7policy,8-9available sides). Intent error compares the active endpoint with the evaluation progress direction; that direction is never passed into U.
+
 ## Registered execution and warm starts
 
-Translation uses protected PP lookahead0.25m and graph segment speeds linearly interpolated at the **projected arclength**, with knots at translating-segment midpoints. No elapsed-time lookup or SP is used for U. Rotation segments are those with graph v<0.01m/s: brake within0.5m/s², then use graph omega's signed magnitude (limited to0.4rad/s). Only the last9Hz angular step is shortened to avoid overshooting the target heading. Completed rotation segments advance the segment cursor; zero-speed rotation knots are excluded from translating-speed interpolation. No heading-threshold start alignment is introduced. No solution or total250ms deadline overrun produces a bounded braking stop. The22-O2 endpoint/projection/time stopping rules remain; U has no heuristic-alignment time exemption.
+Translation uses protected PP lookahead0.25m and graph segment speeds linearly interpolated at the **projected arclength**, with knots at translating-segment midpoints. No elapsed-time lookup or SP is used for U. Rotation segments are those with graph v<0.01m/s: brake within0.5m/s², then use graph omega's signed magnitude (limited to0.4rad/s). Only the last9Hz angular step is shortened to avoid overshooting the target heading. Completed rotation segments advance the segment cursor; zero-speed rotation knots are excluded from translating-speed interpolation. No heading-threshold start alignment is introduced. Only absence of a feasible solution available at the500ms cutoff produces a bounded braking stop; late worker output does not invalidate an already received feasible solution. The22-O2 endpoint/projection/time stopping rules remain; U has no heuristic-alignment time exemption.
 
-The replanning interface runs on each candidate arrival with a nominal4Hz/250ms period and a last accepted **U-only** warm start. The original8candidate starts and up to2depth-edge starts remain; a usable previous U suffix adds one warm initialization (maximum11), inside the same total250ms budget. Warm states are separated by run, split and weight combination. Exhausted prior paths are not fabricated. A* output is never a U seed or fallback; an A*-derived historical OLD path is withheld from U supplementation and recorded.
+The selected planning configuration is the measured variant(ii):8candidate starts and up to2depth-edge starts,4workers,500ms total cutoff. The earlier extra warm initialization is not used. Feasible improving iterates are published during solving; the parent selects the cheapest received pre-cutoff iterate and does not join late workers before returning. Solver options and all factor formulas/weights are unchanged. A* output is never a U seed or fallback; an A*-derived historical OLD path is withheld from U supplementation and recorded.
 
-This offline dataset contains selected saved candidate arrivals, not a new4Hz closed-loop stream. It evaluates those arrivals chronologically and records the actual gap to the warm-source snapshot. No missing candidates are generated and no future depth/NoMaD feedback is invented. Thus the evaluation cannot establish closed-loop4Hz behavior.
+This offline dataset contains selected saved candidate arrivals, not a new4Hz closed-loop stream. It evaluates those selected arrivals chronologically; it does not simulate overlapping500ms jobs at250ms arrival intervals. No missing candidates are generated and no future depth/NoMaD feedback is invented. Thus the evaluation cannot establish closed-loop4Hz behavior.
 
 Short original FRESH means native suffix<0.3m. Available non-A* OLD geometry may supplement it as originally specified; if it is still short, all8mixture candidates remain and resampling stays inside the available polyline. The report separately gives native-short and still-short active fractions (denominator: plans with an active candidate), and graph endpoint forward displacement conditional on each category. Forward displacement is measured along B heading, not u_ref.
 '''
@@ -107,7 +151,7 @@ Short original FRESH means native suffix<0.3m. Available non-A* OLD geometry may
 def selection_section(p):
     evidence=p.get('selection_evidence')
     if evidence is None:return '## Weight selection\n\nNot executed.\n\n'
-    return '## Frozen weight selection evidence\n\nTiming gate p95≤0.25s first. If all exceed it, choose minimum p95 and flag. Otherwise: fewest oracle collisions, lowest planning-failure fraction, lowest sum of within-group progression-median ranks, then lowest compute p50 (exact ties: lower grid index).\n\n'+str({k:v for k,v in evidence.items() if k!='table'})+'\n\n'+table(evidence['table'])+'\n\n'
+    return '## Frozen weight selection evidence\n\nTiming gate p95≤0.5s first. If all exceed it, choose minimum p95 and flag. Otherwise: fewest oracle collisions, lowest planning-failure fraction, lowest sum of within-group progression-median ranks, then lowest compute p50 (exact ties: lower grid index).\n\n'+str({k:v for k,v in evidence.items() if k!='table'})+'\n\n'+table(evidence['table'])+'\n\n'
 
 def write_selection_report(p,destination=None):
     destination=Path(destination) if destination else ROOT/'docs/PHASE23O_UNIFIED.md'
@@ -120,10 +164,11 @@ def generate():
     paired=[]
     for r in records:
         u,b=r['methods']['U']['row'],r['methods']['C0']['row'];paired.append(dict(case_id=u['case_id'],group=u['group'],scene=u['scene'],U_collision=u['oracle_collision'],C0_collision=b['oracle_collision'],progress_delta=u['progress']-b['progress'],time_delta=u['execution_time_s']-b['execution_time_s']))
-    csv_write(OUT/'paired.csv',paired);plots(records,rows,m['examples'])
+    csv_write(OUT/'paired.csv',paired);reactions=reaction_table(records);csv_write(OUT/'reaction.csv',reactions);plots(records,rows,m['examples'])
     text='# Phase23-O — offline unified SE(2) graph\n\n'+FORMULAS+EXECUTION+'\n\n'+selection_section(p)
     text+=f"Protocol SHA256 `{sha256_file(HERE/'protocol.json')}`. Label **{verdict['label']}**. Training{len(m['training'])}, evaluation{len(m['evaluation'])}; distinct runs and indices.\n\n"
     text+='Registered execution/input handling: `'+str(p['policy'])+'`. Selected weights: `'+str(p['selected'])+'`.\n\n'+table(summary)+'\n\n'+table([dict(group=g,**v) for g,v in verdict['groups'].items()])+'\n\n'
+    text+='## Observed response bounds\n\n'+table(reactions)+'\n\n'
     slw=[r for r in rows if r['scene']=='SLW'];text+='SLW saturation: '+str({method:float(np.median([r['omega_saturation_fraction'] for r in slw if r['method']==method])) for method in ('U','C0')})+'\n\n'
     text+='C0/C1 retain frozen selection and R2→R3 solvers (C1 reference on sudden cases only). Missing Phase18 free timestamps are replayed from saved depth and V1 occupancy is checked for exact equality. U receives the unchanged source V1 snapshot. C0/C1 follow22-O2 SP/alignment and stopping. Fallback has no future NoMaD regeneration; recovery-driven replanning cannot be inferred from a fixed snapshot. All failed plans stay in denominators; braking displacement and collision are evaluated too. Sudden progress is the binary footprint passage indicator; therefore a zero baseline median can make the95% progression condition weak. Passage fractions are shown separately.\n\n'
     text+='This is a fixed-path offline counterfactual, not closed-loop navigation evidence. No new RGB, depth render, inference or Isaac run was performed. Timing and safety claims apply only to this evaluation. Full per-case checkpoints stay locally in training/evaluation; summary, examples and provenance are published.\n\n'
@@ -146,6 +191,7 @@ def plots(records,rows,examples):
         for method,v in r['methods'].items():
             if v['plan'].get('path') is not None:a=np.array(v['plan']['path']);ax.plot(*a.T,ls='--',color=colors[method],alpha=.65)
             a=np.array(v['trace']);ax.plot(a[:,0],a[:,1],color=colors[method],label=method)
+        if r['methods']['U']['plan'].get('B_pred') is not None:ax.scatter(*r['methods']['U']['plan']['B_pred'][:2],marker='+',c='purple',label='Predicted application pose')
         ax.scatter(*c['B'][:2],marker='x',c='black');ax.set_aspect('equal');ax.set_title(c['scene']+' '+identity);ax.legend();ax.set_xlabel('World x(m)');ax.set_ylabel('World y(m)')
     fig.savefig(OUT/'examples.png',dpi=140);plt.close(fig)
     fig,axes=plt.subplots(2,3,figsize=(13,7),constrained_layout=True)

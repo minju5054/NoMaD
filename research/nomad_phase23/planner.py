@@ -1,4 +1,4 @@
-"""Non-search seeds plus an optional prior-U warm start; one250ms/four-worker budget."""
+"""Eight policy plus available side seeds; a shared500ms anytime budget."""
 import time
 import numpy as np
 from nomad_phase15b.depth import Snapshot
@@ -33,23 +33,30 @@ def worker(args):
     return dict(index=index,**r)
 
 def plan(pool,case,weights,policy,previous=None):
-    field=Snapshot.load(case['snapshot_file']);started=time.monotonic_ns();deadline=started+250_000_000
-    candidates,sigma,flags=prepare_candidates(case['samples_world'],case['B'],case.get('old_path'),policy['short_policy'])
-    lateral,component=side_initializations(candidates,case['B'],field);starts=[(i,path,None) for i,path in enumerate(list(candidates)+lateral)]
-    warm=warm_suffix(previous,case['B']) if previous is not None else None
-    if warm is not None:starts.insert(0,(-1,np.asarray(warm['poses'])[:,:2],warm))
-    args=[(i,{k:case[k] for k in ('snapshot_file','B','previous_vw')},candidates,sigma,path,weights,deadline,policy['kinematic_sigma'],initial) for i,path,initial in starts]
-    results=list(pool.map(worker,args));ended=time.monotonic_ns();overrun=ended>deadline
-    feasible=[r for r in results if r['accepted'] and r['ready_ns']<=deadline]
-    best=min(feasible,key=lambda r:(r['cost'],r['index'])) if feasible else None
-    selected=best if not overrun else None  # Late output must brake, not execute a late plan.
-    return dict(accepted=selected is not None,disposition='TIMEOUT' if overrun else 'FEASIBLE' if selected else 'NO_FEASIBLE_BEFORE_DEADLINE',selected=selected,
+    from .anytime import collect
+    from .prediction import prefix
+    field=Snapshot.load(case['snapshot_file']);started=time.monotonic_ns();deadline=started+500_000_000
+    mode=policy.get('prediction_mode')
+    if mode is None:raise ValueError('Register the current-path prediction model before execution')
+    motion=prefix(case,.5,mode);B=motion['B_pred'];v0=motion['previous_vw'][0]
+    candidates,sigma,flags=prepare_candidates(case['samples_world'],B,case.get('old_path'),policy['short_policy'])
+    lateral,component=side_initializations(candidates,B,field);starts=list(candidates)+lateral
+    payloads=[dict(index=i,B=B,v0=v0,candidates=candidates,sigma=sigma,path=path,weights=weights,deadline_ns=deadline,snapshot_file=case['snapshot_file']) for i,path in enumerate(starts)]
+    delivery=collect(pool,payloads,deadline);ended=time.monotonic_ns();selected=delivery['selected']
+    attempts=[]
+    for i in range(len(starts)):
+        data=delivery['latest'].get(i,{})
+        attempts.append(dict(index=i,completed_before_cutoff=data.get('kind')=='DONE',iteration=data.get('iteration'),iteration_limit=data.get('iteration_limit'),
+            active_obstacle=data.get('active_obstacle'),active_kinematic=data.get('active_kinematic'),violated_obstacle=data.get('violated_obstacle'),violated_kinematic=data.get('violated_kinematic'),
+            mixture_switches=data.get('mixture_switches',0),started_before_cutoff=bool(data)))
+    return dict(accepted=selected is not None,disposition='FEASIBLE_ANYTIME' if selected else 'NO_FEASIBLE_BEFORE_DEADLINE',selected=selected,
         path=selected['path'] if selected else None,poses=selected['poses'] if selected else None,dt=selected['dt'] if selected else None,
-        sigma_policy_m=sigma,candidate_flags=flags,component=component,initialization_count=len(starts),attempts=results,
-        compute_s=(ended-started)/1e9,deadline_s=.25,deadline_overrun=overrun,active_candidate=selected.get('active_candidate') if selected else None,
-        warm_start_available=previous is not None,warm_start_used=warm is not None,warm_start_selected=selected is not None and selected['index']==-1,
-        feasible_before_deadline_but_discarded=overrun and best is not None,
-        active_switches=sum(r['active_switches'] for r in results),iterate_count=sum(r['iterate_count'] for r in results))
+        B_pred=B,application_previous_vw=motion['previous_vw'],prediction=motion,application_delay_s=.5,source_B=case['B'],
+        sigma_policy_m=sigma,candidate_flags=flags,component=component,initialization_count=len(starts),attempts=attempts,
+        compute_s=(ended-started)/1e9,deadline_s=.5,deadline_overrun=ended>deadline,dispatch_ns=started,deadline_ns=deadline,returned_ns=ended,
+        active_candidate=selected.get('active_candidate') if selected else None,selected_initialization=selected.get('index') if selected else None,
+        pending_at_cutoff=delivery['pending_at_cutoff'],anytime_messages=delivery['messages'],late_results_used=False,
+        warm_start_available=False,warm_start_used=False,warm_start_selected=False,active_switches=sum(r['mixture_switches'] for r in attempts),iterate_count=sum(r.get('iteration') or 0 for r in attempts))
 
 class Replanner:
     """Arrival-driven interface: nominal4Hz. No synthetic arrivals or online hooks."""

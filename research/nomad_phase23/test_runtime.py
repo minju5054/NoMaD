@@ -15,6 +15,8 @@ class Tests(unittest.TestCase):
             file=Path(tmp)/'field.npz';synthetic(True).save(file)
             c=dict(case_id='TEST',group='static',scene='TEST',index=0,B=[0,.4,0],previous_vw=[.2,0],old_path=None,snapshot_file=str(file),samples_world=np.repeat(q[None,:,:2],8,0).tolist(),evaluation_direction=[1,0],oracle_config=dict(start_pose=[0,.4,0],goal_pose=[1,.4,0],agent_radius_m=.09,obstacles=[],corridor=dict(xmin=-1,xmax=2,half_width=1)))
             p=dict(accepted=True,path=q[:,:2].tolist(),poses=q.tolist(),dt=[.5]*10,active_candidate=0,disposition='FEASIBLE',compute_s=.01)
+            from .prediction import prefix
+            p.update(prediction=prefix(c,0.,'constant_twist'),B_pred=c['B'],application_previous_vw=c['previous_vw'])
             result=method_record(c,'U00',p,dict(policy=dict(rotation_policy='graph_rotation',short_policy='retain')))
             self.assertGreater(result['row']['depth_clearance_m'],0);self.assertIn('EXACT_CLEARANCE',result['row']['execution_timing_s'])
     def test_exception_and_dead_pid_status(self):

@@ -1,7 +1,7 @@
 {
   "phase": "23-O",
-  "status": "REGISTERED",
-  "deadline_s": 0.25,
+  "status": "AMENDMENT_PENDING_DETAILS",
+  "deadline_s": 0.5,
   "pool_workers": 4,
   "solver": {
     "name": "SLSQP",
@@ -32,7 +32,9 @@
     "stop_policy": "acceleration_limited_stop",
     "speed_interpolation": "linear_at_translating_segment_midpoint_arclength",
     "rotation_threshold_m_s": 0.01,
-    "rotation_final_step": "same sign, magnitude capped only on final9Hz step to land at target heading"
+    "rotation_final_step": "same sign, magnitude capped only on final9Hz step to land at target heading",
+    "prediction_mode": null,
+    "baseline_wait_model": null
   },
   "selection_rule": "timing_gate_collision_failure_rank_sum_p50",
   "fixed": {
@@ -59,11 +61,11 @@
     "https://april.eecs.umich.edu/pdfs/olson2013ijrr.pdf",
     "https://github.com/rst-tu-dortmund/teb_local_planner/blob/noetic-devel/include/teb_local_planner/g2o_types/edge_kinematics.h"
   ],
-  "input": "NoMaD8 + source depth V1 SDF + actualB/speed + previous observed chunk remainder; U has no A*, u_ref, trigger, oracle or Topomap pose",
+  "input": "NoMaD8 + source depth V1 SDF + current pose/speed + actual executing path for0.5s prediction + permitted OLD remainder for policy prior; predicted application pose fixesx0. U has no A* call, u_ref, trigger, oracle or Topomap input.",
   "training": "Phase18 indices66-69:3 uniform FRESH/run, plus26 frozenPhase21 tuning sudden cases; 8 weight combinations",
   "evaluation": "Phase18 indices70-73:10 uniform+5 final10s forfailed runs, deduplicated; frozen22-O24 +Phase22 rerunL2B triggers",
   "selection_order": [
-    "p95<=0.25 eligible; if none choose minimum p95 and flag",
+    "p95<=0.5 eligible; if none choose minimum p95 and flag",
     "oracle collision count minimum",
     "planning failure fraction minimum",
     "sum of static/sudden progression median ranks minimum",
@@ -75,14 +77,14 @@
     "arrival_driven": true,
     "offline": "chronological selected saved candidate arrivals, gaps reported; no synthetic4Hz stream",
     "source": "last accepted U per run/split/weight; no baseline paths",
-    "initialization": "retain8candidate+up to2depth-edge; add usable previous U suffix first, maximum11; shared250ms budget"
+    "initialization": "variant(ii): exactly8policy starts plus available left/right up to10; no extra prior-U seed; shared500ms anytime budget"
   },
   "short_reporting": [
     "active native FRESH suffix<0.3 fraction",
     "active still-short after valid OLD supplementation fraction",
     "graph endpoint displacement along B heading conditional on each"
   ],
-  "U_ASTAR_history_exclusion": "A*-derived REPAIR/DETOUR OLD from B4/P0/P2F withheld; all8native candidates retained. Actual OLD remains available only to comparator context.",
+  "U_ASTAR_history_exclusion": "A*-derived OLD withheld from policy supplementation and initialization. Actual executing OLD may be used only to predict unavoidable computation-window motion; no A* is called by U.",
   "manifest_sha256": "772962e4d8644c61b53424513108a431e4c2c5c74ccf69c144285929c07a0b36",
   "source_sha256": {
     "research/nomad_phase20b/config.py": "ca3238ac3e3423e10616147171c739a11d039a2e702b424092e9d68af00290ca",
@@ -286,13 +288,13 @@
     "research/nomad_phase23/recent.py": "1d339c45a236ff26f6110a337b5d86ffc40325d644696a91cfe668efe7abbc85",
     "research/nomad_phase23/__init__.py": "01c6edb169ead448eeee6ebe9a36fd9e1a9c8bb387ed578f80d0f398db9ff035",
     "research/nomad_phase23/baselines.py": "2f0b81e5174d4964fb095a051d37fc7b1ebd8600b3685adefac49befe04d2750",
-    "research/nomad_phase23/test_unified.py": "be6e00f4095bb7c8c99350ad74b2e586055eaa9ad1ca7079e920538f0d570549",
+    "research/nomad_phase23/test_unified.py": "718b6d03927ec52a276e7d2f5ca3418d0723a6297bbf72c29e1a70d90fa28cfd",
     "research/nomad_phase23/graph.py": "0a55f3660e0d7a5d6614f6006c582073b69df9d0b961d005504b5c9c4ce15212",
-    "research/nomad_phase23/planner.py": "48594557ede2ae17caae2e438310115c3fdf35eb1cbe5c0fa25caa301abe1646",
+    "research/nomad_phase23/planner.py": "361441d5fda7fd6a86a135f3c369a69de24b514246fb6770000ed7ce67a9a89c",
     "research/nomad_phase23/inputs.py": "35a78e8a09a80c703cc2ee0daf0a9f85a807cc77450459b04ab4784a828f8485",
-    "research/nomad_phase23/report.py": "3afe93b10f8ebc1ba43827c21acf2f74b496c95d1455568340a5c7f9041ee017",
-    "research/nomad_phase23/run.py": "2b9ce3a153b58eebd5ab1efbdbd50d93f700f76eb4157e6a01a59c7623dea8e5",
-    "research/nomad_phase23/rollout.py": "d0fd0bc18960251a87642c17f883b6d6c7d3156d3e24e8fc9abc4de57d1411ac",
+    "research/nomad_phase23/report.py": "21e81ba2273a916b5ceed8851c26c1cfb1612a7f1556e72f0e62153fc10b4160",
+    "research/nomad_phase23/run.py": "22e3910675a607f2fd20c34d1cf05d26a833d8d5113cbb3c0c0b44697d98c630",
+    "research/nomad_phase23/rollout.py": "33cb1433bec1fe51369c260799c7fd0eb1a8263622a155926a00c2744b5be439",
     "research/nomad_phase18d/diagnose.py": "cadd6cf4dec7f985ba56374c7539512d5bb0dd60c60a85e9980e8dd90f189ee6",
     "research/nomad_phase18d/test_phase18d.py": "54fc2f9e6f37928ddc5b9bb07b7f82da155b74d6af11c003e4078849f0578f66",
     "research/nomad_phase18d/__init__.py": "1332f5f75654a58e29db9e1fa95efda3582711f9725801b4a2e82ad70afb4cc7",
@@ -332,15 +334,21 @@
     "research/nomad_phase22/l2b_launch_check.py": "56599ccb2d4f3668565a7f28e4f879f62fc8bce39d6fae6e5241678f5f5afffd",
     "research/nomad_phase23/estimate.py": "ee84733f7a0d2f13b43f6d519db522da406d790780b005816a63db76caeae1be",
     "research/nomad_phase23/runtime.py": "0f3beb3f086291dfe32daf1515cc9ddae8bc75f6bfdd9b41db675065b4af9823",
-    "research/nomad_phase23/test_runtime.py": "9ba7405dc97ae5fdce00737709ad8deee31c2a15d822ab8b243e3d60dea52403",
+    "research/nomad_phase23/test_runtime.py": "307ebc7d2869faa5fdae9bc97d829e72d473b08e368466da7e3f1018ae2348cd",
     "research/nomad_phase23/benchmark.py": "7105f0f8ce07541b41d28fb3eee8cb2ff12d2beab2885073774c0c6e70841104",
     "research/nomad_phase23/optimized.py": "069f1c651640e5e32593825b819dffdfb4e6662d839d560047fbfc7bc1fd053d",
     "research/nomad_phase23/solver_check.py": "c71db93f8945e937a085bc6e3796b811b22c977f7aac3015a81f2a8375c04851",
     "research/nomad_phase23/test_solver_check.py": "8bd0c0cdb669512c1cdba97c385da1cd3ccde790aa1f4298d9d375d836f374a0",
-    "research/nomad_phase23/solver_check_report.py": "72d7b22185900824bb96469656fdddc359bb1e8e21d3d53d07fe1eead6c6f484"
+    "research/nomad_phase23/solver_check_report.py": "72d7b22185900824bb96469656fdddc359bb1e8e21d3d53d07fe1eead6c6f484",
+    "research/nomad_phase23/anytime.py": "2f94c55e41674f37380612a5435895c0802db1d2df411843ecc911826cb430d3",
+    "research/nomad_phase23/prediction.py": "2d80ef3098a876172d3bb833143a81a7ed44ebce5ab7a292bb08d1dd5a0e6770",
+    "research/nomad_phase23/response.py": "37607e3ad8e0d6876e6dd080e47af56e71bf21b244aeaf7276c76e1b964caa2d",
+    "research/nomad_phase23/test_anytime.py": "adc3722af7a7878a343d4743717c8b2f19e3f24196d54c70a63cab47939c6598",
+    "research/nomad_phase23/context.py": "6dbe2e68334f830013b04ebc4d2214edd74397ad1791e0e40747733e8c5192f0",
+    "research/nomad_phase23/amendment_estimate.py": "3ac95ee62afba868cb944989c3903b6170da004071453f0fe464a1e4639ee040"
   },
   "selection_evidence": null,
-  "definition_sha256": "7a9c2742f6cbda49476fdc052f959d24ba3947d4f11c231dae0f558ea05a14bd",
+  "definition_sha256": "32f4328baa5755c4d4be2d13dcaa7a9141f0e7761a0d1275e8ceeeacccc02d9c",
   "execution_repair": {
     "base_commit": "4916cbf",
     "kind": "runtime bug and observability only",
@@ -363,8 +371,27 @@
     "original_gradients": "already analytic",
     "formulas_changed": false,
     "solver_options_changed": false,
-    "default_budget_changed": false,
-    "variants_selected": null,
+    "default_budget_changed": true,
+    "variants_selected": "ii",
     "diagnostic_protocol": "research/nomad_phase23/solver_check_protocol.json"
-  }
+  },
+  "runtime_scope_confirmed": false,
+  "amendment_050": {
+    "base_commit": "1977f8a",
+    "reason": "User adopted(ii) before tuning/evaluation: unlimited feasible29/30 vs250ms delivered19/30.",
+    "factor_grid_solver_unchanged": true,
+    "prediction_horizon_s": 0.5,
+    "anytime": "Cheapest feasible iterate received by parent before cutoff; late output discarded; brake only if none.",
+    "timing_criterion_s": 0.5,
+    "open_definitions": [
+      "Prediction: current-v PP motion versus full saved executor-state reconstruction",
+      "C0/C1: original online braking wait versus prior offline immediate fixed-B rollout"
+    ],
+    "proposed_prediction_mode": "continue_current_v_pp",
+    "proposed_baseline_wait_model": "brake_wait",
+    "full_tuning_executed": false,
+    "evaluation_executed": false,
+    "diagnostics": "Sparse response upper bounds; no future NoMaD/depth or stop waiting fabricated; maxiter diagnostics censored for pending starts."
+  },
+  "input_context_sha256": "f4e82d9d4966660ce98b736baddd05a1d5b721b0985d16b24d3771e56ff45dee"
 }

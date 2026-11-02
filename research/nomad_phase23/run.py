@@ -10,6 +10,8 @@ from nomad_phase15b.depth import Snapshot
 from . import planner,baselines
 from .recent import ensure
 from .rollout import unified_simulate,baseline_guarded,stop_rollout,evaluate
+from .prediction import prefix,concatenate
+from .response import reaction,stop_metrics
 from .report import OUT,HERE,generate,write_selection_report
 from .runtime import (Journal,reconcile,managed_pool,stage,ExecutionSignal,
     SOLVE_WATCHDOG_S,BASELINE_WATCHDOG_S,ROLLOUT_WATCHDOG_S,ORACLE_WATCHDOG_S,EXACT_WATCHDOG_S)
@@ -28,7 +30,19 @@ def commit(message,paths):
     if subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip():subprocess.run(['git','-c','user.name=Codex','-c','user.email=codex@openai.com','commit','-m',message],cwd=ROOT,check=True,stdout=subprocess.DEVNULL)
 def method_record(c,name,plan,p,journal=None):
     timing={}
-    def rollout():return unified_simulate(c,plan,p['policy']) if name.startswith('U') else baseline_guarded(c['B'],plan['path'],c['previous_vw'][0]) if plan['accepted'] else stop_rollout(c['B'],c['previous_vw'][0])
+    def rollout():
+        if name.startswith('U'):
+            waiting=plan['prediction'];next_case=dict(c,B=plan['B_pred'],previous_vw=plan['application_previous_vw'])
+            return concatenate(waiting,unified_simulate(next_case,plan,p['policy']))
+        model=p['policy'].get('baseline_wait_model')
+        if model is None:raise ValueError('Register baseline computation motion before execution')
+        if model=='fixed_B':
+            plan['application_delay_s']=plan['compute_s'];plan['application_pose']=c['B']
+            return baseline_guarded(c['B'],plan['path'],c['previous_vw'][0]) if plan['accepted'] else stop_rollout(c['B'],c['previous_vw'][0])
+        waiting=prefix(c,plan['compute_s'],'brake_wait');plan['application_pose']=waiting['B_pred'];plan['application_delay_s']=plan['compute_s']
+        future=dict(c,B=waiting['B_pred'],previous_vw=waiting['previous_vw'])
+        follow=baseline_guarded(future['B'],plan['path'],future['previous_vw'][0]) if plan['accepted'] else stop_rollout(future['B'],future['previous_vw'][0])
+        return concatenate(waiting,follow)
     result=stage('ROLLOUT',ROLLOUT_WATCHDOG_S,rollout,journal,timing)
     values=stage('ORACLE',ORACLE_WATCHDOG_S,lambda:evaluate(result,c),journal,timing)
     def exact():
@@ -38,14 +52,19 @@ def method_record(c,name,plan,p,journal=None):
     intent=None;native_short=remaining_short=None;forward=None
     if name.startswith('U') and plan['accepted']:
         from .graph import prepare_candidates
-        candidates,_,flags=prepare_candidates(c['samples_world'],c['B'],c.get('old_path'),p['policy']['short_policy']);active=plan['active_candidate'];delta=candidates[active,-1]-c['B'][:2]
+        B=plan['B_pred'];candidates,_,flags=prepare_candidates(c['samples_world'],B,c.get('old_path'),p['policy']['short_policy']);active=plan['active_candidate'];delta=candidates[active,-1]-B[:2]
         native_short=flags[active]['native_remaining_m']<.3;remaining_short=flags[active]['still_short']
-        forward=float((np.asarray(plan['path'])[-1]-c['B'][:2])@np.array([np.cos(c['B'][2]),np.sin(c['B'][2])]))
-        if np.linalg.norm(delta)>1e-12:intent=float(delta@np.array([np.cos(c['B'][2]),np.sin(c['B'][2])]))<=0
+        forward=float((np.asarray(plan['path'])[-1]-B[:2])@np.array([np.cos(B[2]),np.sin(B[2])]))
+        if np.linalg.norm(delta)>1e-12:intent=float(delta@np.asarray(c['evaluation_direction']))<=0
     row=dict(case_id=c['case_id'],group=c['group'],scene=c['scene'],index=c['index'],method=name,accepted=plan['accepted'],disposition=plan['disposition'],compute_s=plan['compute_s'],depth_clearance_m=depth,depth_collision=depth<0 if depth is not None else None,intent_error=intent,active_switches=plan.get('active_switches',0),active_native_short=native_short,active_remaining_short=remaining_short,graph_forward_m=forward,
-        active_transition_opportunities=sum(max(0,r.get('iterate_count',0)-1) for r in plan.get('attempts',[])),
+        active_transition_opportunities=sum(r.get('iteration') or 0 for r in plan.get('attempts',[])),
         warm_start_used=plan.get('warm_start_used',False),warm_source_gap_s=plan.get('warm_source_gap_s'),zero_motion_rollout=result['distance_m']<1e-8,
-        execution_timing_s=timing,rollout_ticks=len(result['speeds']),rollout_tick_cap=result['tick_cap'],**values)
+        selected_initialization=plan.get('selected_initialization'),iteration_limit_known=sum(r.get('iteration_limit') is True for r in plan.get('attempts',[])),
+        completed_initializations=sum(r.get('completed_before_cutoff',False) for r in plan.get('attempts',[])),pending_initializations=plan.get('pending_at_cutoff',0),
+        failure_obstacle_active=sum(r.get('active_obstacle') or 0 for r in plan.get('attempts',[])) if not plan['accepted'] else 0,
+        failure_kinematic_active=sum(r.get('active_kinematic') or 0 for r in plan.get('attempts',[])) if not plan['accepted'] else 0,
+        computation_prefix_s=result.get('computation_prefix_s',0.),computation_prefix_distance_m=result.get('computation_prefix_distance_m',0.),
+        execution_timing_s=timing,rollout_ticks=len(result['speeds']),rollout_tick_cap=result['tick_cap'],**reaction(c,plan,result,c.get('reaction_reference')),**stop_metrics(plan,result),**values)
     return dict(plan=plan,row=row,trace=result['poses'].tolist())
 def case_run(pool,c,p,mapping,deadline,replanners,journal=None):
     file=OUT/c['split']/f"{c['case_id']}.json";record=read(file) if file.exists() else dict(case=c,methods={})
@@ -81,16 +100,16 @@ def case_run(pool,c,p,mapping,deadline,replanners,journal=None):
             if journal:journal.update('COMBINATION_DONE',c['case_id'],name)
     return True
 def rank_weights(scores):
-    eligible=[r for r in scores if r['p95']<=.25]
+    eligible=[r for r in scores if r['p95']<=.5]
     all_exceed=not eligible;rank_pool=eligible if eligible else scores
     for item in scores:
-        item['timing_eligible']=item['p95']<=.25
+        item['timing_eligible']=item['p95']<=.5
         item['progress_rank']={g:sum(other['progress'][g]>item['progress'][g] for other in rank_pool) for g in ('static','sudden')}
         rank=sum(item['progress_rank'].values())
         item['score']=(item['collisions'],item['failure_fraction'],rank,item['p50'],item['index'])
     winner=min(rank_pool,key=lambda r:(r['p95'],r['index'])) if all_exceed else min(eligible,key=lambda r:r['score'])
     for item in scores:item['selected']=item['index']==winner['index']
-    return winner,dict(all_combinations_exceed_025=all_exceed,reason='MINIMUM_P95_FALLBACK' if all_exceed else 'TIMING_GATE_THEN_COLLISION_FAILURE_RANKSUM_P50',table=scores)
+    return winner,dict(all_combinations_exceed_limit=all_exceed,timing_limit_s=.5,reason='MINIMUM_P95_FALLBACK' if all_exceed else 'TIMING_GATE_THEN_COLLISION_FAILURE_RANKSUM_P50',table=scores)
 
 def select_weights(p,manifest):
     records=[read(OUT/'training'/f"{c['case_id']}.json") for c in manifest['training']];scores=[]
@@ -101,6 +120,7 @@ def select_weights(p,manifest):
     winner,evidence=rank_weights(scores);return winner['weights'],evidence
 
 def run_body(a,p,m,journal):
+    assert p.get('runtime_scope_confirmed',False),'Runtime estimate exceeds2h; wait for the user scope decision'
     pending=[k for k,v in p['policy'].items() if v is None]
     assert a.all and not pending,'Resolve and preregister missing execution/input/tuning definitions before running'
     assert p['selection_rule']=='timing_gate_collision_failure_rank_sum_p50','Unregistered selection rule'
@@ -110,6 +130,14 @@ def run_body(a,p,m,journal):
         journal.update('COMPLETE');print('[complete] no solves repeated');return
     for file,h in p['source_sha256'].items():assert sha256_file(ROOT/file)==h,file
     assert sha256_file(OUT/'manifest.json')==p['manifest_sha256']
+    if p.get('input_context_sha256'):
+        assert sha256_file(OUT/'input_context_050.json')==p['input_context_sha256']
+        context=read(OUT/'input_context_050.json')
+        for file,h in context['input_hashes'].items():assert sha256_file(file)==h,file
+        references={v['reaction_reference']['snapshot_file']:v['reaction_reference']['snapshot_sha256'] for v in context['contexts'].values() if v.get('reaction_reference',{}).get('snapshot_file')}
+        for file,h in references.items():assert sha256_file(file)==h,file
+        for split in ('training','evaluation'):
+            m[split]=[dict(c,**context['contexts'][c['case_id']]) for c in m[split]]
     def state(stage,case=None):journal.update(stage,case)
     state('VERIFY_INPUTS')
     started=time.monotonic();deadline=started+a.budget_s
@@ -143,6 +171,8 @@ def run_body(a,p,m,journal):
             state('EVALUATION',c['case_id'])
             if not case_run(pool,c,p,mapping,deadline,replanners,journal):state('BUDGET_STOP_EVALUATION',c['case_id']);print('[budget] evaluation checkpoint saved');return
             print('[evaluation]',c['case_id'],flush=True)
+    from .anytime import raise_late_errors
+    raise_late_errors()
     state('REPORT');verdict=generate();write(OUT/'complete.json',dict(verdict=verdict,execution_git_sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),new_navigation=False,new_inference=False))
     commit('Report Phase23 unified graph offline validation',[HERE,OUT,ROOT/'docs/PHASE23O_UNIFIED.md'])
     subprocess.run(['git','add','-f','--',*[str(f.relative_to(ROOT)) for f in OUT.glob('*.png')]],cwd=ROOT,check=True)
