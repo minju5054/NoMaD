@@ -291,8 +291,8 @@
     "research/nomad_phase23/planner.py": "3e1af1f8fbb3ffb516f54b3d1d90fedef7f0a060f4a6f02063fd82c8c61f6bb3",
     "research/nomad_phase23/inputs.py": "35a78e8a09a80c703cc2ee0daf0a9f85a807cc77450459b04ab4784a828f8485",
     "research/nomad_phase23/report.py": "3afe93b10f8ebc1ba43827c21acf2f74b496c95d1455568340a5c7f9041ee017",
-    "research/nomad_phase23/run.py": "13734731077ed98431b22a07e2592d962ff0c40484f762321f9258fb9695e02f",
-    "research/nomad_phase23/rollout.py": "2f2e45e588a324076ae21c6949260da3f61aa22437a987fbe19fda0765571714",
+    "research/nomad_phase23/run.py": "2b9ce3a153b58eebd5ab1efbdbd50d93f700f76eb4157e6a01a59c7623dea8e5",
+    "research/nomad_phase23/rollout.py": "d0fd0bc18960251a87642c17f883b6d6c7d3156d3e24e8fc9abc4de57d1411ac",
     "research/nomad_phase18d/diagnose.py": "cadd6cf4dec7f985ba56374c7539512d5bb0dd60c60a85e9980e8dd90f189ee6",
     "research/nomad_phase18d/test_phase18d.py": "54fc2f9e6f37928ddc5b9bb07b7f82da155b74d6af11c003e4078849f0578f66",
     "research/nomad_phase18d/__init__.py": "1332f5f75654a58e29db9e1fa95efda3582711f9725801b4a2e82ad70afb4cc7",
@@ -329,8 +329,29 @@
     "research/nomad_phase22/drive_metrics.py": "03bc6f38cff79d90dacca831ede0c36147526e9297545d095712e0c79dad474f",
     "research/nomad_phase22/drive_campaign.py": "17c668edf6e7bf41aa1f99f0b49d5df316ca2d3f4f8294a8d2376e6de3cb0499",
     "research/nomad_phase22/drive_preflight.py": "d95b27e6836bdf24e7d04e2e05afcc5a0d3d8dcda693a444525d71c3726d0784",
-    "research/nomad_phase22/l2b_launch_check.py": "56599ccb2d4f3668565a7f28e4f879f62fc8bce39d6fae6e5241678f5f5afffd"
+    "research/nomad_phase22/l2b_launch_check.py": "56599ccb2d4f3668565a7f28e4f879f62fc8bce39d6fae6e5241678f5f5afffd",
+    "research/nomad_phase23/estimate.py": "ee84733f7a0d2f13b43f6d519db522da406d790780b005816a63db76caeae1be",
+    "research/nomad_phase23/runtime.py": "0f3beb3f086291dfe32daf1515cc9ddae8bc75f6bfdd9b41db675065b4af9823",
+    "research/nomad_phase23/test_runtime.py": "9ba7405dc97ae5fdce00737709ad8deee31c2a15d822ab8b243e3d60dea52403",
+    "research/nomad_phase23/benchmark.py": "7105f0f8ce07541b41d28fb3eee8cb2ff12d2beab2885073774c0c6e70841104"
   },
   "selection_evidence": null,
-  "definition_sha256": "83bb0e9d61ada4666391d9ff27fc3a1aacf844604991f73386b2d2f400e1d691"
+  "definition_sha256": "17070382b94df702a16c309b0f0f05dfddfb23fbcada7117c25b66616bbf7141",
+  "execution_repair": {
+    "base_commit": "4916cbf",
+    "kind": "runtime bug and observability only",
+    "path_input_fix": "convert JSON list to float ndarray before exact clearance",
+    "watchdog_s": {
+      "solve": 5,
+      "baseline": 10,
+      "rollout": 30,
+      "oracle": 60,
+      "exact_clearance": 10
+    },
+    "unchanged_algorithm_deadline_s": 0.25,
+    "rotation_tolerance_rad": 0.001,
+    "rotation_time_bound": "derived directed angle/abs(graph omega)+bounded braking+2/9s, capped by path horizon",
+    "rollout_tick_bound": "ceil72*(path_length/0.05)+2; protected baseline existing analytic alignment bound retained",
+    "method_grid_criteria_unchanged": true
+  }
 }

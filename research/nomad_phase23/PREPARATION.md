@@ -1,3 +1,7 @@
+# Execution repair status
+
+The initial run failed at exact clearance because a JSON list was not converted to ndarray. This is repaired with failure/signal journaling, combination checkpoints and watchdogs.16tests pass. TS0000 serial8-combination diagnostic is complete and excluded from training; all plans timed out in serial mode, so active evaluation throughput was separately measured from a saved trace and a synthetic rollout without further solves. Conservative full-run scheduling estimate2.439h exceeds the user2h threshold. **STOP: do not resume the full matrix before the user decides scope.** See docs/PHASE23O_EXECUTION_DIAGNOSIS.md.
+
 # Phase23-O — registered and ready for user-run offline evaluation
 
 Tests11/11 PASS; early/middle/late saved V1 occupancy+observed replay exact; fake-data selection report, final tables and figures PASS. Real training/evaluation solves:0. No experimental decision yet.
