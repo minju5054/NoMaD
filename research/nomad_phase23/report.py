@@ -18,7 +18,13 @@ def summaries(rows):
             median=lambda k:float(np.median([r[k] for r in rr if r.get(k) is not None])) if any(r.get(k) is not None for r in rr) else None
             answer.append(dict(group=group,method=method,n=len(rr),oracle_collisions=sum(r['oracle_collision'] for r in rr),planning_failure_fraction=sum(not r['accepted'] for r in rr)/len(rr),progress_median=median('progress'),execution_time_median_s=median('execution_time_s'),compute_p50_s=median('compute_s'),compute_p95_s=float(np.quantile([r['compute_s'] for r in rr],.95)),over025=sum(r['compute_s']>.25 for r in rr),
                 min_clearance_median=median('oracle_minimum_clearance_m'),omega_saturation_median=median('omega_saturation_fraction'),intent_error_fraction=float(np.mean([r['intent_error'] for r in rr if r.get('intent_error') is not None])) if any(r.get('intent_error') is not None for r in rr) else None,
-                passage_fraction=sum(r['box_passage'] for r in rr)/len(rr),active_switches=sum(r.get('active_switches',0) for r in rr)))
+                passage_fraction=sum(r['box_passage'] for r in rr)/len(rr),active_switches=sum(r.get('active_switches',0) for r in rr),
+                active_native_short_fraction=float(np.mean([r['active_native_short'] for r in rr if r.get('active_native_short') is not None])) if any(r.get('active_native_short') is not None for r in rr) else None,
+                active_remaining_short_fraction=float(np.mean([r['active_remaining_short'] for r in rr if r.get('active_remaining_short') is not None])) if any(r.get('active_remaining_short') is not None for r in rr) else None,
+                short_active_graph_forward_median_m=float(np.median([r['graph_forward_m'] for r in rr if r.get('active_native_short')])) if any(r.get('active_native_short') for r in rr) else None,
+                still_short_graph_forward_median_m=float(np.median([r['graph_forward_m'] for r in rr if r.get('active_remaining_short')])) if any(r.get('active_remaining_short') for r in rr) else None,
+                warm_start_used=sum(r.get('warm_start_used',False) for r in rr),zero_motion_rollouts=sum(r.get('zero_motion_rollout',False) for r in rr),
+                active_switch_fraction=sum(r.get('active_switches',0) for r in rr)/max(1,sum(r.get('active_transition_opportunities',0) for r in rr))))
     return answer
 def decision(summary):
     flags={}
@@ -86,6 +92,27 @@ References: [Olson & Agarwal author manuscript](https://april.eecs.umich.edu/pdf
 The max-mixture here is the user-specified equal-weight policy-candidate adaptation, not a reproduction of SLAM results.
 '''
 
+EXECUTION='''
+## Registered execution and warm starts
+
+Translation uses protected PP lookahead0.25m and graph segment speeds linearly interpolated at the **projected arclength**, with knots at translating-segment midpoints. No elapsed-time lookup or SP is used for U. Rotation segments are those with graph v<0.01m/s: brake within0.5m/s², then use graph omega's signed magnitude (limited to0.4rad/s). Only the last9Hz angular step is shortened to avoid overshooting the target heading. Completed rotation segments advance the segment cursor; zero-speed rotation knots are excluded from translating-speed interpolation. No heading-threshold start alignment is introduced. No solution or total250ms deadline overrun produces a bounded braking stop. The22-O2 endpoint/projection/time stopping rules remain; U has no heuristic-alignment time exemption.
+
+The replanning interface runs on each candidate arrival with a nominal4Hz/250ms period and a last accepted **U-only** warm start. The original8candidate starts and up to2depth-edge starts remain; a usable previous U suffix adds one warm initialization (maximum11), inside the same total250ms budget. Warm states are separated by run, split and weight combination. Exhausted prior paths are not fabricated. A* output is never a U seed or fallback; an A*-derived historical OLD path is withheld from U supplementation and recorded.
+
+This offline dataset contains selected saved candidate arrivals, not a new4Hz closed-loop stream. It evaluates those arrivals chronologically and records the actual gap to the warm-source snapshot. No missing candidates are generated and no future depth/NoMaD feedback is invented. Thus the evaluation cannot establish closed-loop4Hz behavior.
+
+Short original FRESH means native suffix<0.3m. Available non-A* OLD geometry may supplement it as originally specified; if it is still short, all8mixture candidates remain and resampling stays inside the available polyline. The report separately gives native-short and still-short active fractions (denominator: plans with an active candidate), and graph endpoint forward displacement conditional on each category. Forward displacement is measured along B heading, not u_ref.
+'''
+
+def selection_section(p):
+    evidence=p.get('selection_evidence')
+    if evidence is None:return '## Weight selection\n\nNot executed.\n\n'
+    return '## Frozen weight selection evidence\n\nTiming gate p95≤0.25s first. If all exceed it, choose minimum p95 and flag. Otherwise: fewest oracle collisions, lowest planning-failure fraction, lowest sum of within-group progression-median ranks, then lowest compute p50 (exact ties: lower grid index).\n\n'+str({k:v for k,v in evidence.items() if k!='table'})+'\n\n'+table(evidence['table'])+'\n\n'
+
+def write_selection_report(p,destination=None):
+    destination=Path(destination) if destination else ROOT/'docs/PHASE23O_UNIFIED.md'
+    destination.write_text('# Phase23-O — training selection; evaluation not yet executed\n\n'+FORMULAS+EXECUTION+'\n\n'+selection_section(p)+'Evaluation label: **NOT_EVALUATED**. Selected weights and this table are committed before evaluation begins.\n')
+
 def generate():
     p=json.loads((HERE/'protocol.json').read_text());m=json.loads((OUT/'manifest.json').read_text());records=[json.loads(f.read_text()) for f in sorted((OUT/'evaluation').glob('*.json'))];rows=[v['row'] for r in records for v in r['methods'].values()]
     assert len(records)==len(m['evaluation']);summary=summaries(rows);verdict=decision(summary)
@@ -94,7 +121,7 @@ def generate():
     for r in records:
         u,b=r['methods']['U']['row'],r['methods']['C0']['row'];paired.append(dict(case_id=u['case_id'],group=u['group'],scene=u['scene'],U_collision=u['oracle_collision'],C0_collision=b['oracle_collision'],progress_delta=u['progress']-b['progress'],time_delta=u['execution_time_s']-b['execution_time_s']))
     csv_write(OUT/'paired.csv',paired);plots(records,rows,m['examples'])
-    text='# Phase23-O — offline unified SE(2) graph\n\n'+FORMULAS+'\n\n'
+    text='# Phase23-O — offline unified SE(2) graph\n\n'+FORMULAS+EXECUTION+'\n\n'+selection_section(p)
     text+=f"Protocol SHA256 `{sha256_file(HERE/'protocol.json')}`. Label **{verdict['label']}**. Training{len(m['training'])}, evaluation{len(m['evaluation'])}; distinct runs and indices.\n\n"
     text+='Registered execution/input handling: `'+str(p['policy'])+'`. Selected weights: `'+str(p['selected'])+'`.\n\n'+table(summary)+'\n\n'+table([dict(group=g,**v) for g,v in verdict['groups'].items()])+'\n\n'
     slw=[r for r in rows if r['scene']=='SLW'];text+='SLW saturation: '+str({method:float(np.median([r['omega_saturation_fraction'] for r in slw if r['method']==method])) for method in ('U','C0')})+'\n\n'

@@ -39,8 +39,10 @@ class Builder:
         if d['spawn'] and d['spawn']['tick']<=tick:oracle['obstacles'].append(d['spawn']['obstacle'])
         closest=int(e['topomap']['closest_node']);node=d['map']['nodes'][min(closest+1,len(d['map']['nodes'])-1)];direction=np.asarray(node['world_pose'])[:2]-np.asarray(B)[:2];norm=np.linalg.norm(direction)
         direction=direction/norm if norm>1e-12 else np.array([np.cos(B[2]),np.sin(B[2])])
+        old_source=apps[-1].get('kind') if apps else None
+        astar_old=method in ('B4_ASTAR','P0_ASTAR','P2F_ASTAR_GRAPH') and old_source in ('REPAIR','DETOUR')
         return dict(case_id=identity,split=split,group=group,scene=scene,index=index,source_method=method,run=str(d['run']),fresh_id=e['id'],tick=tick,B=B,previous_vw=previous,
-            samples_world=native.tolist(),old_path=old,old_source=apps[-1].get('kind') if apps else None,snapshot_file=str(file),snapshot_sha256=self.hashes[str(Path(file).resolve())],
+            samples_world=native.tolist(),old_path=None if astar_old else old,baseline_old_path=old,old_source=old_source,U_old_withheld_ASTAR=astar_old,snapshot_file=str(file),snapshot_sha256=self.hashes[str(Path(file).resolve())],
             trigger=override.get('trigger'),baseline_u_ref=override.get('u_ref',u.tolist()),baseline_u_source=source,evaluation_direction=direction.tolist(),oracle_config=oracle,spawn=d['spawn'],
             topomap_closest=closest,topomap_next_node=min(closest+1,len(d['map']['nodes'])-1))
     def build(self):

@@ -132,10 +132,14 @@ class UnifiedGraph:
         if g.min()>=-1e-7 and np.all(x>=self.bounds.lb-1e-9) and np.all(x<=self.bounds.ub+1e-9):
             if self.best is None or value<self.best[0]:self.best=(value,x.copy(),time.monotonic_ns())
 
-def solve_start(B,v0,candidates,sigma,field,weights,path,deadline_ns,kinematic_sigma=.03):
+def solve_start(B,v0,candidates,sigma,field,weights,path,deadline_ns,kinematic_sigma=.03,warm_state=None):
     started=time.monotonic_ns();g=UnifiedGraph(B,v0,candidates,sigma,field,weights,deadline_ns,kinematic_sigma);status='TIMEOUT';success=False
     try:
-        initial=g.initial(path);g.observe(initial)
+        initial=g.initial(path)
+        if warm_state is not None:
+            poses=np.asarray(warm_state['poses']);local=(poses[1:,:2]-g.B[:2])@g.R
+            initial=np.r_[np.c_[local,wrap(poses[1:,2]-B[2])].ravel(),np.clip(warm_state['dt'],.05,1.)]
+        g.observe(initial)
         result=minimize(g.objective,initial,jac=True,method='SLSQP',bounds=g.bounds,constraints=[dict(type='ineq',fun=lambda x:g.constraints(x)[0],jac=lambda x:g.constraints(x)[1])],callback=g.observe,options=dict(maxiter=100,ftol=1e-8))
         success=bool(result.success);status=str(result.message);g.observe(result.x)
     except TimeoutError:pass

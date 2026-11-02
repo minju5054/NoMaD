@@ -1,4 +1,6 @@
-import ast,inspect,time,unittest
+import ast,inspect,time,unittest,tempfile,copy,json,multiprocessing as mp
+from pathlib import Path
+from concurrent.futures import ProcessPoolExecutor
 from unittest.mock import patch
 import numpy as np
 from nomad_phase19r.test_repair import synthetic
@@ -34,5 +36,64 @@ class Tests(unittest.TestCase):
         a=unified_simulate(c,plan,policy);b=unified_simulate(c,plan,policy)
         np.testing.assert_array_equal(a['poses'],b['poses']);self.assertTrue(a['completed']);self.assertLessEqual(abs(a['poses'][-1,0]-1),.1+1e-9)
         self.assertTrue(all(abs(w)<=.4 for w in a['omegas']))
+    def test_rotation_segment_executes_graph_omega(self):
+        from .rollout import GraphFollower
+        from nomad_isaac.common import integrate_se2
+        q=np.c_[np.r_[0.,.004,np.linspace(.1,1.,9)],np.zeros(11),np.r_[0.,np.full(10,.2)]];dt=np.ones(10);dt[1:]=.5
+        ctl=GraphFollower(q,dt);pose=np.zeros(3);previous=0.;rotating=[]
+        for tick in range(100):
+            if tick%8==0:
+                (v,w),diag=ctl.control(pose,previous);previous=v
+                if diag['mode']=='PP_GRAPH_SPEED':break
+            if diag['mode']=='GRAPH_ROTATION':
+                self.assertEqual(v,0.);self.assertGreater(w,0.);self.assertLessEqual(w,.2+1e-12);rotating.append(pose.copy())
+            pose=integrate_se2(pose,v,w,1/72)
+        self.assertTrue(rotating);np.testing.assert_array_equal(np.array(rotating)[:,:2],np.zeros((len(rotating),2)));self.assertAlmostEqual(pose[2],.2,places=9)
+    def test_bounded_stop(self):
+        from .rollout import stop_rollout
+        r=stop_rollout([0.,0.,0.],.3);v=np.r_[.3,[c['v'] for c in r['commands']]]
+        self.assertTrue(np.all(np.diff(v)>=-.5/9-1e-12));self.assertTrue(np.all(v>=0));self.assertEqual(v[-1],0.);self.assertLess(r['distance_m'],.1)
+    def test_arclength_speed_interpolation_and_short_prior(self):
+        from .rollout import GraphFollower
+        q=np.array([[0,0,0],[.1,0,0],[.3,0,0],[.6,0,0]])
+        ctl=GraphFollower(q,[1,1,1]);self.assertAlmostEqual(ctl.speed_at(.125),.15);self.assertAlmostEqual(ctl.speed_at(.325),.25)
+        self.assertEqual(ctl.control([.125,0,0],.15)[0],ctl.control([.125,0,0],.15)[0])
+        short=np.repeat(np.c_[np.linspace(0,.12,8),np.zeros(8)][None],8,0)
+        candidates,sigma,flags=graph.prepare_candidates(short,[0,0,0],None,'retain')
+        self.assertEqual(candidates.shape,(8,11,2));self.assertTrue(all(f['still_short'] for f in flags));self.assertLessEqual(candidates[:,:,0].max(),.12)
+    def test_arrival_warm_start_isolated_and_suffix(self):
+        from .planner import Replanner,warm_suffix
+        q=np.c_[np.linspace(0,1,11),np.zeros((11,2))];accepted=dict(accepted=True,poses=q.tolist(),dt=[.5]*10)
+        before=copy.deepcopy(accepted);suffix=warm_suffix(accepted,[.2,0,0]);np.testing.assert_allclose(suffix['poses'][0],[.2,0,0]);self.assertEqual(accepted,before)
+        with patch('nomad_phase23.planner.plan',side_effect=[copy.deepcopy(accepted) for _ in range(3)]) as call:
+            planner=Replanner(None,{},{});c=dict(split='training',run='run1',tick=0,case_id='a')
+            planner.on_candidates(c);r=planner.on_candidates(dict(c,tick=18,case_id='b'))
+            self.assertEqual(r['warm_source_case_id'],'a');self.assertEqual(r['warm_source_gap_s'],.25);self.assertIsNotNone(call.call_args.kwargs['previous'])
+            planner.on_candidates(dict(c,run='run2',tick=18,case_id='c'));self.assertIsNone(call.call_args.kwargs['previous'])
+    def test_tuning_gate_rank_sum_and_p50(self):
+        from .run import rank_weights
+        def row(i,p95,p50,collision=0,static=1.,sudden=1.):return dict(index=i,weights={},collisions=collision,failure_fraction=0.,progress=dict(static=static,sudden=sudden),p95=p95,p50=p50)
+        winner,evidence=rank_weights([row(0,.251,.01),row(1,.24,.2,1)])
+        self.assertEqual(winner['index'],1);self.assertFalse(evidence['all_combinations_exceed_025'])
+        winner,evidence=rank_weights([row(0,.30,.01),row(1,.28,.2,5)])
+        self.assertEqual(winner['index'],1);self.assertTrue(evidence['all_combinations_exceed_025'])
+        winner,evidence=rank_weights([row(0,.24,.1),row(1,.22,.15)])
+        self.assertEqual(winner['index'],0)
+    def test_four_worker_budget_on_synthetic_data(self):
+        from .planner import plan
+        from nomad_phase20d.pool import initialize,ping
+        ctx=mp.get_context('spawn');queue=ctx.Queue()
+        with tempfile.TemporaryDirectory() as tmp,ProcessPoolExecutor(max_workers=4,mp_context=ctx,initializer=initialize,initargs=(queue,)) as pool:
+            futures=[pool.submit(ping) for _ in range(4)]
+            self.assertEqual(len({queue.get(timeout=30) for _ in range(4)}),4)
+            for f in futures:f.result()
+            file=Path(tmp)/'snapshot.npz';synthetic().save(file)
+            samples=np.repeat(np.c_[np.linspace(0,1.,8),np.zeros(8)][None],8,0)
+            c=dict(B=[0.,0.,0.],previous_vw=[.2,0.],samples_world=samples,snapshot_file=str(file),old_path=None)
+            r=plan(pool,c,dict(time=.1,goal=1.,curvature=.001),dict(short_policy='retain',kinematic_sigma=.03))
+            self.assertGreaterEqual(r['initialization_count'],8)
+            if r['accepted']:
+                self.assertLessEqual(r['compute_s'],.25);self.assertEqual(np.shape(r['poses']),(11,3))
+            if r['deadline_overrun']:self.assertFalse(r['accepted']);self.assertIsNone(r['path'])
 
 if __name__=='__main__':unittest.main()

@@ -20,7 +20,7 @@ def plan(pool,c,method,recent_file):
         stages.append(r);index=r['selected_sample']
         if index is not None and r['dispatch_to_complete_s']<=1.:
             return dict(accepted=True,path=r['results'][index]['path'],disposition=kind,compute_s=time.monotonic()-started,stages=stages,selection=detail)
-    old=c.get('old_path')
+    old=c.get('baseline_old_path',c.get('old_path'))
     if old is not None:
         tail,length=suffix(old,c['B']);_,check=evaluate_samples(np.repeat(np.asarray(old)[None],8,axis=0),c['B'],field)
         if not check['all_unsafe'] and length>=.25:return dict(accepted=True,path=old,disposition='KEEP_ACTIVE',compute_s=time.monotonic()-started,stages=stages,selection=detail)
