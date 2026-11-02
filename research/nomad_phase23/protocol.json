@@ -1,0 +1,63 @@
+{
+  "phase": "23-O",
+  "status": "DRAFT_PENDING_DEFINITIONS",
+  "deadline_s": 0.25,
+  "pool_workers": 4,
+  "solver": {
+    "name": "SLSQP",
+    "analytic_jacobians": true,
+    "maxiter": 100,
+    "ftol": 1e-08,
+    "feasibility_tolerance": 1e-07
+  },
+  "grid": {
+    "time": [
+      0.1,
+      1.0
+    ],
+    "goal": [
+      1.0,
+      4.0
+    ],
+    "curvature": [
+      0.001,
+      0.01
+    ]
+  },
+  "selected": null,
+  "policy": {
+    "rotation_policy": null,
+    "short_policy": null,
+    "kinematic_sigma": null,
+    "stop_policy": null
+  },
+  "selection_rule": null,
+  "fixed": {
+    "nodes": 11,
+    "dt_bounds_s": [
+      0.05,
+      1.0
+    ],
+    "vmax": 0.3,
+    "wmax": 0.4,
+    "amax": 0.5,
+    "clearance": 0.025,
+    "near_start_m": 0.3,
+    "clearance_preference_m": 0.15,
+    "clearance_sigma_m": 0.05,
+    "goal_sigma_m": 0.3,
+    "prior_sigma_bounds_m": [
+      0.03,
+      0.15
+    ],
+    "nonholonomic_sigma_proposed_m": 0.03
+  },
+  "sources": [
+    "https://april.eecs.umich.edu/pdfs/olson2013ijrr.pdf",
+    "https://github.com/rst-tu-dortmund/teb_local_planner/blob/noetic-devel/include/teb_local_planner/g2o_types/edge_kinematics.h"
+  ],
+  "input": "NoMaD8 + source depth V1 SDF + actualB/speed + previous observed chunk remainder; U has no A*, u_ref, trigger, oracle or Topomap pose",
+  "training": "Phase18 indices66-69:3 uniform FRESH/run, plus26 frozenPhase21 tuning sudden cases; 8 weight combinations",
+  "evaluation": "Phase18 indices70-73:10 uniform+5 final10s forfailed runs, deduplicated; frozen22-O24 +Phase22 rerunL2B triggers",
+  "pending_reason": "Explicit answers required for pure-rotation execution, unavailable OLD, fixed kinematic normalization and tuning ranking. No data solves have run."
+}
