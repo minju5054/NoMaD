@@ -288,7 +288,7 @@
     "research/nomad_phase23/baselines.py": "2f0b81e5174d4964fb095a051d37fc7b1ebd8600b3685adefac49befe04d2750",
     "research/nomad_phase23/test_unified.py": "be6e00f4095bb7c8c99350ad74b2e586055eaa9ad1ca7079e920538f0d570549",
     "research/nomad_phase23/graph.py": "0a55f3660e0d7a5d6614f6006c582073b69df9d0b961d005504b5c9c4ce15212",
-    "research/nomad_phase23/planner.py": "3e1af1f8fbb3ffb516f54b3d1d90fedef7f0a060f4a6f02063fd82c8c61f6bb3",
+    "research/nomad_phase23/planner.py": "48594557ede2ae17caae2e438310115c3fdf35eb1cbe5c0fa25caa301abe1646",
     "research/nomad_phase23/inputs.py": "35a78e8a09a80c703cc2ee0daf0a9f85a807cc77450459b04ab4784a828f8485",
     "research/nomad_phase23/report.py": "3afe93b10f8ebc1ba43827c21acf2f74b496c95d1455568340a5c7f9041ee017",
     "research/nomad_phase23/run.py": "2b9ce3a153b58eebd5ab1efbdbd50d93f700f76eb4157e6a01a59c7623dea8e5",
@@ -333,10 +333,14 @@
     "research/nomad_phase23/estimate.py": "ee84733f7a0d2f13b43f6d519db522da406d790780b005816a63db76caeae1be",
     "research/nomad_phase23/runtime.py": "0f3beb3f086291dfe32daf1515cc9ddae8bc75f6bfdd9b41db675065b4af9823",
     "research/nomad_phase23/test_runtime.py": "9ba7405dc97ae5fdce00737709ad8deee31c2a15d822ab8b243e3d60dea52403",
-    "research/nomad_phase23/benchmark.py": "7105f0f8ce07541b41d28fb3eee8cb2ff12d2beab2885073774c0c6e70841104"
+    "research/nomad_phase23/benchmark.py": "7105f0f8ce07541b41d28fb3eee8cb2ff12d2beab2885073774c0c6e70841104",
+    "research/nomad_phase23/optimized.py": "069f1c651640e5e32593825b819dffdfb4e6662d839d560047fbfc7bc1fd053d",
+    "research/nomad_phase23/solver_check.py": "c71db93f8945e937a085bc6e3796b811b22c977f7aac3015a81f2a8375c04851",
+    "research/nomad_phase23/test_solver_check.py": "8bd0c0cdb669512c1cdba97c385da1cd3ccde790aa1f4298d9d375d836f374a0",
+    "research/nomad_phase23/solver_check_report.py": "72d7b22185900824bb96469656fdddc359bb1e8e21d3d53d07fe1eead6c6f484"
   },
   "selection_evidence": null,
-  "definition_sha256": "17070382b94df702a16c309b0f0f05dfddfb23fbcada7117c25b66616bbf7141",
+  "definition_sha256": "7a9c2742f6cbda49476fdc052f959d24ba3947d4f11c231dae0f558ea05a14bd",
   "execution_repair": {
     "base_commit": "4916cbf",
     "kind": "runtime bug and observability only",
@@ -353,5 +357,14 @@
     "rotation_time_bound": "derived directed angle/abs(graph omega)+bounded braking+2/9s, capped by path horizon",
     "rollout_tick_bound": "ceil72*(path_length/0.05)+2; protected baseline existing analytic alignment bound retained",
     "method_grid_criteria_unchanged": true
+  },
+  "implementation_optimization": {
+    "kind": "identical factor caching and vectorized Menger derivatives",
+    "original_gradients": "already analytic",
+    "formulas_changed": false,
+    "solver_options_changed": false,
+    "default_budget_changed": false,
+    "variants_selected": null,
+    "diagnostic_protocol": "research/nomad_phase23/solver_check_protocol.json"
   }
 }

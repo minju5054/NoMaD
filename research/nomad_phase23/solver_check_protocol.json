@@ -1,0 +1,80 @@
+{
+  "status": "FROZEN",
+  "base_commit": "a3177ce",
+  "seed": 20261102,
+  "case_ids": [
+    "TS0000",
+    "TS0006",
+    "TS0039",
+    "TS0044",
+    "TS0046",
+    "TS0083",
+    "TS0087",
+    "TS0093",
+    "TS0113",
+    "TS0137",
+    "TS0148",
+    "TS0149",
+    "TS0169",
+    "TS0173",
+    "TS0177",
+    "TD0217",
+    "TD0218",
+    "TD0220",
+    "TD0221",
+    "TD0224",
+    "TD0225",
+    "TD0226",
+    "TD0228",
+    "TD0229",
+    "TD0231",
+    "TD0232",
+    "TD0235",
+    "TD0239",
+    "TD0240",
+    "TD0241"
+  ],
+  "weights": {
+    "time": 0.1,
+    "goal": 4.0,
+    "curvature": 0.01
+  },
+  "grid_index_zero_based": 3,
+  "middle_rule": "Lower median of the existing Cartesian grid:8even-sized combinations have no unique center; fourth existing combination, no new weights.",
+  "solver": {
+    "method": "SLSQP",
+    "jac": "analytic",
+    "maxiter": 100,
+    "ftol": 1e-08,
+    "wall_deadline": "none in before/after single-process check"
+  },
+  "initialization_order": "candidate0..7,left,right; absent component => side slots unavailable, not fabricated; no cross-snapshot warm start in isolated check",
+  "time_to_best": "preparation + sequential earlier starts + first timestamp where globally lowest-cost feasible iterate was observed; total time separately reported for all snapshots",
+  "variants": {
+    "mode": "registered4-worker envelope; measurement only, no candidate selected",
+    "reference": {
+      "starts": "all",
+      "deadline_s": 0.25
+    },
+    "i": {
+      "starts": "prior2+side",
+      "deadline_s": 0.25
+    },
+    "ii": {
+      "starts": "all",
+      "deadline_s": 0.5
+    },
+    "iii": {
+      "starts": "prior2+side",
+      "deadline_s": 0.5
+    },
+    "prior_rank": "F1 max-mixture cost of each candidate initialization; self-match gives0/ties, lower candidate index wins. No invented confidence score."
+  },
+  "data_read_timing": "Parent immutable SDF load excluded from solve timing in both passes; candidate/side preparation included in snapshot totals.",
+  "original_source_sha256": {
+    "research/nomad_phase23/graph.py": "0a55f3660e0d7a5d6614f6006c582073b69df9d0b961d005504b5c9c4ce15212",
+    "research/nomad_phase23/planner.py": "3e1af1f8fbb3ffb516f54b3d1d90fedef7f0a060f4a6f02063fd82c8c61f6bb3",
+    "research/nomad_phase23/protocol.json": "5e35167ad4bded0114b9d0836605bb0f78c467b7700c809fbab0c0e9079e054c"
+  },
+  "source_manifest_sha256": "772962e4d8644c61b53424513108a431e4c2c5c74ccf69c144285929c07a0b36"
+}

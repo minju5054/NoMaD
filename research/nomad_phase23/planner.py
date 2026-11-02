@@ -3,7 +3,8 @@ import time
 import numpy as np
 from nomad_phase15b.depth import Snapshot
 from nomad_phase0.pure_pursuit import XYPath
-from .graph import prepare_candidates,side_initializations,solve_start
+from .graph import prepare_candidates,side_initializations
+from .optimized import solve_start
 
 _key=None;_field=None
 

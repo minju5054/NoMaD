@@ -1,3 +1,7 @@
+# Solver diagnosis status
+
+30 fixed training-only snapshots were checked before/after mathematically identical caching and vectorization.21tests pass, including F1–F6 finite-difference checks. All250final states are bit-identical; no variant was selected. Improved unbounded single-process best-found p95=0.832s and total p95=1.009s, still above0.25s. **Hold full tuning/evaluation pending user decision.** See docs/PHASE23O_SOLVER_CHECK.md. The main grid, factor definitions,4workers,250ms budget and decision criteria remain unchanged.
+
 # Execution repair status
 
 The initial run failed at exact clearance because a JSON list was not converted to ndarray. This is repaired with failure/signal journaling, combination checkpoints and watchdogs.16tests pass. TS0000 serial8-combination diagnostic is complete and excluded from training; all plans timed out in serial mode, so active evaluation throughput was separately measured from a saved trace and a synthetic rollout without further solves. Conservative full-run scheduling estimate2.439h exceeds the user2h threshold. **STOP: do not resume the full matrix before the user decides scope.** See docs/PHASE23O_EXECUTION_DIAGNOSIS.md.
