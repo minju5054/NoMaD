@@ -1,4 +1,4 @@
-# Phase24 — preparation; NOT_EVALUATED
+# Phase24 — frozen preparation; NOT_EVALUATED
 
 
 ## Input/output pipeline
@@ -60,8 +60,8 @@ Output policy is exactly23-O3: choose the least-cost received feasible iterate; 
 
 The preserved23-O3registered GO_ONLINE used8already-passed snapshots. The corrected pre-passage label is PRE_PASSAGE_NO_GO: U3planned0/16, C0planned2/16, C1planned3/16. In the frozen diagnostic,13/16intent directions differed from corridor+x by>=45degrees. All5converted comparator detours cost more than U3; F7was the largest increasing term inall5. Additional seeds retained feasible passage candidates but the objective selected none. These are diagnostic findings, not evidence of improved obstacle avoidance. Phase24therefore supplies intent through Dand keeps physical trajectory generation in one graph.
 
-## Pending registration
+## Registered offline rules
 
-No real Gsnapshot solve or navigation has run. Awaiting definitions: C0state-to-mode mapping; no-component u_ref fallback; STOP/timing gate cohort. The stored C0stage mapping would give217NORMAL and25DETOUR inputs. The complete inventory is216static,16pre-passage sudden,2pre-spawn and8already-passed.
+{'priority': ['MODE_RECOMPUTED: original20Fobservable trigger predicate on saved odometry/depth', 'MODE_FROM_C0: R3attempt only when required histories missing', 'MODE_FALLBACK: failed NORMAL output promotes to one DETOUR solve'], 'predicate_transient_guards': 'fresh counterfactual trigger state: busyFalse,cooldowninactive,blockedFalse,suppress-1; no prior Gstate or source-method transient state imputed', 'reference': '20F component-frozen preappearance direction; if none, approved20FAradial/start-heading fallback', 'normal_failure': 'only if neitherFEASIBLE norKINEMATIC_TOLERATED; same depth/candidates; one extra solve', 'second_start': 'propagate first0.5s OLD prefix; execute firstSTOP bounded braking during second0.5s; extend odometry with only that deterministic prefix for direction at transition', 'time': 'sum measured per-stage solves; fixed application delay0.5s/stage, total1s on fallback; no new captures/inference', 'comparators': 'reuse frozen C0/C1 only for equivalent trigger/direction arguments; otherwise recompute frozen solvers with the newly reconstructed Btrigger/component direction; Abranch retains radial direction', 'gate': 'passage count on16PRE_PASSAGE; collision on216STATIC; STOP/p95 on their232union.2PRE_SPAWN+8ALREADY_PASSED excluded; all26sudden also shown.'}
 
-Conservative offline estimate:56.6min, allowing history reconstruction for every source run. The requested1h threshold is not exceeded; final mode scope may reduce work. No result label is assigned.
+242inputs;232gate cohort. Estimated43.2min with two Gsolves per input and all268baseline recomputations budgeted.9unit tests passed. No new Gsnapshot solve or navigation has run.

@@ -72,9 +72,9 @@ The preserved23-O3registered GO_ONLINE used8already-passed snapshots. The correc
 
 def summarize(rows):
     result=[]
-    for group in ('STATIC','PRE_PASSAGE','PRE_SPAWN','ALREADY_PASSED'):
+    for group in ('STATIC','PRE_PASSAGE','PRE_SPAWN','ALREADY_PASSED','SUDDEN_ALL'):
         for method in ('G','C0','C1','U'):
-            rr=[r for r in rows if r['input_stage']==group and r['method']==method]
+            rr=[r for r in rows if (r['input_stage']==group or group=='SUDDEN_ALL' and r['input_stage']!='STATIC') and r['method']==method]
             if not rr:continue
             median=lambda k:float(np.median([r[k] for r in rr if r.get(k) is not None])) if any(r.get(k) is not None for r in rr) else None
             result.append(dict(group=group,method=method,n=len(rr),collisions=sum(r['oracle_collision'] for r in rr),min_clearance_median_m=median('oracle_minimum_clearance_m'),omega_saturation_median=median('omega_saturation_fraction'),
@@ -100,7 +100,14 @@ def generate(protocol,records):
         for name,value in record['methods'].items():rows.append(dict(value['row'],method=name,input_stage=record['case']['input_stage']))
     summary=summarize(rows);verdict=gate(rows,protocol['gate_stop_timing_scope']);csv_write(OUT/'snapshots.csv',rows);csv_write(OUT/'summary.csv',summary);write(OUT/'gate.json',verdict)
     pictures=plots(records,protocol['figures'])
-    text='# Phase24 — decision layer and one SE(2)graph\n\n'+DEFINITION+'\n## Registered offline interpretation\n\n'+str(protocol['offline_decisions'])+'\n\nMode is fixed per snapshot; this counterfactual does not replay G-induced transitions, next NoMaD inputs or recovery outcomes. The same reused training set has informed earlier designs, so this is not a held-out confirmation.\n\n'
+    mode_rows=[{k:r.get(k) for k in ('case_id','input_stage','initial_mode_source','mode_source','mode_initial','mode_final','normal_to_detour','stage_count','stage_compute_s','stage_output_types','compute_s','application_delay_s','direction_source')} for r in rows if r['method']=='G']
+    csv_write(OUT/'mode_provenance.csv',mode_rows)
+    mode_summary=[dict(mode_source=k,count=n) for k,n in Counter(r['mode_source'] for r in mode_rows).items()]
+    text='# Phase24 — decision layer and one SE(2)graph\n\n'+DEFINITION+'\n## Registered offline interpretation\n\n'+str(protocol['offline_decisions'])+'\n\n'
+    text+='The original20Ftrigger code is evaluated on the saved pose/depth history. Snapshot-only checks use neutral busy/cooldown/rotation guards because no preceding Gexecution exists; no source method state is silently treated as Gstate. Missing histories alone use C0R3attempt records. Component directions are reconstructed on unchanged source occupancy/SDF; absent components use the approved20FAstart-to-current rule.\n\n'
+    text+='A failed NORMAL output triggers exactly one DETOUR solve. During its second0.5s window, the first STOP output executes bounded braking. The same saved depth is used, with no new NoMaD response; the direction is evaluated at the propagated pose using only recorded history plus that deterministic prefix. Compute time is the sum of both measured solves; application delay is1s for two stages and0.5s for one. MODE_FALLBACK records the transition; initial mode provenance is retained separately.\n\n'
+    text+='C0/C1keep frozen planners and controllers. Saved outputs are reused only when the new trigger/direction arguments are equivalent (or unused by the accepted SAFE/R2branch); otherwise the frozen comparator is recomputed once on the reconstructed trigger and direction. Their Abranch keeps its original radial direction. Uis a frozen reference. This avoids comparing Gwith a C0result produced from a different legacy20D/Etrigger.\n\n'
+    text+='This is not a complete closed-loop Drollout: recovery-driven re-inference, future captures and further mode transitions are absent. The same reused training set informed earlier designs; this is not a held-out confirmation.\n\n'+table(mode_summary)+f"\n\nNORMAL→DETOUR cases: {sum(r['normal_to_detour'] for r in mode_rows)}/242. Detailed per-snapshot reasons and stage times are in mode_provenance.csv and decisions.json.\n\n"
     text+='## Offline comparisons\n\n'+table(summary)+'\n\n## Gate (post-passage excluded)\n\n'+table([dict(criterion=k,passed=v) for k,v in verdict['conditions'].items()])+'\n\n'+str({k:v for k,v in verdict.items() if k not in ('conditions',)})+'\n\n'
     for picture in pictures:text+=f'![{picture}](../research/results/phase24_offline/{picture})\n\n'
     text+='No new inference, renderer or navigation was used in this offline check. '
