@@ -153,7 +153,9 @@ def run():
             cost_rows.extend([dict(case_id=identity,reference_method=method,trajectory=name,**value) for name,value in [('saved_U3',base_terms),('converted_'+method,before)]])
             pair=dict(case_id=identity,method=method,cost_label=label_name,cost_delta_vs_U3=delta,reference_cost=before['total'],U3_cost=base_terms['total'],reference_strict_feasible=before['strict_feasible'],reference_F2_slack_m=before['F2_minimum_slack_m'],reference_heading_lag_max_deg=converted['heading_lag_max_deg'],reference_planned_passage=bool(plan_passage(dict(case=c),dict(plan=dict(path=converted['world_path'])))))
             differences={f'F{i}':before[f'F{i}']-base_terms[f'F{i}'] for i in range(1,8)};largest=max(differences,key=differences.get);pair.update(largest_term_delta=largest,largest_term_delta_value=differences[largest])
-            outcome=extra_solve(pool,c,original['plan'],p,converted,x);save(OUT/'solves'/f'{identity}_{method}.json',outcome)
+            checkpoint=OUT/'solves'/f'{identity}_{method}.json'
+            if checkpoint.exists():outcome=read(checkpoint)
+            else:outcome=extra_solve(pool,c,original['plan'],p,converted,x);save(checkpoint,outcome)
             for start in outcome['starts']:
                 if start['accepted']:
                     xx=from_saved(g,start);start['diagnostic_terms']=terms(g,xx);start['strict_feasible']=start['diagnostic_terms']['strict_feasible']
