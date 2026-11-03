@@ -1,5 +1,7 @@
 # Phase23-O3 — training-only offline check
 
+> **Correction: PRE_PASSAGE_NO_GO.** 이미 상자를 지난 snapshot 8건으로 충족, 통과 전 입력에서 U3 0/16(C0 2/16, C1 3/16)이라 회피 경로 생성 개선으로 해석 불가. Original GO_ONLINE is preserved below; online preparation is held.
+
 
 ## U3 definition
 
@@ -80,3 +82,17 @@ Protocol SHA256 `af6713d7a2c9d20b42400806e1b116704861bf8f785f9408a951897c17459a1
 ![example_TS0037.png](../research/results/phase23o3/example_TS0037.png)
 
 No23-O/23-O2 evaluation case was rerun. No new inference, rendering or closed-loop experiment was part of this offline check. GO_ONLINE permits the requested pilot preparation and smoke only; the main campaign remains user-run.
+
+## Pre-passage correction and online hold
+
+**이미 상자를 지난 snapshot 8건으로 충족, 통과 전 입력에서 U3 0/16(C0 2/16, C1 3/16)이라 회피 경로 생성 개선으로 해석 불가**.
+
+Original registered label **GO_ONLINE** and gate.json are unchanged. Separate rejudgement: **PRE_PASSAGE_NO_GO**. Online preparation is on hold; no U3smoke or main campaign was executed. C0/C1smokes completed before this hold remain excluded artifacts.
+
+| input_stage | n | U2 | U3 | C0 | C1 |
+| --- | --- | --- | --- | --- | --- |
+| PRE_SPAWN | 2 | 0 | 0 | 0 | 0 |
+| PRE_PASSAGE | 16 | 0 | 0 | 2 | 3 |
+| ALREADY_PASSED | 8 | 7 | 8 | 8 | 7 |
+
+See [the frozen-weight diagnosis](PHASE23O3_DIAGNOSIS.md).

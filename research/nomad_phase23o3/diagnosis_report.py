@@ -34,15 +34,18 @@ def generate(protocol,records,costs,pairs,availability,sets,summary,rejudge):
     cheap=[r for r in pairs if r['cost_label']=='INIT_LIMITED'];expensive=[r for r in pairs if r['cost_label']=='OBJECTIVE_LIMITED']
     improved=[r for r in pairs if r['extra_passage'] and r.get('extra_strict_feasible') and r.get('extra_cost',float('inf'))<r['U3_cost']]
     if cheap or improved:conclusions.append('INIT_LIMITED: '+str(len(cheap))+'/5converted detours have lower cost than saved U3; '+str(len(improved))+'/5extra-start outputs are strictly feasible passage paths cheaper than saved U3. This is same-input diagnostic evidence, not a proposed initialization change.')
-    if expensive:conclusions.append('OBJECTIVE_LIMITED: '+str(len(expensive))+'/5converted detours have higher frozen U3 cost. This label compares these particular feasible-heading/time embeddings, not every possible SE(2)timing for the polyline.')
+    if expensive:
+        f7_count=sum(r.get('largest_term_delta')=='F7' for r in pairs);selected=sum(r['selected_passage'] for r in pairs)
+        conclusions.append('OBJECTIVE_LIMITED: '+str(len(expensive))+'/5converted detours have higher frozen U3 cost; F7 is the largest increasing term in'+str(f7_count)+'/5pairs. Seeded multistart selects a passage path in'+str(selected)+'/5cases. This compares these particular feasible-heading/time embeddings, not every possible SE(2)timing for the polyline.')
     if summary['direction_wrong']:conclusions.append('DIRECTION_WRONG: '+str(summary['direction_wrong_count'])+'/16intent directions differ from evaluation-only+x by at least45degrees, exceeding half.')
     summary['conclusions']=conclusions;write(OUT/'summary.json',summary)
+    converged=sum(r['extra_solver_success'] is True for r in pairs);converged_pass=sum(r['extra_solver_success'] is True and r['extra_passage'] for r in pairs)
     text='# Phase23-O3 — frozen-weight pre-passage diagnosis\n\n**PRE_PASSAGE_NO_GO**. Original **GO_ONLINE** is preserved at commit `a2ce323` and in `research/results/phase23o3/gate.json`.\n\n'+WARNING+'。\n\n'+table(rows)+'\n\n'
     text+='## Scope and fixed conversion\n\nOnly the16pre-passage training snapshots are used. The5passing comparator paths belong to3snapshots (twoC0and threeC1paths). No tuning, evaluation-set rerun, navigation, inference or rendering was performed for this diagnosis. U3weights remain w7=0.5, T_m=2s, c=1, time/goal/curvature=1/1/0.01.\n\n'
     text+='Every reference is projected and re-sampled to11positions from the saved U3predicted application pose. Native comparator XY has no yaw/timestamps. Chord-heading targets are sequentially projected onto the existing0.4rad per1s limit; dt=max(0.05,segment_length/0.3,abs(delta_heading)/0.4). Unmodified chord headings would require dt>1s in4/5paths, so heading lag is explicitly reported and its nonholonomic soft cost is included. Positions are not optimized during conversion. The test uses the U3hard motion constraints; acceleration remains the unchanged soft penalty. Hard depth feasibility is checked independently, never assumed from the source path.\n\n'
     text+='Factor sums reproduce the exact frozen objective; saved U3costs are checked against the recorded values. F1includes Cauchy+age cost; F2is clearance preference; F3includes nonholonomic/backward and soft acceleration; F4time; F5active-candidate goal; F6curvature change; F7intent progress.\n\n'
     text+='## Cost comparison\n\n'+table(comparison)+'\n\n'+table(cost_view)+'\n\n## Soft penalties and constraint checks\n\n'+table(soft_view)+'\n\n'
-    text+='## Additional initialization experiment (diagnostic only)\n\nOne run per reference pair, no retries. The additional converted state is scheduled first, followed by the unchanged8current starts and available left/right starts. Four workers, shared0.5s, maxiter100, ftol1e-8, frozen output policy. Extra-first scheduling is diagnostic-only and is not installed in U3. Extra-start convergence/output and the whole multistart selection are separate columns. Pending-at-deadline convergence is unknown, not declared successful.\n\n'+table(init_view)+'\n\n'
+    text+='## Additional initialization experiment (diagnostic only)\n\nOne run per reference pair, no retries. The additional converted state is scheduled first, followed by the unchanged8current starts and available left/right starts. Four workers, shared0.5s, maxiter100, ftol1e-8, frozen output policy. Extra-first scheduling is diagnostic-only and is not installed in U3. Extra-start convergence/output and the whole multistart selection are separate columns. Pending-at-deadline convergence is unknown, not declared successful.\n\n'+table(init_view)+f'\n\nExtra-start solver success:{converged}/5; converged passage outputs:{converged_pass}/5. The3feasible passage candidates retained by extra starts are not converged passage solutions (two remain at their initial path). All5overall selections are non-passage paths.\n\n'
     text+='## Left/right initialization availability\n\n'+table(availability)+'\n\nReasons are the existing initializer metadata; absence of a candidate-intersecting depth component is not evidence that a geometric detour does not exist.\n\n'
     text+='## F7 direction and memory\n\n+x is evaluation-only. Angles refer to the actual F7mean of unit endpoint directions, with the same age weights. Candidate-level signed/absolute angles, lengths, eligibility and supplementation are preserved in candidate_directions.csv; set-level distributions are below.\n\n'+table(direction)+'\n\n'+table(sets)+'\n\n'
     text+='## Representative snapshots\n\nThe three snapshots with passing references plus the first other pre-passage input were fixed before the new solves. The fourth has no passing reference and therefore no extra-initialization solve. Thin candidate curves: current gray/history cyan; comparator paths dashed; extra-start best and multistart-selected outputs are distinct when different.\n\n'
@@ -65,10 +68,11 @@ def plots(protocol,records):
         r=records[identity];c=r['case'];B=np.asarray(r['original']['plan']['B_pred']);q,_,_,meta,_=mixture(c,B);allpoints=[B[None,:2],*list(q)]
         fig,ax=plt.subplots(figsize=(10,6),constrained_layout=True)
         for i,path in enumerate(q):ax.plot(*path.T,color='.6' if meta[i]['set_index']==0 else 'skyblue',lw=.7,alpha=.5,label='Current candidates' if i==0 else 'Memory candidates' if i==8 else None)
-        for box in configured_obstacles(c['oracle_config']):ax.add_patch(Polygon(corners(box),color='.3',alpha=.3))
+        for box in configured_obstacles(c['oracle_config']):
+            polygon=corners(box);allpoints.append(polygon);ax.add_patch(Polygon(polygon,color='.3',alpha=.3))
         cfg,offset=centered(c['oracle_config']);co=cfg['corridor'];wall=np.array([[co['xmin'],-co['half_width']],[co['xmax'],-co['half_width']],[co['xmax'],co['half_width']],[co['xmin'],co['half_width']],[co['xmin'],-co['half_width']]])+[0,offset];ax.plot(*wall.T,c='.4')
         path=r['original']['plan'].get('path')
-        if path is not None:path=np.asarray(path);allpoints.append(path);ax.plot(*path.T,color='seagreen',lw=2,label='Saved U3')
+        if path is not None:path=np.asarray(path);allpoints.append(path);ax.plot(*path.T,color='seagreen',lw=2.2,zorder=5,label='Saved U3')
         for method,color in (('C0','darkorange'),('C1','steelblue')):
             path=r['base'][method]['plan'].get('path')
             if path is not None:path=np.asarray(path);allpoints.append(path);ax.plot(*path.T,'--',color=color,lw=1.5,label=method+' reference')
@@ -79,7 +83,7 @@ def plots(protocol,records):
             if best.get('path') is not None:
                 path=np.asarray(best['path']);allpoints.append(path);ax.plot(*path.T,':',color=color,lw=2,label=method+' extra-start best')
             if selected.get('path') is not None:
-                path=np.asarray(selected['path']);allpoints.append(path);ax.plot(*path.T,color=color,lw=1.4,label=method+' seeded multistart output')
+                path=np.asarray(selected['path']);allpoints.append(path);ax.plot(*path.T,'-.',color=color,lw=1.2,zorder=4,label=method+' seeded multistart output')
         d=np.asarray(r['direction_world'])*.55;ax.quiver(B[0],B[1],d[0],d[1],angles='xy',scale_units='xy',scale=1,color='crimson',label='F7 intent direction')
         ax.quiver(B[0],B[1],.55,0,angles='xy',scale_units='xy',scale=1,color='black',alpha=.5,label='Evaluation +x')
         ax.scatter(*B[:2],marker='x',c='black',label='U3 application B');points=np.concatenate(allpoints);lo=points.min(axis=0)-.35;hi=points.max(axis=0)+.35
