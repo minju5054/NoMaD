@@ -1,4 +1,4 @@
-# Phase23-O — FROZEN preparation; NOT_EVALUATED
+# Phase23-O — training selection; evaluation not yet executed
 
 
 ## Input/output and pipeline
@@ -83,6 +83,22 @@ This offline dataset contains selected saved candidate arrivals, not a new4Hz cl
 
 Short original FRESH means native suffix<0.3m. Available non-A* OLD geometry may supplement it as originally specified; if it is still short, all8mixture candidates remain and resampling stays inside the available polyline. The report separately gives native-short and still-short active fractions (denominator: plans with an active candidate), and graph endpoint forward displacement conditional on each category. Forward displacement is measured along B heading, not u_ref.
 
-## Preparation status
 
-Configuration FROZEN; weights PENDING. Training242snapshots×8weights; evaluation488(454static+34sudden). Original failure-window samples retained and training input identical. Scheduling estimate about2h08m was approved by the user. The runner will commit training selection evidence before evaluation. No experimental label or weight selection exists yet.32pre-freeze unit tests passed; final verification follows the configuration commit.
+## Frozen weight selection evidence
+
+Timing gate p95≤0.5s first. If all exceed it, choose minimum p95 and flag. Otherwise: fewest oracle collisions, lowest planning-failure fraction, lowest sum of within-group progression-median ranks, then lowest compute p50 (exact ties: lower grid index).
+
+{'all_combinations_exceed_limit': False, 'timing_limit_s': 0.5, 'reason': 'TIMING_GATE_THEN_COLLISION_FAILURE_RANKSUM_P50'}
+
+| index | weights | n | collisions | failure_fraction | progress | p95 | p50 | timing_eligible | progress_rank | score | selected |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 0 | {'time': 0.1, 'goal': 1.0, 'curvature': 0.001} | 242 | 17 | 0.028926 | {'static': 0.11579517170013703, 'sudden': 0.0} | 0.30096 | 0.18404 | True | {'static': 5, 'sudden': 0} | (17, 0.028925619834710745, 5, 0.184038932, 0) | False |
+| 1 | {'time': 0.1, 'goal': 1.0, 'curvature': 0.01} | 242 | 17 | 0.041322 | {'static': 0.12944689898858114, 'sudden': 0.0} | 0.32192 | 0.21186 | True | {'static': 1, 'sudden': 0} | (17, 0.04132231404958678, 1, 0.211859922, 1) | False |
+| 2 | {'time': 0.1, 'goal': 4.0, 'curvature': 0.001} | 242 | 17 | 0.028926 | {'static': 0.11002526136989836, 'sudden': 0.0} | 0.30214 | 0.17409 | True | {'static': 7, 'sudden': 0} | (17, 0.028925619834710745, 7, 0.17409203750000002, 2) | False |
+| 3 | {'time': 0.1, 'goal': 4.0, 'curvature': 0.01} | 242 | 17 | 0.028926 | {'static': 0.13116425998210776, 'sudden': 0.0} | 0.32207 | 0.22027 | True | {'static': 0, 'sudden': 0} | (17, 0.028925619834710745, 0, 0.220271731, 3) | False |
+| 4 | {'time': 1.0, 'goal': 1.0, 'curvature': 0.001} | 242 | 17 | 0.03719 | {'static': 0.11999081310984397, 'sudden': 0.0} | 0.30447 | 0.18927 | True | {'static': 3, 'sudden': 0} | (17, 0.0371900826446281, 3, 0.189270746, 4) | False |
+| 5 | {'time': 1.0, 'goal': 1.0, 'curvature': 0.01} | 242 | 15 | 0.078512 | {'static': 0.1140910071127353, 'sudden': 0.0} | 0.33311 | 0.22063 | True | {'static': 6, 'sudden': 0} | (15, 0.07851239669421488, 6, 0.2206296955, 5) | True |
+| 6 | {'time': 1.0, 'goal': 4.0, 'curvature': 0.001} | 242 | 17 | 0.03719 | {'static': 0.11876785377887125, 'sudden': 0.0} | 0.30885 | 0.19003 | True | {'static': 4, 'sudden': 0} | (17, 0.0371900826446281, 4, 0.1900292345, 6) | False |
+| 7 | {'time': 1.0, 'goal': 4.0, 'curvature': 0.01} | 242 | 16 | 0.082645 | {'static': 0.12331365404039418, 'sudden': 0.0} | 0.32319 | 0.23324 | True | {'static': 2, 'sudden': 0} | (16, 0.08264462809917356, 2, 0.2332364295, 7) | False |
+
+Evaluation label: **NOT_EVALUATED**. Selected weights and this table are committed before evaluation begins.
