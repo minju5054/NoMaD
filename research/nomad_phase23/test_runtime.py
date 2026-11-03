@@ -16,7 +16,7 @@ class Tests(unittest.TestCase):
             c=dict(case_id='TEST',group='static',scene='TEST',index=0,B=[0,.4,0],previous_vw=[.2,0],old_path=None,snapshot_file=str(file),samples_world=np.repeat(q[None,:,:2],8,0).tolist(),evaluation_direction=[1,0],oracle_config=dict(start_pose=[0,.4,0],goal_pose=[1,.4,0],agent_radius_m=.09,obstacles=[],corridor=dict(xmin=-1,xmax=2,half_width=1)))
             p=dict(accepted=True,path=q[:,:2].tolist(),poses=q.tolist(),dt=[.5]*10,active_candidate=0,disposition='FEASIBLE',compute_s=.01)
             from .prediction import prefix
-            p.update(prediction=prefix(c,0.,'constant_twist'),B_pred=c['B'],application_previous_vw=c['previous_vw'])
+            p.update(prediction=prefix(c,0.,'existing_rollout'),B_pred=c['B'],application_previous_vw=c['previous_vw'])
             result=method_record(c,'U00',p,dict(policy=dict(rotation_policy='graph_rotation',short_policy='retain')))
             self.assertGreater(result['row']['depth_clearance_m'],0);self.assertIn('EXACT_CLEARANCE',result['row']['execution_timing_s'])
     def test_exception_and_dead_pid_status(self):
@@ -27,6 +27,23 @@ class Tests(unittest.TestCase):
             state=reconcile(root/'state.json');self.assertEqual(state['status'],'FAILED');self.assertEqual(state['combination'],'U03');self.assertEqual(state['error']['type'],'ValueError');self.assertIsNone(state['pid'])
             (root/'state.json').write_text(json.dumps(dict(pid=99999999,stage='TRAINING',case='TS0000')))
             self.assertEqual(reconcile(root/'state.json')['status'],'FAILED')
+    def test_application_uses_predicted_pose_at_exact_delay(self):
+        from .run import method_record,needs_training
+        from .prediction import prefix
+        self.assertTrue(needs_training(dict(status='FROZEN',weights_status='PENDING',selected=None)))
+        self.assertFalse(needs_training(dict(status='FROZEN',weights_status='FROZEN',selected={})))
+        q=np.c_[np.linspace(0,1.5,11),np.zeros((11,2))]
+        with tempfile.TemporaryDirectory() as tmp:
+            file=Path(tmp)/'field.npz';synthetic(True).save(file)
+            c=dict(case_id='TEST',group='static',scene='TEST',index=0,B=[0,0,0],previous_vw=[.2,0],old_path=q[:,:2].tolist(),snapshot_file=str(file),samples_world=np.repeat(q[None,:,:2],8,0).tolist(),evaluation_direction=[1,0],oracle_config=dict(start_pose=[0,0,0],goal_pose=[1.5,0,0],agent_radius_m=.09,obstacles=[],corridor=dict(xmin=-1,xmax=3,half_width=2)))
+            policy=dict(rotation_policy='graph_rotation',short_policy='retain',baseline_wait_model='existing_rollout')
+            for method,delay in [('C0',.137),('C1',.411),('U',.5)]:
+                waiting=prefix(c,delay);p=dict(accepted=True,path=q[:,:2].tolist(),disposition='TEST',compute_s=.001 if method=='U' else delay,application_delay_s=delay)
+                if method=='U':
+                    path=q.copy();path[:,0]+=waiting['B_pred'][0];p.update(path=path[:,:2].tolist(),poses=path.tolist(),dt=[.75]*10,active_candidate=0,B_pred=waiting['B_pred'],application_previous_vw=waiting['previous_vw'],prediction=waiting)
+                r=method_record(c,method,p,dict(policy=policy));np.testing.assert_array_equal(r['trace'][len(waiting['speeds'])],waiting['B_pred'])
+                self.assertEqual(r['row']['computation_prefix_s'],delay)
+                if method=='U':self.assertGreater(delay,p['compute_s'])
     def test_signal_status(self):
         with tempfile.TemporaryDirectory() as tmp:
             code="from nomad_phase23.runtime import Journal,ExecutionSignal\nimport time,sys\ntry:\n with Journal(sys.argv[1]) as j:\n  j.update('ROLLOUT','TS0000','U00');time.sleep(30)\nexcept ExecutionSignal as e:sys.exit(128+e.signum)\n"

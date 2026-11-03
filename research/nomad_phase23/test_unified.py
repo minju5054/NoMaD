@@ -90,7 +90,7 @@ class Tests(unittest.TestCase):
             file=Path(tmp)/'snapshot.npz';synthetic().save(file)
             samples=np.repeat(np.c_[np.linspace(0,1.,8),np.zeros(8)][None],8,0)
             c=dict(B=[0.,0.,0.],previous_vw=[.2,0.],samples_world=samples,snapshot_file=str(file),old_path=None)
-            r=plan(pool,c,dict(time=.1,goal=1.,curvature=.001),dict(short_policy='retain',kinematic_sigma=.03,prediction_mode='continue_current_v_pp'))
+            r=plan(pool,c,dict(time=.1,goal=1.,curvature=.001),dict(short_policy='retain',kinematic_sigma=.03,prediction_mode='existing_rollout'))
             self.assertGreaterEqual(r['initialization_count'],8)
             if r['accepted']:
                 self.assertLessEqual(r['selected']['received_ns'],r['deadline_ns']);self.assertEqual(np.shape(r['poses']),(11,3));np.testing.assert_allclose(r['poses'][0],r['B_pred'])

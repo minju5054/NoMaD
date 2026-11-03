@@ -21,8 +21,9 @@ def write(f,x):
     f=Path(f);f.parent.mkdir(parents=True,exist_ok=True);tmp=f.with_suffix('.tmp');tmp.write_text(json.dumps(clean(x),indent=2)+'\n');tmp.replace(f)
 def grid(p):
     return [dict(zip(p['grid'],values)) for values in itertools.product(*p['grid'].values())]
+def needs_training(p):return p.get('weights_status')!='FROZEN'
 def definition_hash(p):
-    mutable={'status','selected','selection_evidence','definition_sha256'}
+    mutable={'status','weights_status','selected','selection_evidence','definition_sha256'}
     return hashlib.sha256(json.dumps({k:v for k,v in p.items() if k not in mutable},sort_keys=True,separators=(',',':')).encode()).hexdigest()
 def commit(message,paths):
     assert not subprocess.check_output(['git','diff','--cached','--name-only'],cwd=ROOT,text=True).strip()
@@ -34,12 +35,8 @@ def method_record(c,name,plan,p,journal=None):
         if name.startswith('U'):
             waiting=plan['prediction'];next_case=dict(c,B=plan['B_pred'],previous_vw=plan['application_previous_vw'])
             return concatenate(waiting,unified_simulate(next_case,plan,p['policy']))
-        model=p['policy'].get('baseline_wait_model')
-        if model is None:raise ValueError('Register baseline computation motion before execution')
-        if model=='fixed_B':
-            plan['application_delay_s']=plan['compute_s'];plan['application_pose']=c['B']
-            return baseline_guarded(c['B'],plan['path'],c['previous_vw'][0]) if plan['accepted'] else stop_rollout(c['B'],c['previous_vw'][0])
-        waiting=prefix(c,plan['compute_s'],'brake_wait');plan['application_pose']=waiting['B_pred'];plan['application_delay_s']=plan['compute_s']
+        assert p['policy']['baseline_wait_model']=='existing_rollout'
+        waiting=prefix(c,plan['application_delay_s'],'existing_rollout');plan['application_pose']=waiting['B_pred']
         future=dict(c,B=waiting['B_pred'],previous_vw=waiting['previous_vw'])
         follow=baseline_guarded(future['B'],plan['path'],future['previous_vw'][0]) if plan['accepted'] else stop_rollout(future['B'],future['previous_vw'][0])
         return concatenate(waiting,follow)
@@ -63,7 +60,7 @@ def method_record(c,name,plan,p,journal=None):
         completed_initializations=sum(r.get('completed_before_cutoff',False) for r in plan.get('attempts',[])),pending_initializations=plan.get('pending_at_cutoff',0),
         failure_obstacle_active=sum(r.get('active_obstacle') or 0 for r in plan.get('attempts',[])) if not plan['accepted'] else 0,
         failure_kinematic_active=sum(r.get('active_kinematic') or 0 for r in plan.get('attempts',[])) if not plan['accepted'] else 0,
-        computation_prefix_s=result.get('computation_prefix_s',0.),computation_prefix_distance_m=result.get('computation_prefix_distance_m',0.),
+        computation_prefix_s=result.get('computation_prefix_s',0.),computation_prefix_distance_m=result.get('computation_prefix_distance_m',0.),application_delay_s=plan.get('application_delay_s',0.),
         execution_timing_s=timing,rollout_ticks=len(result['speeds']),rollout_tick_cap=result['tick_cap'],**reaction(c,plan,result,c.get('reaction_reference')),**stop_metrics(plan,result),**values)
     return dict(plan=plan,row=row,trace=result['poses'].tolist())
 def case_run(pool,c,p,mapping,deadline,replanners,journal=None):
@@ -120,7 +117,8 @@ def select_weights(p,manifest):
     winner,evidence=rank_weights(scores);return winner['weights'],evidence
 
 def run_body(a,p,m,journal):
-    assert p.get('runtime_scope_confirmed',False),'Runtime estimate exceeds2h; wait for the user scope decision'
+    assert p.get('runtime_scope_confirmed',False),'Wait for the user runtime scope decision'
+    assert p['status']=='FROZEN','Freeze the preparation protocol before any training'
     pending=[k for k,v in p['policy'].items() if v is None]
     assert a.all and not pending,'Resolve and preregister missing execution/input/tuning definitions before running'
     assert p['selection_rule']=='timing_gate_collision_failure_rank_sum_p50','Unregistered selection rule'
@@ -149,13 +147,13 @@ def run_body(a,p,m,journal):
         for _ in range(4):q.get(timeout=90)
         for f in futures:f.result()
         replanners={};order=lambda items:sorted(items,key=lambda c:(c['run'],c['tick'],c['case_id']))
-        if p['status']!='FROZEN':
+        if needs_training(p):
             for c in order(m['training']):
                 state('TRAINING',c['case_id'])
                 if not case_run(pool,c,p,{},deadline,replanners,journal):state('BUDGET_STOP_TRAINING',c['case_id']);print('[budget] training checkpoint saved');return
                 print('[training]',c['case_id'],flush=True)
             selected,evidence=select_weights(p,m);write(OUT/'selection.json',dict(selected=selected,**evidence))
-            p.update(selected=selected,selection_evidence=evidence,status='FROZEN');write(HERE/'protocol.json',p)
+            p.update(selected=selected,selection_evidence=evidence,status='FROZEN',weights_status='FROZEN');write(HERE/'protocol.json',p)
             write_selection_report(p)
             assert not list((OUT/'evaluation').glob('*.json')),'Evaluation must follow frozen selection'
             commit('Freeze Phase23 selected weights and selection report before evaluation',[HERE,OUT/'selection.json',ROOT/'docs/PHASE23O_UNIFIED.md'])

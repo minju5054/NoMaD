@@ -1,6 +1,6 @@
 {
   "phase": "23-O",
-  "status": "AMENDMENT_PENDING_DETAILS",
+  "status": "FROZEN",
   "deadline_s": 0.5,
   "pool_workers": 4,
   "solver": {
@@ -33,8 +33,8 @@
     "speed_interpolation": "linear_at_translating_segment_midpoint_arclength",
     "rotation_threshold_m_s": 0.01,
     "rotation_final_step": "same sign, magnitude capped only on final9Hz step to land at target heading",
-    "prediction_mode": null,
-    "baseline_wait_model": null
+    "prediction_mode": "existing_rollout",
+    "baseline_wait_model": "existing_rollout"
   },
   "selection_rule": "timing_gate_collision_failure_rank_sum_p50",
   "fixed": {
@@ -63,7 +63,7 @@
   ],
   "input": "NoMaD8 + source depth V1 SDF + current pose/speed + actual executing path for0.5s prediction + permitted OLD remainder for policy prior; predicted application pose fixesx0. U has no A* call, u_ref, trigger, oracle or Topomap input.",
   "training": "Phase18 indices66-69:3 uniform FRESH/run, plus26 frozenPhase21 tuning sudden cases; 8 weight combinations",
-  "evaluation": "Phase18 indices70-73:10 uniform+5 final10s forfailed runs, deduplicated; frozen22-O24 +Phase22 rerunL2B triggers",
+  "evaluation": "Phase18 indices70-73:5 uniform+unchanged5 final10s for failed runs, deduplicated;454static+34sudden=488. Training242unchanged.",
   "selection_order": [
     "p95<=0.5 eligible; if none choose minimum p95 and flag",
     "oracle collision count minimum",
@@ -85,7 +85,7 @@
     "graph endpoint displacement along B heading conditional on each"
   ],
   "U_ASTAR_history_exclusion": "A*-derived OLD withheld from policy supplementation and initialization. Actual executing OLD may be used only to predict unavoidable computation-window motion; no A* is called by U.",
-  "manifest_sha256": "772962e4d8644c61b53424513108a431e4c2c5c74ccf69c144285929c07a0b36",
+  "manifest_sha256": "77ae4a223467c1c1ce5cca8e68d384d7c7325142a3821683cb39166f95e8e7a3",
   "source_sha256": {
     "research/nomad_phase20b/config.py": "ca3238ac3e3423e10616147171c739a11d039a2e702b424092e9d68af00290ca",
     "research/nomad_phase20b/runtime.py": "9f914f993b905456235b92f5c91ed6f5fb7267c956c2f3f54cc6c371b3298268",
@@ -287,13 +287,13 @@
     "research/nomad_phase22/protocol.json": "783d62bc92967215c3215deb1d8ac486b47182a8fbffde3f0b9c7efa81d0f912",
     "research/nomad_phase23/recent.py": "1d339c45a236ff26f6110a337b5d86ffc40325d644696a91cfe668efe7abbc85",
     "research/nomad_phase23/__init__.py": "01c6edb169ead448eeee6ebe9a36fd9e1a9c8bb387ed578f80d0f398db9ff035",
-    "research/nomad_phase23/baselines.py": "2f0b81e5174d4964fb095a051d37fc7b1ebd8600b3685adefac49befe04d2750",
-    "research/nomad_phase23/test_unified.py": "718b6d03927ec52a276e7d2f5ca3418d0723a6297bbf72c29e1a70d90fa28cfd",
+    "research/nomad_phase23/baselines.py": "877516af309bb656aced1424d4a229dd75db0bc620f0fb2585b061cc9c042403",
+    "research/nomad_phase23/test_unified.py": "f7bc7a2ec2f3adbaab52d381512ffc98e5dedb75b644c0435e1dc171c65b6fb4",
     "research/nomad_phase23/graph.py": "0a55f3660e0d7a5d6614f6006c582073b69df9d0b961d005504b5c9c4ce15212",
     "research/nomad_phase23/planner.py": "361441d5fda7fd6a86a135f3c369a69de24b514246fb6770000ed7ce67a9a89c",
-    "research/nomad_phase23/inputs.py": "35a78e8a09a80c703cc2ee0daf0a9f85a807cc77450459b04ab4784a828f8485",
-    "research/nomad_phase23/report.py": "21e81ba2273a916b5ceed8851c26c1cfb1612a7f1556e72f0e62153fc10b4160",
-    "research/nomad_phase23/run.py": "22e3910675a607f2fd20c34d1cf05d26a833d8d5113cbb3c0c0b44697d98c630",
+    "research/nomad_phase23/inputs.py": "7156525b6aeaf0e7901785394551d373bcaa141b7b74bdf643dc8e0fb87722cc",
+    "research/nomad_phase23/report.py": "3b8f7b69dbc9441ea08d7f6a1d3348d7bcdf85578ca17c07d6802237f5068249",
+    "research/nomad_phase23/run.py": "323379be7fd8a850d0609aa4cf4fb9830c0cef4a530be1807c8fc9f5b2de4ab7",
     "research/nomad_phase23/rollout.py": "33cb1433bec1fe51369c260799c7fd0eb1a8263622a155926a00c2744b5be439",
     "research/nomad_phase18d/diagnose.py": "cadd6cf4dec7f985ba56374c7539512d5bb0dd60c60a85e9980e8dd90f189ee6",
     "research/nomad_phase18d/test_phase18d.py": "54fc2f9e6f37928ddc5b9bb07b7f82da155b74d6af11c003e4078849f0578f66",
@@ -334,21 +334,21 @@
     "research/nomad_phase22/l2b_launch_check.py": "56599ccb2d4f3668565a7f28e4f879f62fc8bce39d6fae6e5241678f5f5afffd",
     "research/nomad_phase23/estimate.py": "ee84733f7a0d2f13b43f6d519db522da406d790780b005816a63db76caeae1be",
     "research/nomad_phase23/runtime.py": "0f3beb3f086291dfe32daf1515cc9ddae8bc75f6bfdd9b41db675065b4af9823",
-    "research/nomad_phase23/test_runtime.py": "307ebc7d2869faa5fdae9bc97d829e72d473b08e368466da7e3f1018ae2348cd",
+    "research/nomad_phase23/test_runtime.py": "5899e4a03ad0ab9e3748b447252a907333c1e246f944346a5af2939525fa2712",
     "research/nomad_phase23/benchmark.py": "7105f0f8ce07541b41d28fb3eee8cb2ff12d2beab2885073774c0c6e70841104",
     "research/nomad_phase23/optimized.py": "069f1c651640e5e32593825b819dffdfb4e6662d839d560047fbfc7bc1fd053d",
     "research/nomad_phase23/solver_check.py": "c71db93f8945e937a085bc6e3796b811b22c977f7aac3015a81f2a8375c04851",
     "research/nomad_phase23/test_solver_check.py": "8bd0c0cdb669512c1cdba97c385da1cd3ccde790aa1f4298d9d375d836f374a0",
     "research/nomad_phase23/solver_check_report.py": "72d7b22185900824bb96469656fdddc359bb1e8e21d3d53d07fe1eead6c6f484",
     "research/nomad_phase23/anytime.py": "2f94c55e41674f37380612a5435895c0802db1d2df411843ecc911826cb430d3",
-    "research/nomad_phase23/prediction.py": "2d80ef3098a876172d3bb833143a81a7ed44ebce5ab7a292bb08d1dd5a0e6770",
+    "research/nomad_phase23/prediction.py": "69e6a69c954e3b0aabc25a08e461b10afdb3869715b6f6e524d676575dfc1b40",
     "research/nomad_phase23/response.py": "37607e3ad8e0d6876e6dd080e47af56e71bf21b244aeaf7276c76e1b964caa2d",
-    "research/nomad_phase23/test_anytime.py": "adc3722af7a7878a343d4743717c8b2f19e3f24196d54c70a63cab47939c6598",
-    "research/nomad_phase23/context.py": "6dbe2e68334f830013b04ebc4d2214edd74397ad1791e0e40747733e8c5192f0",
+    "research/nomad_phase23/test_anytime.py": "86aa05ef4fe5add12dcc4aeff345e987eb70341d55c53aa11190c3f253499836",
+    "research/nomad_phase23/context.py": "4d36ab0f78d59beb4d9c0acfd3ac43604b1f29518090beed4175324a1ddd75b7",
     "research/nomad_phase23/amendment_estimate.py": "3ac95ee62afba868cb944989c3903b6170da004071453f0fe464a1e4639ee040"
   },
   "selection_evidence": null,
-  "definition_sha256": "32f4328baa5755c4d4be2d13dcaa7a9141f0e7761a0d1275e8ceeeacccc02d9c",
+  "definition_sha256": "b83dcec624db2db6c81608745cc7e335e2a8a373d6eedb246d6a02f992e24c62",
   "execution_repair": {
     "base_commit": "4916cbf",
     "kind": "runtime bug and observability only",
@@ -375,7 +375,7 @@
     "variants_selected": "ii",
     "diagnostic_protocol": "research/nomad_phase23/solver_check_protocol.json"
   },
-  "runtime_scope_confirmed": false,
+  "runtime_scope_confirmed": true,
   "amendment_050": {
     "base_commit": "1977f8a",
     "reason": "User adopted(ii) before tuning/evaluation: unlimited feasible29/30 vs250ms delivered19/30.",
@@ -383,15 +383,43 @@
     "prediction_horizon_s": 0.5,
     "anytime": "Cheapest feasible iterate received by parent before cutoff; late output discarded; brake only if none.",
     "timing_criterion_s": 0.5,
-    "open_definitions": [
-      "Prediction: current-v PP motion versus full saved executor-state reconstruction",
-      "C0/C1: original online braking wait versus prior offline immediate fixed-B rollout"
-    ],
-    "proposed_prediction_mode": "continue_current_v_pp",
-    "proposed_baseline_wait_model": "brake_wait",
+    "open_definitions": [],
+    "proposed_prediction_mode": null,
+    "proposed_baseline_wait_model": null,
     "full_tuning_executed": false,
     "evaluation_executed": false,
-    "diagnostics": "Sparse response upper bounds; no future NoMaD/depth or stop waiting fabricated; maxiter diagnostics censored for pending starts."
+    "diagnostics": "Sparse response upper bounds; no future NoMaD/depth or stop waiting fabricated; maxiter diagnostics censored for pending starts.",
+    "user_motion_decision": "2026-11-03: all methods continue OLD with the existing rollout executor during computation; apply new path at its resulting pose."
   },
-  "input_context_sha256": "f4e82d9d4966660ce98b736baddd05a1d5b721b0985d16b24d3771e56ff45dee"
+  "input_context_sha256": "9344e0844dfb5fdf8f9205869da22a0e111264a1b00feff89d60c19ad55348ac",
+  "weights_status": "PENDING",
+  "motion_registration": {
+    "U_application_s": 0.5,
+    "U_early_finish_applied_at_s": 0.5,
+    "U_no_feasible": "Continue OLD until0.5s; only then bounded braking from predicted pose/speed",
+    "comparator_application": "SAFE_SAMPLE at original saved B; R2/R3/A* measured ready time within shared1s; late results discarded",
+    "comparator_deadline_s": 1.0,
+    "old_executor": "Existing protected22-O2 PP/SP rollout with saved installed-path mode; existing Phase23 PP/graph-speed rollout when explicit OLD pose/dt supplied. Never invent native waypoint timing.",
+    "old_alignment": "Resume OLD state; no artificial replace_path alignment trigger. New C0/C1 paths retain original SPAlignment replacement rule.",
+    "integration": "Original72Hz steps and9Hz commands. Fractional deadline uses the same current command and original exact SE(2) integrator.",
+    "ended_old": "Original endpoint/timeout followed by existing bounded braking/hold only if OLD already ends before output.",
+    "fixed_snapshot_limit": "Recorded OLD/controller state is the common input; no new4Hz candidate stream, future observations, or feedback is synthesized."
+  },
+  "sampling_amendment": {
+    "prior_manifest_sha256": "772962e4d8644c61b53424513108a431e4c2c5c74ccf69c144285929c07a0b36",
+    "before": 829,
+    "after": 488,
+    "static_before": 795,
+    "static_after": 454,
+    "training_unchanged": true,
+    "failure_window5_unchanged": true,
+    "user_decision": "2026-11-03; runtime reduction before tuning/evaluation",
+    "approved_runtime_minutes": 128.10989868577073,
+    "decision": "User approved488evaluation,242training despite estimate above2h",
+    "prior_manifest_file": "research/results/phase23o/registration_history/4eb8f7c_manifest.json"
+  },
+  "freeze_stages": {
+    "configuration": "FROZEN before any tuning",
+    "weights": "PENDING; train then commit selected weights/FROZEN evidence before any evaluation"
+  }
 }

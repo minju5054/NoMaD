@@ -5,6 +5,7 @@ import numpy as np
 from nomad_phase20d.pool import initialize,ping
 from .anytime import collect,select_messages
 from .prediction import prefix,concatenate
+from .rollout import baseline_simulate,unified_simulate
 from .response import reaction,avoiding_output
 
 def fake_worker(payload,channel):
@@ -18,13 +19,30 @@ def fake_worker(payload,channel):
 class Tests(unittest.TestCase):
     def test_predicted_pose_and_same_motion_prefix(self):
         c=dict(B=[0.,0.,0.],previous_vw=[.2,0.],tick=0,baseline_old_path=[[0.,0.],[2.,0.]])
-        r=prefix(c,.5,'continue_current_v_pp');np.testing.assert_allclose(r['B_pred'],[.1,0,0],atol=1e-12)
-        self.assertEqual(len(r['speeds']),36);self.assertTrue(all(v==.2 for v in r['speeds']));self.assertFalse(r['future_log_used'])
-        later=dict(poses=np.array([[.1,0,0],[.2,0,0]]),speeds=[.2],omegas=[0.],duration_s=1/72,completed=True,distance_m=.1,commands=[],tick_cap=2)
+        r=prefix(c,.5);original=baseline_simulate(c['B'],c['baseline_old_path'],.2)
+        np.testing.assert_array_equal(r['poses'],original['poses'][:37])
+        self.assertEqual(len(r['speeds']),36);self.assertGreater(r['speeds'][0],.2);self.assertFalse(r['future_log_used'])
+        b=np.array(r['B_pred']);later=dict(poses=np.array([b,b+[.1,0,0]]),speeds=[.2],omegas=[0.],duration_s=1/72,completed=True,distance_m=.1,commands=[],tick_cap=2)
         joined=concatenate(r,later);np.testing.assert_allclose(joined['poses'][36],r['poses'][-1],atol=1e-15);self.assertEqual(joined['computation_prefix_ticks'],36)
     def test_anytime_cost_and_late_rejection(self):
         messages=[dict(kind='FEASIBLE',index=i,cost=cost,ready_ns=ready,published_ns=ready,received_ns=received) for i,cost,ready,received in [(0,5,10,11),(1,2,20,21),(2,0,30,101)]]
         self.assertEqual(select_messages(messages,100)['index'],1);self.assertIsNone(select_messages([],100))
+    def test_fractional_deadline_uses_original_command(self):
+        from nomad_isaac.common import integrate_se2
+        c=dict(B=[0.,0.,0.],previous_vw=[.2,0.],baseline_old_path=[[0.,0.],[.7,.12],[1.5,.4]])
+        full=baseline_simulate(c['B'],c['baseline_old_path'],.2);delay=.137;r=prefix(c,delay);n=int(delay*72)
+        exact=integrate_se2(full['poses'][n],full['speeds'][n],full['omegas'][n],delay-n/72)
+        np.testing.assert_array_equal(r['poses'][:n+1],full['poses'][:n+1]);np.testing.assert_allclose(r['B_pred'],exact,rtol=0,atol=1e-15)
+        self.assertAlmostEqual(sum(r['step_dt_s']),delay)
+    def test_existing_graph_speed_and_rotation_are_reused(self):
+        q=np.c_[np.r_[0,0,np.linspace(.1,.9,9)],np.zeros(11),np.r_[0,np.full(10,.2)]]
+        plan=dict(accepted=True,poses=q.tolist(),dt=[.5]*10)
+        c=dict(B=[0.,0.,0.],previous_vw=[0.,0.],executing_graph=plan)
+        original=unified_simulate(c,plan,dict(rotation_policy='graph_rotation'));r=prefix(c,.5)
+        np.testing.assert_array_equal(r['poses'],original['poses'][:37]);self.assertTrue(all(v==0 for v in r['speeds']))
+    def test_old_path_does_not_retrigger_alignment(self):
+        c=dict(B=[0.,0.,0.],previous_vw=[.2,0.],baseline_old_path=[[-.3,0],[1.,0.]])
+        r=prefix(c,.5);self.assertGreater(r['B_pred'][0],.1);self.assertTrue(all(w==0 for w in r['omegas']))
     def test_parent_does_not_wait_for_late_worker(self):
         ctx=mp.get_context('spawn');queue=ctx.Queue()
         with ProcessPoolExecutor(max_workers=4,mp_context=ctx,initializer=initialize,initargs=(queue,)) as pool:

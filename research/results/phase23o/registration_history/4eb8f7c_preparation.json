@@ -1,0 +1,47 @@
+{
+  "status": "HOLD_RUNTIME_OVER_2H_AND_PENDING_MOTION_DETAILS",
+  "tests": {
+    "passed": 28,
+    "total": 28
+  },
+  "training_records": 0,
+  "evaluation_records": 0,
+  "full": {
+    "training_snapshots": 242,
+    "grid_combinations": 8,
+    "evaluation_static": 795,
+    "evaluation_sudden": 34,
+    "seconds": 9713.12252480477,
+    "hours": 2.6980895902235473,
+    "over_2h": true,
+    "components": {
+      "U_planning_s": 1458.2657862157794,
+      "baseline_planning_allowance_s": 1898.6000000000001,
+      "postprocessing_s": 3810.3860144662353,
+      "timestamp_replay_s": 483.24621916180257,
+      "report_io_allowance_s": 120.0
+    }
+  },
+  "static5": {
+    "training_snapshots": 242,
+    "grid_combinations": 8,
+    "evaluation_static": 454,
+    "evaluation_sudden": 34,
+    "seconds": 7686.593921146245,
+    "hours": 2.1351649780961792,
+    "over_2h": true,
+    "components": {
+      "U_planning_s": 1278.4217959446833,
+      "baseline_planning_allowance_s": 1148.4,
+      "postprocessing_s": 3119.2071218105093,
+      "timestamp_replay_s": 483.24621916180257,
+      "report_io_allowance_s": 120.0
+    }
+  },
+  "reduction_selected": false,
+  "pending_definitions": [
+    "Prediction: current-v PP motion versus full saved executor-state reconstruction",
+    "C0/C1: original online braking wait versus prior offline immediate fixed-B rollout"
+  ],
+  "protocol_sha256": "847ba30a6e54f987d1b09281dd685c03c0965a69550e80ab5c60d3acd4398287"
+}

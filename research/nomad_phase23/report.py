@@ -30,6 +30,8 @@ def summaries(rows):
         rr=[r for r in rows if r['group']==item['group'] and r['method']==item['method']]
         known=sum(r.get('completed_initializations',0) for r in rr)
         item.update(stop_snapshot_fraction=sum(r.get('stop_requested',False) for r in rr)/len(rr),
+            application_delay_p50_s=float(np.median([r.get('application_delay_s',0.) for r in rr])),
+            application_delay_p95_s=float(np.quantile([r.get('application_delay_s',0.) for r in rr],.95)),
             deceleration_stop_fraction=sum(r.get('deceleration_stop_occurred',False) for r in rr)/len(rr),
             observed_stationary_median_s=float(np.median([r.get('observed_stationary_s',0.) for r in rr])),
             braking_duration_median_s=float(np.median([r.get('braking_duration_s',0.) for r in rr])),
@@ -129,7 +131,11 @@ EXECUTION='''
 
 The user selected solver-check variant(ii): the shared cutoff and tuning/decision timing thresholds change from0.25s to0.5s before evaluation. Diagnostic feasible output was29/30without a limit, versus19/30delivered within0.25s. Eight policy starts plus available side starts,4workers, factor definitions, the8weight grid, maxiter100 and ftol1e-8 stay fixed. Optimized implementation SHA256:069f1c651640e5e32593825b819dffdfb4e6662d839d560047fbfc7bc1fd053d. Diagnostic results are not evaluation results.
 
-U fixes x0 to the predicted application pose0.5s ahead. The current-path computation prefix is included in collision, progress, duration and distance evaluation. Compute wall time is reported without rounding or clipping; it is separate from the scheduled0.5s application delay. Only feasible messages received before cutoff are eligible. Late paths are discarded, while worker exceptions still propagate. Exact prediction and comparator computation-motion modes are recorded in protocol policy; execution refuses unset modes.
+U fixes x0 to the predicted application pose0.5s ahead. The current-path computation prefix is included in collision, progress, duration and distance evaluation. Compute wall time is reported without rounding or clipping; it is separate from the scheduled0.5s application delay. Only feasible messages received before cutoff are eligible. Late paths are discarded, while worker exceptions still propagate. The2026-11-03user decision fixes all computation prefixes to the existing rollout code/controller and exact72Hz SE(2) integrator: no constant-speed or constant-twist surrogate. U applies exactly0.5s later even if a feasible result arrives earlier; no-feasible braking starts only at that application pose. C0/C1 retain FRESHEST selection at the saved B and apply R2/R3/A* output after measured computation, with a shared1s delivery cap and late paths rejected. Separate work-time and application-delay distributions are reported.
+
+The recorded OLD input contains XY geometry and current speed, not invented native timestamps. Its prefix uses frozen PP/SP, resuming the installed path and any saved SP alignment mode rather than triggering a fresh alignment on OLD. An explicit pose/dt OLD, when supplied, reuses the existing PP/graph-speed rollout instead. Newly applied U paths always use graph speeds. The bounded prefix reuses the existing rollout function bytecode and changes only its horizon; a fractional final72Hz interval uses that same controller command with the existing exact integrator. If OLD ends before computation finishes, its existing bounded braking/hold is used; no synthetic forward extension is invented.
+
+Before any tuning/evaluation, the user approved the runtime reduction: static evaluation uniform samples10→5per run, preserving all5final10s failure-window samples and deduplication. Evaluation is454static+34sudden=488instead of829; training242snapshots and8weight combinations remain byte-identical. This was a scheduling amendment (about2h08m versus2h42m), not selection based on method outcomes. Original manifests/context are preserved under registration_history. Protocol settings are FROZEN before running; weights_status remains PENDING until training selects and commits the weights, before any evaluation.
 
 ## Descriptive diagnostics
 

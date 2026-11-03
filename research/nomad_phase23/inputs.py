@@ -14,7 +14,7 @@ def evenly(events,n):
     return sorted(set(int(np.argmin(np.abs(times-t))) for t in targets))
 
 class Builder:
-    def __init__(self):self.hashes={};self.excluded=[];self.cached=None
+    def __init__(self,evaluation_uniform=10):self.hashes={};self.excluded=[];self.cached=None;self.evaluation_uniform=evaluation_uniform
     def track(self,p):
         p=Path(p).resolve();self.hashes.setdefault(str(p),sha256_file(p));return p
     def load(self,run):
@@ -51,7 +51,7 @@ class Builder:
             if r['index'] not in range(66,74):continue
             if r['technical_validation']!='PASS':self.excluded.append(dict(run=r['output'],reason='TECHNICAL_FAILURE'));continue
             d=self.load(r['output']);events=[e for e in d['events'] if 'application_sim_s' in e and 'overnight_metric_samples' in e and 'topomap' in e]
-            split='training' if r['index']<70 else 'evaluation';n=3 if split=='training' else 10;chosen=evenly(events,n);failure_ids=[]
+            split='training' if r['index']<70 else 'evaluation';n=3 if split=='training' else self.evaluation_uniform;chosen=evenly(events,n);failure_ids=[]
             if split=='evaluation' and not r['success']:
                 tail=[(i,e) for i,e in enumerate(events) if e['application_sim_s']>=r['duration_s']-10]
                 failure_ids=[tail[i][0] for i in evenly([e for _,e in tail],5)];chosen=sorted(set(chosen+failure_ids))
@@ -85,7 +85,7 @@ class Builder:
         examples=[max((c for c in evaluation if c['run']==failed['run']),key=lambda c:c['tick'])['case_id'],
             next(c['case_id'] for c in evaluation if c['scene']=='L2A' and c['index']==111 and c['source_method']=='M3_GRAPH'),
             min((c for c in evaluation if c['scene']=='LC'),key=lambda c:np.linalg.norm(np.array(c['B'][:2])-[3.3,.9]))['case_id']]
-        return dict(training=train,evaluation=evaluation,disjoint=True,input_hashes=self.hashes,excluded=self.excluded,examples=examples,training_sampling='3 uniformly spaced FRESH per Phase18 run; all26 frozen sudden training cases',evaluation_sampling='10 uniformly spaced FRESH per run +5 uniformly spaced final10s FRESH for failed runs; duplicates deduplicated')
+        return dict(training=train,evaluation=evaluation,disjoint=True,input_hashes=self.hashes,excluded=self.excluded,examples=examples,training_sampling='3 uniformly spaced FRESH per Phase18 run; all26 frozen sudden training cases',evaluation_sampling=f'{self.evaluation_uniform} uniformly spaced FRESH per run +5 uniformly spaced final10s FRESH for failed runs; duplicates deduplicated')
 
 def main():
     OUT.mkdir(exist_ok=True);file=OUT/'manifest.json';assert not file.exists(),'Preserve existing manifest';m=Builder().build();file.write_text(json.dumps(m,indent=2)+'\n')

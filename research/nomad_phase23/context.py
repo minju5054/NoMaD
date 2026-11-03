@@ -6,13 +6,26 @@ from nomad_isaac.common import ROOT,sha256_file
 from nomad_phase0.chunk_report import trace
 from nomad_phase15b.depth import Snapshot
 from nomad_phase22.drive_geometry import rotation
+from nomad_phase20.execution import SPAlignment
 
 OUT=ROOT/'research/results/phase23o'
 def prepare():
     m=json.loads((OUT/'manifest.json').read_text());cases=m['training']+m['evaluation'];contexts={};hashes={}
     for run in sorted({c['run'] for c in cases}):
         cc=[c for c in cases if c['run']==run];p=Path(run)
-        for c in cc:contexts[c['case_id']]=dict(executing_path=c.get('baseline_old_path',c.get('old_path')))
+        commands_file=p/'phase20_commands.jsonl';commands=[]
+        if commands_file.exists():
+            commands=[json.loads(x) for x in commands_file.read_text().splitlines()];hashes[str(commands_file)]=sha256_file(commands_file)
+        for c in cc:
+            path=c.get('baseline_old_path',c.get('old_path'));state=dict(mode='GO',source='OLD already installed; no new alignment trigger')
+            prior=[r for r in commands if r['tick']<c['tick'] and r.get('SP')]
+            if prior and path is not None:
+                latest=prior[-1];mode=latest['SP']['mode']
+                if mode in ('BRAKE','ROTATE'):
+                    start=next(r for r in prior if r.get('path_source_id')==latest.get('path_source_id'))
+                    ctl=SPAlignment();ctl.replace_path(path,start['pose'],start['before_vw'][0])
+                    if ctl.target_yaw is not None:state=dict(mode=mode,target_yaw=ctl.target_yaw,source='Saved prior SP mode and original path-application heading target',source_tick=latest['tick'])
+            contexts[c['case_id']]=dict(executing_path=path,executing_state=state)
         if cc[0]['group']!='sudden':continue
         rr,poses=trace(p);ns=np.array([int(r['monotonic_ns']) for r in rr],dtype=np.int64);t=np.array([float(r['simulation_time_s']) for r in rr]);s=np.r_[0.,np.cumsum(np.linalg.norm(np.diff(poses[:,:2],axis=0),axis=1))]
         file=p/'depth/updates.jsonl';updates=[json.loads(x) for x in file.read_text().splitlines()];hashes[str(file)]=sha256_file(file)
