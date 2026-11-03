@@ -1,4 +1,4 @@
-# Phase23-O2 — registered preparation; NOT_EVALUATED
+# Phase23-O2 — frozen tuning selection; evaluation pending
 
 
 ## Input/output and the three changes
@@ -29,8 +29,20 @@ All methods retain the23-O computation-motion rules. U/U2 applies exactly0.5s af
 
 Historical-active and prior-departure fractions use accepted U2plans as denominator. Departure means at least one of10future nodes differs from its active prior by>=0.30m; mean and maximum displacement are also recorded. Failure constraints refer to the latest received iterate; deadline-pending starts are censored. Time bounds are listed separately from obstacle and speed/angular constraints. Report both collision-free planned box-passage paths and actual fixed-path rollout passage; neither is a goal-success claim.
 
-## Preparation verification
+## Selection evidence
 
-7/7unit tests pass, including finite-difference Cauchy/soft-acceleration gradients, memory frames/age weights, A* OLD rejection, synthetic4worker anytime and fake report tables/plots. Maximum objective gradient error5.22e-8; constraint Jacobian error2.70e-10. Frozen U sources and prior results are unchanged.
+| index | weights | n | collisions | failure_fraction | progress | p95 | p50 | timing_eligible | progress_rank | score | selected |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 0 | {'c': 1.0, 'T_m': 0.5} | 242 | 10 | 0.16116 | {'static': 0.09011269266081057, 'sudden': 0.0} | 0.41552 | 0.31853 | True | {'static': 8, 'sudden': 0} | (10, 0.16115702479338842, 8, 0.31852747800000003, 0) | True |
+| 1 | {'c': 1.0, 'T_m': 1.0} | 242 | 14 | 0.15702 | {'static': 0.09563782057362513, 'sudden': 0.0} | 0.40912 | 0.31492 | True | {'static': 6, 'sudden': 0} | (14, 0.15702479338842976, 6, 0.3149202875, 1) | False |
+| 2 | {'c': 1.0, 'T_m': 2.0} | 242 | 13 | 0.15289 | {'static': 0.09655594654235293, 'sudden': 0.0} | 0.40471 | 0.31507 | True | {'static': 5, 'sudden': 0} | (13, 0.15289256198347106, 5, 0.3150682655, 2) | False |
+| 3 | {'c': 2.0, 'T_m': 0.5} | 242 | 13 | 0.1281 | {'static': 0.09779240705046893, 'sudden': 0.0} | 0.40951 | 0.30922 | True | {'static': 4, 'sudden': 0} | (13, 0.128099173553719, 4, 0.309220316, 3) | False |
+| 4 | {'c': 2.0, 'T_m': 1.0} | 242 | 15 | 0.1157 | {'static': 0.10508020872744658, 'sudden': 0.0} | 0.4027 | 0.31101 | True | {'static': 1, 'sudden': 0} | (15, 0.11570247933884298, 1, 0.311007442, 4) | False |
+| 5 | {'c': 2.0, 'T_m': 2.0} | 242 | 15 | 0.13223 | {'static': 0.10072847567058117, 'sudden': 0.0} | 0.40859 | 0.31607 | True | {'static': 2, 'sudden': 0} | (15, 0.1322314049586777, 2, 0.316073449, 5) | False |
+| 6 | {'c': 4.0, 'T_m': 0.5} | 242 | 11 | 0.15289 | {'static': 0.09526796059687037, 'sudden': 0.0} | 0.41515 | 0.30964 | True | {'static': 7, 'sudden': 0} | (11, 0.15289256198347106, 7, 0.309640018, 6) | False |
+| 7 | {'c': 4.0, 'T_m': 1.0} | 242 | 11 | 0.1281 | {'static': 0.10678189858598833, 'sudden': 0.0} | 0.40739 | 0.31451 | True | {'static': 0, 'sudden': 0} | (11, 0.128099173553719, 0, 0.31451418249999996, 7) | False |
+| 8 | {'c': 4.0, 'T_m': 2.0} | 242 | 14 | 0.1157 | {'static': 0.10035451274541898, 'sudden': 0.0} | 0.41173 | 0.31383 | True | {'static': 3, 'sudden': 0} | (14, 0.11570247933884298, 3, 0.313830405, 8) | False |
 
-Training242×9; evaluation524HELDOUT_STATIC+34SEEN_SUDDEN, plus2illustration-only cases. Conservative scheduling estimate85.4min from prior measured timings and deadline allowances. No U2training or evaluation has run. c/T_m will be selected and committed FROZEN before evaluation.
+Selected: {'c': 1.0, 'T_m': 0.5}
+
+Evaluation label: NOT_EVALUATED.
