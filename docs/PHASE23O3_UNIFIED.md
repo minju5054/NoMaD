@@ -1,4 +1,4 @@
-# Phase23-O3 — frozen training selection
+# Phase23-O3 — training-only offline check
 
 
 ## U3 definition
@@ -19,7 +19,9 @@ U2 uses its frozen selected training outputs. C0 is computed on the same242input
 
 Gate GO_ONLINE requires: U3 sudden planned-passage fraction>=0.8*C0, total U3 rollout collisions<=C0 across242inputs, total STOP fraction<=10%, and total compute p95<=0.5s. Otherwise NO_GO. These are training-set diagnostics used for selection, not held-out performance or closed-loop evidence.
 
-## Selection evidence
+Protocol SHA256 `af6713d7a2c9d20b42400806e1b116704861bf8f785f9408a951897c17459a16`; selected `{'w7': 0.5, 'T_m': 2.0}`.
+
+## Tuning evidence
 
 | index | settings | n | collisions | sudden_planned_passage_fraction | stop_fraction | static_progress_median | p95 | p50 | timing_eligible | selected |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -33,4 +35,48 @@ Gate GO_ONLINE requires: U3 sudden planned-passage fraction>=0.8*C0, total U3 ro
 | 7 | {'w7': 2.0, 'T_m': 1.0} | 242 | 25 | 0.34615 | 0.028926 | 0.96944 | 0.40726 | 0.31198 | True | False |
 | 8 | {'w7': 2.0, 'T_m': 2.0} | 242 | 26 | 0.30769 | 0.028926 | 0.96526 | 0.40013 | 0.32409 | True | False |
 
-Selected: {'w7': 0.5, 'T_m': 2.0}. Gate report pending; no online run authorized by this file.
+## Same-input comparisons
+
+| group | method | n | collisions | feasible_fraction | tolerated_fraction | stop_fraction | planned_box_passage | sudden_n | planned_box_passage_fraction | rollout_box_passage | progress_median | omega_saturation_median | compute_p50_s | compute_p95_s |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| static | U3 | 216 | 16 | 0.80093 | 0.15741 | 0.041667 | 0 | 0 | — | 0 | 0.67708 | 0 | 0.34137 | 0.43405 |
+| static | U2 | 216 | 10 | 0.83796 | 0 | 0.16204 | 0 | 0 | — | 0 | 0.090113 | 0 | 0.31784 | 0.4151 |
+| static | C0 | 216 | 42 | 0.98148 | 0 | 0.018519 | 0 | 0 | — | 0 | 0.18625 | 0.44659 | 0.0014603 | 0.0021006 |
+| sudden | U3 | 26 | 3 | 0.92308 | 0.076923 | 0 | 8 | 26 | 0.30769 | 8 | 0 | 0.30193 | 0.33706 | 0.44933 |
+| sudden | U2 | 26 | 0 | 0.84615 | 0 | 0.15385 | 7 | 26 | 0.26923 | 8 | 0 | 0.3178 | 0.33183 | 0.43571 |
+| sudden | C0 | 26 | 1 | 0.92308 | 0 | 0.076923 | 10 | 26 | 0.38462 | 9 | 0 | 0.3292 | 0.24912 | 0.54379 |
+| sudden | C1 | 26 | 1 | 0.88462 | 0 | 0.11538 | 10 | 26 | 0.38462 | 10 | 0 | 0.31824 | 0.19844 | 0.43902 |
+| ALL | U3 | 242 | 19 | 0.81405 | 0.14876 | 0.03719 | 8 | 26 | 0.30769 | 8 | 0.66897 | 0 | 0.33783 | 0.43476 |
+| ALL | U2 | 242 | 10 | 0.83884 | 0 | 0.16116 | 7 | 26 | 0.26923 | 8 | 0.073365 | 0 | 0.31853 | 0.41552 |
+| ALL | C0 | 242 | 43 | 0.97521 | 0 | 0.024793 | 10 | 26 | 0.38462 | 9 | 0.16063 | 0.43709 | 0.0014803 | 0.28079 |
+| ALL | C1 | 26 | 1 | 0.88462 | 0 | 0.11538 | 10 | 26 | 0.38462 | 10 | 0 | 0.31824 | 0.19844 | 0.43902 |
+
+## F7 and prior deviation
+
+| group | method | f7_enabled_fraction | f7_positive_residual_fraction | prior_departure_030_fraction |
+| --- | --- | --- | --- | --- |
+| static | U3 | 1 | 1 | 0.80193 |
+| static | U2 | — | — | 0.01105 |
+| sudden | U3 | 1 | 1 | 0.88462 |
+| sudden | U2 | — | — | 0 |
+| ALL | U3 | 1 | 1 | 0.81116 |
+| ALL | U2 | — | — | 0.0098522 |
+
+## Online gate
+
+| condition | passed |
+| --- | --- |
+| planned_passage | True |
+| collision | True |
+| stop | True |
+| timing | True |
+
+**GO_ONLINE**; failed criteria: [].
+
+![example_TD0216.png](../research/results/phase23o3/example_TD0216.png)
+
+![example_TD0217.png](../research/results/phase23o3/example_TD0217.png)
+
+![example_TS0037.png](../research/results/phase23o3/example_TS0037.png)
+
+No23-O/23-O2 evaluation case was rerun. No new inference, rendering or closed-loop experiment was part of this offline check. GO_ONLINE permits the requested pilot preparation and smoke only; the main campaign remains user-run.
