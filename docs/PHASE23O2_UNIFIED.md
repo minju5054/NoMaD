@@ -1,4 +1,4 @@
-# Phase23-O2 — frozen tuning selection; evaluation pending
+# Phase23-O2 — offline U2 validation
 
 
 ## Input/output and the three changes
@@ -29,20 +29,69 @@ All methods retain the23-O computation-motion rules. U/U2 applies exactly0.5s af
 
 Historical-active and prior-departure fractions use accepted U2plans as denominator. Departure means at least one of10future nodes differs from its active prior by>=0.30m; mean and maximum displacement are also recorded. Failure constraints refer to the latest received iterate; deadline-pending starts are censored. Time bounds are listed separately from obstacle and speed/angular constraints. Report both collision-free planned box-passage paths and actual fixed-path rollout passage; neither is a goal-success claim.
 
-## Selection evidence
+Protocol SHA256 `f3fddbbc5b52abc5b100a5dcf318dd3ba2838cf38bcd6436d67943a6ff74782f`; selected `{'c': 1.0, 'T_m': 0.5}`.
+
+## Tuning evidence
 
 | index | weights | n | collisions | failure_fraction | progress | p95 | p50 | timing_eligible | progress_rank | score | selected |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 0 | {'c': 1.0, 'T_m': 0.5} | 242 | 10 | 0.16116 | {'static': 0.09011269266081057, 'sudden': 0.0} | 0.41552 | 0.31853 | True | {'static': 8, 'sudden': 0} | (10, 0.16115702479338842, 8, 0.31852747800000003, 0) | True |
-| 1 | {'c': 1.0, 'T_m': 1.0} | 242 | 14 | 0.15702 | {'static': 0.09563782057362513, 'sudden': 0.0} | 0.40912 | 0.31492 | True | {'static': 6, 'sudden': 0} | (14, 0.15702479338842976, 6, 0.3149202875, 1) | False |
-| 2 | {'c': 1.0, 'T_m': 2.0} | 242 | 13 | 0.15289 | {'static': 0.09655594654235293, 'sudden': 0.0} | 0.40471 | 0.31507 | True | {'static': 5, 'sudden': 0} | (13, 0.15289256198347106, 5, 0.3150682655, 2) | False |
-| 3 | {'c': 2.0, 'T_m': 0.5} | 242 | 13 | 0.1281 | {'static': 0.09779240705046893, 'sudden': 0.0} | 0.40951 | 0.30922 | True | {'static': 4, 'sudden': 0} | (13, 0.128099173553719, 4, 0.309220316, 3) | False |
-| 4 | {'c': 2.0, 'T_m': 1.0} | 242 | 15 | 0.1157 | {'static': 0.10508020872744658, 'sudden': 0.0} | 0.4027 | 0.31101 | True | {'static': 1, 'sudden': 0} | (15, 0.11570247933884298, 1, 0.311007442, 4) | False |
-| 5 | {'c': 2.0, 'T_m': 2.0} | 242 | 15 | 0.13223 | {'static': 0.10072847567058117, 'sudden': 0.0} | 0.40859 | 0.31607 | True | {'static': 2, 'sudden': 0} | (15, 0.1322314049586777, 2, 0.316073449, 5) | False |
-| 6 | {'c': 4.0, 'T_m': 0.5} | 242 | 11 | 0.15289 | {'static': 0.09526796059687037, 'sudden': 0.0} | 0.41515 | 0.30964 | True | {'static': 7, 'sudden': 0} | (11, 0.15289256198347106, 7, 0.309640018, 6) | False |
-| 7 | {'c': 4.0, 'T_m': 1.0} | 242 | 11 | 0.1281 | {'static': 0.10678189858598833, 'sudden': 0.0} | 0.40739 | 0.31451 | True | {'static': 0, 'sudden': 0} | (11, 0.128099173553719, 0, 0.31451418249999996, 7) | False |
-| 8 | {'c': 4.0, 'T_m': 2.0} | 242 | 14 | 0.1157 | {'static': 0.10035451274541898, 'sudden': 0.0} | 0.41173 | 0.31383 | True | {'static': 3, 'sudden': 0} | (14, 0.11570247933884298, 3, 0.313830405, 8) | False |
+| 0 | {'c': 1.0, 'T_m': 0.5} | 242 | 10 | 0.16116 | {'static': 0.09011269266081057, 'sudden': 0.0} | 0.41552 | 0.31853 | True | {'static': 8, 'sudden': 0} | [10, 0.16115702479338842, 8, 0.31852747800000003, 0] | True |
+| 1 | {'c': 1.0, 'T_m': 1.0} | 242 | 14 | 0.15702 | {'static': 0.09563782057362513, 'sudden': 0.0} | 0.40912 | 0.31492 | True | {'static': 6, 'sudden': 0} | [14, 0.15702479338842976, 6, 0.3149202875, 1] | False |
+| 2 | {'c': 1.0, 'T_m': 2.0} | 242 | 13 | 0.15289 | {'static': 0.09655594654235293, 'sudden': 0.0} | 0.40471 | 0.31507 | True | {'static': 5, 'sudden': 0} | [13, 0.15289256198347106, 5, 0.3150682655, 2] | False |
+| 3 | {'c': 2.0, 'T_m': 0.5} | 242 | 13 | 0.1281 | {'static': 0.09779240705046893, 'sudden': 0.0} | 0.40951 | 0.30922 | True | {'static': 4, 'sudden': 0} | [13, 0.128099173553719, 4, 0.309220316, 3] | False |
+| 4 | {'c': 2.0, 'T_m': 1.0} | 242 | 15 | 0.1157 | {'static': 0.10508020872744658, 'sudden': 0.0} | 0.4027 | 0.31101 | True | {'static': 1, 'sudden': 0} | [15, 0.11570247933884298, 1, 0.311007442, 4] | False |
+| 5 | {'c': 2.0, 'T_m': 2.0} | 242 | 15 | 0.13223 | {'static': 0.10072847567058117, 'sudden': 0.0} | 0.40859 | 0.31607 | True | {'static': 2, 'sudden': 0} | [15, 0.1322314049586777, 2, 0.316073449, 5] | False |
+| 6 | {'c': 4.0, 'T_m': 0.5} | 242 | 11 | 0.15289 | {'static': 0.09526796059687037, 'sudden': 0.0} | 0.41515 | 0.30964 | True | {'static': 7, 'sudden': 0} | [11, 0.15289256198347106, 7, 0.309640018, 6] | False |
+| 7 | {'c': 4.0, 'T_m': 1.0} | 242 | 11 | 0.1281 | {'static': 0.10678189858598833, 'sudden': 0.0} | 0.40739 | 0.31451 | True | {'static': 0, 'sudden': 0} | [11, 0.128099173553719, 0, 0.31451418249999996, 7] | False |
+| 8 | {'c': 4.0, 'T_m': 2.0} | 242 | 14 | 0.1157 | {'static': 0.10035451274541898, 'sudden': 0.0} | 0.41173 | 0.31383 | True | {'static': 3, 'sudden': 0} | [14, 0.11570247933884298, 3, 0.313830405, 8] | False |
 
-Selected: {'c': 1.0, 'T_m': 0.5}
+## Group comparisons
 
-Evaluation label: NOT_EVALUATED.
+| group | method | stratum | n | oracle_collisions | planning_failure_fraction | progress_median | compute_p50_s | compute_p95_s | planned_box_passage_fraction | passage_fraction |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| static | U2 | HELDOUT_STATIC | 524 | 9 | 0.20229 | 0.077243 | 0.33086 | 0.40642 | — | 0 |
+| sudden | U2 | SEEN_SUDDEN | 34 | 0 | 0 | 0 | 0.36851 | 0.42709 | 0.029412 | 0.029412 |
+| static | U | HELDOUT_STATIC | 524 | 12 | 0.12023 | 0.099684 | 0.27422 | 0.33432 | — | 0 |
+| sudden | U | SEEN_SUDDEN | 34 | 3 | 0.14706 | 0 | 0.28433 | 0.39441 | 0 | 0.029412 |
+| static | C0 | HELDOUT_STATIC | 524 | 175 | 0.019084 | 0.059152 | 0.0012823 | 0.0014699 | — | 0 |
+| sudden | C0 | SEEN_SUDDEN | 34 | 6 | 0 | 0 | 0.2274 | 0.32002 | 0.26471 | 0.14706 |
+| sudden | C1 | SEEN_SUDDEN | 34 | 4 | 0.11765 | 0 | 0.24627 | 0.6082 | 0.26471 | 0.20588 |
+
+## U2 memory and prior deviation
+
+| group | active_history_fraction | history_age_median_s | history_age_p95_s | prior_departure_030_fraction | prior_deviation_max_median_m | prior_deviation_mean_median_m |
+| --- | --- | --- | --- | --- | --- | --- |
+| static | 0.23923 | 1.0694 | 1.125 | 0.011962 | 0.016034 | 0.0065566 |
+| sudden | 0.5 | 1.0833 | 1.8889 | 0.029412 | 0.038663 | 0.014095 |
+
+## Failed-plan active constraints
+
+| group | method | failed_snapshots_obstacle_active | failed_snapshots_kinematic_active | failed_snapshots_dt_active | pending_initializations |
+| --- | --- | --- | --- | --- | --- |
+| static | U2 | 0 | 67 | 60 | 1 |
+| sudden | U2 | 0 | 0 | 0 | 0 |
+| static | U | 2 | 55 | 57 | 0 |
+| sudden | U | 0 | 5 | 5 | 0 |
+
+## Registered U2 vs C0 decision
+
+| group | safety | planning | progress | timing |
+| --- | --- | --- | --- | --- |
+| static | True | False | True | True |
+| sudden | True | True | True | True |
+
+**UNIFIED_PARTIAL**. Old U: UNIFIED_NOT_READY (unchanged).
+
+![example_X_ES0078.png](../research/results/phase23o2/example_X_ES0078.png)
+
+![example_S0543.png](../research/results/phase23o2/example_S0543.png)
+
+![example_X_ES0172.png](../research/results/phase23o2/example_X_ES0172.png)
+
+![example_S0524.png](../research/results/phase23o2/example_S0524.png)
+
+![example_S0525.png](../research/results/phase23o2/example_S0525.png)
+
+## Draft only — not executed
+
+L2+SLW ×4new seeds×U2/C0/C1=24runs. C1 on SLW is a reference only. Freeze common sensing, computation-time motion and executors; report goal/collision and paired passage/checkpoint time per scene. Pre-register no increased collisions, goal success at least C0, planning failure within5%p, and p95<=0.5s for U2; do not claim unseen-sudden generalization from this offline dataset. This is an unexecuted pilot proposal.
