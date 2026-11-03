@@ -1,4 +1,4 @@
-# Phase23-O — training selection; evaluation not yet executed
+# Phase23-O — offline unified SE(2) graph
 
 
 ## Input/output and pipeline
@@ -92,13 +92,103 @@ Timing gate p95≤0.5s first. If all exceed it, choose minimum p95 and flag. Oth
 
 | index | weights | n | collisions | failure_fraction | progress | p95 | p50 | timing_eligible | progress_rank | score | selected |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 0 | {'time': 0.1, 'goal': 1.0, 'curvature': 0.001} | 242 | 17 | 0.028926 | {'static': 0.11579517170013703, 'sudden': 0.0} | 0.30096 | 0.18404 | True | {'static': 5, 'sudden': 0} | (17, 0.028925619834710745, 5, 0.184038932, 0) | False |
-| 1 | {'time': 0.1, 'goal': 1.0, 'curvature': 0.01} | 242 | 17 | 0.041322 | {'static': 0.12944689898858114, 'sudden': 0.0} | 0.32192 | 0.21186 | True | {'static': 1, 'sudden': 0} | (17, 0.04132231404958678, 1, 0.211859922, 1) | False |
-| 2 | {'time': 0.1, 'goal': 4.0, 'curvature': 0.001} | 242 | 17 | 0.028926 | {'static': 0.11002526136989836, 'sudden': 0.0} | 0.30214 | 0.17409 | True | {'static': 7, 'sudden': 0} | (17, 0.028925619834710745, 7, 0.17409203750000002, 2) | False |
-| 3 | {'time': 0.1, 'goal': 4.0, 'curvature': 0.01} | 242 | 17 | 0.028926 | {'static': 0.13116425998210776, 'sudden': 0.0} | 0.32207 | 0.22027 | True | {'static': 0, 'sudden': 0} | (17, 0.028925619834710745, 0, 0.220271731, 3) | False |
-| 4 | {'time': 1.0, 'goal': 1.0, 'curvature': 0.001} | 242 | 17 | 0.03719 | {'static': 0.11999081310984397, 'sudden': 0.0} | 0.30447 | 0.18927 | True | {'static': 3, 'sudden': 0} | (17, 0.0371900826446281, 3, 0.189270746, 4) | False |
-| 5 | {'time': 1.0, 'goal': 1.0, 'curvature': 0.01} | 242 | 15 | 0.078512 | {'static': 0.1140910071127353, 'sudden': 0.0} | 0.33311 | 0.22063 | True | {'static': 6, 'sudden': 0} | (15, 0.07851239669421488, 6, 0.2206296955, 5) | True |
-| 6 | {'time': 1.0, 'goal': 4.0, 'curvature': 0.001} | 242 | 17 | 0.03719 | {'static': 0.11876785377887125, 'sudden': 0.0} | 0.30885 | 0.19003 | True | {'static': 4, 'sudden': 0} | (17, 0.0371900826446281, 4, 0.1900292345, 6) | False |
-| 7 | {'time': 1.0, 'goal': 4.0, 'curvature': 0.01} | 242 | 16 | 0.082645 | {'static': 0.12331365404039418, 'sudden': 0.0} | 0.32319 | 0.23324 | True | {'static': 2, 'sudden': 0} | (16, 0.08264462809917356, 2, 0.2332364295, 7) | False |
+| 0 | {'time': 0.1, 'goal': 1.0, 'curvature': 0.001} | 242 | 17 | 0.028926 | {'static': 0.11579517170013703, 'sudden': 0.0} | 0.30096 | 0.18404 | True | {'static': 5, 'sudden': 0} | [17, 0.028925619834710745, 5, 0.184038932, 0] | False |
+| 1 | {'time': 0.1, 'goal': 1.0, 'curvature': 0.01} | 242 | 17 | 0.041322 | {'static': 0.12944689898858114, 'sudden': 0.0} | 0.32192 | 0.21186 | True | {'static': 1, 'sudden': 0} | [17, 0.04132231404958678, 1, 0.211859922, 1] | False |
+| 2 | {'time': 0.1, 'goal': 4.0, 'curvature': 0.001} | 242 | 17 | 0.028926 | {'static': 0.11002526136989836, 'sudden': 0.0} | 0.30214 | 0.17409 | True | {'static': 7, 'sudden': 0} | [17, 0.028925619834710745, 7, 0.17409203750000002, 2] | False |
+| 3 | {'time': 0.1, 'goal': 4.0, 'curvature': 0.01} | 242 | 17 | 0.028926 | {'static': 0.13116425998210776, 'sudden': 0.0} | 0.32207 | 0.22027 | True | {'static': 0, 'sudden': 0} | [17, 0.028925619834710745, 0, 0.220271731, 3] | False |
+| 4 | {'time': 1.0, 'goal': 1.0, 'curvature': 0.001} | 242 | 17 | 0.03719 | {'static': 0.11999081310984397, 'sudden': 0.0} | 0.30447 | 0.18927 | True | {'static': 3, 'sudden': 0} | [17, 0.0371900826446281, 3, 0.189270746, 4] | False |
+| 5 | {'time': 1.0, 'goal': 1.0, 'curvature': 0.01} | 242 | 15 | 0.078512 | {'static': 0.1140910071127353, 'sudden': 0.0} | 0.33311 | 0.22063 | True | {'static': 6, 'sudden': 0} | [15, 0.07851239669421488, 6, 0.2206296955, 5] | True |
+| 6 | {'time': 1.0, 'goal': 4.0, 'curvature': 0.001} | 242 | 17 | 0.03719 | {'static': 0.11876785377887125, 'sudden': 0.0} | 0.30885 | 0.19003 | True | {'static': 4, 'sudden': 0} | [17, 0.0371900826446281, 4, 0.1900292345, 6] | False |
+| 7 | {'time': 1.0, 'goal': 4.0, 'curvature': 0.01} | 242 | 16 | 0.082645 | {'static': 0.12331365404039418, 'sudden': 0.0} | 0.32319 | 0.23324 | True | {'static': 2, 'sudden': 0} | [16, 0.08264462809917356, 2, 0.2332364295, 7] | False |
 
-Evaluation label: **NOT_EVALUATED**. Selected weights and this table are committed before evaluation begins.
+Protocol SHA256 `f8c747a8530f24862c6fbd227a5a066c512bda4361f89a6818182d6c181c0b6c`. Label **UNIFIED_NOT_READY**. Training242, evaluation488; distinct runs and indices.
+
+Registered execution/input handling: `{'rotation_policy': 'graph_rotation', 'short_policy': 'retain', 'kinematic_sigma': 0.03, 'stop_policy': 'acceleration_limited_stop', 'speed_interpolation': 'linear_at_translating_segment_midpoint_arclength', 'rotation_threshold_m_s': 0.01, 'rotation_final_step': 'same sign, magnitude capped only on final9Hz step to land at target heading', 'prediction_mode': 'existing_rollout', 'baseline_wait_model': 'existing_rollout'}`. Selected weights: `{'time': 1.0, 'goal': 1.0, 'curvature': 0.01}`.
+
+| group | method | n | oracle_collisions | planning_failure_fraction | progress_median | execution_time_median_s | compute_p50_s | compute_p95_s | over05 | min_clearance_median | omega_saturation_median | intent_error_fraction | passage_fraction | active_switches | active_native_short_fraction | active_remaining_short_fraction | short_active_graph_forward_median_m | still_short_graph_forward_median_m | warm_start_used | zero_motion_rollouts | active_switch_fraction | stop_snapshot_fraction | application_delay_p50_s | application_delay_p95_s | deceleration_stop_fraction | observed_stationary_median_s | braking_duration_median_s | iteration_limit_fraction_known | completed_initializations | pending_initializations | failed_snapshots_obstacle_active | failed_snapshots_kinematic_active | selected_initializer_counts |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| static | U | 454 | 30 | 0.11674 | 0.098665 | 1.3194 | 0.25641 | 0.33885 | 0 | 0.35134 | 0.055051 | 0.17955 | 0 | 74356 | 0.78304 | 0.59601 | 0.12285 | 0.14213 | 0 | 20 | 0.26306 | 0.11674 | 0.5 | 0.5 | 0.57269 | 0.048611 | 0.11111 | 0.49169 | 3732 | 0 | 0 | 35 | {0: 53, 1: 37, 2: 40, 3: 42, 4: 45, 5: 56, 6: 69, 7: 54, 8: 4, 9: 1} |
+| static | C0 | 454 | 110 | 0.0088106 | 0.083462 | 4.9444 | 0.0013319 | 0.0014754 | 0 | 0.19852 | 0.52491 | — | 0 | 0 | — | — | — | — | 0 | 21 | 0 | 0.0088106 | 0 | 0 | 0.011013 | 2.4444 | 0 | — | 0 | 0 | 0 | 0 | {} |
+| sudden | U | 34 | 3 | 0.14706 | 0 | 1.8611 | 0.28433 | 0.39441 | 0 | 0.26371 | 0.25747 | 0.068966 | 0.029412 | 6289 | 0.48276 | 0.24138 | 0.16264 | 0.15808 | 0 | 1 | 0.25634 | 0.14706 | 0.5 | 0.5 | 0.20588 | 0.22222 | 0 | 0.61 | 300 | 0 | 0 | 5 | {0: 2, 1: 1, 2: 3, 3: 5, 4: 5, 5: 3, 6: 3, 7: 5, 9: 2} |
+| sudden | C0 | 34 | 6 | 0 | 0 | 5.2669 | 0.2274 | 0.32002 | 0 | 0.11731 | 0.19909 | — | 0.14706 | 0 | — | — | — | — | 0 | 0 | 0 | 0 | 0.2274 | 0.32002 | 0 | 0.17833 | 0 | — | 0 | 0 | 0 | 0 | {} |
+| sudden | C1 | 34 | 4 | 0.11765 | 0 | 4.6288 | 0.24627 | 0.6082 | 3 | 0.053073 | 0.27312 | — | 0.20588 | 0 | — | — | — | — | 0 | 2 | 0 | 0.11765 | 0.24627 | 0.6082 | 0.058824 | 0.20332 | 0 | — | 0 | 0 | 0 | 0 | {} |
+
+| group | safety | planning | progress | timing |
+| --- | --- | --- | --- | --- |
+| static | True | False | True | True |
+| sudden | True | False | True | True |
+
+## Observed response bounds
+
+| run | method | snapshots | case_id | reaction_delay_upper_bound_s | reaction_distance_upper_bound_m | status | snapshot_status_counts |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_111_B4_ASTAR/attempt1 | C0 | 1 | ED0472 | 5.4538 | 0.51324 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_111_B4_ASTAR/attempt1 | C1 | 1 | ED0472 | 5.3652 | 0.51324 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_111_B4_ASTAR/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_111_M3_GRAPH/attempt1 | C0 | 2 | ED0473 | 5.3799 | 0.34386 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1, 'ALREADY_PASSED_AT_SNAPSHOT': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_111_M3_GRAPH/attempt1 | C1 | 2 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'ALREADY_PASSED_AT_SNAPSHOT': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_111_M3_GRAPH/attempt1 | U | 2 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'ALREADY_PASSED_AT_SNAPSHOT': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_112_B4_ASTAR/attempt1 | C0 | 1 | ED0475 | 6.8577 | 0.44588 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_112_B4_ASTAR/attempt1 | C1 | 1 | ED0475 | 6.6545 | 0.41878 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_112_B4_ASTAR/attempt1 | U | 1 | ED0475 | 7.0488 | 0.49007 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_113_B4_ASTAR/attempt1 | C0 | 1 | ED0476 | 5.5896 | 0.31489 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_113_B4_ASTAR/attempt1 | C1 | 1 | ED0476 | 5.7296 | 0.3462 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_113_B4_ASTAR/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_113_M3_GRAPH/attempt1 | C0 | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_113_M3_GRAPH/attempt1 | C1 | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2A_113_M3_GRAPH/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_111_B4_ASTAR/attempt1 | C0 | 2 | ED0454 | 4.3479 | 0.42415 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 2} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_111_B4_ASTAR/attempt1 | C1 | 2 | ED0455 | 7.7146 | 0.59489 | SPARSE_OBSERVATION_UPPER_BOUND | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_111_B4_ASTAR/attempt1 | U | 2 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 2} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_111_M3_GRAPH/attempt1 | C0 | 1 | ED0456 | 6.1804 | 0.56234 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_111_M3_GRAPH/attempt1 | C1 | 1 | ED0456 | 6.1507 | 0.55904 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_111_M3_GRAPH/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_112_B4_ASTAR/attempt1 | C0 | 1 | ED0457 | 4.3637 | 0.3 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_112_B4_ASTAR/attempt1 | C1 | 1 | ED0457 | 4.2555 | 0.3 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_112_B4_ASTAR/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_112_M3_GRAPH/attempt1 | C0 | 7 | ED0459 | 8.1372 | 0.91787 | SPARSE_OBSERVATION_UPPER_BOUND | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 6} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_112_M3_GRAPH/attempt1 | C1 | 7 | ED0459 | 8.6513 | 0.91787 | SPARSE_OBSERVATION_UPPER_BOUND | {'NO_AVOIDING_OUTPUT_CENSORED': 2, 'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 5} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_112_M3_GRAPH/attempt1 | U | 7 | ED0459 | 8.554 | 0.91787 | SPARSE_OBSERVATION_UPPER_BOUND | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 6} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_113_B4_ASTAR/attempt1 | C0 | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_113_B4_ASTAR/attempt1 | C1 | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_113_B4_ASTAR/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_113_M3_GRAPH/attempt1 | C0 | 2 | ED0467 | 6.378 | 0.78709 | SPARSE_OBSERVATION_UPPER_BOUND | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_113_M3_GRAPH/attempt1 | C1 | 2 | ED0467 | 6.2937 | 0.76693 | SPARSE_OBSERVATION_UPPER_BOUND | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_113_M3_GRAPH/attempt1 | U | 2 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 2} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_114_B4_ASTAR/attempt1 | C0 | 1 | ED0468 | 2.346 | 0.14401 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_114_B4_ASTAR/attempt1 | C1 | 1 | ED0468 | 2.273 | 0.14401 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_114_B4_ASTAR/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_114_M3_GRAPH/attempt1 | C0 | 3 | ED0469 | 4.4874 | 0.37737 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 3} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_114_M3_GRAPH/attempt1 | C1 | 3 | ED0469 | 4.3732 | 0.36816 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 3} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase21_baseline_01/main/L2_114_M3_GRAPH/attempt1 | U | 3 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 3} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_121_P0_ASTAR/attempt1 | C0 | 4 | ED0478 | 6.0556 | 0.63617 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 4} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_121_P0_ASTAR/attempt1 | C1 | 4 | ED0478 | 6.0915 | 0.63796 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 4} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_121_P0_ASTAR/attempt1 | U | 4 | ED0479 | 13.22 | 1.7675 | SPARSE_OBSERVATION_UPPER_BOUND | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 3} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_121_P2F_ASTAR_GRAPH/attempt1 | C0 | 2 | ED0482 | 6.9797 | 0.56126 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 2} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_121_P2F_ASTAR_GRAPH/attempt1 | C1 | 2 | ED0483 | 20.462 | 1.7481 | SPARSE_OBSERVATION_UPPER_BOUND | {'NO_AVOIDING_OUTPUT_CENSORED': 1, 'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_121_P2F_ASTAR_GRAPH/attempt1 | U | 2 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 2} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_122_P1_GRAPH/attempt1 | C0 | 1 | ED0484 | 5.2046 | 0.56418 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_122_P1_GRAPH/attempt1 | C1 | 1 | ED0484 | 5.1478 | 0.54714 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_122_P1_GRAPH/attempt1 | U | 1 | ED0484 | 5.5057 | 0.65167 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P0_ASTAR/attempt1 | C0 | 1 | ED0485 | 4.7976 | 0.5114 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P0_ASTAR/attempt1 | C1 | 1 | ED0485 | 4.7967 | 0.51122 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P0_ASTAR/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P1_GRAPH/attempt1 | C0 | 1 | ED0486 | 5.5204 | 0.38868 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P1_GRAPH/attempt1 | C1 | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P1_GRAPH/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P2F_ASTAR_GRAPH/attempt1 | C0 | 1 | ED0487 | 5.8204 | 0.227 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P2F_ASTAR_GRAPH/attempt1 | C1 | 1 | ED0487 | 5.7946 | 0.227 | SPARSE_OBSERVATION_UPPER_BOUND | {'OBSERVED_AVOIDING_OUTPUT_UPPER_BOUND': 1} |
+| /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase22_l2b_rerun_01/main/L2B_123_P2F_ASTAR_GRAPH/attempt1 | U | 1 | — | — | — | NO_QUALIFYING_OUTPUT_OBSERVED | {'NO_AVOIDING_OUTPUT_CENSORED': 1} |
+
+SLW saturation: {'U': 0.06451612903225806, 'C0': 0.5565476190476191}
+
+C0/C1 retain frozen selection and R2→R3 solvers (C1 reference on sudden cases only). Missing Phase18 free timestamps are replayed from saved depth and V1 occupancy is checked for exact equality. U receives the unchanged source V1 snapshot. C0/C1 follow22-O2 SP/alignment and stopping. Fallback has no future NoMaD regeneration; recovery-driven replanning cannot be inferred from a fixed snapshot. All failed plans stay in denominators; braking displacement and collision are evaluated too. Sudden progress is the binary footprint passage indicator; therefore a zero baseline median can make the95% progression condition weak. Passage fractions are shown separately.
+
+This is a fixed-path offline counterfactual, not closed-loop navigation evidence. No new RGB, depth render, inference or Isaac run was performed. Timing and safety claims apply only to this evaluation. Full per-case checkpoints stay locally in training/evaluation; summary, examples and provenance are published.
+
+![examples.png](../research/results/phase23o/examples.png)
+
+![distributions.png](../research/results/phase23o/distributions.png)
+
+![paired.png](../research/results/phase23o/paired.png)
+
