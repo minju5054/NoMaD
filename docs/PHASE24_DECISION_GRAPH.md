@@ -1,4 +1,4 @@
-# Phase24 — frozen preparation; NOT_EVALUATED
+# Phase24 — decision layer and one SE(2)graph
 
 
 ## Input/output pipeline
@@ -60,8 +60,66 @@ Output policy is exactly23-O3: choose the least-cost received feasible iterate; 
 
 The preserved23-O3registered GO_ONLINE used8already-passed snapshots. The corrected pre-passage label is PRE_PASSAGE_NO_GO: U3planned0/16, C0planned2/16, C1planned3/16. In the frozen diagnostic,13/16intent directions differed from corridor+x by>=45degrees. All5converted comparator detours cost more than U3; F7was the largest increasing term inall5. Additional seeds retained feasible passage candidates but the objective selected none. These are diagnostic findings, not evidence of improved obstacle avoidance. Phase24therefore supplies intent through Dand keeps physical trajectory generation in one graph.
 
-## Registered offline rules
+## Registered offline interpretation
 
 {'priority': ['MODE_RECOMPUTED: original20Fobservable trigger predicate on saved odometry/depth', 'MODE_FROM_C0: R3attempt only when required histories missing', 'MODE_FALLBACK: failed NORMAL output promotes to one DETOUR solve'], 'predicate_transient_guards': 'fresh counterfactual trigger state: busyFalse,cooldowninactive,blockedFalse,suppress-1; no prior Gstate or source-method transient state imputed', 'reference': '20F component-frozen preappearance direction; if none, approved20FAradial/start-heading fallback', 'normal_failure': 'only if neitherFEASIBLE norKINEMATIC_TOLERATED; same depth/candidates; one extra solve', 'second_start': 'propagate first0.5s OLD prefix; execute firstSTOP bounded braking during second0.5s; extend odometry with only that deterministic prefix for direction at transition', 'time': 'sum measured per-stage solves; fixed application delay0.5s/stage, total1s on fallback; no new captures/inference', 'comparators': 'reuse frozen C0/C1 only for equivalent trigger/direction arguments; otherwise recompute frozen solvers with the newly reconstructed Btrigger/component direction; Abranch retains radial direction', 'gate': 'passage count on16PRE_PASSAGE; collision on216STATIC; STOP/p95 on their232union.2PRE_SPAWN+8ALREADY_PASSED excluded; all26sudden also shown.'}
 
-242inputs;232gate cohort. Estimated43.2min with two Gsolves per input and all268baseline recomputations budgeted.9unit tests passed. No new Gsnapshot solve or navigation has run.
+The original20Ftrigger code is evaluated on the saved pose/depth history. Snapshot-only checks use neutral busy/cooldown/rotation guards because no preceding Gexecution exists; no source method state is silently treated as Gstate. Missing histories alone use C0R3attempt records. Component directions are reconstructed on unchanged source occupancy/SDF; absent components use the approved20FAstart-to-current rule.
+
+A failed NORMAL output triggers exactly one DETOUR solve. During its second0.5s window, the first STOP output executes bounded braking. The same saved depth is used, with no new NoMaD response; the direction is evaluated at the propagated pose using only recorded history plus that deterministic prefix. Compute time is the sum of both measured solves; application delay is1s for two stages and0.5s for one. MODE_FALLBACK records the transition; initial mode provenance is retained separately.
+
+C0/C1keep frozen planners and controllers. Saved outputs are reused only when the new trigger/direction arguments are equivalent (or unused by the accepted SAFE/R2branch); otherwise the frozen comparator is recomputed once on the reconstructed trigger and direction. Their Abranch keeps its original radial direction. Uis a frozen reference. This avoids comparing Gwith a C0result produced from a different legacy20D/Etrigger.
+
+This is not a complete closed-loop Drollout: recovery-driven re-inference, future captures and further mode transitions are absent. The same reused training set informed earlier designs; this is not a held-out confirmation.
+
+| mode_source | count |
+| --- | --- |
+| MODE_RECOMPUTED | 210 |
+| MODE_FALLBACK | 32 |
+
+NORMAL→DETOUR cases: 32/242. Detailed per-snapshot reasons and stage times are in mode_provenance.csv and decisions.json.
+
+## Offline comparisons
+
+| group | method | n | collisions | min_clearance_median_m | omega_saturation_median | planned_passage | rollout_passage | progress_median | output_counts | stop_fraction | compute_p50_s | compute_p95_s |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| STATIC | G | 216 | 14 | 0.45209 | 0.16877 | 0 | 0 | 0.20381 | {'FEASIBLE': 183, 'KINEMATIC_TOLERATED': 26, 'STOP': 7} | 0.032407 | 0.16842 | 0.38701 |
+| STATIC | C0 | 216 | 41 | 0.31799 | 0.44201 | 0 | 0 | 0.18037 | {'FEASIBLE': 212, 'STOP': 4} | 0.018519 | 0.0014635 | 0.0021207 |
+| STATIC | U | 216 | 13 | 0.51509 | 0 | 0 | 0 | 0.11409 | {'FEASIBLE': 200, 'STOP': 16} | 0.074074 | 0.21268 | 0.33323 |
+| PRE_PASSAGE | G | 16 | 1 | 0.13105 | 0.47808 | 5 | 3 | 0 | {'FEASIBLE': 15, 'KINEMATIC_TOLERATED': 1} | 0 | 0.15738 | 0.28339 |
+| PRE_PASSAGE | C0 | 16 | 0 | 0.1081 | 0.3292 | 3 | 1 | 0 | {'FEASIBLE': 14, 'STOP': 2} | 0.125 | 0.23511 | 0.44926 |
+| PRE_PASSAGE | C1 | 16 | 0 | 0.054533 | 0.28436 | 3 | 2 | 0 | {'FEASIBLE': 14, 'STOP': 2} | 0.125 | 0.19092 | 0.30276 |
+| PRE_PASSAGE | U | 16 | 0 | 0.30513 | 0.44169 | 0 | 0 | 0 | {'FEASIBLE': 14, 'STOP': 2} | 0.125 | 0.25124 | 0.32477 |
+| PRE_SPAWN | G | 2 | 0 | 0.99021 | 0.043011 | 0 | 0 | 0 | {'FEASIBLE': 2} | 0 | 0.13874 | 0.17218 |
+| PRE_SPAWN | C0 | 2 | 0 | 0.98929 | 0.048193 | 0 | 0 | 0 | {'FEASIBLE': 2} | 0 | 0.0015083 | 0.0015112 |
+| PRE_SPAWN | C1 | 2 | 0 | 0.98929 | 0.048193 | 0 | 0 | 0 | {'FEASIBLE': 2} | 0 | 0.0014319 | 0.0014453 |
+| PRE_SPAWN | U | 2 | 0 | 0.99024 | 0.044944 | 0 | 0 | 0 | {'FEASIBLE': 2} | 0 | 0.16945 | 0.24308 |
+| ALREADY_PASSED | G | 8 | 2 | 0.084549 | 0.49257 | 7 | 8 | 1 | {'FEASIBLE': 4, 'KINEMATIC_TOLERATED': 3, 'STOP': 1} | 0.125 | 0.155 | 0.28633 |
+| ALREADY_PASSED | C0 | 8 | 0 | 0.090195 | 0.40211 | 8 | 8 | 1 | {'FEASIBLE': 8} | 0 | 0.0014848 | 0.39287 |
+| ALREADY_PASSED | C1 | 8 | 0 | 0.090195 | 0.448 | 8 | 8 | 1 | {'FEASIBLE': 8} | 0 | 0.0015364 | 0.26002 |
+| ALREADY_PASSED | U | 8 | 2 | 0.093289 | 0.43067 | 7 | 8 | 1 | {'FEASIBLE': 7, 'STOP': 1} | 0.125 | 0.22899 | 0.34956 |
+| SUDDEN_ALL | G | 26 | 3 | 0.13105 | 0.47639 | 12 | 11 | 0 | {'FEASIBLE': 21, 'KINEMATIC_TOLERATED': 4, 'STOP': 1} | 0.038462 | 0.15738 | 0.31834 |
+| SUDDEN_ALL | C0 | 26 | 0 | 0.1081 | 0.26866 | 11 | 9 | 0 | {'FEASIBLE': 24, 'STOP': 2} | 0.076923 | 0.081571 | 0.51756 |
+| SUDDEN_ALL | C1 | 26 | 0 | 0.060196 | 0.2684 | 11 | 10 | 0 | {'FEASIBLE': 24, 'STOP': 2} | 0.076923 | 0.16355 | 0.31465 |
+| SUDDEN_ALL | U | 26 | 2 | 0.30513 | 0.39032 | 7 | 8 | 0 | {'FEASIBLE': 23, 'STOP': 3} | 0.11538 | 0.24246 | 0.32829 |
+
+## Gate (post-passage excluded)
+
+| criterion | passed |
+| --- | --- |
+| passage | True |
+| static_collision | True |
+| stop | True |
+| timing | True |
+
+{'label': 'GO_ONLINE', 'scope': 'STATIC_AND_PRE_PASSAGE', 'failed': [], 'pre_passage_n': 16, 'G_planned_passage': 5, 'C0_planned_passage': 3, 'static_n': 216, 'G_static_collisions': 14, 'C0_static_collisions': 41, 'stop_timing_n': 232, 'stop_fraction': 0.03017241379310345, 'compute_p95_s': 0.38296663205}
+
+![example_TD0218.png](../research/results/phase24_offline/example_TD0218.png)
+
+![example_TD0236.png](../research/results/phase24_offline/example_TD0236.png)
+
+![example_TD0222.png](../research/results/phase24_offline/example_TD0222.png)
+
+![example_TS0037.png](../research/results/phase24_offline/example_TS0037.png)
+
+No new inference, renderer or navigation was used in this offline check. GO_ONLINE: permits pilot preparation/smoke only; the main24runs remain user-run.
