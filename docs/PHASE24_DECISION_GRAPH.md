@@ -123,3 +123,23 @@ NORMAL→DETOUR cases: 32/242. Detailed per-snapshot reasons and stage times are
 ![example_TS0037.png](../research/results/phase24_offline/example_TS0037.png)
 
 No new inference, renderer or navigation was used in this offline check. GO_ONLINE: permits pilot preparation/smoke only; the main24runs remain user-run.
+
+## Online preparation
+
+The registered offline gate passed. All three required final L2seed95smokes passed; the earlier Gsmoke before the timeout-prediction fix is also preserved. All four attempts are excluded from the24-run pilot. The pilot has not started.
+
+| method | technical_validation | command_pose_error_m | inference_count | launcher_wall_s | output |
+| --- | --- | --- | --- | --- | --- |
+| G | PASS | 0 | 88 | 209.52 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_smoke_02/L2_095_G |
+| C0 | PASS | 0 | 64 | 186.37 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_smoke_01/L2_095_C0 |
+| C1 | PASS | 0 | 90 | 205.12 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_smoke_01/L2_095_C1 |
+
+Tests:18/18. Short sockets:maximum89bytes. Online protocol SHA256 `fb8c22cdb5bfffbb6e6494fcd023f370aff853b4594dc56c43a48c3759e2dbac`. Main order:seed131–134→sceneL2/SLW→registered method permutation;24runs, one attempt each; lock/resume and completed-run preservation. Estimated total99.4minutes.
+
+Application:install paths at exactlydispatch+36integration ticks; keep the global9Hzcommand phase. The first command using that path is the next eligible control tick. Every new NORMAL FRESH launches G; a no-output result applies bounded braking and launches one DETOUR solve. Mode changes invalidate obsolete-mode jobs. DETOUR keeps the frozen20Fhandover conditions (the no-new-obstacle exit applies to triggerB; the originalA/no-component branch retains endpoint/6s/depth-certificate exits). Pending native candidates are logged and selection resumes on the next FRESH after handover. Recovery is the unchanged12-turn Phase17last resort. A*is only C1.
+
+Preflight execution fix: Predictor now propagates existing1s waypoint expiry/braking within the0.5s OLD prefix. Original Gsmoke had3/86 prediction windows crossing expiry; retained and excluded. No graph factors, constants, decision thresholds or prior phase code changed. The original Gsmoke is preserved at /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_smoke_01/L2_095_G.
+
+Collision in both offline and online decisions means oracle geometric obstacle overlap or negative footprint wall clearance; corridor stops are also a separate column. NoMaD, geometry, constants and frozen C0/C1executors were not edited. Online Guses the exact graph factors tested offline.
+
+The four offline figures retain their registered snapshot IDs. Unused u_refarrows are hidden in NORMAL-mode figures; numerical results and raw records are unchanged.

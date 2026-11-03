@@ -1,0 +1,213 @@
+{
+  "phase": "24-online",
+  "status": "FROZEN",
+  "methods": [
+    "G",
+    "C0",
+    "C1"
+  ],
+  "indices": [
+    131,
+    132,
+    133,
+    134
+  ],
+  "offline_protocol_sha256": "0835ef854ebb5cfbc453e826a064da8cfe129dc5960013cbae4c7c098f8f1a31",
+  "application_policy": "PATH_AT_0P5_NEXT_9HZ",
+  "deadline_s": 0.5,
+  "controller_hz": 9,
+  "integration_hz": 72,
+  "candidate_hz_nominal": 4,
+  "delay_s": 0.75,
+  "timeout_sim_s": 90,
+  "main_attempts_per_job": 1,
+  "main_execution": "user only",
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "scenes": {
+    "L2": {
+      "scenario": "research/nomad_phase2/scenario.json",
+      "scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a"
+    },
+    "SLW": {
+      "scenario": "research/nomad_isaac/scenarios/phase17_slw.json",
+      "scenario_sha256": "57c277287204730d30119e45e122cb9051ffe005f3fcefcc2df43e00d332c718",
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/manifest.json",
+      "topomap_sha256": "5d667992e2bb0f3f3f4cece8c8745355c8a36a997b5dfda8ce46f3856655db57"
+    }
+  },
+  "method_definitions": "Phase24 registered decision D + frozen G; C0 Phase21 M3 and C1 Phase21 B4 unmodified",
+  "application_note": "Install at exactly dispatch+36 integration ticks; retain global9Hz control phase, next eligible command tick. Old execution continues during each solve; a failed NORMAL applies bounded braking before the one DETOUR retry.",
+  "mode_note": "Frozen20F trigger B and component direction online; approved radial A direction without component. No ALL_UNSAFE/R2. DETOUR locks native replacement until frozen20F exit (NO_NEW_OBSTACLE_AHEAD for B, endpoint/6s/current depth certificate for all). Last resort uses original12x30deg Recovery after two failed fresh pipelines while stopped.",
+  "seed_order": 20261103,
+  "main_order": [
+    {
+      "index": 131,
+      "scene": "L2",
+      "method": "C0"
+    },
+    {
+      "index": 131,
+      "scene": "L2",
+      "method": "C1"
+    },
+    {
+      "index": 131,
+      "scene": "L2",
+      "method": "G"
+    },
+    {
+      "index": 131,
+      "scene": "SLW",
+      "method": "C0"
+    },
+    {
+      "index": 131,
+      "scene": "SLW",
+      "method": "C1"
+    },
+    {
+      "index": 131,
+      "scene": "SLW",
+      "method": "G"
+    },
+    {
+      "index": 132,
+      "scene": "L2",
+      "method": "C0"
+    },
+    {
+      "index": 132,
+      "scene": "L2",
+      "method": "C1"
+    },
+    {
+      "index": 132,
+      "scene": "L2",
+      "method": "G"
+    },
+    {
+      "index": 132,
+      "scene": "SLW",
+      "method": "C1"
+    },
+    {
+      "index": 132,
+      "scene": "SLW",
+      "method": "C0"
+    },
+    {
+      "index": 132,
+      "scene": "SLW",
+      "method": "G"
+    },
+    {
+      "index": 133,
+      "scene": "L2",
+      "method": "C0"
+    },
+    {
+      "index": 133,
+      "scene": "L2",
+      "method": "G"
+    },
+    {
+      "index": 133,
+      "scene": "L2",
+      "method": "C1"
+    },
+    {
+      "index": 133,
+      "scene": "SLW",
+      "method": "C1"
+    },
+    {
+      "index": 133,
+      "scene": "SLW",
+      "method": "C0"
+    },
+    {
+      "index": 133,
+      "scene": "SLW",
+      "method": "G"
+    },
+    {
+      "index": 134,
+      "scene": "L2",
+      "method": "C1"
+    },
+    {
+      "index": 134,
+      "scene": "L2",
+      "method": "C0"
+    },
+    {
+      "index": 134,
+      "scene": "L2",
+      "method": "G"
+    },
+    {
+      "index": 134,
+      "scene": "SLW",
+      "method": "C0"
+    },
+    {
+      "index": 134,
+      "scene": "SLW",
+      "method": "G"
+    },
+    {
+      "index": 134,
+      "scene": "SLW",
+      "method": "C1"
+    }
+  ],
+  "decisions": {
+    "success_gain": "Gsuccess>=C0success",
+    "collision": "Gcollision<=C0collision",
+    "benefit": "clearance median>=C0+.03 OR omega saturation median<=C0*.5",
+    "G_HELPS": "all preceding",
+    "G_HURTS": "Gsuccess<=C0success-2 OR Gcollision>C0collision",
+    "otherwise": "G_INCONCLUSIVE",
+    "scope": "scene separately; pilot n4; C1 reference"
+  },
+  "collision_metric": "Geometric oracle obstacle overlap OR negative oracle footprint wall clearance, consistent with offline G/C0 gate; corridor stop also reported separately. No safety-margin-only failure is relabeled a collision.",
+  "smoke_runs": {
+    "G": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_smoke_02/L2_095_G",
+    "C0": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_smoke_01/L2_095_C0",
+    "C1": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_smoke_01/L2_095_C1"
+  },
+  "preserved_smoke_attempts": [
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_smoke_01/L2_095_G"
+  ],
+  "preflight_execution_fix": "Predictor now propagates existing1s waypoint expiry/braking within the0.5s OLD prefix. Original Gsmoke had3/86 prediction windows crossing expiry; retained and excluded. No graph factors, constants, decision thresholds or prior phase code changed.",
+  "source_sha256": {
+    "research/nomad_phase24/__init__.py": "424f36e4e266b8e7c846e0f22a3143d745e2428c799a7b8965076c78f47e0bd1",
+    "research/nomad_phase24/campaign.py": "81f2bafc66780d2156f962a3331eee521e345c8827ceec9942ab7e5bab978258",
+    "research/nomad_phase24/context.py": "e147b90731a565381fe2c11948ea007490e28d697742421db3007d2f2578dd24",
+    "research/nomad_phase24/decision.py": "b0850794e948349a9cbe61a9a7b8c127895449b857a92055bcedb7a21e218103",
+    "research/nomad_phase24/graph.py": "3d9954695832a80f3b4c8cd5a80acb32c22a549be61053b5183b46a63061261d",
+    "research/nomad_phase24/inputs.py": "580685a7acdde676b6a7f46b03f511d46faf529f00de60aa04dd303296b8b139",
+    "research/nomad_phase24/live.py": "aca036f6d270b07cb8e81d3ad3bb75c41b14ea69f79aa366d40da79da8346baf",
+    "research/nomad_phase24/online_config.py": "7602fc25c88a88de5773a8bcf0311cdb420549332d98f466eda0971950574985",
+    "research/nomad_phase24/online_execution.py": "7e425a5eeb3a15cdbf3f355f94ed07f34b715eb0a9866fa2dbe740d6b7562907",
+    "research/nomad_phase24/online_launch.py": "fde7147e887bca1aebb8d04b78218b7ff0160a48b565e777585e0a5d5f68a229",
+    "research/nomad_phase24/online_metrics.py": "73dc8c9dece67d4ef0f2b053b66604b40852563bfe4167439ff53fab12330b6f",
+    "research/nomad_phase24/online_pool.py": "a4e7fb8dab6395b5f24f8ccebd7b5f56f4d4324ce9e3362247762ac25695bdb3",
+    "research/nomad_phase24/online_prepare.py": "211f904ca196cd1c5ac2e2744795ef6092eb1ff4f3aea939eb165a9486596388",
+    "research/nomad_phase24/online_report.py": "e877b9a5173b834b944ded9fa02442ee46c5fff9a340570ddfa97ccc2e8b0ea9",
+    "research/nomad_phase24/online_simulator.py": "c7a05194231b179a79ef1c2cacc2dd6f2f2e27d8e5684df8427784a62e8a2ccc",
+    "research/nomad_phase24/online_worker.py": "04b8122b688ed54f087ab5e3f25ed11892614c3c286eb25b51bfb4658afc9a6f",
+    "research/nomad_phase24/prepare.py": "16b13bfb95bae65d86c97dd44e01b1f82dc52ff3222323edab774ee5377e971f",
+    "research/nomad_phase24/report.py": "c92e7abdf3880ce6de7ed4552357e22cae536e1c8db20cfebcaaaee7f12f213c",
+    "research/nomad_phase24/run.py": "e755745ca8bd84b93ed549ff5d20db5136218c3d8922f00888e65a259a728375",
+    "research/nomad_phase24/test_decision.py": "7a8eb30fd73834482cbcec92e8e7e68c003b4ce0aaea4ceb0100ebffe1593eae",
+    "research/nomad_phase24/test_graph.py": "a15d90e5f74229a8413a8dc07f7a2fc36d3491fa6dadcae2cf812b1e3582de0a",
+    "research/nomad_phase24/test_online.py": "9fc87f11c51cc0975e6999555429f6e9d8f6725424d2d6dfb161db1035c80210"
+  },
+  "offline_gate_sha256": "fec2b27444fc7bf832a75424621513cd9137d054ea2ba1520fcccc30ef8ff44c",
+  "estimated_total_minutes": 99.37799374240916,
+  "estimate_basis": "24runs times slowest seed95 launcher wall time,15%allowance plus3minutes report; main outcomes not observed",
+  "socket_max_bytes": 89
+}
