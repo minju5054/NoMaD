@@ -1,0 +1,28 @@
+{
+  "status": "READY_FOR_USER_RUN",
+  "estimate": {
+    "expected_minutes": 85.40252116664925,
+    "over_2h": false,
+    "old_actual_minutes": 23.110277058516665,
+    "training_solves": 2178,
+    "U2_total": 2738,
+    "new_U": 524,
+    "new_C0": 524,
+    "reused_seen_comparators": 106,
+    "per_rollout_allowance_s": 0.31188283796655014,
+    "prior_non_solver_overhead_s": 703.5325914578051,
+    "safety_multiplier": 1.25,
+    "assumptions": "Full500ms for every U/U2 solve,1s for every C0 call,2x prior postprocessing p95 per record, full prior non-solver overhead+60s and25% allowance. Prediction estimate, not a new dataset benchmark."
+  },
+  "new_training_records": 0,
+  "new_evaluation_records": 0,
+  "tests": {
+    "passed": 7,
+    "total": 7,
+    "objective_jacobian_max_error": 5.214644716033945e-08,
+    "constraint_jacobian_max_error": 2.691824541045662e-10,
+    "fake_report": "PASS"
+  },
+  "protocol_sha256": "a583cc6d4ff0ac20a14eb024fe6ac48613e3d94190477f5572db73abff39e8a3",
+  "old_sources_unchanged": true
+}
