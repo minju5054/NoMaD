@@ -147,3 +147,104 @@ The four offline figures retain their registered snapshot IDs. Unused u_refarrow
 ## Disk recovery amendment
 
 See [operational recovery](PHASE24_DISK_RECOVERY.md). Four completed runs remain unchanged; SLW_131_C1 is an explicitly authorized disk-full retry and SLW_131_G is a preserved unstarted attempt. The original method protocol and decision function remain unchanged. Seed131keeps full frames; later seeds use reduced archives.
+
+## Online pilot results
+
+Pilot, four new paired seeds per scene; C1 is descriptive only. Exact simulator odometry is assumed. The three seed95 smoke runs are excluded.
+
+Online protocol SHA256 `fb8c22cdb5bfffbb6e6494fcd023f370aff853b4594dc56c43a48c3759e2dbac`. G installs the graph at36integration ticks and retains the global9Hz controller phase; C0/C1retain Phase21executors and timing.
+
+### Registered decisions
+
+| scene | label | goal_not_lower | collisions_not_higher | clearance_gain_3cm | omega_halved |
+| --- | --- | --- | --- | --- | --- |
+| L2 | PILOT_G_HURTS | False | False | False | True |
+| SLW | PILOT_G_HELPS | True | True | False | True |
+
+### Outcomes
+
+| scene | method | n | valid | success | collision | corridor | stuck | technical_failure | goal_time_median_s | box_passage | passage_time_median_s | min_clearance_median_m | detour_min_clearance_median_m | omega_saturation_median | stopped_fraction_median | recovery_count | compute_p95_median_s |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| L2 | G | 4 | 4 | 1 | 1 | 0 | 2 | 0 | 68.097 | 2 | 21.486 | 0.1038 | 0.14599 | 0.10832 | 0.27205 | 0 | 0.44944 |
+| L2 | C0 | 4 | 4 | 2 | 0 | 0 | 2 | 0 | 65.368 | 3 | 15.764 | 0.16074 | 0.20162 | 0.4101 | 0.35923 | 1 | 0.43244 |
+| L2 | C1 | 4 | 4 | 2 | 0 | 0 | 2 | 0 | 75.757 | 4 | 18.812 | 0.06524 | 0.062813 | 0.40508 | 0.34688 | 0 | 0.62047 |
+| SLW | G | 4 | 4 | 0 | 4 | 4 | 0 | 0 | — | 0 | — | -0.0015963 | -0.0015339 | 0.13349 | 0.32146 | 0 | 0.33605 |
+| SLW | C0 | 4 | 4 | 0 | 4 | 4 | 0 | 0 | — | 0 | — | -0.00058715 | — | 0.35696 | 0.39317 | 0 | — |
+| SLW | C1 | 4 | 4 | 0 | 4 | 4 | 0 | 0 | — | 0 | — | -0.00093635 | — | 0.26194 | 0.38302 | 0 | — |
+| ALL | G | 8 | 8 | 1 | 5 | 4 | 2 | 0 | 68.097 | 2 | 21.486 | -0.00032846 | 0.135 | 0.10832 | 0.28821 | 0 | 0.36954 |
+| ALL | C0 | 8 | 8 | 2 | 4 | 4 | 2 | 0 | 65.368 | 3 | 15.764 | 0.0029505 | 0.20162 | 0.37959 | 0.39317 | 1 | 0.43244 |
+| ALL | C1 | 8 | 8 | 2 | 4 | 4 | 2 | 0 | 75.757 | 4 | 18.812 | 0.025546 | 0.062813 | 0.36863 | 0.37242 | 0 | 0.62047 |
+
+### Paired inputs
+
+| scene | index | method | classification | success | box_passage | box_passage_from_spawn_s | goal_time_s | minimum_clearance_m | detour_minimum_clearance_m | omega_saturation_fraction | stopped_fraction | recovery_count | technical_validation |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| L2 | 131 | C0 | SUCCESS | True | True | 14.472 | 62.819 | 0.21221 | 0.21443 | 0.32257 | 0.29007 | 0 | PASS |
+| L2 | 131 | C1 | SUCCESS | True | True | 22.25 | 78.181 | 0.062813 | 0.062813 | 0.39652 | 0.36952 | 0 | PASS |
+| L2 | 131 | G | STUCK | False | False | — | — | 0.095197 | 0.15699 | 0.18272 | 0.2716 | 0 | PASS |
+| L2 | 132 | C0 | STUCK | False | True | 39.125 | — | 0.0060229 | — | 0.42593 | 0.4284 | 1 | PASS |
+| L2 | 132 | C1 | STUCK | False | True | 15.375 | — | 0.051618 | 0.051618 | 0.34074 | 0.29383 | 0 | PASS |
+| L2 | 132 | G | COLLISION | False | False | — | — | -0.00014208 | 0.0067418 | 0.005386 | 0.36984 | 0 | PASS |
+| L2 | 133 | C0 | STUCK | False | False | — | — | 0.13732 | — | 0.61728 | 0.51975 | 0 | PASS |
+| L2 | 133 | C1 | STUCK | False | True | 65.792 | — | 0.085337 | — | 0.6716 | 0.61852 | 0 | PASS |
+| L2 | 133 | G | STUCK | False | True | 19.375 | — | 0.13929 | 0.40668 | 0.097531 | 0.22963 | 0 | PASS |
+| L2 | 134 | C0 | SUCCESS | True | True | 15.764 | 67.917 | 0.18416 | 0.18881 | 0.39427 | 0.28793 | 0 | PASS |
+| L2 | 134 | C1 | SUCCESS | True | True | 13.847 | 73.333 | 0.067667 | 0.067667 | 0.41364 | 0.32424 | 0 | PASS |
+| L2 | 134 | G | SUCCESS | True | True | 23.597 | 68.097 | 0.11241 | 0.135 | 0.11911 | 0.27249 | 0 | PASS |
+| SLW | 131 | C0 | CORRIDOR | False | False | — | — | -0.0016513 | — | 0.39803 | 0.38329 | 0 | PASS |
+| SLW | 131 | C1 | CORRIDOR | False | False | — | — | -0.0015224 | — | 0.2562 | 0.39071 | 0 | PASS |
+| SLW | 131 | G | CORRIDOR | False | False | — | — | -0.0025237 | — | 0.18869 | 0.3591 | 0 | PASS |
+| SLW | 132 | C0 | CORRIDOR | False | False | — | — | -0.00012175 | — | 0.33195 | 0.39834 | 0 | PASS |
+| SLW | 132 | C1 | CORRIDOR | False | False | — | — | -0.0010333 | — | 0.23545 | 0.37533 | 0 | PASS |
+| SLW | 132 | G | CORRIDOR | False | False | — | — | -0.0015343 | -0.0015339 | 0.16949 | 0.33898 | 0 | PASS |
+| SLW | 133 | C0 | CORRIDOR | False | False | — | — | -0.00037288 | — | 0.3649 | 0.38799 | 0 | PASS |
+| SLW | 133 | C1 | CORRIDOR | False | False | — | — | -0.00052663 | — | 0.50019 | 0.46346 | 0 | PASS |
+| SLW | 133 | G | CORRIDOR | False | False | — | — | -0.00051484 | — | 0.097491 | 0.30394 | 0 | PASS |
+| SLW | 134 | C0 | CORRIDOR | False | False | — | — | -0.00080143 | — | 0.34903 | 0.45983 | 0 | PASS |
+| SLW | 134 | C1 | CORRIDOR | False | False | — | — | -0.00083935 | — | 0.26768 | 0.36502 | 0 | PASS |
+| SLW | 134 | G | CORRIDOR | False | False | — | — | -0.0016583 | — | 0.086997 | 0.26193 | 0 | PASS |
+
+### Mode/output/timing
+
+| scene | index | method | mode_fraction | output_counts | output_fractions | pipeline_output_counts | job_compute_p95_s | compute_p50_s | compute_p95_s | compute_definition | recovery_count |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| L2 | 131 | C0 | — | — | — | — | — | 0.54056 | 0.54056 | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| L2 | 131 | C1 | — | — | — | — | — | 0.24523 | 0.86839 | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| L2 | 131 | G | {'NORMAL': 0.8629629629629632, 'DETOUR': 0.13703703703703687} | {'FEASIBLE': 73, 'STOP': 7, 'KINEMATIC_TOLERATED': 5} | {'FEASIBLE': 0.8588235294117647, 'STOP': 0.08235294117647059, 'KINEMATIC_TOLERATED': 0.058823529411764705} | {'FEASIBLE': 73, 'KINEMATIC_TOLERATED': 5} | 0.24964 | 0.19473 | 0.46647 | G dispatch-to-final wall time incl transport; NORMAL->DETOUR stages summed per pipeline; single-job p95 also reported | 0 |
+| L2 | 132 | C0 | — | — | — | — | — | 0.12954 | 0.43244 | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 1 |
+| L2 | 132 | C1 | — | — | — | — | — | 0.43317 | 0.55713 | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| L2 | 132 | G | {'NORMAL': 0.8061041292639138, 'DETOUR': 0.1938958707360862} | {'FEASIBLE': 21, 'STOP': 2, 'KINEMATIC_TOLERATED': 3} | {'FEASIBLE': 0.8076923076923077, 'STOP': 0.07692307692307693, 'KINEMATIC_TOLERATED': 0.11538461538461539} | {'FEASIBLE': 21, 'KINEMATIC_TOLERATED': 3} | 0.22909 | 0.20537 | 0.33519 | G dispatch-to-final wall time incl transport; NORMAL->DETOUR stages summed per pipeline; single-job p95 also reported | 0 |
+| L2 | 133 | C0 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| L2 | 133 | C1 | — | — | — | — | — | 0.6838 | 0.6838 | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| L2 | 133 | G | {'NORMAL': 0.8703703703703703, 'DETOUR': 0.12962962962962968} | {'FEASIBLE': 71, 'KINEMATIC_TOLERATED': 7, 'STOP': 10} | {'FEASIBLE': 0.8068181818181818, 'KINEMATIC_TOLERATED': 0.07954545454545454, 'STOP': 0.11363636363636363} | {'FEASIBLE': 71, 'KINEMATIC_TOLERATED': 7, 'STOP': 3} | 0.25135 | 0.1858 | 0.44507 | G dispatch-to-final wall time incl transport; NORMAL->DETOUR stages summed per pipeline; single-job p95 also reported | 0 |
+| L2 | 134 | C0 | — | — | — | — | — | 0.27354 | 0.27354 | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| L2 | 134 | C1 | — | — | — | — | — | 0.53541 | 0.53541 | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| L2 | 134 | G | {'NORMAL': 0.8011421578625331, 'DETOUR': 0.19885784213746696} | {'FEASIBLE': 53, 'STOP': 5, 'KINEMATIC_TOLERATED': 2} | {'FEASIBLE': 0.8833333333333333, 'STOP': 0.08333333333333333, 'KINEMATIC_TOLERATED': 0.03333333333333333} | {'FEASIBLE': 53, 'KINEMATIC_TOLERATED': 2} | 0.25563 | 0.19107 | 0.4538 | G dispatch-to-final wall time incl transport; NORMAL->DETOUR stages summed per pipeline; single-job p95 also reported | 0 |
+| SLW | 131 | C0 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| SLW | 131 | C1 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| SLW | 131 | G | {'NORMAL': 1.0} | {'FEASIBLE': 10, 'KINEMATIC_TOLERATED': 4} | {'FEASIBLE': 0.7142857142857143, 'KINEMATIC_TOLERATED': 0.2857142857142857} | {'FEASIBLE': 10, 'KINEMATIC_TOLERATED': 4} | 0.3207 | 0.17351 | 0.3207 | G dispatch-to-final wall time incl transport; NORMAL->DETOUR stages summed per pipeline; single-job p95 also reported | 0 |
+| SLW | 132 | C0 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| SLW | 132 | C1 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| SLW | 132 | G | {'NORMAL': 0.8389830508474576, 'DETOUR': 0.16101694915254236} | {'FEASIBLE': 9, 'STOP': 1} | {'FEASIBLE': 0.9, 'STOP': 0.1} | {'FEASIBLE': 9} | 0.3094 | 0.18092 | 0.38768 | G dispatch-to-final wall time incl transport; NORMAL->DETOUR stages summed per pipeline; single-job p95 also reported | 0 |
+| SLW | 133 | C0 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| SLW | 133 | C1 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| SLW | 133 | G | {'NORMAL': 0.9770609318996416, 'DETOUR': 0.022939068100358433} | {'FEASIBLE': 16, 'KINEMATIC_TOLERATED': 1, 'STOP': 1} | {'FEASIBLE': 0.8888888888888888, 'KINEMATIC_TOLERATED': 0.05555555555555555, 'STOP': 0.05555555555555555} | {'FEASIBLE': 16, 'KINEMATIC_TOLERATED': 1} | 0.26012 | 0.20527 | 0.35141 | G dispatch-to-final wall time incl transport; NORMAL->DETOUR stages summed per pipeline; single-job p95 also reported | 0 |
+| SLW | 134 | C0 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| SLW | 134 | C1 | — | — | — | — | — | — | — | frozen C0/C1 repair/detour dispatch-to-complete; timeout uses recorded wait | 0 |
+| SLW | 134 | G | {'NORMAL': 1.0} | {'FEASIBLE': 12} | {'FEASIBLE': 1.0} | {'FEASIBLE': 12} | 0.25003 | 0.14637 | 0.25003 | G dispatch-to-final wall time incl transport; NORMAL->DETOUR stages summed per pipeline; single-job p95 also reported | 0 |
+
+Technical failures (preserved; no automatic retry): []
+
+Disk incident: four completed runs were preserved byte-for-byte; the interrupted SLWseed131C1attempt is DISK_FULL TECHNICAL_FAILURE and was explicitly authorized for one same-seed retry. SLWseed131Ghad no requests/trajectory and was restarted after preserving its startup attempt. Archived attempts are excluded from the24main rows; no outcome-based retry was added.
+
+| key | reason | classification | preserved_attempt | max_additional_attempts |
+| --- | --- | --- | --- | --- |
+| SLW_131_C1 | DISK_FULL_TECHNICAL_FAILURE | TECHNICAL_FAILURE | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_pilot_01/attempts/SLW_131_C1/disk_full_attempt_01 | 1 |
+| SLW_131_G | DISK_FULL_STARTUP_NO_RUN | NOT_STARTED | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24_pilot_01/attempts/SLW_131_G/disk_full_attempt_01 | 1 |
+
+After the incident, full raw RGB/depth is retained for seed131in each scene. Other seeds retain live capture/inference/map updates unchanged, but archive only FRESH/1Hz/final maps, all planner snapshots, trajectories and metrics. Runtime latency includes the reduced archival load without compensation. Method factors, weights, seeds and decision criteria remain the frozen protocol.
+
+![paths_L2.png](../research/results/phase24_online/paths_L2.png)
+
+![paths_SLW.png](../research/results/phase24_online/paths_SLW.png)
+
