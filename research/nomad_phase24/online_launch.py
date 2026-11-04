@@ -4,6 +4,7 @@ from pathlib import Path
 from nomad_isaac.common import ROOT,sha256_file,write_json
 from nomad_isaac.socket_path import socket_path_for_run,validate_socket_path
 from .online_config import METHODS,SCENES,verify
+from .storage import atomic_json,retain_full_frames
 
 def environment():
     env=os.environ.copy()
@@ -20,7 +21,10 @@ def main():
         socket_path=str(sock),socket_path_bytes=validate_socket_path(sock),source_sha256={str(f.relative_to(ROOT)):sha256_file(f) for f in Path(__file__).parent.glob('*.py')},checkpoint_sha256=p['checkpoint_sha256']))
     worker=sim=None;launch_start=time.monotonic()
     signal.signal(signal.SIGTERM,lambda *_:(_ for _ in ()).throw(KeyboardInterrupt()))
-    env=environment()
+    env=environment();keep=retain_full_frames(a.index,a.smoke);env['NOMAD_PHASE24_FULL_FRAMES']='1' if keep else '0'
+    atomic_json(out/'storage_policy.json',dict(version='DISK_RECOVERY_1',full_frames=keep,full_frame_seed_per_scene=131,
+        maps='all4Hz' if keep else 'initial/final,1Hz visualization and FRESH snapshots; planner job snapshots retained',
+        changes='archive only; RGB/depth capture, NoMaD inputs, live map updates and all solver/controller rules unchanged'))
     try:
         with (out/'worker.log').open('x') as wl,(out/'simulator.log').open('x') as sl:
             worker=subprocess.Popen([str(ROOT.parent/'.venv/bin/python'),'-u','-m','nomad_isaac.worker','--socket',str(sock),'--output',str(out/'model'),'--checkpoint',str(ROOT.parent/'artifacts/checkpoints/nomad.pth'),'--topomap',p['scenes'][a.scene]['topomap']],cwd=ROOT,env=env,stdout=wl,stderr=subprocess.STDOUT,start_new_session=True)
@@ -33,8 +37,11 @@ def main():
             cmd=['/home/gpuadmin/isaacsim/python.sh',str(ROOT/'research/nomad_phase24/online_simulator.py'),'--level',a.scene,'--output',str(out),'--method',a.method,'--index',str(a.index),'--delay','.75','--socket',str(sock),'--timeout','90','--topomap',p['scenes'][a.scene]['topomap'],'--portable-root',str(out/'portable')]
             sim=subprocess.Popen(cmd,cwd=ROOT,env=env,stdout=sl,stderr=subprocess.STDOUT,start_new_session=True);code=sim.wait(timeout=600)
             if code or not (out/'summary.json').exists() or (out/'FAILED.json').exists():raise RuntimeError(f'Isaac stage incomplete exit={code}')
-            assert worker.wait(timeout=15)==0;write_json(out/'launch_complete.json',dict(exit_code=0,smoke_excluded=a.smoke,launcher_wall_s=time.monotonic()-launch_start))
-    except BaseException as exc:write_json(out/'launch_failure.json',dict(error=repr(exc)));raise
+            assert worker.wait(timeout=15)==0;atomic_json(out/'launch_complete.json',dict(exit_code=0,smoke_excluded=a.smoke,launcher_wall_s=time.monotonic()-launch_start))
+    except BaseException as exc:
+        try:atomic_json(out/'launch_failure.json',dict(error=repr(exc)))
+        except OSError:pass  # Preserve the original exception when the disk is full.
+        raise
     finally:
         for proc in (sim,worker):
             if proc is not None and proc.poll() is None:

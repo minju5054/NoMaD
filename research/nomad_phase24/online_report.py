@@ -35,6 +35,12 @@ def generate(root,out=OUT,doc=DOC,figures=True):
     text+=f"Online protocol SHA256 `{sha256_file(Path(__file__).with_name('online_protocol.json'))}`. G installs the graph at36integration ticks and retains the global9Hz controller phase; C0/C1retain Phase21executors and timing.\n\n"
     text+='### Registered decisions\n\n'+table(decisions)+'\n\n### Outcomes\n\n'+table(summary)+'\n\n### Paired inputs\n\n'+table(paired)+'\n\n### Mode/output/timing\n\n'+table(details)+'\n\n'
     failed=[{k:r.get(k) for k in ('scene','index','method','output','error')} for r in rows if r['technical_validation']!='PASS'];text+='Technical failures (preserved; no automatic retry): '+str(failed)+'\n\n'
+    recovery=root/'recovery/disk_full_20261104/recovery.json'
+    if recovery.exists():
+        incident=json.loads(recovery.read_text());(out/'disk_recovery.json').write_text(json.dumps(incident,indent=2)+'\n')
+        text+='Disk incident: four completed runs were preserved byte-for-byte; the interrupted SLWseed131C1attempt is DISK_FULL TECHNICAL_FAILURE and was explicitly authorized for one same-seed retry. SLWseed131Ghad no requests/trajectory and was restarted after preserving its startup attempt. Archived attempts are excluded from the24main rows; no outcome-based retry was added.\n\n'
+        text+=table([{k:r[k] for k in ('key','reason','classification','preserved_attempt','max_additional_attempts')} for r in incident['retries']])+'\n\n'
+        text+='After the incident, full raw RGB/depth is retained for seed131in each scene. Other seeds retain live capture/inference/map updates unchanged, but archive only FRESH/1Hz/final maps, all planner snapshots, trajectories and metrics. Runtime latency includes the reduced archival load without compensation. Method factors, weights, seeds and decision criteria remain the frozen protocol.\n\n'
     if figures:
         for file in plots(rows,out):text+=f'![{file}](../research/results/phase24_online/{file})\n\n'
     doc.write_text(text);return decisions

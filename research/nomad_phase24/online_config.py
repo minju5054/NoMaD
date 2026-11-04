@@ -29,5 +29,7 @@ def verify():
     for info in p['scenes'].values():
         assert sha256_file(ROOT/info['scenario'])==info['scenario_sha256'];assert sha256_file(info['topomap'])==info['topomap_sha256']
     assert sha256_file(ROOT.parent/'artifacts/checkpoints/nomad.pth')==p['checkpoint_sha256']
-    for name,h in p.get('source_sha256',{}).items():assert sha256_file(ROOT/name)==h,name
+    from .storage import operational_hash,verify_storage_sources
+    for name,h in p.get('source_sha256',{}).items():assert sha256_file(ROOT/name)==operational_hash(name,h),name
+    verify_storage_sources()
     return p

@@ -143,3 +143,7 @@ Preflight execution fix: Predictor now propagates existing1s waypoint expiry/bra
 Collision in both offline and online decisions means oracle geometric obstacle overlap or negative footprint wall clearance; corridor stops are also a separate column. NoMaD, geometry, constants and frozen C0/C1executors were not edited. Online Guses the exact graph factors tested offline.
 
 The four offline figures retain their registered snapshot IDs. Unused u_refarrows are hidden in NORMAL-mode figures; numerical results and raw records are unchanged.
+
+## Disk recovery amendment
+
+See [operational recovery](PHASE24_DISK_RECOVERY.md). Four completed runs remain unchanged; SLW_131_C1 is an explicitly authorized disk-full retry and SLW_131_G is a preserved unstarted attempt. The original method protocol and decision function remain unchanged. Seed131keeps full frames; later seeds use reduced archives.

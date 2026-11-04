@@ -1,0 +1,52 @@
+{
+  "status": "FROZEN",
+  "scope": "OPERATIONAL_STORAGE_ONLY",
+  "baseline_sha": "836127a",
+  "method_protocol_sha256": "fb8c22cdb5bfffbb6e6494fcd023f370aff853b4594dc56c43a48c3759e2dbac",
+  "changed_sources": {
+    "research/nomad_phase24/campaign.py": {
+      "original_sha256": "81f2bafc66780d2156f962a3331eee521e345c8827ceec9942ab7e5bab978258",
+      "sha256": "499ec583d780edc10ae284a3d97e6ea4950f5c2ce493b00661b2dcbbc35eb0a6"
+    },
+    "research/nomad_phase24/online_launch.py": {
+      "original_sha256": "fde7147e887bca1aebb8d04b78218b7ff0160a48b565e777585e0a5d5f68a229",
+      "sha256": "ac7cf51a0f303c9728cca2d6affc342fe15ae6bdf2f3ecc0166efacb80a2cb5c"
+    },
+    "research/nomad_phase24/online_execution.py": {
+      "original_sha256": "7e425a5eeb3a15cdbf3f355f94ed07f34b715eb0a9866fa2dbe740d6b7562907",
+      "sha256": "9741a01db140c28668c0b60b30c05ae6a99c544f934081b5afd44fe76a1808bf"
+    },
+    "research/nomad_phase24/online_config.py": {
+      "original_sha256": "7602fc25c88a88de5773a8bcf0311cdb420549332d98f466eda0971950574985",
+      "sha256": "266702ecb1119ae71a3c8a9c3a2c1e4c4ddcb11208841d694fa87c9677fb2bf0"
+    },
+    "research/nomad_phase24/online_simulator.py": {
+      "original_sha256": "c7a05194231b179a79ef1c2cacc2dd6f2f2e27d8e5684df8427784a62e8a2ccc",
+      "sha256": "5c0d2f1bebf1fe681b514bf9785d4b347cb001162d19628f6fb32a170d3f46d0"
+    },
+    "research/nomad_phase24/online_report.py": {
+      "original_sha256": "e877b9a5173b834b944ded9fa02442ee46c5fff9a340570ddfa97ccc2e8b0ea9",
+      "sha256": "1a74afb64819f1e5811b9ab86cf4336396077436aa5091cccf2b2d61dfe3a104"
+    }
+  },
+  "new_sources": {
+    "research/nomad_phase24/storage.py": "665d5b61f16ffe9a4fe47d4492ac44e03abfeac7c76b614ff24b160927d8b9da",
+    "research/nomad_phase24/retention.py": "b4ac85e725cde73c111233a995a4229665300cd36221e84211bb6b617345ea45",
+    "research/nomad_phase24/recover_disk.py": "f0836c56b317a4ddde615de27b523bcddeecb5fa040f92b36fdc765a4f1ec8ea",
+    "research/nomad_phase24/test_storage.py": "dc6a49f33ed160cdcd0f2f2a0feaba42492a563668dd22a08ab2b27454104753"
+  },
+  "full_frame_seed_per_scene": {
+    "L2": 131,
+    "SLW": 131
+  },
+  "retention": "All live capture/inference/map updates unchanged. Non131: no raw RGB/depth archives,1Hz+FRESH+initial/final maps, all solver job snapshots and numerical/trajectory logs retained.",
+  "headroom_bytes": 20000000000,
+  "emergency_metadata_reserve_bytes": 1048576,
+  "estimate": "Completed-run average; compact projection retains1Hz+FRESH frames plus20%of omitted map bytes as allowance; re-estimate before every next run.",
+  "retry_exception": {
+    "SLW_131_C1": "One user-authorized same-seed retry after confirmed disk-full technical failure; original attempt preserved",
+    "SLW_131_G": "Startup interruption before any request/trajectory; original partial attempt preserved"
+  },
+  "new_navigation_executed": false,
+  "tests_passed": 7
+}
