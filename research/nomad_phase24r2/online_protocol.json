@@ -1,0 +1,280 @@
+{
+  "phase": "24-R2",
+  "status": "FROZEN",
+  "methods": [
+    "G",
+    "C0",
+    "C1"
+  ],
+  "indices": [
+    151,
+    152,
+    153,
+    154
+  ],
+  "application_policy": "PATH_AT_0P5_NEXT_9HZ",
+  "deadline_s": 0.5,
+  "controller_hz": 9,
+  "integration_hz": 72,
+  "candidate_hz_nominal": 4,
+  "delay_s": 0.75,
+  "timeout_sim_s": 90,
+  "main_attempts_per_job": 1,
+  "main_execution": "user only",
+  "checkpoint_sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+  "scenes": {
+    "L2": {
+      "scenario": "research/nomad_phase2/scenario.json",
+      "scenario_sha256": "b5d7a5df40e3efdf3371a4d4d5a9621aa21b98c9bf297d9b0ba69b2d05475fae",
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
+      "topomap_sha256": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a"
+    }
+  },
+  "method_definitions": "All Phase24-R factors, initializations, maps, certificates, decisions, controller, C0/C1 unchanged; only G DETOUR endpoint return residual added.",
+  "application_note": "Install at exactly dispatch+36 integration ticks; retain global9Hz control phase, next eligible command tick. Old execution continues during each solve; a failed NORMAL applies bounded braking before the one DETOUR retry.",
+  "mode_note": "Frozen20F trigger B and component direction online; approved radial A direction without component. No ALL_UNSAFE/R2. DETOUR locks native replacement until frozen20F exit (NO_NEW_OBSTACLE_AHEAD for B, endpoint/6s/current depth certificate for all). Last resort uses original12x30deg Recovery after two failed fresh pipelines while stopped.",
+  "seed_order": 20261104,
+  "main_order": [
+    {
+      "index": 151,
+      "scene": "L2",
+      "method": "C0"
+    },
+    {
+      "index": 151,
+      "scene": "L2",
+      "method": "G"
+    },
+    {
+      "index": 151,
+      "scene": "L2",
+      "method": "C1"
+    },
+    {
+      "index": 152,
+      "scene": "L2",
+      "method": "G"
+    },
+    {
+      "index": 152,
+      "scene": "L2",
+      "method": "C1"
+    },
+    {
+      "index": 152,
+      "scene": "L2",
+      "method": "C0"
+    },
+    {
+      "index": 153,
+      "scene": "L2",
+      "method": "C1"
+    },
+    {
+      "index": 153,
+      "scene": "L2",
+      "method": "G"
+    },
+    {
+      "index": 153,
+      "scene": "L2",
+      "method": "C0"
+    },
+    {
+      "index": 154,
+      "scene": "L2",
+      "method": "C1"
+    },
+    {
+      "index": 154,
+      "scene": "L2",
+      "method": "C0"
+    },
+    {
+      "index": 154,
+      "scene": "L2",
+      "method": "G"
+    }
+  ],
+  "decisions": {
+    "R2_PASS": "G goal success >= C0 - 1 AND G collisions == 0 AND G box passage >= C0 - 1",
+    "otherwise": "R2_FAIL",
+    "scope": "L2 pilot n=4; C1 reference; existing Phase24/R results not pooled"
+  },
+  "collision_metric": "Geometric oracle obstacle overlap OR negative oracle footprint wall clearance, consistent with offline G/C0 gate; corridor stop also reported separately. No safety-margin-only failure is relabeled a collision.",
+  "preserved_smoke_attempts": [],
+  "base_commit": "d133909",
+  "definitions_pending": [],
+  "preserved_sources": {
+    "research/nomad_phase24/__init__.py": "424f36e4e266b8e7c846e0f22a3143d745e2428c799a7b8965076c78f47e0bd1",
+    "research/nomad_phase24/campaign.py": "499ec583d780edc10ae284a3d97e6ea4950f5c2ce493b00661b2dcbbc35eb0a6",
+    "research/nomad_phase24/context.py": "e147b90731a565381fe2c11948ea007490e28d697742421db3007d2f2578dd24",
+    "research/nomad_phase24/decision.py": "b0850794e948349a9cbe61a9a7b8c127895449b857a92055bcedb7a21e218103",
+    "research/nomad_phase24/graph.py": "3d9954695832a80f3b4c8cd5a80acb32c22a549be61053b5183b46a63061261d",
+    "research/nomad_phase24/inputs.py": "580685a7acdde676b6a7f46b03f511d46faf529f00de60aa04dd303296b8b139",
+    "research/nomad_phase24/live.py": "aca036f6d270b07cb8e81d3ad3bb75c41b14ea69f79aa366d40da79da8346baf",
+    "research/nomad_phase24/online_config.py": "266702ecb1119ae71a3c8a9c3a2c1e4c4ddcb11208841d694fa87c9677fb2bf0",
+    "research/nomad_phase24/online_execution.py": "9741a01db140c28668c0b60b30c05ae6a99c544f934081b5afd44fe76a1808bf",
+    "research/nomad_phase24/online_launch.py": "ac7cf51a0f303c9728cca2d6affc342fe15ae6bdf2f3ecc0166efacb80a2cb5c",
+    "research/nomad_phase24/online_metrics.py": "73dc8c9dece67d4ef0f2b053b66604b40852563bfe4167439ff53fab12330b6f",
+    "research/nomad_phase24/online_pool.py": "a4e7fb8dab6395b5f24f8ccebd7b5f56f4d4324ce9e3362247762ac25695bdb3",
+    "research/nomad_phase24/online_prepare.py": "211f904ca196cd1c5ac2e2744795ef6092eb1ff4f3aea939eb165a9486596388",
+    "research/nomad_phase24/online_report.py": "1a74afb64819f1e5811b9ab86cf4336396077436aa5091cccf2b2d61dfe3a104",
+    "research/nomad_phase24/online_simulator.py": "5c0d2f1bebf1fe681b514bf9785d4b347cb001162d19628f6fb32a170d3f46d0",
+    "research/nomad_phase24/online_worker.py": "04b8122b688ed54f087ab5e3f25ed11892614c3c286eb25b51bfb4658afc9a6f",
+    "research/nomad_phase24/pilot_diagnosis.py": "ad47380822e7871ea8057ec7622d5177eec78838d88066e09f5d0715461792f1",
+    "research/nomad_phase24/prepare.py": "16b13bfb95bae65d86c97dd44e01b1f82dc52ff3222323edab774ee5377e971f",
+    "research/nomad_phase24/recover_disk.py": "f0836c56b317a4ddde615de27b523bcddeecb5fa040f92b36fdc765a4f1ec8ea",
+    "research/nomad_phase24/report.py": "c92e7abdf3880ce6de7ed4552357e22cae536e1c8db20cfebcaaaee7f12f213c",
+    "research/nomad_phase24/retention.py": "b4ac85e725cde73c111233a995a4229665300cd36221e84211bb6b617345ea45",
+    "research/nomad_phase24/run.py": "e755745ca8bd84b93ed549ff5d20db5136218c3d8922f00888e65a259a728375",
+    "research/nomad_phase24/storage.py": "665d5b61f16ffe9a4fe47d4492ac44e03abfeac7c76b614ff24b160927d8b9da",
+    "research/nomad_phase24/test_decision.py": "7a8eb30fd73834482cbcec92e8e7e68c003b4ce0aaea4ceb0100ebffe1593eae",
+    "research/nomad_phase24/test_graph.py": "a15d90e5f74229a8413a8dc07f7a2fc36d3491fa6dadcae2cf812b1e3582de0a",
+    "research/nomad_phase24/test_online.py": "9fc87f11c51cc0975e6999555429f6e9d8f6725424d2d6dfb161db1035c80210",
+    "research/nomad_phase24/test_storage.py": "dc6a49f33ed160cdcd0f2f2a0feaba42492a563668dd22a08ab2b27454104753",
+    "research/nomad_phase20f/__init__.py": "fd4df1392bc9e7b2c2550bce5385f1db74f22cdf5ae1eeef40f9503e32cc8aab",
+    "research/nomad_phase20f/campaign.py": "3bfb3c29205db771634e3ba6bb5a01bac1b20fe8823744c59a7dddd7057f69ff",
+    "research/nomad_phase20f/config.py": "647708bcb268f3c046b94db6fc3258d151cfe2e2b9b92574524b632ccb4a1bd5",
+    "research/nomad_phase20f/depth.py": "b73e09dc3d69387d040c2f2550cfb6e67c87ddaa7923c36ed153769f3e0bb7bc",
+    "research/nomad_phase20f/direction.py": "565d79bc3e4622b086dd8648befed55738f51870b19b24c85479f5f5a8dffe02",
+    "research/nomad_phase20f/history.py": "cb02c70ba6307bda80a9fbac72e1d3813f6e589d3f10f0dca2814d6e4418fd5f",
+    "research/nomad_phase20f/launch.py": "87f7576c52923943104e24c1ca5d67eb3cd4ce1976be21eb64d5b95089635d1b",
+    "research/nomad_phase20f/metrics.py": "b7e981a62b245e669da83dd803efedaef3b04bba2ae7a5187ecb9f2b99005401",
+    "research/nomad_phase20f/offline.py": "f90c71ccb28cac7936b874043ec23ae9341a13c97ad375c722b91fcdfce59e2b",
+    "research/nomad_phase20f/preflight.py": "256132892b97deb7fcf44eed94cdfcad56c5e91e4ff50faf71eab35a261543ba",
+    "research/nomad_phase20f/report.py": "43aaf8aa02484e502d5abaa067734e2863ba77832140f163f0e171fdfe4f790b",
+    "research/nomad_phase20f/runtime.py": "aa08dfb898bd3ff5cc435bbfdd17776ef192adf1d0c2ba0a97ac2be59358c737",
+    "research/nomad_phase20f/simulator.py": "a5dfd7e55df06cb5de1f180caef1ca4256804880aa07fdfe1a83e02c94c1498c",
+    "research/nomad_phase20f/test_history.py": "3f19cefc8cce4b102e41c931a85f4867bd15535fdda46e05a16eb7624d21c70b",
+    "research/nomad_phase20f/test_map.py": "17048e7ad51ae53fe6e5959d5f8b95a41a85123c1c5b574cd832a752b1952a55",
+    "research/nomad_phase20f/test_runtime.py": "b8a922f5ca726ca5e18120945ffa854e5d856297beea6f338342edcd9c2db369",
+    "research/nomad_phase20f/trigger.py": "7a6eb6f3d8b77159647198bb29409483a56de05dafebd1e23cb3ccb8dbfdaadc",
+    "research/nomad_phase20f/visualize.py": "1ed3d2cec6d2d1a4719c9839140b6656f3dc7d49ac5d0a7acd223971880008eb",
+    "research/nomad_phase21/__init__.py": "7d059bf5b96d9dc7896e749b6f77a047a2a47bb7cbf2924827b7514d3eba48d3",
+    "research/nomad_phase21/astar.py": "8f2100583e305cfa81a604542172ff91f65f88e040cd57e7b5b24fb353b4b8be",
+    "research/nomad_phase21/campaign.py": "9e817bc2e70bb96d9a50c3bda72cee7c9fc6fb281b2ef8d5094e8c9f10d510b1",
+    "research/nomad_phase21/config.py": "738c39405a57b4a5f814723830c5d142a66de9cf14fdac3f0d281942fd72c42f",
+    "research/nomad_phase21/execution.py": "cb68d03180094b1496daf55ee4b7822422999e39231354229bfda436f27622f6",
+    "research/nomad_phase21/geometry.py": "5eca42a0dcb632eff2027631f18fc21b3f2f9327afc90c88a44d186f8ab04ba2",
+    "research/nomad_phase21/launch.py": "688e09d2536a1c9b2780048e543e16811475b794a7ded4d2c1252c3781860f14",
+    "research/nomad_phase21/metrics.py": "e4b5f53fd34cd498131c86da08e5d7cc75073d2ea96e706c2e8dacc8d122970b",
+    "research/nomad_phase21/pool.py": "c2d719adc6571f6de659d186ca7a6a60c1ca11b18ac35b31aa8d510a17f489ed",
+    "research/nomad_phase21/preflight.py": "6442eadd48180824a32705af3fef4685ed2c1f39f75b368c048172ee77e49b1a",
+    "research/nomad_phase21/report.py": "e69f2659839b9d9739f15f0e38209cc9051ad0c4aa85dc317618b72ecbb51c30",
+    "research/nomad_phase21/simulator.py": "75bc378f2e4afd82ed6cbc7dae68ed95876087c8934c685fe47b8aaa8486ec91",
+    "research/nomad_phase21/test_astar.py": "6b15f28d112c1d1ce0b5a33e6ca8522255bfc96effa16af10470b7ceb0f60b5f",
+    "research/nomad_phase21/test_execution.py": "7f21c168404287eb4c7821a98d8ad030395222e5e54ae42112d90baf0a95f723",
+    "research/nomad_phase21/test_report.py": "f24c487b29b9b5f2f5e9a551b8358466b829916a862ed4b943edf4d5d028ab6f",
+    "research/nomad_phase21/tune.py": "8b616b294f3a3ed9423f020facc4c2c4f26c05f826507ba31a09817774345d34",
+    "research/nomad_phase21/visualize.py": "1682e403714cc8f651e20227b33dd39dafbc9ac6e07213f8448ad3c1e68b79d2",
+    "research/nomad_phase21/worker.py": "3742af9ba67826296514afc22024ac9a2e32c2f87e9acca9ffdc3cf3fd0f260a",
+    "research/nomad_phase23/__init__.py": "01c6edb169ead448eeee6ebe9a36fd9e1a9c8bb387ed578f80d0f398db9ff035",
+    "research/nomad_phase23/amendment_estimate.py": "3ac95ee62afba868cb944989c3903b6170da004071453f0fe464a1e4639ee040",
+    "research/nomad_phase23/anytime.py": "2f94c55e41674f37380612a5435895c0802db1d2df411843ecc911826cb430d3",
+    "research/nomad_phase23/baselines.py": "877516af309bb656aced1424d4a229dd75db0bc620f0fb2585b061cc9c042403",
+    "research/nomad_phase23/benchmark.py": "7105f0f8ce07541b41d28fb3eee8cb2ff12d2beab2885073774c0c6e70841104",
+    "research/nomad_phase23/context.py": "4d36ab0f78d59beb4d9c0acfd3ac43604b1f29518090beed4175324a1ddd75b7",
+    "research/nomad_phase23/estimate.py": "ee84733f7a0d2f13b43f6d519db522da406d790780b005816a63db76caeae1be",
+    "research/nomad_phase23/graph.py": "0a55f3660e0d7a5d6614f6006c582073b69df9d0b961d005504b5c9c4ce15212",
+    "research/nomad_phase23/inputs.py": "7156525b6aeaf0e7901785394551d373bcaa141b7b74bdf643dc8e0fb87722cc",
+    "research/nomad_phase23/optimized.py": "069f1c651640e5e32593825b819dffdfb4e6662d839d560047fbfc7bc1fd053d",
+    "research/nomad_phase23/planner.py": "361441d5fda7fd6a86a135f3c369a69de24b514246fb6770000ed7ce67a9a89c",
+    "research/nomad_phase23/prediction.py": "69e6a69c954e3b0aabc25a08e461b10afdb3869715b6f6e524d676575dfc1b40",
+    "research/nomad_phase23/recent.py": "1d339c45a236ff26f6110a337b5d86ffc40325d644696a91cfe668efe7abbc85",
+    "research/nomad_phase23/report.py": "3b8f7b69dbc9441ea08d7f6a1d3348d7bcdf85578ca17c07d6802237f5068249",
+    "research/nomad_phase23/response.py": "37607e3ad8e0d6876e6dd080e47af56e71bf21b244aeaf7276c76e1b964caa2d",
+    "research/nomad_phase23/rollout.py": "33cb1433bec1fe51369c260799c7fd0eb1a8263622a155926a00c2744b5be439",
+    "research/nomad_phase23/run.py": "323379be7fd8a850d0609aa4cf4fb9830c0cef4a530be1807c8fc9f5b2de4ab7",
+    "research/nomad_phase23/runtime.py": "0f3beb3f086291dfe32daf1515cc9ddae8bc75f6bfdd9b41db675065b4af9823",
+    "research/nomad_phase23/solver_check.py": "c71db93f8945e937a085bc6e3796b811b22c977f7aac3015a81f2a8375c04851",
+    "research/nomad_phase23/solver_check_report.py": "72d7b22185900824bb96469656fdddc359bb1e8e21d3d53d07fe1eead6c6f484",
+    "research/nomad_phase23/test_anytime.py": "86aa05ef4fe5add12dcc4aeff345e987eb70341d55c53aa11190c3f253499836",
+    "research/nomad_phase23/test_runtime.py": "5899e4a03ad0ab9e3748b447252a907333c1e246f944346a5af2939525fa2712",
+    "research/nomad_phase23/test_solver_check.py": "8bd0c0cdb669512c1cdba97c385da1cd3ccde790aa1f4298d9d375d836f374a0",
+    "research/nomad_phase23/test_unified.py": "f7bc7a2ec2f3adbaab52d381512ffc98e5dedb75b644c0435e1dc171c65b6fb4",
+    "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58",
+    "research/nomad_phase24r/test_phase24r.py": "6e46e98aea7cac5db0d58217f90fb4fa7e0586e23982aac3e733a02f1433f398",
+    "research/nomad_phase24r/candidates.py": "6a001434b989988083bfeb5c7e53f83e079fb0201f03c197deacb4778b791695",
+    "research/nomad_phase24r/online_report.py": "b420761b7a66c2f3c3fe5ddd5f31c0987a475ea9a3f462d000ca00319747fbc6",
+    "research/nomad_phase24r/online_protocol.json": "377e16dcb1b7d7a4555280366ce3534897c81da99d7727dc2d92438f46a29e70",
+    "research/nomad_phase24r/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/nomad_phase24r/campaign.py": "30284fd8a429dab692460bab28be875b94e1779cc2f6200b27adb9b7d081f74a",
+    "research/nomad_phase24r/online_execution.py": "2b6f71506a35badef129cd35b5b357070a3b7d7115047c02f833fc5595ea1d2f",
+    "research/nomad_phase24r/geometry.py": "59b75be4853907cb3f5b804e40d12b41ff57607fa5026a7713962686ba24709e",
+    "research/nomad_phase24r/online_simulator.py": "3dff9a69822badc7abf835c46b9a76ad381d77baf930e74b9cf4fc4031e97f34",
+    "research/nomad_phase24r/online_config.py": "bcbd6381266e0dff562b0d04cc8a51aea9eb5583f4c6d321c6f16054599f1684",
+    "research/nomad_phase24r/online_worker.py": "393c8b0aeba99a709dfea9203e277a63854149d146fd710062f9f85db0e647a6",
+    "research/nomad_phase24r/follower.py": "f103a6449be5cce795285c92283fc813086af93fb86baa672c375f57e1c7b37d",
+    "research/nomad_phase24r/online_pool.py": "01cb98fa26087057276795d1c89873a4d05a0d3530f8d48384934228d27b30a2",
+    "research/nomad_phase24r/online_launch.py": "700ac3c924adccc0ccd11b25afbe1e7231df280531559331fe4f8463b3487fa0",
+    "research/nomad_phase24r/live.py": "cbb09ad9496db137d74a52b7a1e9c822b8e4428f33b6140d1e330247109f7bfb",
+    "research/nomad_phase24r/online_prepare.py": "8cf68590ca77c8771801f3b48b69974091dee7394bba31b2fb9b633639f970e9",
+    "research/nomad_phase24r/graph.py": "fec22b30d69ab1abaade903e935cfe1a285bb7493e508bf8fdd7a8338b322501",
+    "research/nomad_phase24r/depth.py": "24c22112425a758383f55624d604234f4b5d02bd535aeafe35bde60cf48a8ae6",
+    "research/nomad_phase24r/online_metrics.py": "d539efbdcfeb1de49edad3ab6716a669b77ff39930c8d2fb618ee622551c4dd5",
+    "research/nomad_phase24r/trigger.py": "88af728c7e0cc0e12b4eec3b24104d12b7f3003a2f9317b1e7fe8a0868c706f4",
+    "research/nomad_phase24r/storage.py": "1e31b6a0fda8ce7cc5e506b17fa4d52adc34f26d27f10710eb3286587f1e7042",
+    "research/nomad_phase24r/safety.py": "d1a2ee10a200dfe6792158f139aa4280e9957e1bc44a2b3535c1b41e791dff4d",
+    "research/nomad_phase24r/goal_diagnosis.py": "77ab0ad468a7f5cf0d21e5dec7603695488613471b914f2194084e64cd43d58c"
+  },
+  "inherited_phase24r_changes": {
+    "geometry": "All four USD wall inner faces must match config corridor before navigation",
+    "graph_detour_map": "base first0.3m / strict occupied|unknown|free age>2s elsewhere",
+    "certificate": "9points/segment+h/sqrt2+L/16 and continuous exact; conservative start; application and live checks",
+    "component": "occupied and not passed; no10s TTL",
+    "progress": "forward3s<.2 OR component distance reduction3s<.1",
+    "goal": "shared0.3m tolerance; validate stored entry timestamps"
+  },
+  "changes": {
+    "G_DETOUR_ONLY": {
+      "factor": "(signed lateral distance(p10, approach line) / 0.30 m)^2",
+      "weight": 1,
+      "line_component": "robot position at component t_new; direction existing u_ref",
+      "line_fallback": "actual detour-entry position; direction existing radial A u_ref",
+      "tuning": "NONE"
+    }
+  },
+  "metrics_added": {
+    "detour_max_abs_y_m": "maximum |y| over actual accepted detour execution intervals; missing if none",
+    "post_passage_5s_abs_y_m": "interpolated |y| at passage+5s; missing if run ended before that instant",
+    "post_detour_closest_progress": "per accepted detour handover: closest_node at last FRESH <= min(handover+5s,run end) minus last FRESH <= handover; report 5s-complete flag and run-end difference separately"
+  },
+  "storage": {
+    "full_frames_seed_per_scene": 151,
+    "other_seeds": "same 7d823b7 compact archive rules",
+    "required_headroom_GB": 20
+  },
+  "source_sha256": {
+    "research/nomad_phase24r2/__init__.py": "53274a7e8d853bf1cc1ab5c844fd13a4af0a3fcf45b3c592c95da337847d841d",
+    "research/nomad_phase24r2/campaign.py": "3d956cbda2f63bb738d36abbe4d8e82fb6b507028d898681227bd3d4cac72133",
+    "research/nomad_phase24r2/graph.py": "40e865a43d1d6322e4dd4ccccacc74541f1afe50c6121365aa4ccd53e93d0e88",
+    "research/nomad_phase24r2/live.py": "82ee7a858517d41acc2d5b47a7405ac9a63c35d5643384bdffc9eb1037c1844d",
+    "research/nomad_phase24r2/online_config.py": "f1fa6e9773ea0671e8d7cb4347cde4e7574448bdebac415f55fa59d568a0b235",
+    "research/nomad_phase24r2/online_execution.py": "b48fd95305670b16c7fb6e3e6965c549c30a012ef0af2c18b6998a8af77b9407",
+    "research/nomad_phase24r2/online_launch.py": "c453c4346474ad7fd0dae09f56bbcd2079c57c193ff3873ceb5618f1e4051e5a",
+    "research/nomad_phase24r2/online_metrics.py": "a26ad8b96c892642937b2c8d7ee43abaec3ae197944ba3556606f04d8efb1455",
+    "research/nomad_phase24r2/online_pool.py": "1bf45075bb06f6dc33919ec9416d1f76a593d1eddb8b09c6a3d42485a88a5dcc",
+    "research/nomad_phase24r2/online_prepare.py": "6134be7873c2f3b325a199cfa09719b47489cfc864abe844af7c3c70a37210a2",
+    "research/nomad_phase24r2/online_report.py": "cd59fa48d30617157be6a8894f5fd5a89f4c818bc32bc13eadc79e3813015081",
+    "research/nomad_phase24r2/online_simulator.py": "70dc4e8daf455fc3bb9c00137d81982b0a4b3da90ee5e6b116c93b30df43ecb9",
+    "research/nomad_phase24r2/online_worker.py": "97de107a461ef311ac0548d1ceea1f547670739123fe983f507b3b6fee14953d",
+    "research/nomad_phase24r2/storage.py": "836837fe01cb1b0e5876678b1160cdacdffa21ae2a2627e169d9a91e9b8b6069",
+    "research/nomad_phase24r2/test_phase24r2.py": "809a4553ba7eea8664801eba15d4ab86c572dbff1c41ea916adfcbb64bf05ce0"
+  },
+  "smoke_runs": {
+    "L2_G": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase24r2_smoke_01/L2_095_G"
+  },
+  "smoke_summary": {
+    "technical_validation": "PASS",
+    "excluded": true,
+    "command_pose_error_m": 0.0,
+    "geometry_max_error_m": 7.450580152834618e-10,
+    "detour_jobs": 20,
+    "return_anchor_error_m": 0.0,
+    "launcher_wall_s": 225.34939381992444
+  },
+  "socket_max_bytes": 90,
+  "estimated_total_minutes": 48.90930736185672,
+  "estimate_basis": "4x new G smoke wall time +4x prior L2 C0 max +4x prior L2 C1 max; 15% allowance +3min report"
+}
