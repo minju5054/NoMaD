@@ -11,7 +11,7 @@ from .storage import atomic_json,capacity
 
 HERE=Path(__file__).parent;OUT=ROOT/'research/results/phase24r'
 def main():
-    p=protocol();assert p['status'] in ('DRAFT_PENDING_DEFINITIONS','DRAFT_PENDING_CAPACITY_FIX','DRAFT_PENDING_STORAGE_ARCHIVE_FIX','DRAFT_PENDING_REPORT_FIELDS') and not p['definitions_pending']
+    p=protocol();assert p['status'] in ('DRAFT_PENDING_DEFINITIONS','DRAFT_PENDING_CAPACITY_FIX','DRAFT_PENDING_STORAGE_ARCHIVE_FIX','DRAFT_PENDING_REPORT_FIELDS','DRAFT_PENDING_HASH_REFRESH') and not p['definitions_pending']
     smoke=[]
     for scene in ('L2','SLW'):
         for method in p['methods']:
