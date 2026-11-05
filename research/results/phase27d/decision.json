@@ -1,0 +1,36 @@
+{
+  "label": "NOT_RETURN_BOTTLENECK",
+  "applied_detour_failures": 35,
+  "passed_then_fail": 18,
+  "passed_failure_fraction": 0.5142857142857142,
+  "condition1": true,
+  "inside_goal_rate": 0.19444444444444445,
+  "outside_goal_rate": 0.29285714285714287,
+  "condition2": false,
+  "comparison_estimable": true,
+  "sudden_only": false,
+  "support_limit": {
+    "threshold_m": 0.5,
+    "crossing_bin_upper_m": 0.75,
+    "fraction": 0.5112253758866632,
+    "steps": 102491,
+    "runs": 101
+  },
+  "failure_category_counts": {
+    "PASSED_THEN_FAIL": 18,
+    "DETOUR_FAIL": 17
+  },
+  "dominant_failure_category": "PASSED_THEN_FAIL",
+  "termination_counts": [
+    {
+      "category": "PASSED_THEN_FAIL",
+      "termination": "simulation_timeout",
+      "runs": 18
+    },
+    {
+      "category": "DETOUR_FAIL",
+      "termination": "simulation_timeout",
+      "runs": 17
+    }
+  ]
+}
