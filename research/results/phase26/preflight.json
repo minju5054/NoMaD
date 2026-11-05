@@ -1,0 +1,381 @@
+{
+  "passed": true,
+  "protocol_sha256": "36b4d61b0ff3162a2369559e11bc3141f8061f10b20c8da8b47eead515266157",
+  "source_sha256": {
+    "research/nomad_phase26/__init__.py": "5bef5956421f1eb5392632fa19733617ab210e20f24b380321e04ee2220c3416",
+    "research/nomad_phase26/astar_pool.py": "15b31fab0254a6434c731ed13b4e6f211bff95c7d4d258ccf91cfc98f3df5473",
+    "research/nomad_phase26/astar_worker.py": "d929f257ac5fab5b659853e65f3321b7c0ad8a72984cb16fa9e9d86cb0f9556a",
+    "research/nomad_phase26/campaign.py": "7281310c2fe11b2674bc50af722c5966adc9fff8a78d9d6dcbd1fe7a16174d3c",
+    "research/nomad_phase26/config.py": "000703ff7d740f137c9ac8ae46727e34fe98a645ad5e9f41707dd2531cba8f59",
+    "research/nomad_phase26/decisions.py": "6fbf8675f8fc02b5c4afdeafdb65360a9c2ff23d10fe25b6c143d94715a1ef0e",
+    "research/nomad_phase26/execution.py": "17a7325a3f9edc25256d07bef0f4d6b44074a9cfb602cbd17e37dfb5a7cad78e",
+    "research/nomad_phase26/geometry_check.py": "e45e36f6ad874990becf24dc0202cb02ce858b934a8744493d2dcfbd95806e5b",
+    "research/nomad_phase26/launch.py": "441d81704267a1d50ed81f77db5454695a6f72a5acfb11b2919c5d5970fce15e",
+    "research/nomad_phase26/metrics.py": "f5f66511552f984e03584d3fb90badd32ca3ec5b1eead0d8e1b1de22d8d1bc65",
+    "research/nomad_phase26/preflight.py": "403bf6f612b6c7241dab08d7dc1cb6f0ba0a212b8ea53f2a4ee81a0344107dc0",
+    "research/nomad_phase26/rendering.py": "fa693e5d06735e0fb6bb0afbd2f9ac790185477df83723aa0dcc898a56942faa",
+    "research/nomad_phase26/report.py": "faf89a4a655504425034d7926ea3e99fd5f392d84fb3f52ad57b97d085afde01",
+    "research/nomad_phase26/scenes.py": "2b4c8a59aa7de6e1aa397ef5ae863896bd8b4ce1b8ab921a13b97021f171fdbe",
+    "research/nomad_phase26/simulator.py": "3ac04f1cd5080da1bd93969a3a40e58247accf58bedc5cb385351fe309355dfc",
+    "research/nomad_phase26/storage.py": "322ea2e41be40920c9c281006432a6b8e6fe48b15bc7eb721a271be0f8356215",
+    "research/nomad_phase26/test_phase26.py": "d92626f47be8f8c194e4d4458d943286f3efda08c7266d575047517984b1ceb2"
+  },
+  "tests_passed": 8,
+  "smoke": [
+    {
+      "scene": "H1",
+      "method": "B0_NOMAD_RAW",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450582373280668e-10,
+      "launcher_wall_s": 146.1155236819759,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H1_095_B0_NOMAD_RAW/attempt1"
+    },
+    {
+      "scene": "H1",
+      "method": "B1_SAFE_TE",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450582373280668e-10,
+      "launcher_wall_s": 169.7279884800082,
+      "attempt_count": 2,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H1_095_B1_SAFE_TE/attempt2"
+    },
+    {
+      "scene": "H1",
+      "method": "B2_SAFE_RTC",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450582373280668e-10,
+      "launcher_wall_s": 176.46258791093715,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H1_095_B2_SAFE_RTC/attempt1"
+    },
+    {
+      "scene": "H1",
+      "method": "B3_SAFE_ROTATE",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450582373280668e-10,
+      "launcher_wall_s": 168.94718718202785,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H1_095_B3_SAFE_ROTATE/attempt1"
+    },
+    {
+      "scene": "H1",
+      "method": "B4_ASTAR",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450582373280668e-10,
+      "launcher_wall_s": 167.11886249505915,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H1_095_B4_ASTAR/attempt1"
+    },
+    {
+      "scene": "H1",
+      "method": "C0",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450582373280668e-10,
+      "launcher_wall_s": 181.11044607893564,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H1_095_C0/attempt1"
+    },
+    {
+      "scene": "H2",
+      "method": "B0_NOMAD_RAW",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450580152834618e-10,
+      "launcher_wall_s": 144.22093106305692,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H2_095_B0_NOMAD_RAW/attempt1"
+    },
+    {
+      "scene": "H2",
+      "method": "B1_SAFE_TE",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450580152834618e-10,
+      "launcher_wall_s": 197.2937158929417,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H2_095_B1_SAFE_TE/attempt1"
+    },
+    {
+      "scene": "H2",
+      "method": "B2_SAFE_RTC",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450580152834618e-10,
+      "launcher_wall_s": 208.4666685659904,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H2_095_B2_SAFE_RTC/attempt1"
+    },
+    {
+      "scene": "H2",
+      "method": "B3_SAFE_ROTATE",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450580152834618e-10,
+      "launcher_wall_s": 193.00968382006977,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H2_095_B3_SAFE_ROTATE/attempt1"
+    },
+    {
+      "scene": "H2",
+      "method": "B4_ASTAR",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450580152834618e-10,
+      "launcher_wall_s": 204.5601076380117,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H2_095_B4_ASTAR/attempt1"
+    },
+    {
+      "scene": "H2",
+      "method": "C0",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450580152834618e-10,
+      "launcher_wall_s": 210.84586090303492,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H2_095_C0/attempt1"
+    },
+    {
+      "scene": "L2",
+      "method": "C0",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450580152834618e-10,
+      "launcher_wall_s": 207.49225728807505,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/L2_095_C0/attempt1"
+    },
+    {
+      "scene": "LC",
+      "method": "C0",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450582373280668e-10,
+      "launcher_wall_s": 213.80479551805183,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/LC_095_C0/attempt1"
+    },
+    {
+      "scene": "SLW",
+      "method": "C0",
+      "technical_validation": "PASS",
+      "command_pose_error_m": 0.0,
+      "wall_geometry_error_m": 7.450582373280668e-10,
+      "launcher_wall_s": 217.2216636359226,
+      "attempt_count": 1,
+      "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/SLW_095_C0/attempt1"
+    }
+  ],
+  "technical_failures_preserved": [
+    {
+      "scene": "H1",
+      "method": "B1_SAFE_TE",
+      "attempt": 1,
+      "cause": "KeyError('avoidance_success')",
+      "preserved_output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase26_smoke_01/main/H1_095_B1_SAFE_TE/attempt1"
+    }
+  ],
+  "geometry": {
+    "H1": {
+      "passed": true,
+      "scene": "H1",
+      "scope": "depth-only; zero methods/inference/navigation",
+      "checks": [
+        {
+          "passed": true,
+          "box_number": 1,
+          "pose": [
+            3.3,
+            1.2,
+            1.5707963267948966
+          ],
+          "placement": {
+            "status": "PLACED",
+            "reasons": [],
+            "obstacle": {
+              "id": "DynamicObstacle",
+              "size_xyz_m": [
+                1.0,
+                0.4,
+                0.8
+              ],
+              "color_rgb": [
+                0.65,
+                0.04,
+                0.65
+              ],
+              "minimum_visible_pixels": 20,
+              "spawn_tick": 0,
+              "placement": {
+                "mode": "phase26_h1"
+              },
+              "center_xy_m": [
+                3.6,
+                2.49
+              ]
+            },
+            "spawn_pose": [
+              3.3,
+              1.2,
+              1.5707963267948966
+            ],
+            "axis": 1,
+            "box_number": 1,
+            "footprint_clearance_m": 1.0,
+            "wall_clearance_m": 0.10000000000000053,
+            "distance_definition": "1m between forward robot footprint support and box near face"
+          },
+          "wide_gap_m": 0.7000000000000002,
+          "wide_gap_interval": [
+            2.4,
+            3.1
+          ],
+          "gap_angle_deg": 23.09129517181809,
+          "gap_depth_rays": 3880,
+          "box_depth_points": 4294,
+          "rendered_boxes": 1,
+          "usd_evaluation_walls": "PASS"
+        }
+      ]
+    },
+    "H2": {
+      "passed": true,
+      "scene": "H2",
+      "scope": "depth-only; zero methods/inference/navigation",
+      "checks": [
+        {
+          "passed": true,
+          "box_number": 1,
+          "pose": [
+            2.0,
+            0.0,
+            0.0
+          ],
+          "placement": {
+            "status": "PLACED",
+            "reasons": [],
+            "obstacle": {
+              "id": "DynamicObstacle",
+              "size_xyz_m": [
+                0.4,
+                1.0,
+                0.8
+              ],
+              "color_rgb": [
+                0.65,
+                0.04,
+                0.65
+              ],
+              "minimum_visible_pixels": 20,
+              "spawn_tick": 0,
+              "placement": {
+                "mode": "phase2_world_x",
+                "distance_m": 1.0
+              },
+              "center_xy_m": [
+                3.29,
+                0.3
+              ]
+            },
+            "spawn_pose": [
+              2.0,
+              0.0,
+              0.0
+            ],
+            "axis": 0,
+            "box_number": 1,
+            "footprint_clearance_m": 0.9999999999999999,
+            "wall_clearance_m": 0.7,
+            "distance_definition": "1m between forward robot footprint support and box near face"
+          },
+          "wide_gap_m": 1.3,
+          "wide_gap_interval": [
+            -1.5,
+            -0.2
+          ],
+          "gap_angle_deg": -33.38147564720536,
+          "gap_depth_rays": 2954,
+          "box_depth_points": 16498,
+          "rendered_boxes": 1,
+          "usd_evaluation_walls": "PASS"
+        },
+        {
+          "passed": true,
+          "box_number": 2,
+          "pose": [
+            5.0,
+            0.0,
+            0.0
+          ],
+          "placement": {
+            "status": "PLACED",
+            "reasons": [],
+            "obstacle": {
+              "id": "DynamicObstacle2",
+              "size_xyz_m": [
+                0.4,
+                1.0,
+                0.8
+              ],
+              "color_rgb": [
+                0.65,
+                0.04,
+                0.65
+              ],
+              "minimum_visible_pixels": 20,
+              "spawn_tick": 18,
+              "placement": {
+                "mode": "phase2_world_x",
+                "distance_m": 1.0
+              },
+              "center_xy_m": [
+                6.29,
+                -0.3
+              ]
+            },
+            "spawn_pose": [
+              5.0,
+              0.0,
+              0.0
+            ],
+            "axis": 0,
+            "box_number": 2,
+            "footprint_clearance_m": 0.9999999999999999,
+            "wall_clearance_m": 0.7,
+            "distance_definition": "1m between forward robot footprint support and box near face"
+          },
+          "wide_gap_m": 1.3,
+          "wide_gap_interval": [
+            0.2,
+            1.5
+          ],
+          "gap_angle_deg": 33.38147564720536,
+          "gap_depth_rays": 6045,
+          "box_depth_points": 16498,
+          "rendered_boxes": 2,
+          "usd_evaluation_walls": "PASS"
+        }
+      ]
+    }
+  },
+  "main_navigation_started": 0,
+  "planned": 60,
+  "estimated_hours": 3.6960809365520704,
+  "disk": {
+    "remaining_runs": 60,
+    "expected_remaining_bytes": 144451282294,
+    "required_free_bytes": 164451282294,
+    "free_bytes": 222610505728,
+    "headroom_bytes": 20000000000,
+    "enough": true,
+    "estimate_source": "smoke bytes, same scene/method where available, otherwise maximum same-method smoke; no retention of raw frames except seed201"
+  },
+  "max_socket_bytes": 98
+}

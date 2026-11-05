@@ -1,0 +1,119 @@
+{
+  "passed": true,
+  "scene": "H2",
+  "scope": "depth-only; zero methods/inference/navigation",
+  "checks": [
+    {
+      "passed": true,
+      "box_number": 1,
+      "pose": [
+        2.0,
+        0.0,
+        0.0
+      ],
+      "placement": {
+        "status": "PLACED",
+        "reasons": [],
+        "obstacle": {
+          "id": "DynamicObstacle",
+          "size_xyz_m": [
+            0.4,
+            1.0,
+            0.8
+          ],
+          "color_rgb": [
+            0.65,
+            0.04,
+            0.65
+          ],
+          "minimum_visible_pixels": 20,
+          "spawn_tick": 0,
+          "placement": {
+            "mode": "phase2_world_x",
+            "distance_m": 1.0
+          },
+          "center_xy_m": [
+            3.29,
+            0.3
+          ]
+        },
+        "spawn_pose": [
+          2.0,
+          0.0,
+          0.0
+        ],
+        "axis": 0,
+        "box_number": 1,
+        "footprint_clearance_m": 0.9999999999999999,
+        "wall_clearance_m": 0.7,
+        "distance_definition": "1m between forward robot footprint support and box near face"
+      },
+      "wide_gap_m": 1.3,
+      "wide_gap_interval": [
+        -1.5,
+        -0.2
+      ],
+      "gap_angle_deg": -33.38147564720536,
+      "gap_depth_rays": 2954,
+      "box_depth_points": 16498,
+      "rendered_boxes": 1,
+      "usd_evaluation_walls": "PASS"
+    },
+    {
+      "passed": true,
+      "box_number": 2,
+      "pose": [
+        5.0,
+        0.0,
+        0.0
+      ],
+      "placement": {
+        "status": "PLACED",
+        "reasons": [],
+        "obstacle": {
+          "id": "DynamicObstacle2",
+          "size_xyz_m": [
+            0.4,
+            1.0,
+            0.8
+          ],
+          "color_rgb": [
+            0.65,
+            0.04,
+            0.65
+          ],
+          "minimum_visible_pixels": 20,
+          "spawn_tick": 18,
+          "placement": {
+            "mode": "phase2_world_x",
+            "distance_m": 1.0
+          },
+          "center_xy_m": [
+            6.29,
+            -0.3
+          ]
+        },
+        "spawn_pose": [
+          5.0,
+          0.0,
+          0.0
+        ],
+        "axis": 0,
+        "box_number": 2,
+        "footprint_clearance_m": 0.9999999999999999,
+        "wall_clearance_m": 0.7,
+        "distance_definition": "1m between forward robot footprint support and box near face"
+      },
+      "wide_gap_m": 1.3,
+      "wide_gap_interval": [
+        0.2,
+        1.5
+      ],
+      "gap_angle_deg": 33.38147564720536,
+      "gap_depth_rays": 6045,
+      "box_depth_points": 16498,
+      "rendered_boxes": 2,
+      "usd_evaluation_walls": "PASS"
+    }
+  ]
+}
