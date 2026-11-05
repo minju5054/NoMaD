@@ -1,0 +1,38 @@
+{
+  "astar": "ASTAR_RETRIGGER_LOOP",
+  "terminal": "COMMON_TERMINAL_ISSUE",
+  "status": "observational leading-mechanism diagnosis, not causal identification",
+  "evidence": {
+    "Astar_PTF_runs": 6,
+    "C0_PTF_runs": 5,
+    "Astar_PTF_with_handover": 5,
+    "Astar_PTF_retrigger_handovers": 19,
+    "Astar_PTF_handovers": 23,
+    "Astar_success_retrigger_handovers": 8,
+    "Astar_success_handovers": 23,
+    "Astar_unique_post_pass_retriggers": 19,
+    "Astar_post_pass_wall_retriggers": 18,
+    "Astar_post_pass_loop_runs": 3,
+    "C0_unique_post_pass_retriggers": 6,
+    "C0_post_pass_wall_retriggers": 6,
+    "near_goal_failed_runs": 19,
+    "failed_runs": 87,
+    "method_families": 7,
+    "zero_goal_endpoint_windows": 10,
+    "terminal_stop_median": 0.4999999999999993,
+    "terminal_alignment_median": 0.3944444444444436,
+    "terminal_all_unsafe": 0,
+    "terminal_filter_decisions": 327
+  },
+  "limitations": [
+    "Overall excess is one run (6/30 vs5/30) and changes by phase.",
+    "Only30 corresponding target/type event pairs; median trigger-pose separation0.372m, not identical-input counterfactuals.",
+    "One A* PTF run has no completed handover; three of five measurable PTF runs have repeated post-passage wall triggers.",
+    "A* paths have less clearance, potentially upstream of revalidation/loops; endpoint heading/speed/native reversal are not consistently worse.",
+    "Near-goal phenomenon is common, but a single shared causal mechanism is not established."
+  ],
+  "proposed_changes": [
+    "공통 결정 계층 후보: depth로 추정한 벽면을 따라 이미 전진하는 경우의 approach-only 재트리거와 동일 벽면/component 조각의 연속 재진입을 분리하고, 진행 증거를 요구하는 hysteresis를 검토. Oracle 물체 ID는 쓰지 않고 깊이 기반 안전 정지는 유지한다.",
+    "공통 종단 모드 후보: 종단 Topomap/목표영상과 짧은 후보의 방향 안정성을 이용해 참조·정렬을 유지하고, 매 FRESH의 정렬 재시작을 억제하는 방식을 검토. 평가용 goal 좌표는 제어 입력으로 쓰지 않는다."
+  ]
+}

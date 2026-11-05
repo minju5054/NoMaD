@@ -1,0 +1,17 @@
+{
+  "scope": "same final144main runs as27D; no smoke/failed-attempt duplication; unchanged prior classifications",
+  "pairing": "all handovers retained; paired run=phase,scene,seed; event pairs additionally same trigger A/B and evaluation physical target, chronological occurrence; unmatched rows retained; not identical-state counterfactuals",
+  "target": "B-trigger component occupied cells mapped to nearest oracle surface by majority; component IDs only comparable within run. No component => UNKNOWN, not force paired",
+  "distance": "body clearance: exact signed point/segment distance minus recorded circular robot radius; boxes and walls separate plus overall minimum",
+  "path": "actual installed detour path, evaluated against obstacles active at application; also evaluate at handover if another box appeared",
+  "endpoint": "terminal chord heading vs reference tangent at endpoint; actual handover yaw error also retained. Speed=actual at handover plus stored SP terminal profile value",
+  "retrigger": "new R3 TRIGGER in (handover,handover+10s]; follow-up capped at run end; R2-only attempts separately counted; same_component requires same within-run ID, physical-target agreement separate",
+  "native_direction": "first logged native FRESH strictly after handover; pure FRESHEST over all8 remaining lengths, low-index tie; angle vs outgoing detour chord >90deg reverses, <=90 continues; no direction=>undefined; deferred flag retained",
+  "terminal": "all unsuccessful runs; min true-goal distance<=0.6m; last20s or entire shorter run, actual measured poses/speeds",
+  "goal_candidates": "all8 endpoint fraction, any endpoint, and raw FRESHEST endpoint inside recorded goal tolerance; latest saved FRESH held forward at72Hz, validity flagged",
+  "states": "C0/baselines: logged SP mode/target/source; SP slowing=GO and target<0.3. G has graph-speed executor, so SP=N/A; graph rotations reported separately. ALL_UNSAFE is not always path rejection in G",
+  "decision": "qualitative mechanism diagnosis, not a newly tuned numerical gate; separate phase/outcome strata and matched-run evidence required; UNCLEAR if competing/confounded/weak",
+  "cautions": "B4 R2 is A* in21/24R/R2 but SLSQP in26; G executor differs; event reuse and incomplete10s are explicit; no causal proof from observational logs",
+  "script": "/tmp/phase27e_analyze.py",
+  "script_sha256": "cf3c29af49c1cc555372d288c5938ca98371a96d3033eb7aafb696fa631f77e3"
+}
