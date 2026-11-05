@@ -1,0 +1,78 @@
+{
+  "phase": "25",
+  "status": "FROZEN_OFFLINE",
+  "settings_base_commit": "8aca3ac6f79d8be50520fdc56233c6be510baa44",
+  "variants": [
+    "S7",
+    "L7",
+    "L13"
+  ],
+  "scales": [
+    0.01,
+    0.001,
+    0.0001
+  ],
+  "LM": {
+    "method": "lm",
+    "max_nfev_per_stage": 50,
+    "ftol": 1e-08,
+    "xtol": 1e-08,
+    "gtol": 1e-08,
+    "jacobian": "analytic"
+  },
+  "obstacle_penalty": "11 nodes +10 midpoints; literal user definition; final full frozen90point constraints/margins and continuous certificate",
+  "time": {
+    "workers": 4,
+    "application_limit_s": 1.0,
+    "gate_p95_s": 0.1,
+    "definition": "whole job: load+EDT+cache+parallel all starts+certificate+selection; startup excluded; per-variant fresh cache reload; rotate method order"
+  },
+  "selection": "eligible variants only; larger pre-passage planned passage count then L7",
+  "manifest_sha256": "918c5b25d2a0decef475c47ec19dc896409b068308ec5947dd06b4e21af194e4",
+  "frozen_sources": {
+    "research/nomad_phase20c/detour.py": "0fbf4404017e6cba858a825c850f12b26b3cb66b32096daf9999d3c9968ab0f5",
+    "research/nomad_phase20c/detour_known.py": "8db6b56af8372d913e05f69ee4eb8cf54e9caea1e54691881e0580d639310704",
+    "research/nomad_phase20d/recent.py": "b3f0a191bad1e23899db01cb4adc6cc359bb66f8b357e196439ea0a8e4baab11",
+    "research/nomad_phase20d/pool.py": "6b8dac51721f90cc54acd129cf0fc427eed3c4ceb9c57279d813c0d693705b59",
+    "research/nomad_phase24r/safety.py": "d1a2ee10a200dfe6792158f139aa4280e9957e1bc44a2b3535c1b41e791dff4d",
+    "research/nomad_phase24r/trigger.py": "88af728c7e0cc0e12b4eec3b24104d12b7f3003a2f9317b1e7fe8a0868c706f4",
+    "research/nomad_phase24r/online_execution.py": "2b6f71506a35badef129cd35b5b357070a3b7d7115047c02f833fc5595ea1d2f",
+    "research/nomad_phase24r2/online_execution.py": "b48fd95305670b16c7fb6e3e6965c549c30a012ef0af2c18b6998a8af77b9407",
+    "research/nomad_phase24r2/online_protocol.json": "f14f60fa9baf107dd143ef5d05068a1dab802385c75d29c3342a1751ba926360"
+  },
+  "source_sha256": {
+    "research/nomad_phase25/__init__.py": "a300743dc83baf0cea805e969b608f883f861e60493c389de2d305d759bbaadd",
+    "research/nomad_phase25/test_lm.py": "fec21242a6cdda1e0a4f405fc105102e52826fe99fb89ccbb053a979c556d7d9",
+    "research/nomad_phase25/inputs.py": "27445c08dfe3671265ff05fbfe77085ed41b536f722f23295153fe09eb0fd955",
+    "research/nomad_phase25/report.py": "34580403631514e72bba1542bdc67a0d086a9c923ae00bf5149a3b09369d1f1f",
+    "research/nomad_phase25/lm.py": "85690ca506fe5e198faf611aabcb4b8f18568341f9088d2fe1c5c2c8cb853d27",
+    "research/nomad_phase25/evaluate.py": "8a429fa18459b4b201f191ba732763fc36af642b7ec9f4f7ff4c881765f8ad93"
+  },
+  "gate": {
+    "adoption_drop_pp": 5,
+    "compute_p95_s": 0.1,
+    "pre_passage_plans": ">=S7",
+    "depth_clearance_median_drop_m": 0.01
+  },
+  "online_if_pass": {
+    "methods": [
+      "C0-SLSQP",
+      "C0-LM"
+    ],
+    "scenes": [
+      "L2",
+      "L2A"
+    ],
+    "indices": [
+      161,
+      162,
+      163,
+      164
+    ],
+    "runs": 16,
+    "smoke": "L2 seed95 once per method",
+    "status": "NOT_PREPARED_UNTIL_GO_ONLINE"
+  },
+  "tests_passed": 5,
+  "no_tuning": true
+}
