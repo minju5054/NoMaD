@@ -1,0 +1,22 @@
+topic,path,line,observed,sha256
+v4 factors/variables,research/nomad_phase0/graph_v4.py,98,8 editable SE(2) poses /24variables; E is frozen projection interpolation; no v or dt variables,e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445
+v4 fixed constants,research/nomad_phase0/graph_v4_protocol.json,1,"XY/yaw priors, relative, boundary, tangent, previous, progress, curvature and certificate constants",4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f
+flag solver,research/nomad_phase5/graph.py,38,"analytic SLSQP, maxiter100, ftol1e-8; returns8poses and feasibility",f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a
+Phase12 GF,research/nomad_phase12/graph_gf.py,27,"v4 geometry-free subset; keeps boundary curvature, removes oracle SDF/corridor/side",c7b2e234302b07f894bdcaa6515ede9657d002869e4f462758880acd03a5a403
+Phase12 GF execution,research/nomad_phase12/gf_execution.py,10,AccelExecution subclass; FRESHEST selection supplies unmodified GF worker,6a20c5be8cb140bba432636aa4a901c5ce3dd2774201c612d33161c4983ca45e
+Phase12 GF worker,research/nomad_phase12/gf_worker.py,1,numeric sample/B/previous command/previous corrected path -> GraphGF poses,f05a71a9d8ca614a069c54c64a2db81e0030085560e7b9b0d640053a6680db04
+Phase13 reuse,research/nomad_phase13/execution.py,1,GF and TE imports reused; selection/smooth baselines separate,4342bd849e2451cb7a0c8be9b1905dd71a5c6d5a3498a9c9dc8ea61ca59505c9
+Phase15B depth,research/nomad_phase15b/graph.py,7,v4/GF factors plus depth9samples-per-segment hard rows and exact occupied-site certificate,46f20a442464fe37076071d2237c42c04b3bce1ceb75a964d59d8862cd862d69
+Phase15B executor,research/nomad_phase15b/execution.py,1,SafeExecution inherits AccelExecution and CURV,3b0ec36d95c49eb8d7267d252cca593fb5c8e4e402b843918bb2bea20234fe00
+Phase16 executor,research/nomad_phase16/execution.py,43,KEEP_ACTIVE/STOP_WAIT and SAFE-TE retained-chunk rules; same Graph factors,9a65369472647e3c25c3636cfffb296aa544ea4c61d5135e201c2c2de87e1f02
+Phase17 CLR,research/nomad_phase17/graph.py,9,"DepthGraph + max(0,.15-depth)/.05 residual, same nodes and solver",168757f96f39023923b72e9f861263375f8cb55cdb0f87f03df466e0ce7c635e
+Phase17 recovery,research/nomad_phase17/execution.py,10,"RECOVER_ROTATE, distinct from departure SP alignment",6f2fbeaad9be6684159276da53b010a1604b8d70f72443cddbbac8ba7b926fa5
+Phase17 recovery constants,research/nomad_phase17/recovery.py,1,"STOP_WAIT >=2, actual_v<.01,30deg,.3rad/s,max12",a0d610e4a6c31028b83768086097c3fb0e8f858df55041e68203d463c3f4f503
+Phase18 reuse,research/nomad_phase18/execution.py,2,Phase17 SafeExecution; RTC generation adapter does not change Graph output,4834f9cb1a2a905d967b1b6c90e13226c88d9ce0df0e9087cbe65567548f2b35
+online B and output consumption,research/nomad_phase4c/execution.py,32,"dispatch actual B/physical previous vw; accepted poses[:,:2] -> PP; auxiliary yaw discarded",9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232
+online acceptance,research/nomad_phase3_stage2/execution.py,38,"latest FRESH/SUPERSEDED,0.5sSTALE; apply eligible result on controller tick",6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0
+actual CURV target,research/nomad_phase4/execution.py,19,"clip(.4/abs(k_PP),.05,.3), acceleration.5,omega clip.4",2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86
+plant delegation,research/nomad_phase4c/plant.py,17,CURV delegates Phase4 live v_max.3; no inherited offline v_max.2 execution,3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d
+PP geometry,research/nomad_phase0/pure_pursuit.py,1,"project/lookahead follower; geometry path, not optimized timed trajectory",5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d
+current SP start alignment,research/nomad_phase20/execution.py,13,"first>=5cm point on full path, not B suffix;20/45deg triggers",89956a9310336dbb575d2651af9576732845262e5c531a83e45d3c203cab22e6
+current G chord alignment,research/nomad_phase24r/follower.py,1,">30deg once/segment, brake and align towithin10deg; graph-native rotations separate",f103a6449be5cce795285c92283fc813086af93fb86baa672c375f57e1c7b37d

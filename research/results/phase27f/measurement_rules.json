@@ -1,0 +1,31 @@
+{
+  "sample_hz": 72,
+  "scope": "same144 main runs as27D; no new execution, inference, solve or code modification",
+  "budget": "exclusive priority: first inference wait, recovery, alignment rotation/braking, repair/detour wait, filter STOP_WAIT, SP low target, residual driving, other stop",
+  "moving": "abs(actual_v)>=0.02; physical moving/stopped totals additionally reported, because braking/wait/SP-low can overlap moving",
+  "physical_stop": "abs(actual_v)<0.02",
+  "sp_low": "SP GO target<0.3 and actual abs(v)>=.02; graph-speed G has no SP, so its low moving speed stays DRIVING",
+  "alignment": "SP departure alignment and G chord-priority alignment; intrinsic graph rotation segments are separate OTHER_STOP subtype",
+  "dominance": "(all alignment rotate time + all alignment braking time)/physical stopped time >=.5; also report stationary-only numerator and SP/nonG sensitivity",
+  "event": "SP: every PATH_APPLIED alignment=True attempt, including zero executed time; G: every priority START/END pair, with segment/start distinction and command tails flagged",
+  "restart": "same installed path instance rotation episodes minus1; reused native source IDs separately counted, not called identical geometry",
+  "freshest": "all8 raw samples, current B projection remaining-length max, low-index ties; compare separately with actually installed path and the executor target",
+  "start_direction": "B to first point at least0.05m away on projected suffix; suffix tangent separately; none if insufficient remaining geometry",
+  "yaw_decomposition": "same chosen raw candidate: error_B=wrap(error_A + direction_change(A-to-B projection) - robot_yaw_change); signed components and ordered absolute-error changes, not percentages",
+  "counterfactual": "arithmetic only: observed duration-alignment_rotation_seconds+remaining_reference_length/.3; no new trajectory/NoMaD/depth update; optimistic capacity upper bound",
+  "counter_sensitivity": "also connect terminal pose to reference and reference end to actual goal radius; use observed moving speed separately; already-zero remaining length flagged",
+  "caveats": "braking can still translate; native graph rotations are not departure alignment; saved-plan/candidate angular differences are not counterfactual rollout predictions",
+  "states": {
+    "DRIVING": "주행",
+    "ALIGN_ROTATE": "출발/구간 정렬 회전",
+    "ALIGN_BRAKE": "정렬 감속",
+    "SP_LOW": "SP 저속",
+    "FILTER_NO_CANDIDATE": "필터 후보 없음",
+    "DETOUR_COMPUTE_WAIT": "우회/수리 계산 대기",
+    "RECOVER_ROTATE": "RECOVER_ROTATE",
+    "FIRST_INFERENCE_WAIT": "첫 추론 대기",
+    "OTHER_STOP": "기타 정지"
+  },
+  "script": "/tmp/phase27f_analyze.py",
+  "script_sha256": "6f10115206d96c7a1c97c00c876893aa1a8dd2c802a031b94878dbab6ddf9895"
+}
