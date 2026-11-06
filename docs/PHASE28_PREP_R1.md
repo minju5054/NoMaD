@@ -163,3 +163,46 @@ R1 초기·마지막 위반 상세는 `r1_constraint_violations.csv`, 개별 x0/
 최종: **GATE_FAIL**. 미충족 항목: same:accepted, new:accepted. 주행 명령을 제공하지 않고 중단한다. 수치나 구조를 추가 조정하지 않았다.
 
 재현: `/usr/bin/python3`, `PYTHONPATH=research`. 저장 입력 기반 오프라인 계산만 수행했고 venv에 패키지를 설치하지 않았다. 기존 결과·원 protocol·C0-NA hash 보존을 확인했다.
+
+
+## 사전등록 이탈 — 사용자 승인에 따른 R1 주행 진행
+
+**승인 기록 날짜: 2026-11-06T19:55:55+09:00 (Asia/Seoul).** 원 게이트와 수치는 위와 같이 **GATE_FAIL**로 유지한다. 사용자 요청에 따라 이 eligibility gate를 예외적으로 넘어서 주행 준비를 진행한다. GATE_PASS로 재분류하거나 수락률 기준을 낮추지 않는다.
+
+사용자가 제시한 근거는 “FALLBACK 때 동결 C0-NA 실행기를 적용하므로 C0-H가 C0-NA보다 불리해질 수 없다”는 것이다. 이는 **진행을 승인한 사용자 판단의 근거**로 기록한다. 동일 fallback만으로 비열등성이 보장되지는 않는다. H 계산 중 대기·OLD 진행, 적용 시점과 로봇 상태, 수락된 궤적, 추후 관측/전환이 달라질 수 있다. 따라서 결과는 실측으로 판단하며 사전에 우월성/비열등성을 가정하지 않는다.
+
+### 활성 protocol과 변경 범위
+
+활성 파일: `research/nomad_phase28/protocol_online_r1.json`, SHA256 `b272242cbe907a4559967b4caf1d998caf1f3b0bb2d7fdc53c9475c736d97bcc`. `active_protocol.json`이 이 hash를 검증한다. 원 Phase28 protocol과 R1 수치 동결 protocol은 별도 파일로 보존했고 R1 gate.json hash도 검증한다. 예외 승인 날짜·원 수치·검증 manifest·source hash가 활성 protocol에 포함된다.
+
+C0-H만 **R1 solver + R1Follower**로 연결했다. C0-NA, 결정 계층, R2/R3, depth 지도/필터, 평가기, R1 비용/수치/제약/0.15s 한도는 변경하지 않았다. 기존 H의 dispatch→예측B→제어 tick 적용→최신지도 certificate→fallback lifecycle의 함수 본체를 그대로 바인딩하며 solver/follower 참조만 R1으로 교체했다. 원 H 구현도 보존한다.
+
+### 온라인 로그와 보고 지표
+
+`phase28_handoff.jsonl`에 사건당 `CASE_OUTCOME`과 종료 시 `CASE_SUMMARY`를 기록한다: OPTIMIZED/INIT_ONLY/FALLBACK, 사유, numerical solver 유형, 실제 적용 여부, 계산시간, feedback 명령·clip 수/비율. 분모는 H 대상인 NORMAL SAFE FRESH 사건이며 R2/R3 우회 사건은 포함하지 않는다. H 실행 명령마다 `COMMAND`에 case_id·출력 유형·clip flag를 기록한다. superseded/다른 모드/종료로 버린 사건은 실제 H 사용이 없으므로 effective FALLBACK으로 분류하되, 이것이 명시적 NA 경로 설치였는지는 별도 flag와 사유로 구분한다. 늦게 끝난 solver 시간은 최종 summary에서 보충하며, 알 수 없는 계산시간은0으로 만들지 않는다. WORKER_BUSY는 새 풀이를 시작하지 않았으므로 계산시간0으로 따로 구분한다.
+
+report 틀은 도착·충돌, 도착시간(성공 조건부), 평균속도, 정지비율, 정렬 회전/감속비율, 최소 여유를 방법×장면별로 포함한다. Phase27-R 재사용 C0와 같은 scene×seed의 연속 지표 차이를 계산한다. H 사건 유형 비율은 사건 수로 가중 집계하고 solver 유형과 실제 적용 유형을 분리한다. feedback clip 비율도 명령 수로 가중 집계한다. 원 평가 함수와 기술 실패 제외 규칙은 그대로이며 새로운 성능 판정 기준은 추가하지 않는다.
+
+### 검증 — 새 시뮬레이션 없음
+
+단위테스트 **45개 통과**. 기존 저장 사건20개를 branch coverage 목적으로 사전에 고정했다(OPTIMIZED8 / INIT_ONLY6 / 비-timeout FALLBACK6; scene 순환 후 event_key 순). 성능률 추정용 재표본이 아니다. 시간 경계는 별도 deterministic 단위테스트로 확인한다.
+
+온라인의 실제 dispatch 함수·단일 worker·R1 solver·적용 함수·추종기·로그를 호출해 **20/20 사건이 저장 오프라인 R1 결과와 일치**했다. 원200개 이력의 정확한 직전 수락 warm 상태와 같은 snapshot을 사용했고, 새 FRESH/지도 변경이나 Isaac 폐루프는 만들지 않았다. 예상 pose/속도는1e−12, 경로·dt·첫 명령은1e−6 허용오차로 검증했다. nominal 적용 tick 이전에는 적용되지 않는지도 확인했다. 입력 로딩/인공 제어 tick fixture와 무관한 부모 simulator bookkeeping만 mock했으며, solve 결과나 시간을 mock하지 않았다. 상세는 `research/results/phase28_r1_online/parity_results.csv`와 사건 로그에 있다.
+
+현재 본 run-root 존재: `False`. 본 실험·smoke는 실행하지 않았다. 현재 여유 234.81GB, 보수적 필요량 90.09GB(20GB reserve 포함), 여유충족 `True`. 종료 후 `portable/cache`·`pycache` 정리 옵션과 원본 보관 정책은 유지한다.
+
+### 사용자 실행 명령 — 기존20회, 실행하지 않음
+
+C0-NA/C0-H × SLW/LC/L2/H1/H2 × seed201/202 =20회. C0는 Phase27-R에서 재사용한다.
+
+```bash
+cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && nohup env -u LD_LIBRARY_PATH -u LD_PRELOAD -u PYTHONHOME -u VIRTUAL_ENV PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_phase28.campaign --run-root ../artifacts/isaac6/phase28_pilot_01 > ../artifacts/isaac6/phase28_pilot_01.log 2>&1 < /dev/null &
+```
+
+진행 확인:
+
+```bash
+cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && PYTHONPATH=research /usr/bin/python3 -m nomad_phase28.campaign --run-root ../artifacts/isaac6/phase28_pilot_01 --status
+```
+
+report는 `/usr/bin/python3`와 `PYTHONPATH=research`로 자동 생성하며 결과 commit·push까지 수행한다. venv pip 설치 없음.

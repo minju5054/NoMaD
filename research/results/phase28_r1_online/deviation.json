@@ -1,0 +1,52 @@
+{
+  "user_authorized": true,
+  "date": "2026-11-06T19:55:55+09:00",
+  "original_gate_label": "GATE_FAIL",
+  "original_gate": {
+    "label": "GATE_FAIL",
+    "sets": {
+      "same": {
+        "n": 200,
+        "optimized": 160,
+        "accepted": 171,
+        "optimized_fraction": 0.8,
+        "accepted_fraction": 0.855,
+        "p95_s": 0.08663808084675108,
+        "checks": {
+          "optimized": true,
+          "accepted": false,
+          "timing": true
+        },
+        "passed": false
+      },
+      "new": {
+        "n": 200,
+        "optimized": 153,
+        "accepted": 173,
+        "optimized_fraction": 0.765,
+        "accepted_fraction": 0.865,
+        "p95_s": 0.08848874605428134,
+        "checks": {
+          "optimized": true,
+          "accepted": false,
+          "timing": true
+        },
+        "passed": false
+      }
+    },
+    "failed_checks": [
+      "same:accepted",
+      "new:accepted"
+    ],
+    "criteria": {
+      "per_sample_set_n": 200,
+      "optimized_min": 0.7,
+      "accepted_min": 0.9,
+      "p95_max_s": 0.15,
+      "require_both_sets": true
+    }
+  },
+  "user_rationale": "FALLBACK uses frozen C0-NA, therefore user accepts the narrowly failed gate and elects to drive",
+  "caveat": "Same fallback does not guarantee no worse outcome: waiting, state, accepted paths, and handover timing can differ.",
+  "action": "Exception to eligibility gate only; R1 values, costs, limits and0.15s deadline unchanged; no navigation by agent"
+}

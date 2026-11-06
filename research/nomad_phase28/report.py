@@ -28,7 +28,21 @@ def audit(run):
         handoff_calls=sum(q['event']=='DISPATCH' for q in h),handoff_applied=len(applied),handoff_fallback_reasons=dict(fallback),
         feedback_command_count=len(feedback),feedback_clip_fraction=float(np.mean([q['diag']['any_clipped'] for q in feedback])) if feedback else None,
         handoff_compute_p50_s=quant([q['result'] for q in applied],'wall_s'),handoff_compute_p95_s=quant([q['result'] for q in applied],'wall_s',.95))
+    r.update(case_statistics(h))
     return r
+
+def case_statistics(events):
+    # Final summaries resolve compute time and clip counts for discarded jobs too.
+    cases={r['case_id']:r for r in events if r['event']=='CASE_OUTCOME'}
+    cases.update({r['case_id']:r for r in events if r['event']=='CASE_SUMMARY'})
+    rows=list(cases.values());counts=Counter(r['output_type'] for r in rows);solver=Counter(r.get('solver_output_type') for r in rows if r.get('solver_output_type'))
+    commands=sum(r.get('feedback_commands',0) for r in rows);clipped=sum(r.get('feedback_clipped_commands',0) for r in rows)
+    return dict(handoff_case_count=len(rows),handoff_case_types={k:counts[k] for k in ('OPTIMIZED','INIT_ONLY','FALLBACK')},
+        handoff_case_fractions={k:counts[k]/len(rows) if rows else None for k in ('OPTIMIZED','INIT_ONLY','FALLBACK')},
+        handoff_solver_types=dict(solver),handoff_case_reasons=dict(Counter(r['reason'] for r in rows)),
+        handoff_all_case_compute_p50_s=quant(rows,'compute_wall_s'),handoff_all_case_compute_p95_s=quant(rows,'compute_wall_s',.95),
+        handoff_compute_unknown_cases=sum(r.get('compute_wall_s') is None for r in rows),handoff_feedback_commands=commands,
+        handoff_feedback_clipped_commands=clipped,handoff_feedback_clip_fraction=clipped/commands if commands else None)
 
 def preparation():
     p=verify();manifest=read(OUT/'preparation/sample_manifest.json');events=read(OUT/'offline/events.json');rows=[];cost=[]
@@ -147,9 +161,13 @@ def generate(root):
     for scene in (*SCENES,'ALL'):
         for method in ('C0',*METHODS):
             q=[r for r in rows if r['method']==method and (scene=='ALL' or r['scene']==scene) and r['technical_validation']=='PASS' and (r['scene'],r['index']) not in excluded]
+            case_n=sum(r.get('handoff_case_count',0) for r in q);types={k:sum(r.get('handoff_case_types',{}).get(k,0) for r in q) for k in ('OPTIMIZED','INIT_ONLY','FALLBACK')}
+            command_n=sum(r.get('handoff_feedback_commands',0) for r in q);clip_n=sum(r.get('handoff_feedback_clipped_commands',0) for r in q)
             summary.append(dict(scene=scene,method=method,n=len(q),goal=sum(r['success'] for r in q),collision=sum(r['collision'] for r in q),
                 **{k:quant(q,k) for k in ('goal_time_s','mean_speed_m_s','stopped_fraction','alignment_rotation_fraction','alignment_brake_fraction','minimum_clearance_m','feedback_clip_fraction')},
-                handoff_calls=sum(r.get('handoff_calls',0) for r in q),handoff_applied=sum(r.get('handoff_applied',0) for r in q)))
+                handoff_calls=sum(r.get('handoff_calls',0) for r in q),handoff_applied=sum(r.get('handoff_applied',0) for r in q),handoff_case_count=case_n,
+                **{k+'_count':v for k,v in types.items()},**{k+'_fraction':v/case_n if case_n else None for k,v in types.items()},
+                all_case_compute_p95_median_s=quant(q,'handoff_all_case_compute_p95_s'),feedback_clip_fraction_pooled=clip_n/command_n if command_n else None))
     for scene in SCENES:
         for index in (201,202):
             if (scene,index) in excluded:continue
@@ -157,10 +175,12 @@ def generate(root):
             for method in METHODS:
                 r=next(r for r in new if (r['scene'],r['index'],r['method'])==(scene,index,method))
                 pairs.append(dict(scene=scene,index=index,method=method,goal=r['success'],baseline_goal=c['success'],collision=r['collision'],baseline_collision=c['collision'],
+                    goal_difference=int(r['success'])-int(c['success']),collision_difference=int(r['collision'])-int(c['collision']),
                     **{k+'_difference':r[k]-c[k] if r.get(k) is not None and c.get(k) is not None else None for k in ('goal_time_s','mean_speed_m_s','stopped_fraction','alignment_rotation_fraction','minimum_clearance_m')}))
     save(OUT/'runs.json',rows);save(OUT/'exclusions.json',excluded);csv_write(OUT/'summary.csv',summary);csv_write(OUT/'paired.csv',pairs)
-    fallback=[dict(scene=r['scene'],index=r['index'],method=r['method'],reasons=r.get('handoff_fallback_reasons',{}),compute_p50=r.get('handoff_compute_p50_s'),compute_p95=r.get('handoff_compute_p95_s')) for r in new];save(OUT/'handoff_statistics.json',fallback)
-    doc=ROOT/'docs/PHASE28_RESULTS.md';doc.write_text('# Phase28 results\n\nC0 rows reuse Phase27-R; new NA/H runs occurred later. Descriptive continuous outcomes; no new performance label. Goal time uses successes only; other metrics include valid failures. Medians per method/scene. Technical paired exclusions: '+str(excluded)+'\n\n'+table(summary)+'\n\n'+table(pairs)+'\n\nH fallback counts and timing: `handoff_statistics.json`. Clip fractions count actual H feedforward+feedback controller queries. Frozen planner, selector and evaluator unchanged.\n')
+    fallback=[dict(scene=r['scene'],index=r['index'],method=r['method'],reasons=r.get('handoff_case_reasons',r.get('handoff_fallback_reasons',{})),types=r.get('handoff_case_types',{}),fractions=r.get('handoff_case_fractions',{}),solver_types=r.get('handoff_solver_types',{}),compute_p50=r.get('handoff_all_case_compute_p50_s'),compute_p95=r.get('handoff_all_case_compute_p95_s'),feedback_clip_fraction=r.get('handoff_feedback_clip_fraction')) for r in new];save(OUT/'handoff_statistics.json',fallback)
+    registration=protocol();deviation=registration.get('deviation',{})
+    doc=ROOT/'docs/PHASE28_RESULTS.md';doc.write_text('# Phase28 results — R1 online\n\nC0 rows reuse Phase27-R; new NA/H runs occurred later. Descriptive continuous outcomes; no new performance label. Goal time uses successes only; other metrics include valid failures. Medians per method/scene; event-type fractions pool cases, not run-level percentages. Technical paired exclusions: '+str(excluded)+'\n\nProtocol SHA256 `'+sha256_file(HERE/'protocol_online_r1.json')+'`. Registered gate remains GATE_FAIL; user deviation: '+json.dumps(deviation,ensure_ascii=False)+'. Identical fallback does not guarantee noninferiority because waiting, state and accepted trajectories can differ.\n\n'+table(summary)+'\n\n'+table(pairs)+'\n\nH event types/reasons and all-case timing: `handoff_statistics.json`. Effective FALLBACK includes discarded/superseded H jobs, which are distinguished by reason and applied flags; it does not imply an explicit NA installation for a discarded job. Numerical solver output types are separately reported. Clip fractions count actual H feedforward+feedback commands. Original R1 numerical code, C0-NA, decision, detour, selector and evaluator remain frozen.\n')
     return doc
 
 def main():
