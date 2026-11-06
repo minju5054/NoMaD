@@ -1,27 +1,28 @@
 {
   "label": "PARTIAL",
-  "reason": "smoke complete; next registered stage",
+  "reason": "dev complete; next registered stage",
   "pairs": [],
   "dev_gate": {
-    "passed": false,
+    "passed": true,
     "checks": {
-      "complete": false,
+      "complete": true,
       "collision": true,
-      "goal": false,
-      "application": false,
+      "goal": true,
+      "application": true,
       "technical": true
     },
-    "g18_goal": 0,
+    "g18_goal": 5,
     "na_goal": 5,
-    "g18_collision": 0,
+    "g18_collision": 3,
     "na_collision": 3,
-    "g18_calls": 0,
-    "g18_applied": 0,
-    "application_rate": null
+    "g18_calls": 447,
+    "g18_applied": 317,
+    "application_rate": 0.70917225950783
   },
-  "stopped_stage": "smoke",
-  "stop_reason": "smoke complete; next registered stage",
+  "stopped_stage": "dev",
+  "stop_reason": "dev complete; next registered stage",
   "completed_by_stage": {
+    "dev": 20,
     "smoke": 2
   },
   "protocol_sha256": "95f71cfcebfc3ee947da18be17e5010f59795ca449ff163bda2777ba2297efad"
