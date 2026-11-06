@@ -1,0 +1,23 @@
+{
+  "status": "FROZEN_PREPARED_NOT_RUN",
+  "gate": {
+    "denominator": "ALL_H_CASES_EXCEPT_DETOUR_STARTED",
+    "excluded_reasons": [
+      "DETOUR_STARTED"
+    ],
+    "application_fraction_min": 0.7,
+    "compute_p95_max_s": 0.3,
+    "numerator": "Cases actually applied as OPTIMIZED or INIT_ONLY",
+    "denominator_definition": "All H cases minus discarded DETOUR_STARTED only; SUPERSEDED,WORKER_BUSY,TIMEOUT,TERMINAL and all other reasons included",
+    "timing_population": "All completed dispatched jobs with measured compute time, including DETOUR_STARTED; no timing exclusion by case reason",
+    "zero_denominator": "GATE_FAIL",
+    "registered_at": "2026-11-06T23:07:31+09:00"
+  },
+  "protocol_sha256": "aab511238b48d82dca217912b7cdddd47c63a60bf3a409e925c4c98da3db5823",
+  "tests_passed": 15,
+  "legacy_inputs_and_snapshots_unchanged": true,
+  "previous_sources_unchanged": true,
+  "smoke_runs_planned": 1,
+  "smoke_run_started": false,
+  "campaign_started": false
+}

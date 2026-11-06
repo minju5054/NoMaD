@@ -1,0 +1,422 @@
+{
+  "comparison": {
+    "key": "LC_202_0018",
+    "scene": "LC",
+    "index": 202,
+    "online_reason": "TIMEOUT",
+    "online_compute_s": 0.15674514399870532,
+    "online_wait_s": 0.21951063300366513,
+    "numeric_details_available": true,
+    "online_planning_s": 0.15560367699799826,
+    "online_diagnostic_s": 0.0011379100033082068,
+    "logged_iterations": 0,
+    "timeout_iteration_known": false,
+    "initial_trajectory_complete": true,
+    "last_iterate_changed": true,
+    "original_initial_certificate_logged": false,
+    "online_prediction_s": null,
+    "online_queue_s": null,
+    "online_slsqp_s": null,
+    "online_certificate_s": null,
+    "offline_prediction_reproduced": true,
+    "offline_prediction_s": 0.00023533399507869035,
+    "offline_scope": "PREDICTION_PLUS_SOLVE",
+    "offline_wall_s": 0.06990095599758206,
+    "offline_type": "OPTIMIZED",
+    "offline_reason": "OPTIMIZED",
+    "offline_iterations": 96,
+    "online_minus_offline_s": 0.08684418800112326
+  },
+  "offline_result": {
+    "accepted": true,
+    "solver_success": true,
+    "output_type": "OPTIMIZED",
+    "disposition": "OPTIMIZED",
+    "iterations": 96,
+    "warm_dt_used": false,
+    "exit_mode": 0,
+    "message": "Optimization terminated successfully",
+    "optimized_certificate": {
+      "passed": true,
+      "reason": "PASS",
+      "exact_clearance_m": 0.2964225556157367,
+      "minimum_slack_m": 0.26306083027703653
+    },
+    "poses": [
+      [
+        2.796420725589377,
+        2.1388107466305657,
+        1.550691069203868
+      ],
+      [
+        2.804449977038169,
+        2.1578046051280664,
+        1.1506910692048251
+      ],
+      [
+        2.8168229337618853,
+        2.1788541747101964,
+        1.0292162774566034
+      ],
+      [
+        2.831802728083555,
+        2.2013564174165277,
+        0.9727859893783117
+      ],
+      [
+        2.848068673140654,
+        2.2244623820591496,
+        0.9449919536719964
+      ],
+      [
+        2.8649100346653578,
+        2.2476550354421194,
+        0.9383222206301429
+      ],
+      [
+        2.8821301777619737,
+        2.270487840644432,
+        0.9116524875832512
+      ],
+      [
+        2.8999297420300962,
+        2.29262654973193,
+        0.8755686253443766
+      ],
+      [
+        2.9183701105123574,
+        2.314028267775316,
+        0.84363929199777
+      ],
+      [
+        2.937309114133052,
+        2.334881733137293,
+        0.8233022582111111
+      ],
+      [
+        2.9564523218643255,
+        2.35551328433029,
+        0.8222791587696356
+      ]
+    ],
+    "dt": [
+      1.0,
+      0.3036869793661466,
+      0.14107572019907602,
+      0.11096746912330781,
+      0.1,
+      0.1,
+      0.10000000000176734,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "speed": [
+      0.020759359207657944,
+      0.08045027951399644,
+      0.19164095389369826,
+      0.25465175126452083,
+      0.28662408734452455,
+      0.2859927972755775,
+      0.2840835248026921,
+      0.2825152262904494,
+      0.2817055603110288,
+      0.28144686460627977
+    ],
+    "omega": [
+      -0.3999999999990429,
+      -0.40000000000580566,
+      -0.39999999999051034,
+      -0.25047012359478843,
+      -0.06669733041853032,
+      -0.26669733046891686,
+      -0.3608386223823733,
+      -0.3192933334660619,
+      -0.20337033786658854,
+      -0.010230994414754946
+    ],
+    "cost_terms": {
+      "tracking": 0.1273383746648421,
+      "nonholonomic": 0.06583536669463429,
+      "smoothing": 0.04115697950029507,
+      "clearance": 0.0,
+      "time": 0.2155730168690298
+    },
+    "cost_fractions": {
+      "tracking": 0.2830347116200238,
+      "nonholonomic": 0.1463321176814036,
+      "smoothing": 0.0914795233933002,
+      "clearance": 0.0,
+      "time": 0.4791536473052724
+    },
+    "trajectory_time_s": 2.155730168690298,
+    "allow_rotation": false,
+    "max_abs_w": 0.40000000000580566,
+    "max_abs_a": 0.5000000003192041,
+    "max_abs_angular_acceleration": 2.0000000005038654,
+    "start_pose_error": 0.0,
+    "start_speed_error": 0.04006883915001238,
+    "start_omega_error": 0.7999999999990429,
+    "initial_acceleration": -0.08013767830002476,
+    "initial_angular_acceleration": -1.5999999999980858,
+    "initial_vw": [
+      0.060828198357670324,
+      0.4
+    ],
+    "first_midpoint_speed_delta": -0.04006883915001238,
+    "first_midpoint_omega_delta": -0.7999999999990429,
+    "initial_time_anchor_speed_error": 0.0,
+    "initial_time_anchor_omega_error": 0.0,
+    "planning_wall_s": 0.06949025199719472,
+    "wall_s": 0.06990095599758206,
+    "over_deadline": false,
+    "initial_valid": false,
+    "initial_certificate": null,
+    "initialization": {
+      "horizon_s": 2.550032871058471,
+      "integration_ticks": 184,
+      "endpoint_hold": true,
+      "endpoint_reached_s": 1.5555555555555556,
+      "endpoint_distance_m": 0.08984184050343694,
+      "dt": [
+        0.32948752126749276,
+        1.0,
+        0.14079593600346388,
+        0.14057675314988638,
+        0.23285045662410297,
+        0.14062500971976638,
+        0.143633328841265,
+        0.1407370857436536,
+        0.14070058252401244,
+        0.14062619718482766
+      ]
+    },
+    "initial_x": [
+      0.056239444061427,
+      -0.004248570021474834,
+      -0.13179500850699655,
+      0.2534409703121966,
+      -0.07233624900227359,
+      -0.5317950085069953,
+      0.27068155533439553,
+      -0.0830992156840866,
+      -0.5881133829083806,
+      0.27757748442024455,
+      -0.08786892309804789,
+      -0.62222222222222,
+      0.27757748442024455,
+      -0.08786892309804789,
+      -0.62222222222222,
+      0.27757748442024455,
+      -0.08786892309804789,
+      -0.62222222222222,
+      0.27757748442024455,
+      -0.08786892309804789,
+      -0.62222222222222,
+      0.27757748442024455,
+      -0.08786892309804789,
+      -0.62222222222222,
+      0.27757748442024455,
+      -0.08786892309804789,
+      -0.62222222222222,
+      0.27757748442024455,
+      -0.08786892309804789,
+      -0.62222222222222,
+      0.32948752126749276,
+      1.0,
+      0.14079593600346388,
+      0.14057675314988638,
+      0.23285045662410297,
+      0.14062500971976638,
+      0.143633328841265,
+      0.1407370857436536,
+      0.14070058252401244,
+      0.14062619718482766
+    ],
+    "initial_violation": {
+      "groups": {
+        "SDF": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "m"
+        },
+        "SPEED": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "m/s"
+        },
+        "OMEGA": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "rad/s"
+        },
+        "ACCELERATION": {
+          "maximum": 0.10221991387902396,
+          "count": 1,
+          "relative_max": 0.20443982775804792,
+          "unit": "m/s2"
+        },
+        "ANGULAR_ACCELERATION": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "rad/s2"
+        },
+        "NO_STATIONARY_ROTATION": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "rad/s"
+        },
+        "DT_LOWER": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "s"
+        },
+        "DT_UPPER": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "s"
+        },
+        "YAW_BOUND": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "rad"
+        },
+        "INITIAL_ACCELERATION": {
+          "maximum": 0.1705549261590389,
+          "count": 1,
+          "relative_max": 0.3411098523180778,
+          "unit": "m/s2"
+        },
+        "INITIAL_ANGULAR_ACCELERATION": {
+          "maximum": 2.8560260912007145,
+          "count": 1,
+          "relative_max": 1.4280130456003572,
+          "unit": "rad/s2"
+        }
+      },
+      "dominant": "INITIAL_ANGULAR_ACCELERATION"
+    },
+    "last_x": [
+      0.019151439058211286,
+      -0.0076457780147364,
+      -0.39999999999904273,
+      0.0404454991638987,
+      -0.019593055608199204,
+      -0.5214747917472646,
+      0.06324434641343328,
+      -0.0341174395478558,
+      -0.5779050798255561,
+      0.08667265023449697,
+      -0.04991557711956333,
+      -0.6056991155318717,
+      0.11019919339269703,
+      -0.06628727208293508,
+      -0.6123688485737249,
+      0.13337357608498146,
+      -0.08304490641795538,
+      -0.6390385816206168,
+      0.15586565156906995,
+      -0.10039579886226326,
+      -0.6751224438594918,
+      0.17763376762364091,
+      -0.11840218240824245,
+      -0.7070517772060979,
+      0.1988637663133146,
+      -0.13691812233535103,
+      -0.7273888109927569,
+      0.2198760009833803,
+      -0.1556426864435497,
+      -0.7284119104342326,
+      1.0,
+      0.3036869793661466,
+      0.14107572019907602,
+      0.11096746912330781,
+      0.1,
+      0.1,
+      0.10000000000176734,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "last_violation": {
+      "groups": {
+        "SDF": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "m"
+        },
+        "SPEED": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "m/s"
+        },
+        "OMEGA": {
+          "maximum": 5.8056337515211e-12,
+          "count": 0,
+          "relative_max": 1.451408437880275e-11,
+          "unit": "rad/s"
+        },
+        "ACCELERATION": {
+          "maximum": 3.1920410759056494e-10,
+          "count": 0,
+          "relative_max": 6.384082151811299e-10,
+          "unit": "m/s2"
+        },
+        "ANGULAR_ACCELERATION": {
+          "maximum": 5.038653938527204e-10,
+          "count": 0,
+          "relative_max": 2.519326969263602e-10,
+          "unit": "rad/s2"
+        },
+        "NO_STATIONARY_ROTATION": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "rad/s"
+        },
+        "DT_LOWER": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "s"
+        },
+        "DT_UPPER": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "s"
+        },
+        "YAW_BOUND": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "rad"
+        },
+        "INITIAL_ACCELERATION": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "m/s2"
+        },
+        "INITIAL_ANGULAR_ACCELERATION": {
+          "maximum": 0.0,
+          "count": 0,
+          "relative_max": 0.0,
+          "unit": "rad/s2"
+        }
+      },
+      "dominant": "NONE_FEASIBLE"
+    },
+    "diagnostic_wall_s": 0.00040928099770098925
+  }
+}
