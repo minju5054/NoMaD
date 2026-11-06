@@ -1,0 +1,40 @@
+{
+  "accepted": false,
+  "solver_success": false,
+  "disposition": "SOLVER_FAILURE",
+  "iterations": 15,
+  "warm_start": true,
+  "message": "Inequality constraints incompatible",
+  "wall_s": 0.03555591800250113,
+  "over_deadline": false,
+  "event_key": "SLW_202_C0_52",
+  "stratum": "C0_SAFE_RANDOM",
+  "scene": "SLW",
+  "index": 202,
+  "source_method": "C0",
+  "native_id": 52,
+  "alpha": 2.0,
+  "alpha_source": "NO_FINITE_PLANT_LIMIT_FALLBACK_2",
+  "prediction": {
+    "pose": [
+      1.827952605814596,
+      0.4748861809824196,
+      -1.3880917454575417
+    ],
+    "vw": [
+      0.3,
+      -0.07257005680959594
+    ],
+    "dispatch_tick": 3880,
+    "apply_tick": 3896,
+    "delay_s": 0.2222222222222222
+  },
+  "na_expected": {
+    "sp_time_s": 0.8361036502868573,
+    "alignment_time_s": 0.0,
+    "alignment_brake_time_s": 0.0,
+    "total_s": 0.8361036502868573,
+    "limitation": "SP profile integral and ideal departure stop/rotation only; no PP rollout, tracking error, future FRESH or success prediction"
+  },
+  "expected_time_difference_s": null
+}

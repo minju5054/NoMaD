@@ -1,0 +1,40 @@
+{
+  "accepted": false,
+  "solver_success": false,
+  "disposition": "SOLVER_FAILURE",
+  "iterations": 100,
+  "warm_start": true,
+  "message": "Iteration limit reached",
+  "wall_s": 0.09584737900149776,
+  "over_deadline": false,
+  "event_key": "SLW_201_B2_SAFE_RTC_62",
+  "stratum": "ACTUAL_ALIGNMENT",
+  "scene": "SLW",
+  "index": 201,
+  "source_method": "B2_SAFE_RTC",
+  "native_id": 62,
+  "alpha": 2.0,
+  "alpha_source": "NO_FINITE_PLANT_LIMIT_FALLBACK_2",
+  "prediction": {
+    "pose": [
+      2.0838437322341585,
+      0.6654913136526206,
+      3.1007128884442707
+    ],
+    "vw": [
+      0.0,
+      0.0
+    ],
+    "dispatch_tick": 4696,
+    "apply_tick": 4712,
+    "delay_s": 0.2222222222222222
+  },
+  "na_expected": {
+    "sp_time_s": 3.304144895224945,
+    "alignment_time_s": 0.0,
+    "alignment_brake_time_s": 0.0,
+    "total_s": 3.304144895224945,
+    "limitation": "SP profile integral and ideal departure stop/rotation only; no PP rollout, tracking error, future FRESH or success prediction"
+  },
+  "expected_time_difference_s": null
+}

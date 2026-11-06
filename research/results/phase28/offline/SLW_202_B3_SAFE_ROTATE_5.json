@@ -1,0 +1,40 @@
+{
+  "accepted": false,
+  "solver_success": false,
+  "disposition": "SOLVER_FAILURE",
+  "iterations": 2,
+  "warm_start": false,
+  "message": "More than 3*n iterations in LSQ subproblem",
+  "wall_s": 0.004798434001713758,
+  "over_deadline": false,
+  "event_key": "SLW_202_B3_SAFE_ROTATE_5",
+  "stratum": "ACTUAL_ALIGNMENT",
+  "scene": "SLW",
+  "index": 202,
+  "source_method": "B3_SAFE_ROTATE",
+  "native_id": 5,
+  "alpha": 2.0,
+  "alpha_source": "NO_FINITE_PLANT_LIMIT_FALLBACK_2",
+  "prediction": {
+    "pose": [
+      1.2234978127120213,
+      -0.5992059374784845,
+      -0.7907765712205546
+    ],
+    "vw": [
+      0.3,
+      -0.4
+    ],
+    "dispatch_tick": 568,
+    "apply_tick": 584,
+    "delay_s": 0.2222222222222222
+  },
+  "na_expected": {
+    "sp_time_s": 0.30370243289527055,
+    "alignment_time_s": 0.0,
+    "alignment_brake_time_s": 0.0,
+    "total_s": 0.30370243289527055,
+    "limitation": "SP profile integral and ideal departure stop/rotation only; no PP rollout, tracking error, future FRESH or success prediction"
+  },
+  "expected_time_difference_s": null
+}

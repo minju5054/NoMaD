@@ -1,0 +1,40 @@
+{
+  "accepted": false,
+  "solver_success": false,
+  "disposition": "SOLVER_FAILURE",
+  "iterations": 3,
+  "warm_start": true,
+  "message": "More than 3*n iterations in LSQ subproblem",
+  "wall_s": 0.005419610999524593,
+  "over_deadline": false,
+  "event_key": "H2_201_C0_32",
+  "stratum": "C0_SAFE_RANDOM",
+  "scene": "H2",
+  "index": 201,
+  "source_method": "C0",
+  "native_id": 32,
+  "alpha": 2.0,
+  "alpha_source": "NO_FINITE_PLANT_LIMIT_FALLBACK_2",
+  "prediction": {
+    "pose": [
+      1.6374611348200474,
+      1.1715453908676945,
+      -2.414011396190986
+    ],
+    "vw": [
+      0.3,
+      0.4
+    ],
+    "dispatch_tick": 2496,
+    "apply_tick": 2512,
+    "delay_s": 0.2222222222222222
+  },
+  "na_expected": {
+    "sp_time_s": 0.7533383195962385,
+    "alignment_time_s": 0.0,
+    "alignment_brake_time_s": 0.0,
+    "total_s": 0.7533383195962385,
+    "limitation": "SP profile integral and ideal departure stop/rotation only; no PP rollout, tracking error, future FRESH or success prediction"
+  },
+  "expected_time_difference_s": null
+}
