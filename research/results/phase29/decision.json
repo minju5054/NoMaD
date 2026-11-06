@@ -349,5 +349,37 @@
     "dev": 20,
     "smoke": 2
   },
-  "protocol_sha256": "95f71cfcebfc3ee947da18be17e5010f59795ca449ff163bda2777ba2297efad"
+  "protocol_sha256": "95f71cfcebfc3ee947da18be17e5010f59795ca449ff163bda2777ba2297efad",
+  "final_audit": {
+    "file": "final_audit.json",
+    "technical_attempt_failures": 0,
+    "dev_gate_verified": true,
+    "confirmation_criteria_verified": true,
+    "counts": [
+      {
+        "method": "C0",
+        "n": 15,
+        "goal": 11,
+        "collision": 1
+      },
+      {
+        "method": "C0-NA",
+        "n": 15,
+        "goal": 10,
+        "collision": 2
+      },
+      {
+        "method": "SM",
+        "n": 15,
+        "goal": 8,
+        "collision": 1
+      },
+      {
+        "method": "G18",
+        "n": 15,
+        "goal": 12,
+        "collision": 1
+      }
+    ]
+  }
 }

@@ -1,8 +1,8 @@
-최종 라벨: G18_NOT_SUPPORTED
-완료: {'confirm': 60, 'dev': 20, 'smoke': 2} (본 실행 순차, smoke 제외)
-dev G18/NA 도착 5/5, 충돌 3/3, G18 적용 317/447
-멈춘 단계: confirm — All registered stages complete
-수치·정책·평가기·이전 결과 보존; 확인 실험은 dev gate 통과한 경우에만 실행.
+1. 최종 라벨: **G18_NOT_SUPPORTED**
+2. 완료: {'confirm': 60, 'dev': 20, 'smoke': 2}; 기술 실패 0, 재시도 0
+3. C0 도착 11/15·충돌 1; C0-NA 도착 10/15·충돌 2; SM 도착 8/15·충돌 1; G18 도착 12/15·충돌 1
+4. G18−SM 여유 -0.0166m, 도착시간 -10.833s; G18−C0 도착시간 -4.528s
+5. 종료 단계: confirm — All registered stages complete; 경과 234.4분, 여유 44.5GB.
 
 # Phase29 경로–속도 분해
 
@@ -155,3 +155,25 @@ dev G18/NA 도착 5/5, 충돌 3/3, G18 적용 317/447
 SM: Phase22 P3 geometry(.5 strength, three halvings,11-point resampling) on B suffix. R3-only advance/spacing/disk restrictions do not apply to normal chunks; both use Phase18 output depth-site certificate. G18: unchanged ClearanceGraph/FlagGraphV4+depth hard+CLR soft(.15/.05), previous correction prior; original 0.5s STALE and latest-id SUPERSEDED decision. RAW selected path runs until a valid correction arrives, and remains on rejection. Output XY goes to frozen NA PP/SP and >90° alignment, not CURV or timed H follower. G18 process uses parent NumPy/SciPy and CPU7, immutable shared SDF arrays. C0 confirm remains original C0; C0-NA/SM/G18 share NA.
 
 Dev denominator: all G18 SAFE FRESH submissions including initialization failures, expired, superseded, stale and terminal-unapplied. Technical failures are final run outcomes after at most one retry; failed attempts are preserved separately. Confirmation paired goal-time medians use both-success pairs; no such pair makes that condition false. Incomplete stages yield PARTIAL, not imputed failures. Deadlines are checked between runs; an active run is allowed to finish. Previous C0/NA results are copied as descriptive rows only. No tuning or package install.
+
+
+## 확인 판정 독립 검산
+
+| condition | passed | evidence |
+|---|---|---|
+| a | True | collision 1 < 2; goal 12 >= 10 |
+| b | False | clearance median -0.016604m >0 (n=15); collision 1 <= 1; goal-time median -10.833333333333336s <=3 (n=7) |
+| c | True | goal-time median -4.527777777777779s <0 (n=10); collision 1 <= 1 |
+
+| method | n | goal | collision |
+|---|---|---|---|
+| C0 | 15 | 11 | 1 |
+| C0-NA | 15 | 10 | 2 |
+| SM | 15 | 8 | 1 |
+| G18 | 15 | 12 | 1 |
+
+도착시간 및 그 짝 차이는 둘 다 도착한 짝만 사용한다. 최소여유·평균속도·정지비율·ω 포화는 실패를 포함한 모든 기술 유효 run을 사용한다. `paired.csv`에는 짝별 도착/충돌 차이와 연속 지표 차이를 함께 기록했다. dev 및 smoke는 확인 판정에 포함하지 않았다.
+
+G18 적용은 유효 결과를 NORMAL 실행기의 경로로 설치한 사건이다. CPU7 고정, cache 정리, seed/90s/goal radius 및 원 소스 보존을 final_audit.json으로 검증했다. 계산시간은 worker 처리와 dispatch→결과 수신을 구분해 graph_timing.csv에 기록했다(terminal-unapplied의 수신 총시간이 없는 행은 후자에서 제외, n 별도).
+
+Phase29 protocol의 과거 Phase28 R1 항목은 재사용한 등록 틀의 이력이다. G18은 실제로 동결 graph_v4_protocol와 ClearanceGraph를 사용하며, H의 시간 매개 궤적/속도·0.15s 수치 budget은 사용하지 않는다. SM은 Phase22 P3의 기하 연산을 평소 suffix에 적용한다. 실행 중 수치·방법·판정의 수정 및 튜닝은 없었다.
