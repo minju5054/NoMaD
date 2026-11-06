@@ -14,7 +14,9 @@ class SPAlignment:
         self.follower=PurePursuit(xy,follower_protocol()['follower']);self.plan=make_profile(xy)
         self.plan_generation+=1;self.mode='GO';self.target_yaw=None;self.trigger_S=False
         B=np.asarray(B,dtype=float)
-        first=next((q for q in self.follower.path.points if np.linalg.norm(q-B[:2])>=.05),None)
+        path=self.follower.path
+        projected_s,_=path.project(B[:2])
+        first=next((q for s,q in zip(path.s,path.points) if s>=projected_s+.05),None)
         self.alignment_threshold_deg=20. if actual_v<.01 else 45.
         self.initial_heading_error_deg=None
         if first is not None:

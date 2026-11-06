@@ -1,0 +1,347 @@
+{
+  "name": "Phase27-R registered Phase26 alignment bug-fix rerun",
+  "status": "FROZEN",
+  "base_commit": "0ef9da05a20c764de3fb4c2599eb7fc5b436b781",
+  "phase26_protocol_sha256": "36b4d61b0ff3162a2369559e11bc3141f8061f10b20c8da8b47eead515266157",
+  "allowed_source_change": {
+    "path": "research/nomad_phase20/execution.py",
+    "before_sha256": "89956a9310336dbb575d2651af9576732845262e5c531a83e45d3c203cab22e6",
+    "after_sha256": "ebcd985e5f7f94878d35cf7361e561a2ce20fa9a482a5a43df05478428e20359",
+    "definition": "First stored waypoint with arclength >=project(B)+0.05; unavailable suffix disables alignment; thresholds and control unchanged"
+  },
+  "methods": [
+    "B0_NOMAD_RAW",
+    "B1_SAFE_TE",
+    "B2_SAFE_RTC",
+    "B3_SAFE_ROTATE",
+    "B4_ASTAR",
+    "C0"
+  ],
+  "indices": [
+    201,
+    202
+  ],
+  "scenes": [
+    "SLW",
+    "LC",
+    "L2",
+    "H1",
+    "H2"
+  ],
+  "main_order": [
+    {
+      "scene": "SLW",
+      "index": 201,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "SLW",
+      "index": 201,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "SLW",
+      "index": 201,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "SLW",
+      "index": 201,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "SLW",
+      "index": 201,
+      "method": "C0"
+    },
+    {
+      "scene": "SLW",
+      "index": 201,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "LC",
+      "index": 201,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "LC",
+      "index": 201,
+      "method": "C0"
+    },
+    {
+      "scene": "LC",
+      "index": 201,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "LC",
+      "index": 201,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "LC",
+      "index": 201,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "LC",
+      "index": 201,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "L2",
+      "index": 201,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "L2",
+      "index": 201,
+      "method": "C0"
+    },
+    {
+      "scene": "L2",
+      "index": 201,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "L2",
+      "index": 201,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "L2",
+      "index": 201,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "L2",
+      "index": 201,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "H1",
+      "index": 201,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "H1",
+      "index": 201,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "H1",
+      "index": 201,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "H1",
+      "index": 201,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "H1",
+      "index": 201,
+      "method": "C0"
+    },
+    {
+      "scene": "H1",
+      "index": 201,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "H2",
+      "index": 201,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "H2",
+      "index": 201,
+      "method": "C0"
+    },
+    {
+      "scene": "H2",
+      "index": 201,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "H2",
+      "index": 201,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "H2",
+      "index": 201,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "H2",
+      "index": 201,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "SLW",
+      "index": 202,
+      "method": "C0"
+    },
+    {
+      "scene": "SLW",
+      "index": 202,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "SLW",
+      "index": 202,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "SLW",
+      "index": 202,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "SLW",
+      "index": 202,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "SLW",
+      "index": 202,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "LC",
+      "index": 202,
+      "method": "C0"
+    },
+    {
+      "scene": "LC",
+      "index": 202,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "LC",
+      "index": 202,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "LC",
+      "index": 202,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "LC",
+      "index": 202,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "LC",
+      "index": 202,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "L2",
+      "index": 202,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "L2",
+      "index": 202,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "L2",
+      "index": 202,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "L2",
+      "index": 202,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "L2",
+      "index": 202,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "L2",
+      "index": 202,
+      "method": "C0"
+    },
+    {
+      "scene": "H1",
+      "index": 202,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "H1",
+      "index": 202,
+      "method": "C0"
+    },
+    {
+      "scene": "H1",
+      "index": 202,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "H1",
+      "index": 202,
+      "method": "B1_SAFE_TE"
+    },
+    {
+      "scene": "H1",
+      "index": 202,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "H1",
+      "index": 202,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "H2",
+      "index": 202,
+      "method": "C0"
+    },
+    {
+      "scene": "H2",
+      "index": 202,
+      "method": "B3_SAFE_ROTATE"
+    },
+    {
+      "scene": "H2",
+      "index": 202,
+      "method": "B2_SAFE_RTC"
+    },
+    {
+      "scene": "H2",
+      "index": 202,
+      "method": "B4_ASTAR"
+    },
+    {
+      "scene": "H2",
+      "index": 202,
+      "method": "B0_NOMAD_RAW"
+    },
+    {
+      "scene": "H2",
+      "index": 202,
+      "method": "B1_SAFE_TE"
+    }
+  ],
+  "phase26_decisions_unchanged": true,
+  "phase26_retry_storage_order_unchanged": true,
+  "results_directory": "research/results/phase27r",
+  "run_root": "../artifacts/isaac6/phase27r_pilot_01",
+  "navigation_authorized_for_agent": false,
+  "wrapper_source_sha256": {
+    "research/nomad_phase27r/__init__.py": "81b864047b92f46bae426feef3af473ab35193b0f754380e4c1645a7a7f68fab",
+    "research/nomad_phase27r/campaign.py": "a51154f0d400485ea58e336e82a95817500fe399eeecafb58aa48e1da742cc51",
+    "research/nomad_phase27r/config.py": "171bb5644291776d6acdbf53bd0fd802947febbb575d28685220a4d9a82331e4",
+    "research/nomad_phase27r/launch.py": "630d8bd378380b80767134f9433a3edbfb2a43821891d861b83af9d6dea54d51",
+    "research/nomad_phase27r/prepare.py": "9869b8af657d62d5d64ed178f31aba9236111620cbcbdfd8ffa83524b703d4de",
+    "research/nomad_phase27r/report.py": "878c50b2815a95c9d3711fd4d083cd5dd193681b8ef36ba1b79e6a2c4fde8264",
+    "research/nomad_phase27r/test_alignment.py": "29a6a7c2622bb3087545a4b7f830b58b8e04fdd5a0a1cbf2c50e007950c59531"
+  }
+}

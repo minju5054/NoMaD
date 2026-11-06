@@ -1,0 +1,44 @@
+[
+  {
+    "source": "research/nomad_phase19s/srg.py",
+    "line": 82,
+    "finding": "SAME_PREFIX_SCAN_UNCHANGED",
+    "note": "Offline SRG trigger S scans full.points by Euclidean distance; no edit. Phase26 does not call this rollout (SP imports wrap/evaluate only).",
+    "sha256": "865c8d457604da192bf86e1d911cec0ca006efe6c1143cbb361269c33ba70054"
+  },
+  {
+    "source": "research/nomad_phase24r/follower.py",
+    "line": 24,
+    "finding": "CHORD_DIRECTION_NOT_PREFIX_POINT",
+    "note": "Uses segment chord, not B-to-old-waypoint. first_pending also checks segment0 before projected segment: a different potential stale-segment direction; investigated only, unchanged.",
+    "sha256": "f103a6449be5cce795285c92283fc813086af93fb86baa672c375f57e1c7b37d"
+  },
+  {
+    "source": "research/nomad_phase17/recovery.py",
+    "line": 9,
+    "finding": "NO_PATH_PREFIX_INPUT",
+    "note": "Depth free rays at current heading +/-30deg determine recovery sign. No chunk-prefix target.",
+    "sha256": "a0d610e4a6c31028b83768086097c3fb0e8f858df55041e68203d463c3f4f503"
+  },
+  {
+    "source": "research/nomad_phase23/rollout.py",
+    "line": 16,
+    "finding": "PLANNED_HEADING_SEGMENTS",
+    "note": "Native graph rotation uses planned segment theta/omega; does not scan original prefix for a point5cm from B. Unchanged.",
+    "sha256": "33cb1433bec1fe51369c260799c7fd0eb1a8263622a155926a00c2744b5be439"
+  },
+  {
+    "source": "research/nomad_phase21/execution.py",
+    "line": 30,
+    "finding": "INHERITS_CORRECTED_SP",
+    "note": "SAFE_TE latest selected chunk uses SPAlignment; no independent prefix selector. Ensemble steering and KEEP rules unchanged.",
+    "sha256": "cb68d03180094b1496daf55ee4b7822422999e39231354229bfda436f27622f6"
+  },
+  {
+    "source": "research/nomad_phase23/prediction.py",
+    "line": 1,
+    "finding": "INHERITED_SP_WITH_SAVED_STATE",
+    "note": "Existing prediction reuses SPAlignment and restores saved alignment state when available; not separately edited or used to simulate here.",
+    "sha256": "69e6a69c954e3b0aabc25a08e461b10afdb3869715b6f6e524d676575dfc1b40"
+  }
+]
