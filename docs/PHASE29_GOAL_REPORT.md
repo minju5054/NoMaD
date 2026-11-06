@@ -1,7 +1,7 @@
 최종 라벨: PARTIAL
-완료: {} (본 실행 순차, smoke 제외)
+완료: {'smoke': 2} (본 실행 순차, smoke 제외)
 dev G18/NA 도착 0/5, 충돌 0/3, G18 적용 0/0
-멈춘 단계: implementation — Implementation complete; registered smoke is next
+멈춘 단계: smoke — smoke complete; next registered stage
 수치·정책·평가기·이전 결과 보존; 확인 실험은 dev gate 통과한 경우에만 실행.
 
 # Phase29 경로–속도 분해
@@ -18,6 +18,8 @@ dev G18/NA 도착 0/5, 충돌 0/3, G18 적용 0/0
 | dev | H1 | C0-NA | 2 | 2 | 2 | 0 | 31.78 | 0.172 | 0.1521 | 0.0932 | 0.437 |
 | dev | H2 | C0 | 2 | 2 | 1 | 0 | 54.93 | 0.1491 | 0.2641 | 0.03962 | 0.4147 |
 | dev | H2 | C0-NA | 2 | 2 | 0 | 1 | — | 0.1606 | 0.189 | 0.02847 | 0.4826 |
+| smoke | H1 | SM | 1 | 1 | 1 | 0 | 36.76 | 0.1475 | 0.1239 | 0.1461 | 0.2354 |
+| smoke | H1 | G18 | 1 | 1 | 1 | 0 | 29.93 | 0.1848 | 0.1114 | 0.09703 | 0.2538 |
 
 ## Dev gate
 
@@ -41,7 +43,9 @@ dev G18/NA 도착 0/5, 충돌 0/3, G18 적용 0/0
 
 ## G18 적용/거절/계산
 
-자료 없음
+| stage | scene | index | calls | applied | reasons | compute_p50_s | compute_p95_s |
+|---|---|---|---|---|---|---|---|
+| smoke | H1 | 201 | 28 | 23 | {'INITIALIZATION_REJECTED': 3, 'ACCEPTED': 23, 'NONCONVERGED': 1, 'TERMINAL_UNAPPLIED': 1} | 0.08177 | 0.09676 |
 
 ## 짝 차이
 

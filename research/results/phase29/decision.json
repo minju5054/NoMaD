@@ -1,6 +1,6 @@
 {
   "label": "PARTIAL",
-  "reason": "Implementation complete; registered smoke is next",
+  "reason": "smoke complete; next registered stage",
   "pairs": [],
   "dev_gate": {
     "passed": false,
@@ -19,8 +19,10 @@
     "g18_applied": 0,
     "application_rate": null
   },
-  "stopped_stage": "implementation",
-  "stop_reason": "Implementation complete; registered smoke is next",
-  "completed_by_stage": {},
+  "stopped_stage": "smoke",
+  "stop_reason": "smoke complete; next registered stage",
+  "completed_by_stage": {
+    "smoke": 2
+  },
   "protocol_sha256": "95f71cfcebfc3ee947da18be17e5010f59795ca449ff163bda2777ba2297efad"
 }
