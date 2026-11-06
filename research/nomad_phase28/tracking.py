@@ -7,11 +7,12 @@ from nomad_phase0.chunk_execution import protocol as pp_protocol
 from nomad_phase18d.speed_profile import make_profile
 from nomad_phase16.execution import stop_command
 from .graph import wrap
+from .telemetry import builtin
 
 def clip_command(raw,previous,alpha,dt=1/9):
     v=float(np.clip(raw[0],max(0.,previous[0]-.5*dt),min(.3,previous[0]+.5*dt)))
     w=float(np.clip(raw[1],max(-.4,previous[1]-alpha*dt),min(.4,previous[1]+alpha*dt)))
-    return (v,w),dict(v_clipped=abs(v-raw[0])>1e-12,w_clipped=abs(w-raw[1])>1e-12,any_clipped=abs(v-raw[0])>1e-12 or abs(w-raw[1])>1e-12)
+    return (v,w),builtin(dict(v_clipped=abs(v-raw[0])>1e-12,w_clipped=abs(w-raw[1])>1e-12,any_clipped=abs(v-raw[0])>1e-12 or abs(w-raw[1])>1e-12))
 
 class TimedFollower:
     def __init__(self,result,start_s,alpha):
@@ -30,8 +31,8 @@ class TimedFollower:
         command,flags=clip_command(raw,[actual_v,self.previous_w],self.alpha)
         self.mode='ROTATE' if command[0]<.01 and abs(command[1])>1e-8 and self.result['allow_rotation'] else 'GO'
         done=finished and max(abs(command[0]),abs(command[1]))<1e-12
-        return command,dict(completed=done,mode=self.mode,phase28_timed=True,elapsed_s=t,target=vf,kappa=None,
-            feedforward=[vf,wf],feedback=[.5*ex,ey+.5*eh],raw_command=raw,rotation_suppressed=suppressed,**flags)
+        return command,builtin(dict(completed=done,mode=self.mode,phase28_timed=True,elapsed_s=t,target=vf,kappa=None,
+            feedforward=[vf,wf],feedback=[.5*ex,ey+.5*eh],raw_command=raw,rotation_suppressed=suppressed,**flags))
 
 def apply_tick(dispatch_tick):return int(math.ceil((int(dispatch_tick)+.15*72)/8)*8)
 

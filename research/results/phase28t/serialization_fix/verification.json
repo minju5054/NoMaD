@@ -1,0 +1,70 @@
+{
+  "baseline_commit": "f17baf3",
+  "tests_passed": 49,
+  "controller_ticks": 512,
+  "navigation_started": 0,
+  "no_new_solve_for_saved_replays": true,
+  "replays": [
+    {
+      "source": "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase28_r1/same/H1_201_B1_SAFE_TE_24.json",
+      "source_sha256": "c921d7dc9e1899134cf2a3f942aaddaef5f1e0ce5d2e7a79ced616ef213ae2d5",
+      "output_type": "OPTIMIZED",
+      "controller_ticks": 128,
+      "integration_ticks": 1024,
+      "serialized_records": 772,
+      "pre_fix_non_json_diag_ticks": 20,
+      "command_max_difference": 0.0
+    },
+    {
+      "source": "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase28_r1/same/H2_201_B3_SAFE_ROTATE_75.json",
+      "source_sha256": "3509fc11a589e6b697c9aecbd188b999bac99df595404084652d95af15d0ea3f",
+      "output_type": "INIT_ONLY",
+      "controller_ticks": 128,
+      "integration_ticks": 1024,
+      "serialized_records": 772,
+      "pre_fix_non_json_diag_ticks": 49,
+      "command_max_difference": 0.0
+    },
+    {
+      "source": "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/phase28_r1/same/H1_201_C0_18.json",
+      "source_sha256": "a5f45b4f96a7d1bec92056dad22c25300699c8db122f3b9f4777a0368358f8f1",
+      "output_type": "FALLBACK",
+      "controller_ticks": 128,
+      "integration_ticks": 1024,
+      "serialized_records": 645,
+      "pre_fix_non_json_diag_ticks": 0,
+      "command_max_difference": 0.0
+    },
+    {
+      "source": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase28t_smoke_01/phase28_handoff.jsonl",
+      "source_sha256": "f418461d07d80b9c10f25899b996251a7d1883cf55e72adcbb24d42151b922b8",
+      "job_id": 0,
+      "output_type": "OPTIMIZED",
+      "controller_ticks": 128,
+      "integration_ticks": 1024,
+      "serialized_records": 772,
+      "pre_fix_non_json_diag_ticks": 19,
+      "command_max_difference": 0.0
+    }
+  ],
+  "smoke01_status": "TECHNICAL_FAILURE",
+  "failure": "NumPy bool in follower diag propagated to async refresh; H log already sanitized; controller refresh was not",
+  "frozen_numerics_timing_gate_unchanged": true,
+  "smoke01_preserved_sha256": {
+    "../artifacts/isaac6/phase28t_smoke_01/phase28_handoff.jsonl": "f418461d07d80b9c10f25899b996251a7d1883cf55e72adcbb24d42151b922b8",
+    "../artifacts/isaac6/phase28t_smoke_01/async_thread_failure.txt": "cc774b5ab452604d2b1fa8264dc6dc119347fb859998650fa3ccf66635cb5693",
+    "../artifacts/isaac6/phase28t_smoke_01/FAILED.json": "68aba150064b5a251d7f9d1455d378b04bd69781a25c26e4d0b72589f5d637c5",
+    "../artifacts/isaac6/phase28t_smoke_01/launch_failure.json": "545c862dba6136995830ef6ab146865e68c407c99b8372d6c5d64804d827424f",
+    "../artifacts/isaac6/phase28t_smoke_01/provenance.json": "dfe557eff10a809e65ae56cac8d3f9f6deb50df2a8b442db263a13339ea14a14",
+    "research/results/phase28t/smoke/gate_cases.csv": "1d7122744616e033170fc0ed083a7959c6bc9e029a34db42468b866d26855fa1",
+    "research/results/phase28t/smoke/events.json": "13094ba4ccf513e766870a7ff8299244bfbf99c771b47786ef3347e7d6758d56",
+    "research/results/phase28t/smoke/outcome_types.csv": "010ab04731ce9d4da3784014dbbb7d1226c18c1e2ade70a17b87c4a105459cd3",
+    "research/results/phase28t/smoke/case_timing.csv": "7b5b5e8762d3e92a6adb561e5a5786d023d550d00140ec44ee4138151947bfa2",
+    "research/results/phase28t/smoke/summary.json": "c17b2e07bc752164a084d488e55adf22493bff3f927fcbc270468023573320df",
+    "research/results/phase28t/smoke/stages.csv": "33d94bd5eca5beae59639b9265727df12e3346345204343f45523512d0c075db",
+    "research/results/phase28t/smoke/affinity.json": "f12cc38303bb0cb6705ec92ea0dc85eaaf2cdac443b3fc2630b0a07f62c29cc7",
+    "docs/PHASE28T_SMOKE.md": "9a44aa1482d2fc3779f354b256e28d5fcf9021e83793e5a8953a6e4b77dd1d9c"
+  },
+  "smoke02_output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase28t_smoke_02",
+  "protocol_sha256": "2fec9bc5f30e58aa8764b6fc0adcb4511125d556cf3590379f2dc1b77d6a09eb"
+}

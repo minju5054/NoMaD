@@ -72,3 +72,23 @@ report 재생성: `cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && PY
 Protocol의 실험 정의·status·R1 수치·시간 정책·게이트는 그대로다. 요청된 source hash 갱신은 `source_sha256`의 launch.py 및 새 test_launch.py 메타데이터에만 적용했다. 현재 Protocol SHA256 `9c4923864b365a2e500156df1556763c27a3d62da386e60cfb302a93b49e7269`.
 
 추가 테스트 5개 통과: 실제 `base.main()`의 argparse와 status/index assertion을 실행하고 바로 다음 socket 경로 계산 진입에서 중단했다. H1/C0-H/201 통과, 잘못된 METHODS·SCENES·index 및 legacy `--smoke` 거부, 원 검증 실패 전파, 사본 불변성과 provenance 기록을 확인했다. `smoke --dry-run`도 통과했다. simulator/worker 프로세스 생성과 smoke 실행은 없었으며 `phase28t_smoke_01` 폴더도 생성되지 않았다. 위 실행 명령은 그대로 사용한다.
+
+## smoke_01 직렬화 기술 실패 수정 · smoke_02 준비
+
+`smoke_01`은 첫 OPTIMIZED 적용(job 0, 계산 0.073871 s) 직후 공용 `async_runtime.append()`의 `json.dumps(refresh)`에서 NumPy bool 때문에 기술 실패했다. H 전용 COMMAND 로그는 이미 정리됐지만, follower의 `completed` 및 clip flag가 들어 있는 controller refresh에는 NumPy 스칼라가 남아 있었다. 이 run은 **TECHNICAL_FAILURE**로 보존하며 성능/게이트 통과로 해석하지 않는다. 원 raw·실패 로그·기존 `PHASE28T_SMOKE.md` 및 `results/phase28t/smoke/`는 변경하지 않았다.
+
+Phase28 follower 반환 diag, H 기록, controller refresh/switch 출력 경계에서 NumPy scalar/array·tuple을 Python bool/float/int/list/dict로 재귀 변환한다. 공용 async_runtime, 다른 phase, R1 solver·수치·명령 계산·0.30s 예산·24 tick 적용·게이트는 그대로다. 현재 source hash와 이를 참조하는 active protocol hash만 갱신하고, 새 smoke 출력 경로를 `_02`로 등록했다. 원 Phase28 protocol.json/protocol_r1.json도 유지했다.
+
+검증: **49 tests 통과**, 저장 OPTIMIZED·INIT_ONLY·FALLBACK 및 smoke_01 APPLIED를 각각 **128 제어 tick(72Hz 적분 1,024 tick)**, 총 **512 제어 tick / 2,961 record**로 검사했다. FALLBACK에는 궤적 해가 없으므로 실제 C0-NA fallback 경로를 사용했고, 두 수락 유형에는 R1Follower를 사용했다. 매 tick의 diag·공용 controller refresh·switch·COMMAND·handoff record는 `default` 없는 표준 `json.dumps`로 직렬화됐다. 수정 전과 명령 최대 차이는 **0**이다. smoke_01 입력은 수정 전 diag에서 19 tick의 직렬화 실패를 재현했으며 수정 후 0이다. gate·timing 회귀 테스트와 수치 worker IPC 단위테스트만 실행했고, Isaac·NoMaD·새 smoke는 실행하지 않았다.
+
+검증 근거: `research/results/phase28t/serialization_fix/verification.json` (보존 파일 SHA256 포함). 현재 Protocol SHA256 `2fec9bc5f30e58aa8764b6fc0adcb4511125d556cf3590379f2dc1b77d6a09eb`.
+
+**이제 아래 smoke_02 명령만 사용한다. 위 smoke_01 명령은 이력이며 다시 실행하지 않는다.** H1 × C0-H × seed201 한 번, 자동 재시도 없음, 기존 출력 폴더 거부. 직접 launcher를 호출해도 기존 폴더는 affinity 변경이나 cleanup 전에 거부한다. smoke_02 report는 `docs/PHASE28T_SMOKE_02.md`와 `research/results/phase28t/smoke_02/`로 분리된다.
+
+```bash
+cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && nohup env -u LD_LIBRARY_PATH -u LD_PRELOAD -u PYTHONHOME -u VIRTUAL_ENV PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_phase28t.smoke --output ../artifacts/isaac6/phase28t_smoke_02 > ../artifacts/isaac6/phase28t_smoke_02.log 2>&1 < /dev/null &
+```
+
+진행 확인: `tail -n 20 /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase28t_smoke_02.log`
+
+report 재생성: `cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && PYTHONPATH=research /usr/bin/python3 -m nomad_phase28t.report --smoke-root ../artifacts/isaac6/phase28t_smoke_02`

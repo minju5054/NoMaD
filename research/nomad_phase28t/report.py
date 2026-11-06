@@ -53,8 +53,13 @@ def smoke_gate(case_count,numerical_accepted,applied,times,detour_started_exclud
     return dict(label='GATE_PASS' if passed else 'GATE_FAIL',denominator='ALL_H_CASES_EXCEPT_DETOUR_STARTED',total_h_cases=case_count,detour_started_excluded=detour_started_excluded,denominator_n=den,applied=applied,application_fraction=fraction,compute_p95_s=p95,compute_samples=len(times),
         applied_among_all=applied/case_count if case_count else None,applied_among_numerically_accepted=applied/numerical_accepted if numerical_accepted else None)
 
+def smoke_destinations(root):
+    # Keep the existing smoke_01 technical-failure report and tables intact.
+    suffix='_02' if Path(root).name=='phase28t_smoke_02' else ''
+    return OUT/('smoke'+suffix),ROOT/('docs/PHASE28T_SMOKE'+suffix+'.md')
+
 def smoke(root):
-    p=protocol();out=OUT/'smoke';out.mkdir(parents=True,exist_ok=True)
+    p=protocol();out,doc=smoke_destinations(root);out.mkdir(parents=True,exist_ok=True)
     events=lines(root/'phase28_handoff.jsonl');cases={e['case_id']:e for e in events if e['event']=='CASE_OUTCOME'};cases.update({e['case_id']:e for e in events if e['event']=='CASE_SUMMARY'})
     results={e['job_id']:e['result'] for e in events if e['event']=='TIMING_RESULT' and e.get('result')};counts=application_counts(cases.values());applied=counts['applied']
     numerical=sum(r['output_type'] in ('OPTIMIZED','INIT_ONLY') for r in results.values());times=[r['wall_s'] for r in results.values()]
@@ -96,7 +101,7 @@ def smoke(root):
     csv_write(out/'gate_cases.csv',[dict(case_id=c['case_id'],job_id=c.get('job_id'),output_type=c['output_type'],reason=c['reason'],applied=c.get('applied',False),excluded_from_application_denominator=c['reason']=='DETOUR_STARTED') for c in cases.values()])
     affinity=read(root/'phase28t_affinity.json') if (root/'phase28t_affinity.json').exists() else {};worker=read(root/'phase28t_worker_provenance.json') if (root/'phase28t_worker_provenance.json').exists() else {}
     save(out/'affinity.json',dict(launch=affinity,worker=worker))
-    doc=ROOT/'docs/PHASE28T_SMOKE.md';doc.write_text('# Phase28-T single smoke\n\nExcluded H1/C0-H/seed201 run only; no campaign results.\n\nGate application ratio = actually applied OPTIMIZED/INIT_ONLY cases / (all H cases minus discarded DETOUR_STARTED cases). Only DETOUR_STARTED is excluded; SUPERSEDED, WORKER_BUSY and other reasons remain. The excluded count and per-case audit are in summary.json and gate_cases.csv.\n\n'+table([summary])+'\n\n'+table(typed)+'\n\n'+table(stage_rows)+'\n\n'+table(rows)+'\n\nIteration timestamps are completed major callbacks; internal SLSQP line searches/minor iterations are not exposed. Initialization total includes NA integration; submit-to-solver includes transport/copy/attach, so nested stages must not be summed. Application certificate is reported separately from compute budget. All dispatched completed-job times, including DETOUR_STARTED, timeout and other discarded jobs, enter compute p95; WORKER_BUSY has no dispatched job.\n\nAffinity: '+json.dumps(dict(launch=affinity,worker=worker),ensure_ascii=False)+'\n')
+    doc.write_text('# Phase28-T single smoke\n\nExcluded H1/C0-H/seed201 run only; no campaign results.\n\nGate application ratio = actually applied OPTIMIZED/INIT_ONLY cases / (all H cases minus discarded DETOUR_STARTED cases). Only DETOUR_STARTED is excluded; SUPERSEDED, WORKER_BUSY and other reasons remain. The excluded count and per-case audit are in summary.json and gate_cases.csv.\n\n'+table([summary])+'\n\n'+table(typed)+'\n\n'+table(stage_rows)+'\n\n'+table(rows)+'\n\nIteration timestamps are completed major callbacks; internal SLSQP line searches/minor iterations are not exposed. Initialization total includes NA integration; submit-to-solver includes transport/copy/attach, so nested stages must not be summed. Application certificate is reported separately from compute budget. All dispatched completed-job times, including DETOUR_STARTED, timeout and other discarded jobs, enter compute p95; WORKER_BUSY has no dispatched job.\n\nAffinity: '+json.dumps(dict(launch=affinity,worker=worker),ensure_ascii=False)+'\n')
     return summary
 
 def preparation():

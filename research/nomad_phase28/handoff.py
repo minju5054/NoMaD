@@ -7,6 +7,7 @@ from nomad_phase24.retention import retained_apply,run_without_oracle
 from .runtime import NAExecution
 from .graph import solve,certificate
 from .tracking import TimedFollower,predict
+from .telemetry import builtin
 
 class HExecution(NAExecution):
     def __init__(self,method,out,alpha):
@@ -14,7 +15,7 @@ class HExecution(NAExecution):
         self.h_pool=ThreadPoolExecutor(max_workers=1,thread_name_prefix='phase28-handoff')
         self.h_log=(out/'phase28_handoff.jsonl').open('x')
     def hrecord(self,event,**kw):
-        self.h_log.write(json.dumps(dict(event=event,**kw))+'\n');self.h_log.flush()
+        self.h_log.write(json.dumps(builtin(dict(event=event,**kw)))+'\n');self.h_log.flush()
     def cancel_h(self,reason):
         if self.pending_h:
             self.hrecord('DISCARDED',job_id=self.pending_h['job_id'],reason=reason)
@@ -64,7 +65,11 @@ class HExecution(NAExecution):
         super().apply(core,refresh,switch)
         if self.detour is not None:self.cancel_h('DETOUR_STARTED')
     def write_command(self,core,refresh,switch,before,nominal,source,diag):
+        diag=builtin(diag)
         super().write_command(core,refresh,switch,before,nominal,source,diag)
+        # The shared async writer serializes these records without a default.
+        refresh.update(builtin(refresh))
+        if switch is not None:switch.update(builtin(switch))
         if diag.get('phase28_timed'):
             self.hrecord('COMMAND',simulation_time_s=refresh['simulation_time_s'],command=[core.v,core.w],before_vw=before,source=source,diag=diag)
     def close(self):

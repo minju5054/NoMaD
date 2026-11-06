@@ -16,9 +16,11 @@ class Processes:
 def main():
     assert '--smoke' not in sys.argv
     for name,value in [('--scene','H1'),('--method','C0-H'),('--index','201')]:assert sys.argv[sys.argv.index(name)+1]==value
+    out=Path(sys.argv[sys.argv.index('--output')+1]).resolve()
+    if out.exists():raise RuntimeError('Existing smoke preserved; no automatic repeat/retry')
     affinity=plan();original_mask=set(os.sched_getaffinity(0)) if hasattr(os,'sched_getaffinity') else None;result=pin(affinity['driver_cpus']) if affinity['possible'] else dict(passed=False,reason=affinity['reason'])
     if affinity.get('worker_cpu') is not None:os.environ['NOMAD_PHASE28T_WORKER_CPU']=str(affinity['worker_cpu'])
-    out=Path(sys.argv[sys.argv.index('--output')+1]).resolve();processes=Processes();base.subprocess=processes;base.METHODS=('C0-H',);base.SCENES=('H1',)
+    processes=Processes();base.subprocess=processes;base.METHODS=('C0-H',);base.SCENES=('H1',)
     verified={}
     def verify_for_base():
         registered=verify()  # Run every Phase28-T check before adapting anything.

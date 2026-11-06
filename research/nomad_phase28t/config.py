@@ -4,7 +4,7 @@ from pathlib import Path
 from nomad_isaac.common import ROOT,sha256_file
 from nomad_phase28.config import runtime_config as original_config,verify as verify_base
 
-HERE=Path(__file__).parent;OUT=ROOT/'research/results/phase28t';SMOKE_ROOT=ROOT.parent/'artifacts/isaac6/phase28t_smoke_01'
+HERE=Path(__file__).parent;OUT=ROOT/'research/results/phase28t';SMOKE_ROOT=ROOT.parent/'artifacts/isaac6/phase28t_smoke_02'
 def protocol():return json.loads((HERE/'protocol.json').read_text())
 def runtime_config(method,index,timeout=90,level='H1'):
     assert (method,index,level)==('C0-H',201,'H1') and timeout==90
