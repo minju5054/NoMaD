@@ -1,7 +1,7 @@
-최종 라벨: PARTIAL
+최종 라벨: G18_NOT_SUPPORTED
 완료: {'confirm': 60, 'dev': 20, 'smoke': 2} (본 실행 순차, smoke 제외)
 dev G18/NA 도착 5/5, 충돌 3/3, G18 적용 317/447
-멈춘 단계: confirm — confirm complete; next registered stage
+멈춘 단계: confirm — All registered stages complete
 수치·정책·평가기·이전 결과 보존; 확인 실험은 dev gate 통과한 경우에만 실행.
 
 # Phase29 경로–속도 분해
