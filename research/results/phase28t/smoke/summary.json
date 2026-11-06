@@ -1,0 +1,132 @@
+{
+  "cases": 38,
+  "detour_started_excluded": 0,
+  "gate_eligible_cases": 38,
+  "case_reasons": {
+    "OPTIMIZED": 32,
+    "SOLVER_FAILURE": 6
+  },
+  "jobs": 38,
+  "actually_applied": 32,
+  "numerically_accepted": 32,
+  "feedback_commands": 257,
+  "feedback_clipped": 133,
+  "feedback_clip_fraction": 0.5175097276264592,
+  "technical_validation": "PASS",
+  "technical_error": null,
+  "original_evaluator": {
+    "scene": "H1",
+    "method": "C0-H",
+    "index": 201,
+    "seed_offset": 2010000,
+    "output": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase28t_smoke_02",
+    "technical_validation": "PASS",
+    "classification": "SUCCESS",
+    "success": true,
+    "collision": false,
+    "obstacle_collision": false,
+    "wall_overlap": false,
+    "corridor": false,
+    "termination": "goal_entry",
+    "duration_s": 42.25,
+    "goal_time_s": 42.25,
+    "box_passage": true,
+    "box_passage_time_s": 36.94444444444444,
+    "box_passage_from_spawn_s": 14.944444444444443,
+    "passage_side": "-X",
+    "minimum_clearance_m": 0.089060986129088,
+    "minimum_obstacle_clearance_m": 0.089060986129088,
+    "minimum_wall_clearance_m": 0.8547239315278848,
+    "omega_saturation_fraction": 0.26627218934911245,
+    "stopped_fraction": 0.2156476002629847,
+    "distance_m": 5.300927408268331,
+    "command_pose_error_m": 0.0,
+    "inference_count": 41,
+    "g_dispatches": 0,
+    "g_applications": 0,
+    "g_output_counts": {
+      "FEASIBLE": 0,
+      "KINEMATIC_TOLERATED": 0,
+      "STOP": 0
+    },
+    "prediction_error_m": [],
+    "application_delay_s": [],
+    "boxes": [
+      {
+        "box_number": 1,
+        "spawn_time_s": 22.0,
+        "passed": true,
+        "passage_time_s": 14.944444444444443,
+        "passage_at_s": 36.94444444444444,
+        "side": "-X",
+        "min_clearance_m": 0.12464531575919122,
+        "collision": false
+      }
+    ],
+    "expected_boxes": 1,
+    "detour_trigger_count": 3,
+    "detour_applied_count": 1,
+    "detour_latency_s": [
+      0.3333333333333286
+    ],
+    "detour_latency_median_s": 0.3333333333333286,
+    "detour_compute_p95_s": 0.3939656855,
+    "certificate_rejection_count": 0,
+    "recovery_count": 0,
+    "launcher_wall_s": 154.1861914090041,
+    "wall_geometry_error_m": 7.450582373280668e-10,
+    "mean_speed_m_s": 0.12546573747380665,
+    "alignment_rotation_fraction": 0.023668639053254437,
+    "alignment_brake_fraction": 0.0,
+    "handoff_calls": 38,
+    "handoff_applied": 32,
+    "handoff_fallback_reasons": {
+      "SOLVER_FAILURE": 6
+    },
+    "feedback_command_count": 257,
+    "feedback_clip_fraction": 0.5175097276264592,
+    "handoff_compute_p50_s": 0.0727468895020138,
+    "handoff_compute_p95_s": 0.11344635039858986,
+    "handoff_case_count": 38,
+    "handoff_case_types": {
+      "OPTIMIZED": 32,
+      "INIT_ONLY": 0,
+      "FALLBACK": 6
+    },
+    "handoff_case_fractions": {
+      "OPTIMIZED": 0.8421052631578947,
+      "INIT_ONLY": 0.0,
+      "FALLBACK": 0.15789473684210525
+    },
+    "handoff_solver_types": {
+      "OPTIMIZED": 32,
+      "FALLBACK": 6
+    },
+    "handoff_case_reasons": {
+      "OPTIMIZED": 32,
+      "SOLVER_FAILURE": 6
+    },
+    "handoff_all_case_compute_p50_s": 0.07977306099928683,
+    "handoff_all_case_compute_p95_s": 0.12323347509700397,
+    "handoff_compute_unknown_cases": 0,
+    "handoff_feedback_commands": 257,
+    "handoff_feedback_clipped_commands": 133,
+    "handoff_feedback_clip_fraction": 0.5175097276264592
+  },
+  "compute_p50_s": 0.07977306099928683,
+  "compute_p95_s": 0.12323347509700397,
+  "compute_max_s": 0.13702213299984578,
+  "gate": {
+    "label": "GATE_PASS",
+    "denominator": "ALL_H_CASES_EXCEPT_DETOUR_STARTED",
+    "total_h_cases": 38,
+    "detour_started_excluded": 0,
+    "denominator_n": 38,
+    "applied": 32,
+    "application_fraction": 0.8421052631578947,
+    "compute_p95_s": 0.12323347509700397,
+    "compute_samples": 38,
+    "applied_among_all": 0.8421052631578947,
+    "applied_among_numerically_accepted": 1.0
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "launch": {
+    "plan": {
+      "possible": true,
+      "allowed": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "driver_cpus": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "worker_cpu": 7,
+      "reserved_siblings": [
+        7,
+        15
+      ],
+      "physical_core": [
+        0,
+        7
+      ]
+    },
+    "launcher": {
+      "passed": true,
+      "requested": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "before": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "actual": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "pid": 810114
+    }
+  },
+  "worker": {
+    "pid": 812937,
+    "python": "/home/gpuadmin/isaacsim/kit/python/bin/python3",
+    "numpy": "2.3.1",
+    "scipy": "1.17.0",
+    "numpy_file": "/home/gpuadmin/isaacsim/extscache/omni.kit.pip_archive-0.0.0+f9bf0dda.lx64.cp312/pip_prebundle/numpy/__init__.py",
+    "scipy_file": "/home/gpuadmin/isaacsim/exts/omni.pip.compute/pip_prebundle/scipy/__init__.py",
+    "affinity": {
+      "passed": true,
+      "requested": [
+        7
+      ],
+      "before": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "actual": [
+        7
+      ],
+      "pid": 812937
+    },
+    "ready_ns": 49708087167612
+  }
+}
