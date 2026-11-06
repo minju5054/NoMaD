@@ -1,0 +1,41 @@
+{
+  "phase26": {
+    "label": "PILOT_SUPPORTS",
+    "C0_BETTER_vs": {
+      "B1_SAFE_TE": true,
+      "B2_SAFE_RTC": true,
+      "B3_SAFE_ROTATE": true
+    },
+    "C0_vs_ASTAR": "BETTER",
+    "STATIC_OK": true,
+    "satisfied": [
+      "B1_SAFE_TE",
+      "B2_SAFE_RTC",
+      "B3_SAFE_ROTATE",
+      "ASTAR",
+      "STATIC_OK"
+    ],
+    "unsatisfied": [],
+    "excluded_scene_seed": []
+  },
+  "phase27r": {
+    "label": "PILOT_AGAINST",
+    "C0_BETTER_vs": {
+      "B1_SAFE_TE": false,
+      "B2_SAFE_RTC": true,
+      "B3_SAFE_ROTATE": false
+    },
+    "C0_vs_ASTAR": "WORSE",
+    "STATIC_OK": true,
+    "satisfied": [
+      "B2_SAFE_RTC",
+      "STATIC_OK"
+    ],
+    "unsatisfied": [
+      "B1_SAFE_TE",
+      "B3_SAFE_ROTATE",
+      "ASTAR"
+    ],
+    "excluded_scene_seed": []
+  }
+}
