@@ -1,5 +1,5 @@
 """Exactly H1/C0-H/201 once; affinity only for this process and its descendants."""
-import json,os,subprocess,sys
+import copy,json,os,subprocess,sys
 from pathlib import Path
 from nomad_phase26 import launch as base
 from nomad_phase28.storage import cleanup
@@ -18,10 +18,21 @@ def main():
     for name,value in [('--scene','H1'),('--method','C0-H'),('--index','201')]:assert sys.argv[sys.argv.index(name)+1]==value
     affinity=plan();original_mask=set(os.sched_getaffinity(0)) if hasattr(os,'sched_getaffinity') else None;result=pin(affinity['driver_cpus']) if affinity['possible'] else dict(passed=False,reason=affinity['reason'])
     if affinity.get('worker_cpu') is not None:os.environ['NOMAD_PHASE28T_WORKER_CPU']=str(affinity['worker_cpu'])
-    out=Path(sys.argv[sys.argv.index('--output')+1]).resolve();processes=Processes();base.subprocess=processes;base.verify=verify;base.METHODS=('C0-H',);base.SCENES=('H1',)
+    out=Path(sys.argv[sys.argv.index('--output')+1]).resolve();processes=Processes();base.subprocess=processes;base.METHODS=('C0-H',);base.SCENES=('H1',)
+    verified={}
+    def verify_for_base():
+        registered=verify()  # Run every Phase28-T check before adapting anything.
+        verified['protocol']=copy.deepcopy(registered)
+        compatible=copy.deepcopy(registered);compatible['status']='FROZEN'
+        return compatible
+    base.verify=verify_for_base
     writer=base.write_json;atomic=base.atomic_json
     def provenance(path,value):
-        if path.name=='provenance.json':value=dict(value,phase='28-T',smoke_excluded=True,campaign=False,affinity_plan=affinity,launcher_affinity=result)
+        if path.name=='provenance.json':
+            value=dict(value,phase='28-T',smoke_excluded=True,campaign=False,affinity_plan=affinity,launcher_affinity=result,
+                protocol=copy.deepcopy(verified['protocol']),launcher_compatibility=dict(
+                    verification='nomad_phase28t.config.verify passed',original_status=verified['protocol']['status'],
+                    base_launcher_status=value['protocol']['status'],adapted_fields=['status'],protocol_file_modified=False))
         return writer(path,value)
     def marked(path,value):
         if path.name=='launch_complete.json':value=dict(value,smoke_excluded=True,campaign=False)

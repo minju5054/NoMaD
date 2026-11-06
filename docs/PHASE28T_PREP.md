@@ -53,7 +53,7 @@ smoke report는 사건별 시간 분포 CSV, OPTIMIZED/INIT_ONLY/FALLBACK(실제
 
 ## 4. 준비 검증·명령(실행하지 않음)
 
-단위테스트 15개 통과. 적용 tick, 예측 적분, budget-only AST, factor/제약 수치 보존, timeout 반복 계측, 프로세스 전달·affinity 선택, report/gate를 검증했다. 실제 H1 렌더/NoMaD/주행 smoke는 실행하지 않았다. Protocol SHA256 `aab511238b48d82dca217912b7cdddd47c63a60bf3a409e925c4c98da3db5823`.
+단위테스트 15개 통과. 적용 tick, 예측 적분, budget-only AST, factor/제약 수치 보존, timeout 반복 계측, 프로세스 전달·affinity 선택, report/gate를 검증했다. 실제 H1 렌더/NoMaD/주행 smoke는 실행하지 않았다. 최초 동결 Protocol SHA256 `aab511238b48d82dca217912b7cdddd47c63a60bf3a409e925c4c98da3db5823`.
 
 H1 × C0-H × seed201 **한 번만**, 기존90초 주행 상한을 유지한다. 본 campaign 호출이나 자동 재시도는 없다. 기존 smoke 폴더가 있으면 덮어쓰거나 재실행하지 않는다. 결과는 본 실험에서 제외한다. 완료 후 `docs/PHASE28T_SMOKE.md`, `research/results/phase28t/smoke/`를 생성한다.
 
@@ -64,3 +64,11 @@ cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && nohup env -u LD_LIBRA
 로그 확인: `tail -n 20 /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase28t_smoke_01.log`
 
 report 재생성: `cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && PYTHONPATH=research /usr/bin/python3 -m nomad_phase28t.report --smoke-root ../artifacts/isaac6/phase28t_smoke_01`
+
+## Launcher status 호환 수정 (주행 미실행)
+
+사용자 실행은 base launcher의 `status == FROZEN` assertion에서 종료되었고 출력 폴더·주행은 시작되지 않았다. 실행 코드 변경은 `nomad_phase28t/launch.py`에 한정했다. 원 `phase28t.config.verify()`의 모든 검사를 통과한 후에만 깊은 사본의 status를 `FROZEN`으로 바꿔 base launcher에 전달한다. provenance의 protocol에는 원 `FROZEN_SMOKE_ONLY`를 보존하고, `launcher_compatibility`에 원 status·base 전달 status·변환 필드·런타임 protocol 파일 미수정을 기록한다.
+
+Protocol의 실험 정의·status·R1 수치·시간 정책·게이트는 그대로다. 요청된 source hash 갱신은 `source_sha256`의 launch.py 및 새 test_launch.py 메타데이터에만 적용했다. 현재 Protocol SHA256 `9c4923864b365a2e500156df1556763c27a3d62da386e60cfb302a93b49e7269`.
+
+추가 테스트 5개 통과: 실제 `base.main()`의 argparse와 status/index assertion을 실행하고 바로 다음 socket 경로 계산 진입에서 중단했다. H1/C0-H/201 통과, 잘못된 METHODS·SCENES·index 및 legacy `--smoke` 거부, 원 검증 실패 전파, 사본 불변성과 provenance 기록을 확인했다. `smoke --dry-run`도 통과했다. simulator/worker 프로세스 생성과 smoke 실행은 없었으며 `phase28t_smoke_01` 폴더도 생성되지 않았다. 위 실행 명령은 그대로 사용한다.
