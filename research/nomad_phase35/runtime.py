@@ -42,4 +42,10 @@ def make_execution(config,out):
 def install(config):
     frozen_install(config);install_storage()
     import nomad_phase15b.execution as factory
+    import nomad_phase8.execution as overnight
     factory.make_execution=make_execution
+    # RGB-only B0 bypasses the depth factory. Route that original overnight
+    # construction seam too; otherwise it silently instantiates Phase21 Raw
+    # with the old 20/45-degree departure rule.
+    original=overnight.OvernightExecution
+    overnight.OvernightExecution=lambda c,out:make_execution(c,out) if c.get('phase35') else original(c,out)

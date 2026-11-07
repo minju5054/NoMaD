@@ -29,6 +29,20 @@ def instance(method):
     return x
 
 class WiringTests(unittest.TestCase):
+    def test_rgb_only_factory_uses_na_dispatch(self):
+        from . import runtime
+        import nomad_phase8.execution as overnight
+        import nomad_phase15b.execution as depth
+        before=overnight.OvernightExecution;old_depth=depth.make_execution
+        try:
+            with patch.object(runtime,'frozen_install'),patch.object(runtime,'install_storage'),patch.object(runtime,'make_execution',return_value='NA_SENTINEL') as factory:
+                cfg=runtime_config('NOMAD_RAW',95)
+                runtime.install(cfg)
+                self.assertEqual(overnight.OvernightExecution(cfg,Path('/tmp')),'NA_SENTINEL')
+                factory.assert_called_once_with(cfg,Path('/tmp'))
+                self.assertIs(depth.make_execution,factory)
+        finally:overnight.OvernightExecution=before;depth.make_execution=old_depth
+
     def test_all_install_thresholds_and_json_ticks(self):
         for method in METHODS:
             for degrees in (20,45,90,91,130):

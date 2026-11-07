@@ -79,10 +79,12 @@ def generate(stage):
             if m=='SAFE_RTC':rtc.append({k:r.get(k) for k in ('scene','index','chunk_delay_p50_s','chunk_delay_p95_s','inference_p50_s','inference_p95_s','stopped_fraction','command_state_seconds')})
     smoke=[read(f) for f in sorted((RUN_ROOT/'smoke_metrics').glob('*.json'))]
     smoke_info=[{k:r.get(k) for k in ('scene','index','method','technical_validation','launcher_wall_s','attempt_count','output')} for r in smoke]
+    smoke_errors=[{k:r.get(k) for k in ('scene','index','method','attempt','error','output')} for f in sorted((RUN_ROOT/'attempt_metrics').glob('smoke_*.json')) if (r:=read(f)).get('technical_validation')!='PASS']
     technical=[{k:r.get(k) for k in ('scene','index','method','attempt_count','error','output')} for r in rows if r.get('technical_validation')!='PASS']
     OUT.mkdir(parents=True,exist_ok=True)
     save(OUT/'runs.json',rows);save(OUT/'decision.json',d);csvout(OUT/'summary.csv',stats);csvout(OUT/'paired.csv',d['pairs']);csvout(OUT/'comparisons.csv',d['comparisons'])
     save(OUT/'mechanism.json',mechanism);save(OUT/'rtc.json',rtc);csvout(OUT/'failures.csv',failures);save(OUT/'technical_failures.json',technical);save(OUT/'smoke.json',smoke_info)
+    save(OUT/'smoke_technical_failures.json',smoke_errors)
     count_text=' / '.join(f"{m} {d['counts'][m]['goal']}/{d['counts'][m]['valid']}" for m in METHODS)
     collision_text=' / '.join(f"{m} {d['counts'][m]['collision']}" for m in METHODS)
     dt=d['comparisons'][0]['goal_time_delta_median_s']
@@ -102,6 +104,7 @@ def generate(stage):
     text+='## SAFE_RTC chunk 이어받기 지연·정지\n\n'+table(rtc)+'\n\nChunk 지연=application_sim_s−observation_sim_s(D750·추론 포함); received→apply 원자료도 runs.json에 기록했다. 정지는 실제72Hz |v|<0.01 비율, command_state_seconds는9Hz 명령 유지시간 합이다.\n\n'
     text+='## 실패 분해(Phase31-D 그대로)\n\n우선순위: 기술 실패 OTHER(성능 통계 제외); box contact→BOX_COLLISION(InnerCorner 등 구조벽은 WALL); 외곽 overlap/corridor stop→WALL_COLLISION; 목표≤0.6m→NEAR_GOAL_HOVER; 모든 돌발 상자 통과→POST_PASSAGE_TIMEOUT; SLW/LC 마지막10초 목표거리 감소<0.2m→STATIC_NARROW_STUCK; 상자 출현·미통과→DETOUR_FAIL; 미출현 또는 시작 최대변위<0.5m→EARLY_STUCK; 나머지OTHER. WALL_COLLISION 분해에는 margin 정지도 포함되나 주 판정 충돌은 원 evaluator 실제 overlap 값 그대로다.\n\n'+table(failures)+'\n\n'
     text+='## Smoke와 기술 실패\n\nSmoke는 기술검증 전용이며 본 결과에서 제외하고 성능 해석하지 않는다.\n\n'+table(smoke_info)+'\n\n'+(table(technical) if technical else '본 결과 기술 실패 없음(아직 미완료인 run을 성공으로 세지 않음).')+'\n\n'
+    if smoke_errors:text+='보존한 smoke 기술 실패:\n\n'+table(smoke_errors)+'\n\nNOMAD_RAW 첫 시도는 depth 없는 원 factory를 통해 이전20°/45° 실행기로 연결되어90° 기술 검사를 통과하지 못했다. 본 실행 전 Phase35의 RGB-only factory 연결만 수정했다. 방법 수치·판정·기존 파일은 변경하지 않았으며 첫 시도를 본 결과에서 제외하고 한 번만 재시도했다.\n\n'
     text+='순차 실행, 기술실패1회 재시도, smoke 같은 오류2회면 STOP_BLOCKED. 매 attempt 전30GB 미만이면 STOP_BLOCKED;6.5시간 만료 시 진행 중 run만 끝내고 PARTIAL. 완료 블록5개마다 중간 보고서를 commit·push하며 매 단계 동일하게 보존한다.\n\n'
     text+='재개: `env PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_phase35.campaign --stage main`\n\n상태: `PYTHONPATH=research /usr/bin/python3 -m nomad_phase35.campaign --status`\n'
     doc=ROOT/'docs/PHASE35_REPORT.md';doc.write_text(text)
