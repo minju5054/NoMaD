@@ -1,69 +1,78 @@
 [
   {
     "method": "OURS",
-    "n": 0,
-    "detour_triggers": 0,
-    "detour_applied": 0,
-    "detour_path_total_m": 0,
-    "detour_execution_s": 0,
-    "compute_n": 0,
-    "compute_p50_s": null,
-    "compute_p95_s": null,
+    "n": 5,
+    "detour_triggers": 40,
+    "detour_applied": 13,
+    "detour_path_total_m": 19.188610149384342,
+    "detour_execution_s": 23.888888888888893,
+    "compute_n": 57,
+    "compute_p50_s": 0.330661387,
+    "compute_p95_s": 0.6566149591999999,
     "ec_by_state": {
       "NORMAL": {
-        "checks": 0,
-        "rejects": 0,
-        "reject_fraction": null
+        "checks": 682,
+        "rejects": 60,
+        "reject_fraction": 0.08797653958944282
       },
       "R2": {
-        "checks": 0,
-        "rejects": 0,
-        "reject_fraction": null
+        "checks": 22,
+        "rejects": 5,
+        "reject_fraction": 0.22727272727272727
       },
       "R3": {
-        "checks": 0,
-        "rejects": 0,
-        "reject_fraction": null
+        "checks": 91,
+        "rejects": 1,
+        "reject_fraction": 0.01098901098901099
       }
     },
-    "fallback_routes": {}
+    "fallback_routes": {
+      "NEXT_SAFE_FULL": 13,
+      "R2_TO_R3": 5,
+      "R3_FAILURE": 1,
+      "SAFE_SLOW": 4
+    }
   },
   {
     "method": "ASTAR+EC",
-    "n": 0,
-    "detour_triggers": 0,
-    "detour_applied": 0,
-    "detour_path_total_m": 0,
-    "detour_execution_s": 0,
-    "compute_n": 0,
-    "compute_p50_s": null,
-    "compute_p95_s": null,
+    "n": 5,
+    "detour_triggers": 28,
+    "detour_applied": 6,
+    "detour_path_total_m": 8.873161323081472,
+    "detour_execution_s": 10.222222222222225,
+    "compute_n": 34,
+    "compute_p50_s": 0.281657365,
+    "compute_p95_s": 0.3930577814499999,
     "ec_by_state": {
       "NORMAL": {
-        "checks": 0,
-        "rejects": 0,
-        "reject_fraction": null
+        "checks": 620,
+        "rejects": 42,
+        "reject_fraction": 0.06774193548387097
       },
       "R2": {
-        "checks": 0,
-        "rejects": 0,
-        "reject_fraction": null
+        "checks": 7,
+        "rejects": 4,
+        "reject_fraction": 0.5714285714285714
       },
       "R3": {
-        "checks": 0,
+        "checks": 23,
         "rejects": 0,
-        "reject_fraction": null
+        "reject_fraction": 0.0
       }
     },
-    "fallback_routes": {}
+    "fallback_routes": {
+      "SAFE_SLOW": 6,
+      "NEXT_SAFE_FULL": 7,
+      "R2_TO_R3": 4
+    }
   },
   {
     "method": "SAFE_TE",
-    "n": 0,
+    "n": 5,
     "detour_triggers": 0,
     "detour_applied": 0,
     "detour_path_total_m": 0,
-    "detour_execution_s": 0,
+    "detour_execution_s": 0.0,
     "compute_n": 0,
     "compute_p50_s": null,
     "compute_p95_s": null,
@@ -88,11 +97,11 @@
   },
   {
     "method": "SAFE_RTC",
-    "n": 0,
+    "n": 5,
     "detour_triggers": 0,
     "detour_applied": 0,
     "detour_path_total_m": 0,
-    "detour_execution_s": 0,
+    "detour_execution_s": 0.0,
     "compute_n": 0,
     "compute_p50_s": null,
     "compute_p95_s": null,
@@ -117,11 +126,11 @@
   },
   {
     "method": "NOMAD_RAW",
-    "n": 0,
+    "n": 5,
     "detour_triggers": 0,
     "detour_applied": 0,
     "detour_path_total_m": 0,
-    "detour_execution_s": 0,
+    "detour_execution_s": 0.0,
     "compute_n": 0,
     "compute_p50_s": null,
     "compute_p95_s": null,

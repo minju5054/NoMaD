@@ -3,34 +3,34 @@
   "evidence_valid": false,
   "counts": {
     "OURS": {
-      "n": 0,
-      "valid": 0,
-      "goal": 0,
+      "n": 5,
+      "valid": 5,
+      "goal": 3,
       "collision": 0
     },
     "ASTAR+EC": {
-      "n": 0,
-      "valid": 0,
-      "goal": 0,
+      "n": 5,
+      "valid": 5,
+      "goal": 4,
       "collision": 0
     },
     "SAFE_TE": {
-      "n": 0,
-      "valid": 0,
-      "goal": 0,
-      "collision": 0
+      "n": 5,
+      "valid": 5,
+      "goal": 3,
+      "collision": 2
     },
     "SAFE_RTC": {
-      "n": 0,
-      "valid": 0,
-      "goal": 0,
-      "collision": 0
+      "n": 5,
+      "valid": 5,
+      "goal": 2,
+      "collision": 1
     },
     "NOMAD_RAW": {
-      "n": 0,
-      "valid": 0,
-      "goal": 0,
-      "collision": 0
+      "n": 5,
+      "valid": 5,
+      "goal": 1,
+      "collision": 2
     }
   },
   "BEATS": {
@@ -42,59 +42,300 @@
   "provisional_predicates": {
     "BEATS": {
       "SAFE_TE": false,
-      "SAFE_RTC": false,
-      "NOMAD_RAW": false
+      "SAFE_RTC": true,
+      "NOMAD_RAW": true
     },
     "GRAPH": "GRAPH_EQUAL"
   },
   "comparisons": [
     {
       "baseline": "ASTAR+EC",
-      "n": 0,
-      "wins": 0,
-      "losses": 0,
-      "ties": 0,
-      "both_arrived": 0,
-      "goal_time_delta_median_s": null,
+      "n": 5,
+      "wins": 1,
+      "losses": 2,
+      "ties": 2,
+      "both_arrived": 2,
+      "goal_time_delta_median_s": -7.527777777777779,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "SAFE_TE",
-      "n": 0,
-      "wins": 0,
-      "losses": 0,
-      "ties": 0,
-      "both_arrived": 0,
-      "goal_time_delta_median_s": null,
+      "n": 5,
+      "wins": 2,
+      "losses": 2,
+      "ties": 1,
+      "both_arrived": 1,
+      "goal_time_delta_median_s": -0.09722222222222143,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "SAFE_RTC",
-      "n": 0,
-      "wins": 0,
-      "losses": 0,
-      "ties": 0,
-      "both_arrived": 0,
-      "goal_time_delta_median_s": null,
+      "n": 5,
+      "wins": 2,
+      "losses": 1,
+      "ties": 2,
+      "both_arrived": 1,
+      "goal_time_delta_median_s": -25.73611111111111,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "NOMAD_RAW",
-      "n": 0,
-      "wins": 0,
+      "n": 5,
+      "wins": 2,
       "losses": 0,
-      "ties": 0,
-      "both_arrived": 0,
-      "goal_time_delta_median_s": null,
-      "mcnemar_exact_p": 1.0
+      "ties": 3,
+      "both_arrived": 1,
+      "goal_time_delta_median_s": 2.791666666666668,
+      "mcnemar_exact_p": 0.5
     }
   ],
-  "pairs": [],
+  "pairs": [
+    {
+      "scene": "SLW",
+      "index": 212,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 212,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 212,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 212,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "LC",
+      "index": 212,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -16.0
+    },
+    {
+      "scene": "LC",
+      "index": 212,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -0.09722222222222143
+    },
+    {
+      "scene": "LC",
+      "index": 212,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "LC",
+      "index": 212,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "L2",
+      "index": 212,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "L2",
+      "index": 212,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "L2",
+      "index": 212,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "L2",
+      "index": 212,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H1",
+      "index": 212,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": 0.9444444444444429
+    },
+    {
+      "scene": "H1",
+      "index": 212,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H1",
+      "index": 212,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -25.73611111111111
+    },
+    {
+      "scene": "H1",
+      "index": 212,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": 2.791666666666668
+    },
+    {
+      "scene": "H2",
+      "index": 212,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 212,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 212,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 212,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    }
+  ],
   "statistical_p_used_for_decision": false,
   "planned_pairs": 15,
-  "campaign_status": "SMOKE_PASS",
-  "stopped_stage": "smoke",
-  "stop_reason": "Four requested technical smokes passed",
-  "report_stage": "smoke",
+  "campaign_status": "RUNNING",
+  "stopped_stage": "main",
+  "stop_reason": null,
+  "report_stage": "blocks_5",
   "protocol_sha256": "30b586995197409dff38dd21f1dbf7e63e18891652e9f00d5728775cfd0e9245"
 }
