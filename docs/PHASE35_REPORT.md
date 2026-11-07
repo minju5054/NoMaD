@@ -1,8 +1,8 @@
-1. 라벨: **PENDING_INCOMPLETE_EVIDENCE**; BEATS: {'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}.
+1. 라벨: **AWAITING_TECHNICAL_FIX**; BEATS: {'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}.
 2. 도착(유효 run): OURS 0/0 / ASTAR+EC 0/0 / SAFE_TE 0/0 / SAFE_RTC 0/0 / NOMAD_RAW 0/0.
 3. 충돌: OURS 0 / ASTAR+EC 0 / SAFE_TE 0 / SAFE_RTC 0 / NOMAD_RAW 0.
 4. OURS−ASTAR+EC 도착시간 짝차이 중앙값: 미측정s; 완료 0/75.
-5. 멈춘 단계/상태: implementation / PREPARATION; 이유: Implementation and tests. 본 실행은 재개 가능.
+5. 멈춘 단계/상태: smoke / AWAITING_TECHNICAL_FIX; 이유: Inspect first smoke error before one retry: AssertionError('Executor threshold differs'). 본 실행은 재개 가능.
 
 # Phase35 주요 baseline 비교
 
@@ -104,7 +104,11 @@ Chunk 지연=application_sim_s−observation_sim_s(D750·추론 포함); receive
 
 Smoke는 기술검증 전용이며 본 결과에서 제외하고 성능 해석하지 않는다.
 
-자료 없음
+| scene | index | method | technical_validation | launcher_wall_s | attempt_count | output |
+|---|---|---|---|---|---|---|
+| H1 | 95 | ASTAR+EC | PASS | 137.53 | 1 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/smoke/H1_095_ASTAR+EC/attempt1 |
+| H1 | 95 | SAFE_RTC | PASS | 181.55 | 1 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/smoke/H1_095_SAFE_RTC/attempt1 |
+| H1 | 95 | SAFE_TE | PASS | 195.9 | 1 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/smoke/H1_095_SAFE_TE/attempt1 |
 
 본 결과 기술 실패 없음(아직 미완료인 run을 성공으로 세지 않음).
 
