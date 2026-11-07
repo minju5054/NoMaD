@@ -1,7 +1,7 @@
 1. 라벨: **PENDING_INCOMPLETE_EVIDENCE**; BEATS: {'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}.
-2. 도착(유효 run): OURS 3/5 / ASTAR+EC 4/5 / SAFE_TE 3/5 / SAFE_RTC 2/5 / NOMAD_RAW 1/5.
-3. 충돌: OURS 0 / ASTAR+EC 0 / SAFE_TE 2 / SAFE_RTC 1 / NOMAD_RAW 2.
-4. OURS−ASTAR+EC 도착시간 짝차이 중앙값: -7.527777777777779s; 완료 25/75.
+2. 도착(유효 run): OURS 6/10 / ASTAR+EC 7/10 / SAFE_TE 6/10 / SAFE_RTC 7/10 / NOMAD_RAW 3/10.
+3. 충돌: OURS 0 / ASTAR+EC 0 / SAFE_TE 3 / SAFE_RTC 1 / NOMAD_RAW 3.
+4. OURS−ASTAR+EC 도착시간 짝차이 중앙값: -7.930555555555555s; 완료 50/75.
 5. 멈춘 단계/상태: main / RUNNING; 이유: 진행 중, 중단 없음. 본 실행은 재개 가능.
 
 # Phase35 주요 baseline 비교
@@ -28,10 +28,10 @@ BEATS_X: OURS 도착>X 도착 AND 충돌≤X. Graph 판정은 순서대로 GRAPH
 
 | baseline | n | wins | losses | ties | both_arrived | goal_time_delta_median_s | mcnemar_exact_p |
 |---|---|---|---|---|---|---|---|
-| ASTAR+EC | 5 | 1 | 2 | 2 | 2 | -7.5278 | 1 |
-| SAFE_TE | 5 | 2 | 2 | 1 | 1 | -0.097222 | 1 |
-| SAFE_RTC | 5 | 2 | 1 | 2 | 1 | -25.736 | 1 |
-| NOMAD_RAW | 5 | 2 | 0 | 3 | 1 | 2.7917 | 0.5 |
+| ASTAR+EC | 10 | 2 | 3 | 5 | 4 | -7.9306 | 1 |
+| SAFE_TE | 10 | 4 | 4 | 2 | 2 | 0.090278 | 1 |
+| SAFE_RTC | 10 | 2 | 3 | 5 | 4 | -12.722 | 1 |
+| NOMAD_RAW | 10 | 3 | 0 | 7 | 3 | -3.5972 | 0.25 |
 
 BEATS 결과: `{'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}`; Graph: `None`.
 
@@ -39,36 +39,36 @@ BEATS 결과: `{'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}`; Graph: `
 
 | method | scene | n | valid | goal | collision | goal_time_median_s | mean_speed_m_s | stopped_fraction | minimum_clearance_m | omega_saturation_fraction |
 |---|---|---|---|---|---|---|---|---|---|---|
-| OURS | SLW | 1 | 1 | 1 | 0 | 70.792 | 0.09564 | 0.36257 | 0.060453 | 0.44909 |
-| OURS | LC | 1 | 1 | 1 | 0 | 26.931 | 0.19713 | 0.1114 | 0.20122 | 0.51315 |
-| OURS | L2 | 1 | 1 | 0 | 0 | — | 0.16271 | 0.16296 | 0.049371 | 0.39136 |
-| OURS | H1 | 1 | 1 | 1 | 0 | 31.361 | 0.17481 | 0.12046 | 0.14556 | 0.46147 |
-| OURS | H2 | 1 | 1 | 0 | 0 | — | 0.14644 | 0.24938 | 0.031204 | 0.32963 |
-| OURS | ALL | 5 | 5 | 3 | 0 | 31.361 | 0.16271 | 0.16296 | 0.060453 | 0.44909 |
-| ASTAR+EC | SLW | 1 | 1 | 0 | 0 | — | 0.086172 | 0.33827 | 0.045028 | 0.40247 |
-| ASTAR+EC | LC | 1 | 1 | 1 | 0 | 42.931 | 0.13799 | 0.1967 | 0.057055 | 0.54351 |
-| ASTAR+EC | L2 | 1 | 1 | 1 | 0 | 43.917 | 0.19016 | 0.10879 | 0.050247 | 0.56736 |
-| ASTAR+EC | H1 | 1 | 1 | 1 | 0 | 30.417 | 0.17222 | 0.17534 | 0.039699 | 0.27397 |
-| ASTAR+EC | H2 | 1 | 1 | 1 | 0 | 44.542 | 0.1912 | 0.097287 | 0.053823 | 0.55847 |
-| ASTAR+EC | ALL | 5 | 5 | 4 | 0 | 43.424 | 0.17222 | 0.17534 | 0.050247 | 0.54351 |
-| SAFE_TE | SLW | 1 | 1 | 0 | 1 | — | 0.16531 | 0.33548 | -0.00032023 | 0.47527 |
-| SAFE_TE | LC | 1 | 1 | 1 | 0 | 27.028 | 0.20183 | 0.10689 | 0.24826 | 0.49024 |
-| SAFE_TE | L2 | 1 | 1 | 1 | 0 | 73.014 | 0.17583 | 0.09435 | 0.26391 | 0.55868 |
-| SAFE_TE | H1 | 1 | 1 | 0 | 1 | — | 0.13052 | 0.20497 | -0.0023434 | 0.58061 |
-| SAFE_TE | H2 | 1 | 1 | 1 | 0 | 44.167 | 0.18678 | 0.10566 | 0.056935 | 0.57736 |
-| SAFE_TE | ALL | 5 | 5 | 3 | 2 | 44.167 | 0.17583 | 0.10689 | 0.056935 | 0.55868 |
-| SAFE_RTC | SLW | 1 | 1 | 0 | 1 | — | 0.10763 | 0.30323 | -0.0021449 | 0.54069 |
-| SAFE_RTC | LC | 1 | 1 | 0 | 0 | — | 0.12202 | 0.13827 | 0.1561 | 0.55556 |
-| SAFE_RTC | L2 | 1 | 1 | 0 | 0 | — | 0.12547 | 0.24568 | 0.02072 | 0.60988 |
-| SAFE_RTC | H1 | 1 | 1 | 1 | 0 | 57.097 | 0.1433 | 0.14011 | 0.029347 | 0.64218 |
-| SAFE_RTC | H2 | 1 | 1 | 1 | 0 | 53.958 | 0.15776 | 0.16885 | 0.035368 | 0.54286 |
-| SAFE_RTC | ALL | 5 | 5 | 2 | 1 | 55.528 | 0.12547 | 0.16885 | 0.029347 | 0.55556 |
-| NOMAD_RAW | SLW | 1 | 1 | 0 | 1 | — | 0.18906 | 0.30365 | -0.0015794 | 0.38102 |
-| NOMAD_RAW | LC | 1 | 1 | 0 | 1 | — | 0.085424 | 0.35936 | -0.00017686 | 0.73262 |
-| NOMAD_RAW | L2 | 1 | 1 | 0 | 0 | — | 0.16263 | 0.10617 | 0.061567 | 0.6284 |
-| NOMAD_RAW | H1 | 1 | 1 | 1 | 0 | 28.569 | 0.18249 | 0.10112 | 0.034011 | 0.64998 |
-| NOMAD_RAW | H2 | 1 | 1 | 0 | 0 | — | 0.16569 | 0.076543 | 0.062225 | 0.6284 |
-| NOMAD_RAW | ALL | 5 | 5 | 1 | 2 | 28.569 | 0.16569 | 0.10617 | 0.034011 | 0.6284 |
+| OURS | SLW | 2 | 2 | 1 | 0 | 70.792 | 0.08188 | 0.43746 | 0.064981 | 0.38689 |
+| OURS | LC | 2 | 2 | 2 | 0 | 28.021 | 0.188 | 0.14539 | 0.17353 | 0.48177 |
+| OURS | L2 | 2 | 2 | 1 | 0 | 54.083 | 0.16749 | 0.15339 | 0.047621 | 0.44838 |
+| OURS | H1 | 2 | 2 | 2 | 0 | 30.764 | 0.17772 | 0.13574 | 0.15035 | 0.42963 |
+| OURS | H2 | 2 | 2 | 0 | 0 | — | 0.14673 | 0.2321 | 0.08466 | 0.34753 |
+| OURS | ALL | 10 | 10 | 6 | 0 | 30.764 | 0.16749 | 0.17118 | 0.10381 | 0.42344 |
+| ASTAR+EC | SLW | 2 | 2 | 1 | 0 | 57.778 | 0.098343 | 0.28644 | 0.050283 | 0.42912 |
+| ASTAR+EC | LC | 2 | 2 | 2 | 0 | 35.951 | 0.16042 | 0.17505 | 0.092688 | 0.5359 |
+| ASTAR+EC | L2 | 2 | 2 | 1 | 0 | 43.917 | 0.18089 | 0.12909 | 0.040185 | 0.54911 |
+| ASTAR+EC | H1 | 2 | 2 | 2 | 0 | 51.181 | 0.14666 | 0.20505 | 0.038308 | 0.33506 |
+| ASTAR+EC | H2 | 2 | 2 | 1 | 0 | 44.542 | 0.16321 | 0.19864 | 0.046271 | 0.47676 |
+| ASTAR+EC | ALL | 10 | 10 | 7 | 0 | 43.917 | 0.15481 | 0.18602 | 0.047637 | 0.49203 |
+| SAFE_TE | SLW | 2 | 2 | 1 | 1 | 52.194 | 0.14341 | 0.29973 | 0.011265 | 0.48644 |
+| SAFE_TE | LC | 2 | 2 | 2 | 0 | 27.931 | 0.19315 | 0.11125 | 0.23072 | 0.53799 |
+| SAFE_TE | L2 | 2 | 2 | 1 | 0 | 73.014 | 0.15165 | 0.093471 | 0.15232 | 0.55959 |
+| SAFE_TE | H1 | 2 | 2 | 0 | 2 | — | 0.15722 | 0.15959 | -0.001174 | 0.5377 |
+| SAFE_TE | H2 | 2 | 2 | 2 | 0 | 60.799 | 0.17192 | 0.11238 | 0.059935 | 0.53047 |
+| SAFE_TE | ALL | 10 | 10 | 6 | 3 | 48.181 | 0.17057 | 0.11491 | 0.04883 | 0.52814 |
+| SAFE_RTC | SLW | 2 | 2 | 1 | 1 | 48.819 | 0.12094 | 0.30183 | 3.3159e-05 | 0.49495 |
+| SAFE_RTC | LC | 2 | 2 | 1 | 0 | 28.819 | 0.15351 | 0.16167 | 0.10752 | 0.53609 |
+| SAFE_RTC | L2 | 2 | 2 | 1 | 0 | 89.056 | 0.14277 | 0.19021 | 0.047297 | 0.6234 |
+| SAFE_RTC | H1 | 2 | 2 | 2 | 0 | 41.938 | 0.17071 | 0.13437 | 0.046009 | 0.58458 |
+| SAFE_RTC | H2 | 2 | 2 | 2 | 0 | 58.16 | 0.15548 | 0.15659 | 0.025305 | 0.56452 |
+| SAFE_RTC | ALL | 10 | 10 | 7 | 1 | 53.958 | 0.14825 | 0.15659 | 0.032358 | 0.54921 |
+| NOMAD_RAW | SLW | 2 | 2 | 0 | 2 | — | 0.18095 | 0.26881 | -0.00090172 | 0.47847 |
+| NOMAD_RAW | LC | 2 | 2 | 1 | 1 | 33.667 | 0.12187 | 0.22753 | 0.055429 | 0.58578 |
+| NOMAD_RAW | L2 | 2 | 2 | 0 | 0 | — | 0.15955 | 0.089506 | 0.14495 | 0.61049 |
+| NOMAD_RAW | H1 | 2 | 2 | 2 | 0 | 31.167 | 0.17139 | 0.10979 | 0.069059 | 0.58969 |
+| NOMAD_RAW | H2 | 2 | 2 | 0 | 0 | — | 0.15406 | 0.078395 | 0.099343 | 0.64074 |
+| NOMAD_RAW | ALL | 10 | 10 | 3 | 3 | 33.667 | 0.16146 | 0.10365 | 0.061896 | 0.61049 |
 
 도착시간은 성공 run만의 중앙값, 속도/정지/여유/포화는 run별 값의 중앙값이다. 최소여유는 참고이며 주 판정에 사용하지 않는다.
 
@@ -80,32 +80,52 @@ BEATS 결과: `{'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}`; Graph: `
 | SLW | 212 | OURS - SAFE_TE | SAFE_TE | True | False | False | True | 1 | — |
 | SLW | 212 | OURS - SAFE_RTC | SAFE_RTC | True | False | False | True | 1 | — |
 | SLW | 212 | OURS - NOMAD_RAW | NOMAD_RAW | True | False | False | True | 1 | — |
+| SLW | 213 | OURS - ASTAR+EC | ASTAR+EC | False | True | False | False | -1 | — |
+| SLW | 213 | OURS - SAFE_TE | SAFE_TE | False | True | False | False | -1 | — |
+| SLW | 213 | OURS - SAFE_RTC | SAFE_RTC | False | True | False | False | -1 | — |
+| SLW | 213 | OURS - NOMAD_RAW | NOMAD_RAW | False | False | False | True | 0 | — |
 | LC | 212 | OURS - ASTAR+EC | ASTAR+EC | True | True | False | False | 0 | -16 |
 | LC | 212 | OURS - SAFE_TE | SAFE_TE | True | True | False | False | 0 | -0.097222 |
 | LC | 212 | OURS - SAFE_RTC | SAFE_RTC | True | False | False | False | 1 | — |
 | LC | 212 | OURS - NOMAD_RAW | NOMAD_RAW | True | False | False | True | 1 | — |
+| LC | 213 | OURS - ASTAR+EC | ASTAR+EC | True | True | False | False | 0 | 0.13889 |
+| LC | 213 | OURS - SAFE_TE | SAFE_TE | True | True | False | False | 0 | 0.27778 |
+| LC | 213 | OURS - SAFE_RTC | SAFE_RTC | True | True | False | False | 0 | 0.29167 |
+| LC | 213 | OURS - NOMAD_RAW | NOMAD_RAW | True | True | False | False | 0 | -4.5556 |
 | L2 | 212 | OURS - ASTAR+EC | ASTAR+EC | False | True | False | False | -1 | — |
 | L2 | 212 | OURS - SAFE_TE | SAFE_TE | False | True | False | False | -1 | — |
 | L2 | 212 | OURS - SAFE_RTC | SAFE_RTC | False | False | False | False | 0 | — |
 | L2 | 212 | OURS - NOMAD_RAW | NOMAD_RAW | False | False | False | False | 0 | — |
+| L2 | 213 | OURS - ASTAR+EC | ASTAR+EC | True | False | False | False | 1 | — |
+| L2 | 213 | OURS - SAFE_TE | SAFE_TE | True | False | False | False | 1 | — |
+| L2 | 213 | OURS - SAFE_RTC | SAFE_RTC | True | True | False | False | 0 | -34.972 |
+| L2 | 213 | OURS - NOMAD_RAW | NOMAD_RAW | True | False | False | False | 1 | — |
 | H1 | 212 | OURS - ASTAR+EC | ASTAR+EC | True | True | False | False | 0 | 0.94444 |
 | H1 | 212 | OURS - SAFE_TE | SAFE_TE | True | False | False | True | 1 | — |
 | H1 | 212 | OURS - SAFE_RTC | SAFE_RTC | True | True | False | False | 0 | -25.736 |
 | H1 | 212 | OURS - NOMAD_RAW | NOMAD_RAW | True | True | False | False | 0 | 2.7917 |
+| H1 | 213 | OURS - ASTAR+EC | ASTAR+EC | True | True | False | False | 0 | -41.778 |
+| H1 | 213 | OURS - SAFE_TE | SAFE_TE | True | False | False | True | 1 | — |
+| H1 | 213 | OURS - SAFE_RTC | SAFE_RTC | True | True | False | False | 0 | 3.3889 |
+| H1 | 213 | OURS - NOMAD_RAW | NOMAD_RAW | True | True | False | False | 0 | -3.5972 |
 | H2 | 212 | OURS - ASTAR+EC | ASTAR+EC | False | True | False | False | -1 | — |
 | H2 | 212 | OURS - SAFE_TE | SAFE_TE | False | True | False | False | -1 | — |
 | H2 | 212 | OURS - SAFE_RTC | SAFE_RTC | False | True | False | False | -1 | — |
 | H2 | 212 | OURS - NOMAD_RAW | NOMAD_RAW | False | False | False | False | 0 | — |
+| H2 | 213 | OURS - ASTAR+EC | ASTAR+EC | False | False | False | False | 0 | — |
+| H2 | 213 | OURS - SAFE_TE | SAFE_TE | False | True | False | False | -1 | — |
+| H2 | 213 | OURS - SAFE_RTC | SAFE_RTC | False | True | False | False | -1 | — |
+| H2 | 213 | OURS - NOMAD_RAW | NOMAD_RAW | False | False | False | False | 0 | — |
 
 ## 우회·EC·계산시간
 
 | method | n | detour_triggers | detour_applied | detour_path_total_m | detour_execution_s | compute_n | compute_p50_s | compute_p95_s | ec_by_state | fallback_routes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| OURS | 5 | 40 | 13 | 19.189 | 23.889 | 57 | 0.33066 | 0.65661 | {'NORMAL': {'checks': 682, 'rejects': 60, 'reject_fraction': 0.08797653958944282}, 'R2': {'checks': 22, 'rejects': 5, 'reject_fraction': 0.22727272727272727}, 'R3': {'checks': 91, 'rejects': 1, 'reject_fraction': 0.01098901098901099}} | {'NEXT_SAFE_FULL': 13, 'R2_TO_R3': 5, 'R3_FAILURE': 1, 'SAFE_SLOW': 4} |
-| ASTAR+EC | 5 | 28 | 6 | 8.8732 | 10.222 | 34 | 0.28166 | 0.39306 | {'NORMAL': {'checks': 620, 'rejects': 42, 'reject_fraction': 0.06774193548387097}, 'R2': {'checks': 7, 'rejects': 4, 'reject_fraction': 0.5714285714285714}, 'R3': {'checks': 23, 'rejects': 0, 'reject_fraction': 0.0}} | {'SAFE_SLOW': 6, 'NEXT_SAFE_FULL': 7, 'R2_TO_R3': 4} |
-| SAFE_TE | 5 | 0 | 0 | 0 | 0 | 0 | — | — | {'NORMAL': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R2': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R3': {'checks': 0, 'rejects': 0, 'reject_fraction': None}} | {} |
-| SAFE_RTC | 5 | 0 | 0 | 0 | 0 | 0 | — | — | {'NORMAL': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R2': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R3': {'checks': 0, 'rejects': 0, 'reject_fraction': None}} | {} |
-| NOMAD_RAW | 5 | 0 | 0 | 0 | 0 | 0 | — | — | {'NORMAL': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R2': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R3': {'checks': 0, 'rejects': 0, 'reject_fraction': None}} | {} |
+| OURS | 10 | 82 | 23 | 32.571 | 39.667 | 113 | 0.33066 | 0.62274 | {'NORMAL': {'checks': 1329, 'rejects': 96, 'reject_fraction': 0.07223476297968397}, 'R2': {'checks': 29, 'rejects': 9, 'reject_fraction': 0.3103448275862069}, 'R3': {'checks': 160, 'rejects': 1, 'reject_fraction': 0.00625}} | {'NEXT_SAFE_FULL': 27, 'R2_TO_R3': 9, 'R3_FAILURE': 1, 'SAFE_SLOW': 5, 'STOP_WAIT': 3} |
+| ASTAR+EC | 10 | 67 | 13 | 18.096 | 22.444 | 79 | 0.29218 | 0.60281 | {'NORMAL': {'checks': 1475, 'rejects': 116, 'reject_fraction': 0.07864406779661016}, 'R2': {'checks': 12, 'rejects': 5, 'reject_fraction': 0.4166666666666667}, 'R3': {'checks': 54, 'rejects': 0, 'reject_fraction': 0.0}} | {'SAFE_SLOW': 7, 'NEXT_SAFE_FULL': 27, 'STOP_WAIT': 3, 'R2_TO_R3': 5} |
+| SAFE_TE | 10 | 0 | 0 | 0 | 0 | 0 | — | — | {'NORMAL': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R2': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R3': {'checks': 0, 'rejects': 0, 'reject_fraction': None}} | {} |
+| SAFE_RTC | 10 | 0 | 0 | 0 | 0 | 0 | — | — | {'NORMAL': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R2': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R3': {'checks': 0, 'rejects': 0, 'reject_fraction': None}} | {} |
+| NOMAD_RAW | 10 | 0 | 0 | 0 | 0 | 0 | — | — | {'NORMAL': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R2': {'checks': 0, 'rejects': 0, 'reject_fraction': None}, 'R3': {'checks': 0, 'rejects': 0, 'reject_fraction': None}} | {} |
 
 우회 경로 길이는 실제 설치된 DETOUR polyline 길이 합, 실행시간은 APPLIED→END(종료 시 활성 구간 포함) 합이다. 계산시간은 R2/R3 4-process pool 전체 job 시간이며 inference/EC 시간과 다르다. EC는 상태별 CHECK 수/REJECT 수를 보고한다. 미사용 방법은 해당 없음이며 거절률0으로 해석하지 않는다.
 
@@ -114,10 +134,15 @@ BEATS 결과: `{'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}`; Graph: `
 | scene | index | chunk_delay_p50_s | chunk_delay_p95_s | inference_p50_s | inference_p95_s | stopped_fraction | command_state_seconds |
 |---|---|---|---|---|---|---|---|
 | H1 | 212 | 0.90278 | 1.0139 | 0.076 | 0.093683 | 0.14011 | {'WAYPOINT_TIMEOUT': 3.333333333333332, 'NORMAL': 47.444444444444436, 'ENDPOINT': 0.22222222222222587, 'ALIGN_BRAKE': 1.4305555555555607, 'ALIGN_ROTATE': 3.6666666666666643, 'STOP_WAIT': 1.0} |
+| H1 | 213 | 0.90278 | 1.0139 | 0.074328 | 0.1141 | 0.12863 | {'WAYPOINT_TIMEOUT': 3.5555555555555536, 'NORMAL': 22.0, 'ENDPOINT': 0.22222222222222232, 'ALIGN_BRAKE': 0.5555555555555554, 'ALIGN_ROTATE': 0.44444444444444464} |
 | H2 | 212 | 0.90278 | 1.0139 | 0.074941 | 0.095857 | 0.16885 | {'WAYPOINT_TIMEOUT': 3.222222222222225, 'NORMAL': 42.06944444444444, 'ENDPOINT': 0.6666666666666687, 'ALIGN_BRAKE': 1.7777777777777786, 'ALIGN_ROTATE': 4.222222222222221, 'STOP_WAIT': 2.0} |
+| H2 | 213 | 0.90278 | 1.0139 | 0.078997 | 0.096051 | 0.14432 | {'WAYPOINT_TIMEOUT': 3.666666666666675, 'NORMAL': 50.80555555555556, 'ALIGN_BRAKE': 3.0000000000000036, 'ALIGN_ROTATE': 3.888888888888882, 'STOP_WAIT': 1.0} |
 | L2 | 212 | 0.90278 | 1.0139 | 0.074758 | 0.089 | 0.24568 | {'WAYPOINT_TIMEOUT': 3.777777777777775, 'NORMAL': 64.55555555555554, 'ENDPOINT': 1.0000000000000009, 'ALIGN_BRAKE': 2.777777777777784, 'ALIGN_ROTATE': 12.888888888888891, 'STOP_WAIT': 2.0, 'RECOVER_ROTATE': 1.7777777777777786, 'WAIT_FRESH': 0.22222222222222143, 'KEEP_ACTIVE': 1.0} |
+| L2 | 213 | 0.90278 | 1.0139 | 0.075599 | 0.087753 | 0.13475 | {'WAYPOINT_TIMEOUT': 3.3333333333333393, 'NORMAL': 73.72222222222223, 'ENDPOINT': 0.11111111111111072, 'ALIGN_BRAKE': 3.6666666666666767, 'ALIGN_ROTATE': 7.2222222222222054, 'STOP_WAIT': 1.0} |
 | LC | 212 | 0.90278 | 1.009 | 0.075958 | 0.095381 | 0.13827 | {'WAYPOINT_TIMEOUT': 3.555555555555568, 'NORMAL': 75.0, 'ENDPOINT': 0.4444444444444393, 'ALIGN_BRAKE': 2.5555555555555785, 'ALIGN_ROTATE': 8.444444444444418} |
+| LC | 213 | 0.90278 | 1.0139 | 0.074291 | 0.11903 | 0.18506 | {'WAYPOINT_TIMEOUT': 3.2222222222222214, 'NORMAL': 22.15277777777778, 'ALIGN_BRAKE': 0.7777777777777768, 'ALIGN_ROTATE': 2.222222222222223, 'ENDPOINT': 0.44444444444444287} |
 | SLW | 212 | 0.90278 | 1.0139 | 0.071874 | 0.1231 | 0.30323 | {'WAYPOINT_TIMEOUT': 3.2222222222222214, 'NORMAL': 13.583333333333336, 'ALIGN_BRAKE': 1.888888888888884, 'ALIGN_ROTATE': 3.111111111111116, 'STOP_WAIT': 1.0, 'KEEP_ACTIVE': 2.0, 'ENDPOINT': 0.11111111111111072} |
+| SLW | 213 | 0.93056 | 1.0139 | 0.074981 | 0.10567 | 0.30043 | {'WAYPOINT_TIMEOUT': 3.2222222222222214, 'NORMAL': 31.444444444444443, 'ALIGN_BRAKE': 2.5972222222222303, 'ALIGN_ROTATE': 5.555555555555548, 'STOP_WAIT': 2.0, 'RECOVER_ROTATE': 3.5555555555555554, 'WAIT_FRESH': 0.2222222222222232, 'ENDPOINT': 0.22222222222222143} |
 
 Chunk 지연=application_sim_s−observation_sim_s(D750·추론 포함); received→apply 원자료도 runs.json에 기록했다. 정지는 실제72Hz |v|<0.01 비율, command_state_seconds는9Hz 명령 유지시간 합이다.
 
@@ -128,17 +153,26 @@ Chunk 지연=application_sim_s−observation_sim_s(D750·추론 포함); receive
 | scene | index | method | primary_cause | minimum_goal_distance_m | last10_goal_progress_m | maximum_start_displacement_m | structural_contact | output |
 |---|---|---|---|---|---|---|---|---|
 | H2 | 212 | OURS | NEAR_GOAL_HOVER | 0.37664 | -1.0979 | 8.495 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/H2_212_OURS/attempt1 |
+| H2 | 213 | OURS | POST_PASSAGE_TIMEOUT | 0.76428 | 1.1406 | 7.5419 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/H2_213_OURS/attempt1 |
 | L2 | 212 | OURS | NEAR_GOAL_HOVER | 0.30214 | -1.7496 | 8.5615 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/L2_212_OURS/attempt1 |
+| SLW | 213 | OURS | STATIC_NARROW_STUCK | 2.6446 | 0 | 2.4505 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/SLW_213_OURS/attempt1 |
+| H2 | 213 | ASTAR+EC | DETOUR_FAIL | 2.4803 | 1.5203 | 5.5306 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/H2_213_ASTAR+EC/attempt1 |
+| L2 | 213 | ASTAR+EC | NEAR_GOAL_HOVER | 0.30984 | -1.2828 | 8.5788 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/L2_213_ASTAR+EC/attempt1 |
 | SLW | 212 | ASTAR+EC | STATIC_NARROW_STUCK | 1.2363 | -0.42444 | 3.7872 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/SLW_212_ASTAR+EC/attempt1 |
 | H1 | 212 | SAFE_TE | BOX_COLLISION | 1.5923 | 0.6402 | 3.8621 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/H1_212_SAFE_TE/attempt1 |
+| H1 | 213 | SAFE_TE | BOX_COLLISION | 0.87095 | 1.764 | 3.8365 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/H1_213_SAFE_TE/attempt1 |
+| L2 | 213 | SAFE_TE | POST_PASSAGE_TIMEOUT | 3.6786 | 2.0306 | 4.3774 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/L2_213_SAFE_TE/attempt1 |
 | SLW | 212 | SAFE_TE | WALL_COLLISION | 3.1725 | 1.826 | 2.0958 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/SLW_212_SAFE_TE/attempt1 |
 | L2 | 212 | SAFE_RTC | NEAR_GOAL_HOVER | 0.55462 | 0.081748 | 8.6389 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/L2_212_SAFE_RTC/attempt1 |
 | LC | 212 | SAFE_RTC | OTHER | 2.2704 | 0.73638 | 3.2885 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/LC_212_SAFE_RTC/attempt1 |
 | SLW | 212 | SAFE_RTC | BOX_COLLISION | 2.6978 | 0.72484 | 2.5298 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/SLW_212_SAFE_RTC/attempt1 |
 | H2 | 212 | NOMAD_RAW | DETOUR_FAIL | 2.1641 | 1.7878 | 5.8369 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/H2_212_NOMAD_RAW/attempt1 |
+| H2 | 213 | NOMAD_RAW | DETOUR_FAIL | 2.1438 | 0.45807 | 5.8701 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/H2_213_NOMAD_RAW/attempt1 |
 | L2 | 212 | NOMAD_RAW | NEAR_GOAL_HOVER | 0.33365 | -2.0101 | 8.3437 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/L2_212_NOMAD_RAW/attempt1 |
+| L2 | 213 | NOMAD_RAW | NEAR_GOAL_HOVER | 0.31699 | 0.61322 | 7.8307 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/L2_213_NOMAD_RAW/attempt1 |
 | LC | 212 | NOMAD_RAW | BOX_COLLISION | 1.6383 | 0.11089 | 4.031 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/LC_212_NOMAD_RAW/attempt1 |
 | SLW | 212 | NOMAD_RAW | WALL_COLLISION | 3.5147 | 1.4853 | 1.7765 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/SLW_212_NOMAD_RAW/attempt1 |
+| SLW | 213 | NOMAD_RAW | WALL_COLLISION | 3.1548 | 1.8452 | 2.1126 | False | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/main/SLW_213_NOMAD_RAW/attempt1 |
 
 ## Smoke와 기술 실패
 

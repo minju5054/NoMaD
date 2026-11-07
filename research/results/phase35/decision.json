@@ -3,34 +3,34 @@
   "evidence_valid": false,
   "counts": {
     "OURS": {
-      "n": 5,
-      "valid": 5,
-      "goal": 3,
+      "n": 10,
+      "valid": 10,
+      "goal": 6,
       "collision": 0
     },
     "ASTAR+EC": {
-      "n": 5,
-      "valid": 5,
-      "goal": 4,
+      "n": 10,
+      "valid": 10,
+      "goal": 7,
       "collision": 0
     },
     "SAFE_TE": {
-      "n": 5,
-      "valid": 5,
-      "goal": 3,
-      "collision": 2
+      "n": 10,
+      "valid": 10,
+      "goal": 6,
+      "collision": 3
     },
     "SAFE_RTC": {
-      "n": 5,
-      "valid": 5,
-      "goal": 2,
+      "n": 10,
+      "valid": 10,
+      "goal": 7,
       "collision": 1
     },
     "NOMAD_RAW": {
-      "n": 5,
-      "valid": 5,
-      "goal": 1,
-      "collision": 2
+      "n": 10,
+      "valid": 10,
+      "goal": 3,
+      "collision": 3
     }
   },
   "BEATS": {
@@ -42,7 +42,7 @@
   "provisional_predicates": {
     "BEATS": {
       "SAFE_TE": false,
-      "SAFE_RTC": true,
+      "SAFE_RTC": false,
       "NOMAD_RAW": true
     },
     "GRAPH": "GRAPH_EQUAL"
@@ -50,43 +50,43 @@
   "comparisons": [
     {
       "baseline": "ASTAR+EC",
-      "n": 5,
-      "wins": 1,
-      "losses": 2,
-      "ties": 2,
-      "both_arrived": 2,
-      "goal_time_delta_median_s": -7.527777777777779,
+      "n": 10,
+      "wins": 2,
+      "losses": 3,
+      "ties": 5,
+      "both_arrived": 4,
+      "goal_time_delta_median_s": -7.930555555555555,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "SAFE_TE",
-      "n": 5,
-      "wins": 2,
-      "losses": 2,
-      "ties": 1,
-      "both_arrived": 1,
-      "goal_time_delta_median_s": -0.09722222222222143,
+      "n": 10,
+      "wins": 4,
+      "losses": 4,
+      "ties": 2,
+      "both_arrived": 2,
+      "goal_time_delta_median_s": 0.09027777777777857,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "SAFE_RTC",
-      "n": 5,
+      "n": 10,
       "wins": 2,
-      "losses": 1,
-      "ties": 2,
-      "both_arrived": 1,
-      "goal_time_delta_median_s": -25.73611111111111,
+      "losses": 3,
+      "ties": 5,
+      "both_arrived": 4,
+      "goal_time_delta_median_s": -12.722222222222221,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "NOMAD_RAW",
-      "n": 5,
-      "wins": 2,
+      "n": 10,
+      "wins": 3,
       "losses": 0,
-      "ties": 3,
-      "both_arrived": 1,
-      "goal_time_delta_median_s": 2.791666666666668,
-      "mcnemar_exact_p": 0.5
+      "ties": 7,
+      "both_arrived": 3,
+      "goal_time_delta_median_s": -3.597222222222218,
+      "mcnemar_exact_p": 0.25
     }
   ],
   "pairs": [
@@ -139,6 +139,54 @@
       "goal_time_difference_s": null
     },
     {
+      "scene": "SLW",
+      "index": 213,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 213,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 213,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 213,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
       "scene": "LC",
       "index": 212,
       "comparison": "OURS - ASTAR+EC",
@@ -187,6 +235,54 @@
       "goal_time_difference_s": null
     },
     {
+      "scene": "LC",
+      "index": 213,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": 0.13888888888888928
+    },
+    {
+      "scene": "LC",
+      "index": 213,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": 0.27777777777777857
+    },
+    {
+      "scene": "LC",
+      "index": 213,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": 0.29166666666666785
+    },
+    {
+      "scene": "LC",
+      "index": 213,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -4.555555555555554
+    },
+    {
       "scene": "L2",
       "index": 212,
       "comparison": "OURS - ASTAR+EC",
@@ -232,6 +328,54 @@
       "ours_collision": false,
       "other_collision": false,
       "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "L2",
+      "index": 213,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "L2",
+      "index": 213,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "L2",
+      "index": 213,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -34.97222222222222
+    },
+    {
+      "scene": "L2",
+      "index": 213,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 1,
       "goal_time_difference_s": null
     },
     {
@@ -283,6 +427,54 @@
       "goal_time_difference_s": 2.791666666666668
     },
     {
+      "scene": "H1",
+      "index": 213,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -41.77777777777777
+    },
+    {
+      "scene": "H1",
+      "index": 213,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H1",
+      "index": 213,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": 3.3888888888888893
+    },
+    {
+      "scene": "H1",
+      "index": 213,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -3.597222222222218
+    },
+    {
       "scene": "H2",
       "index": 212,
       "comparison": "OURS - ASTAR+EC",
@@ -329,6 +521,54 @@
       "other_collision": false,
       "goal_difference": 0,
       "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 213,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 213,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 213,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": false,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": -1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 213,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
     }
   ],
   "statistical_p_used_for_decision": false,
@@ -336,6 +576,6 @@
   "campaign_status": "RUNNING",
   "stopped_stage": "main",
   "stop_reason": null,
-  "report_stage": "blocks_5",
+  "report_stage": "blocks_10",
   "protocol_sha256": "30b586995197409dff38dd21f1dbf7e63e18891652e9f00d5728775cfd0e9245"
 }
