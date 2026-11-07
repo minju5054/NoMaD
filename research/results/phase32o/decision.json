@@ -1,0 +1,59 @@
+{
+  "label": "OFFLINE_FAIL",
+  "conditions": {
+    "detection": true,
+    "false_reject": true,
+    "model_error": false,
+    "compute": true
+  },
+  "box_detection": {
+    "known_detected": 16,
+    "total": 17,
+    "exact_map_cases": 16,
+    "missing_cases": 1,
+    "lower_bound": 0.9411764705882353,
+    "upper_bound": 1.0,
+    "with_older_map_proxy_detected": 17
+  },
+  "false_reject": {
+    "reject": 304,
+    "denominator": 8443,
+    "rate": 0.03600615894824115,
+    "total_noncollision_population": 8911,
+    "missing_latest_maps": 468,
+    "population_rate_lower_bound": 0.03411513859275053,
+    "population_rate_upper_bound": 0.0866344966894849,
+    "older_map_proxy_rate": 0.035461788800359106
+  },
+  "validation": {
+    "position_samples": 496653,
+    "position_p50_m": 0.0,
+    "position_p95_m": 0.030037125350230395,
+    "same_executor_samples": 349182,
+    "same_executor_p50_m": 0.0,
+    "same_executor_p95_m": 0.0,
+    "no_comparable_interval_events": 204,
+    "definition": "Inclusive actual-path prefix, censored at external override/replacement; C0/H policy differences retained. Same executor subgroup descriptive only."
+  },
+  "timing": {
+    "p50_s": 0.004284825503418688,
+    "p95_s": 0.010233898456499446,
+    "rollout_p50_s": 0.0015033459931146353,
+    "rollout_p95_s": 0.0017113627982325848,
+    "sweep_p50_s": 0.0028057629970135167,
+    "sweep_p95_s": 0.008636011404450979,
+    "over_20ms": 65,
+    "all_including_proxies_p95_s": 0.010146459602401584,
+    "io_excluded": true
+  },
+  "coverage": {
+    "events": 8937,
+    "runs": 160,
+    "exact_maps": 8468,
+    "missing_latest_maps": 469,
+    "invalid_na_inputs": 3
+  },
+  "no_new_navigation": true,
+  "oracle_in_certificate": false,
+  "r3_new_solves": 0
+}
