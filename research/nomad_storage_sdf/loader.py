@@ -38,7 +38,10 @@ def reconstruct(data):
     return np.full(occ.shape,empty)
 
 
-def load_npz(path,expected_arrays=None):
+def fingerprint_digest(data):
+    return hashlib.sha256(json.dumps({k:array_fingerprint(v) for k,v in data.items()},sort_keys=True,separators=(',',':')).encode()).hexdigest()
+
+def load_npz(path,expected_arrays=None,expected_digest=None):
     with ORIGINAL_LOAD(path,allow_pickle=False) as z:data={k:z[k] for k in z.files}
     if 'values' not in data:
         if not REQUIRED.issubset(data):raise ValueError('Not a compact SDF archive')
@@ -47,6 +50,7 @@ def load_npz(path,expected_arrays=None):
         if set(data)!=set(expected_arrays):raise ValueError('Restored key mismatch')
         for k,a in data.items():
             if array_fingerprint(a)!=expected_arrays[k]:raise ValueError('Restored array mismatch: '+k)
+    if expected_digest is not None and fingerprint_digest(data)!=expected_digest:raise ValueError('Restored array digest mismatch')
     return data
 
 
@@ -82,7 +86,8 @@ def restoring_numpy_load():
 
 
 def manifest_index(path):
-    rows=json.loads(Path(path).read_text())
+    p=Path(path)
+    rows=[json.loads(s) for s in p.read_text().splitlines() if s] if p.suffix=='.jsonl' else json.loads(p.read_text())
     return {str(Path(r['path']).resolve()):r for r in rows}
 
 
@@ -90,7 +95,7 @@ def resolve_original_hash(path,expected_sha,manifest):
     path=Path(path).resolve();current=hashlib.sha256(path.read_bytes()).hexdigest()
     if current==expected_sha:return dict(status='ORIGINAL_BYTES',current_sha256=current)
     row=manifest_index(manifest).get(str(path))
-    if row is None or row['original_sha256']!=expected_sha or row['new_sha256']!=current or row['status']!='CONVERTED':raise ValueError('No verified original-hash lineage: '+str(path))
-    load_npz(path,row['original_arrays'])
+    if row is None or row['original_sha256']!=expected_sha or row['new_sha256']!=current or row['status'] not in ('CONVERTED','ALREADY_COMPACT'):raise ValueError('No verified original-hash lineage: '+str(path))
+    load_npz(path,row.get('original_arrays'),row.get('arrays_sha256'))
     return dict(status='LOSSLESS_RETROFIT',original_sha256=expected_sha,current_sha256=current,
                 original_tar=row['backup_tar'],original_tar_member=row['backup_member'])
