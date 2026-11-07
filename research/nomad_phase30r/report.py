@@ -15,7 +15,7 @@ def table(rows):
     return '\n'.join(['| '+' | '.join(keys)+' |','|'+'|'.join(['---']*len(keys))+'|']+['| '+' | '.join(fmt(r.get(k)) for k in keys)+' |' for r in rows])
 def csv_write(p,rows):
     if not rows:p.write_text('');return
-    with p.open('w',newline='') as f:w=csv.DictWriter(f,list(rows[0]));w.writeheader();w.writerows(rows)
+    with p.open('w',newline='') as f:w=csv.DictWriter(f,list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
 
 def detour_metrics(root):
     root=Path(root);summary=read(root/'summary.json');end=summary['simulation_duration_s'];events=lines(root/'detour.jsonl')
