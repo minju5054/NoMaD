@@ -1,0 +1,198 @@
+{
+  "runs": 160,
+  "failures": 64,
+  "arrival": [
+    {
+      "level": "method",
+      "method_or_variant": "C0",
+      "scene": "ALL",
+      "n": 35,
+      "goal": 22,
+      "rate": 0.6285714285714286,
+      "wilson_low": 0.4633693684359532,
+      "wilson_high": 0.7683418049663429
+    },
+    {
+      "level": "method",
+      "method_or_variant": "C0-NA",
+      "scene": "ALL",
+      "n": 35,
+      "goal": 21,
+      "rate": 0.6,
+      "wilson_low": 0.435727090128925,
+      "wilson_high": 0.7444927114061941
+    },
+    {
+      "level": "method",
+      "method_or_variant": "C0-H",
+      "scene": "ALL",
+      "n": 20,
+      "goal": 11,
+      "rate": 0.55,
+      "wilson_low": 0.34208534245034233,
+      "wilson_high": 0.7418021417443759
+    },
+    {
+      "level": "method",
+      "method_or_variant": "SM",
+      "scene": "ALL",
+      "n": 25,
+      "goal": 14,
+      "rate": 0.56,
+      "wilson_low": 0.3706733186979878,
+      "wilson_high": 0.7333436111893266
+    },
+    {
+      "level": "method",
+      "method_or_variant": "G18",
+      "scene": "ALL",
+      "n": 25,
+      "goal": 17,
+      "rate": 0.68,
+      "wilson_low": 0.48410269273102247,
+      "wilson_high": 0.8279480969309202
+    },
+    {
+      "level": "method",
+      "method_or_variant": "G18-R",
+      "scene": "ALL",
+      "n": 20,
+      "goal": 11,
+      "rate": 0.55,
+      "wilson_low": 0.34208534245034233,
+      "wilson_high": 0.7418021417443759
+    }
+  ],
+  "failures_by_cause": [
+    {
+      "cause": "STATIC_NARROW_STUCK",
+      "n": 7,
+      "fraction_of_failures": 0.109375,
+      "fraction_of_all_runs": 0.04375,
+      "common_observed": 2,
+      "common_all_six": 0
+    },
+    {
+      "cause": "BOX_COLLISION",
+      "n": 17,
+      "fraction_of_failures": 0.265625,
+      "fraction_of_all_runs": 0.10625,
+      "common_observed": 4,
+      "common_all_six": 0
+    },
+    {
+      "cause": "WALL_COLLISION",
+      "n": 9,
+      "fraction_of_failures": 0.140625,
+      "fraction_of_all_runs": 0.05625,
+      "common_observed": 1,
+      "common_all_six": 0
+    },
+    {
+      "cause": "DETOUR_FAIL",
+      "n": 8,
+      "fraction_of_failures": 0.125,
+      "fraction_of_all_runs": 0.05,
+      "common_observed": 1,
+      "common_all_six": 0
+    },
+    {
+      "cause": "POST_PASSAGE_TIMEOUT",
+      "n": 5,
+      "fraction_of_failures": 0.078125,
+      "fraction_of_all_runs": 0.03125,
+      "common_observed": 0,
+      "common_all_six": 0
+    },
+    {
+      "cause": "NEAR_GOAL_HOVER",
+      "n": 13,
+      "fraction_of_failures": 0.203125,
+      "fraction_of_all_runs": 0.08125,
+      "common_observed": 1,
+      "common_all_six": 0
+    },
+    {
+      "cause": "EARLY_STUCK",
+      "n": 1,
+      "fraction_of_failures": 0.015625,
+      "fraction_of_all_runs": 0.00625,
+      "common_observed": 0,
+      "common_all_six": 0
+    },
+    {
+      "cause": "OTHER",
+      "n": 4,
+      "fraction_of_failures": 0.0625,
+      "fraction_of_all_runs": 0.025,
+      "common_observed": 1,
+      "common_all_six": 0
+    }
+  ],
+  "common_observed_blocks": 3,
+  "common_all_six_blocks": 0,
+  "unchanged_cross_day_repeat_pairs": 0,
+  "collision_modes": {
+    "G18:R2": 2,
+    "G18:R3": 1,
+    "G18:NORMAL": 1,
+    "G18-R:NORMAL": 1,
+    "G18-R:R2": 3
+  },
+  "phase31p_power": [
+    {
+      "scope": "Phase31-P only",
+      "a": "G18-R",
+      "b": "C0",
+      "n": 10,
+      "goal_a": 4,
+      "goal_b": 5,
+      "a_only": 1,
+      "b_only": 2,
+      "paired_difference": -0.1,
+      "discordance": 0.3,
+      "mcnemar_exact_p": 1.0,
+      "pairs_for_80pct": 249,
+      "power_at_n": 0.8014469210283377,
+      "jeffreys_sensitivity_pairs": 394,
+      "status": "ESTIMATED",
+      "cross_phase_pairs": 0
+    },
+    {
+      "scope": "Phase31-P only",
+      "a": "G18-R",
+      "b": "C0-NA",
+      "n": 10,
+      "goal_a": 4,
+      "goal_b": 6,
+      "a_only": 1,
+      "b_only": 3,
+      "paired_difference": -0.2,
+      "discordance": 0.4,
+      "mcnemar_exact_p": 0.625,
+      "pairs_for_80pct": 84,
+      "power_at_n": 0.8029936211072373,
+      "jeffreys_sensitivity_pairs": 124,
+      "status": "ESTIMATED",
+      "cross_phase_pairs": 0
+    },
+    {
+      "scope": "Phase31-P only",
+      "a": "C0",
+      "b": "C0-NA",
+      "n": 10,
+      "goal_a": 5,
+      "goal_b": 6,
+      "a_only": 1,
+      "b_only": 2,
+      "paired_difference": -0.1,
+      "discordance": 0.3,
+      "mcnemar_exact_p": 1.0,
+      "pairs_for_80pct": 249,
+      "power_at_n": 0.8014469210283377,
+      "jeffreys_sensitivity_pairs": 394,
+      "status": "ESTIMATED",
+      "cross_phase_pairs": 0
+    }
+  ]
+}

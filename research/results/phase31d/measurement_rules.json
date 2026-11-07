@@ -1,0 +1,32 @@
+{
+  "priority": [
+    "SUCCESS excluded",
+    "TECHNICAL OTHER/excluded from stats",
+    "geometric box/structural-wall contact",
+    "outer wall overlap or corridor boundary stop",
+    "goal proximity <=0.6m",
+    "all required dynamic boxes passed",
+    "static last10s goal-progress <0.20m",
+    "dynamic spawned but not all passed",
+    "no dynamic box yet / displacement <0.5m",
+    "OTHER"
+  ],
+  "wall_label": "Includes corridor safety-boundary/margin stops; physical overlap boolean kept separately. InnerCorner structural box is wall; slalom/AfterCorner/dynamic boxes are boxes.",
+  "static_scenes": [
+    "SLW",
+    "LC"
+  ],
+  "late_window_s": 10.0,
+  "late_goal_progress_m": 0.2,
+  "near_goal_m": 0.6,
+  "early_radial_m": 0.5,
+  "handover_recent_s": 3.0,
+  "common_failure": "All independent recorded runs (including changed H versions) at a scene/seed failed. Coverage of all six requested methods is separately required for ALL_SIX; partial coverage never called all-six.",
+  "repeated_runs": "Deduplicate resolved output path. Unchanged configuration/algorithm is required for stochastic-replay agreement; H R1 vs T is a changed-policy comparison.",
+  "alpha": 0.05,
+  "power": 0.8,
+  "test": "two-sided exact McNemar, conditional binomial, unconditional power over random discordant count",
+  "power_cap_pairs": 20000,
+  "effect_estimate": "paired common scene/seed only; C0-H original and T treated as different variants; no duplicate reuse of others within one comparison",
+  "classification_caveat": "Operational primary failure stage from saved logs, not an identified causal mechanism; original results remain untouched"
+}
