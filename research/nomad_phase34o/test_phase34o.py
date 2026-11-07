@@ -94,5 +94,28 @@ class RepairTests(unittest.TestCase):
         json.dumps(r, allow_nan=False)
 
 
+class MeasurementTests(unittest.TestCase):
+    def test_ec_missing_is_not_false_success_or_dropped_denominator(self):
+        from .report import summary
+        def row(solution, ec):
+            return dict(solution=solution,ec_pass=ec,plan_clearance_m=.05 if solution else None,pool_wall_s=.1)
+        s=summary([row(True,True),row(True,None),row(False,False),row(True,False)])
+        self.assertEqual(s['solution_rate'],.75)
+        self.assertEqual(s['ec_conditional_lower'],1/3)
+        self.assertEqual(s['ec_conditional_upper'],2/3)
+        self.assertEqual(s['joint_EC_lower'],.25)
+        self.assertEqual(s['joint_EC_upper'],.5)
+
+    def test_gate_thresholds_and_missing_bounds(self):
+        from .report import gate
+        base=dict(solution_rate=.8,joint_EC_lower=.4,joint_EC_upper=.4,pool_p95_s=.1)
+        new=dict(solution_rate=.75,joint_EC_lower=.6,joint_EC_upper=.6,pool_p95_s=.13)
+        self.assertEqual(gate(base,new)['label'],'OFFLINE_OK')
+        self.assertEqual(gate(base,dict(new,pool_p95_s=.131))['label'],'OFFLINE_FAIL')
+        self.assertEqual(gate(base,dict(new,solution_rate=.749))['label'],'OFFLINE_FAIL')
+        self.assertEqual(gate(base,dict(new,joint_EC_lower=.5))['label'],'INDETERMINATE_MISSING_EC')
+        self.assertEqual(gate(base,dict(new,joint_EC_lower=.5,joint_EC_upper=.59))['label'],'OFFLINE_FAIL')
+
+
 if __name__ == '__main__':
     unittest.main()

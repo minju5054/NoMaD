@@ -1,6 +1,6 @@
 {
   "phase": "34-O",
-  "status": "FROZEN_SOLVER",
+  "status": "FROZEN",
   "frozen_at_utc": "2026-11-07T16:55:20Z",
   "source_commit": "98ec07ca787f8551944389804b7461173909ad03",
   "source_hashes": {
@@ -72,12 +72,22 @@
   "timing": "frozen evaluate_job.pool_wall_s: eight samples in warmed persistent 4-process pool, including IPC/map restore/selection; excludes EC",
   "pairing": "same saved job B/samples/map; R2 first for even ordinal, CLR first for odd; no parameter tuning",
   "success": "original public accepted flag (solver success AND constraints AND certificate); not EC-filtered selection",
-  "missing_EC_policy": "Pending user clarification; numeric solves independent; do not compute gate until fixed",
   "gate": {
     "solution_rate_max_decrease_pp": 5.0,
     "joint_EC_min_increase_pp": 20.0,
     "total_job_p95_ratio_max": 1.3
   },
   "driving_preparation": false,
-  "simulation": false
+  "simulation": false,
+  "ec_policy": {
+    "actual_install": "PATH_APPLIED tick actual trajectory pose/vw and latest published snapshot; unchanged retained EC cap",
+    "uninstalled_with_result": "saved RESULT decision tick as paired counterfactual installation, explicitly separated from actual installs",
+    "no_result": "UNMEASURED",
+    "missing_latest_map": "UNMEASURED; old archived proxy descriptive only",
+    "solution_absent": "EC fail regardless of missing context",
+    "conditional_denominator": "all jobs with selected accepted solution; missing EC bounds, observed-only fraction supplemental",
+    "joint_denominator": 411,
+    "gate_bounds": "CLR_lower - R2_upper through CLR_upper - R2_lower; missing maps never silently PASS/FAIL",
+    "assumption_status": "Analysis convention for jobs without actual installation; recorded before EC evaluation; not a user-approved new method parameter"
+  }
 }
