@@ -1,0 +1,83 @@
+{
+  "phase": "34-O",
+  "status": "FROZEN_SOLVER",
+  "frozen_at_utc": "2026-11-07T16:55:20Z",
+  "source_commit": "98ec07ca787f8551944389804b7461173909ad03",
+  "source_hashes": {
+    "research/nomad_phase19r/repair.py": "01314bdc267cfda557275f5ba5844e4433eea2ac86bfbdf9c8ea7f2b04eb516a",
+    "research/nomad_phase19r/evaluate.py": "7520b87af37728e5e192021ef9290183f866e9b91c6327a4937628a6ad2b2f3c",
+    "research/nomad_phase20/repair.py": "65a70b2f4fc597dfd6a47af38df8f4f7b4e6d6d1ae3aa9655025e3f8d8c6b70c",
+    "research/nomad_phase20d/pool.py": "6b8dac51721f90cc54acd129cf0fc427eed3c4ceb9c57279d813c0d693705b59",
+    "research/nomad_phase20c/detour.py": "0fbf4404017e6cba858a825c850f12b26b3cb66b32096daf9999d3c9968ab0f5",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase32o/exec_cert.py": "ff0a2857ff622c9254788f262e5de26e56cce5cd0d56a527a1b63b7707eeaf98",
+    "research/nomad_phase28/alignment.py": "d79ce0972f0471d67c046d3f70813662289600ab234fd73e80f404e1f2821411",
+    "research/nomad_phase20/execution.py": "ebcd985e5f7f94878d35cf7361e561a2ce20fa9a482a5a43df05478428e20359",
+    "research/nomad_phase33p/storage.py": "3af7b4757decc1639dadf476da9452314899e9f1a7ab451cf8b02df97589331f",
+    "research/nomad_storage_sdf/loader.py": "cd0f6b2511bb39009fdbde8b1f652b6a79b9125a6608de1636398afb797da918"
+  },
+  "new_solver_hashes": {
+    "repair.py": "0746ce5cdcec0bb7fd55f5f796cd60767e9d37595d47a5b275948b8cfe2ab86f",
+    "pool.py": "3587bc4193fa36f86e9e1a35e76c88c43a5c5212bfea5f9fe6dcf5dae65b0a05"
+  },
+  "input_sha256": "8b6b609ce0a7a4184f1c71aea0cace40c919d2bf9dee173b7e381ebc7e1f8c20",
+  "input_manifest_sha256": "b6276f603b1f8eed0218646f8987ee934c70cc512a8290a0f365cad026a4bcf1",
+  "cohort": {
+    "jobs": 411,
+    "runs": 87,
+    "roots": {
+      "phase28_pilot_01": 52,
+      "phase28t_main_01": 19,
+      "phase29_01": 125,
+      "phase30r_dev_01": 42,
+      "phase31p_01": 129,
+      "phase32_01": 44
+    },
+    "collision_cases": 8,
+    "contexts": {
+      "RESULT_DECISION_COUNTERFACTUAL": 237,
+      "ACTUAL_INSTALL": 172,
+      "NO_RESULT": 2
+    },
+    "maps": {
+      "EXACT_LATEST_PUBLISHED": 395,
+      "MISSING_LATEST_MAP": 14,
+      "NO_RESULT": 2
+    },
+    "scope": "Experimental main/dev/confirm including technical attempts with jobs; smoke excluded"
+  },
+  "variants": [
+    "R2",
+    "R2_CLR"
+  ],
+  "only_method_change": {
+    "residual": "max(0,0.15-depth_clearance)/0.05",
+    "weight": 1.0,
+    "samples": "same 9 closed points/segment as frozen R3, 63 points for 7 R2 segments",
+    "objective": "0.5 * sum(residual**2)",
+    "oracle_input": false
+  },
+  "optimization": {
+    "samples": 8,
+    "workers": 4,
+    "solver": "SLSQP",
+    "maxiter": 100,
+    "ftol": 1e-08,
+    "initialization": "frozen Phase20 R2",
+    "hard_constraints": "unchanged",
+    "certificate": "unchanged",
+    "selector": "accepted sample of minimum mean edit, index tie-break",
+    "retries": 0
+  },
+  "timing": "frozen evaluate_job.pool_wall_s: eight samples in warmed persistent 4-process pool, including IPC/map restore/selection; excludes EC",
+  "pairing": "same saved job B/samples/map; R2 first for even ordinal, CLR first for odd; no parameter tuning",
+  "success": "original public accepted flag (solver success AND constraints AND certificate); not EC-filtered selection",
+  "missing_EC_policy": "Pending user clarification; numeric solves independent; do not compute gate until fixed",
+  "gate": {
+    "solution_rate_max_decrease_pp": 5.0,
+    "joint_EC_min_increase_pp": 20.0,
+    "total_job_p95_ratio_max": 1.3
+  },
+  "driving_preparation": false,
+  "simulation": false
+}
