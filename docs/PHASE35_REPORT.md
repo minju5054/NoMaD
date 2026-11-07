@@ -1,12 +1,12 @@
-1. 라벨: **AWAITING_TECHNICAL_FIX**; BEATS: {'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}.
+1. 라벨: **PENDING_INCOMPLETE_EVIDENCE**; BEATS: {'SAFE_TE': None, 'SAFE_RTC': None, 'NOMAD_RAW': None}.
 2. 도착(유효 run): OURS 0/0 / ASTAR+EC 0/0 / SAFE_TE 0/0 / SAFE_RTC 0/0 / NOMAD_RAW 0/0.
 3. 충돌: OURS 0 / ASTAR+EC 0 / SAFE_TE 0 / SAFE_RTC 0 / NOMAD_RAW 0.
 4. OURS−ASTAR+EC 도착시간 짝차이 중앙값: 미측정s; 완료 0/75.
-5. 멈춘 단계/상태: smoke / AWAITING_TECHNICAL_FIX; 이유: Inspect first smoke error before one retry: AssertionError('Executor threshold differs'). 본 실행은 재개 가능.
+5. 멈춘 단계/상태: smoke / SMOKE_PASS; 이유: Four requested technical smokes passed. 본 실행은 재개 가능.
 
 # Phase35 주요 baseline 비교
 
-Protocol FROZEN SHA256 `4055fbbc90bc5381a2219236a4ba03fb46c38667c058d94cf782674c6e9fc984`. 실험 시작 예산 기준 UTC epoch 1794071828, 최대6.5시간. oracle은 원 평가기에만 사용한다. 기존 결과/방법 파일을 수정하지 않는다.
+Protocol FROZEN SHA256 `30b586995197409dff38dd21f1dbf7e63e18891652e9f00d5728775cfd0e9245`. 실험 시작 예산 기준 UTC epoch 1794071828, 최대6.5시간. oracle은 원 평가기에만 사용한다. 기존 결과/방법 파일을 수정하지 않는다.
 
 ## 동결 방법
 
@@ -107,10 +107,19 @@ Smoke는 기술검증 전용이며 본 결과에서 제외하고 성능 해석�
 | scene | index | method | technical_validation | launcher_wall_s | attempt_count | output |
 |---|---|---|---|---|---|---|
 | H1 | 95 | ASTAR+EC | PASS | 137.53 | 1 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/smoke/H1_095_ASTAR+EC/attempt1 |
+| H1 | 95 | NOMAD_RAW | PASS | 139.67 | 2 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/smoke/H1_095_NOMAD_RAW/attempt2 |
 | H1 | 95 | SAFE_RTC | PASS | 181.55 | 1 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/smoke/H1_095_SAFE_RTC/attempt1 |
 | H1 | 95 | SAFE_TE | PASS | 195.9 | 1 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/smoke/H1_095_SAFE_TE/attempt1 |
 
 본 결과 기술 실패 없음(아직 미완료인 run을 성공으로 세지 않음).
+
+보존한 smoke 기술 실패:
+
+| scene | index | method | attempt | error | output |
+|---|---|---|---|---|---|
+| H1 | 95 | NOMAD_RAW | 1 | AssertionError('Executor threshold differs') | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase35_01/smoke/H1_095_NOMAD_RAW/attempt1 |
+
+NOMAD_RAW 첫 시도는 depth 없는 원 factory를 통해 이전20°/45° 실행기로 연결되어90° 기술 검사를 통과하지 못했다. 본 실행 전 Phase35의 RGB-only factory 연결만 수정했다. 방법 수치·판정·기존 파일은 변경하지 않았으며 첫 시도를 본 결과에서 제외하고 한 번만 재시도했다.
 
 순차 실행, 기술실패1회 재시도, smoke 같은 오류2회면 STOP_BLOCKED. 매 attempt 전30GB 미만이면 STOP_BLOCKED;6.5시간 만료 시 진행 중 run만 끝내고 PARTIAL. 완료 블록5개마다 중간 보고서를 commit·push하며 매 단계 동일하게 보존한다.
 
