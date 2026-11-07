@@ -2,7 +2,7 @@
 2. 도착(유효 run): OURS 9/15 / ASTAR+EC 10/15 / SAFE_TE 9/15 / SAFE_RTC 8/15 / NOMAD_RAW 5/15.
 3. 충돌: OURS 0 / ASTAR+EC 0 / SAFE_TE 4 / SAFE_RTC 4 / NOMAD_RAW 6.
 4. OURS−ASTAR+EC 도착시간 짝차이 중앙값: -6.597222222222221s; 완료 75/75.
-5. 멈춘 단계/상태: main / RUNNING; 이유: 진행 중, 중단 없음. 본 실행은 재개 가능.
+5. 멈춘 단계/상태: main / COMPLETE; 이유: All 75 preregistered runs finished. 본 실행은 재개 가능.
 
 # Phase35 주요 baseline 비교
 
