@@ -33,13 +33,13 @@ def memory_pressure(now,baseline):
     # Previously swapped-out idle pages are reported separately; detect new use.
     return now['available_bytes']<4*1024**3 or now['swap_used_bytes']>baseline['swap_used_bytes'] or now['swap_out_pages']>baseline['swap_out_pages']
 
-def init_worker(ids,ready,start,registry,abort,mutation_lock,cpus,isaac):
+def init_worker(ids,ready,start,registry,abort,mutation_lock,cpus,isaac,protected_roots=('phase32_01',)):
     index=ids.get();registry[index]=os.getpid();os.sched_setaffinity(0,set(cpus))
     priority=os.getpriority(os.PRIO_PROCESS,0)
     if priority<10:os.nice(10-priority)
     ready.put((index,os.getpid()));start.wait()
     b.ISAAC=Path(isaac)
-    guard=Guard(b.ISAAC);guard.ignore.update(pid for pid in registry if pid)
+    guard=Guard(b.ISAAC,protected_roots=protected_roots);guard.ignore.update(pid for pid in registry if pid)
     CTX.update(index=index,abort=abort,lock=mutation_lock,guard=guard)
 
 def ping():return os.getpid()
@@ -109,7 +109,7 @@ class Runner:
     def __init__(self,plan,baseline,initial,workers):
         self.plan=plan;self.baseline=baseline;self.initial=initial;self.workers=workers
         self.context=mp.get_context('spawn');self.abort=self.context.Event();self.mutation_lock=self.context.Lock()
-        self.pool=None;self.pids=[];self.guard=Guard(b.ISAAC);self.original_ignore=set(self.guard.ignore)
+        self.pool=None;self.pids=[];self.guard=Guard(b.ISAAC,protected_roots=plan.get('protected_roots',('phase32_01',)));self.original_ignore=set(self.guard.ignore)
         self.throttle=threading.Event();self.done=threading.Event();self.stats_lock=threading.Lock()
         self.started=time.monotonic();self.processed=0;self.converted=0;self.saved=0;self.last_save=0;self.peak=memory()
         self.profiles={};self.benchmark_id=plan.get('benchmark_id','parallel')
@@ -135,7 +135,7 @@ class Runner:
         for i in range(n):ids.put(i)
         allowed=sorted(os.sched_getaffinity(0));cpus=[x for x in allowed if x not in (7,15)] or allowed
         self.pool=ProcessPoolExecutor(max_workers=n,mp_context=self.context,initializer=init_worker,
-                initargs=(ids,ready,start,registry,self.abort,self.mutation_lock,cpus,str(b.ISAAC)))
+                initargs=(ids,ready,start,registry,self.abort,self.mutation_lock,cpus,str(b.ISAAC),self.plan.get('protected_roots',('phase32_01',))))
         futures=[self.pool.submit(ping) for _ in range(n)]
         try:
             self.pids=[ready.get(timeout=60)[1] for _ in range(n)]

@@ -31,8 +31,8 @@ def kernel_locks():
 
 
 class Guard:
- def __init__(self,base):
-  host_required();self.base=Path(base).resolve();self.ignore=ancestors();self.last=0.;self.process_roots={};self.locks=set();self.lock_paths={}
+ def __init__(self,base,protected_roots=('phase32_01',)):
+  host_required();self.base=Path(base).resolve();self.ignore=ancestors();self.last=0.;self.process_roots={};self.locks=set();self.lock_paths={};self.protected_roots=frozenset(protected_roots)
  def refresh(self,force=False):
   if not force and time.monotonic()-self.last<1.:return
   matched={};locks=kernel_locks()
@@ -58,7 +58,7 @@ class Guard:
   self.process_roots=matched;self.locks=locks;self.last=time.monotonic()
  def reason(self,root,force=False):
   root=Path(root);self.refresh(force)
-  if root.name=='phase32_01':return dict(reason='PROTECTED_PHASE32_ROOT')
+  if root.name in getattr(self,'protected_roots',frozenset(('phase32_01',))):return dict(reason='PROTECTED_PHASE32_ROOT' if root.name=='phase32_01' else 'EXPLICITLY_PROTECTED_ROOT')
   marker=[str(p) for p in root.iterdir() if p.name.lower() in ('lock','.lock','pid','.pid','campaign.pid') or p.name.lower().endswith('.lock')]
   if marker:return dict(reason='RUN_ROOT_LOCK_MARKER',files=marker)
   state=root/'state.json'

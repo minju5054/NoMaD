@@ -10,6 +10,13 @@ from nomad_phase15.depth_sdf import DepthSDF
 ORIGINAL_LOAD=np.load
 REQUIRED={'occupied','origin','h','radius'}
 
+def storage_v2_info(data):
+    text=str(data.get('metadata',''))
+    if '"_sdf_storage_v2"' not in text:return {}
+    meta=json.loads(text);info=meta.get('_sdf_storage_v2',{}) if isinstance(meta,dict) else {}
+    if info and info.get('version')!=2:raise ValueError('Unsupported SDF storage version')
+    return info
+
 
 def array_fingerprint(a):
     a=np.asarray(a)
@@ -28,9 +35,15 @@ def bit_equal(a,b):
 def reconstruct(data):
     occ=np.asarray(data['occupied']);origin=np.asarray(data['origin']);h=float(data['h']);radius=float(data['radius'])
     if occ.ndim!=2 or occ.dtype!=np.bool_ or origin.shape!=(2,) or not np.isfinite(origin).all() or not np.isfinite(h) or h<=0 or not np.isfinite(radius):raise ValueError('Invalid SDF grid metadata')
+    info=storage_v2_info(data)
     if occ.any():
         # Identical primitive/expression to LogOddsSDF.update, not a new EDT.
-        return distance_transform_edt(~occ,sampling=h)-radius
+        value=distance_transform_edt(~occ,sampling=h)-radius
+        return np.array(value,dtype=info.get('values_dtype',value.dtype),order=info.get('values_order','C'),copy=True) if info else value
+    if info:
+        # Serialization metadata preserves the runtime empty-map constant;
+        # original non-grid bounds cannot be inferred bit-exactly from shape.
+        return np.full(occ.shape,info['empty_distance_m'],dtype=info['values_dtype'],order=info.get('values_order','C'))
     # Original bounds are not stored. Reconstruct grid extent; if floating
     # rounding or non-grid bounds differ, conversion's exact check SKIPS it.
     upper=origin+(np.array(occ.shape[::-1])-1)*h
@@ -41,11 +54,17 @@ def reconstruct(data):
 def fingerprint_digest(data):
     return hashlib.sha256(json.dumps({k:array_fingerprint(v) for k,v in data.items()},sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
-def load_npz(path,expected_arrays=None,expected_digest=None):
-    with ORIGINAL_LOAD(path,allow_pickle=False) as z:data={k:z[k] for k in z.files}
+def restore_dict(data):
     if 'values' not in data:
         if not REQUIRED.issubset(data):raise ValueError('Not a compact SDF archive')
         data={'values':reconstruct(data),**data}
+        info=storage_v2_info(data)
+        if info:data['metadata']=np.asarray(info['original_metadata_json'],dtype=info['metadata_dtype'])
+    return data
+
+def load_npz(path,expected_arrays=None,expected_digest=None):
+    with ORIGINAL_LOAD(path,allow_pickle=False) as z:data={k:z[k] for k in z.files}
+    data=restore_dict(data)
     if expected_arrays is not None:
         if set(data)!=set(expected_arrays):raise ValueError('Restored key mismatch')
         for k,a in data.items():
@@ -76,7 +95,7 @@ def restoring_numpy_load():
     def patched(file,*args,**kwargs):
         z=ORIGINAL_LOAD(file,*args,**kwargs)
         if isinstance(z,np.lib.npyio.NpzFile) and 'values' not in z.files and REQUIRED.issubset(z.files):
-            try:data={k:z[k] for k in z.files};data={'values':reconstruct(data),**data}
+            try:data=restore_dict({k:z[k] for k in z.files})
             finally:z.close()
             return RestoredArchive(data)
         return z
