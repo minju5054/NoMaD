@@ -1,0 +1,51 @@
+{
+  "label": "OFFLINE_FAIL",
+  "checks": {
+    "solve_success_at_least_80_percent": false,
+    "compute_p95_at_most_150ms": false,
+    "overall_solve_and_ec_strictly_better": false
+  },
+  "failed_checks": [
+    "solve_success_at_least_80_percent",
+    "compute_p95_at_most_150ms",
+    "overall_solve_and_ec_strictly_better"
+  ],
+  "population": 247,
+  "baseline": {
+    "scope": "ALL",
+    "variant": "G18",
+    "n": 247,
+    "solve_successes": 218,
+    "solve_success_rate": 0.8825910931174089,
+    "ec_pass_given_solution": 0.9954128440366973,
+    "solve_and_ec_count": 217,
+    "solve_and_ec_rate": 0.8785425101214575,
+    "compute_p50_s": 0.07962744901305996,
+    "compute_p95_s": 0.33018317829999994,
+    "installed_ec_count": 247,
+    "failure_reasons": {
+      "INITIALIZATION_OR_SDF_REJECTED": 19,
+      "NONCONVERGED": 10
+    }
+  },
+  "variant": {
+    "scope": "ALL",
+    "variant": "G18X",
+    "n": 247,
+    "solve_successes": 139,
+    "solve_success_rate": 0.562753036437247,
+    "ec_pass_given_solution": 0.9928057553956835,
+    "solve_and_ec_count": 138,
+    "solve_and_ec_rate": 0.5587044534412956,
+    "compute_p50_s": 0.09545287498622201,
+    "compute_p95_s": 0.43363214859999993,
+    "installed_ec_count": 247,
+    "failure_reasons": {
+      "INITIALIZATION_OR_SDF_REJECTED": 90,
+      "NONCONVERGED": 11,
+      "NO_ACCEPTED_INITIALIZATION": 7
+    }
+  },
+  "navigation_started": 0,
+  "main_prepared": false
+}

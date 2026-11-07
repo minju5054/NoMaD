@@ -1,0 +1,199 @@
+{
+  "case_id": "E0160",
+  "rows": [
+    {
+      "case_id": "E0160",
+      "event_key": "L2_202_G18+EC:24",
+      "state": "NORMAL",
+      "scene": "L2",
+      "index": 202,
+      "variant": "G18",
+      "input_source": "RECORDED_NORMAL_SUBMIT",
+      "source_job_id": 14,
+      "solve_success": true,
+      "compute_s": 0.10885089699877426,
+      "ec_pass": true,
+      "solve_and_ec": true,
+      "ec_reason": "PASS",
+      "ec_clearance_m": 0.09641339458045167,
+      "failure_reason": "ACCEPTED",
+      "initialization_error": null,
+      "installed_ec_pass": true,
+      "installed_ec_clearance_m": 0.08060267998565643,
+      "speed_cap_m_s": null,
+      "solve_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/L2_202_G18+EC/attempt1/depth/snapshot_0063.npz",
+      "ec_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/L2_202_G18+EC/attempt1/depth/snapshot_0064.npz"
+    },
+    {
+      "case_id": "E0160",
+      "event_key": "L2_202_G18+EC:24",
+      "state": "NORMAL",
+      "scene": "L2",
+      "index": 202,
+      "variant": "G18X",
+      "input_source": "RECORDED_NORMAL_SUBMIT",
+      "source_job_id": 14,
+      "solve_success": false,
+      "compute_s": 0.0008616289997007698,
+      "ec_pass": false,
+      "solve_and_ec": false,
+      "ec_reason": "NO_FEASIBLE_CERTIFIED_SOLUTION",
+      "ec_clearance_m": null,
+      "failure_reason": "INITIALIZATION_OR_SDF_REJECTED",
+      "initialization_error": "ValueError('Previous curvature exceeds Phase33 hard limit 2 m^-1')",
+      "installed_ec_pass": true,
+      "installed_ec_clearance_m": 0.08060267998565643,
+      "speed_cap_m_s": null,
+      "solve_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/L2_202_G18+EC/attempt1/depth/snapshot_0063.npz",
+      "ec_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/L2_202_G18+EC/attempt1/depth/snapshot_0064.npz"
+    }
+  ],
+  "numerical": {
+    "G18": {
+      "result": {
+        "solve_success": true,
+        "path": [
+          [
+            2.851640606404097,
+            0.27200772535215584
+          ],
+          [
+            2.863837646269178,
+            0.2938685387753045
+          ],
+          [
+            2.8724869019701074,
+            0.32334267639054565
+          ],
+          [
+            2.8711369164507663,
+            0.37072121200942665
+          ],
+          [
+            2.85689609653995,
+            0.42634874536007644
+          ],
+          [
+            2.840616704958588,
+            0.48662453768022534
+          ],
+          [
+            2.8249567336944703,
+            0.5482108567532412
+          ],
+          [
+            2.8115501343525744,
+            0.6095941403250966
+          ]
+        ],
+        "details": {
+          "success": true,
+          "status": 0,
+          "message": "Optimization terminated successfully",
+          "solver_wall_s": 0.1046125820139423,
+          "solve_and_certificate_wall_s": 0.10789434699108824,
+          "iterations": 52,
+          "objective_evaluations": 151,
+          "objective_calls": 151,
+          "constraint_calls": 151,
+          "objective": 9.54041287974223,
+          "factor_costs": {
+            "fresh_prior_xy": 0.25266172688809485,
+            "fresh_prior_heading": 0.12249190439242869,
+            "relative_translation": 0.18253812138544187,
+            "relative_heading": 0.9309925251868647,
+            "boundary_position": 2.008271492942867,
+            "boundary_heading": 3.3279767653601,
+            "heading_tangent": 0.5021602797183988,
+            "previous_corrected_xy": 0.18339332212556747,
+            "endpoint_progress": 0.0221074760841393,
+            "depth_clearance_preference": 2.007819265658323
+          },
+          "minimum_scaled_inequality": -2.5119046842547732e-08,
+          "scaled_equality_error": 1.7824283715661693e-14,
+          "entry_curvature_m_inv": 6.404492999933933,
+          "previous_curvature_m_inv": 6.404492999932159,
+          "maximum_node_curvature_m_inv": 8.000000200952375,
+          "constraints_satisfied": true,
+          "exact_path_certificate": {
+            "depth_site_clearance_m": 0.12753878114031422,
+            "oracle_used": false,
+            "corridor_halfplanes": false
+          },
+          "exact_certificate_pass": true,
+          "feasible": true,
+          "selection_score": {
+            "total": 0.10738038389030231,
+            "modification": 0.06316543172202371,
+            "progress_cost": 0.0442149521682786,
+            "endpoint_forward_progress_m": 0.19743162062116226
+          },
+          "previous_prior_applied": true,
+          "phase5_flags": {
+            "previous_prior": true,
+            "obstacle_sdf": true,
+            "corridor": false,
+            "exact_certificate": true,
+            "boundary_curvature": true
+          },
+          "certificate_scope": "DEPTH_OCCUPIED_SITES_ONLY",
+          "derivatives": "unchanged explicit analytic v4 Jacobians; flag-selected rows only",
+          "minimum_sdf_slack_m": 0.09247966992445122,
+          "sdf_active_within_1mm": false,
+          "clearance_preference_active": true,
+          "clearance_preference_active_points": 40,
+          "clearance_preference_total_points": 63,
+          "clearance_preference_target_m": 0.15,
+          "clearance_preference_sigma_m": 0.05
+        },
+        "reason": "ACCEPTED",
+        "compute_s": 0.10885089699877426,
+        "worker_pid": 2705011,
+        "cores": [
+          7
+        ]
+      },
+      "ec": {
+        "clearance_m": 0.09641339458045167,
+        "reason": "PASS",
+        "passed": true,
+        "lower_bound_only": false,
+        "compute_s": 0.004374995973194018,
+        "rollout_s": 0.0023277599830180407,
+        "duration_s": 2.0,
+        "endpoint_reached": false,
+        "alignment": false,
+        "sweep_s": 0.0020472359901759773
+      }
+    },
+    "G18X": {
+      "result": {
+        "solve_success": false,
+        "path": null,
+        "reason": "INITIALIZATION_OR_SDF_REJECTED",
+        "error": "ValueError('Previous curvature exceeds Phase33 hard limit 2 m^-1')",
+        "compute_s": 0.0008616289997007698,
+        "worker_pid": 2705011,
+        "cores": [
+          7
+        ]
+      },
+      "ec": {
+        "passed": false,
+        "reason": "NO_FEASIBLE_CERTIFIED_SOLUTION"
+      }
+    }
+  },
+  "installed_ec": {
+    "clearance_m": 0.08060267998565643,
+    "reason": "PASS",
+    "passed": true,
+    "lower_bound_only": false,
+    "compute_s": 0.0037427519855555147,
+    "rollout_s": 0.0017086509906221181,
+    "duration_s": 2.0,
+    "endpoint_reached": false,
+    "alignment": false,
+    "sweep_s": 0.0020341009949333966
+  }
+}

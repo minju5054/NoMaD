@@ -1,0 +1,99 @@
+{
+  "case_id": "E0147",
+  "rows": [
+    {
+      "case_id": "E0147",
+      "event_key": "L2_201_G18+EC:17",
+      "state": "NORMAL",
+      "scene": "L2",
+      "index": 201,
+      "variant": "G18X",
+      "input_source": "RECORDED_NORMAL_SUBMIT",
+      "source_job_id": 10,
+      "solve_success": false,
+      "compute_s": 0.0007635029905941337,
+      "ec_pass": false,
+      "solve_and_ec": false,
+      "ec_reason": "NO_FEASIBLE_CERTIFIED_SOLUTION",
+      "ec_clearance_m": null,
+      "failure_reason": "INITIALIZATION_OR_SDF_REJECTED",
+      "initialization_error": "ValueError('Previous speed is zero: boundary curvature undefined')",
+      "installed_ec_pass": true,
+      "installed_ec_clearance_m": 0.3496844188514322,
+      "speed_cap_m_s": null,
+      "solve_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/L2_201_G18+EC/attempt1/depth/snapshot_0043.npz",
+      "ec_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/L2_201_G18+EC/attempt1/depth/snapshot_0043.npz"
+    },
+    {
+      "case_id": "E0147",
+      "event_key": "L2_201_G18+EC:17",
+      "state": "NORMAL",
+      "scene": "L2",
+      "index": 201,
+      "variant": "G18",
+      "input_source": "RECORDED_NORMAL_SUBMIT",
+      "source_job_id": 10,
+      "solve_success": false,
+      "compute_s": 0.0005994400125928223,
+      "ec_pass": false,
+      "solve_and_ec": false,
+      "ec_reason": "NO_FEASIBLE_CERTIFIED_SOLUTION",
+      "ec_clearance_m": null,
+      "failure_reason": "INITIALIZATION_OR_SDF_REJECTED",
+      "initialization_error": "ValueError('Previous speed is zero: boundary curvature undefined')",
+      "installed_ec_pass": true,
+      "installed_ec_clearance_m": 0.3496844188514322,
+      "speed_cap_m_s": null,
+      "solve_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/L2_201_G18+EC/attempt1/depth/snapshot_0043.npz",
+      "ec_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/L2_201_G18+EC/attempt1/depth/snapshot_0043.npz"
+    }
+  ],
+  "numerical": {
+    "G18X": {
+      "result": {
+        "solve_success": false,
+        "path": null,
+        "reason": "INITIALIZATION_OR_SDF_REJECTED",
+        "error": "ValueError('Previous speed is zero: boundary curvature undefined')",
+        "compute_s": 0.0007635029905941337,
+        "worker_pid": 2705011,
+        "cores": [
+          7
+        ]
+      },
+      "ec": {
+        "passed": false,
+        "reason": "NO_FEASIBLE_CERTIFIED_SOLUTION"
+      }
+    },
+    "G18": {
+      "result": {
+        "solve_success": false,
+        "path": null,
+        "reason": "INITIALIZATION_OR_SDF_REJECTED",
+        "error": "ValueError('Previous speed is zero: boundary curvature undefined')",
+        "compute_s": 0.0005994400125928223,
+        "worker_pid": 2705011,
+        "cores": [
+          7
+        ]
+      },
+      "ec": {
+        "passed": false,
+        "reason": "NO_FEASIBLE_CERTIFIED_SOLUTION"
+      }
+    }
+  },
+  "installed_ec": {
+    "clearance_m": 0.3496844188514322,
+    "reason": "PASS",
+    "passed": true,
+    "lower_bound_only": false,
+    "compute_s": 0.005020773998694494,
+    "rollout_s": 0.001643397001316771,
+    "duration_s": 2.0,
+    "endpoint_reached": false,
+    "alignment": false,
+    "sweep_s": 0.0033773769973777235
+  }
+}

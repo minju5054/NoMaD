@@ -1,0 +1,299 @@
+{
+  "case_id": "E0031",
+  "rows": [
+    {
+      "case_id": "E0031",
+      "event_key": "H1_203_G18+EC:45",
+      "state": "NORMAL",
+      "scene": "H1",
+      "index": 203,
+      "variant": "G18X",
+      "input_source": "RECORDED_NORMAL_SUBMIT",
+      "source_job_id": 23,
+      "solve_success": true,
+      "compute_s": 0.11331393598811701,
+      "ec_pass": true,
+      "solve_and_ec": true,
+      "ec_reason": "PASS",
+      "ec_clearance_m": 0.14972854939720046,
+      "failure_reason": "ACCEPTED",
+      "initialization_error": null,
+      "installed_ec_pass": true,
+      "installed_ec_clearance_m": 0.14972854939720046,
+      "speed_cap_m_s": null,
+      "solve_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/H1_203_G18+EC/attempt1/depth/snapshot_0107.npz",
+      "ec_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/H1_203_G18+EC/attempt1/depth/snapshot_0107.npz"
+    },
+    {
+      "case_id": "E0031",
+      "event_key": "H1_203_G18+EC:45",
+      "state": "NORMAL",
+      "scene": "H1",
+      "index": 203,
+      "variant": "G18",
+      "input_source": "RECORDED_NORMAL_SUBMIT",
+      "source_job_id": 23,
+      "solve_success": true,
+      "compute_s": 0.07962744901305996,
+      "ec_pass": true,
+      "solve_and_ec": true,
+      "ec_reason": "PASS",
+      "ec_clearance_m": 0.14972854939720046,
+      "failure_reason": "ACCEPTED",
+      "initialization_error": null,
+      "installed_ec_pass": true,
+      "installed_ec_clearance_m": 0.14972854939720046,
+      "speed_cap_m_s": null,
+      "solve_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/H1_203_G18+EC/attempt1/depth/snapshot_0107.npz",
+      "ec_snapshot": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase32_01/main/H1_203_G18+EC/attempt1/depth/snapshot_0107.npz"
+    }
+  ],
+  "numerical": {
+    "G18X": {
+      "result": {
+        "solve_success": true,
+        "path": [
+          [
+            2.817847022387792,
+            2.5764503568261543
+          ],
+          [
+            2.8258134345097066,
+            2.633653333495456
+          ],
+          [
+            2.839015716772744,
+            2.6912737250042804
+          ],
+          [
+            2.858268211988267,
+            2.7506504217013545
+          ],
+          [
+            2.8835291874236284,
+            2.8048875160212225
+          ],
+          [
+            2.911826235201652,
+            2.851050117719348
+          ],
+          [
+            2.9443441722965287,
+            2.893180698828211
+          ],
+          [
+            2.9769950971103296,
+            2.927665825624236
+          ]
+        ],
+        "details": {
+          "success": true,
+          "status": 0,
+          "message": "Optimization terminated successfully",
+          "solver_wall_s": 0.1075331769825425,
+          "solve_and_certificate_wall_s": 0.11231619800673798,
+          "iterations": 47,
+          "objective_evaluations": 126,
+          "objective_calls": 126,
+          "constraint_calls": 126,
+          "objective": 41.11342427435019,
+          "factor_costs": {
+            "fresh_prior_xy": 0.43599851442803333,
+            "fresh_prior_heading": 0.20058804349570236,
+            "relative_translation": 0.3487384406527774,
+            "relative_heading": 0.05384854824438634,
+            "boundary_position": 1.9999999942851445,
+            "boundary_heading": 0.6315418124531401,
+            "heading_tangent": 0.02825300058860765,
+            "previous_corrected_xy": 37.38427414230946,
+            "endpoint_progress": 0.02999720888073818,
+            "depth_clearance_preference": 0.00018456901219776113
+          },
+          "minimum_scaled_inequality": -1.2904333157592873e-08,
+          "scaled_equality_error": 1.2490009027033011e-14,
+          "entry_curvature_m_inv": 1.249000906272231e-12,
+          "previous_curvature_m_inv": 0.0,
+          "maximum_node_curvature_m_inv": 2.0000000258086663,
+          "constraints_satisfied": true,
+          "exact_path_certificate": {
+            "depth_site_clearance_m": 0.14937208900074814,
+            "oracle_used": false,
+            "corridor_halfplanes": false
+          },
+          "exact_certificate_pass": true,
+          "feasible": true,
+          "selection_score": {
+            "total": 0.1689940463684847,
+            "modification": 0.10899962860700832,
+            "progress_cost": 0.05999441776147636,
+            "endpoint_forward_progress_m": 0.18876560517084967
+          },
+          "previous_prior_applied": true,
+          "phase5_flags": {
+            "previous_prior": true,
+            "obstacle_sdf": true,
+            "corridor": false,
+            "exact_certificate": true,
+            "boundary_curvature": true
+          },
+          "certificate_scope": "DEPTH_OCCUPIED_SITES_ONLY",
+          "derivatives": "unchanged explicit analytic v4 Jacobians; flag-selected rows only",
+          "minimum_sdf_slack_m": 0.04698821678848252,
+          "sdf_active_within_1mm": false,
+          "clearance_preference_active": true,
+          "clearance_preference_active_points": 8,
+          "clearance_preference_total_points": 63,
+          "clearance_preference_target_m": 0.15,
+          "clearance_preference_sigma_m": 0.05
+        },
+        "reason": "ACCEPTED",
+        "compute_s": 0.11331393598811701,
+        "worker_pid": 2705011,
+        "cores": [
+          7
+        ]
+      },
+      "ec": {
+        "clearance_m": 0.14972854939720046,
+        "reason": "PASS",
+        "passed": true,
+        "lower_bound_only": false,
+        "compute_s": 0.002459470008034259,
+        "rollout_s": 0.0016101030050776899,
+        "duration_s": 2.0,
+        "endpoint_reached": false,
+        "alignment": false,
+        "sweep_s": 0.0008493670029565692
+      }
+    },
+    "G18": {
+      "result": {
+        "solve_success": true,
+        "path": [
+          [
+            2.8209490242824806,
+            2.5755207789529906
+          ],
+          [
+            2.8284761256051927,
+            2.632775667793316
+          ],
+          [
+            2.8411593711344576,
+            2.69050596642844
+          ],
+          [
+            2.859587719084588,
+            2.7501423650618695
+          ],
+          [
+            2.8825767879471846,
+            2.8052542233683133
+          ],
+          [
+            2.9108495288987712,
+            2.8511478896918416
+          ],
+          [
+            2.944610834279335,
+            2.8920079110473207
+          ],
+          [
+            2.9802376013253564,
+            2.923360476246882
+          ]
+        ],
+        "details": {
+          "success": true,
+          "status": 0,
+          "message": "Optimization terminated successfully",
+          "solver_wall_s": 0.0740285869978834,
+          "solve_and_certificate_wall_s": 0.0786866600101348,
+          "iterations": 45,
+          "objective_evaluations": 103,
+          "objective_calls": 103,
+          "constraint_calls": 103,
+          "objective": 41.01142083361898,
+          "factor_costs": {
+            "fresh_prior_xy": 0.40869564857403917,
+            "fresh_prior_heading": 0.17089937777852343,
+            "relative_translation": 0.35828504837280756,
+            "relative_heading": 0.14150554258634845,
+            "boundary_position": 1.9999999999996878,
+            "boundary_heading": 0.5918691528062349,
+            "heading_tangent": 0.01524075374115379,
+            "previous_corrected_xy": 37.29164531519046,
+            "endpoint_progress": 0.03324517681091725,
+            "depth_clearance_preference": 3.481775879872976e-05
+          },
+          "minimum_scaled_inequality": -7.827072323607354e-14,
+          "scaled_equality_error": 1.7954387976359953e-14,
+          "entry_curvature_m_inv": 1.7954387976362758e-12,
+          "previous_curvature_m_inv": 0.0,
+          "maximum_node_curvature_m_inv": 3.1535347967928256,
+          "constraints_satisfied": true,
+          "exact_path_certificate": {
+            "depth_site_clearance_m": 0.1496565537926115,
+            "oracle_used": false,
+            "corridor_halfplanes": false
+          },
+          "exact_certificate_pass": true,
+          "feasible": true,
+          "selection_score": {
+            "total": 0.16866426576534427,
+            "modification": 0.10217391214350977,
+            "progress_cost": 0.0664903536218345,
+            "endpoint_forward_progress_m": 0.18553569125970049
+          },
+          "previous_prior_applied": true,
+          "phase5_flags": {
+            "previous_prior": true,
+            "obstacle_sdf": true,
+            "corridor": false,
+            "exact_certificate": true,
+            "boundary_curvature": true
+          },
+          "certificate_scope": "DEPTH_OCCUPIED_SITES_ONLY",
+          "derivatives": "unchanged explicit analytic v4 Jacobians; flag-selected rows only",
+          "minimum_sdf_slack_m": 0.11387592690961945,
+          "sdf_active_within_1mm": false,
+          "clearance_preference_active": true,
+          "clearance_preference_active_points": 3,
+          "clearance_preference_total_points": 63,
+          "clearance_preference_target_m": 0.15,
+          "clearance_preference_sigma_m": 0.05
+        },
+        "reason": "ACCEPTED",
+        "compute_s": 0.07962744901305996,
+        "worker_pid": 2705011,
+        "cores": [
+          7
+        ]
+      },
+      "ec": {
+        "clearance_m": 0.14972854939720046,
+        "reason": "PASS",
+        "passed": true,
+        "lower_bound_only": false,
+        "compute_s": 0.002482522977516055,
+        "rollout_s": 0.001613739994354546,
+        "duration_s": 2.0,
+        "endpoint_reached": false,
+        "alignment": false,
+        "sweep_s": 0.000868782983161509
+      }
+    }
+  },
+  "installed_ec": {
+    "clearance_m": 0.14972854939720046,
+    "reason": "PASS",
+    "passed": true,
+    "lower_bound_only": false,
+    "compute_s": 0.0026322180056013167,
+    "rollout_s": 0.0017527049931231886,
+    "duration_s": 2.0,
+    "endpoint_reached": false,
+    "alignment": false,
+    "sweep_s": 0.0008795130124781281
+  }
+}
