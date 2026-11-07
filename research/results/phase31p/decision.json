@@ -1,0 +1,35 @@
+{
+  "label": "HOLD",
+  "evidence_valid": true,
+  "checks": {
+    "goal_gt_na": false,
+    "collision_le_na": false,
+    "goal_ge_c0": false,
+    "collision_le_c0": false
+  },
+  "phase31p_only_counts": {
+    "G18-R": {
+      "n": 10,
+      "goal": 4,
+      "collision": 4
+    },
+    "C0": {
+      "n": 10,
+      "goal": 5,
+      "collision": 1
+    },
+    "C0-NA": {
+      "n": 10,
+      "goal": 6,
+      "collision": 2
+    }
+  },
+  "complete_blocks": 10,
+  "reason": "Registered conditions not all satisfied",
+  "historical_used": false,
+  "auxiliary_metrics_used": false,
+  "auxiliary": {
+    "c0_both_success_pairs": 3,
+    "c0_goal_time_difference_median_s": -2.625
+  }
+}
