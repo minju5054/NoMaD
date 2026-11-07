@@ -1,76 +1,77 @@
 [
   {
     "method": "OURS",
-    "n": 10,
-    "detour_triggers": 82,
-    "detour_applied": 23,
-    "detour_path_total_m": 32.571065877739805,
-    "detour_execution_s": 39.666666666666664,
-    "compute_n": 113,
-    "compute_p50_s": 0.330661387,
-    "compute_p95_s": 0.6227436871999997,
+    "n": 15,
+    "detour_triggers": 115,
+    "detour_applied": 32,
+    "detour_path_total_m": 45.709770878619494,
+    "detour_execution_s": 56.444444444444436,
+    "compute_n": 153,
+    "compute_p50_s": 0.347060113,
+    "compute_p95_s": 0.6299873102,
     "ec_by_state": {
       "NORMAL": {
-        "checks": 1329,
-        "rejects": 96,
-        "reject_fraction": 0.07223476297968397
+        "checks": 2002,
+        "rejects": 141,
+        "reject_fraction": 0.07042957042957043
       },
       "R2": {
-        "checks": 29,
-        "rejects": 9,
-        "reject_fraction": 0.3103448275862069
+        "checks": 33,
+        "rejects": 11,
+        "reject_fraction": 0.3333333333333333
       },
       "R3": {
-        "checks": 160,
-        "rejects": 1,
-        "reject_fraction": 0.00625
+        "checks": 228,
+        "rejects": 4,
+        "reject_fraction": 0.017543859649122806
       }
     },
     "fallback_routes": {
-      "NEXT_SAFE_FULL": 27,
-      "R2_TO_R3": 9,
-      "R3_FAILURE": 1,
-      "SAFE_SLOW": 5,
+      "NEXT_SAFE_FULL": 41,
+      "R2_TO_R3": 11,
+      "SAFE_SLOW": 8,
+      "R3_FAILURE": 2,
       "STOP_WAIT": 3
     }
   },
   {
     "method": "ASTAR+EC",
-    "n": 10,
-    "detour_triggers": 67,
-    "detour_applied": 13,
-    "detour_path_total_m": 18.095571683977145,
-    "detour_execution_s": 22.44444444444446,
-    "compute_n": 79,
-    "compute_p50_s": 0.292178114,
-    "compute_p95_s": 0.6028116334,
+    "n": 15,
+    "detour_triggers": 109,
+    "detour_applied": 21,
+    "detour_path_total_m": 29.971117590264015,
+    "detour_execution_s": 31.66666666666668,
+    "compute_n": 135,
+    "compute_p50_s": 0.294277195,
+    "compute_p95_s": 0.6031938342,
     "ec_by_state": {
       "NORMAL": {
-        "checks": 1475,
-        "rejects": 116,
-        "reject_fraction": 0.07864406779661016
+        "checks": 2191,
+        "rejects": 170,
+        "reject_fraction": 0.07759014148790506
       },
       "R2": {
-        "checks": 12,
-        "rejects": 5,
-        "reject_fraction": 0.4166666666666667
+        "checks": 22,
+        "rejects": 7,
+        "reject_fraction": 0.3181818181818182
       },
       "R3": {
-        "checks": 54,
-        "rejects": 0,
-        "reject_fraction": 0.0
+        "checks": 77,
+        "rejects": 1,
+        "reject_fraction": 0.012987012987012988
       }
     },
     "fallback_routes": {
-      "SAFE_SLOW": 7,
-      "NEXT_SAFE_FULL": 27,
-      "STOP_WAIT": 3,
-      "R2_TO_R3": 5
+      "SAFE_SLOW": 8,
+      "NEXT_SAFE_FULL": 43,
+      "STOP_WAIT": 7,
+      "R2_TO_R3": 7,
+      "R3_FAILURE": 1
     }
   },
   {
     "method": "SAFE_TE",
-    "n": 10,
+    "n": 15,
     "detour_triggers": 0,
     "detour_applied": 0,
     "detour_path_total_m": 0,
@@ -99,7 +100,7 @@
   },
   {
     "method": "SAFE_RTC",
-    "n": 10,
+    "n": 15,
     "detour_triggers": 0,
     "detour_applied": 0,
     "detour_path_total_m": 0,
@@ -128,7 +129,7 @@
   },
   {
     "method": "NOMAD_RAW",
-    "n": 10,
+    "n": 15,
     "detour_triggers": 0,
     "detour_applied": 0,
     "detour_path_total_m": 0,

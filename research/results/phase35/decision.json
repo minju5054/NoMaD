@@ -1,48 +1,48 @@
 {
-  "label": "PENDING_INCOMPLETE_EVIDENCE",
-  "evidence_valid": false,
+  "label": "GRAPH_EQUAL",
+  "evidence_valid": true,
   "counts": {
     "OURS": {
-      "n": 10,
-      "valid": 10,
-      "goal": 6,
+      "n": 15,
+      "valid": 15,
+      "goal": 9,
       "collision": 0
     },
     "ASTAR+EC": {
-      "n": 10,
-      "valid": 10,
-      "goal": 7,
+      "n": 15,
+      "valid": 15,
+      "goal": 10,
       "collision": 0
     },
     "SAFE_TE": {
-      "n": 10,
-      "valid": 10,
-      "goal": 6,
-      "collision": 3
+      "n": 15,
+      "valid": 15,
+      "goal": 9,
+      "collision": 4
     },
     "SAFE_RTC": {
-      "n": 10,
-      "valid": 10,
-      "goal": 7,
-      "collision": 1
+      "n": 15,
+      "valid": 15,
+      "goal": 8,
+      "collision": 4
     },
     "NOMAD_RAW": {
-      "n": 10,
-      "valid": 10,
-      "goal": 3,
-      "collision": 3
+      "n": 15,
+      "valid": 15,
+      "goal": 5,
+      "collision": 6
     }
   },
   "BEATS": {
-    "SAFE_TE": null,
-    "SAFE_RTC": null,
-    "NOMAD_RAW": null
+    "SAFE_TE": false,
+    "SAFE_RTC": true,
+    "NOMAD_RAW": true
   },
-  "GRAPH": null,
+  "GRAPH": "GRAPH_EQUAL",
   "provisional_predicates": {
     "BEATS": {
       "SAFE_TE": false,
-      "SAFE_RTC": false,
+      "SAFE_RTC": true,
       "NOMAD_RAW": true
     },
     "GRAPH": "GRAPH_EQUAL"
@@ -50,43 +50,43 @@
   "comparisons": [
     {
       "baseline": "ASTAR+EC",
-      "n": 10,
+      "n": 15,
       "wins": 2,
       "losses": 3,
-      "ties": 5,
-      "both_arrived": 4,
-      "goal_time_delta_median_s": -7.930555555555555,
+      "ties": 10,
+      "both_arrived": 7,
+      "goal_time_delta_median_s": -6.597222222222221,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "SAFE_TE",
-      "n": 10,
+      "n": 15,
       "wins": 4,
       "losses": 4,
-      "ties": 2,
-      "both_arrived": 2,
-      "goal_time_delta_median_s": 0.09027777777777857,
+      "ties": 7,
+      "both_arrived": 5,
+      "goal_time_delta_median_s": 0.27777777777777857,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "SAFE_RTC",
-      "n": 10,
-      "wins": 2,
+      "n": 15,
+      "wins": 4,
       "losses": 3,
-      "ties": 5,
-      "both_arrived": 4,
-      "goal_time_delta_median_s": -12.722222222222221,
+      "ties": 8,
+      "both_arrived": 5,
+      "goal_time_delta_median_s": -25.73611111111111,
       "mcnemar_exact_p": 1.0
     },
     {
       "baseline": "NOMAD_RAW",
-      "n": 10,
-      "wins": 3,
+      "n": 15,
+      "wins": 4,
       "losses": 0,
-      "ties": 7,
-      "both_arrived": 3,
+      "ties": 11,
+      "both_arrived": 5,
       "goal_time_delta_median_s": -3.597222222222218,
-      "mcnemar_exact_p": 0.25
+      "mcnemar_exact_p": 0.125
     }
   ],
   "pairs": [
@@ -177,6 +177,54 @@
     {
       "scene": "SLW",
       "index": 213,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 214,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 214,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 214,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "SLW",
+      "index": 214,
       "comparison": "OURS - NOMAD_RAW",
       "baseline": "NOMAD_RAW",
       "ours_goal": false,
@@ -283,6 +331,54 @@
       "goal_time_difference_s": -4.555555555555554
     },
     {
+      "scene": "LC",
+      "index": 214,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -6.597222222222221
+    },
+    {
+      "scene": "LC",
+      "index": 214,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": 2.625
+    },
+    {
+      "scene": "LC",
+      "index": 214,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "LC",
+      "index": 214,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -3.0416666666666643
+    },
+    {
       "scene": "L2",
       "index": 212,
       "comparison": "OURS - ASTAR+EC",
@@ -377,6 +473,54 @@
       "other_collision": false,
       "goal_difference": 1,
       "goal_time_difference_s": null
+    },
+    {
+      "scene": "L2",
+      "index": 214,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -14.013888888888886
+    },
+    {
+      "scene": "L2",
+      "index": 214,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -0.7777777777777786
+    },
+    {
+      "scene": "L2",
+      "index": 214,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -37.20833333333333
+    },
+    {
+      "scene": "L2",
+      "index": 214,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -6.708333333333336
     },
     {
       "scene": "H1",
@@ -475,6 +619,54 @@
       "goal_time_difference_s": -3.597222222222218
     },
     {
+      "scene": "H1",
+      "index": 214,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": -2.8472222222222285
+    },
+    {
+      "scene": "H1",
+      "index": 214,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": true,
+      "other_goal": true,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": 0.6805555555555536
+    },
+    {
+      "scene": "H1",
+      "index": 214,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H1",
+      "index": 214,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": true,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 1,
+      "goal_time_difference_s": null
+    },
+    {
       "scene": "H2",
       "index": 212,
       "comparison": "OURS - ASTAR+EC",
@@ -567,6 +759,54 @@
       "other_goal": false,
       "ours_collision": false,
       "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 214,
+      "comparison": "OURS - ASTAR+EC",
+      "baseline": "ASTAR+EC",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 214,
+      "comparison": "OURS - SAFE_TE",
+      "baseline": "SAFE_TE",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 214,
+      "comparison": "OURS - SAFE_RTC",
+      "baseline": "SAFE_RTC",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": false,
+      "goal_difference": 0,
+      "goal_time_difference_s": null
+    },
+    {
+      "scene": "H2",
+      "index": 214,
+      "comparison": "OURS - NOMAD_RAW",
+      "baseline": "NOMAD_RAW",
+      "ours_goal": false,
+      "other_goal": false,
+      "ours_collision": false,
+      "other_collision": true,
       "goal_difference": 0,
       "goal_time_difference_s": null
     }
@@ -576,6 +816,6 @@
   "campaign_status": "RUNNING",
   "stopped_stage": "main",
   "stop_reason": null,
-  "report_stage": "blocks_10",
+  "report_stage": "blocks_15",
   "protocol_sha256": "30b586995197409dff38dd21f1dbf7e63e18891652e9f00d5728775cfd0e9245"
 }
