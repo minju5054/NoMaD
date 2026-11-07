@@ -1,0 +1,71 @@
+{
+  "label": "OFFLINE_FAIL",
+  "criteria": {
+    "a_solution_rate": true,
+    "c_joint_EC_increase": false,
+    "e_time": true
+  },
+  "solution_rate_difference_pp": -1.9464720194647178,
+  "joint_EC_difference_lower_pp": 7.055961070559613,
+  "joint_EC_difference_upper_pp": 13.86861313868613,
+  "pool_p95_ratio": 1.1959800078557763,
+  "missing_EC_cannot_reach_gate": true,
+  "navigation_prepared": false,
+  "simulation_runs": 0,
+  "summaries": [
+    {
+      "group": "ALL",
+      "variant": "R2",
+      "n": 411,
+      "solutions": 187,
+      "solution_rate": 0.45498783454987834,
+      "ec_pass": 79,
+      "ec_missing_solutions": 14,
+      "ec_observed_solutions": 173,
+      "ec_conditional_observed": 0.45664739884393063,
+      "ec_conditional_lower": 0.42245989304812837,
+      "ec_conditional_upper": 0.49732620320855614,
+      "joint_EC_lower": 0.1922141119221411,
+      "joint_EC_upper": 0.22627737226277372,
+      "plan_clearance_p10_m": 0.017730092269094604,
+      "plan_clearance_p50_m": 0.03426166052224014,
+      "plan_clearance_p90_m": 0.03563352431381954,
+      "plan_clearance_min_m": 0.00846840366186545,
+      "pool_p50_s": 0.143271224,
+      "pool_p95_s": 0.19271169500000002
+    },
+    {
+      "group": "ALL",
+      "variant": "R2_CLR",
+      "n": 411,
+      "solutions": 179,
+      "solution_rate": 0.43552311435523117,
+      "ec_pass": 122,
+      "ec_missing_solutions": 14,
+      "ec_observed_solutions": 165,
+      "ec_conditional_observed": 0.7393939393939394,
+      "ec_conditional_lower": 0.6815642458100558,
+      "ec_conditional_upper": 0.7597765363128491,
+      "joint_EC_lower": 0.29683698296836986,
+      "joint_EC_upper": 0.3309002433090024,
+      "plan_clearance_p10_m": 0.02296659328376211,
+      "plan_clearance_p50_m": 0.06102372482278354,
+      "plan_clearance_p90_m": 0.13811473811882768,
+      "plan_clearance_min_m": 0.008528052999019042,
+      "pool_p50_s": 0.154397647,
+      "pool_p95_s": 0.2304793345
+    }
+  ],
+  "EC_policy": {
+    "actual_install": "PATH_APPLIED tick actual trajectory pose/vw and latest published snapshot; unchanged retained EC cap",
+    "uninstalled_with_result": "saved RESULT decision tick as paired counterfactual installation, explicitly separated from actual installs",
+    "no_result": "UNMEASURED",
+    "missing_latest_map": "UNMEASURED; old archived proxy descriptive only",
+    "solution_absent": "EC fail regardless of missing context",
+    "conditional_denominator": "all jobs with selected accepted solution; missing EC bounds, observed-only fraction supplemental",
+    "joint_denominator": 411,
+    "gate_bounds": "CLR_lower - R2_upper through CLR_upper - R2_lower; missing maps never silently PASS/FAIL",
+    "assumption_status": "Analysis convention for jobs without actual installation; recorded before EC evaluation; not a user-approved new method parameter"
+  },
+  "protocol_sha256": "70f94e7a2e5576290f3e53ab6d11f25ce1dd01edaa795b6a4309a8f4c72a79f6"
+}

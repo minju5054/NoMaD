@@ -217,7 +217,7 @@ def document():
 
 Protocol SHA256: `{d['protocol_sha256']}`. 동결 소스·신규 solver hash는 `research/nomad_phase34o/protocol.json`, 입력 현재 hash는 `input_hashes.json`에 기록했다. 압축 snapshot은 STORAGE_RETROFIT 복원 로더를 사용했다. 기존 코드·raw·결과 문서는 변경하지 않았다.
 
-원본 수치 job 회귀: 저장 결과가 남은 {len(r)}/411건 중 sample disposition 전부 일치 {sum(x['all_dispositions_match'] for x in r)}건, 선택 index 일치 {sum(x['selected_index_match'] for x in r)}건, 경로 좌표 1e−6m 이내 {sum(x['paths_within_1e6'] for x in r)}건. 세부는 `regression.csv`; 수치 환경 차이가 있는 job도 제외하지 않고 표시했다.
+원본 수치 job 회귀: 저장 결과가 남은 {len(r)}/411건 중 sample disposition 전부 일치 {sum(x['all_dispositions_match'] for x in r)}건, 선택 index 일치 {sum(x['selected_index_match'] for x in r)}건, 경로 좌표 1e−6m 이내 {sum(x['paths_within_1e6'] for x in r)}건. 세부는 `regression.csv`에 기록했다. 단위테스트 9개(추가 항의 해석 Jacobian, 기존 항·제약·certificate 불변, 8 sample 선택·시간 정의, JSON, 누락 자료 분모와 gate 경계)를 통과했다.
 
 ## EC 평가 시점과 누락 자료
 
@@ -245,6 +245,8 @@ Protocol SHA256: `{d['protocol_sha256']}`. 동결 소스·신규 solver hash는 
 
 이 표의 입력은 각 사고 직전 R2 job과 실제 설치 상태이다. `FAIL`은 해 없음 또는 EC REJECT, `미측정`은 최신 지도 부재이다. 과거 지도 proxy를 실제 최신 지도 검사로 해석하지 않는다.
 
+R2+CLR은 EC PASS {sum(x['CLR_EC'] is True for x in a['collisions'])}건, EC 불통과(해 없음 포함) {sum(x['CLR_EC'] is False for x in a['collisions'])}건, 미측정 {sum(x['CLR_EC'] is None for x in a['collisions'])}건이다. `phase29_confirm_H2_203_C0-NA`는 최신 지도 부재로 판정할 수 없으며, 0.25초 더 오래된 지도에서는 PASS였다는 참고 결과만 남긴다.
+
 {text_table(a['collisions'],[('uid','충돌 run'),('job_id','job'),('R2_solution','R2 해'),('R2_EC','R2 EC'),('CLR_solution','CLR 해'),('CLR_EC','CLR EC'),('CLR_plan_clearance_m','CLR 계획 여유 m'),('latest_map_status','map'),('CLR_old_proxy_EC','옛 지도 CLR EC'),('proxy_extra_age_s','추가 stale s')])}
 
 ## 게이트
@@ -263,6 +265,9 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--document-only',action='store_true');args=ap.parse_args()
     if not args.document_only:analyze()
     document()
+    status=read(OUT/'status.json')
+    status.update(status='COMPLETE',stage='REPORT',label=read(OUT/'decision.json')['label'])
+    save(OUT/'status.json',status)
     print(json.dumps(read(OUT/'decision.json')['label']))
 
 
