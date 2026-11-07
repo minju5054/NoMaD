@@ -1,0 +1,30 @@
+[
+  {
+    "cause": "BOX_COLLISION",
+    "candidate": "동일 PP/SP 실행기에 최신 depth·현재 pose/명령 기준의 짧은 실행구간 안전검사와 유효 suffix/끝점 소진 처리를 연결하는 방안 검증.",
+    "fairness": "모든 방법 공통",
+    "scope": "C0/C0-NA/C0-H/SM/G18/G18-R의 각 실행 경로; oracle 없이 depth만 사용",
+    "evidence": "NORMAL 원 경로8건, R2 8건, R3 1건 모두 계획과 실제 여유가 다름; NORMAL3건은 충돌 시 끝점으로 투영됨."
+  },
+  {
+    "cause": "BOX_COLLISION",
+    "candidate": "R2 출발 여유 완화 수락을 실제 heading·속도에서의 추종 가능 여유와 함께 검증하고, 불충분하면 공통 fallback으로 보내는 방안 비교.",
+    "fairness": "모든 방법 공통",
+    "scope": "R2를 쓰는 모든 방법; G18-R만 더 보수적으로 바꾸지 않음",
+    "evidence": "충돌 R2 8건 중4건의 exact 계획 여유<2.5cm; 시작 완화 기준 내에서 수락됐지만 실제 궤적이 관통. 여유 확대의 교착 tradeoff는 별도 검증 필요."
+  },
+  {
+    "cause": "NEAR_GOAL_HOVER",
+    "candidate": "마지막 Topomap 노드 부근에서 후보 생성·노드 재선택/역행의 안정성을 RGB/Topomap 이력으로 개선하는 공통 terminal-policy 진단.",
+    "fairness": "모든 방법 공통",
+    "scope": "공통 NoMaD/Topomap 계층; 평가용 목표좌표를 정책 입력으로 쓰지 않음",
+    "evidence": "실패 종료 시 마지막 node2/13 vs 성공18/23, 후보 끝점 goal 원 비율 median1.39% vs27.5%. endpoint만으로 원인을 확정하지 않음."
+  },
+  {
+    "cause": "NEAR_GOAL_HOVER",
+    "candidate": "목표 노드 부근의 짧은 chunk에서 정렬 반복·실행 완료·FRESH 교체가 시간을 소비하는지 공통 terminal executor를 검증.",
+    "fairness": "모든 방법 공통",
+    "scope": "같은 terminal 처리 조건을 모든 방법에 적용해 비교; goal 반경0.3m/90s 제한 유지",
+    "evidence": "C0 L2/204는 근접 이후81.9% 정렬 회전; 반면3건은 근접 후 남은 시간이3.03s 이하라 terminal 시간 낭비와 늦은 접근을 분리해야 함."
+  }
+]
