@@ -1,0 +1,34 @@
+# Phase39-O — R2/R3 재풀이 준비
+
+준비 단계에서 데이터셋 재풀이·시뮬레이션 실행0회. 입력 209 job, 입력 누락 0건(재구성 안 함). 저장 입력이 있는 NEGATIVE_DEPTH_AT_B job 111건. 평가 범위 209건. SDF는 STORAGE_RETROFIT 로더로만 복원하며 raw/동결 코드는 수정하지 않는다.
+
+Protocol FROZEN_OFFLINE SHA256: `b29690ea1559ac379859fc27c15b1ee6d5a55716de19637b3e24410a9089cc9c`.
+
+대용량 입력 사본 `preparation/all_inputs.json`, `inputs.json`은 SSD 로컬에만 보존하고 Git에서 제외한다. 원격에는 코드·문서·검증 요약·입력 hash만 둔다. 사본이 없는 checkout에서는 `PYTHONPATH=research /usr/bin/python3 -m nomad_phase39o.prepare --refresh-inputs --validate`로 같은 보존 로그에서 다시 준비한다(재풀이 없음).
+
+V3 추가 초기값 점검: {'SHORT_SUFFIX': 1232, 'RESAMPLED_SPACING_OUTSIDE_0.1_0.2': 1}. ADDED가0이면 이번 입력에서 V3의 실제 초기값 집합은 V2와 같다. NoMaD/직전 경로가 짧다는 이유로 연장하거나 점을 반복하지 않는다.
+
+| 변형 | 변경 |
+|---|---|
+| V0 | 동결 코드 그대로, pre-EC 수치 disposition·선택 index·경로를 기록값과 비교 |
+| V1 | 검사점별 ξ≥0, 목적함수에1000Σξ; ξmax≤1e−6 및 원 제약 위반≤1e−7·certificate 등 기존 수락 조건 |
+| V2 | V1 + c_B<0.025일 때만 c(s)=min(0.025,c_B−0.005+0.5s),0.3m 이후0.025; 음수 c_B 사전거부 제거 |
+| V3 | V2 + 저장 NoMaD8 suffix/직전 설치 경로 초기값. B+10점,0.1~0.2m; 짧거나 간격 불충족인 추가 초기값만 제외 |
+
+V0 재현성은 `repair_pool_jobs.jsonl`의 pre-EC 수치 disposition을 비교한다. 온라인 TIMEOUT/SUPERSEDED 등은 당시 제어/시간에 의존하므로 재현했다고 주장하지 않고 별도 열로 보존한다.
+
+certificate는 기존 인접 waypoint 선분을0.3m에서 나누고, 각 닫힌 구간의 끝점 c(s_b)로 **동일한 exact segment-to-occupied-site 거리**를 판정한다. 구간을 더 잘게 쪼개 유리하게 만들지 않는다. c_B≥0.025이면 동결 certificate 그대로다. EC는 실행하지 않는다. **온라인 시 EC도 같은 c(s) 기준 필요**: 동결 EC(궤적 여유≥0.025)는 탈출 경로를 거절한다.
+
+동결 c_B=d(B)−h/√2를 유지한다. 따라서 탈출 R3의 B점 제약은0.005−첫 구간 길이/16이며 최소 간격0.1m에서≤−0.00125m다. 최종 ξ 허용치와의 구조적 충돌을 별도 기록하고 상수는 바꾸지 않는다. R2 진전은 원 reference 끝점 방향, R3 진전은 저장 u_ref 방향이다.
+
+SLW 전체 R2/R3 job 합산에서 V0보다 성공률≥30%p 증가 AND 전체 job p95≤1s AND 수락 해 재certificate 실패0이면 변형별 GO_ONLINE. 하나라도 통과하면 전체 GO_ONLINE이며 V1→V2→V3 순의 가장 단순한 통과 변형을 선택한다. 미완료 자료는 판정하지 않는다. 온라인 준비/실행은 하지 않는다.
+
+동결과 같은 warmed4-process pool, BLAS1, SLSQP maxiter100/ftol1e−8,재시도0. 시간은 원 pool_wall_s(지도 복원·R3 cache·IPC·선택 포함,독립 audit 제외). 추정 33.5분: 저장 job 시간에 변형별8배 보수적 계수와 추가 초기값 수,25% 여유·120s 고정 여유를 적용한 **계획 가정**이며 신규 실측이 아니다.55분에서 새 변형 job을 시작하지 않고 현재 job을 마친 뒤 PARTIAL로 저장한다. 같은 명령으로 미완료 부분만 재개한다.
+
+```bash
+cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && nohup env PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_phase39o.run > ../artifacts/isaac6/phase39o_01.log 2>&1 < /dev/null &
+```
+
+진행 확인: `PYTHONPATH=research /usr/bin/python3 -m nomad_phase39o.run --status`. 산출물은 `research/results/phase39o/`, 완료/부분 종료 후 이 문서와 표가 자동 갱신된다. 이전 입력·결과를 덮어쓰지 않는다.
+
+검증: 합성 단위테스트 13개(해석 Jacobian/슬랙/탈출 certificate/4프로세스/v2 복원/가짜 report), 836 job×변형 dry-run 통과. 저장 입력의 수치 재풀이는 실행하지 않았다.
