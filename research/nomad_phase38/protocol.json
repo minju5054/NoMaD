@@ -1538,7 +1538,7 @@
     "TE+EC": "TE handoff plus Phase32 NORMAL EC/fallback, ensemble-aware forward integration",
     "RTC+EC": "RTC plus Phase32 NORMAL EC/fallback",
     "OURS-DETOUR": "OURS normal SAFE/EC/fallback/recovery; no trigger decision layer, R2 or R3",
-    "CARE": "FRESHEST-SAFE then registered CARE rotation, recovery; no EC or R2/R3"
+    "CARE": "Phase35 NOMAD_RAW sample0/chunk timing + current-frame CARE; no SAFE filter, FRESHEST, EC, R2/R3 or recovery"
   },
   "executor": {
     "source": "nomad_phase28.alignment.NoAlignment",
@@ -1551,22 +1551,47 @@
     "acceleration_max": 0.5
   },
   "interpretations": {
-    "care_input": "FRESHEST-SAFE follows the requested common depth filter",
+    "care_input": "User-fixed NOMAD_RAW first sample, current-frame camera points only",
     "te_ec": "Inspect actual ensemble steering rather than mismatched single PP trajectory",
     "jitter": "Uniform continuous offset in [-.2,+.2]m; chosen before any driving data"
   },
   "care": {
-    "input": "FRESHEST_SAFE",
-    "obstacles": "observed AND occupied common top-down cell centers within 1m of current robot center",
-    "force": "sum unit(waypoint-obstacle)/distance^2; waypoint with largest norm; rotate full world path around application pose B",
+    "input": "NOMAD_RAW_SAMPLE_0",
+    "chunk_timing": "Frozen RawNA.apply unchanged",
+    "obstacles": "Current depth frame only: backproject, 0<camera axial Z<=1m, .03<world height<=.6; camera-X bins retain minimum Z",
+    "bins": 32,
+    "bin_range": "Uniform valid camera-X min/max per frame; inclusive right edge; empty bins omitted",
+    "bins_reason": "M not specified in paper; user fixed32 before smoke",
+    "map_used": false,
+    "depth_filter": false,
+    "freshest_selection": false,
+    "ec": false,
+    "detour": false,
+    "recovery": false,
+    "depth_noise": "Frozen common Gaussian sigma=.01*d^2, same per-frame RNG stream; no accumulation",
+    "force": "F(p_k)=sum_m (p_k-o_m)/||p_k-o_m||^4 in robot plane x-forward,y-left",
+    "single_term_magnitude": "1/d^3 mathematically; explicit vector equation takes precedence over inverse-square prose",
+    "sign_rationale": "User-fixed repulsive intent, positive robot-plane sign instead of literal negative sign in paper equation; camera-to-robot and left/right directions unit tested",
+    "selected_waypoint": "argmax norm(F); first index on exact tie",
+    "rotation": "atan2(F_y,F_x), clipped to +/-pi/4; rotate all waypoints about application robot origin B; no special frontal/backward-force case",
     "clip_rad": 0.7853981633974483,
     "safe_fov_rad": 0.5235987755982988,
-    "safe_fov": "Current corrected maximum-repulsion waypoint heading; brake within .5m/s2 then v0 rotation within .4rad/s until <=pi/6",
+    "safe_fov": "If corrected p_k* heading error >pi/6: immediate v=0 in-place rotation capped at .4rad/s; otherwise common PP/SP",
+    "no_obstacles": "unchanged RAW path/executor",
+    "v_max_m_s": 0.3,
+    "w_max_rad_s": 0.4,
     "numerical_epsilon_m": 1e-09,
-    "coincident_direction": "backward in robot frame",
-    "no_obstacles": "unchanged path",
     "paper": "https://arxiv.org/html/2506.03834v4",
-    "adaptation_not_exact_reproduction": true
+    "differences": [
+      "camera depth instead of monocular estimate",
+      "common .3m/s .4rad/s limits",
+      "M32 chosen explicitly",
+      "p_k* for Safe-FOV and PP lookahead .25m for translating",
+      "user-fixed repulsive robot-plane sign"
+    ],
+    "amended_at_kst": "2026-11-08T16:12:20.025839+09:00",
+    "previous_protocol_sha256": "612d79d6b7d483353379ba2115802417ba4ffd50df208e734468a1cd2d25320e",
+    "before_smoke": true
   },
   "rtc": {
     "implementation": "research/nomad_phase8/rtc_hard.py",
@@ -2864,20 +2889,21 @@
   "source_sha256": {
     "research/nomad_phase38/__init__.py": "d6a9b5e158c700f0e286e1e0d4001ed109c3668a1ae7ac57079d7a0b5fc53305",
     "research/nomad_phase38/campaign.py": "a659432cb2503cbf3dcbeecff347df21d9ada0f4c92c287f346d51581c888e0b",
-    "research/nomad_phase38/care.py": "1171da40d9f4728e573c12f171e5ce2835bcddf974e15f184e084eae621312dc",
-    "research/nomad_phase38/config.py": "7fae9cdc0b75d4f005569bca29706e2b0866720bca1b12821b452906c6e5e024",
+    "research/nomad_phase38/care.py": "48a428c44351c006983e685005ea0dcbf20ca02f51204e8f61a6f04263d7305a",
+    "research/nomad_phase38/care_depth.py": "878ea6dc6ac2445bce91e06b4c4f943168adf5ebc31daa52c09ee41eb691728a",
+    "research/nomad_phase38/config.py": "6213bfc056ff90ffb5ee0bbb7bef9f2845d3b6ea0ec14a9739fc6fe084f8f79f",
     "research/nomad_phase38/ec_normal.py": "87a77fa0674d70e9d0b7a618475a24f48cb5666ca227da423e79ca9787adb4e3",
     "research/nomad_phase38/launch.py": "0933cfa94d0bc1aaba3addae63cd6234d32484ac798e0890b899249bf3615bd3",
     "research/nomad_phase38/metrics.py": "32fa2c977175dde582dcfc01fe0c4c1ebb06faef1bd822e9ec07458743b6b64a",
-    "research/nomad_phase38/prepare.py": "7ca57245a9cb0c756572de1d2119acd0073b1b1113fe4871f26835e693bfa02f",
+    "research/nomad_phase38/prepare.py": "3ad59c650c5c637846055256441f5d7f8b91d198ed2a1b98fc3c15c55268ad39",
     "research/nomad_phase38/report.py": "9e39d69e1d8a1424753316304a9ba1e4234c707d3ce038b1bef5644ca77ebf75",
-    "research/nomad_phase38/runtime.py": "8eb50301db82dc735bbe42605a20c1a9125bddf34c54f9bd22ffd259689697eb",
+    "research/nomad_phase38/runtime.py": "5a6b27e3f7048912f662514e26a1092908af27666bf5b37feb87637e30b47a2a",
     "research/nomad_phase38/scenes.py": "bafc6e388ebc1fd19ea3bd69cf7ea66e605326904c7f9e608b0ee33670c05efb",
     "research/nomad_phase38/simulator.py": "086ac78b7a063dc2fb46ae95aef371581a4a517527a533aa66edc67de5c76b7d",
     "research/nomad_phase38/statistics.py": "a710dbe98bf06f1dc4aa042297a376edae59faa6e034bef8ccc063bb8b053a33",
-    "research/nomad_phase38/test_care.py": "bc49e175313d0ba0950ac6775b9daacd20d924272f6bf8ba5978ae531bfa01a0",
-    "research/nomad_phase38/test_preparation.py": "47f3584594ccfa3c69c19c7d19c1b4be0170b92a855c957ddc28879e03ed539f",
-    "research/nomad_phase38/test_runtime.py": "455204f032e1e4f5ce70fccfc9535ebeb70a7bf9c4d63fa1328111e0959c5e29",
+    "research/nomad_phase38/test_care.py": "c04ed3aabde9bdaa9d39b9e7c16307f81ae6ac7a58bbbe5bfd72ca650255ca56",
+    "research/nomad_phase38/test_preparation.py": "4e026a0004faae9c1a12d95c74159e906faaec220514b88a60d2012f87e84bc1",
+    "research/nomad_phase38/test_runtime.py": "67e68f7cb9ef3bc9a3c85c2db8c74168d9d8771b9fce562469dc712202002138",
     "research/nomad_phase38/test_statistics.py": "e9dd5b0f3a1f03de4a78d88403e12e0ea8806595f458e7506c828c8f308f8809"
   }
 }

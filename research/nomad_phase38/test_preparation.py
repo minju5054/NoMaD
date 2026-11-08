@@ -7,6 +7,17 @@ from . import config,campaign,launch,report
 from .scenes import registered_jitter,gap_check,straight_place,multi_place
 
 class PreparationTests(unittest.TestCase):
+    def test_care_amendment_keeps_all_other_registration_and_sources(self):
+        import hashlib
+        from .prepare import registration_without_care,BASE_CARE_REGISTRATION
+        original=json.loads(subprocess.check_output(['git','show',BASE_CARE_REGISTRATION+':research/nomad_phase38/protocol.json'],cwd=config.ROOT,text=True))
+        self.assertEqual(registration_without_care(config.protocol()),registration_without_care(original))
+        for name in ('campaign.py','ec_normal.py','launch.py','metrics.py','report.py','scenes.py','simulator.py','statistics.py'):
+            rel='research/nomad_phase38/'+name
+            self.assertEqual(hashlib.sha256((config.ROOT/rel).read_bytes()).hexdigest(),original['source_sha256'][rel])
+        c=config.runtime_config('CARE',217)
+        self.assertEqual(c['phase21_method'],'B0_NOMAD_RAW');self.assertTrue(c['depth_camera'])
+        self.assertEqual(c['phase15b_method'],'CARE_DEPTH_FRAME')
     def test_all_180_blocks_nights_and_short_sockets(self):
         from nomad_isaac.socket_path import socket_path_for_run,validate_socket_path
         blocks,order=config.registered_order();self.assertEqual(len(blocks),20);self.assertEqual(len(order),180)

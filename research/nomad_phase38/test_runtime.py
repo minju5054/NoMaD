@@ -10,6 +10,7 @@ from .runtime import CareExecution
 
 def prepare(e):
     f=field();f.observed=np.ones_like(f.occupied);f.metadata=MappingProxyType(dict(frame_id=0,sim_s=0.,publication_monotonic_ns=0))
+    if isinstance(e,CareExecution):f=SimpleNamespace(points_world=np.empty((0,2)),metadata=f.metadata)
     e.depth_maps=SimpleNamespace(snapshot=lambda:f)
     if isinstance(e,TEWithEC):e.ec_te_mode='ENSEMBLE'
     return SimpleNamespace(pose=np.zeros(3),v=0.,w=0.),f
@@ -93,12 +94,12 @@ class RuntimeTests(unittest.TestCase):
             e.apply(core,refresh(),fresh());self.assertEqual(e.mode,'STOP_WAIT')
             e.apply(core,refresh(8),fresh(2));self.assertEqual(e.recovery.state,'RECOVER_ROTATE')
             self.assertIsNone(e.repair_worker);e.close()
-    def test_care_safe_fov_brakes_then_rotates_and_preserves_center(self):
+    def test_care_safe_fov_immediate_zero_and_preserves_center(self):
         from .runtime import CareProfile
-        ctl=CareProfile();ctl.replace_path([[0,0],[0,1]],[0,0,0],.2);ctl.care_active=True;ctl.care_waypoint=np.array([0,1.]);ctl.mode='GO'
+        ctl=CareProfile();ctl.replace_path([[0,0],[0,1]],[0,0,0],.2);ctl.care_waypoint=np.array([0,1.]);ctl.mode='GO'
         q=np.zeros(3);v=.2;rotated=False
         for step in range(80):
-            old=v;(v,w),diag=ctl.control(q,v);self.assertLessEqual(abs(v-old),.5/9+1e-12)
+            (v,w),diag=ctl.control(q,v)
             before=q.copy();q=integrate_se2(q,v,w,1/9)
             if diag['mode']=='ROTATE':rotated=True;np.testing.assert_array_equal(q[:2],before[:2]);self.assertEqual(v,0.)
             json.dumps(diag,allow_nan=False)

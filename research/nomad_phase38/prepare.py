@@ -7,61 +7,45 @@ PREP=OUT/'preparation'
 def save(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,indent=2,ensure_ascii=False)+'\n')
 def read(p):return json.loads(p.read_text())
 
+BASE_CARE_REGISTRATION='477b651'
+
+def registration_without_care(p):
+    import copy
+    p=copy.deepcopy(p)
+    p.pop('care',None);p.pop('source_sha256',None)
+    p['method_definitions'].pop('CARE',None);p['interpretations'].pop('care_input',None)
+    return p
+
 def freeze():
+    """CARE-only amendment: all other registered definitions remain identical."""
     assert not RUN_ROOT.exists() and not SMOKE_ROOT.exists()
+    import hashlib
     from nomad_isaac.common import sha256_file
-    from .scenes import registered_jitter
-    baseline=read(ROOT/'research/nomad_phase35/protocol.json');blocks,order=registered_order()
-    sources={**baseline['frozen_sources'],**baseline['source_sha256']}
-    for f in ('research/nomad_phase35/protocol.json','research/nomad_phase8/rtc_hard.py'):sources[f]=sha256_file(ROOT/f)
-    p=dict(status='FROZEN',phase='38',frozen_at_kst=datetime.datetime.now(ZoneInfo('Asia/Seoul')).isoformat(),
-        base_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
-        methods=list(METHODS),indices=list(INDICES),scenes=baseline['scenes'],checkpoint_sha256=baseline['checkpoint_sha256'],
-        planned=180,order_seed=20261111,blocks=blocks,main_order=order,nights={'1':[217,218],'2':[219,220]},
-        smoke=dict(methods=list(SMOKE_METHODS),scene='H1',index=95,count=4,executed=False),
-        method_definitions={
-            'NOMAD_RAW':'Phase35 NOMAD_RAW frozen: sample0, no depth/filter/recovery; PP/SP >90deg alignment',
-            'TE':'Phase35 SAFE_TE frozen: K3, older-heavy exp(-.5k), 1s expiry, SAFE/KEEP and recovery',
-            'RTC':'Phase35 SAFE_RTC frozen: NoMaD DDPM RTC-hard/RePaint beta5, SAFE and recovery',
-            'ASTAR+EC':'Phase35 ASTAR+EC frozen; original A* R2/R3 bridges',
-            'OURS':'Phase35 OURS frozen; original R2/R3/trigger/EC',
-            'TE+EC':'TE handoff plus Phase32 NORMAL EC/fallback, ensemble-aware forward integration',
-            'RTC+EC':'RTC plus Phase32 NORMAL EC/fallback',
-            'OURS-DETOUR':'OURS normal SAFE/EC/fallback/recovery; no trigger decision layer, R2 or R3',
-            'CARE':'FRESHEST-SAFE then registered CARE rotation, recovery; no EC or R2/R3'},
-        executor=baseline['executor'],
-        interpretations=dict(care_input='FRESHEST-SAFE follows the requested common depth filter',
-            te_ec='Inspect actual ensemble steering rather than mismatched single PP trajectory',
-            jitter='Uniform continuous offset in [-.2,+.2]m; chosen before any driving data'),
-        care=dict(input='FRESHEST_SAFE',obstacles='observed AND occupied common top-down cell centers within 1m of current robot center',
-            force='sum unit(waypoint-obstacle)/distance^2; waypoint with largest norm; rotate full world path around application pose B',
-            clip_rad=0.7853981633974483,safe_fov_rad=0.5235987755982988,
-            safe_fov='Current corrected maximum-repulsion waypoint heading; brake within .5m/s2 then v0 rotation within .4rad/s until <=pi/6',
-            numerical_epsilon_m=1e-9,coincident_direction='backward in robot frame',no_obstacles='unchanged path',
-            paper='https://arxiv.org/html/2506.03834v4',adaptation_not_exact_reproduction=True),
-        rtc=dict(implementation='research/nomad_phase8/rtc_hard.py',beta=5,unchanged=True,
-            difference='DDPM waypoint RePaint hard-prefix+guidance, not original flow-policy soft mask',paper='https://arxiv.org/html/2506.07339v2'),
-        ec_extension=dict(te_rollout='ENSEMBLE',margin_m=.025,horizon_s=2.,period_ticks=36,apply='next 9Hz tick, <=4 tick delay',
-            fallback='primary full, next SAFE FRESHEST at full, all SAFE FRESHEST at .1m/s, STOP_WAIT',
-            slow_cap='until next full-speed EC-PASS FRESH installation',
-            te_expiry='advance retained chunk clock by rollout time; no future NoMaD chunks invented',
-            te_candidate='hypothetical accepted candidate replaces its same-ID chunk; keep other valid chunks and original weights; rejected previews do not mutate live ensemble',
-            te_keep='original SAFE KEEP pruning then EC on retained ensemble; reject -> STOP_WAIT'),
-        placements={f'{s}_{i}':registered_jitter(s,i) for s in SCENES for i in (*INDICES,95)},
-        placement_rule=dict(distribution='Uniform(-.2,.2)m added to frozen lateral center',seed_stream='SeedSequence([20261111,index,dynamic_scene_number,box_number])',
-            shared_across_methods=True,reject='wall/static overlap or widest available side gap < .28m',robot_diameter_m=.18,extra_gap_m=.1),
-        statistics=dict(comparisons=[['OURS',x] for x in ('NOMAD_RAW','TE','RTC','CARE')]+[['TE','TE+EC'],['RTC','RTC+EC'],['OURS-DETOUR','OURS'],['ASTAR+EC','OURS']],
-            outcomes=['success','collision'],mcnemar='two-sided exact binomial on discordant pairs',holm_family=16,
-            family_scope='all 8 pairs x 2 endpoints per cumulative report; night1 interim, no sequential-error guarantee',
-            noninferiority='OURS goal rate minus each other method, CI lower >= -0.10',bootstrap_replicates=20000,bootstrap_seed=20261111,
-            bootstrap_unit='paired scene x seed; resample within scene',bootstrap_interval='percentile95, not multiplicity adjusted',
-            missing='exclude a comparison pair when either measurement technically invalid; no outcome imputation'),
-        technical_retries=1,sequential=True,cache_cleanup=True,disk_min_bytes=30_000_000_000,
-        storage=dict(version=2,values_saved=False,loader='nomad_storage_sdf.loader',archive_retention='Phase35 unchanged'),
-        report=dict(automatic_after_each_night=True,cumulative=True,python='/usr/bin/python3',module='nomad_phase38.report',publish=True,
-            document='docs/PHASE38_RESULTS.md',output='research/results/phase38'),
-        preparation_only=True,simulations_started=0,frozen_sources=sources,
-        source_sha256={str(f.relative_to(ROOT)):sha256_file(f) for f in sorted(HERE.glob('*.py'))})
+    original=subprocess.check_output(['git','show',BASE_CARE_REGISTRATION+':research/nomad_phase38/protocol.json'],cwd=ROOT,text=True)
+    baseline=json.loads(original);p=read(HERE/'protocol.json')
+    assert registration_without_care(p)==registration_without_care(baseline)
+    p['method_definitions']['CARE']='Phase35 NOMAD_RAW sample0/chunk timing + current-frame CARE; no SAFE filter, FRESHEST, EC, R2/R3 or recovery'
+    p['interpretations']['care_input']='User-fixed NOMAD_RAW first sample, current-frame camera points only'
+    p['care']=dict(input='NOMAD_RAW_SAMPLE_0',chunk_timing='Frozen RawNA.apply unchanged',
+        obstacles='Current depth frame only: backproject, 0<camera axial Z<=1m, .03<world height<=.6; camera-X bins retain minimum Z',
+        bins=32,bin_range='Uniform valid camera-X min/max per frame; inclusive right edge; empty bins omitted',
+        bins_reason='M not specified in paper; user fixed32 before smoke',
+        map_used=False,depth_filter=False,freshest_selection=False,ec=False,detour=False,recovery=False,
+        depth_noise='Frozen common Gaussian sigma=.01*d^2, same per-frame RNG stream; no accumulation',
+        force='F(p_k)=sum_m (p_k-o_m)/||p_k-o_m||^4 in robot plane x-forward,y-left',
+        single_term_magnitude='1/d^3 mathematically; explicit vector equation takes precedence over inverse-square prose',
+        sign_rationale='User-fixed repulsive intent, positive robot-plane sign instead of literal negative sign in paper equation; camera-to-robot and left/right directions unit tested',
+        selected_waypoint='argmax norm(F); first index on exact tie',
+        rotation='atan2(F_y,F_x), clipped to +/-pi/4; rotate all waypoints about application robot origin B; no special frontal/backward-force case',
+        clip_rad=0.7853981633974483,safe_fov_rad=0.5235987755982988,
+        safe_fov='If corrected p_k* heading error >pi/6: immediate v=0 in-place rotation capped at .4rad/s; otherwise common PP/SP',
+        no_obstacles='unchanged RAW path/executor',v_max_m_s=.3,w_max_rad_s=.4,numerical_epsilon_m=1e-9,
+        paper='https://arxiv.org/html/2506.03834v4',
+        differences=['camera depth instead of monocular estimate','common .3m/s .4rad/s limits','M32 chosen explicitly','p_k* for Safe-FOV and PP lookahead .25m for translating','user-fixed repulsive robot-plane sign'],
+        amended_at_kst=datetime.datetime.now(ZoneInfo('Asia/Seoul')).isoformat(),
+        previous_protocol_sha256=hashlib.sha256(original.encode()).hexdigest(),before_smoke=True)
+    p['source_sha256']={str(f.relative_to(ROOT)):sha256_file(f) for f in sorted(HERE.glob('*.py'))}
+    assert registration_without_care(p)==registration_without_care(baseline)
     save(HERE/'protocol.json',p);verify();return p
 
 def validate():
@@ -77,6 +61,16 @@ def validate():
     inherited=read(ROOT/'research/results/phase26/preflight.json');assert inherited['passed'] and inherited['protocol_sha256']==sha256_file(ROOT/'research/nomad_phase26/protocol.json')
     result=dict(passed=True,tests=int(re.search(r'Ran (\d+) tests',result.stderr).group(1)),dry_run=180,night_jobs=[90,90],smoke_commands=4,
         simulations_started=0,venv_stdlib_import_passed=True,protocol_sha256=sha256_file(HERE/'protocol.json'),disk_free_bytes=shutil.disk_usage(ROOT).free)
+    import hashlib
+    before=json.loads(subprocess.check_output(['git','show',BASE_CARE_REGISTRATION+':research/nomad_phase38/protocol.json'],cwd=ROOT,text=True))
+    after=read(HERE/'protocol.json');unchanged=registration_without_care(after)
+    assert unchanged==registration_without_care(before)
+    stable_files=['campaign.py','ec_normal.py','launch.py','metrics.py','report.py','scenes.py','simulator.py','statistics.py']
+    assert all(sha256_file(HERE/f)==before['source_sha256']['research/nomad_phase38/'+f] for f in stable_files)
+    save(PREP/'care_revision_scope.json',dict(base_commit=BASE_CARE_REGISTRATION,
+        previous_protocol_sha256=after['care']['previous_protocol_sha256'],protocol_sha256=result['protocol_sha256'],
+        non_care_registration_equal=True,non_care_registration_sha256=hashlib.sha256(json.dumps(unchanged,sort_keys=True).encode()).hexdigest(),
+        unchanged_operational_sources=stable_files,simulation_runs=0))
     save(PREP/'validation.json',result);return result
 
 def document():
@@ -98,14 +92,19 @@ def document():
 | NOMAD_RAW / TE / RTC / ASTAR+EC / OURS | Phase35 동결 그대로. RAW의 depth·필터·회복 없음도 유지 |
 | TE+EC / RTC+EC | 해당 handoff + Phase32 EC, 다음 SAFE→같은 SAFE들0.1m/s→STOP_WAIT |
 | OURS−DETOUR | OURS의 평소 SAFE/EC/회복 유지,트리거 결정 계층·R2/R3 없음 |
-| CARE | FRESHEST-SAFE 입력→역제곱 반발 최대 waypoint의 방향으로 전체 경로±π/4 회전; 그 waypoint heading>π/6이면 제동 후 제자리 회전. EC/우회 없음 |
+| CARE | NOMAD_RAW sample0·동일 chunk 시점 + 현재 depth 프레임 CARE. SAFE·FRESHEST·EC·우회·회복 없음 |
 
-공통 이동은 C0-NA PP/SP(90° 초과 출발 정렬),depth V1,회복,저장v2다(RAW는 동결 예외). CARE의30° Safe-FOV 회전은 사용자 지정 추가 규칙이다. TE+EC는 실제 ensemble 조향·원1초 만료를 복제해 EC를 계산한다. 거절 preview는 실제 chunk를 바꾸지 않으며,주기적 대안은 같은 chunk ID/수신시각을 유지한다.36tick 재검사와 다음9Hz tick 적용,0.1m/s 상한의 다음 전속도 PASS FRESH까지 유지를 보존한다.
+CARE만 smoke 전에 개정했다. 다른8방법·배치·seed·순서·EC·판정은 원 protocol과 동일하다. TE+EC는 기존 ensemble/1초 만료를 검사하며36tick 재검사·다음9Hz tick 적용·감속 상한 유지도 그대로다.
+
+CARE는 현재 프레임의 역투영 점에서 `0<Z≤1m`, 공통 높이 `0.03<h≤0.6m`를 적용하고 카메라 좌우 X 범위를32등분해 칸별 최소 Z점 하나를 남긴다(지도 누적 없음). 로봇 평면(x전방,y왼쪽)에서 `F=Σ(p−o)/‖p−o‖⁴`, 최대 ‖F‖ waypoint의 `atan2(Fy,Fx)`를±π/4로 clip하여 전체 경로를 B 원점 기준 회전한다. 정면 장애물 별도 처리 없음. O가 비면 RAW 경로 그대로다. Safe-FOV는 보정된 p_k*의 heading 오차>π/6이면 **즉시 v=0**, |ω|≤0.4로 제자리 회전하고, 그 외에는 PP/SP를 쓴다. 식의 단일 항 크기는 수학적으로1/d³이며, 사용자 지정 수식 자체를 유지했다.
 
 | 원문과의 차이 | 이번 구현 |
 |---|---|
-| [CARE v4](https://arxiv.org/html/2506.03834v4): RGB 추정 depth·전방 bin 최근점·식(1)의 거리 가중 | 공통 관측/점유 지도1m 이내 셀 중심; 사용자 지정 **역제곱의 바깥 방향 벡터**. 원문 식(1)을 그대로 복제한 것이 아님 |
-| CARE 입력·출력 | SAFE 선택 후 현재 B에서 보정,공통 PP/SP·0.3m/s·0.4rad/s 및 회복. 원문의 별도 전진/회전 제어와 다름 |
+| [CARE v4](https://arxiv.org/html/2506.03834v4) depth 소스 | 단안 추정 대신 공통 depth 카메라·노이즈·높이 필터, 현재 프레임만 사용 |
+| CARE 속도 제한 | 공통0.3m/s·0.4rad/s |
+| CARE 칸 수 | 원문에 M이 명시되지 않아32로 고정; 유효 카메라 X의 min/max를 균등 분할 |
+| CARE 제어 waypoint | Safe-FOV는 p_k*, 전진 조향은 공통 PP lookahead0.25m·SP |
+| CARE 식(1) 부호 | 원문 −표기 대신 반발 의도를 따른 사용자 지정 로봇평면 +수식 사용; 카메라→로봇 변환 후 왼쪽 장애물→오른쪽 회전 및 대칭을 단위테스트로 확인 |
 | [RTC](https://arxiv.org/html/2506.07339v2): flow 정책·soft masking | 현재 NoMaD DDPM RTC-hard/RePaint prefix+guidance(β5) 유지. 원 논문의 완전 재현으로 부르지 않음 |
 
 장면 SLW,LC,L2,H1,H2 × seed217–220 ×9방법=180회. 밤1=217,218 / 밤2=219,220. seed→scene 블록 안 순서만 RNG20261111로 섞었다. 돌발 상자는 기존 옆 방향 위치에 **U(−0.2,+0.2)m**를 더하며,벽/기존 상자 겹침 또는 넓은 쪽 유효 틈<0.28m이면 재추출한다. 배치는 scene×seed별 모든 방법에 같고 protocol에 수치·재추출 횟수를 고정했다. 새로운 장면 렌더나 주행은 하지 않았다.
@@ -131,7 +130,7 @@ def document():
 {commands['status']}
 ```
 
-run-root: `../artifacts/isaac6/phase38_01/night1`, `night2`. 검증 산출물: `research/results/phase38/preparation/`. venv 설치·기존 phase 소스/결과 변경 없음.
+run-root: `../artifacts/isaac6/phase38_01/night1`, `night2`. CARE는 프레임당 최대32점과 메타데이터만 압축 저장하고 SDF는 만들지 않는다. 다른 방법 저장v2는 그대로다. 검증 산출물: `research/results/phase38/preparation/`. venv 설치·기존 phase 소스/결과 변경 없음.
 '''
     (ROOT/'docs/PHASE38_PREP.md').write_text(text)
 

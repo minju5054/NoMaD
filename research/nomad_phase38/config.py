@@ -10,7 +10,7 @@ METHODS=('NOMAD_RAW','TE','RTC','ASTAR+EC','OURS','TE+EC','RTC+EC','OURS-DETOUR'
 SMOKE_METHODS=('TE+EC','RTC+EC','CARE','OURS-DETOUR')
 SCENES=('SLW','LC','L2','H1','H2');INDICES=(217,218,219,220);ORDER_SEED=20261111
 ALIASES={'NOMAD_RAW':'NOMAD_RAW','TE':'SAFE_TE','RTC':'SAFE_RTC','ASTAR+EC':'ASTAR+EC','OURS':'OURS',
-         'TE+EC':'SAFE_TE','RTC+EC':'SAFE_RTC','OURS-DETOUR':'OURS','CARE':'SAFE_RTC'}
+         'TE+EC':'SAFE_TE','RTC+EC':'SAFE_RTC','OURS-DETOUR':'OURS','CARE':'NOMAD_RAW'}
 EC_METHODS=('OURS','ASTAR+EC','TE+EC','RTC+EC','OURS-DETOUR')
 
 def registered_order():
@@ -29,8 +29,10 @@ def runtime_config(method,index,timeout=90,level='H1'):
     c=frozen_config(ALIASES[method],95 if index==95 else 212,90,level)
     c.update(seed_offset=index*10000,run_id=f'{level}_{index}',phase35_index=index,phase38=True,phase38_method=method,phase38_index=index)
     if method=='CARE':
-        c.update(phase35_method='CARE',phase21_method='B3_M1',phase20_method='M1_ROTATE',phase26_method='B3_SAFE_ROTATE',
-            phase24_method='B3_SAFE_ROTATE',phase24r_method='B3_SAFE_ROTATE',phase15b_method='B3_SAFE_ROTATE',overnight_method='CURV')
+        # The nonempty sensor tag attaches a current-frame receiver, not the
+        # SAFE factory: make_execution routes it to RawNA+CARE explicitly.
+        c.update(phase35_method='CARE',phase26_method='CARE',phase24_method='CARE',phase24r_method='CARE',
+            phase15b_method='CARE_DEPTH_FRAME',depth_camera=True)
     if method in ('TE+EC','RTC+EC'):c.update(phase32=True,phase32_method='C0-NA+EC',phase32_index=index)
     for key in ('phase29_index','phase32_index'):
         if key in c:c[key]=index
