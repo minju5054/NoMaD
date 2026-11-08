@@ -27,8 +27,10 @@ def guarded_direction(poses,tick,baseline_direction):
     d3=poses[tick,:2]-poses[tick-216,:2];d10=poses[tick,:2]-poses[tick-720,:2]
     n3=float(np.linalg.norm(d3));n10=float(np.linalg.norm(d10));info.update(distance_3s_m=n3,distance_10s_m=n10)
     if n10<.3:return base.copy(),dict(info,reason='SHORT_10S_DISPLACEMENT')
-    if n3<=1e-12:return base.copy(),dict(info,reason='UNDEFINED_3S_DIRECTION')
-    u3=d3/n3;u10=d10/n10;dot=float(np.clip(u3@u10,-1.,1.));angle=float(np.degrees(np.arccos(dot)))
-    info.update(direction_3s=u3.tolist(),direction_10s=u10.tolist(),angle_deg=angle)
+    u3=d3/n3 if n3>1e-12 else None;u10=d10/n10
+    # User's final definition first forms the baseline u_ref, including the
+    # <0.3m heading fallback. Compare that direction with the10s direction.
+    dot=float(np.clip(base@u10,-1.,1.));angle=float(np.degrees(np.arccos(dot)))
+    info.update(direction_3s=u3.tolist() if u3 is not None else None,direction_10s=u10.tolist(),comparison_direction=base.tolist(),angle_deg=angle)
     if dot<0.:return u10,dict(info,overridden=True,reason='DIRECTION_DISAGREEMENT_GT_90')
     return base.copy(),dict(info,reason='BASELINE_DIRECTION_RETAINED')

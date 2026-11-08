@@ -20,7 +20,7 @@ def main():
             t_ref='first observed occupied entry in forward rectangle; known first_occupied tick backdated only if cell already in the base forward rectangle at birth; otherwise first common available entry',
             association='4-connected observed occupied sets associate earliest t_ref/distance; 5-cell threshold on full rectangle, no extra component minimum',
             baseline_direction='displacement over [t_ref-3s,t_ref], <0.3m uses t_ref heading; unavailable uses original A direction',
-            guard='angle of3s vs10s displacement both ending at t_ref >90deg AND10s distance>=0.3m ->10s; otherwise baseline',
+            guard='angle of baseline u_ref (3s displacement or heading fallback) vs10s displacement both ending at t_ref >90deg AND10s distance>=0.3m ->10s; otherwise baseline',
             no_progress='current3s projected motion<0.20m OR current component fixed-cell minimum-distance drop<0.10m',
             untouched=['A','R2','R3','EC','fallback','maintenance/handover','executor','depth map']),
         oracle_labels=['BOX_AHEAD','STATIC_AHEAD','PASSED_BOX','NOTHING_AHEAD'],

@@ -1,0 +1,111 @@
+{
+  "status": "FROZEN_OFFLINE",
+  "phase": "37",
+  "frozen_unix": 1794099536.490686,
+  "base_commit": "56b94f162bf8aa3c09ad885bde2f171f4112ad7c",
+  "source_hashes": {
+    "research/nomad_phase37/test_predicates.py": "69ceaa56c352786be5faf4aabb031012800e768ec67b499e5072f00f8c00ab36",
+    "research/nomad_phase37/test_gate.py": "68028a2bb37edb25a18abd442c8038d9bdf5a1f2dd079973730b6f6d83e68695",
+    "research/nomad_phase37/__init__.py": "68fe8508bf79e44002e95ca749f9f642a79d1abd87d62578016e39ab035ce79a",
+    "research/nomad_phase37/geometry.py": "1d69e717817927071e6252204fa9249973039e3b023fbd1cb5db0ccb82ce012e",
+    "research/nomad_phase37/audit.py": "4b322ff20c3bfd3acb0f7b9906b4a808a494d7ec8578e0a61998247756a54d6f",
+    "research/nomad_phase37/test_topo.py": "45583a92be2947a74571f4db5fcb41d10271ab3342d64e156d35e27a7c3b8860",
+    "research/nomad_phase37/trig.py": "aec49018ff446ff1e68bc29b74a1963f81e857323209a0d9000455129d3b7733",
+    "research/nomad_phase37/report.py": "06564749bd255cfffda73185c5976e89730b171f0cc1c9515f5a33c92eb2f4b9",
+    "research/nomad_phase37/predicates.py": "49490b0389d9f817a8e5e1eb476667c97fd243b00b8e9f968dbe3e237ee81165",
+    "research/nomad_phase37/test_trig.py": "f1e581cbb29db1af47562035e67990a054cad71f286e3860b641a7001ac2ac7c",
+    "research/nomad_phase37/freeze.py": "35803e19d39d4cbad180fcba21a5a19a13c64f9f2635b1966b3a256a4eed4751",
+    "research/nomad_phase37/topo.py": "e5275d030f9c7d24ea9a3fb2e43f982002f5fd5552fdf7de7c918a8fda4a17d5",
+    "research/nomad_phase37/evaluate.py": "68a6d5b3c402c8ddf0da6523365bd4d6608030981fb02f82739552b729dd68ce",
+    "research/nomad_phase24r/trigger.py": "88af728c7e0cc0e12b4eec3b24104d12b7f3003a2f9317b1e7fe8a0868c706f4",
+    "research/nomad_phase20f/direction.py": "565d79bc3e4622b086dd8648befed55738f51870b19b24c85479f5f5a8dffe02",
+    "research/nomad_phase20f/history.py": "cb02c70ba6307bda80a9fbac72e1d3813f6e589d3f10f0dca2814d6e4418fd5f",
+    "research/nomad_phase20c/trigger.py": "a26d387dab70b89802e31df59d1ae51ed8c3429a29945b37940f97f1f802f090",
+    "research/nomad_phase20c/detour_known.py": "8db6b56af8372d913e05f69ee4eb8cf54e9caea1e54691881e0580d639310704",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/results/phase32/runs.json": "3bd2b16bf1835a2a497bf22503461ddba6148b0fc8af8e3b19788fad4c9e17b6",
+    "research/results/phase35/runs.json": "cc969b3cfcd57e0e546a512fbe74f4c522523d51596ea7d4e00af12f2b3aa47a"
+  },
+  "data": {
+    "runs": 30,
+    "Phase32": "all15 C0-NA+EC main runs",
+    "Phase35": "all15 OURS main runs",
+    "map_policy": "common saved maps only; no older-map replacement",
+    "trigger_unit": "same eligible9Hz logged decision opportunity; logged busy/alignment/recovery/repair/cooldown schedule held common",
+    "map_priority": "actual condition snapshot if recorded, otherwise same-control-tick snapshot"
+  },
+  "TRIG": {
+    "length_m": 1.0,
+    "width_m": 0.4,
+    "min_cells": 5,
+    "mask": "observed & occupied",
+    "new_cell_required": false,
+    "t_ref": "first observed occupied entry in forward rectangle; known first_occupied tick backdated only if cell already in the base forward rectangle at birth; otherwise first common available entry",
+    "association": "4-connected observed occupied sets associate earliest t_ref/distance; 5-cell threshold on full rectangle, no extra component minimum",
+    "baseline_direction": "displacement over [t_ref-3s,t_ref], <0.3m uses t_ref heading; unavailable uses original A direction",
+    "guard": "angle of3s vs10s displacement both ending at t_ref >90deg AND10s distance>=0.3m ->10s; otherwise baseline",
+    "no_progress": "current3s projected motion<0.20m OR current component fixed-cell minimum-distance drop<0.10m",
+    "untouched": [
+      "A",
+      "R2",
+      "R3",
+      "EC",
+      "fallback",
+      "maintenance/handover",
+      "executor",
+      "depth map"
+    ]
+  },
+  "oracle_labels": [
+    "BOX_AHEAD",
+    "STATIC_AHEAD",
+    "PASSED_BOX",
+    "NOTHING_AHEAD"
+  ],
+  "oracle_geometry": "same rule u_ref rectangle1.0x0.4m, physical polygons, active spawns only; existing recorded passage is not undone on return",
+  "reference": "Topomap photographed world poses joined as a polyline; nearest-projection tangent",
+  "TRIG_gate": {
+    "box_recall": "TRIG fires at >=95% of same-tick original-fired BOX_AHEAD opportunities",
+    "false_positive": "TRIG(PASSED_BOX+NOTHING_AHEAD)<=0.5*original count",
+    "direction": "TRIG fraction angle>90deg <=0.5*original fraction; STATIC_AHEAD excluded from all gates",
+    "missing_denominator": "not established, never OFFLINE_OK"
+  },
+  "TOPO_H": {
+    "radius": 4,
+    "close_threshold": 3,
+    "backward_queries": 3,
+    "initial_H": 0,
+    "initial_c": 0,
+    "update": "r>=H: H=r,c=0; r<H: c+=1; at c>=3 H=r,c=0",
+    "subgoal": "min(H+int(dist[H]<3),goal_node); if H>=goal_node-1 use goal_node",
+    "robot_pose": "RGB query observation_pose",
+    "behind": "subgoal reference s < robot reference s -0.2m",
+    "ahead": "subgoal index > nearest physical Topomap node index +2",
+    "missing_scores": "no imputation/inference; conservative reachable-state/subgoal bounds",
+    "gate": "failure behind upper<=0.5 original; success behind and ahead upper increases<=0.02"
+  },
+  "next_stage": "Only if TRIG OFFLINE_OK; add TOPO-H only if TOPO_OK, otherwise TRIG alone",
+  "requested_online": {
+    "methods": [
+      "OURS",
+      "conditional selected TRIG variant"
+    ],
+    "scenes": [
+      "SLW",
+      "LC",
+      "L2",
+      "H1",
+      "H2"
+    ],
+    "seeds": [
+      215,
+      216
+    ],
+    "order_seed": 20261110,
+    "planned": 20,
+    "run_root": "../artifacts/isaac6/phase37p_01",
+    "decision": "PROMISING iff variant goals>OURS AND collisions<=OURS"
+  },
+  "simulation_started": false
+}

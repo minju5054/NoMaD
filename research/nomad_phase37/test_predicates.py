@@ -28,7 +28,7 @@ class PredicateTests(unittest.TestCase):
         p=np.zeros((721,3));p[720,:2]=[2,2];p[504,:2]=p[720,:2]-d3;p[0,:2]=p[720,:2]-d10;return p
 
     def test_reversal_uses_ten_second_direction(self):
-        p=self.history(np.array([-1.,0]),np.array([1.,0]));u,r=guarded_direction(p,720,[0,1])
+        p=self.history(np.array([-1.,0]),np.array([1.,0]));u,r=guarded_direction(p,720,[-1,0])
         np.testing.assert_array_equal(u,[1,0]);self.assertTrue(r['overridden'])
 
     def test_exact_ninety_does_not_override(self):
@@ -38,6 +38,10 @@ class PredicateTests(unittest.TestCase):
     def test_short_or_missing_history_retains_baseline(self):
         p=self.history(np.array([-1.,0]),np.array([.29,0]));u,r=guarded_direction(p,720,[0,1]);self.assertFalse(r['overridden'])
         u,r=guarded_direction(p,719,[0,1]);self.assertEqual(r['reason'],'INCOMPLETE_10S_HISTORY')
-        p=self.history(np.array([0.,0]),np.array([1.,0]));u,r=guarded_direction(p,720,[0,1]);self.assertEqual(r['reason'],'UNDEFINED_3S_DIRECTION')
+        p=self.history(np.array([0.,0]),np.array([1.,0]));u,r=guarded_direction(p,720,[0,1]);self.assertEqual(r['reason'],'BASELINE_DIRECTION_RETAINED')
+
+    def test_short_three_second_motion_compares_heading_baseline(self):
+        p=self.history(np.array([.02,0]),np.array([1.,0]));u,r=guarded_direction(p,720,[-1,0])
+        np.testing.assert_array_equal(u,[1,0]);self.assertTrue(r['overridden'])
 
 if __name__=='__main__':unittest.main()

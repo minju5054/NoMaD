@@ -90,7 +90,9 @@ H가 원 closest와 달라지면 요구 window 일부의 거리값이 기록에 
 
 ## 검증 및 다음 단계
 
-20개 단위테스트: observed/occupied5셀·unknown 제외·직사각형 변환, t_ref 고정과 전방 돌발 출현 시 기존 t_new 일치, t_ref 기준 방향 guard, TOPO-H3회 후퇴·거리/goal 분기·원 window 유지·누락 점수 상태 범위, 기하 분류와 gate 경계를 확인했다. frozen 코드는 수정하지 않았다.
+21개 단위테스트: observed/occupied5셀·unknown 제외·직사각형 변환, t_ref 고정과 전방 돌발 출현 시 기존 t_new 일치, t_ref 기준 방향 guard(짧은3초 변위의 heading 대체 포함), TOPO-H3회 후퇴·거리/goal 분기·원 window 유지·누락 점수 상태 범위, 기하 분류와 gate 경계를 확인했다. frozen 코드는 수정하지 않았다.
+
+게이트 계산 전 구현 검토에서,3초 변위<0.3m인 경우 raw 변위 방향이 아니라 최종 기본 u_ref(heading 대체값)를10초 방향과 비교해야 하는 오류를 수정했다. 첫 부분 평가 출력과 당시 protocol은 `technical_archive/guard_comparison_attempt1/`에 보존했으며 판정에 사용하지 않았다. 숫자·gate·데이터셋은 변경하지 않았고 결과를 이용한 튜닝도 하지 않았다.
 
 TRIG={decision['label']}, TOPO-H={topo['label']}. TRIG 통과 시에만 선택 방법 `{decision['planned_new_method']}`의20회 준비로 진행한다. 이 보고서 생성 자체는 campaign·Isaac·NoMaD를 실행하지 않는다.
 '''
