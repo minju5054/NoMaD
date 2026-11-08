@@ -1,0 +1,32 @@
+{
+  "label": "OFFLINE_FAIL",
+  "checks": {
+    "box_recall": false,
+    "false_trigger_reduction": false,
+    "direction_error_reduction": false
+  },
+  "original_BOX_AHEAD": 45,
+  "TRIG_fired_at_same_BOX_AHEAD_opportunity": 41,
+  "box_recall": 0.9111111111111111,
+  "false_trigger_counts": {
+    "original": 16,
+    "TRIG": 38
+  },
+  "direction": {
+    "original": {
+      "n": 61,
+      "wrong": 4,
+      "rate": 0.06557377049180328
+    },
+    "TRIG": {
+      "n": 79,
+      "wrong": 6,
+      "rate": 0.0759493670886076
+    }
+  },
+  "scope": "same saved-map, same logged eligibility, 9Hz decision opportunities; STATIC_AHEAD excluded from all gates",
+  "TOPO": "TOPO_FAIL",
+  "planned_new_method": "OURS+TRIG",
+  "online_preparation_allowed": false,
+  "simulation_started": false
+}

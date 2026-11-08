@@ -1,0 +1,32 @@
+[offline] 1 /30 32 H1 201
+[offline] 2 /30 32 H1 202
+[offline] 3 /30 32 H1 203
+[offline] 4 /30 32 H1 204
+[offline] 5 /30 32 H1 205
+[offline] 6 /30 32 H2 201
+[offline] 7 /30 32 H2 202
+[offline] 8 /30 32 H2 203
+[offline] 9 /30 32 H2 204
+[offline] 10 /30 32 H2 205
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase37/evaluate.py", line 193, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase37/evaluate.py", line 172, in main
+    tr,aa=trigger_run(r);tt=topo_run(r);save(path,dict(triggers=tr,availability=aa,topo=tt))
+          ^^^^^^^^^^^^^^
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase37/evaluate.py", line 78, in trigger_run
+    old,detail=choose_ahead(field,poses,tick,legacy_cache);old_u=np.array(old['u_ref']) if old else radial_reference(poses,tick)[0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase24r/trigger.py", line 36, in choose_ahead
+    sets=component_sets(snapshot);candidates=[];active=0
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase24r/trigger.py", line 18, in component_sets
+    for k,region in enumerate(find_objects(labels),1):
+                              ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/scipy/ndimage/_measurements.py", line 308, in find_objects
+    return _nd_image.find_objects(input, max_label)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
