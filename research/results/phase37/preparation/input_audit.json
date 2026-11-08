@@ -1,0 +1,31 @@
+{
+  "status": "AWAITING_MEASUREMENT_DEFINITIONS",
+  "gate_evaluated": false,
+  "simulation_started": false,
+  "runs": 30,
+  "static_runs": 6,
+  "sudden_runs": 24,
+  "totals": {
+    "published_maps": 6729,
+    "available_map_frames": 4489,
+    "control_ticks_after_3s": 14565,
+    "command_snapshot_available_ticks": 9913,
+    "logged_condition_checks": 1312,
+    "exact_condition_checks": 962,
+    "reproduced_condition_checks": 962,
+    "logged_B_triggers": 162,
+    "exact_B_trigger_maps": 161,
+    "B_future_full_nomad_only": 0,
+    "B_future_intervened": 150,
+    "B_future_truncated": 12
+  },
+  "phase36_found": false,
+  "primitive_tests_passed": 6,
+  "elapsed_s": 19.532065694016637,
+  "missing_reasons": [
+    "Phase36 TOPO-H definition absent from local and fetched remote history",
+    "Default u_ref definition ambiguous: retain component-born direction vs rolling three-second direction",
+    "Five-second original-NoMaD outcome cannot be read directly after intervention; progress threshold and episode matching need preregistration",
+    "Compact archives omit some published snapshots; exact-check cohort vs missing-data policy must be stated"
+  ]
+}
