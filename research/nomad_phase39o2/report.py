@@ -1,0 +1,112 @@
+"""Job gates plus position-group/run descriptions, with saved V0 reference."""
+import json
+from collections import Counter
+from pathlib import Path
+import numpy as np
+from nomad_phase31p.report import table,median
+from nomad_phase32o.evaluate import save,csvout
+from nomad_isaac.common import sha256_file
+from .data import ROOT,HERE,OUT,read
+from .solver import VARIANTS
+
+def decision(rows,expected):
+    by={v:[r for r in rows if r['variant']==v] for v in ('V0',*VARIANTS)}
+    ids={r['case_id'] for r in expected};complete=bool(ids) and all(len(by[v])==len(ids) and {r['case_id'] for r in by[v]}==ids for v in by)
+    rate=sum(r['success'] for r in by['V0'])/len(ids) if complete else None;verdicts=[]
+    for v in VARIANTS:
+        group=by[v];success=sum(r['success'] for r in group)/len(ids) if complete else None
+        timing=float(np.quantile([r['job_wall_s'] for r in group],.95)) if group else None
+        bad=sum(r['certificate_failures'] for r in group)
+        checks=dict(success_plus_30pp=complete and success>=rate+.30-1e-12,p95_le_1s=timing is not None and timing<=1.,certificate_failures_zero=bad==0)
+        verdicts.append(dict(variant=v,label='GO' if complete and all(checks.values()) else 'NO_GO' if complete else 'NOT_EVALUATED',
+            n=len(group),baseline_success_rate=rate,success_rate=success,p95_s=timing,certificate_failures=bad,checks=checks))
+    selected=next((v['variant'] for v in verdicts if v['label']=='GO'),None)
+    return dict(label='GO' if selected else 'NO_GO' if complete else 'NOT_EVALUATED',selected_variant=selected,complete=complete,variants=verdicts)
+
+def summarize(rows):
+    result=[]
+    for kind in ('R2','R3','ALL'):
+        for band in ('<0','0<=cB<0.03125','>=0.03125','ALL'):
+            for v in ('V0',*VARIANTS):
+                group=[r for r in rows if (kind=='ALL' or r['kind']==kind) and (band=='ALL' or r['cB_bin']==band) and r['variant']==v]
+                if group:result.append(dict(kind=kind,cB_bin=band,variant=v,n=len(group),accepted_jobs=sum(r['success'] for r in group),
+                    success_rate=sum(r['success'] for r in group)/len(group),p50_s=median([r['job_wall_s'] for r in group]),
+                    p95_s=float(np.quantile([r['job_wall_s'] for r in group],.95)),certificate_failures=sum(r['certificate_failures'] for r in group)))
+    return result
+
+def grouped_rates(rows):
+    grouped={}
+    for r in rows:grouped.setdefault((r['run'],r['group'],r['variant']),[]).append(r)
+    groups=[dict(run=run,group=g,variant=v,n_jobs=len(rs),success=any(r['success'] for r in rs),
+        kinds=sorted({r['kind'] for r in rs}),cB_bins=sorted({r['cB_bin'] for r in rs})) for (run,g,v),rs in sorted(grouped.items())]
+    runs=[]
+    for run in sorted({r['run'] for r in rows}):
+        for v in ('V0',*VARIANTS):
+            gg=[r for r in groups if r['run']==run and r['variant']==v]
+            jj=[r for r in rows if r['run']==run and r['variant']==v]
+            if gg:runs.append(dict(run=run,variant=v,jobs=len(jj),accepted_jobs=sum(r['success'] for r in jj),groups=len(gg),
+                successful_groups=sum(r['success'] for r in gg),group_success_rate=sum(r['success'] for r in gg)/len(gg),run_any_success=any(r['success'] for r in gg)))
+    return groups,runs
+
+def preparation_text(p):
+    return f'''# Phase39-O2 — B행·기하 초기값·탈출 비교 준비
+
+**실행 준비만 완료.** Phase39-O의209개 입력과 저장 V0 결과를 재사용한다. V0 solve 경로는 코드에서 거부한다. 실제 재풀이 대상은 VB/VO/VE, 총627 job×변형이다. A* 및 경로 검색, 슬랙 변수는 사용하지 않는다. 기존 코드·결과는 보존한다.
+
+| 변형 | 고정 정의 |
+|---|---|
+| VB | R2/R3에서 첫 선분 k=0의 SDF 행 하나만 제외. 나머지 비용·제약·certificate와 음수 B 사전거부 유지 |
+| VO | VB+R3 기하 초기값 좌/우 최대2개. 기존7개 유지 |
+| VE | VO 상속. c_B<0.025에서만 c(s)=min(0.025,c_B−0.005+0.5s),음수 B 사전거부 제거. 높은 c_B도 B행은 제외 |
+
+c_B는 동결 `d(B)−h/√2`다. VE certificate: s_esc=(0.03−c_B)/0.5, 닫힌[0,s_esc]는 exact≥c_B−0.005, [s_esc,끝]은 exact≥0.025. 0.3m는 기존 base/strict 지도 전환이며, 두 경계에서 경로를 나눠 상수 기준의 exact certificate를 적용한다. c_B≥0.025는 제약(B행 제외)·certificate 모두 동결이다. EC는 실행하지 않는다. VE 온라인 적용 시 동결 EC(항상0.025)는 탈출 경로를 거절하므로 EC에도 같은 탈출 기준이 필요하다.
+
+VO는 전체 R3 보수적 지도(점유·unknown·last-free>2s 차단)를8-연결로 라벨링한다. B의 u_ref 띠(길이1.6m,폭0.18m)와 가장 먼저 만나는 성분을 고르고 B 반경1.6m로 자른 후 좌우 극값을 구한다. 극값 셀의 사각형이 원 경계에 닿는 쪽은 제외한다. 극값 동률이면 B에 가장 가까운 셀(다음 row/column 순)을 쓴다. 경유점=극값 셀 중심±수직방향0.14m; 점유/지도 밖이면 제외한다. B→경유점→u_ref 방향의 두 직선에10개 구간을 폐형식으로 배분한다(선호 간격0.15m,끝점 전진 목표1.2m). 경유점은 실제 vertex로 유지하고, 간격0.1~0.2m/반경1.6m를 만족하지 못하면 해당 초기값만 제외한다. 다른 경유점을 찾거나 재시도하지 않는다.
+
+판정은 전체209 job의 원래 분모로, V0 성공률+30%p AND p95≤1s AND certificate 실패0. 통과한 것 중 VB→VO→VE 순으로 가장 단순한 변형을 선택한다. V0 시간은39-O 실측치를 그대로 쓴다. 새 job 시간은4프로세스 풀 전체 시간으로 지도 복원/cache/기하 초기값 생성/선택을 포함한다.
+
+보고: c_B(<0 / 0~0.03125 / ≥0.03125)×R2/R3×변형의 수락률·SLSQP 메시지, VO 초기값 생성률·선택 비율. 동일 run 안 시간순 인접 job의 XY 이동<1cm이면 같은 그룹으로 이어 묶는다(R2/R3를 함께 묶고 heading/map 차이는 분리 조건에 쓰지 않음). 그룹은 해가 하나라도 있으면 성공, run별 그룹 성공률과 하나 이상의 성공 그룹 여부를 함께 보고한다(계획 해 생성 기준이며 도착 성공이 아님). 이 보조 통계는 원 job 기준 판정을 바꾸지 않는다.
+
+Protocol SHA256 `{sha256_file(HERE/'protocol.json')}`. 예상 약{p['estimated_minutes']:.1f}분(저장 V0 시간·최대9 초기값·보수적 연산 계수 기반 계획 추정).55분 이후 새 job을 시작하지 않고 현재 job 완료 후 PARTIAL 저장; 같은 명령으로 재개한다. 미완료 자료는 판정하지 않는다. baseline/input hash 검증,실행 잠금,원자적 결과 저장을 사용한다.
+
+```bash
+cd {ROOT} && nohup env PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_phase39o2.run > ../artifacts/isaac6/phase39o2_01.log 2>&1 < /dev/null &
+```
+
+진행 확인: `PYTHONPATH=research /usr/bin/python3 -m nomad_phase39o2.run --status`. 완료 후 이 문서와 `research/results/phase39o2/` 표가 자동 갱신된다. V0 원본과39-O 로컬 입력 사본은 읽기 전용이며 재생성하지 않는다.
+'''
+
+def generate(output=OUT,document=None):
+    output=Path(output);p=read(HERE/'protocol.json');meta=read(OUT/'preparation/metadata.json');by={m['case_id']:m for m in meta}
+    records=[dict(case_id=m['case_id'],variant='V0',numeric=read(m['baseline_file'])['numeric'],certificate_audit=read(m['baseline_file'])['certificate_audit']) for m in meta]
+    records+=[read(f) for f in sorted((output/'jobs').glob('*.json'))]
+    rows=[];message=Counter();seeds=[];solutions=[]
+    for record in records:
+        m=by[record['case_id']];v=record['variant'];numeric=record['numeric'];audit=record['certificate_audit'];selected=numeric.get('selected_sample')
+        source=numeric.get('selected_initialization_source','FAN_OR_SAMPLE' if selected is not None else None)
+        rows.append(dict(m,variant=v,success=any(r['accepted'] for r in numeric['results']),job_wall_s=numeric['pool_wall_s'],
+            certificate_failures=sum(not x['certificate_pass'] for x in audit),selected_source=source,selected_index=selected))
+        for i,r in enumerate(numeric['results']):
+            msg=r.get('message',r.get('error',r['disposition']));message[(m['cB_bin'],m['kind'],v,msg)]+=1
+            solutions.append(dict(case_id=m['case_id'],variant=v,kind=m['kind'],cB_bin=m['cB_bin'],index=i,accepted=r['accepted'],
+                disposition=r['disposition'],message=msg,source=r.get('initialization_source'),iterations=r.get('iterations'),
+                removed_B_sdf_value_m=r.get('removed_B_sdf_value_m'),constraint_violation=r.get('constraint_violation')))
+        if numeric.get('geometry'):
+            seeds.extend(dict(case_id=m['case_id'],variant=v,scene=m['scene'],cB_bin=m['cB_bin'],**s) for s in numeric['geometry']['sides'])
+    stats=summarize(rows);groups,runs=grouped_rates(rows);d=decision(rows,meta)
+    geo=[]
+    for v in ('VO','VE'):
+        ss=[s for s in seeds if s['variant']==v];jj=[r for r in rows if r['variant']==v and r['kind']=='R3'];selected=[r for r in jj if r['selected_index'] is not None]
+        geo.append(dict(variant=v,r3_jobs=len(jj),attempted_sides=len(ss),generated_sides=sum(s['generated'] for s in ss),
+            generation_rate=sum(s['generated'] for s in ss)/len(ss) if ss else None,
+            jobs_with_any_extra=len({s['case_id'] for s in ss if s['generated']}),selected_paths=len(selected),
+            job_any_generation_rate=len({s['case_id'] for s in ss if s['generated']})/len(jj) if jj else None,
+            selected_geometric=sum(str(r['selected_source']).startswith('OBSTACLE_') for r in selected),
+            selected_geometric_fraction=sum(str(r['selected_source']).startswith('OBSTACLE_') for r in selected)/len(selected) if selected else None,
+            exclusion_reasons=dict(Counter(s['reason'] for s in ss if not s['generated']))))
+    output.mkdir(parents=True,exist_ok=True)
+    for file,data in (('jobs.csv',rows),('solutions.csv',solutions),('summary.csv',stats),('groups.csv',groups),('runs.csv',runs),('geometry.csv',seeds),('geometry_summary.csv',geo),
+        ('messages.csv',[dict(cB_bin=b,kind=k,variant=v,message=msg,count=n) for (b,k,v,msg),n in sorted(message.items())])):csvout(output/file,data)
+    save(output/'decision.json',d)
+    lead=f"# Phase39-O2 — 재풀이 결과\n\n**{d['label']}**, 선택 {d['selected_variant']}. V0는 저장 결과{len(meta)}건만 재사용했고 재실행0회다.\n\n{table(d['variants'])}\n\n{table(stats)}\n\n## 기하 초기값\n\n{table(geo)}\n\n## run별 위치 중복 제거 통계\n\n{table(runs)}\n\n메시지 분포와 개별 초기값 제외 사유는 messages.csv / geometry.csv, 연속 그룹 구성은 groups.csv에 있다.\n\n## 고정된 준비 기록\n"
+    doc=Path(document) if document else ROOT/'docs/PHASE39O2_RESOLVE.md';doc.write_text(lead+preparation_text(p).split('\n',1)[1]);return d
