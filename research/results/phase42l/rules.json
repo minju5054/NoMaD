@@ -1,0 +1,17 @@
+{
+  "primary_pose": "Image observation_pose at observation_sim_s; nearest Topomap node in XY, smaller node id on ties",
+  "auxiliary_pose": "Inference completion and controller latch: nearest preceding saved72Hz pose; no extrapolation beyond trajectory",
+  "node_error": "estimated index minus nearest physical node index; absolute error in nodes",
+  "jump": "abs(current closest - preceding inference closest)>=3; first/missing predecessor excluded",
+  "last10": "Failed runs only; observations in[max(0,termination_sim_s-10),termination_sim_s]",
+  "failure_mapping": "Existing primary_cause; POST_PASSAGE_TIMEOUT=>POST_PASSAGE, STATIC_NARROW_STUCK=>STATIC_NARROW; successes override stale cause; others retained",
+  "cohorts": "Final recorded attempt per report row, Phase38 180 + Phase41 15; technical failures listed separately",
+  "hmm": "Forward only, no Viterbi/backward pass, no future observations or nearest-node truth input",
+  "transition": "Uniform over global-map index neighbors |j-i|<=K; K=min(N-1,max(1,ceil(odometry_path_distance/median_positive_adjacent_node_spacing)))",
+  "distance": "Integrated recorded72Hz XY travel between successive valid observation times; no displacement cancellation",
+  "emission": "exp(-logged_NoMaD_distance), unit temperature, uncalibrated energy; no fitting or variants",
+  "missing_window": "Only logged candidate_ids receive emissions; all other posterior entries zero, no distance synthesis",
+  "reset": "If logged window has zero reachable prior mass, uniform prior in that window, count reset explicitly",
+  "limitations": "Observed raw-policy windows are fixed; this is not a counterfactual full online localization policy or driving outcome",
+  "reporting": "Event-weighted error plus equal-run mean MAE; paired raw/HMM errors use identical valid rows; no significance tests or causal claims"
+}
