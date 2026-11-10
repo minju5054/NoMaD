@@ -2,7 +2,7 @@
 
 | status | runs | conditions | seeds | methods | protocol_sha256 |
 |---|---|---|---|---|---|
-| FROZEN; MAIN_NOT_RUN | 40 | D075/D150 | 221,222 | CUT/GRAPH-HO | bb2298f0b196e2581d2553f28087d0045a810f798732e09aea15019d30115ff6 |
+| FROZEN; MAIN_NOT_RUN | 40 | D075/D150 | 221,222 | CUT/GRAPH-HO | 1cc31fda1f431072cb8687d9ea7b1c1e70e628b05f0346067a6199fdd558f6eb |
 
 | method | definition |
 |---|---|
@@ -28,19 +28,19 @@ LC GRAPH-HO seed95 smoke 1회만 허용(본 결과 제외). reference 최단 LC/
 
 | scene | reference_m |
 |---|---|
-| SLW | 5.69336 |
-| LC | 5.69336 |
-| L2 | ~7.7 |
-| H1 | 5.69336 |
-| H2 | ~7.7 |
+| SLW | 6.2971 |
+| LC | 5.6934 |
+| L2 | ~7.7 (straight reference) |
+| H1 | 5.6934 |
+| H2 | ~7.7 (straight reference) |
 
 | passed | tests | dry_run | main_started | offline_resolves | protocol_sha256 | disk_free_bytes |
 |---|---|---|---|---|---|---|
-| True | 11 | 40 | 0 | 0 | bb2298f0b196e2581d2553f28087d0045a810f798732e09aea15019d30115ff6 | 1132997447680 |
+| True | 11 | 40 | 0 | 0 | 1cc31fda1f431072cb8687d9ea7b1c1e70e628b05f0346067a6199fdd558f6eb | 1132937232384 |
 
-| status |
-|---|
-| NOT_RUN |
+| technical_validation | graph_attempts | graph_applied | graph_reasons | ec_checks | ec_rejects | new_timeout_count |
+|---|---|---|---|---|---|---|
+| PASS | 35 | 32 | {'INITIALIZATION_REJECTED': 2, 'ACCEPTED': 32, 'SOLVER_OR_CERTIFICATE_REJECT': 1} | 135 | 0 | 1 |
 
 smoke는 기술 audit만 평가한다. 수치 성과로 method/parameter를 바꾸지 않는다. 본 실행은 사용자가 수행한다.
 

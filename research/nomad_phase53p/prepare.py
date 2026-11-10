@@ -63,7 +63,7 @@ def document():
     status=prefix+'PYTHONPATH=research /usr/bin/python3 -m nomad_phase53p.campaign --status'
     save(OUT/'preparation/commands.json',dict(campaign=command,status=status,main_executed=False))
     smoke_row=dict(status='NOT_RUN') if not smoke else {k:smoke.get(k) for k in ('technical_validation','graph_attempts','graph_applied','graph_reasons','ec_checks','ec_rejects','new_timeout_count')}
-    lengths=[dict(scene=s,reference_m=p['scenes'][s+'_D075'].get('reference_length_m','~7.7' if s in ('L2','H2') else '5.69336')) for s in BASE_SCENES]
+    lengths=[dict(scene=s,reference_m=json.loads((ROOT/p['scenes'][s+'_D075']['scenario']).read_text()).get('reference_length_m','~7.7 (straight reference)')) for s in BASE_SCENES]
     lines=['# Phase53-P 준비',table([dict(status='FROZEN; MAIN_NOT_RUN',runs=40,conditions='D075/D150',seeds='221,222',methods='CUT/GRAPH-HO',protocol_sha256=sha256_file(HERE/'protocol.json'))]),
         table([dict(method=k,definition=v) for k,v in p['method_definitions'].items()]),table([dict(item=k,value=v) for k,v in p['report_definitions'].items()]),
         'LC GRAPH-HO seed95 smoke 1회만 허용(본 결과 제외). reference 최단 LC/H1 동률 중 LC 선택. 추가 분석·오프라인 재풀이 없음.',table(lengths),table([v]),table([smoke_row]),
@@ -84,9 +84,38 @@ def validate():
     from .report import generate
     generate();document();print(json.dumps(result))
 
+def finalize_smoke():
+    """Associate the single saved PASS with the final prep manifest, not rerun it.
+
+    Only this documentation/registration tool may differ from the smoke commit;
+    all runtime/test/report sources and every numerical protocol field must match.
+    Both protocol hashes are retained, so the raw run provenance is never rewritten.
+    """
+    p=verify();metrics=list((SMOKE_ROOT/'metrics').glob('*.json'));assert len(metrics)==1
+    r=json.loads(metrics[0].read_text());assert r['technical_validation']=='PASS' and r['attempt_count']==1
+    provenance=json.loads((Path(r['output'])/'provenance.json').read_text())
+    assert provenance['smoke_excluded'] and provenance['index']==95 and provenance['method']=='GRAPH-HO'
+    ignore={'frozen_at_utc','source_sha256'}
+    assert {k:v for k,v in p.items() if k not in ignore}=={k:v for k,v in provenance['protocol'].items() if k not in ignore}
+    exempt=str((HERE/'prepare.py').relative_to(ROOT));verified={}
+    for f,h in provenance['source_sha256'].items():
+        if f==exempt:continue
+        assert sha256_file(ROOT/f)==h,f
+        verified[f]=h
+    count=0
+    for f in (Path(r['output'])/x for x in ('controller.jsonl','phase20_commands.jsonl','graph_ho.jsonl','exec_cert.jsonl')):
+        for line in f.read_text().splitlines():
+            if line.strip():json.dumps(json.loads(line),allow_nan=False);count+=1
+    save(OUT/'preparation/smoke.json',dict(r,excluded_from_main=True,
+        protocol_sha256=sha256_file(HERE/'protocol.json'),smoke_execution_protocol_sha256=provenance['protocol_sha256'],
+        runtime_source_equivalence=verified,preparation_only_change='Reference-length documentation reads scenario metadata;final smoke registration utility only',
+        standard_json_records_validated=count,simulations_started=1))
+    print(json.dumps(dict(smoke='PASS',runtime_sources_identical=len(verified),json_records=count,main_started=0)))
+
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--freeze',action='store_true');ap.add_argument('--validate',action='store_true');ap.add_argument('--document',action='store_true');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--freeze',action='store_true');ap.add_argument('--validate',action='store_true');ap.add_argument('--document',action='store_true');ap.add_argument('--finalize-smoke',action='store_true');a=ap.parse_args()
     if a.freeze:freeze()
     if a.validate:validate()
+    if a.finalize_smoke:finalize_smoke()
     if a.document:document()
 if __name__=='__main__':main()
