@@ -10,19 +10,30 @@ from . import scene
 class Tests(unittest.TestCase):
     def setUp(self):self.base=runtime_config('C0',201,90,'H1');self.p=scene.load_spec()
     def test_requested_center_and_size(self):
-        q,s=scene.target(self.p['topomap_nodes_xy_m']);np.testing.assert_allclose(q,[2.8840808527897175,1.5],atol=1e-12,rtol=0)
+        q,s=scene.target(self.p['topomap_nodes_xy_m']);np.testing.assert_allclose(q,[2.8764528309775836,1.10],atol=1e-12,rtol=0)
         np.testing.assert_array_equal(q,self.p['box']['center_xy_m']);self.assertFalse(self.p['position_adjusted_for_overlap'])
         after=next(o for o in self.base['obstacles'] if o['id']=='AfterCorner');self.assertEqual(list(scene.SIZE),after['size_xyz_m'])
     def test_phase38_gap_and_no_overlap(self):
         p=self.p;self.assertEqual(scene.overlap_reasons(self.base,p['box']['center_xy_m']),[])
         result=gap_check(self.base,p['box'],1);self.assertTrue(result['passed']);self.assertEqual(result['required_gap_m'],.28)
-        np.testing.assert_allclose(result['gaps_m'],[.23408085278971758,1.0659191472102827],atol=1e-12,rtol=0)
+        np.testing.assert_allclose(result['gaps_m'],[.22645283097758373,1.0735471690224165],atol=1e-12,rtol=0)
     def test_front_and_one_meter_arc_trigger_once(self):
         c=scene.configure(self.base);p=c['h1v2'];front_s,front=scene.box_front(p['topomap_nodes_xy_m'],p['box']['center_xy_m'])
-        self.assertAlmostEqual(front[1],1.3);self.assertAlmostEqual(front_s-p['spawn']['arc_m'],1.)
+        self.assertAlmostEqual(front[1],.9);self.assertAlmostEqual(front_s-p['spawn']['arc_m'],1.)
         for delta,expected in [(-1e-5,False),(1e-5,True),(.02,True)]:
             xy,_=scene.at(p['topomap_nodes_xy_m'],p['spawn']['arc_m']+delta)
             self.assertEqual(scene.triggered(c,[*xy,0.],0),expected);self.assertFalse(scene.triggered(c,[*xy,0.],1))
+    def test_return_corridor_widths_and_exact_corner_witness(self):
+        r=scene.return_gap_check(self.base,self.p['box']);self.assertTrue(r['passed']);self.assertAlmostEqual(r['top_to_aftercorner_m'],.4)
+        self.assertAlmostEqual(r['diagonal_minimum_m'],.4582284766117627)
+        self.assertAlmostEqual(r['horizontal_separation_m'],.22354716902241645)
+        distance=np.linalg.norm(np.array(r['closest_box_point_xy_m'])-r['closest_aftercorner_point_xy_m'])
+        self.assertAlmostEqual(distance,r['diagonal_minimum_m']);self.assertEqual(r['required_gap_m'],.28)
+    def test_previous_position_return_check_failure_does_not_mutate_box(self):
+        box=copy.deepcopy(self.p['previous_h1v2_preview']['box']);before=copy.deepcopy(box)
+        r=scene.return_gap_check(self.base,box);self.assertFalse(r['passed']);self.assertEqual(box,before)
+        self.assertAlmostEqual(r['top_to_aftercorner_m'],0.);self.assertAlmostEqual(r['diagonal_minimum_m'],.2159191472102826)
+        self.assertEqual(r['checks'],dict(top_to_aftercorner=False,diagonal_minimum=False))
     def test_config_is_opt_in_and_preserves_frozen_inputs(self):
         before=copy.deepcopy(self.base);c=scene.configure(self.base);self.assertEqual(self.base,before)
         for k,v in before.items():

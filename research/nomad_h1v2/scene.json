@@ -150,44 +150,109 @@
   },
   "requested_target": {
     "x_hint_m": 2.5,
-    "y_m": 1.5,
+    "y_m": 1.1,
     "position_xy_m": [
-      2.8840808527897175,
-      1.5
+      2.8764528309775836,
+      1.1
     ],
-    "arc_m": 3.8553869286557605
+    "arc_m": 3.454524121687583
   },
   "box": {
     "id": "DynamicObstacle",
     "center_xy_m": [
-      2.8840808527897175,
-      1.5
+      2.8764528309775836,
+      1.1
     ],
     "size_xyz_m": [
       0.5,
       0.4,
       0.8
     ],
-    "arc_m": 3.8553869286557605,
+    "arc_m": 3.454524121687583,
     "yaw_rad": 0.0
   },
   "position_adjusted_for_overlap": false,
-  "nearest_position_rule": "If overlap only: minimum Euclidean displacement from requested polyline point;ties arc displacement then earliest arc. No movement after gap failure.",
-  "box_front": {
-    "position_xy_m": [
-      2.889146938309896,
+  "nearest_position_rule": "Fixed polyline y=1.10;no relocation on overlap,gap or return-gap failure.",
+  "static_overlap_reasons": [],
+  "return_gap_check": {
+    "passed": true,
+    "reason": "PASS",
+    "required_gap_m": 0.28,
+    "top_surface_y_m": 1.3,
+    "aftercorner_bottom_y_m": 1.7,
+    "top_to_aftercorner_m": 0.3999999999999999,
+    "horizontal_separation_m": 0.22354716902241645,
+    "diagonal_minimum_m": 0.4582284766117627,
+    "closest_box_point_xy_m": [
+      3.1264528309775836,
       1.3
     ],
-    "arc_m": 3.6553227758884597,
+    "closest_aftercorner_point_xy_m": [
+      3.35,
+      1.7
+    ],
+    "checks": {
+      "top_to_aftercorner": true,
+      "diagonal_minimum": true
+    },
+    "definition": "top/bottom signed y gap and exact minimum Euclidean surface distance between world-axis-aligned boxes;physical width,not footprint clearance",
+    "scope": "Static local geometry only;no rollout or claim that PP can complete the return maneuver"
+  },
+  "previous_h1v2_preview": {
+    "box": {
+      "id": "PreviousH1v2",
+      "center_xy_m": [
+        2.8840808527897175,
+        1.5
+      ],
+      "size_xyz_m": [
+        0.5,
+        0.4,
+        0.8
+      ]
+    },
+    "arc_m": 3.8553869286557605,
+    "source_commit": "88fd53a",
+    "return_gap_check": {
+      "passed": false,
+      "reason": "RETURN_GAP_FAIL",
+      "required_gap_m": 0.28,
+      "top_surface_y_m": 1.7,
+      "aftercorner_bottom_y_m": 1.7,
+      "top_to_aftercorner_m": 0.0,
+      "horizontal_separation_m": 0.2159191472102826,
+      "diagonal_minimum_m": 0.2159191472102826,
+      "closest_box_point_xy_m": [
+        3.1340808527897175,
+        1.7
+      ],
+      "closest_aftercorner_point_xy_m": [
+        3.35,
+        1.7
+      ],
+      "checks": {
+        "top_to_aftercorner": false,
+        "diagonal_minimum": false
+      },
+      "definition": "top/bottom signed y gap and exact minimum Euclidean surface distance between world-axis-aligned boxes;physical width,not footprint clearance",
+      "scope": "Static local geometry only;no rollout or claim that PP can complete the return maneuver"
+    }
+  },
+  "box_front": {
+    "position_xy_m": [
+      2.854793082677139,
+      0.9000000000000001
+    ],
+    "arc_m": 3.253354678937351,
     "definition": "first intersection of forward topomap node polyline with closed box footprint"
   },
   "spawn": {
     "position_xy_m": [
-      2.5105711566805375,
-      0.4228072686341149
+      2.2122295413180213,
+      0.15724647609964243
     ],
-    "heading_rad": 0.8099357664331795,
-    "arc_m": 2.6553227758884597,
+    "heading_rad": 0.5732950937269404,
+    "arc_m": 2.253354678937351,
     "lead_arc_m": 1.0,
     "rule": "First72Hz tick with projected robot-center arc>=box_front_arc-1.0m,once only;projection onto stored node polyline,no actual tick/time predetermined"
   },
@@ -195,12 +260,12 @@
     "passed": true,
     "reason": "PASS",
     "gaps_m": [
-      0.23408085278971758,
-      1.0659191472102827
+      0.22645283097758373,
+      1.0735471690224165
     ],
     "required_gap_m": 0.28,
-    "left_m": 0.23408085278971758,
-    "right_m": 1.0659191472102827,
+    "left_m": 0.22645283097758373,
+    "right_m": 1.0735471690224165,
     "left_definition": "-x (looking along+y)",
     "right_definition": "+x (looking along+y)"
   },

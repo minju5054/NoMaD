@@ -28,7 +28,7 @@ def project(points,pose):
     q=a+u[:,None]*delta;i=int(np.argmin(np.sum((q-np.asarray(pose)[:2])**2,axis=1)))
     return float(arc[i]+u[i]*(arc[i+1]-arc[i])),q[i]
 
-def target(points,y=1.5,x_hint=2.5):
+def target(points,y=1.10,x_hint=2.5):
     xy,arc=polyline(points);found=[]
     for i,(a,b) in enumerate(zip(xy[:-1],xy[1:])):
         if abs(b[1]-a[1])<1e-12:
@@ -37,7 +37,7 @@ def target(points,y=1.5,x_hint=2.5):
         else:u=(y-a[1])/(b[1]-a[1])
         if 0<=u<=1:
             q=a+u*(b-a);s=arc[i]+u*(arc[i+1]-arc[i]);found.append((abs(q[0]-x_hint),float(s),q))
-    if not found:raise ValueError('Topomap polyline does not intersect y=1.5m')
+    if not found:raise ValueError(f'Topomap polyline does not intersect y={y}m')
     _,s,q=min(found,key=lambda item:(item[0],item[1]));return q,s
 
 def overlap_reasons(c,center,size=SIZE):
@@ -93,6 +93,28 @@ def box_front(points,center,size=SIZE):
         if left<=right:hits.append((float(arc[i]+left*(arc[i+1]-arc[i])),a+left*delta))
     if not hits:raise ValueError('Selected box does not intersect topomap polyline')
     return min(hits,key=lambda x:x[0])
+
+def return_gap_check(c,box):
+    """Report-only, exact static AABB surface gaps to AfterCorner.
+
+    Both physical widths are compared with2r+.1. No relocation, controller
+    change or navigation feasibility claim follows from this local check.
+    """
+    after=next(o for o in configured_obstacles(c) if o['id']=='AfterCorner')
+    lo=np.asarray(box['center_xy_m'])-np.asarray(box['size_xyz_m'][:2])/2
+    hi=np.asarray(box['center_xy_m'])+np.asarray(box['size_xyz_m'][:2])/2
+    a=np.asarray(after['center_xy_m'])-np.asarray(after['size_xyz_m'][:2])/2
+    b=np.asarray(after['center_xy_m'])+np.asarray(after['size_xyz_m'][:2])/2
+    sep=np.maximum(np.maximum(a-hi,lo-b),0.)
+    vertical=float(a[1]-hi[1]);distance=float(np.linalg.norm(sep));required=float(2*c['agent_radius_m']+.1)
+    first=np.clip((a+b)/2,lo,hi);second=np.clip(first,a,b);first=np.clip(second,lo,hi)
+    checks=dict(top_to_aftercorner=bool(vertical>=required),diagonal_minimum=bool(distance>=required))
+    return dict(passed=all(checks.values()),reason='PASS' if all(checks.values()) else 'RETURN_GAP_FAIL',required_gap_m=required,
+        top_surface_y_m=float(hi[1]),aftercorner_bottom_y_m=float(a[1]),top_to_aftercorner_m=vertical,
+        horizontal_separation_m=float(sep[0]),diagonal_minimum_m=distance,
+        closest_box_point_xy_m=first.tolist(),closest_aftercorner_point_xy_m=second.tolist(),checks=checks,
+        definition='top/bottom signed y gap and exact minimum Euclidean surface distance between world-axis-aligned boxes;physical width,not footprint clearance',
+        scope='Static local geometry only;no rollout or claim that PP can complete the return maneuver')
 
 def load_spec():
     p=json.loads((HERE/'scene.json').read_text())
