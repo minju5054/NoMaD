@@ -1,0 +1,71 @@
+{
+  "status": "FROZEN",
+  "rules": {
+    "phase": "52-EC-OFFLINE",
+    "input_phases": [
+      "phase47c",
+      "phase52p"
+    ],
+    "expected_runs": 100,
+    "start": "B=recorded EC start actual pose;recorded actual v,w;exact check snapshot only;missing maps excluded with counts",
+    "termination": "Brake request at earlier path endpoint recognition or2.0s;latched stop_command until v=0,w=0",
+    "clock": "72Hz integration,9Hz control. Continuation keeps absolute phase;2s brake request applied at next9Hz tick (0 or4 extra ticks on these logs),all held-motion ticks checked",
+    "replay": "Original INSTALL checks rebuild fresh frozen NA profile;continuation restores installed generation and recorded control-state evolution before check;regression matches pass,duration,endpoint,clearance<=1e-6m",
+    "tail_comparison": "All recorded checks;confirmed PASS->REJECT requires original replay match. Mismatches separated,not claimed as tail effects",
+    "graph": "Reduced SE(2) execution graph:14 XY variables (B+7 future points);all72Hz SE(2) states eliminated through frozen PP/SP integrate_se2 equality factors;no independent yaw/time variables",
+    "graph_reference": "Each of8 current stored NoMaD candidates separately:project B,connect B to suffix,re-sample8 arc-length points;B fixed;no0.25m short cutoff,degenerate suffix reported",
+    "objective": "sum_i ||p_i-q_candidate_i||^2 only;unit weight,no extra sigma or tuning",
+    "bounds": "Each future XY coordinate within +/-0.75m of its own initial reference",
+    "execution_constraint": "Minimum continuous circular-footprint clearance on PP/SP72Hz trajectory including braking tail >=0.025m;terminal v=w=0 by construction",
+    "graph_clock": "New-path INSTALL EC semantics:initial PP control at t=0,then9Hz;actual initial pose/v/w from check. No replanning delay,NoMaD regeneration or depth update simulated",
+    "optimizer": {
+      "method": "SLSQP",
+      "maxiter": 100,
+      "ftol": 1e-08,
+      "objective_gradient": "analytic",
+      "constraint_gradient": "2-point finite difference",
+      "eps_m": 1e-06
+    },
+    "acceleration": "Compiled arithmetic mirror with exact arc/site clearance clipped only above+0.075m;no fast-math;geometry-equivalent .025 feasible set;tested vs Python",
+    "acceptance": "Solver success + numerical violation<=1e-7 + independent Python braking-tail EC >=.025 and terminal stop;reject independent failures",
+    "infeasible_boundary": "If fixed initial footprint itself fails exact.025 clearance,all8 starts proven infeasible without SLSQP;count as no solution and record reason",
+    "dedup": "Unique(run,tick,pose,v,w,snapshot frame/file,current candidate bank id,cap). Original REJECT only;full-speed inputs solved once;0.1m/s unique inputs counted but never solved",
+    "candidate_selection": "Lowest objective among independently verified8 solutions,tie sample index. Report original-candidate tail PASS and solved-only rescue separately",
+    "timing": "Four independent event workers,BLAS1. Per-event time includes8 starts and independent checks;map loading/startup separate. Per-start timing also reported",
+    "limitations": "Same historical data;offline feasibility only. Distance-only objective can shorten/stop or rotate without progress:travel and <=5cm motion reported. No oracle used for solve/certificate",
+    "no_simulation": true,
+    "no_new_inference": true,
+    "no_parameter_tuning": true
+  },
+  "source_sha256": {
+    "research/nomad_phase52ec/fast.py": "b392b259e7916f2bfd10aa0f971a8de23fb9d815473f602bfab1e9dc004c895d",
+    "research/nomad_phase52ec/__init__.py": "af94c4df0a5e66cc4f3a820777aa47d2f5ef1081f2276f63de5448dbd6cdf088",
+    "research/nomad_phase52ec/test_analysis.py": "e4f28bd1f2283b34cbb71b421db69fe124e9384d3b0cd48d7dcddfd18eb68635",
+    "research/nomad_phase52ec/graph.py": "22890a5a1e47e2307a715c60d5b1f5de1449ecfacc508428e455120b53f82aec",
+    "research/nomad_phase52ec/chunks.py": "fdd43aa4f1738b45ca2b07b41b6f5c12fa8575403d8c22232541e2eea308a691",
+    "research/nomad_phase52ec/inputs.py": "07c795408a949530e6e5dd0b217f4610352931a00b342980823d268c02c3ed47",
+    "research/nomad_phase52ec/report.py": "c3162b8bebf563a717a3358a4ebc5ed6d3caa70e17c5256022b7f6d4c5f39e43",
+    "research/nomad_phase52ec/rollout.py": "270f5fd2c3036dd6b59449ed2bfdda981ab69c3218bb96990728c16e462f8274",
+    "research/nomad_phase52ec/kernel.cpp": "a5023fd30f6de5e40a2216761d553db4745b8505acb44c52ba39484026e0a406",
+    "research/nomad_phase52ec/evaluate.py": "3e7e503460ae76c158fcb2ce01003c5c78513d4653e6225426c39eeb3531845f",
+    "research/nomad_phase52ec/campaign.py": "f7291e0a7f6c932a0f779f1c80e1161c740489725e7385766a7af97b2109e3b3",
+    "research/nomad_phase52ec/test_campaign.py": "9964f21af4d55b5a46a94771c37095cddac8ebfef35630f4456842a302ee77ed"
+  },
+  "report_only_revision": {
+    "reason": "Separate resampling-only and actual-optimization rescues;add totals and edit tails;no numerical rule or solver changes;separate geometric suffix tangent from frozen5cm executor alignment bearing in supplementary chunk report;distinguish measured solver+verification work from analysis-call wall including raw-candidate EC baseline checks;user-requested resumable offline campaign wrapper only,completed numerical inputs never recomputed",
+    "numerical_protocol_sha256": "9e45b542c9ba6365646ed10d0c2a2f7e0bdc70d415a95e0683cbebca5fbb2175",
+    "changed_files": [
+      "research/nomad_phase52ec/report.py",
+      "research/nomad_phase52ec/chunks.py",
+      "research/nomad_phase52ec/campaign.py",
+      "research/nomad_phase52ec/test_campaign.py"
+    ]
+  },
+  "campaign_registration": {
+    "graph_inputs_sha256": "7d8652d5f829b65eab9b4e2f92971801f9ee62a748e7e4d855d1a84da58b2afc",
+    "heartbeat_s": 60,
+    "workers": 4,
+    "completed_cache_inputs": 420,
+    "simulation_allowed": false
+  }
+}

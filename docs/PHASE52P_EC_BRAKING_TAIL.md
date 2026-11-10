@@ -1,0 +1,173 @@
+# EC 제동 꼬리: Phase47-C·Phase52-P 저장 검사 재판정
+
+| phase | runs | runs_with_ec | runs_without_ec |
+|---|---|---|---|
+| phase47c | 60 | 40 | 20 |
+| phase52p | 40 | 40 | 0 |
+
+| phase | scene | recorded | assessed | missing_maps | other_excluded | replay_matches | replay_mismatches | logged_pass | confirmed_pass_to_reject | fraction_of_reproduced_pass | endpoint_flips | horizon_flips | flipped_speed_median_m_s | flipped_remaining_median_m |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| phase47c | H1 | 643 | 643 | 0 | 0 | 643 | 0 | 599 | 12 | 0.020033 | 0 | 12 | 0.3 | 0.012142 |
+| phase47c | H2 | 952 | 952 | 0 | 0 | 952 | 0 | 933 | 3 | 0.0032154 | 0 | 3 | 0.079726 | 0.36989 |
+| phase47c | L2 | 792 | 792 | 0 | 0 | 792 | 0 | 759 | 5 | 0.0065876 | 0 | 5 | 0.097562 | 0.29201 |
+| phase47c | LC | 598 | 598 | 0 | 0 | 598 | 0 | 588 | 9 | 0.015306 | 0 | 9 | 0.3 | 0.047828 |
+| phase47c | SLW | 1369 | 1369 | 0 | 0 | 1369 | 0 | 1057 | 20 | 0.018921 | 3 | 17 | 0.18106 | 0.24117 |
+| phase52p | H1 | 840 | 840 | 0 | 0 | 840 | 0 | 776 | 18 | 0.023196 | 0 | 18 | 0.3 | 0 |
+| phase52p | H2 | 2353 | 2353 | 0 | 0 | 2353 | 0 | 2054 | 12 | 0.0058423 | 1 | 11 | 0.11356 | 0.15323 |
+| phase52p | L2 | 1663 | 1663 | 0 | 0 | 1663 | 0 | 1480 | 10 | 0.0067568 | 4 | 6 | 0.12709 | 0.20393 |
+| phase52p | LC | 951 | 951 | 0 | 0 | 951 | 0 | 918 | 6 | 0.0065359 | 0 | 6 | 0.3 | 0.068939 |
+| phase52p | SLW | 2110 | 2110 | 0 | 0 | 2110 | 0 | 1763 | 41 | 0.023256 | 2 | 39 | 0.22617 | 0.060808 |
+| phase47c | ALL | 4354 | 4354 | 0 | 0 | 4354 | 0 | 3936 | 49 | 0.012449 | 3 | 46 | 0.3 | 0.1306 |
+| phase52p | ALL | 7917 | 7917 | 0 | 0 | 7917 | 0 | 6991 | 87 | 0.012445 | 7 | 80 | 0.27319 | 0.060808 |
+| ALL | ALL | 12271 | 12271 | 0 | 0 | 12271 | 0 | 10927 | 136 | 0.012446 | 10 | 126 | 0.27587 | 0.079786 |
+
+| item | value |
+|---|---|
+| 규칙 | 경로 끝 또는2s 중 먼저 제동을 요청하고 frozen stop_command(v=max(0,v-0.5/9),omega=0)를9Hz마다 반복하여v=0까지72Hz 적분/연속 swept footprint 검사. 주행 코드 수정 없음 |
+| 시간 격자 | 주기 EC는9Hz 중간4tick 위상일 수 있음.2s 제동 요청은 정확히 기록하고 다음 실제9Hz 제어 tick에서 적용(0/4tick 추가),이 구간도 검사. 새 경로 Graph 검증은 원 INSTALL EC처럼t=0에서 첫 제어 |
+| 원 EC 재현 | 설치 경로는 새 frozen NA profile,continuation은 저장된 generation/실제 제어 호출로 mode·target·progress 복원. 원 PASS·끝점·시간·최소여유1e-6 일치한 검사만 확정 PASS→REJECT로 집계 |
+| 입력 보존 | 정확한 검사 snapshot을 STORAGE_RETROFIT로 복원. 없는 지도는 제외,오래된 지도 대체 없음. NoMaD world 좌표의 플랫폼별 fused multiply-add 차이는 저장 path SHA256과 비트일치하는 경우만 복원 |
+| 한계 | 정적 저장 지도 위 오프라인 재판정. 새 NoMaD/지도갱신/주행 없음. v=0까지 제동을 유지하는 분석 규칙이므로 향후 온라인에서도 같은 종료 동작이 필요 |
+
+## PASS → REJECT 검사
+
+| phase | scene | method | seed | condition | check_id | time_s | scope | actual_v_m_s | remaining_length_m | logged_clearance_m | new_clearance_m | stop_reason |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| phase47c | H1 | OURS-DETOUR+HMM | 222 | D075 | 46 | 18.389 | PERIODIC | 0.11869 | 0.32863 | 0.045804 | -0.023807 | HORIZON |
+| phase47c | H1 | OURS-DETOUR+HMM | 222 | D075 | 53 | 20.389 | PERIODIC | 0.3 | 0.19451 | 0.05011 | -0.012466 | HORIZON |
+| phase47c | H1 | OURS-DETOUR+HMM | 222 | D075 | 63 | 23.389 | PERIODIC | 0.20375 | 0.019347 | 0.049581 | 0.0073813 | HORIZON |
+| phase47c | H1 | OURS-DETOUR | 222 | D075 | 65 | 24.667 | PERIODIC | 0.3 | 0 | 0.081054 | 0.017475 | HORIZON |
+| phase47c | H1 | OURS-DETOUR+HMM | 223 | D075 | 31 | 13.889 | PERIODIC | 0.26716 | 0 | 0.045833 | -0.01073 | HORIZON |
+| phase47c | H1 | OURS-DETOUR+HMM | 223 | D075 | 61 | 23.889 | PERIODIC | 0.26969 | 0.025298 | 0.041473 | 0.0062205 | HORIZON |
+| phase47c | H1 | OURS-DETOUR+HMM | 223 | D075 | 76 | 27.444 | INSTALL | 0.3 | 0 | 0.033626 | 0.0054245 | HORIZON |
+| phase47c | H1 | OURS-DETOUR | 223 | D075 | 59 | 22.389 | PERIODIC | 0.3 | 0.12844 | 0.05643 | -0.020101 | HORIZON |
+| phase47c | H1 | OURS-DETOUR | 223 | D075 | 64 | 23.889 | PERIODIC | 0.3 | 0 | 0.071795 | 0.01781 | HORIZON |
+| phase47c | H1 | OURS-DETOUR+HMM | 224 | D075 | 52 | 21.333 | PERIODIC | 0.3 | 0.0049374 | 0.062095 | -0.0056753 | HORIZON |
+| phase47c | H1 | OURS-DETOUR+HMM | 224 | D075 | 55 | 22.333 | PERIODIC | 0.3 | 0 | 0.072306 | 0.01695 | HORIZON |
+| phase47c | H1 | OURS-DETOUR+HMM | 224 | D075 | 65 | 23.833 | PERIODIC | 0.1 | 0.13456 | 0.029365 | 0.021156 | HORIZON |
+| phase47c | H2 | OURS-DETOUR+HMM | 221 | D075 | 29 | 12.667 | INSTALL | 0 | 0.3775 | 0.093752 | 0.022011 | HORIZON |
+| phase47c | H2 | OURS-DETOUR | 221 | D075 | 26 | 11.889 | PERIODIC | 0.3 | 0 | 0.062341 | 0.021492 | HORIZON |
+| phase47c | H2 | OURS-DETOUR | 222 | D075 | 36 | 14.889 | INSTALL | 0.079726 | 0.36989 | 0.072887 | 0.011424 | HORIZON |
+| phase47c | L2 | OURS-DETOUR+HMM | 222 | D075 | 40 | 16.389 | PERIODIC | 0.097562 | 0.36695 | 0.049075 | -0.0034996 | HORIZON |
+| phase47c | L2 | OURS-DETOUR | 222 | D075 | 44 | 17.389 | PERIODIC | 0.07337 | 0.29201 | 0.081206 | -0.0078172 | HORIZON |
+| phase47c | L2 | OURS-DETOUR+HMM | 223 | D075 | 48 | 18.889 | INSTALL | 0.05 | 0.38547 | 0.036987 | 0.0013139 | HORIZON |
+| phase47c | L2 | OURS-DETOUR+HMM | 224 | D075 | 82 | 30.667 | PERIODIC | 0.3 | 0 | 0.028496 | -0.016932 | HORIZON |
+| phase47c | L2 | OURS-DETOUR+HMM | 224 | D075 | 83 | 30.667 | INSTALL | 0.3 | 0.23204 | 0.027733 | -0.017668 | HORIZON |
+| phase47c | LC | OURS-DETOUR+HMM | 221 | D075 | 50 | 19.889 | PERIODIC | 0.3 | 0.0099622 | 0.046548 | -0.0029537 | HORIZON |
+| phase47c | LC | OURS-DETOUR | 221 | D075 | 51 | 19.889 | PERIODIC | 0.3 | 0 | 0.048019 | -0.020431 | HORIZON |
+| phase47c | LC | OURS-DETOUR+HMM | 222 | D075 | 51 | 20.167 | PERIODIC | 0.3 | 0.18592 | 0.039089 | -0.017097 | HORIZON |
+| phase47c | LC | OURS-DETOUR | 222 | D075 | 31 | 13.389 | PERIODIC | 0.21824 | 0.096387 | 0.062201 | -0.025909 | HORIZON |
+| phase47c | LC | OURS-DETOUR | 223 | D075 | 31 | 13.667 | PERIODIC | 0.3 | 0 | 0.03076 | 0.024481 | HORIZON |
+| phase47c | LC | OURS-DETOUR | 223 | D075 | 46 | 18.667 | PERIODIC | 0.13025 | 0.28503 | 0.053264 | 0.00028655 | HORIZON |
+| phase47c | LC | OURS-DETOUR | 223 | D075 | 49 | 19.667 | PERIODIC | 0.3 | 0.047828 | 0.083704 | 0.0119 | HORIZON |
+| phase47c | LC | OURS-DETOUR+HMM | 224 | D075 | 56 | 21.389 | PERIODIC | 0.3 | 0.065879 | 0.07519 | 0.00037647 | HORIZON |
+| phase47c | LC | OURS-DETOUR | 224 | D075 | 55 | 21.389 | PERIODIC | 0.3 | 0.0080831 | 0.086873 | 0.018477 | HORIZON |
+| phase47c | SLW | OURS-DETOUR | 221 | D075 | 11 | 6.2222 | INSTALL | 0.3 | 0.060004 | 0.032704 | -0.023254 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 14 | 7.6667 | INSTALL | 0.3 | 0.075421 | 0.042334 | -0.025337 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 61 | 18.944 | PERIODIC | 0.13007 | 0.24373 | 0.036449 | 0.014212 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 88 | 28.333 | PERIODIC | 0.089741 | 0.16117 | 0.03441 | -0.023239 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 92 | 29.333 | INSTALL | 0.058576 | 0.32369 | 0.062677 | 0.017504 | ENDPOINT |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 116 | 36.833 | PERIODIC | 0.050671 | 0.24158 | 0.030338 | -0.043909 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 119 | 37.444 | INSTALL | 0.072649 | 0.35251 | 0.029944 | -0.0052276 | ENDPOINT |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 120 | 37.944 | PERIODIC | 0.23204 | 0.28955 | 0.03274 | -0.0052276 | ENDPOINT |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 255 | 85.167 | PERIODIC | 0.3 | 0.25373 | 0.054232 | -0.028051 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 267 | 88.444 | INSTALL | 0.088691 | 0.31864 | 0.035823 | 0.013469 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 222 | D075 | 269 | 89 | INSTALL | 0.05 | 0.22859 | 0.031734 | 0.02322 | HORIZON |
+| phase47c | SLW | OURS-DETOUR | 222 | D075 | 7 | 5.3889 | PERIODIC | 0.3 | 0.1306 | 0.056802 | 0.02446 | HORIZON |
+| phase47c | SLW | OURS-DETOUR | 222 | D075 | 16 | 6.4444 | INSTALL | 0.3 | 0.027654 | 0.025605 | -0.042266 | HORIZON |
+| phase47c | SLW | OURS-DETOUR | 222 | D075 | 65 | 22.889 | INSTALL | 0.052952 | 0.24926 | 0.065357 | 0.0035844 | HORIZON |
+| phase47c | SLW | OURS-DETOUR | 222 | D075 | 80 | 27.889 | PERIODIC | 0.084266 | 0.29387 | 0.067873 | 0.0017509 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 223 | D075 | 76 | 29.889 | PERIODIC | 0.3 | 0 | 0.040859 | 0.011735 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 223 | D075 | 100 | 36.889 | INSTALL | 0 | 0.35407 | 0.028469 | 0.02185 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 223 | D075 | 135 | 48.889 | PERIODIC | 0.3 | 0 | 0.065876 | -0.0075676 | HORIZON |
+| phase47c | SLW | OURS-DETOUR+HMM | 224 | D075 | 9 | 6.1667 | PERIODIC | 0.3 | 0.099569 | 0.071586 | -0.015805 | HORIZON |
+| phase47c | SLW | OURS-DETOUR | 224 | D075 | 10 | 5.8889 | INSTALL | 0.24444 | 0.24077 | 0.060664 | -0.010446 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 221 | D075 | 53 | 20.889 | PERIODIC | 0.3 | 0 | 0.066365 | 0.0044936 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 221 | D075 | 73 | 24.889 | PERIODIC | 0.3 | 0 | 0.055264 | 0.016426 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 221 | D075 | 74 | 24.889 | KEEP_ACTIVE_NO_MIN_LENGTH | 0.3 | 0 | 0.055264 | 0.016426 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 221 | D075 | 60 | 20.889 | PERIODIC | 0.3 | 0 | 0.033583 | -0.029892 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 222 | D075 | 43 | 17.389 | PERIODIC | 0.084656 | 0.37328 | 0.028055 | -0.024753 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 222 | D075 | 60 | 22.389 | PERIODIC | 0.3 | 0 | 0.034349 | -0.030484 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 222 | D075 | 68 | 24.389 | PERIODIC | 0.13543 | 0.1494 | 0.037296 | 0.010331 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 222 | D075 | 62 | 20.889 | PERIODIC | 0.3 | 0 | 0.044439 | -0.02661 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 222 | D075 | 72 | 22.444 | INSTALL | 0.3 | 0.0041796 | 0.033172 | -0.01645 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 222 | D075 | 75 | 23.889 | PERIODIC | 0.3 | 0 | 0.067177 | 0.013902 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 222 | D075 | 77 | 23.889 | INSTALL | 0.3 | 0.20649 | 0.06894 | 0.015635 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 222 | D075 | 79 | 24.444 | INSTALL | 0.29436 | 0.07142 | 0.049246 | 0.023752 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 221 | D150 | 69 | 33.833 | PERIODIC | 0.3 | 0 | 0.090797 | 0.01448 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 221 | D150 | 90 | 29.722 | PERIODIC | 0.3 | 0 | 0.043954 | -0.032173 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 222 | D150 | 53 | 26.833 | PERIODIC | 0.3 | 0 | 0.069962 | 0.013292 | HORIZON |
+| phase52p | H1 | CUT-HOLD | 222 | D150 | 66 | 29 | PERIODIC | 0.3 | 0 | 0.040696 | -0.019011 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 222 | D150 | 31 | 14.056 | PERIODIC | 0.3 | 0 | 0.079207 | -0.0085053 | HORIZON |
+| phase52p | H1 | GRAPH-REC | 222 | D150 | 32 | 14.111 | INSTALL | 0.3 | 0.0092247 | 0.063091 | -0.0085053 | HORIZON |
+| phase52p | H2 | CUT-HOLD | 221 | D075 | 52 | 20.389 | PERIODIC | 0.094023 | 0.38518 | 0.05032 | 0.023336 | HORIZON |
+| phase52p | H2 | CUT-HOLD | 222 | D075 | 89 | 33.333 | PERIODIC | 0.3 | 0.053171 | 0.043104 | -0.028246 | HORIZON |
+| phase52p | H2 | GRAPH-REC | 222 | D075 | 32 | 12.889 | INSTALL | 0.13333 | 0.18872 | 0.034909 | 0.0043226 | HORIZON |
+| phase52p | H2 | CUT-HOLD | 221 | D150 | 34 | 18.667 | PERIODIC | 0.13307 | 0.11774 | 0.037779 | 0.019004 | HORIZON |
+| phase52p | H2 | GRAPH-REC | 221 | D150 | 28 | 15.222 | PERIODIC | 0.1788 | 0 | 0.028585 | 0.009246 | HORIZON |
+| phase52p | H2 | GRAPH-REC | 221 | D150 | 48 | 18.944 | PERIODIC | 0.05 | 0.30759 | 0.056532 | 0.015792 | HORIZON |
+| phase52p | H2 | GRAPH-REC | 221 | D150 | 282 | 48.222 | GRAPH_REC_REPLACE | 0 | 0.28264 | 0.031392 | 0.012505 | ENDPOINT |
+| phase52p | H2 | CUT-HOLD | 222 | D150 | 64 | 26.833 | PERIODIC | 0.05 | 0.21991 | 0.02555 | 0.022673 | HORIZON |
+| phase52p | H2 | CUT-HOLD | 222 | D150 | 114 | 44.889 | PERIODIC | 0.3 | 0.073893 | 0.02639 | -0.026113 | HORIZON |
+| phase52p | H2 | GRAPH-REC | 222 | D150 | 44 | 16.889 | PERIODIC | 0.09406 | 0.0060775 | 0.025369 | 0.021882 | HORIZON |
+| phase52p | H2 | GRAPH-REC | 222 | D150 | 180 | 50.889 | INSTALL | 0 | 0.38604 | 0.059883 | 0.011767 | HORIZON |
+| phase52p | H2 | GRAPH-REC | 222 | D150 | 297 | 78.111 | PERIODIC | 0.3 | 0 | 0.051689 | -0.017239 | HORIZON |
+| phase52p | L2 | GRAPH-REC | 221 | D075 | 44 | 17.667 | GRAPH_REC_REPLACE | 0.05 | 0.23075 | 0.042295 | -0.026376 | ENDPOINT |
+| phase52p | L2 | GRAPH-REC | 221 | D075 | 46 | 18 | KEEP_ACTIVE_NO_MIN_LENGTH | 0.21667 | 0.17711 | 0.049105 | -0.023752 | ENDPOINT |
+| phase52p | L2 | GRAPH-REC | 221 | D075 | 47 | 18.167 | PERIODIC | 0.17468 | 0.14495 | 0.049105 | -0.023752 | ENDPOINT |
+| phase52p | L2 | GRAPH-REC | 221 | D075 | 48 | 18.667 | PERIODIC | 0.27855 | 0.038302 | 0.049105 | -0.023752 | ENDPOINT |
+| phase52p | L2 | CUT-HOLD | 222 | D075 | 243 | 76.111 | INSTALL | 0.011889 | 0.33458 | 0.061507 | 0.0011077 | HORIZON |
+| phase52p | L2 | GRAPH-REC | 222 | D075 | 51 | 19.389 | PERIODIC | 0.079496 | 0.17392 | 0.033919 | 0.013743 | HORIZON |
+| phase52p | L2 | GRAPH-REC | 221 | D150 | 58 | 20.944 | PERIODIC | 0.27281 | 0 | 0.065258 | -0.0031868 | HORIZON |
+| phase52p | L2 | GRAPH-REC | 222 | D150 | 128 | 36 | GRAPH_REC_REPLACE | 0.2054 | 0.27692 | 0.048645 | 0.0095649 | HORIZON |
+| phase52p | L2 | GRAPH-REC | 222 | D150 | 317 | 86.667 | GRAPH_REC_REPLACE | 0 | 0.41204 | 0.030652 | 0.021332 | HORIZON |
+| phase52p | L2 | GRAPH-REC | 222 | D150 | 320 | 86.667 | GRAPH_REC_REPLACE | 0 | 0.41442 | 0.033654 | 0.024287 | HORIZON |
+| phase52p | LC | CUT-HOLD | 222 | D075 | 61 | 23.389 | PERIODIC | 0.3 | 0.092493 | 0.092619 | 0.012636 | HORIZON |
+| phase52p | LC | CUT-HOLD | 221 | D150 | 46 | 23.889 | PERIODIC | 0.3 | 0.045385 | 0.075764 | 0.012329 | HORIZON |
+| phase52p | LC | CUT-HOLD | 221 | D150 | 61 | 26.833 | PERIODIC | 0.3 | 0 | 0.087803 | 0.0056602 | HORIZON |
+| phase52p | LC | GRAPH-REC | 221 | D150 | 93 | 28.722 | PERIODIC | 0.3 | 0.25391 | 0.038985 | -0.019912 | HORIZON |
+| phase52p | LC | GRAPH-REC | 222 | D150 | 46 | 16.389 | PERIODIC | 0.3 | 0.033017 | 0.025546 | -0.01216 | HORIZON |
+| phase52p | LC | GRAPH-REC | 222 | D150 | 76 | 24.667 | PERIODIC | 0.12696 | 0.15654 | 0.053243 | 0.00069184 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D075 | 35 | 10.889 | PERIODIC | 0.3 | 0 | 0.025465 | -0.017344 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D075 | 138 | 43.889 | PERIODIC | 0.3 | 0 | 0.07811 | 0.023988 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D075 | 258 | 76.667 | PERIODIC | 0.3 | 0 | 0.060564 | -0.0088295 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D075 | 280 | 83.167 | PERIODIC | 0.05 | 0.2399 | 0.031228 | 0.01823 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D075 | 13 | 5.3889 | PERIODIC | 0.3 | 0.08415 | 0.029718 | -0.0070445 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D075 | 24 | 6.5 | PERIODIC | 0.3 | 0.046129 | 0.071438 | -0.012421 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D075 | 100 | 30.389 | PERIODIC | 0.066786 | 0.24677 | 0.030169 | 0.012963 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D075 | 202 | 57.389 | PERIODIC | 0.3 | 0.060808 | 0.074866 | 0.020565 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D075 | 206 | 58.5 | PERIODIC | 0.3 | 0.026986 | 0.025803 | -0.052181 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D075 | 228 | 64.889 | PERIODIC | 0.27319 | 0 | 0.036422 | -0.0076918 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D075 | 7 | 5.3889 | PERIODIC | 0.3 | 0.13119 | 0.055675 | 0.023289 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D075 | 11 | 6.3889 | PERIODIC | 0.3 | 0.073122 | 0.031585 | -0.054994 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D075 | 153 | 40.889 | PERIODIC | 0.15792 | 0 | 0.03422 | 0.017646 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D075 | 175 | 47.889 | INSTALL | 0.15283 | 0.20029 | 0.027683 | -0.027317 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D075 | 185 | 51.667 | PERIODIC | 0.05 | 0.25713 | 0.052898 | 0.023267 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D075 | 307 | 88.167 | PERIODIC | 0.11253 | 0.085891 | 0.029397 | 0.02402 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D075 | 313 | 89.667 | INSTALL | 0.22617 | 0.085142 | 0.062602 | -0.0056363 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D075 | 14 | 5.3889 | PERIODIC | 0.3 | 0.12652 | 0.038528 | 0.0040327 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D075 | 41 | 10.389 | PERIODIC | 0.3 | 0 | 0.087906 | 0.019378 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D075 | 86 | 27.889 | INSTALL | 0.05 | 0.33049 | 0.078808 | 0.0078659 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D075 | 132 | 41.389 | PERIODIC | 0.12465 | 0.26494 | 0.038541 | -0.033266 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D075 | 161 | 46.889 | INSTALL | 0.13459 | 0.30982 | 0.029618 | 0.01793 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D075 | 321 | 88.667 | PERIODIC | 0.3 | 0 | 0.054395 | -0.019493 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D150 | 5 | 5.8333 | PERIODIC | 0.3 | 0 | 0.089317 | -0.0010809 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D150 | 11 | 6.8333 | PERIODIC | 0.20185 | 0 | 0.030353 | -0.011089 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D150 | 21 | 11.167 | PERIODIC | 0.3 | 0.29672 | 0.092242 | 0.023788 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D150 | 57 | 22.889 | INSTALL | 0.068637 | 0.29339 | 0.064439 | 0.0018268 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D150 | 110 | 34.333 | PERIODIC | 0.20961 | 0 | 0.041385 | 0.0095546 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 221 | D150 | 185 | 63.722 | PERIODIC | 0.12779 | 0.13129 | 0.086281 | 0.023162 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D150 | 20 | 7.3333 | INSTALL | 0.20557 | 0.047884 | 0.032138 | 0.0096256 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D150 | 126 | 43 | GRAPH_REC_REPLACE | 0.05 | 0.3182 | 0.033108 | 0.016661 | ENDPOINT |
+| phase52p | SLW | GRAPH-REC | 221 | D150 | 129 | 43 | GRAPH_REC_REPLACE | 0.05 | 0.33036 | 0.033226 | 0.018017 | ENDPOINT |
+| phase52p | SLW | GRAPH-REC | 221 | D150 | 137 | 45.389 | PERIODIC | 0.3 | 0 | 0.025362 | 0.021841 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 221 | D150 | 171 | 55.222 | GRAPH_REC_REPLACE | 0.050918 | 0.29442 | 0.043282 | -0.014156 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D150 | 8 | 6.3333 | INSTALL | 0.3 | 0 | 0.041766 | -0.01604 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D150 | 46 | 12.333 | INSTALL | 0 | 0.034104 | 0.035084 | 0.012911 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D150 | 110 | 38.389 | PERIODIC | 0.16331 | 0.047028 | 0.032848 | -0.010941 | HORIZON |
+| phase52p | SLW | CUT-HOLD | 222 | D150 | 238 | 83.389 | PERIODIC | 0.2673 | 0.027709 | 0.044712 | -0.01322 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D150 | 16 | 6.4444 | INSTALL | 0.3 | 0 | 0.069798 | 0.010523 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D150 | 82 | 23.389 | PERIODIC | 0.074946 | 0.24829 | 0.039442 | -0.028586 | HORIZON |
+| phase52p | SLW | GRAPH-REC | 222 | D150 | 169 | 50.611 | PERIODIC | 0.3 | 0 | 0.056169 | -0.033989 | HORIZON |
+
+변경 검사: [braking_flips.csv](../research/results/phase52ec/braking_flips.csv). 전체 검사 `research/results/phase52ec/ec_checks.csv`는 로컬 archive로 보존한다. 불일치/제외: [목록](../research/results/phase52ec/replay_exclusions_or_mismatches.json).
