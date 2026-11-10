@@ -1,0 +1,49 @@
+{
+  "experiment": "CONFIRMATORY",
+  "status": "COMPLETE",
+  "completed": 60,
+  "planned": 60,
+  "protocol_sha256": "f9169693c79d561c056bfca150c697459bbc9375dbe9b3f03f79c16c240f8064",
+  "primary_tests": [
+    {
+      "comparison": "PRIMARY1",
+      "left": "OURS-DETOUR+HMM",
+      "right": "OURS-DETOUR",
+      "outcome": "success",
+      "favorable_direction": "higher",
+      "n": 20,
+      "both_false": 6,
+      "right_only": 0,
+      "left_only": 10,
+      "both_true": 4,
+      "left_count": 14,
+      "right_count": 4,
+      "paired_difference_pp": 50.0,
+      "p_exact_two_sided": 0.001953125,
+      "excluded": [],
+      "p_holm_two_primary": 0.00390625,
+      "full_20_pairs": true,
+      "reject_equal_holm_0p05": true
+    },
+    {
+      "comparison": "PRIMARY2",
+      "left": "OURS-DETOUR",
+      "right": "NOMAD_RAW",
+      "outcome": "collision",
+      "favorable_direction": "lower",
+      "n": 20,
+      "both_false": 14,
+      "right_only": 6,
+      "left_only": 0,
+      "both_true": 0,
+      "left_count": 0,
+      "right_count": 6,
+      "paired_difference_pp": -30.0,
+      "p_exact_two_sided": 0.03125,
+      "excluded": [],
+      "p_holm_two_primary": 0.03125,
+      "full_20_pairs": true,
+      "reject_equal_holm_0p05": true
+    }
+  ]
+}
