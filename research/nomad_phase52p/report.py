@@ -5,7 +5,7 @@ from nomad_phase31p.report import table,median
 from nomad_phase32o.evaluate import save,csvout
 from .config import ROOT,HERE,OUT,RUN_ROOT,METHODS,CONDITIONS,BASE_SCENES,verify,split
 
-NUMERIC=('goal_time_s','mean_speed_m_s','stopped_s','minimum_clearance_m','tracking_error_p50_m','tracking_error_p95_m',
+NUMERIC=('goal_time_s','mean_speed_m_s','stopped_s','initial_wait_s','minimum_clearance_m','tracking_error_p50_m','tracking_error_p95_m',
     'chunk_heading_jump_p50_deg','chunk_heading_jump_p95_deg','raw_candidate_distance_mean_m','stop_distance_m','ec_rejects',
     'graph_solve_p50_s','graph_solve_p95_s','graph_acceptance_rate','hold_after_rejection_s')
 
@@ -38,11 +38,16 @@ def generate(root=RUN_ROOT,output=OUT,document=None):
         states.extend(dict(**key,state=k,seconds=v) for k,v in r.get('command_state_seconds',{}).items())
         box.extend(dict(**key,**b) for b in r.get('spawn_path_observations',[]))
         if not r.get('historical_group'):graphs.append(dict(**key,**{k:v for k,v in r.items() if k.startswith('graph_') or k.startswith('hold_after_')}))
-    state=dict(status='COMPLETE' if len(runs)==40 else 'PARTIAL',completed=len(runs),planned=40,protocol_sha256=__import__('hashlib').sha256((HERE/'protocol.json').read_bytes()).hexdigest())
+    state=dict(status='COMPLETE' if len(runs)==40 else 'PARTIAL',completed=len(runs),planned=40,protocol_sha256=__import__('hashlib').sha256((HERE/'protocol.json').read_bytes()).hexdigest(),
+        audit_revision_sha256=__import__('hashlib').sha256((HERE/'audit_revision.json').read_bytes()).hexdigest())
     output.mkdir(parents=True,exist_ok=True);save(output/'runs.json',runs);save(output/'analysis.json',state)
     for name,data in [('summary',stats),('paired',pairs),('command_states',states),('spawn_path_observations',box),('graph',graphs)]:csvout(output/(name+'.csv'),data)
     defs=[dict(item=k,value=v) for k,v in p['report_definitions'].items()]
-    doc=Path(document) if document else ROOT/'docs/PHASE52P_RESULTS.md';doc.write_text('\n\n'.join(table(d or [dict(n=0)]) for d in ([state],defs,stats,pairs,states,box,graphs))+'\n');return doc
+    defs.append(dict(item='startup audit correction',value='Only pre-first-chunk missing WAYPOINT_TIMEOUT is allowed; any new_timeout or WAYPOINT_TIMEOUT after first chunk remains a technical failure. initial_wait_s ends at first control with chunk; latch time also recorded. Original frozen protocol unchanged.'))
+    startup=[dict(scene=r['scene'],seed=r['index'],method=r['method'],**{k:r.get(k) for k in
+        ('initial_wait_s','first_chunk_received_s','first_chunk_control_s','startup_missing_timeout_rows','new_timeout_count','post_chunk_waypoint_timeout_rows','selected_attempt')}) for r in runs]
+    csvout(output/'initial_wait.csv',startup)
+    doc=Path(document) if document else ROOT/'docs/PHASE52P_RESULTS.md';doc.write_text('\n\n'.join(table(d or [dict(n=0)]) for d in ([state],defs,stats,pairs,startup,states,box,graphs))+'\n');return doc
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--run-root',type=Path,default=RUN_ROOT);ap.add_argument('--publish',action='store_true');a=ap.parse_args();assert a.run_root.resolve()==RUN_ROOT.resolve();doc=generate(a.run_root)

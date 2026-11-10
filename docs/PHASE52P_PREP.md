@@ -2,7 +2,7 @@
 
 | status | runs | methods | conditions | seeds | scenes |
 |---|---|---|---|---|---|
-| FROZEN_PREPARED_NOT_RUN | 40 | CUT-HOLD / GRAPH-REC | D075 / D150 | 221,222 | SLW,LC,L2,H1,H2 |
+| FROZEN_PROTOCOL / AUDIT_REPAIRED / RESUME_READY | 40 | CUT-HOLD / GRAPH-REC | D075 / D150 | 221,222 | SLW,LC,L2,H1,H2 |
 
 | item | value |
 |---|---|
@@ -40,8 +40,32 @@
 
 [Phase51-P WIDE 저장 후보 분석](PHASE51P_WIDE_ANALYSIS.md)
 
+## 시작 대기 audit 수정 및 저장 attempt1 복구
+
+2026-11-10T17:04:26+09:00: 최초 chunk 이전 `status=missing`, `valid=false`, id<0, age=null인 `WAYPOINT_TIMEOUT` 출처만 시작 대기로 허용한다. 최초 chunk 수신 이후 같은 출처 또는 어느 시점의 `new_timeout`은 여전히 기술 실패다. `initial_wait_s`는 첫 chunk가 있는 제어 tick까지의 대기이며, 실제 수신 latch 시각은 `first_chunk_received_s`로 별도 기록한다. 원본 controller/주행 로그는 수정하지 않았다.
+
+요청한 6개와 추가 확인된 H1 GRAPH-REC 1개를 동일한 결과 무관 규칙으로 복구했다. **attempt1 exit0·summary 완료·이번 audit 오류만 존재·수정 audit PASS**를 모두 만족해야 선택한다. attempt2는 6개 완료본과 1개 중단본 모두 사용하지 않고 `attempt_metrics`에 제외 사유를 기록했다. 원래 실패 metrics와 state는 run-root의 `audit_recovery/STARTUP_MISSING_AUDIT_V1/before/` 및 저장소 `research/results/phase52p/audit_fix/original_metadata.json`에 보존했다.
+
+| run | attempt | audit | initial_wait_s | first_chunk_received_s | startup_missing_rows | new_timeout | post_chunk_timeout | reason | attempt2 |
+|---|---|---|---|---|---|---|---|---|---|
+| SLW_D075_221_CUT-HOLD | 1 | PASS | 2.8889 | 2.8333 | 26 | 0 | 0 | exit0 + summary complete + startup audit error only | EXCLUDED / preserved |
+| SLW_D075_221_GRAPH-REC | 1 | PASS | 2.8889 | 2.8333 | 26 | 0 | 0 | exit0 + summary complete + startup audit error only | EXCLUDED / preserved |
+| LC_D075_221_GRAPH-REC | 1 | PASS | 2.8889 | 2.8333 | 26 | 0 | 0 | exit0 + summary complete + startup audit error only | EXCLUDED / preserved |
+| LC_D075_221_CUT-HOLD | 1 | PASS | 2.8889 | 2.8472 | 26 | 0 | 0 | exit0 + summary complete + startup audit error only | EXCLUDED / preserved |
+| L2_D075_221_CUT-HOLD | 1 | PASS | 2.8889 | 2.8333 | 26 | 0 | 0 | exit0 + summary complete + startup audit error only | EXCLUDED / preserved |
+| L2_D075_221_GRAPH-REC | 1 | PASS | 2.8889 | 2.8472 | 26 | 0 | 0 | exit0 + summary complete + startup audit error only | EXCLUDED / preserved |
+| H1_D075_221_GRAPH-REC | 1 | PASS | 2.8889 | 2.8611 | 26 | 0 | 0 | exit0 + summary complete + startup audit error only | EXCLUDED / preserved |
+
+| tests_passed | reaudited_attempt1 | excluded_attempt2 | remaining_combinations | next_key | simulations_started | protocol_sha256 | audit_revision_sha256 | raw_files_unchanged | H1_CUT_HOLD_pending | original_protocol_and_runtime_preserved |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 12 | 7 | 7 | 33 | H1_D075_221_CUT-HOLD | 0 | 57838e8042c9d156c728313a61432c2e3eccb000530f20ef654b2045978a57c4 | fe15bfafb4bf96a5b7f997652b1e05a4d99e448decce1cd1779496030079fb09 | 11412 | True | True |
+
+재개하면 공통 campaign lock 안에서 이 7개 attempt1의 audit을 먼저 다시 실행한다. 하나라도 실패하면 `AUDIT_GATE_FAILED`로 멈추며 새 주행을 시작하지 않는다. 통과하면 이미 복구된 7개를 건너뛰고 **나머지 33개를 원래 순서**로 실행한다. 첫 대상은 `H1_D075_221_CUT-HOLD`다. 새 시뮬레이션 smoke는 없다.
+
+실험 `protocol.json`과 run-root `plan.json`은 그대로다. 방법·solver·controller·장면·seed·순서 변경 없이 audit/report/resume 수정만 `audit_revision.json`에 별도 hash로 기록했다. 이전 전체 로그를 보존하도록 재개 명령은 `>>`로 덧붙인다.
+
 진행 확인: `cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && PYTHONPATH=research /usr/bin/python3 -m nomad_phase52p.campaign --status`
 
-실행 명령(미실행):
+재개 명령(미실행):
 
-`cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && nohup env -u LD_LIBRARY_PATH -u LD_PRELOAD -u PYTHONHOME -u VIRTUAL_ENV PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_phase52p.campaign > ../artifacts/isaac6/phase52p_01.log 2>&1 < /dev/null &`
+`cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && nohup env -u LD_LIBRARY_PATH -u LD_PRELOAD -u PYTHONHOME -u VIRTUAL_ENV PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_phase52p.campaign >> ../artifacts/isaac6/phase52p_01.log 2>&1 < /dev/null &`

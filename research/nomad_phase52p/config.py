@@ -29,5 +29,12 @@ def runtime_config(method,index,timeout=90,level='H1_D075'):
 
 def verify():
     verify47();p=protocol();assert p['status']=='FROZEN' and p['main_order']==registered_order()
-    for f,h in {**p['frozen_sources'],**p['source_sha256'],**p['reference_hashes']}.items():assert sha256_file(ROOT/f)==h,f
+    revision=json.loads((HERE/'audit_revision.json').read_text())
+    assert sha256_file(HERE/'protocol.json')==revision['base_protocol_sha256']
+    allowed={str((HERE/f).relative_to(ROOT)) for f in ('config.py','metrics.py','campaign.py','report.py')}
+    assert set(revision['overridden_source_sha256'])<=allowed
+    added={str((HERE/f).relative_to(ROOT)) for f in ('resume.py','test_resume.py')}
+    assert set(revision['added_source_sha256'])==added
+    for f,h in {**p['frozen_sources'],**p['source_sha256'],**p['reference_hashes'],
+                **revision['overridden_source_sha256'],**revision['added_source_sha256']}.items():assert sha256_file(ROOT/f)==h,f
     return p

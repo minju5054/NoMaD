@@ -14,9 +14,21 @@ def jobs(root):
     fn=frozen.jobs
     return FunctionType(fn.__code__,dict(fn.__globals__,protocol=protocol),fn.__name__)(root)
 
+def run_with_audit_gate(base):
+    """Called only for actual resume, inside the inherited global campaign lock."""
+    original=base.campaign
+    def guarded(root,smoke=False):
+        assert not smoke
+        from .resume import audit_gate
+        audit_gate(root)
+        return original(root,False)
+    base.campaign=guarded
+    try:return base.main()
+    finally:base.campaign=original
+
 def main():
-    source=inspect.getsource(frozen.main).replace('planned=20','planned=40').replace('from .metrics import audit','from nomad_phase52p.metrics import audit')
-    ns=dict(frozen.main.__globals__,ROOT=ROOT,RUN_ROOT=RUN_ROOT,protocol=protocol,verify=verify,jobs=jobs,Routes=Routes)
+    source=inspect.getsource(frozen.main).replace('planned=20','planned=40').replace('from .metrics import audit','from nomad_phase52p.metrics import audit').replace('    base.main()','    run_with_audit_gate(base)')
+    ns=dict(frozen.main.__globals__,ROOT=ROOT,RUN_ROOT=RUN_ROOT,protocol=protocol,verify=verify,jobs=jobs,Routes=Routes,run_with_audit_gate=run_with_audit_gate)
     exec(compile(source,__file__,'exec'),ns);return ns['main']()
 
 if __name__=='__main__':main()

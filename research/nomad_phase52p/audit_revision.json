@@ -1,0 +1,28 @@
+{
+  "revision": "STARTUP_MISSING_AUDIT_V1",
+  "registered_at_utc": "2026-11-10T08:00:07.668340+00:00",
+  "base_protocol_sha256": "57838e8042c9d156c728313a61432c2e3eccb000530f20ef654b2045978a57c4",
+  "original_commit": "bfe19d0",
+  "required_attempt1_keys": [
+    "SLW_D075_221_CUT-HOLD",
+    "SLW_D075_221_GRAPH-REC",
+    "LC_D075_221_GRAPH-REC",
+    "LC_D075_221_CUT-HOLD",
+    "L2_D075_221_CUT-HOLD",
+    "L2_D075_221_GRAPH-REC",
+    "H1_D075_221_GRAPH-REC"
+  ],
+  "authorization": "User: restore all completed exit0 attempt1 with only this audit defect,including discovered seventh H1 GRAPH-REC;exclude all attempt2 regardless of outcomes",
+  "scope": "Only audit/reporting/resume guard/source verification;method,solver,controller,scenario,seed,order,protocol unchanged",
+  "audit": "Pre-first-chunk missing source WAYPOINT_TIMEOUT allowed;new_timeout anywhere or WAYPOINT_TIMEOUT after first chunk still fails",
+  "overridden_source_sha256": {
+    "research/nomad_phase52p/config.py": "23801a9fefa4a3ea0e7c73c68a7d6adc43f625875ed93fe538112d20239fd88d",
+    "research/nomad_phase52p/metrics.py": "ea6907a4d942313fe6821e00aecb15370df66b7517f722ab2056b63e32c09426",
+    "research/nomad_phase52p/campaign.py": "be74b56809a8b6ac32f200130c8255989bf6db5702f0e0899d82df492b078925",
+    "research/nomad_phase52p/report.py": "bf09ae77cbba271066224b0562a28e9b4a133d4b858508919f81b67f7ec2d3cd"
+  },
+  "added_source_sha256": {
+    "research/nomad_phase52p/resume.py": "40808c3894a4034223d7886bb2ba3b6a0543ed34ca845b72000aa01733222c08",
+    "research/nomad_phase52p/test_resume.py": "12ca01d23d6614cb682bd26d1f655c05283c2a8711268c1fa6821f1127fc746b"
+  }
+}

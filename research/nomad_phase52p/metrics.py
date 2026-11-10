@@ -11,6 +11,38 @@ from nomad_isaac.common import local_to_world
 TRACK_STATES={'NORMAL','KEEP_ACTIVE','ALIGN_BRAKE','ALIGN_ROTATE','REPAIR','ENDPOINT'}
 def q(a,p):return float(np.quantile(a,p)) if len(a) else None
 
+def waypoint_lifetime(commands,duration,received=(),declared_id=None):
+    """Allow only genuine startup missing input; never forgive post-input expiry.
+
+    Receipt is the execution thread's latch, not the IPC packet receive time.
+    Final drained/unapplied results are not chunks delivered for navigation.
+    The initial command-wait duration ends at the first control record that
+    has a chunk (or declared arrival), and is separate from latch time.
+    """
+    assert commands,'Missing controller records'
+    delivered=[float(e['latched_sim_s']) for e in received
+               if not e.get('terminal_unapplied',False) or (declared_id is not None and e.get('id')==declared_id)]
+    first_received=min(delivered) if delivered else None
+    first_control=None;missing_timeout_rows=0;seen=False;previous=-1.
+    for i,e in enumerate(commands):
+        t=float(e['simulation_time_s']);assert previous<=t<=duration+1e-8,'Invalid controller chronology';previous=t
+        assert not e.get('new_timeout',False),f'WAYPOINT_EXPIRY_EVENT at controller row{i},t={t}'
+        has_chunk=(e.get('latest_received_id',-1)>=0 or e.get('waypoint_id',-1)>=0
+                   or e.get('waypoint_age_wall_s') is not None or e.get('applied_command_source')=='DECLARED_ARRIVAL')
+        if has_chunk and first_control is None:first_control=t
+        seen=seen or has_chunk
+        if e.get('applied_command_source')=='WAYPOINT_TIMEOUT':
+            missing=(e.get('status')=='missing' and e.get('valid') is False
+                     and e.get('latest_received_id',-1)<0 and e.get('waypoint_id',-1)<0
+                     and e.get('waypoint_age_wall_s') is None)
+            before_receipt=first_received is None or t<first_received-1e-10
+            assert missing and not seen and before_receipt,f'POST_CHUNK_WAYPOINT_TIMEOUT at controller row{i},t={t}'
+            missing_timeout_rows+=1
+    initial_wait=duration if first_control is None else first_control
+    return dict(initial_wait_s=float(initial_wait),first_chunk_received_s=first_received,
+                first_chunk_control_s=first_control,startup_missing_timeout_rows=missing_timeout_rows,
+                new_timeout_count=0,post_chunk_waypoint_timeout_rows=0)
+
 def extra(root):
     root=Path(root);summary=json.loads((root/'summary.json').read_text());c=summary['scenario'];duration=summary['simulation_duration_s']
     trajectory=list(csv.DictReader((root/'agent_trajectory.csv').open()));t=np.array([float(x['simulation_time_s']) for x in trajectory]);xy=np.array([[float(x[k]) for k in ('x_m','y_m')] for x in trajectory]);v=np.array([float(x['v_m_s']) for x in trajectory])
@@ -89,10 +121,14 @@ def extra(root):
 def audit(root):
     root=Path(root);r=frozen_audit(root);c=json.loads((root/'scenario.json').read_text());assert c['phase52p']
     assert r['detour_applied_count']==0 and r['g_dispatches']==0
-    for e in rows(root/'controller.jsonl'):
-        assert not e.get('new_timeout',False)
-        assert e.get('applied_command_source')!='WAYPOINT_TIMEOUT'
+    declaration=root/'declared_arrival.json'
+    declared_id=json.loads(declaration.read_text())['id'] if declaration.exists() else None
+    startup=waypoint_lifetime(rows(root/'controller.jsonl'),r['duration_s'],rows(root/'received.jsonl'),declared_id)
     r.update(extra(root));r.update(method=c['phase52p_method'],base_scene=r['scene'],scene=c['phase52p_level'],condition=c['phase52p_condition'])
+    r.update(startup)
+    states=r['command_state_seconds']
+    # Raw command records remain byte-identical. This label is report-only.
+    states['INITIAL_CHUNK_WAIT']=states.pop('INITIAL_INFERENCE_WAIT',0.)+states.pop('WAYPOINT_TIMEOUT',0.)
     for e in rows(root/'reconstruction.jsonl'):
         if e['event']=='RESULT' and e.get('applied'):assert e['tick']==e['apply_tick'] and e['disposition']=='ACCEPTED'
     summary=json.loads((root/'summary.json').read_text());assert summary['delivery_delay']['configured_additional_s']==c['phase52p_delay_s']
