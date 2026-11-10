@@ -2,7 +2,7 @@
 
 | status | completed | planned | queue_state | protocol_sha256 |
 |---|---|---|---|---|
-| NOT_STARTED | 0 | 48 | SKIPPED | 28bffd0bc277174fd63eda89acea342088fb787789e7095c41c7637291ef50c0 |
+| NOT_STARTED | 0 | 48 | READY_PENDING_USER | 28bffd0bc277174fd63eda89acea342088fb787789e7095c41c7637291ef50c0 |
 
 완료되고 기술 audit PASS인 동일 장면·seed 짝만 비교한다. 미완료/기술 실패는 NOT_RUN/FAIL로 표시하고 대체하지 않는다. 정적 SLW·LC의 상자 통과는 N/A(12블록 중 돌발8블록만 통과 검정 대상). E2 성공 비열등은 성공 차이≥−1회의 파일럿 서술 기준이며 통계적 비열등 검정이 아니다.
 
