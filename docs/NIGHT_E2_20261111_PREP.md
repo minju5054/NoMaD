@@ -27,9 +27,9 @@
 |---|---|---|---|---|---|
 | True | 9 | 48 | 0 | 28bffd0bc277174fd63eda89acea342088fb787789e7095c41c7637291ef50c0 | 1129865801728 |
 
-| status |
-|---|
-| SMOKE_NOT_RUN |
+| status | reason | protocol_sha256 | key | output | attempts | original_reason | failure_stage | simulations_started | launcher_log | launcher_log_sha256 | code_repaired | retried |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| SKIPPED | FileNotFoundError: [Errno 2] No such file or directory: '/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_night20261111/protocol.json' | 28bffd0bc277174fd63eda89acea342088fb787789e7095c41c7637291ef50c0 | LC_D150_095_GRAPH-HOLD | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/night_queue_20261111_01/smoke/E2/main/LC_D150_095_GRAPH-HOLD/attempt1 | 1 | Launcher failure; preserved; no source repair during this queue | PROVENANCE_BEFORE_WORKER_AND_SIMULATOR | 0 | /home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/night_queue_20261111_01/smoke/E2/logs/LC_D150_095_GRAPH-HOLD_1.log | d36a37c18b07023deedda85c73860f6b2060486b6ab657505e2605f54de7fba1 | False | False |
 
 PREP·코드 commit/push 후 등록 smoke1회만 실행한다. audit 실패 시 수정·재시도하지 않고 SKIPPED. PASS 실험만 E1→E2→E3 단일 대기열. 총6시간 종료선 이후에는 다음run/재시도를 시작하지 않고 진행 중run만 마친다. 저장v2·portable/cache/pycache정리·30GB 여유·기술실패1회재시도. 실험 종료/시간제한 시 완료된짝만 report하고 미완료표시,자동commit/push.
 

@@ -1,10 +1,12 @@
 # 20261111 밤샘 대기열
 
+**SKIPPED_ALL — 대기열 미시작, 주행0회.** E1/E2/E3 smoke가 공통 launcher의 provenance 기록에서 `nomad_night20261111/protocol.json`을 읽으려다 FileNotFoundError로 종료됐다. 등록된 파일은 `protocol_E1.json`, `protocol_E2.json`, `protocol_E3.json`이다. NoMaD worker와 Isaac은 시작되지 않았다. 사용자 지시대로 코드 수정·재시도 없이 각1회 실패를 보존했다. PASS 실험이 없어 nohup은 실행하지 않았다.
+
 | priority | experiment | planned | smoke | prep | report |
 |---|---|---|---|---|---|
-| 1 | E1 | 36 | NOT_RUN | NIGHT_E1_20261111_PREP.md | NIGHT_E1_20261111_RESULTS.md |
-| 2 | E2 | 48 | NOT_RUN | NIGHT_E2_20261111_PREP.md | NIGHT_E2_20261111_RESULTS.md |
-| 3 | E3 | 36 | NOT_RUN | NIGHT_E3_20261111_PREP.md | NIGHT_E3_20261111_RESULTS.md |
+| 1 | E1 | 36 | SKIPPED | NIGHT_E1_20261111_PREP.md | NIGHT_E1_20261111_RESULTS.md |
+| 2 | E2 | 48 | SKIPPED | NIGHT_E2_20261111_PREP.md | NIGHT_E2_20261111_RESULTS.md |
+| 3 | E3 | 36 | SKIPPED | NIGHT_E3_20261111_PREP.md | NIGHT_E3_20261111_RESULTS.md |
 
 최신 확정6장면(SLW,LC,L2,H1,H2,H1-v2),seed225·226. 총120run. Smoke3회는본결과제외,실패실험은수정없이SKIPPED. 통과실험만순차실행한다. 대기열시작부터6시간경과시새run/재시도를금지하고진행중run만완료한다. 미완료짝은표시하되비교에서제외한다. 실험마다report·PNG·commit·push.
 
