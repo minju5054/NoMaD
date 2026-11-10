@@ -18,7 +18,8 @@ def read(path,default=None):return json.loads(Path(path).read_text()) if Path(pa
 def planned(root):
     from nomad_phase26.campaign import jobs
     from types import FunctionType
-    return FunctionType(jobs.__code__,dict(jobs.__globals__,protocol=protocol),jobs.__name__)(Path(root),False)
+    return FunctionType(jobs.__code__,dict(jobs.__globals__,protocol=protocol),jobs.__name__,
+                        jobs.__defaults__,jobs.__closure__)(Path(root),False)
 
 def revision():return read(HERE/'audit_revision.json')
 def backup_root(root):return Path(root)/'audit_recovery'/REVISION/'before'

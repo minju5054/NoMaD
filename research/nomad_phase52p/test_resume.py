@@ -1,5 +1,5 @@
 """Audit and metadata recovery regressions; no simulation/solver launches."""
-import ast,copy,json,subprocess,tempfile,unittest
+import ast,copy,json,os,subprocess,tempfile,unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -114,5 +114,38 @@ class RecoveryTests(unittest.TestCase):
             self.assertTrue(resume.eligible(j,root))
             f=root/'attempt_metrics'/f"{j['key']}_1.json";r=resume.read(f);r['success']=True;dump(f,r);self.assertTrue(resume.eligible(j,root))
             r['error']='Launcher error';dump(f,r);self.assertFalse(resume.eligible(j,root))
+
+class RealPlanTests(unittest.TestCase):
+    """Actual persisted root and actual engine jobs; no mocks or fake jobs."""
+    def test_planned_actual_root_forty_jobs_and_seven_recovered_keys(self):
+        from .config import RUN_ROOT,verify
+        verify();plan=resume.planned(RUN_ROOT)
+        saved=json.loads((RUN_ROOT/'plan.json').read_text())
+        self.assertEqual(len(plan),40);self.assertEqual(plan,saved['jobs'])
+        self.assertEqual(campaign.jobs(RUN_ROOT),plan)
+        required=resume.revision()['required_attempt1_keys']
+        keys=[j['key'] for j in plan if j['key'] in required]
+        self.assertEqual(len(keys),7);self.assertEqual(keys,required)
+        pending=[j for j in plan if not (RUN_ROOT/'metrics'/f"{j['key']}.json").exists()]
+        self.assertEqual(len(pending),33);self.assertEqual(pending[0]['key'],'H1_D075_221_CUT-HOLD')
+
+    def test_real_cli_dry_run_exercises_closed_jobs_and_saved_audit_gate(self):
+        from .config import ROOT,HERE,RUN_ROOT,OUT
+        from nomad_isaac.common import sha256_file
+        protected=[HERE/'protocol.json',RUN_ROOT/'plan.json',RUN_ROOT/'state.json',OUT/'runs.json',
+            *(RUN_ROOT/'metrics').glob('*.json'),*(RUN_ROOT/'attempt_metrics').glob('*.json')]
+        before={str(f):sha256_file(f) for f in protected}
+        env=dict(os.environ,PYTHONPATH='research',OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1')
+        result=subprocess.run(['/usr/bin/python3','-m','nomad_phase52p.campaign','--dry-run'],
+            cwd=ROOT,env=env,text=True,capture_output=True,timeout=90)
+        self.assertEqual(result.returncode,0,result.stderr[-2500:])
+        data=json.loads(result.stdout.splitlines()[-1])
+        self.assertEqual(data['planned'],40);self.assertEqual(data['audit_gate'],'PASS')
+        self.assertEqual(data['audited_attempt1_keys'],resume.revision()['required_attempt1_keys'])
+        self.assertEqual(data['audited_attempt1_count'],7);self.assertGreater(data['actual_jobs_closure_cells'],0)
+        self.assertEqual(data['jobs'],json.loads((RUN_ROOT/'plan.json').read_text())['jobs'])
+        self.assertEqual(data['remaining'],33);self.assertEqual(data['next_key'],'H1_D075_221_CUT-HOLD')
+        self.assertEqual(data['simulations_started'],0)
+        self.assertEqual(before,{str(f):sha256_file(f) for f in protected})
 
 if __name__=='__main__':unittest.main()

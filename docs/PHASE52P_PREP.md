@@ -64,6 +64,26 @@
 
 실험 `protocol.json`과 run-root `plan.json`은 그대로다. 방법·solver·controller·장면·seed·순서 변경 없이 audit/report/resume 수정만 `audit_revision.json`에 별도 hash로 기록했다. 이전 전체 로그를 보존하도록 재개 명령은 `>>`로 덧붙인다.
 
+## Closure 보존 및 실제 재개 dry-run 검증
+
+2026-11-10T17:30:20+09:00: 재개 초기화가 `jobs`를 closure로 바꾸는데 복제 시 closure를 누락해 audit gate 진입 전에 Exit1이 났다. `resume.planned()`와 `campaign.jobs()` 모두 `FunctionType(..., __name__, __defaults__, __closure__)`로 복제한다. 같은 누락이 있는 과거 wrapper를 경유하지 않고 현재 실제 Phase26 `jobs` binding을 사용한다. 재개 setup 내부 복제에도 defaults/closure를 보존한다. 이전 phase 파일은 수정하지 않았다.
+
+기존 dry-run은 closure 재바인딩 전에 반환했으므로 오류를 놓쳤다. 이제 `--dry-run`도 실제 campaign setup과 공통 lock을 거쳐 보존 run audit gate까지 실행하고, 주행 시작 전에 반환한다. mock 없이 `planned(RUN_ROOT)` 및 실제 CLI로 검증했다. 복구된 7개·attempt2 제외 기록·원 protocol·plan·주행 코드는 바꾸지 않았다.
+
+| 검증 | 결과 |
+|---|---|
+| 테스트 | 14 PASS |
+| 실제 plan / 복구 key | 40 / 7 |
+| 실제 재바인딩 jobs closure cell | 1 |
+| 실제 run-root audit gate | 7/7 PASS |
+| 남은 조합 / 다음 실행 | 33 / H1_D075_221_CUT-HOLD |
+| 보존 원본 파일 | 11,412개 변경 없음 |
+| 시뮬레이션 | 0회 |
+| 원 protocol SHA256 | 57838e8042c9d156c728313a61432c2e3eccb000530f20ef654b2045978a57c4 |
+| 현재 audit revision SHA256 | 8777f1e1fdc492c58c1338111e05855b37a8c2439660d76ba07e55d81f7e0172 |
+
+검증 기록: `research/results/phase52p/closure_fix/`. 재개 명령은 아래와 같으며 실행하지 않았다.
+
 진행 확인: `cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && PYTHONPATH=research /usr/bin/python3 -m nomad_phase52p.campaign --status`
 
 재개 명령(미실행):
