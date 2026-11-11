@@ -1,0 +1,149 @@
+{
+  "status": "FROZEN",
+  "phase": "LOC_V2_REPLAY",
+  "registered_at_utc": "2026-11-11T08:13:39.764113+00:00",
+  "variants": [
+    "HMM0",
+    "NET",
+    "OBS",
+    "SIGN",
+    "OBS+SIGN"
+  ],
+  "sources": [
+    [
+      "CAL",
+      "Phase47-C",
+      "research/nomad_phase47c/protocol.json",
+      "phase47c_01",
+      [
+        "OURS-DETOUR+HMM"
+      ]
+    ],
+    [
+      "CAL",
+      "Phase52-P",
+      "research/nomad_phase52p/protocol.json",
+      "phase52p_01",
+      null
+    ],
+    [
+      "CAL",
+      "Phase53-P",
+      "research/nomad_phase53p/protocol.json",
+      "phase53p_01",
+      null
+    ],
+    [
+      "CAL",
+      "NIGHT_E1",
+      "research/nomad_night20261111/protocol_E1.json",
+      "night_queue_20261111_01/E1",
+      null
+    ],
+    [
+      "CAL",
+      "NIGHT_E3",
+      "research/nomad_night20261111/protocol_E3.json",
+      "night_queue_20261111_01/E3",
+      null
+    ],
+    [
+      "EVAL",
+      "Phase57-P",
+      "research/nomad_phase57p/protocol.json",
+      "phase57p_01",
+      [
+        "MIN",
+        "MIN+G18"
+      ]
+    ],
+    [
+      "EVAL",
+      "Phase58-P",
+      "research/nomad_phase58p/protocol.json",
+      "phase58p_01",
+      null
+    ],
+    [
+      "EVAL",
+      "Phase59-P",
+      "research/nomad_phase59p/protocol.json",
+      "phase59p_01",
+      null
+    ]
+  ],
+  "expected_calibration_runs": 172,
+  "expected_evaluation_runs": 48,
+  "data_rule": "HMM-use runs only;CAL Phase47-C only OURS-DETOUR+HMM,EVAL Phase57 only MIN/MIN+G18;all methods in remaining specified phases;EVAL seeds227,228;CAL/EVAL dirs and seeds disjoint",
+  "obs": {
+    "k": "candidate node minus hypothesis node",
+    "offset_rows": [
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      "OUTSIDE_BOTH_SIDES"
+    ],
+    "distance_bin_width": 0.5,
+    "laplace": 1,
+    "emission": "product across ALL logged window candidate distances,computed in log space",
+    "range": "calibration min/max floor(distance/.5) plus fixed underflow and overflow bins;never evaluation values"
+  },
+  "sign": {
+    "calibration_tangent": "previous inference logged HMM0 MAP",
+    "evaluation_tangent": "variant previous MAP",
+    "tangent": "unit central adjacent-node difference;one-sided ends;zero vector uses nearest nonzero oriented adjacent edge",
+    "progress": "current minus previous observed odometry XY projected onto tangent",
+    "ell": "existing median positive adjacent node spacing",
+    "sigma2": "population variance(ddof0) of true_node_delta - progress/ell,consecutive saved inference IDs only",
+    "transition": "Gaussian density sampled at integer node offsets and row-normalized over global node range;mean=progress/ell;no cutoff/floor",
+    "variance_zero": "fail explicitly;no tuned epsilon"
+  },
+  "inheritance": "OBS uses HMM0 transition;SIGN uses original emission;OBS+SIGN uses both. HMM0 and NET delegate to frozen nomad_hmm_replay.Replay.",
+  "goal_delay": {
+    "origin": "first saved inference with true_node==goal",
+    "primary": "first MAP==goal at/after origin;delay is inference ID difference",
+    "censor": "no MAP==goal at/after origin through log end -> right censored;exclude from primary median and print count beside median",
+    "negative": "first MAP==goal before origin -> separate negative count,signed first-MAP minus origin delay;can overlap later censor",
+    "no_truth_goal": "no true_node goal observed -> separate,not delay0"
+  },
+  "reporting": "EVAL performance only;CAL and EVAL used run/inference counts by phase;CAL parameter/coverage metadata allowed,no CAL accuracy table",
+  "assumptions": "Topomap node poses and observation-time exact odometry available in shared world frame;recorded candidate windows fixed;no missing distance synthesis",
+  "limitations": [
+    "OBS product assumes conditional independence of window distances and may be overconfident",
+    "SIGN variance uses logged HMM0 MAP tangent and includes error from incorrectly localized segments"
+  ],
+  "execution": "Cache calibration contributions perrun;fit/save immutable model before any EVAL;resume requires same CAL fingerprint. Per-EVAL cache with input/model/protocol hash;1min progress;automatic report commit/push.",
+  "source_sha256": {
+    "research/nomad_loc_v2/replay.py": "a42015e67cc09a9942a501fb9b046e3677f06ff2a6d3d8238195365db662f14c",
+    "research/nomad_loc_v2/__init__.py": "61d8dc773bc485c676a4597cfeacda2ae59ee556bba998f16e7ad806f6e8b5e6",
+    "research/nomad_loc_v2/filter.py": "039754e0250f716ec0593e352e1f86454d5c17f7f06f55c782d8178c2b38c4b8",
+    "research/nomad_loc_v2/report.py": "76636f28ad30e791fd0339089075c1d2c4d1db43195c363c1e5d259af8c864f4",
+    "research/nomad_loc_v2/prepare.py": "5cd0e98467a8b69f475d0b31c85189ed2245664d3eacffd975eccf8395b8d95e",
+    "research/nomad_loc_v2/test_loc_v2.py": "2ee6ed1a32ca9c1ba16b07607028b157d9d5c8b8b26665054a59ee2c45d9a5df",
+    "research/nomad_loc_v2/calibration.py": "eadfc0d686837d764272ac8f039e404b4493d0899b292b36ba6deeb7b0a805b3",
+    "research/nomad_loc_v2/data.py": "fb67e7b304d36d493c37e6a5e3ca1da24aa634f2dd73476132c7a29ec49e36ab"
+  },
+  "frozen_sources": {
+    "research/nomad_hmm_replay/filter.py": "cc8293a41951d5e74d4a9e085ee9043a68065b9e018df756a487a74fcbf67928",
+    "research/nomad_hmm_replay/data.py": "f35bc8d21ca90f5298294b8cb1bfaa0d05ec74e6b79de2ee6f6f2d368cc720f2",
+    "research/nomad_hmm_replay/replay.py": "5e30bd6606e300dcb2e2cd9b470e5c6dc32656abe5b1135852434966879c051f",
+    "research/nomad_phase42l/filter.py": "eb3ea66a6f5bb1573174ac47669e2c7b229a91a570a579d6bc9c256cb1307a91",
+    "research/nomad_phase42l/analyze.py": "4b3d0e86c84728a2e2ccc6aa3e2a8130c3fcce0335a7f32f63564de95608243d"
+  },
+  "reference_hashes": {
+    "research/nomad_phase47c/protocol.json": "f9169693c79d561c056bfca150c697459bbc9375dbe9b3f03f79c16c240f8064",
+    "research/nomad_phase52p/protocol.json": "57838e8042c9d156c728313a61432c2e3eccb000530f20ef654b2045978a57c4",
+    "research/nomad_phase53p/protocol.json": "1cc31fda1f431072cb8687d9ea7b1c1e70e628b05f0346067a6199fdd558f6eb",
+    "research/nomad_night20261111/protocol_E1.json": "46eb5be0e6a0ee2c2ef39d76b2fa779f6e55b36d2c14e3410da763ba969dde12",
+    "research/nomad_night20261111/protocol_E3.json": "123ba3c9c7fd2208f21b9070f92fcc91f418d932d89f0a476856f254ed5ee4ae",
+    "research/nomad_phase57p/protocol.json": "8a7c1e827306abda407d386a9c934bccee400a261700b3d6963f9f284886dca0",
+    "research/nomad_phase58p/protocol.json": "617d7de3b84686e2c10b20c57e3c1eeade14699f61ddf60825cd09dd7df05921",
+    "research/nomad_phase59p/protocol.json": "27081d1ff2f87d8d083ce8f9823e472c2b225b552573a7b32fa116f8cdc14780"
+  }
+}
