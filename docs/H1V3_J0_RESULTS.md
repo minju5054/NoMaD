@@ -29,3 +29,23 @@
 선별 기준: 0s 성공2/2 AND 0.75s checkpoint 평균>0s 평균. 두 조건 모두 seed221·222의 checkpoint가 있어야 하며 결측 대체 없음. 0s 두 run을 먼저 실행한다. 기존 H1-v2 코드·결과는 수정하지 않는다.
 
 ![H1-v3 geometry](figures/h1v3_scene_preview.png)
+
+## 저장 궤적 그림
+
+기존 4회 저장 72Hz 궤적·summary의 장면/상자/종료 위치만 그렸다. 시뮬레이션·solver·평가기 재실행 없음.
+
+D000, seed221: SUCCESS
+
+![saved drive](figures/h1v3_j0_D000_221.png)
+
+D000, seed222: TIMEOUT
+
+![saved drive](figures/h1v3_j0_D000_222.png)
+
+D750, seed221: SUCCESS
+
+![saved drive](figures/h1v3_j0_D750_221.png)
+
+D750, seed222: TIMEOUT
+
+![saved drive](figures/h1v3_j0_D750_222.png)

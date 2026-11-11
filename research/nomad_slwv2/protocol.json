@@ -1,0 +1,286 @@
+{
+  "phase": "SLW-v2 J0 screen",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-11-11T16:55:09.881872+00:00",
+  "planned": 4,
+  "publish_branch": "research/phase0-infrastructure",
+  "method": "OURS-noEC",
+  "indices": [
+    221,
+    222
+  ],
+  "delays_s": [
+    0.0,
+    0.75
+  ],
+  "main_order": [
+    {
+      "scene": "SLW-v2",
+      "index": 221,
+      "method": "OURS-noEC",
+      "delay": 0.0
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 222,
+      "method": "OURS-noEC",
+      "delay": 0.0
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 221,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 222,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    }
+  ],
+  "source_sha256": {
+    "research/nomad_slwv2/scene.json": "911057cfc6ede72efeaeb4253ace45b5a38756f0fa056f9c5c699f418fcf7ebe",
+    "research/nomad_slwv2/launch.py": "c866eaad34d0f8267af1a93f4f8d5dda6be6b6b42c6d70483ec6efa751cd74aa",
+    "research/nomad_slwv2/__init__.py": "218a54ab5160b81c964c509ab1b49e638e9ab32798772532981c3e211fccd5c4",
+    "research/nomad_slwv2/campaign.py": "2e1054d3aef7aa3298b7c2b00e8554e259228b2304a35c3216a73f1c14428f92",
+    "research/nomad_slwv2/metrics.py": "f0a32b2d81604c7c98bf30c14217d1b1694aec6d3de7a98d9fc62aef34afcb5b",
+    "research/nomad_slwv2/reference_simulator.py": "f34eb360da4cdc8de461924a559c5b0e7605f441e3846151679f7407af6c4315",
+    "research/nomad_slwv2/reference.py": "1b31702ba8be9d0b778065ef2f45d54d21065af3c32cf61ab23e8dee18ba69d6",
+    "research/nomad_slwv2/test_scene.py": "bdf50fe621859311bb70714b40b5142371347d94351add843c892fb2839ca95c",
+    "research/nomad_slwv2/figures.py": "dfd234b3813e6629a32630d7e7c16c8076eb478a061a3f23fe6bdd6f3861735d",
+    "research/nomad_slwv2/report.py": "1a13691f2bf2012a99c1d71e79ecee79dc5f7fac5f2817dadd4930aa38ab066e",
+    "research/nomad_slwv2/simulator.py": "aa0a864341be47e12332ef588c7dd77a09445485f00cce8e3161ceb28124eb2a",
+    "research/nomad_slwv2/prepare.py": "8fbb7a9a64fb0272947cf8babeb7ff6fddd454018a2793b931a7079d2fd16e31",
+    "research/nomad_slwv2/config.py": "9ac5a110672bd63258f12faebc1fe9b14f162baf0861e29817e1ee9f88987a13",
+    "research/nomad_phase17/simulator.py": "0273e0d6853178926e462efdd6f1785a7fa24933b70f21a29ce037207ad345cd",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_isaac/scenarios/phase17_slw.json": "57c277287204730d30119e45e122cb9051ffe005f3fcefcc2df43e00d332c718",
+    "research/nomad_h1v3/report.py": "a61d7a84968cbf6533ae306c15a609a14c1913960a0af651100151a132bfb293",
+    "research/nomad_h1v3/protocol.json": "60280e37fae59be42f8930dc00914be2fcd666110574e992736392405bb16846"
+  },
+  "parent_j0_protocol_sha256": "5269b6386e91a3f66e8b8eacef1188705c2b85e5c2df468eea813385e2f13309",
+  "execution": {
+    "base": "Phase18",
+    "controller": "protected PP geometry + Phase18 CURV, lookahead .25, vmax .3, |omega|<=.4",
+    "timing_hz": [
+      4,
+      9,
+      72
+    ],
+    "expiry_s": 1.0,
+    "goal": "true pose distance <=.3m; no closest_node stop",
+    "localization": "official argmin closest_node/subgoal",
+    "latency": "world-anchor at observed pose, choose by suffix at actual application B; unchanged uniform result-delivery delay",
+    "graph": "frozen Phase17/18 ClearanceGraph factors/solver/initialization/async scheduler; SUPERSEDED/STALE/expiry preserved",
+    "depth": "Phase18 V1, unknown free, sigma=.01*d^2; original map publication/storage",
+    "no_safe": "retain current path/progress, without refreshing its one-second receipt clock; no recovery/STOP_WAIT special rule",
+    "endpoint": "latch protected PP endpoint_stop until a new SAFE or accepted Graph path is installed; zero command",
+    "EC": false,
+    "HMM": false,
+    "NET": false,
+    "recovery": false,
+    "stop_wait_special": false,
+    "oracle_for_control": false
+  },
+  "screening": {
+    "zero_success_required": 2,
+    "checkpoint_mean_increase_strict": true,
+    "maximum_selected": 3,
+    "rank": "zero-delay checkpoint mean ascending; ties frozen scene order",
+    "missing": "both seeds must be valid and have checkpoints in both conditions; no imputation"
+  },
+  "session_budget_s": 3600,
+  "technical_retries": 0,
+  "disk_reserve_bytes": 30000000000,
+  "scene_geometry": {
+    "name": "SLW-v2",
+    "start_pose": [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    "goal_pose": [
+      5.0,
+      0.0,
+      0.0
+    ],
+    "goal_tolerance_m": 0.3,
+    "timeout_sim_s": 90.0,
+    "timeout_navigation_wall_s": 180.0,
+    "timeout_process_wall_s": 600.0,
+    "integration_hz": 72,
+    "observation_hz": 4,
+    "controller_hz": 9,
+    "controller_dt_s": 0.25,
+    "max_v": 0.2,
+    "max_w": 0.4,
+    "seed": 101,
+    "context_size": 3,
+    "num_samples": 8,
+    "selected_sample": 0,
+    "selected_waypoint_index": 2,
+    "camera": {
+      "width": 320,
+      "height": 240,
+      "height_m": 0.5,
+      "horizontal_fov_deg": 90.0,
+      "focal_length_mm": 18.0,
+      "horizontal_aperture_mm": 36.0,
+      "vertical_aperture_mm": 27.0
+    },
+    "corridor": {
+      "xmin": -2.0,
+      "xmax": 6.0,
+      "half_width": 0.9,
+      "height": 2.6
+    },
+    "boundary_stop_margin_m": 0.1,
+    "synchronous": false,
+    "smoothing": false,
+    "waypoint_modification": false,
+    "agent_radius_m": 0.09,
+    "required_clearance_m": 0.02,
+    "obstacles": [
+      {
+        "id": "Slalom1",
+        "center_xy_m": [
+          1.3,
+          0.4
+        ],
+        "size_xyz_m": [
+          0.4,
+          1.0,
+          0.8
+        ],
+        "color_rgb": [
+          0.85,
+          0.08,
+          0.08
+        ]
+      },
+      {
+        "id": "Slalom2",
+        "center_xy_m": [
+          2.7,
+          -0.4
+        ],
+        "size_xyz_m": [
+          0.4,
+          1.0,
+          0.8
+        ],
+        "color_rgb": [
+          0.08,
+          0.2,
+          0.85
+        ]
+      },
+      {
+        "id": "Slalom3",
+        "center_xy_m": [
+          4.1,
+          0.4
+        ],
+        "size_xyz_m": [
+          0.4,
+          1.0,
+          0.8
+        ],
+        "color_rgb": [
+          0.95,
+          0.8,
+          0.04
+        ]
+      }
+    ],
+    "phase16_scene": "SLW-v2",
+    "checkpoint": {
+      "axis": 0,
+      "threshold_m": 4.6,
+      "meaning": "last box far X face + 0.30m"
+    },
+    "oracle_shortest_grid_length_m": 5.546761902332486,
+    "scene_variant": "SLW-v2"
+  },
+  "depth_bounds_m": [
+    -4.0,
+    -3.5,
+    8.0,
+    6.2
+  ],
+  "reference": {
+    "center_to_obstacle_m": 0.25,
+    "center_to_wall_m": 0.25,
+    "spacing_sim_s": 2.0,
+    "planner": "nomad_phase16.geometry.reference_path",
+    "rollout": "nomad_phase16.geometry.reference_rollout",
+    "renderer": "nomad_phase17.simulator reference branch",
+    "grid_m": 0.02,
+    "smooth_passes": 20,
+    "speed_m_s": 0.2,
+    "lookahead_m": 0.25,
+    "max_reference_s": 120,
+    "executed_during_prep": false,
+    "topomap_sha256": "DEFERRED: sealed in resolved_assets.json after user-run reference preparation"
+  },
+  "scenes": {
+    "SLW-v2": {
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/manifest.json",
+      "topomap_sha256": null,
+      "checkpoint": {
+        "axis": 0,
+        "direction": 1,
+        "box_id": "Slalom3",
+        "dynamic": false,
+        "threshold_m": 4.6,
+        "formula": "last box +x far face +0.30; identical to SLW"
+      },
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -2.1,
+          -1.0,
+          6.1,
+          1.0
+        ],
+        "padded_bbox_m": [
+          -2.6,
+          -1.5,
+          6.6,
+          1.5
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      }
+    }
+  },
+  "simulations_started_during_prep": 0,
+  "changes": [
+    "start x0 -> -1",
+    "corridor xmin -1 -> -2",
+    "Slalom1/2/3 solid red/blue/yellow"
+  ],
+  "reference_preparation_in_campaign": true
+}
