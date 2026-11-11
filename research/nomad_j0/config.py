@@ -28,5 +28,6 @@ def verify():
 def runtime_config(method,index,timeout=90,level='SLW'):
     assert method==METHOD and index in INDICES and level in SCENES and timeout==90
     c=shared_config(method,index,timeout,level)
+    assert c['sdf_registration']==protocol()['scenes'][level]['sdf_registration']
     c['j0']=True
     return c

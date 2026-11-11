@@ -1,7 +1,7 @@
 {
   "phase": "J0",
   "status": "FROZEN",
-  "frozen_at_utc": "2026-11-11T14:56:34.151157+00:00",
+  "frozen_at_utc": "2026-11-11T15:29:57.210535+00:00",
   "method": "OURS-noEC",
   "indices": [
     221,
@@ -547,6 +547,44 @@
           "assumption": "Zero jitter;canonical original first trigger y=1.2m. Actual H1 box y depends on actual spawn y in[1.2,1.3],so center y spans[2.49,2.59]. Existing results untouched."
         },
         "size_axes": "world x,y,z;matches static AfterCorner0.5x0.4x0.8;no yaw/jitter;fixed position independent of seed and actual spawn pose"
+      },
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -1.1,
+          -1.1,
+          4.3,
+          4.3
+        ],
+        "padded_bbox_m": [
+          -1.6,
+          -1.6,
+          4.8,
+          4.8
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
       }
     },
     "SLW": {
@@ -634,7 +672,45 @@
       },
       "dynamic_obstacle": null,
       "spawn": null,
-      "h1v2_spec": null
+      "h1v2_spec": null,
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -1.1,
+          -1.0,
+          6.1,
+          1.0
+        ],
+        "padded_bbox_m": [
+          -1.6,
+          -1.5,
+          6.6,
+          1.5
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      }
     },
     "H2": {
       "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json",
@@ -716,7 +792,45 @@
         ],
         "max_geometry_adjustments": 1
       },
-      "h1v2_spec": null
+      "h1v2_spec": null,
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -1.1,
+          -1.6,
+          9.1,
+          1.6
+        ],
+        "padded_bbox_m": [
+          -1.6,
+          -2.1,
+          9.6,
+          2.1
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          9.6,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      }
     },
     "LC": {
       "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/manifest.json",
@@ -788,7 +902,45 @@
       },
       "dynamic_obstacle": null,
       "spawn": null,
-      "h1v2_spec": null
+      "h1v2_spec": null,
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -1.1,
+          -1.1,
+          4.3,
+          4.3
+        ],
+        "padded_bbox_m": [
+          -1.6,
+          -1.6,
+          4.8,
+          4.8
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      }
     },
     "CL": {
       "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/manifest.json",
@@ -909,7 +1061,45 @@
       },
       "dynamic_obstacle": null,
       "spawn": null,
-      "h1v2_spec": null
+      "h1v2_spec": null,
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -1.1,
+          -1.6,
+          6.1,
+          1.6
+        ],
+        "padded_bbox_m": [
+          -1.6,
+          -2.1,
+          6.6,
+          2.1
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      }
     }
   },
   "source_sha256": {
@@ -1062,24 +1252,23 @@
     "research/nomad_phase8/offline.py": "7fa72e4d1e84a49d94f8123d40c8365e5eb914ba793f16d54d60901a42b63a3e",
     "research/nomad_phase17/protocol.json": "be911cf1f9e139090aca37c6156c8cb23a2a1e2289afa3fb410bec89b3e529d7",
     "research/nomad_phase7/rtc.py": "446bbbd2bbe8db3c0639fa6829167030de84f1b24b90ebcdd2eb5316b05ff4ae",
-    "research/nomad_isaac/scenarios/phase17_slw.json": "57c277287204730d30119e45e122cb9051ffe005f3fcefcc2df43e00d332c718",
-    "research/nomad_phase17/references/SLW.json": "44abcb27edd1d5b76d8ca74e9f7d68b2f28a67c705b06b2cc713111587412039",
-    "research/nomad_isaac/scenarios/phase16_lc.json": "1c18c5be6a9b04996f31e3ab6164be0133ee9b2a06667a3e7f27693731ef2cf3",
-    "research/nomad_phase16/references/LC.json": "5518dc9da485dbc823df79fcf1064e6739cab926786000f29248803a6af9dc99",
-    "research/nomad_isaac/scenarios/phase16_cl.json": "d86b222cdcf44095a5a6b83428b7764df7e6913eda63bee3e4bc4e0286c800b3",
-    "research/nomad_phase16/references/CL.json": "814479317639616b01e3331209e39815df2026f620854b5b919da1b095aeb08c",
     "research/nomad_j0/launch.py": "a5061e35e72cf2827a4164da5319343b1e77b3843bdc2f607123926d7efa78be",
     "research/nomad_j0/__init__.py": "59149382e0eb0d15ad36e13f3423f18876c29323f13af841f8854cf81f9acd5f",
-    "research/nomad_j0/campaign.py": "8e7458a29ffbbc4134a7481f7ee0984d540234a2b96cd1ea08d07cb8e97da813",
-    "research/nomad_j0/test_j0.py": "ed3c87f74159e4ca5dcdc38d402672f67dc17e6cbc35878dc3ef9605bdca9081",
+    "research/nomad_j0/campaign.py": "c98afab5de205ce7b2bfd51cfe1ffc4444ac9c915bfe03c60a0dc200e65e736a",
+    "research/nomad_j0/test_j0.py": "580749f85d71978289bee21e3582067b72521f548efc2354e1be0b47b1e58c20",
     "research/nomad_j0/metrics.py": "d57fbfd38f689965ad694b5280691dbc263770712aa872c474acd128ba4a15c6",
-    "research/nomad_j0/report.py": "05b64fd83723d1a3e977c8b4098a8035b09cac4dc9cb046efe77e6c49fbe8716",
+    "research/nomad_j0/report.py": "e45a4842a2b510e1a70134ab254e32ddf7da219c7428271ec0af0daf30be8877",
     "research/nomad_j0/simulator.py": "363d2fcf069804557ae3a2cd69292e8a16e88f83a5f0b9f98b3ee290ac998a12",
-    "research/nomad_j0/prepare.py": "bf236bb3e9443979e365abd26c2aaa06ebf10c58d1f0f0f02881aa38baba550e",
-    "research/nomad_j0/config.py": "5653ae9bb66c1177db7023337ee78392c1e9cfbf1dfa058d0574c0e603b55e5c",
+    "research/nomad_j0/prepare.py": "3579fa11edd6e21424dc4b082f7a31da6affc3f7d2cd2a556cb09e6edfdd3970",
+    "research/nomad_j0/protocol_before_sdf_fix.json": "42ebab18c221fdf5525ec83ba5692e8b84eb913b2df07d8f1dd88b743c5d7cee",
+    "research/nomad_j0/sdf_fix_prepare.py": "48a936911f3865238e66e1182a007661b858954e8c7abdf77eb9a1835343da48",
+    "research/nomad_j0/config.py": "d9bc650ec392160e9ba702cf0a6a782cec2abd37cb5e0eaf3f77d967f336f35d",
+    "research/nomad_j0/h2_rerun.py": "2bf7f84d0a1092fe42206ae7b2061b91e4b5a569843a005e841010b430b77059",
+    "research/nomad_j0/test_sdf_fix.py": "6424fc0d6b05664aa07e96fa8cf5caa004746aaf927aaa0f8156eca3cb415de7",
     "research/nomad_j1/__init__.py": "69f7c2e6f6904424ebf4ce775f2fcc4e28cc8ec5b1a8c994446c65a0a4766752",
-    "research/nomad_j1/common.py": "417ef9237ad7d2d94d03ed61b62bd4c4b515318eb210a3a3046d38f3221e3ea4",
-    "research/nomad_j1/execution.py": "c5c0bad7635a36e5e8706155f2e61073c3b0346907048bb50073e54b1709c8d2",
+    "research/nomad_j1/common.py": "34e0043082ab4dfeba109ef9f9712e5ad032526be0af62d7741af15c98a1f8d8",
+    "research/nomad_j1/depth.py": "8fde06d05dee310e7ed4e0c89cf11f536cd74225364899b6003859280676a58c",
+    "research/nomad_j1/execution.py": "2a3f7c776ccdcf33367d749053ce556988712ceb8aa512a69f469c6573275d82",
     "research/nomad_phase18/launch.py": "1a573330c43ead4a8a23f4065d01b85f6fa6f94e16b913cc8e6cd53ab37b10d0",
     "research/nomad_phase18/replay.py": "ed8d36c050296e54114fa1666fe007b3d0d8fb72a357f2f8fa89b7c81a444a71",
     "research/nomad_phase18/preflight.py": "5e93da9703bb8d1e079ee92ff93807c27df3227405c1844ea2bcf633a27f3df3",
@@ -1177,6 +1366,12 @@
     "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_LC_902_SAFE.json": "56688eb6addcb59db948996a695d2e1215b11d44ee1bf3062e2e89d4f40dfe6a",
     "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_SLW_901_SAFE.json": "6a04e0204c4392fcf0eeb108740b2b30b26aa42304e4914d56687eea1da6064d",
     "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_SLW_902_SAFE.json": "1a94215bc426c61d128bfda89b6af2ba7ef03a73a213e9fb2785c7483174fbab",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase17_slw.json": "57c277287204730d30119e45e122cb9051ffe005f3fcefcc2df43e00d332c718",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase17/references/SLW.json": "44abcb27edd1d5b76d8ca74e9f7d68b2f28a67c705b06b2cc713111587412039",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase16_lc.json": "1c18c5be6a9b04996f31e3ab6164be0133ee9b2a06667a3e7f27693731ef2cf3",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase16/references/LC.json": "5518dc9da485dbc823df79fcf1064e6739cab926786000f29248803a6af9dc99",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase16_cl.json": "d86b222cdcf44095a5a6b83428b7764df7e6913eda63bee3e4bc4e0286c800b3",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase16/references/CL.json": "814479317639616b01e3331209e39815df2026f620854b5b919da1b095aeb08c",
     "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/manifest.json": "5d667992e2bb0f3f3f4cece8c8745355c8a36a997b5dfda8ce46f3856655db57",
     "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0000.png": "b8b841ebb0b3fed9ee8114924f95b2ea92dc0e625ec8ff8a20f8d93306516c21",
     "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0001.png": "cf4a86591cff1d89e7cf9dc4e6c9c6bcae4180146244a604349d317c18389d8a",
@@ -1295,5 +1490,15 @@
   "technical_retries": 0,
   "technical_rule": "Phase18 one attempt; record failure and continue. Preserve interrupted attempt, never overwrite",
   "disk_reserve_bytes": 30000000000,
-  "simulation_started_during_prep": false
+  "simulation_started_during_prep": false,
+  "sdf_fix": {
+    "original_protocol_sha256": "42ebab18c221fdf5525ec83ba5692e8b84eb913b2df07d8f1dd88b743c5d7cee",
+    "publish_branch": "fix/j0-scene-sdf-bounds",
+    "rerun_scenes": [
+      "H2"
+    ],
+    "rerun_planned": 4,
+    "reuse_non_H2": 16,
+    "change": "Only scene-derived SDF allocation, retaining origin/resolution/empty sentinel; frozen query unchanged"
+  }
 }

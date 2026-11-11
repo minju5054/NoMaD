@@ -43,3 +43,9 @@ H1-v2는 y=1.10 돌발 상자의 +y 먼 면+0.30=1.60m. H2는 실제 두 번째 
 본 실행(미실행):
 
 `cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && nohup env -u LD_LIBRARY_PATH -u LD_PRELOAD -u PYTHONHOME -u VIRTUAL_ENV PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_j0.campaign > ../artifacts/isaac6/j0_01.log 2>&1 < /dev/null &`
+
+## 별도 worktree의 H2 등록 범위 수정
+
+원래20회 명령은 최초 J0 준비 기록이다. 현재 수정 브랜치에서는 원 J0 종료 후 H2 네 개만 새 root에서 실행하고 나머지16개와 합쳐 보고한다. [수정·동등성 검증](J0_SDF_FIX.md). 실행 중인 원 작업 트리는 변경하지 않는다.
+
+`cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer-j0-sdf-fix && nohup env -u LD_LIBRARY_PATH -u LD_PRELOAD -u PYTHONHOME -u VIRTUAL_ENV PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_j0.h2_rerun > ../artifacts/isaac6/j0_h2_sdf_01.log 2>&1 < /dev/null &`

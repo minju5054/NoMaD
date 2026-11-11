@@ -38,9 +38,9 @@ def csv_write(path,rows):
     with Path(path).open('w',newline='') as f:
         w=csv.DictWriter(f,fieldnames=fields,lineterminator='\n');w.writeheader();w.writerows(rows)
 
-def generate(root=RUN_ROOT,out=OUT,doc=None):
+def generate(root=RUN_ROOT,out=OUT,doc=None,records=None):
     p=verify();root=Path(root);out=Path(out);out.mkdir(parents=True,exist_ok=True)
-    records=[json.loads(f.read_text()) for f in sorted((root/'metrics').glob('*.json'))]
+    records=[json.loads(f.read_text()) for f in sorted((root/'metrics').glob('*.json'))] if records is None else records
     expected={(j['scene'],j['index'],j['delay']) for j in p['main_order']}
     keys=[(r['scene'],r['index'],r['delay']) for r in records]
     assert len(keys)==len(set(keys)) and set(keys)<=expected

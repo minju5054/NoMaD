@@ -56,4 +56,6 @@ def runtime_config(method, index, timeout=90, level='SLW'):
     c.update(j_common=True, j_method=method, j_scene=level, phase15b_method=method,
              nomad_goal_stop=False, oracle_publication=False, goal_tolerance_m=.3,
              checkpoint=checkpoint_spec(level))
+    from .depth import registration
+    c['sdf_registration'] = registration(c)
     return c
