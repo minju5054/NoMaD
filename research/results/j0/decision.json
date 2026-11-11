@@ -1,13 +1,16 @@
 {
-  "status": "PREPARED_NOT_RUN",
-  "selected_scenes": [],
-  "eligible_scenes": 0,
+  "status": "COMPLETE",
+  "selected_scenes": [
+    "LC",
+    "CL"
+  ],
+  "eligible_scenes": 2,
   "rows": [
     {
       "scene": "H1-v2",
-      "zero_success": 0,
+      "zero_success": 1,
       "required_success": 2,
-      "complete": false,
+      "complete": true,
       "all_checkpoints_observed": false,
       "zero_checkpoint_mean_s": null,
       "delayed_checkpoint_mean_s": null,
@@ -19,7 +22,7 @@
       "scene": "SLW",
       "zero_success": 0,
       "required_success": 2,
-      "complete": false,
+      "complete": true,
       "all_checkpoints_observed": false,
       "zero_checkpoint_mean_s": null,
       "delayed_checkpoint_mean_s": null,
@@ -41,31 +44,31 @@
     },
     {
       "scene": "LC",
-      "zero_success": 0,
+      "zero_success": 2,
       "required_success": 2,
-      "complete": false,
-      "all_checkpoints_observed": false,
-      "zero_checkpoint_mean_s": null,
-      "delayed_checkpoint_mean_s": null,
-      "difference_s": null,
-      "passed": false,
-      "reason": "INCOMPLETE_OR_MISSING_CHECKPOINT"
+      "complete": true,
+      "all_checkpoints_observed": true,
+      "zero_checkpoint_mean_s": 18.4375,
+      "delayed_checkpoint_mean_s": 34.28472222222222,
+      "difference_s": 15.847222222222221,
+      "passed": true,
+      "reason": "PASS"
     },
     {
       "scene": "CL",
-      "zero_success": 0,
+      "zero_success": 2,
       "required_success": 2,
-      "complete": false,
-      "all_checkpoints_observed": false,
-      "zero_checkpoint_mean_s": null,
-      "delayed_checkpoint_mean_s": null,
-      "difference_s": null,
-      "passed": false,
-      "reason": "INCOMPLETE_OR_MISSING_CHECKPOINT"
+      "complete": true,
+      "all_checkpoints_observed": true,
+      "zero_checkpoint_mean_s": 20.78472222222222,
+      "delayed_checkpoint_mean_s": 34.708333333333336,
+      "difference_s": 13.923611111111114,
+      "passed": true,
+      "reason": "PASS"
     }
   ],
   "missing_policy": "Require both checkpoint observations in both conditions; no censoring or imputation",
   "tie_rule": "Frozen SCENES order",
   "criteria": "zero-delay success 2/2 AND delayed checkpoint mean strictly greater; rank zero-delay mean ascending",
-  "protocol_sha256": "42ebab18c221fdf5525ec83ba5692e8b84eb913b2df07d8f1dd88b743c5d7cee"
+  "protocol_sha256": "5269b6386e91a3f66e8b8eacef1188705c2b85e5c2df468eea813385e2f13309"
 }
