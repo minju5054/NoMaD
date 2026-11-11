@@ -1,0 +1,1987 @@
+{
+  "phase": "J1",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-11-11T17:31:29.878940+00:00",
+  "methods": [
+    "NOMAD_RAW",
+    "RTC-hard",
+    "OURS",
+    "OURS-noGRAPH",
+    "OURS-noEC"
+  ],
+  "scenes": {
+    "SLW-v2": {
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/manifest.json",
+      "topomap_sha256": "4c41bae770e2ea643f7f40e33c4b71942d554fdaed48138b8ce9ee27503f5e77",
+      "checkpoint": {
+        "axis": 0,
+        "direction": 1,
+        "box_id": "Slalom3",
+        "dynamic": false,
+        "threshold_m": 4.6,
+        "formula": "last box +x far face +0.30; identical to SLW"
+      },
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -2.1,
+          -1.0,
+          6.1,
+          1.0
+        ],
+        "padded_bbox_m": [
+          -2.6,
+          -1.5,
+          6.6,
+          1.5
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      },
+      "start_pose": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "goal_pose": [
+        5.0,
+        0.0,
+        0.0
+      ]
+    },
+    "H1-v3": {
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/manifest.json",
+      "topomap_sha256": "f1c4f080632b69f1e6e39eddbe9f8f0284f9a4ba44ff8f51be9c300db1a3045f",
+      "checkpoint": {
+        "axis": 1,
+        "direction": 1,
+        "box_id": "DynamicObstacle",
+        "dynamic": false,
+        "threshold_m": 1.2,
+        "formula": "box center along +y + projected half extent + 0.30"
+      },
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -1.1,
+          -1.1,
+          4.3,
+          4.3
+        ],
+        "padded_bbox_m": [
+          -1.6,
+          -1.6,
+          4.8,
+          4.8
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      },
+      "start_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "goal_pose": [
+        3.3,
+        3.2,
+        0.0
+      ]
+    },
+    "LC": {
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/manifest.json",
+      "topomap_sha256": "f1c4f080632b69f1e6e39eddbe9f8f0284f9a4ba44ff8f51be9c300db1a3045f",
+      "checkpoint": {
+        "axis": 1,
+        "direction": 1,
+        "box_id": "AfterCorner",
+        "dynamic": false,
+        "threshold_m": 2.4,
+        "formula": "box center along axis + projected half extent + 0.30"
+      },
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -1.1,
+          -1.1,
+          4.3,
+          4.3
+        ],
+        "padded_bbox_m": [
+          -1.6,
+          -1.6,
+          4.8,
+          4.8
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      },
+      "start_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "goal_pose": [
+        3.3,
+        3.2,
+        0.0
+      ]
+    }
+  },
+  "indices": [
+    231,
+    232,
+    233,
+    234,
+    235,
+    236,
+    237,
+    238,
+    239,
+    240,
+    241,
+    242,
+    243
+  ],
+  "main_order": [
+    {
+      "scene": "SLW-v2",
+      "index": 231,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 231,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 231,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 231,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 231,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 231,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 231,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 231,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 231,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 231,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 231,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 231,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 231,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 231,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 231,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 232,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 232,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 232,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 232,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 232,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 232,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 232,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 232,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 232,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 232,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 232,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 232,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 232,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 232,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 232,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 233,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 233,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 233,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 233,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 233,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 233,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 233,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 233,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 233,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 233,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 233,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 233,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 233,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 233,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 233,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 234,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 234,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 234,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 234,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 234,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 234,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 234,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 234,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 234,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 234,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 234,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 234,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 234,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 234,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 234,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 235,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 235,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 235,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 235,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 235,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 235,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 235,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 235,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 235,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 235,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 235,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 235,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 235,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 235,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 235,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 236,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 236,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 236,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 236,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 236,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 236,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 236,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 236,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 236,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 236,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 236,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 236,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 236,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 236,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 236,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 237,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 237,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 237,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 237,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 237,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 237,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 237,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 237,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 237,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 237,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 237,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 237,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 237,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 237,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 237,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 238,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 238,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 238,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 238,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 238,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 238,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 238,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 238,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 238,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 238,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 238,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 238,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 238,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 238,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 238,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 239,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 239,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 239,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 239,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 239,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 239,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 239,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 239,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 239,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 239,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 239,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 239,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 239,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 239,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 239,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 240,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 240,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 240,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 240,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 240,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 240,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 240,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 240,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 240,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 240,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 240,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 240,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 240,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 240,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 240,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 241,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 241,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 241,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 241,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 241,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 241,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 241,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 241,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 241,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 241,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 241,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 241,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 241,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 241,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 241,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 242,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 242,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 242,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 242,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 242,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 242,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 242,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 242,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 242,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 242,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 242,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 242,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 242,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 242,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 242,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 243,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 243,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 243,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 243,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 243,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 243,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 243,
+      "method": "NOMAD_RAW",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 243,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 243,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 243,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 243,
+      "method": "RTC-hard",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 243,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "LC",
+      "index": 243,
+      "method": "OURS",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 243,
+      "method": "OURS-noGRAPH",
+      "delay": 0.75
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 243,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    }
+  ],
+  "planned": 195,
+  "order_seed": 20261112,
+  "block_size": 15,
+  "session_budget_s": 19800.0,
+  "budget": "Finish an already-started seed block; do not start a new seed after19800s; same command resumes",
+  "source_sha256": {
+    "research/nomad_phase0/pure_pursuit.py": "5e6010bad728dc7130457dfc71da0a92e5e0d86f1a63dfefc2aae1105475993d",
+    "research/nomad_phase0/follower_protocol.json": "e72fc4581f12f3fff6d07611f2673fd7a9f1664f2eaeec10ccb16e167336da10",
+    "research/nomad_phase0/chunk_pilot_protocol.json": "3be16f5ec1e9b61cda39dd0c511a915c187acae6b118ff5daa40dd02d6048a6e",
+    "research/nomad_phase0/graph_v4.py": "e7b7a9b784189644564df24b7c0d02af6e1497f9ef11c63616f597634aa1c445",
+    "research/nomad_phase0/graph_v4_protocol.json": "4def6d67a1b3398b4316cc832b214935e59ba2b323004c235fed2771e2d4576f",
+    "research/nomad_isaac/common.py": "37411b364e3d39547d2c134e2cbe67f9b9e5d09b7cfad6709567960859e4d03d",
+    "research/nomad_isaac/clearance.py": "70213b966898efb17e070ead2c24a77b0b58478c1d6b228045157fe91dba048c",
+    "research/nomad_isaac/async_core.py": "4836432dfc44212015a537d5f45f0b9e110586d63bf69477794a8b4caf494e3d",
+    "research/nomad_isaac/delivery_delay.py": "640bb74816667b0abdc28e1662815371854093bb5960d6aa8e70903bded21413",
+    "research/nomad_isaac/topomap.py": "2c333951850d252cda85b9c6c2c85a0752776f26ef25b4303b9a61723169c8a1",
+    "research/nomad_isaac/worker.py": "9e59152aaa8e6b5b4b41630fbf0956c5bd6fcec6232885f1e0041745b2a04e12",
+    "research/nomad_preflight/native.py": "5e2f088e23f8bf83963f130ac4f95ffb1ccc12c8c7fb869be067d335f4b6b631",
+    "deployment/src/pd_controller.py": "bdff3fa9dda8c3b3237b5a1de83c6aaebfca5eccb67ffad7502d4ac7b7aa1e2b",
+    "deployment/src/navigate.py": "ed0c9bbc9b69746eae403aa3c7054d6f4ecccee51c6c8ae1c15e1584ea0ac226",
+    "train/config/nomad.yaml": "eb1aa594abd62a97a8ece0c735a4d2274a703d0fffaa3a97b0f880a950bba463",
+    "research/nomad_phase2/graph_worker.py": "2ffc21b0bd7d1469c123ce10e9647d7241f49cfcbf8833036d5dd9b01daef0e0",
+    "research/nomad_phase3_stage2/execution.py": "6bffa187edf58334dba85fe0ea362c7c751a29747198c8a30f845cdd49010cd0",
+    "research/nomad_phase4c/execution.py": "9cacc7ebb9bd07b33a4552180418790da973d884995496a17847f31a1ce98232",
+    "research/nomad_phase4c/plant.py": "3bad1d69ba1ceb47bc3a3d7aa5f0ba09724d750141ebe2b3f3b90e5ac497e07d",
+    "research/nomad_phase4c/protocol.json": "12b56f55d88c01101ef9ecd397723276260c5f11212a96418c04be4ab200cf00",
+    "research/nomad_phase4c/base_metrics.py": "12257847bfb605950a172add5f79b87af1434e1586530c139519128cacaa1497",
+    "research/nomad_phase4/execution.py": "2a1ebb7047463108f1c6336700bd196854bf85eaca89268624f3e980569a2d86",
+    "research/nomad_phase8/execution.py": "883f6416f6090dfb723a850eb39e3321f04c097eafd3fbb3647600d09567143c",
+    "research/nomad_phase8/inference.py": "1be01ac7e197ee88f4e227179bc3c077385e9e9d5d4f987b6c46d53477acd816",
+    "research/nomad_phase8/rtc_hard.py": "f8d2b25de87b092a43973cf0830923783bef970720005516399ddc8a0e69d7a6",
+    "research/nomad_phase8/request.py": "3fad51192bba2456b7273c8281038f85efa14d7cacd201c4b2af8b3e3505e46d",
+    "research/nomad_phase8/metrics.py": "94c40cc615764c61e8795141eb95d7b1bf14564477d0ea160ba894a6034896f3",
+    "research/nomad_phase8/protocol.json": "7f0b97256a6899faa96963eb694dfb91bca5dcf9b5251e79e3ad083e21630376",
+    "research/nomad_phase9/intent.py": "0c7efc7acfd2325f10794ba37941119563bfbd765c08868672884f05343419aa",
+    "research/nomad_phase5/graph.py": "f59d3d8d7c70bada8a40d62ec1769e8c69d5785b6a9f2fa169a8843e7ac4940a",
+    "research/nomad_phase12/config.py": "cbd45df40faed3bc2c89a4a010cb2bf4c39ac213c14d7f94d033234e2175d1e3",
+    "research/nomad_phase12/execution.py": "321d689729d8a90d13de606c2b1c7b662b87d5db1233485e2a99bc878e249704",
+    "research/nomad_phase12/gf_execution.py": "6a20c5be8cb140bba432636aa4a901c5ce3dd2774201c612d33161c4983ca45e",
+    "research/nomad_phase12/gf_worker.py": "f05a71a9d8ca614a069c54c64a2db81e0030085560e7b9b0d640053a6680db04",
+    "research/nomad_phase12/graph_gf.py": "c7b2e234302b07f894bdcaa6515ede9657d002869e4f462758880acd03a5a403",
+    "research/nomad_phase12/methods.py": "e752ab9ee57f91ceee9338722e05814f60f2047a51eecc00b6316fd8c19df8cb",
+    "research/nomad_phase12/protocol.json": "79acccfc6a6c4c5faf8c2b90dc796738cd67cb3a19bc0565b599749f9f035560",
+    "research/nomad_phase13/__init__.py": "44aa71b97e687753369955f9722976e89ccd398b919ae3ac3f894408915e8064",
+    "research/nomad_phase13/offline_validation.json": "1add90c57b0a37870a7ae6aaac1af90a1c7e0307940746c1500388185a77d0c7",
+    "research/nomad_phase13/methods.py": "d312c92041bf15b6157f59541d09f0397c2725e26b6df1f5c40e382a32fd6bb3",
+    "research/nomad_phase13/metrics.py": "283ba31acc0fc3bbca71141aa9eb28d9b850bbb0a84facefb7e84b618e8d7869",
+    "research/nomad_phase13/batch.py": "ca2ed96dc9ac0effdf31e908f0126d507ccc3756dbed2d5e0715bffc470b6ef6",
+    "research/nomad_phase13/report.py": "285324e39570f681ba71e9672ab46ab6a9021725fd1774d317d00829360711c6",
+    "research/nomad_phase13/protocol.json": "7f6ea7170327d001c545d628f2a9b29579f7ed557512fce5f4ccaf59756ab8f0",
+    "research/nomad_phase13/config.py": "e763af6471132d71c2b5b4a197d144643c7c764f4518a5fcfd8bd6b80ccf6317",
+    "research/nomad_phase13/test_phase13.py": "e6a8f7c6e94c65712a74c4a511c62afb6e1d00f8dc0ff9f0344f15360d661a3a",
+    "research/nomad_phase13/execution.py": "4342bd849e2451cb7a0c8be9b1905dd71a5c6d5a3498a9c9dc8ea61ca59505c9",
+    "research/nomad_phase13/offline.py": "b0494f96a6aed0b92f2480e3862a839454b131032ed9d0172010045a80e7ea9a",
+    "research/nomad_phase15/test_occupancy.py": "f4689c6db134f05e28bffcb387404480af8f6c9090995393e928108a2893c0dd",
+    "research/nomad_phase15/occupancy_protocol.json": "b4654bd801d72273669e4878bc8faaa96171b4032f224e34e3b027da1fa6f6ad",
+    "research/nomad_phase15/occupancy_report.py": "7f4006309c34997824c3344efaa3b8a388cd8570f25b073885627d93c84ce6d0",
+    "research/nomad_phase15/__init__.py": "5fa3b5c55ff121d5e4b7f1ba25e435bb727b2de272d101c23dec541f79637f15",
+    "research/nomad_phase15/test_depth_sdf.py": "5bc3179f3103b060595ac038cd9aa41a18268a743e8d6cb1eb44dda9b651578b",
+    "research/nomad_phase15/depth_sdf.py": "12f48eb36abbc5cdec32ba974f86a9dca943448ff43bec0114552351ce7b5a26",
+    "research/nomad_phase15/report.py": "1b8ea63f6dd2dc7f3271f1c2777f30976f2fe3a0d893b4ec066ccc78240358e1",
+    "research/nomad_phase15/protocol.json": "5adc417cdb8d827ca2d3b608486bb15453e7ab1ed76d26fbdb4cceed161957ef",
+    "research/nomad_phase15/replay_render.py": "07c8006f6571d4e5a8d99f4a66a243e6e2b4786b45283c435f8802881272b5a8",
+    "research/nomad_phase15/occupancy.py": "5cd5c399467f4ffc657231110b4af21d74e05eee756974763dd5bdc898df72ec",
+    "research/nomad_phase15/evaluate.py": "b1147d50f0a7dce3e2146fe66981caad7ec7366d5a096b3bd99eb37e0224e8f4",
+    "research/nomad_phase15/occupancy_rays.c": "2af80e0f9302270a73de2ad1f2551630e921bbe19a0c8742f7f96c6dd7f1f423",
+    "research/nomad_phase12/__init__.py": "2c133be31d1c8501caef6559f85ecba0cbe502fa105a73ee08f1777cac6c2fa4",
+    "research/nomad_phase12/batch.py": "62759a9bd68571e872204fba0e982d79324c88b7941cd9aa23eea0a89110fa11",
+    "research/nomad_phase12/metrics.py": "cb76019a4e1213865fe951eecf60bed8f6312f35dd8e8aadcbca409ee18b5579",
+    "research/nomad_phase12/offline.py": "90f009454bef59929503b913c1240f6909e392bd48d9632e89ca54e4b7b30ebd",
+    "research/nomad_phase12/offline_cases_r2.json": "4ee61f399fdbe7c6d9da787692d26cf277eb5ea55515b20544b4727c0aac2341",
+    "research/nomad_phase12/offline_validation.json": "d877fc2c2e128da59df42c534abd76626832de6bf6d3189c3aa68e9caeaff3bf",
+    "research/nomad_phase12/offline_validation_r2.json": "bc83bad0da1ac400cd6bad3032cadff15a9ff3a182fd5b0bcd9be6431ebeb22a",
+    "research/nomad_phase12/report.py": "6bc5a779b305f6eb8c0e16b2860ed7f64834eeb1eb6a33fa4749be4c21f59c4e",
+    "research/nomad_phase12/test_baselines.py": "5eb0536125136830e43820bbdd80af86304a84ec6d08b1db4b7f887d70a0b289",
+    "research/nomad_phase12/test_graph_gf.py": "df243bdd21d0fcb6b030e1464f7ecc6217cd8c4170caf9cee3e18011e84a7e4b",
+    "research/nomad_phase12/validation_r2.json": "c59c420b38e0f28936fe32200940157b6996d4887ae8284790e8a403d3bcdd87",
+    "research/nomad_phase12h/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "research/nomad_phase12h/batch.py": "3c181e05fae0d38172035a7c30c703ce03f55f5a421185679c65ae4f8a297d68",
+    "research/nomad_phase12h/config.py": "f665f806d3c5b6d455edd2d30cb67af02c756a99a1c4078c2c092260e0805405",
+    "research/nomad_phase12h/offline.py": "65da19cff24e5533319ec6f42e017bfb2f7fc005fac7533a8f007aa856c090b7",
+    "research/nomad_phase12h/offline_validation.json": "7851f7c45897965d65251465fbbc23a9c9ad75596c8c81da17ebe57d8b971d8d",
+    "research/nomad_phase12h/protocol.json": "ecc7bab1b30090b82702c3353ddbf61828859ba38dd9b3045e8183ee48b82a72",
+    "research/nomad_phase12h/report.py": "6e1f8744ece6b052bfca8dd03b9a06eb6dc0c8b7fec1b04e385562a8926d711f",
+    "research/nomad_phase12h/test_hermite.py": "b1695b0688d4d063e1b6c78b483d2209e14d6006d8b372e07ae3a300e747d3f5",
+    "research/nomad_phase12h/validation.json": "345ad1fc82b3524da948cb9765d0351df3a738703fd7409c7ceeb462533ba811",
+    "research/nomad_phase14d/__init__.py": "444751810bd3d955885ea2023b1ecc74b8fdb3bd069c25826dfcb12c9da6f69d",
+    "research/nomad_phase14d/diagnose.py": "16d26875ae641b4c7a2efa70fb443e2b1455e45b5a7c2f76cb9752ea7d956d8f",
+    "research/nomad_phase14d/test_diagnose.py": "525a29e5550d1d98c42dfdc64a39e0f2d278a876b35904883f483dbe6564efc1",
+    "research/nomad_phase15b/__init__.py": "13e5688df8b88dc1b79b6a93cfc20638bee075709a6dd28c34caa8b8f68501af",
+    "research/nomad_phase15b/batch.py": "6ba92e3935a4bcaf5371fb8ef8c64b71b3db0ca33defff0ff3c7602770bc43cc",
+    "research/nomad_phase15b/config.py": "b157533916a670e37fcbce8ef8ac25a0ce2e381df1750c77658141dedfe81e73",
+    "research/nomad_phase15b/depth.py": "f6072c9591c7696feef66d65d1048fbf7ad65b0ed0ba408a5f746e8577718919",
+    "research/nomad_phase15b/execution.py": "3b0ec36d95c49eb8d7267d252cca593fb5c8e4e402b843918bb2bea20234fe00",
+    "research/nomad_phase15b/graph.py": "46f20a442464fe37076071d2237c42c04b3bce1ceb75a964d59d8862cd862d69",
+    "research/nomad_phase15b/metrics.py": "55777deb6739b2c804e105694e6e0cbd070160c5ea208f80baba96c3dc3285b8",
+    "research/nomad_phase15b/offline.py": "96f5ac10340a7f26e0c93f34662a6cd4f9240e0cd62e7c8cc164d73d20ad8e94",
+    "research/nomad_phase15b/offline_validation.json": "9721b27ac40b76eef309a124cbf4c8e0bc157d70f504e934efa5e11b945016d7",
+    "research/nomad_phase15b/protocol.json": "17b99f595bbdf18ecf7b0741961823071a836207f146260846ba8670eb732245",
+    "research/nomad_phase15b/report.py": "ee18b4bd2ff80c797b626a16c67667c5d9cf592794b7ee92f4285953bfb50f86",
+    "research/nomad_phase15b/socket_smoke_validation.json": "bb474d73d315561aefec4d066edbbe5b0cc3b60fd9c10dbcf062ca429b81d89e",
+    "research/nomad_phase15b/test_depth_pilot.py": "1f72eff4c97a3ee4a17606c0dac80753aff0ca2e896a63a33cc138544886b1e4",
+    "research/nomad_phase15b/test_socket_paths.py": "b17cf00aa4fd349ba53ccb4063ad1fbf05516bf80ff0dc20f125f84136b1aa12",
+    "research/nomad_phase15b/worker.py": "61c830b22fa2bde4eb197389d952d9fca79c31c847d737baf356687f25d0e43e",
+    "research/nomad_phase15c/__init__.py": "b448582ba3fb9bab13cf6da76e5c4fcce9aacbecc3dd22b284984b17ea6e739e",
+    "research/nomad_phase15c/diagnose.py": "1f57f69c78a6086e0739cfd12b2413dc67453c40f569ce9bc777ba7fb02d7c90",
+    "research/nomad_phase15c/report.py": "7a0ac3b6f31325a0657ce557de1adcca2d775776eceb14df91e4ddd1c1684be4",
+    "research/nomad_phase15c/test_diagnose.py": "bcfdcb6140429fdb79c64d4f7ea6ee08bd5c0d73aa488c761692ed7e21424c8a",
+    "research/nomad_isaac/simulator.py": "1ca0dd1ce7d6b3208a5f5c69a656d1040cdd39ccaf488b81cad7a7d38e62920c",
+    "research/nomad_isaac/async_runtime.py": "e646cff1370adb7c192dc307fcf7e629554d5494c9a5bacfc39ae8568fb6be58",
+    "research/nomad_isaac/launch.py": "6eb4f701ae9e2bc51f7e2f80a2aeaa18a0901639184704bf4570d482a3d781b9",
+    "research/nomad_phase0/graph_v2.py": "a8b57749f482ba775356c6ca025255053659c7e8b202501ed1dd8d5372102ad1",
+    "research/nomad_phase16/geometry.py": "044ac3e855d1445d97e9e63400e521a80bbaffcf34f81c26fa2e2809157bc0e0",
+    "research/nomad_phase16/protocol.json": "26dc7556a7471d48dd859c177bcf0876a137ecefa7aec3455b63e1ed1599cffb",
+    "research/nomad_phase16/launch.py": "54c992938fccc922c626df93e6a10ad528235e65a9af6d8310afee5b8b62f974",
+    "research/nomad_phase16/preflight.py": "acd52885b723958c24b33b56f1c9d7f95aca5670727ad3d58a7667130ce6a054",
+    "research/nomad_phase16/test_phase16.py": "e9efe82b4ba80d8740a4ab6b7f0a91acc8c2134368c907fd3064aa83b2ad9f4a",
+    "research/nomad_phase16/__init__.py": "7bc234538ecea766982206061798bdc053e69e2a1c073eea130728a9ab76f157",
+    "research/nomad_phase16/campaign.py": "343b29223a9d310e4dbfafa27fd2ade8aeae17347bafeb34a372473c8f7c4e1d",
+    "research/nomad_phase16/metrics.py": "b5df5077518b9cf22b83cd61ec6b9650d20244a0db01f4e762a4ff365fed1015",
+    "research/nomad_phase16/report.py": "373126c82d0b2524adeea7abaa3c7b90e3fcb2102cb5bc60f04c39672f56095f",
+    "research/nomad_phase16/simulator.py": "a20b59d0e7f3401e97cb974a17efbea1ffe7e1961aa5c60be2fc035eafe0e7bd",
+    "research/nomad_phase16/depth.py": "020174e93cd7d2de1135cfbba3afff50d3833602e77d447d08845db286ba6ac3",
+    "research/nomad_phase16/config.py": "f9c46887c9f23805f783a84be505497ce8a91739bf83538257341d85293aa806",
+    "research/nomad_phase16/execution.py": "9a65369472647e3c25c3636cfffb296aa544ea4c61d5135e201c2c2de87e1f02",
+    "research/nomad_phase16d/diagnose.py": "e0fd752e9f0eca7f20b33d90e925ee1ee8b8df386d468032eae2cff2854566df",
+    "research/nomad_phase16d/__init__.py": "b38a4ec84b39f3c9e716fc8efd7a81adfe345b1dde994de35a2b02209afa9804",
+    "research/nomad_phase16d/test_diagnose.py": "50dc48b9a84d71cb3a2cbcee1c350ba09c8bca556033cb5039e0db2031170bb2",
+    "research/nomad_phase16d/report.py": "0dcb038e89299392c621d4d63cd826bfb2b103fa31d927c74819ffe3cef8dcb5",
+    "research/nomad_phase17/launch.py": "296ee25d128152d97880ff7981aaa353b781eda9aeca914cf00f30adde80921f",
+    "research/nomad_phase17/preflight.py": "ebe19a61bd5279f8a448252c50101213006c1327e9dd55006f0dc248a46c4c8c",
+    "research/nomad_phase17/worker.py": "8fff27d841421394fe2901c227cbd53813f3b01114f0f4c4cf719c94c50afccb",
+    "research/nomad_phase17/__init__.py": "68601db537bb12ff924a4941cb6f78ea400cbb0fd4691dcaa6c561e7fdb4e970",
+    "research/nomad_phase17/campaign.py": "54b4a31384ec7d7d9da69fff279ccd144f552b5b6613cf24f082adb4ca558ebd",
+    "research/nomad_phase17/metrics.py": "b45a4ac7654fee8056ef3d70ccc4bb583db55ebfd039567fe3f41482d211805e",
+    "research/nomad_phase17/test_offline.py": "29d2e6b964de3ed51b2f77e76f4bb9167418bd70cea01178fa1d8ccd63bcbf0a",
+    "research/nomad_phase17/graph.py": "168757f96f39023923b72e9f861263375f8cb55cdb0f87f03df466e0ce7c635e",
+    "research/nomad_phase17/report.py": "ffd9e1c2097e2aaffc5fefdcd7fd92c66678446f2e5401e1ae99d938804f10aa",
+    "research/nomad_phase17/simulator.py": "0273e0d6853178926e462efdd6f1785a7fa24933b70f21a29ce037207ad345cd",
+    "research/nomad_phase17/recovery.py": "a0d610e4a6c31028b83768086097c3fb0e8f858df55041e68203d463c3f4f503",
+    "research/nomad_phase17/config.py": "c4bd7debfbb9d448910ab78c6073c9d7c7b78f5946e5443a828c139719145ca3",
+    "research/nomad_phase17/test_runtime.py": "d745b5b1128e9cc391601d77cf47b5431f4bdcb77f6af3b5723651b2d8e1aacd",
+    "research/nomad_phase17/execution.py": "6f2fbeaad9be6684159276da53b010a1604b8d70f72443cddbbac8ba7b926fa5",
+    "research/nomad_phase17/offline_report.py": "d38072207571dfae23dc5d69d8f496619299337b69920acb85d7a57880d6ffd5",
+    "research/nomad_phase17/offline.py": "575f857cc0f6e9f74ac62c287d6d0f8e43bf243914fcf17518834c47b69ca284",
+    "research/nomad_phase8/worker.py": "131e9a80ad1fef6a8f37f01d114e55f4f2c5ae7e4fa1fdcda408f4d2b1b042c9",
+    "research/nomad_phase8/__init__.py": "84d85c167209322773a47c51004916331abb841d973fe00965390c7a4d48e428",
+    "research/nomad_phase8/batch.py": "d3bc65f57245f2b8946eedd9d2b942a962c3f09ecd16c9ff83da99f65615a5e6",
+    "research/nomad_phase8/test_overnight.py": "e8135c7de96eb42061fe15e23d49b0e5848401094d9337b1533eba04f6a0a12b",
+    "research/nomad_phase8/report.py": "aa9a606444902c354615fbfbeed28dfe9796d6e4d9e4827595aecb3375eb776f",
+    "research/nomad_phase8/config.py": "02e114456197ba999453d476d9506ec0a4c9f4b173be1bf10acac43cf20eaf92",
+    "research/nomad_phase8/overnight.py": "1dd70547020582fed2e668529daf1609ba7922af267cc6caba5f4291de3064a7",
+    "research/nomad_phase8/offline.py": "7fa72e4d1e84a49d94f8123d40c8365e5eb914ba793f16d54d60901a42b63a3e",
+    "research/nomad_phase17/protocol.json": "be911cf1f9e139090aca37c6156c8cb23a2a1e2289afa3fb410bec89b3e529d7",
+    "research/nomad_phase7/rtc.py": "446bbbd2bbe8db3c0639fa6829167030de84f1b24b90ebcdd2eb5316b05ff4ae",
+    "research/nomad_j0/launch.py": "a5061e35e72cf2827a4164da5319343b1e77b3843bdc2f607123926d7efa78be",
+    "research/nomad_j0/__init__.py": "59149382e0eb0d15ad36e13f3423f18876c29323f13af841f8854cf81f9acd5f",
+    "research/nomad_j0/campaign.py": "c98afab5de205ce7b2bfd51cfe1ffc4444ac9c915bfe03c60a0dc200e65e736a",
+    "research/nomad_j0/test_j0.py": "580749f85d71978289bee21e3582067b72521f548efc2354e1be0b47b1e58c20",
+    "research/nomad_j0/metrics.py": "d57fbfd38f689965ad694b5280691dbc263770712aa872c474acd128ba4a15c6",
+    "research/nomad_j0/report.py": "e45a4842a2b510e1a70134ab254e32ddf7da219c7428271ec0af0daf30be8877",
+    "research/nomad_j0/simulator.py": "363d2fcf069804557ae3a2cd69292e8a16e88f83a5f0b9f98b3ee290ac998a12",
+    "research/nomad_j0/prepare.py": "3579fa11edd6e21424dc4b082f7a31da6affc3f7d2cd2a556cb09e6edfdd3970",
+    "research/nomad_j0/protocol_before_sdf_fix.json": "42ebab18c221fdf5525ec83ba5692e8b84eb913b2df07d8f1dd88b743c5d7cee",
+    "research/nomad_j0/sdf_fix_prepare.py": "48a936911f3865238e66e1182a007661b858954e8c7abdf77eb9a1835343da48",
+    "research/nomad_j0/config.py": "d9bc650ec392160e9ba702cf0a6a782cec2abd37cb5e0eaf3f77d967f336f35d",
+    "research/nomad_j0/h2_rerun.py": "2bf7f84d0a1092fe42206ae7b2061b91e4b5a569843a005e841010b430b77059",
+    "research/nomad_j0/test_sdf_fix.py": "6424fc0d6b05664aa07e96fa8cf5caa004746aaf927aaa0f8156eca3cb415de7",
+    "research/nomad_j1/__init__.py": "69f7c2e6f6904424ebf4ce775f2fcc4e28cc8ec5b1a8c994446c65a0a4766752",
+    "research/nomad_j1/common.py": "34e0043082ab4dfeba109ef9f9712e5ad032526be0af62d7741af15c98a1f8d8",
+    "research/nomad_j1/depth.py": "8fde06d05dee310e7ed4e0c89cf11f536cd74225364899b6003859280676a58c",
+    "research/nomad_j1/execution.py": "2a3f7c776ccdcf33367d749053ce556988712ceb8aa512a69f469c6573275d82",
+    "research/nomad_phase18/launch.py": "1a573330c43ead4a8a23f4065d01b85f6fa6f94e16b913cc8e6cd53ab37b10d0",
+    "research/nomad_phase18/replay.py": "ed8d36c050296e54114fa1666fe007b3d0d8fb72a357f2f8fa89b7c81a444a71",
+    "research/nomad_phase18/preflight.py": "5e93da9703bb8d1e079ee92ff93807c27df3227405c1844ea2bcf633a27f3df3",
+    "research/nomad_phase18/__init__.py": "958cc8b661ecce63402735ef765f6089f780e61de420adcc7bad6c802ee95387",
+    "research/nomad_phase18/campaign.py": "3492de134860e6c4c211bd43a2faba7db4bd7c2ddc16b9314994c2115e3709b2",
+    "research/nomad_phase18/metrics.py": "3e1ec6970e60cf9564dc6ab11c0177c6fdde5cdecbb297a84bad1d26d01d624a",
+    "research/nomad_phase18/test_phase18.py": "7ba16131f76d054a7c3b3d8b715f5140e35f7ebd2546d627c73e0a101c749eec",
+    "research/nomad_phase18/report.py": "f02d38e0df53e845448a7a8a8a19b4e43c95fa843a740d01612c8b1394aef248",
+    "research/nomad_phase18/simulator.py": "f604ac732293b2a4cc8de71a28c6f0fd581989cb7b913e9fbfd1592f7574b21d",
+    "research/nomad_phase18/protocol.json": "a49ed0492b7cd646747784e436cc4e48a7db4075e6d09950d01be16d2bb0bbfa",
+    "research/nomad_phase18/statistics.py": "25bfd864af05fb5295894fc155a8b1a577d142d47b7cc660c562a1db26b34361",
+    "research/nomad_phase18/config.py": "350294dcc57b8d4e6a110cb26bac0234e92137d5d33beacbfb741091194cd39c",
+    "research/nomad_phase18/execution.py": "4834f9cb1a2a905d967b1b6c90e13226c88d9ce0df0e9087cbe65567548f2b35",
+    "research/nomad_phase18raw/launch.py": "ff02d10c1dc0d5d9b6d7e5f33a327ebc32aec5747631ff84e1332396a4ab5aef",
+    "research/nomad_phase18raw/test_raw.py": "1bffa37511068c0b2ba54ab369a38af87a1f00f43de5e0c7c761ba1e7ef9106e",
+    "research/nomad_phase18raw/__init__.py": "0ff6395f934a35309c2e2f65b20c15fc941606e8445b94ca0066cfa182bfd743",
+    "research/nomad_phase18raw/campaign.py": "e3ff43df9ec3ee48c6015866f4ca61f8ffacd6494403f33e4b30fad4c79a8d3c",
+    "research/nomad_phase18raw/metrics.py": "b762fe2c1dd6fbca806db4b42f54940d1a50f11f89cf741a941f710c7a97d2b5",
+    "research/nomad_phase18raw/report.py": "d9fff8e1bdca228ae47b49d517150d8998d2a85c40080306fb30cfa8dea3b2e5",
+    "research/nomad_phase18raw/simulator.py": "3175e5bf5581454f9ff0c895ad48a25fd8784a01f7f1889f344f80033e8ce1ea",
+    "research/nomad_phase18raw/prepare.py": "03f33cea61ce36d9edbf888e97f022e2f7cf363348b2a6f7779eb84384b429b3",
+    "research/nomad_phase18raw/protocol.json": "0b32140138b40ced900ea0ce470631c48c73e8d26ec07b452c5041cd38b43a6c",
+    "research/nomad_phase18raw/statistics.py": "9a1c9d8898d2c756cd908f675f0f0a4da0a72d40e556fc6d088ab52755199f37",
+    "research/nomad_phase18raw/config.py": "26e5c6ed5fd43fc7a4de5f5c2aeadf866b2127e6a6d975dd25a1fa5905b84a10",
+    "research/nomad_phase18raw/execution.py": "bbce7dc9e3f045bb7c1afa620e9c55ede51a4a1f256dfec3f6774e73bfb18221",
+    "research/nomad_phase16/offline_validation.json": "16b68b2ca62ad32eb57cb8d726b5a2c29921fe13da90a3911f2900739c1dbe80",
+    "research/nomad_phase5/worker.py": "540ebeda11ae47b5de4f2c2a1187a5250ddced33a324b4d263dff3aefd210b78",
+    "research/nomad_phase5/__init__.py": "b19b00765d754cd69e41d3ea2e437e1b98078e728d6afa99b443c5a781398904",
+    "research/nomad_phase5/metrics.py": "32ca2f33a245f860b7e3920a9d359914675926625134c2bb572806dbabff1b70",
+    "research/nomad_phase5/batch.py": "195f98927e9510ef285f5b4987ac67050791bf2c3f41b5a1295aa7023a13a45c",
+    "research/nomad_phase5/test_phase5.py": "985cfef697c92c81b046f5323636bbbe46c7740d7856db6103ce34c2a1811e5f",
+    "research/nomad_phase5/rigid.py": "d2720588df8fdd1eaba90323aca3cc445a407b4b3f34077e0ca046a29b4c8dac",
+    "research/nomad_phase5/report.py": "3dbdccd769f814f9e927b3df6b8a428d78a4bb53e01c5e9f8d756ef85971222f",
+    "research/nomad_phase5/protocol.json": "8b508c59b28441ca7a88147ed688d962415bb132a73bacf13380194b074daf40",
+    "research/nomad_phase5/config.py": "e6597f2e7361c6e83c1fb49d64b94f5086696fb1987d25bc81543daa6a715235",
+    "research/nomad_phase5/execution.py": "297728294ef71bbdecdb6042434d1ba8d47ab02eb059df940e71f542f0d9423f",
+    "research/nomad_phase4c/__init__.py": "6da133a22f53a56a37daa860fb1e57948a3db7471d3287ef0fa176dd88dd304a",
+    "research/nomad_phase4c/metrics.py": "2975c9eb77a8914a3a7b0a8073acf3e7de051d98de16b05965aefbe9abdb0b6a",
+    "research/nomad_phase4c/batch.py": "1d9a3804e4dd532abf4585d3fdab271cc4df2e093574fb9507becbce685d9807",
+    "research/nomad_phase4c/report.py": "cdfd2cdd4e88f20df23fbd4de34cd7bddc73cb620ae46011e32291ac736b19bf",
+    "research/nomad_phase4c/config.py": "275278c34f1216c7e439a14de98fddc3c20fb916f49375bfe191522598446858",
+    "research/nomad_phase4c/test_phase4c.py": "ba9beb2ad6acdab5652a451d76e539b98af2f6d1cfdc471c2e7ce86ae750f3e9",
+    "research/nomad_phase4/test_phase4.py": "a3160ef8c5ea778c7282c9641c47639bc8c3d5388bfb85704d7e6e4309bc4cf0",
+    "research/nomad_phase4/test_v51.py": "af1d8ff5721bbccb4d4fb720360eecd0a4ecb0907311434d6c6f89d998a215f6",
+    "research/nomad_phase4/worker.py": "fd73a98bed12a5a7772a3b095fafaa97f8942ea109419cdb2ecf2e331cd9ba9d",
+    "research/nomad_phase4/__init__.py": "8289e6b7e109184f2d7ae40ec0a262296f37264d7181ebdb9e5d6c9ae57a201c",
+    "research/nomad_phase4/graph_v5.py": "d3c056bbbcc883692cb49fe6f8025718be45d6a61e6a88141128ef38066fbd5e",
+    "research/nomad_phase4/metrics.py": "b039008e7f214d3e28840b668b0c0564b88bc49367090692e63cc7477b757b01",
+    "research/nomad_phase4/batch.py": "320c60af65c4faf81377fef5681b081f5a344f54c5e25a7d472eda45dedfd338",
+    "research/nomad_phase4/base_metrics.py": "b4a9f6f3c94024d500af32d10d247937ca80410e3c028ce16fc5e760073336ef",
+    "research/nomad_phase4/offline_check.py": "268b0b597bd76945cd1cc6cbf5716d74b71a115aefec8abf89f992ccbda8af90",
+    "research/nomad_phase4/offline_v51.py": "ecf110173e7e9573ae6b3508e43d7d8df03f0adf9d96a0ca9769e5b7a535bea8",
+    "research/nomad_phase4/graph_v51.py": "f2a48a0cfedbd71b643d5c9f5714e7e9908a97723efc664c96e6e63889c12e31",
+    "research/nomad_phase4/report.py": "d9b74278a96ea2d973f86a6168581886291dbf2212ccf5e11006bd9749ec91b2",
+    "research/nomad_phase4/protocol.json": "a64427196231545ace3f721551eda3d61ce678de2c224d1a98dee3671451d3a2",
+    "research/nomad_phase4/protocol_v51.json": "b7d3c81ae4ca875891efdd24ad89fa3bad507cf3746bb95ca5e76a0d7f394141",
+    "research/nomad_phase4/config.py": "c842c3ac54ce9adef092d3c1b146598a2d105ff67b5ee02926376ab22c6d18c0",
+    "research/nomad_phase4/v51_policy.py": "72fd0dc5d9f93579a795a7be30e2e4e8bf6646d660ffd9bb0e97d6b388e358a4",
+    "research/nomad_phase3_stage2/test_stage2.py": "988c6ae3e06025925568b27666fa80009a271ccd735c8a0745332ea732a94ad0",
+    "research/nomad_phase3_stage2/__init__.py": "8ce78b4f824b70b803d034fe627b8e5bd7113ca5449998a73b0f6a96c9be9df2",
+    "research/nomad_phase3_stage2/metrics.py": "afc205ea51eba51f18e4424fbc37632ac1cb552e73a6e38b53b1dfaaad8df550",
+    "research/nomad_phase3_stage2/batch.py": "c994e788088ff7bc635c7d58e173d7db9d266d53fa6cb6906a3ef1d772ea23e4",
+    "research/nomad_phase3_stage2/base_metrics.py": "91f26240715daed1321fb55732e496b7cf16b150527e2076a23b259692456f3b",
+    "research/nomad_phase3_stage2/report.py": "5e929692f49ea84ce45a44316ed65e68d8ef2712c62091a2c4899772ce689821",
+    "research/nomad_phase3_stage2/protocol.json": "35c22b4d2c4f6932a0280e97c42f408556cd59074eea88abbbc2bba0ed0cb59c",
+    "research/nomad_phase3_stage2/config.py": "1a86562f7cfa7797c326d52d3b290dc239019d7535121e7e1325d5876fc03edd",
+    "research/nomad_h1v2/scene.json": "546a444588184ccac0dfd5404d1b873442b6b015eb2e84a0c40b6a1d03a8813b",
+    "research/nomad_h1v2/scene.py": "96a18bec46628a4057f814face3a2271f0aa0d32fa114bbcf188567bab5e85c3",
+    "research/nomad_h1v2/__init__.py": "58228a386803a99253bac1012f733c0228084dcd54cff56564ad4a75003b1126",
+    "research/nomad_h1v2/test_scene.py": "e845269d8f72ecfccdb16715a495e25bf2d952db24077d6d671b397fac3e7723",
+    "research/nomad_h1v2/prepare.py": "963a7116a647a56175fa6015202adeb234e6850fbc84d5ece60c770a63cf0031",
+    "research/nomad_h1v2/validation.json": "0ebf08fe8b7abe40d319c4e564f620724be039eeef077099a91b1ba68c32746a",
+    "research/nomad_phase26/config.py": "000703ff7d740f137c9ac8ae46727e34fe98a645ad5e9f41707dd2531cba8f59",
+    "research/nomad_phase26/protocol.json": "36b4d61b0ff3162a2369559e11bc3141f8061f10b20c8da8b47eead515266157",
+    "research/nomad_phase26/scenes.py": "2b4c8a59aa7de6e1aa397ef5ae863896bd8b4ce1b8ab921a13b97021f171fdbe",
+    "research/nomad_phase26/rendering.py": "fa693e5d06735e0fb6bb0afbd2f9ac790185477df83723aa0dcc898a56942faa",
+    "research/nomad_phase26/simulator.py": "3ac04f1cd5080da1bd93969a3a40e58247accf58bedc5cb385351fe309355dfc",
+    "research/nomad_phase26/launch.py": "441d81704267a1d50ed81f77db5454695a6f72a5acfb11b2919c5d5970fce15e",
+    "research/nomad_phase26/storage.py": "322ea2e41be40920c9c281006432a6b8e6fe48b15bc7eb721a271be0f8356215",
+    "research/nomad_phase24/storage.py": "665d5b61f16ffe9a4fe47d4492ac44e03abfeac7c76b614ff24b160927d8b9da",
+    "research/nomad_phase24r/geometry.py": "59b75be4853907cb3f5b804e40d12b41ff57607fa5026a7713962686ba24709e",
+    "research/nomad_phase28/telemetry.py": "b7a29b95e540058691744e126013024f57adbde9d089dfa173fb311b3e97ce8a",
+    "research/nomad_phase38/scenes.py": "bafc6e388ebc1fd19ea3bd69cf7ea66e605326904c7f9e608b0ee33670c05efb",
+    "research/nomad_phase0/s0_batch.py": "8354688808a65777d6610560187a993a6fe17b3213064689d8e25ae593390150",
+    "research/nomad_phase0/chunk_execution.py": "b93858c5a16818ea1c406f3b1c25142baeb6d2abc3c47a6c3222376961a142c8",
+    "research/nomad_phase0/chunk_report.py": "95f121abb0e871c86f2acb868979db667ea48725367bade0847c02ed82d4234c",
+    "research/nomad_j1/launch.py": "dec2a3d7a1e9ada9f99c929fc4715db042631d632b6e62d1f47aba799b7b10d7",
+    "research/nomad_j1/campaign.py": "5a4e3152bbdf8d26dd23213f4f9edeae703496f7fe168e1e9cd782e79028faa2",
+    "research/nomad_j1/test_j1.py": "d3c160de98a96c55b8ba4eb096b9281700111dbd95c644a7514b3d31a7ac0463",
+    "research/nomad_j1/metrics.py": "fde4845b37db81263e8228de35a0eee93daaa96ce970fe81e3d727f0cd3a7c92",
+    "research/nomad_j1/report.py": "3d53ee820369d8eb2728ca7590f3649c70f515f3c914281b811095a662caa14a",
+    "research/nomad_j1/simulator.py": "95c4d632c2dd6555196a0b49f52bfbf6974bbd031057a7c1608fa5df5d61596f",
+    "research/nomad_j1/prepare.py": "b1f368e3faaf0d39508005f3fbb4c9cf13f2c2aeaee9a4f7d1c15e9246d6350c",
+    "research/nomad_j1/ec.py": "b97637fdb898f1561394deb0915fe168087deaca360f598d37ff1161e6903c3c",
+    "research/nomad_j1/runtime.py": "4db5acf3211069f47309e0636c5ea7ff2763fefeb80215b3b2561eae6e0c55ca",
+    "research/nomad_j1/statistics.py": "215ad0e43446bd67a0e9ef0296e889ba7c78fc916ce6b7a525a8211fab27bb56",
+    "research/nomad_j1/config.py": "eb27a6c6682bbda935e4b682abaff2c7d8fc2477f6efeb256dc70df1541568d3",
+    "research/nomad_phase7/__init__.py": "13fed72b4efc62b7cd6a6be9c70ac27f823b51fba4bbfab037d898708a861f30",
+    "research/nomad_phase7/batch.py": "b0e1050d0eb79ad11563d6bbf0626795f863ef0afafba6357bebef09b0a529a0",
+    "research/nomad_phase7/report.py": "08f291b1754e90f435086446faf05ca0a3fa48fcdfca3427ec2c9d5b6c040bad",
+    "research/nomad_phase7/prepare.py": "b5598b804103decd7245810fe5a66e190559241f457a4c014def5e5807411f35",
+    "research/nomad_phase7/test_phase7.py": "3e8e3abb8b7587af13b4a513d73abd87cb5f3df9e21ae57d10781d7d0eba60dd",
+    "research/nomad_phase7/config.py": "b99cf2b8698a06b1b9558020a4cd6f9ccbcfea02b0117493a21522e2dc08c3d6",
+    "research/nomad_phase7/offline.py": "d8611c09a03c2924cb899e6a991778545e0987d6802575e7ee22716696b5c09c",
+    "research/nomad_phase52ec/fast.py": "b392b259e7916f2bfd10aa0f971a8de23fb9d815473f602bfab1e9dc004c895d",
+    "research/nomad_phase52ec/__init__.py": "af94c4df0a5e66cc4f3a820777aa47d2f5ef1081f2276f63de5448dbd6cdf088",
+    "research/nomad_phase52ec/campaign.py": "f7291e0a7f6c932a0f779f1c80e1161c740489725e7385766a7af97b2109e3b3",
+    "research/nomad_phase52ec/test_analysis.py": "e4f28bd1f2283b34cbb71b421db69fe124e9384d3b0cd48d7dcddfd18eb68635",
+    "research/nomad_phase52ec/graph.py": "22890a5a1e47e2307a715c60d5b1f5de1449ecfacc508428e455120b53f82aec",
+    "research/nomad_phase52ec/chunks.py": "fdd43aa4f1738b45ca2b07b41b6f5c12fa8575403d8c22232541e2eea308a691",
+    "research/nomad_phase52ec/inputs.py": "07c795408a949530e6e5dd0b217f4610352931a00b342980823d268c02c3ed47",
+    "research/nomad_phase52ec/report.py": "c3162b8bebf563a717a3358a4ebc5ed6d3caa70e17c5256022b7f6d4c5f39e43",
+    "research/nomad_phase52ec/test_campaign.py": "9964f21af4d55b5a46a94771c37095cddac8ebfef35630f4456842a302ee77ed",
+    "research/nomad_phase52ec/rollout.py": "270f5fd2c3036dd6b59449ed2bfdda981ab69c3218bb96990728c16e462f8274",
+    "research/nomad_phase52ec/evaluate.py": "3e7e503460ae76c158fcb2ce01003c5c78513d4653e6225426c39eeb3531845f",
+    "research/nomad_phase32o/__init__.py": "ed14e45ab50854f150ee3525a6696878120e2752bb4d0e531f69abf7e30c7036",
+    "research/nomad_phase32o/exec_cert.py": "ff0a2857ff622c9254788f262e5de26e56cce5cd0d56a527a1b63b7707eeaf98",
+    "research/nomad_phase32o/report.py": "d9cdf073da842142069089cbc394f8f09dac76451335454381a3eaed9c532ef8",
+    "research/nomad_phase32o/test_exec_cert.py": "fd4fbdc78c2b2c1befd8c3a415ba65a4a4d8e798016b2644f5371841c288314a",
+    "research/nomad_phase32o/evaluate.py": "ceaee8c87a7a3c2adac23766e856357c6660c4a3b2ffddad25c228cde4f5fbc9",
+    "research/nomad_h1v3/config.py": "c4ace89fc90e832c506b5e1fe02f33b090caa2f0e5095ea2508257b742d5c998",
+    "research/nomad_h1v3/scene.py": "41e45bb65db2bfc7789d6d646abc315c0ab0f342a90d1d0fda1f5ebf3f108832",
+    "research/nomad_h1v3/scene.json": "dc7e6905012f4268453313af2d5f0ff9b4305c78e2baf6e66557fc03aa4a4268",
+    "research/nomad_slwv2/config.py": "9ac5a110672bd63258f12faebc1fe9b14f162baf0861e29817e1ee9f88987a13",
+    "research/nomad_slwv2/protocol.json": "7b9b69d1991df02fb663e657fe5cd63adda67205f60631a6accd5c60589a4c5c",
+    "research/nomad_phase32/policy.py": "396331132965a067f77ce22cfeb071340d8c165e032069bc08693d91bbe460c4"
+  },
+  "asset_sha256": {
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/complete.json": "e061d0ce6b3c340b470fed75ffbfe885e3ae7bef657cfa08fccdf5e4c347f727",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/gates.json": "9d755cdd85ebfce3e2c144ea8776fd603c4b990d3eec1ccd8da618cabcb3c246",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/resolved_protocol.json": "d807d78515e98b6b10a2950de24ce09a0d9320111c420aa1b06e999fc6d47e74",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_CL_901_SAFE.json": "b293a6bca2038c70bcaec065fb7d4118cd64c68abee3e8dce40e35f26ecb303e",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_CL_902_SAFE.json": "966830dec1fe357c1ed4cb17623430d2eab1a94bb57f3ee6ff123ae2c6ca27eb",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_LC_901_SAFE.json": "20bb20801123b3adf9a53bf05d69fa0811d3cacc8d67a347ef212f169e9a8bcb",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_LC_902_SAFE.json": "56688eb6addcb59db948996a695d2e1215b11d44ee1bf3062e2e89d4f40dfe6a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_SLW_901_SAFE.json": "6a04e0204c4392fcf0eeb108740b2b30b26aa42304e4914d56687eea1da6064d",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/metrics/gate_SLW_902_SAFE.json": "1a94215bc426c61d128bfda89b6af2ba7ef03a73a213e9fb2785c7483174fbab",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase17_slw.json": "57c277287204730d30119e45e122cb9051ffe005f3fcefcc2df43e00d332c718",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase17/references/SLW.json": "44abcb27edd1d5b76d8ca74e9f7d68b2f28a67c705b06b2cc713111587412039",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase16_lc.json": "1c18c5be6a9b04996f31e3ab6164be0133ee9b2a06667a3e7f27693731ef2cf3",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase16/references/LC.json": "5518dc9da485dbc823df79fcf1064e6739cab926786000f29248803a6af9dc99",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_isaac/scenarios/phase16_cl.json": "d86b222cdcf44095a5a6b83428b7764df7e6913eda63bee3e4bc4e0286c800b3",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/nomad_phase16/references/CL.json": "814479317639616b01e3331209e39815df2026f620854b5b919da1b095aeb08c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/manifest.json": "5d667992e2bb0f3f3f4cece8c8745355c8a36a997b5dfda8ce46f3856655db57",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0000.png": "b8b841ebb0b3fed9ee8114924f95b2ea92dc0e625ec8ff8a20f8d93306516c21",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0001.png": "cf4a86591cff1d89e7cf9dc4e6c9c6bcae4180146244a604349d317c18389d8a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0002.png": "2ba332e3af6630c2f108d2c58f08baf4ad75475007ce4c36e87db8c06dd3dc8b",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0003.png": "d304f7b028cbbf3409b07272eeaaa9318c6d01be6540ee3f6407fd1fa394a5e5",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0004.png": "7e77af97f7b6f303ac22f3cee30708245b0d8907d7504083bac28c7f5cf6fe43",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0005.png": "1b1ef9c5f08f2ac20d8616dcc76d7765d0c0eda2d0d41bc4a9bb3932af8b75fe",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0006.png": "8181e642e4bd8d506fa7c15e3caeb415961ea343d7374f8631d734876f413fed",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0007.png": "93e5b8169cc52d1d7d1d37c0b94fe500dd4e84bfeb34eb2e0cf71768ab79fcb6",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0008.png": "755c17c78fab4fcc239e5c9bb706c8ba876e99fc98bdf1ea6237d01491b15299",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0009.png": "c69b2f108af26270c9181ed4e72f56115711fbdc3ca719dc77ecde5555eaf11c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0010.png": "051ee7d918c92e45fd4da0b39c427c794dc729da95c6d7135affe58379546252",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0011.png": "5f535e805f31f314115f7a679065e054f68769d6beb116de4f1349a161a9685a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0012.png": "dbb95133418cfcd908c6d8f2faf5e9d9934735043ebe7c339901981a6af0eab1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0013.png": "1eb1aa57ef341d55bd346635d63ec6a8f5fe77438dcaa737b51aa3da96edf710",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0014.png": "3a41f9a92c7b0cc219e8771b68bc48c304a5d6ed8cbdfd7cfd2e58fb40672fff",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase17_multiscene_01/topomap/SLW/topomap/rgb/0015.png": "b2685822170af598b51f5f7856a81c2ac4bc413a484ad8a32f85412664b951d2",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/manifest.json": "f1c4f080632b69f1e6e39eddbe9f8f0284f9a4ba44ff8f51be9c300db1a3045f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0000.png": "5845d910b326f80b001202965c438c8fa66937d04c53fcc627e3149ed147a056",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0001.png": "da5336c42e7ec80826913249addf9054b57b42c6e6e2fa789fe8ded00121636e",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0002.png": "d4849e3cc433e04a3e1e12032801ea867893e3c33b0a57de8fcd9d10e3c5fbbd",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0003.png": "4cc0b7ed96bff290d69992afde7e23a412f946f33e00e1e1eef7dcd5a51ffd59",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0004.png": "ac75794bfe1852cc11b468f8557b14fb4ebc9264fbc343fc9e431b295ef598c7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0005.png": "1476f83f4fa2f4436de728e8afd88e2429213ceb9a1e8fd3b32c1f8f80123621",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0006.png": "8371329a90d990c0d2e5530d1e2488de211baa52170f1a26a706a5d5ff8a337c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0007.png": "b748a0c4204c4148e610d86a55e09b7cd58e9cffae78051eb03953ac5354bf29",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0008.png": "44b58384a8e4a90d4f60afff5616468aa9b7689f8fff74b7ca14c51e1b256c53",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0009.png": "a52fef8da021b2beb87268497dda2da1dfcbacac382d3117fbec2aee18486ab6",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0010.png": "cb64811d97c0b1c1b67406c02b8e196bfc4fb5354c45cfbfbe6947317e124eca",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0011.png": "0c33302546b385030d5875eef094f9d937445325b5b710afb99d45ec32b03620",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0012.png": "477f15ee4b7e1cde36a17da4a20ea51a1f97f2930e1c412dd2f665e68e9ff5cc",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0013.png": "e88bbbe853b5801570739f90d9c0e8134ff0c0d413154f62ced4c7a9dd18d1e3",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/rgb/0014.png": "8d34aaf912267eb5da390ba091146b430ec4083936f8e341109b7d9bd12efde7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/manifest.json": "358f4fa519cb9577b0a5e4ad25ea55cabc11e1cf2737e3022c33f5095678c5fa",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0000.png": "e10c53056a42bbeb97c704d8b1923349ba93739665203f4f8e106db84ef838d2",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0001.png": "a8e4db096ecaf198667a06af88660a4220b349e2b98f0ec5089e8362e89edaed",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0002.png": "44e63116987ca830738d98fb9233841dd91e19bfde0899cbdb4b539af845a780",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0003.png": "7bd6b8e95121ba7d276dc40e8abcd51d471a2e7351f216363ce58f8ea2c9f4a9",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0004.png": "6a06a360da2758c75ddb22e6d6ae2355ab43cfcc2cbc83da18f4d65cfb4a7962",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0005.png": "750acff8a904f2be2cf6b4b617ded64c02c2ba22e709c08045ee945dd2ab4168",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0006.png": "8457301b3e42963b4c65c3848c517c1134c33d0ee2d0d2b697d9eaea9fe4c94b",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0007.png": "2296d3a88af627266cff84cad2364aa9fd69d835f35b4151b1adfcfaa0603218",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0008.png": "7a6fa2dd3397bd0ac9cdb7d876ea270d7add52a5ec9aacbdd605f88271c6d5f8",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0009.png": "007da533fbf72f952236cac875e7b02b78da3db000bce6929afa3c6b71c3eac8",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0010.png": "4e8adc84a373b5391074eac6d9a4ac1bcca1d0ce5bce258aa7bc94129685890b",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0011.png": "c77b23789010dc7d9e2b6c43aa6835fc898a206dd5e84ba7d3b19bc1ae2f7ba1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0012.png": "6b6d7d8c16c9511a0ad98c9fac88a968df74c1162d44bbf48188d8ca02a51393",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0013.png": "974a1ad1d287f3df520419fb0e4098294ad26a24ef0f01717fa769254b7ea446",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/CL/topomap/rgb/0014.png": "70709b639b24e8d8080d2a259846dbe883fcfce70384856a9d3debd01319c711",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/requests.jsonl": "b1d2d04a2cdf32dbd819954f37d7766be5d7c3008daebbeec50838a1cc46c1f1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations.jsonl": "05dc0f8103f23d4b2944c032df3b7bc1fa0a4a9e868eddd9e52dfe11ed9688a2",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/model/inference.jsonl": "2d0aaeea7114d6805bf1524eded3561244a77aa39dee4d2d8ccd3517681090f7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/scenario.json": "ca8ae98358d46c0e5a19070daec014d7753db83ce8c37251c9058364562d4ff3",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/model/raw/0001.npz": "3c6957e3e65e28db673951d9831bf06e24c8a6908a06815ade8b734d35bee46d",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/model/derived/0001.npz": "fe20b96167afdb8c0eab448405b7bf61343b68d09709c81b10f3ad122d4af981",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations/0005.png": "122e8cbdc5911e882ab7798d3b0f8af9453f90193987b620fe8fa7868f20abbb",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations/0006.png": "721e26dff0ea34b7c9d20834bc6c422de99ea58362dacaad0d3780fe3d8fa6db",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations/0007.png": "151a2ca169f082fae88d89b67f62553849cef4102a56a830a826064f3da5f27f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase12_baselines_02/S0_25_D750_RTC-hard/observations/0008.png": "ff405f4b71bba92a15a063314fc311efa4aac4d167660bdceab41975ced88096",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/manifest.json": "0d80ec037e2fa14264d9276f010efea2764c6bf269ac81f1bfb21f294d14cb0a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0000.png": "8cfc88d8a56540b41974dd5bbf7d954a4615232fbefcaca5f8fde3635d024a94",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0001.png": "210aba6520b9c05ce985c1cbdbf8b9aadc3b532b36caa11cc82aa5d5aeb313ad",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0002.png": "ecd7c291a255799b315e65f360b5846b9d3246552369624d7eb1a02e3e87c99f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0003.png": "ad880b9db8b0c815e543bce5dc2687eed3f4ec404d517a6c7fbaf2c4def4cee4",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0004.png": "e286d563d8d5249b7227fd63d1e8d60ad9c5536e991183393ff82befd49bdef6",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0005.png": "053f00cbafcfaff68891237bc6ab81b8f6a314c3e431bac46eb0eb67590dae82",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0006.png": "7b0680d97d9770bd3598c2d14c4353d8f7431a2a53c22334ed43e43991fb6741",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0007.png": "9517d82b37857a55da693b8abab102ae65c5802237ea00fdaae7891d51984a2a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0008.png": "d88aa74f7066954f8129401f101ec8080ff45ecb78725ad214ce1da508938adc",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0009.png": "d574ffe1101aad437f0415626e686561495e8b5497892eed19ec0f494e5b9ff5",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0010.png": "88b7bc7557169f29c70ce2308def4b5309a531b3774e7513efc884ec3e03b40c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0011.png": "93cbdd5352aac1efc18574746eac8a95f27512a19490ac0dc5aacfccc60d7b58",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0012.png": "f12cf8764c0d10bb1d00432bf47f89425298758076f60e729a1d5eb223bdec0d",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0013.png": "b62c63f1180674091f5cf2ae3ff45b3befe7eda05466f8b9fea6e952f4d43d3e",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0014.png": "2ff0ae2a8c74a57b431d3ef55ba0130dbcd3cc8ae7d9f264b5e7d291e72cfed7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0015.png": "095d3852ea515e820d844f858aee7642f8dc82e907b2d18b6511ef555f5cc8ba",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0016.png": "423bf4987ae86095f3d6473239f16f20dbfabe5afcb7ec1e857e2a5a3a90b295",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0017.png": "bc0b755caa0343208d43d10827cf412e9388c3932e234f760c8958127658f93f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0018.png": "3e0208069dd9e8c534ecd5a858514563c783caf9efdd6245ff8158ef955a1ce7",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0019.png": "4769a760bca3e466e62a3b149abd03904373945d36f2512b3af681555850317a",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/s1_v2_baseline_01/render/topomap/rgb/0020.png": "64cfa198378a8b85ba943f40379fb05da858b71c41cfc67f953d24947b0bc324",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/checkpoints/nomad.pth": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/manifest.json": "4c41bae770e2ea643f7f40e33c4b71942d554fdaed48138b8ce9ee27503f5e77",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0000.png": "ecf2f245a8e5a7228d8b274be580191f8bda16e184f9df77446726c36344a161",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0001.png": "012b6cd518735eca907159afbc531e4f6cb091b88daf3c8eb13d30d2d08722ef",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0002.png": "ade2d45c2cd7cc4c34d2073a67d9d04c8fb4a2305c8f0a02b6dadebae0989486",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0003.png": "1a58c43a9511c905000c90bfa1917bfb104a280cca9aef8565b13138aed96eba",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0004.png": "22c7f0e79f2ea416f4878f44d0f9e35faa5f6c89f1ab6c9e45ffc52c4985956f",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0005.png": "af3e7250307ef363c5503917679c4acdaf041e993f91063fd49ff7a0856f5018",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0006.png": "abbb11acaef5e75c541d96604503807ed7b2253df8a1f181fc46c969343a17af",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0007.png": "3ad46a2319d41463c1b3bc6eb6a1af4b096c0f9b607b59a201c69ef3cac292f6",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0008.png": "a0251d14db958a7208771f123974b72a37919ef8a7e09f630c6d3feb30ed76aa",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0009.png": "cd56037a9777a9e3a8eea4f764cf73a2bb66b5fd5f60e5bec2fa7be38cbedbf2",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0010.png": "6a76bfdc319b6ad557a072d48136c7d8f20f1b3fd45ce3b27e5f541f60d10515",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0011.png": "563c00a2b16ecf6d8cea81ed5b516798ddb95fa939b7a71dff508532bc69fcdf",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0012.png": "5721b99f9c6ed9d7f00cab1af5f76247bc09a793cd2375cbfb2a7cf51b93804c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0013.png": "33297aa77818e2247c54fedee4faba26a4f490f9da65a4f656e6ac88b2889ef1",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0014.png": "f088818c19733cfb6e57f6149466d6b02adbf460b247e3256f2c00a0383208fc",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0015.png": "c997a17db3761d640dc2cc766df67dce98450f6699213c52562015ee42deeb75",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0016.png": "2fd88ecbb14a5bd95c04f082ba69f3899be88786121f7dcea161b8edc74ab85c",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0017.png": "e4e83bc171f9d30bee705822092bd2df777884207586f4f0cc0c6dc20ecaf687",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/slwv2_j0_01/reference/topomap/rgb/0018.png": "a8cc705ccb5f0affaa20b1ef9ce4ecf741b793f3901361a3b7ba74ac1143ffa4",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/j0/decision.json": "f142816383e301ec1f7739ecae1667490e1ddbd75e85aec852248d00ac7cb94d",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/h1v3_j0/decision.json": "55c64e901a6c0d1c6c4cad8c079a7ae4b4e5ce5d334301f7b8614cadad07ac91",
+    "/home/gpuadmin/Workspace/NoMaD/visualnav-transformer/research/results/slwv2_j0/decision.json": "4383faed8f9a4d5e1d6c946d5bfb4120fd654f1153daeda3df2c663d145265fb"
+  },
+  "screening_results": {
+    "J0": {
+      "status": "COMPLETE",
+      "selected_scenes": [
+        "LC",
+        "CL"
+      ],
+      "eligible_scenes": 2,
+      "rows": [
+        {
+          "scene": "H1-v2",
+          "zero_success": 1,
+          "required_success": 2,
+          "complete": true,
+          "all_checkpoints_observed": false,
+          "zero_checkpoint_mean_s": null,
+          "delayed_checkpoint_mean_s": null,
+          "difference_s": null,
+          "passed": false,
+          "reason": "INCOMPLETE_OR_MISSING_CHECKPOINT"
+        },
+        {
+          "scene": "SLW",
+          "zero_success": 0,
+          "required_success": 2,
+          "complete": true,
+          "all_checkpoints_observed": false,
+          "zero_checkpoint_mean_s": null,
+          "delayed_checkpoint_mean_s": null,
+          "difference_s": null,
+          "passed": false,
+          "reason": "INCOMPLETE_OR_MISSING_CHECKPOINT"
+        },
+        {
+          "scene": "H2",
+          "zero_success": 0,
+          "required_success": 2,
+          "complete": false,
+          "all_checkpoints_observed": false,
+          "zero_checkpoint_mean_s": null,
+          "delayed_checkpoint_mean_s": null,
+          "difference_s": null,
+          "passed": false,
+          "reason": "INCOMPLETE_OR_MISSING_CHECKPOINT"
+        },
+        {
+          "scene": "LC",
+          "zero_success": 2,
+          "required_success": 2,
+          "complete": true,
+          "all_checkpoints_observed": true,
+          "zero_checkpoint_mean_s": 18.4375,
+          "delayed_checkpoint_mean_s": 34.28472222222222,
+          "difference_s": 15.847222222222221,
+          "passed": true,
+          "reason": "PASS"
+        },
+        {
+          "scene": "CL",
+          "zero_success": 2,
+          "required_success": 2,
+          "complete": true,
+          "all_checkpoints_observed": true,
+          "zero_checkpoint_mean_s": 20.78472222222222,
+          "delayed_checkpoint_mean_s": 34.708333333333336,
+          "difference_s": 13.923611111111114,
+          "passed": true,
+          "reason": "PASS"
+        }
+      ],
+      "missing_policy": "Require both checkpoint observations in both conditions; no censoring or imputation",
+      "tie_rule": "Frozen SCENES order",
+      "criteria": "zero-delay success 2/2 AND delayed checkpoint mean strictly greater; rank zero-delay mean ascending",
+      "protocol_sha256": "5269b6386e91a3f66e8b8eacef1188705c2b85e5c2df468eea813385e2f13309"
+    },
+    "H1-v3": {
+      "status": "COMPLETE",
+      "selected_scenes": [],
+      "eligible_scenes": 0,
+      "rows": [
+        {
+          "scene": "H1-v3",
+          "zero_success": 1,
+          "required_success": 2,
+          "complete": true,
+          "all_checkpoints_observed": false,
+          "zero_checkpoint_mean_s": null,
+          "delayed_checkpoint_mean_s": null,
+          "difference_s": null,
+          "passed": false,
+          "reason": "INCOMPLETE_OR_MISSING_CHECKPOINT"
+        }
+      ],
+      "missing_policy": "Require both checkpoint observations in both conditions; no censoring or imputation",
+      "tie_rule": "Frozen SCENES order",
+      "criteria": "zero-delay success 2/2 AND delayed checkpoint mean strictly greater; rank zero-delay mean ascending",
+      "protocol_sha256": "60280e37fae59be42f8930dc00914be2fcd666110574e992736392405bb16846"
+    },
+    "SLW-v2": {
+      "status": "COMPLETE",
+      "selected_scenes": [],
+      "eligible_scenes": 0,
+      "rows": [
+        {
+          "scene": "SLW-v2",
+          "zero_success": 1,
+          "required_success": 2,
+          "complete": true,
+          "all_checkpoints_observed": false,
+          "zero_checkpoint_mean_s": null,
+          "delayed_checkpoint_mean_s": null,
+          "difference_s": null,
+          "passed": false,
+          "reason": "INCOMPLETE_OR_MISSING_CHECKPOINT"
+        }
+      ],
+      "missing_policy": "Require both checkpoint observations in both conditions; no censoring or imputation",
+      "tie_rule": "Frozen SCENES order",
+      "criteria": "zero-delay success 2/2 AND delayed checkpoint mean strictly greater; rank zero-delay mean ascending",
+      "protocol_sha256": "7b9b69d1991df02fb663e657fe5cd63adda67205f60631a6accd5c60589a4c5c"
+    }
+  },
+  "inclusion": "LC passed J0; H1-v3 and SLW-v2 failed screen but preregistered for sudden-obstacle/narrow-corridor coverage",
+  "execution": {
+    "base": "J0 Phase18 PP/CURV",
+    "goal_radius_m": 0.3,
+    "goal_pose_truth": true,
+    "node_based_stop": false,
+    "waypoint_expiry_s": 1.0,
+    "depth": "V1 + J0 scene SDF registration",
+    "endpoint_latch": true,
+    "NoMaD": "official closest_node/subgoal",
+    "HMM": false,
+    "NET": false,
+    "recovery": false,
+    "STOP_WAIT_special": false,
+    "RAW": "Phase18-RAW sample0 + common endpoint latch",
+    "RTC": "Phase18 RTC-hard generation and SAFE selection; common no recovery/special fallback",
+    "OURS_noEC": "exact J0 Execution object",
+    "OURS": "same SAFE selection/frozen CLR worker + install/periodic EC",
+    "OURS_noGRAPH": "same SAFE selection/install/periodic EC, no Graph",
+    "Graph": "same8-point frozen factors/options,async stale/superseded/expiry; SAFE raw interim and graph output independently EC-gated"
+  },
+  "EC": {
+    "methods": [
+      "OURS",
+      "OURS-noGRAPH"
+    ],
+    "period_ticks": 36,
+    "apply_at": "next9Hz control tick",
+    "tail": "Phase52: endpoint or2s,then frozen stop_command until0; same continuous occupied-site footprint certificate>=.025",
+    "controller": "actual Phase18 PP/CURV adapter; noSP or start alignment",
+    "installation_reject": "retain old path/progress/receipt expiry",
+    "periodic_reject": "retain path,stop_command(.5m/s2,omega0);remain blocked until new install passes",
+    "alternate_candidates": false,
+    "slow_tier": false,
+    "recovery": false
+  },
+  "statistics": {
+    "primary": [
+      "OURS-RTC checkpoint mean paired difference",
+      "OURS vs OURS-noEC safety exact McNemar"
+    ],
+    "bootstrap_repetitions": 20000,
+    "bootstrap_seed": 20261030,
+    "clusters": "seed across3scenes",
+    "CI": 0.95,
+    "bootstrap_p": "two-sided centered null; (1+count(|boot-mean|>=|mean|))/(20000+1)",
+    "McNemar": "two-sided exact binomial discordant pairs",
+    "family": "Holm two tests,alpha.05",
+    "missing": "valid observed matched checkpoint pairs only; no imputation",
+    "interim": "completed seed blocks only; \uc911\uac04 \uacb0\uacfc, \ud310\uc815 \ubcf4\ub958"
+  },
+  "smoke": {
+    "scene": "LC",
+    "method": "OURS",
+    "index": 95,
+    "delay": 0.75,
+    "timeout_sim_s": 30,
+    "excluded": true,
+    "count": 1
+  },
+  "technical_rule": "first main technical failure stops; one explicit plumbing-fix retry allowed; all other runs one attempt,continue",
+  "disk_reserve_bytes": 30000000000,
+  "cache_cleanup": true
+}
