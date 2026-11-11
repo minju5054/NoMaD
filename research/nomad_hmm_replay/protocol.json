@@ -1,0 +1,79 @@
+{
+  "status": "FROZEN",
+  "phase": "HMM_REPLAY",
+  "frozen_at_utc": "2026-11-11T06:14:06.484978+00:00",
+  "variants": [
+    "HMM0",
+    "NET",
+    "NET+MEM"
+  ],
+  "parameters": {
+    "ell": "median positive adjacent Topomap node XY spacing (Phase42-L)",
+    "round": "Python nearest integer,ties-to-even",
+    "net_width": "min(N-1,round(norm(odometry_xy-MAP_entry_xy)/ell)),no minimum1,selftransition included",
+    "entry_anchor": "reset after each MAP change,including revisits/window resets",
+    "visited_memory": "record first MAP visit position once;never overwrite",
+    "emission": "exp(-(NoMaD distance-min(window distances))),unit temperature",
+    "memory": "multiply exp(-squared XY distance/(2ell\u00b2));unvisited1",
+    "initial": "Phase42-L uniform prior in recorded window",
+    "window_reset": "Phase42-L uniform reset if logged window has zero reachable mass;explicitly counted",
+    "no_tuning": true
+  },
+  "input": {
+    "cohorts": [
+      [
+        "Phase53-P",
+        "research/nomad_phase53p/protocol.json",
+        "phase53p_01"
+      ],
+      [
+        "NIGHT_E1",
+        "research/nomad_night20261111/protocol_E1.json",
+        "night_queue_20261111_01/E1"
+      ],
+      [
+        "Phase57-P",
+        "research/nomad_phase57p/protocol.json",
+        "phase57p_01"
+      ],
+      [
+        "Phase58-P",
+        "research/nomad_phase58p/protocol.json",
+        "phase58p_01"
+      ]
+    ],
+    "delay_s": 0.75,
+    "hmm_only": true,
+    "expected_runs": 86,
+    "run_selection": "Final run metrics selected attempt;never open an unfinished attempt. Dynamic discovery at script start/resume,missing inputs reported.",
+    "odometry": "saved observation XY at hmm_odometry_tick;current exact simulator odometry assumption",
+    "truth": "saved node_errors,validated with Phase42-L nearest;fallback nearest only if absent"
+  },
+  "reports": {
+    "primary_error": "observation-time MAP-true_node,all logged measurements;delivered/declaration subset separate",
+    "false_goal": "MAP==goal AND true_node<goal-2",
+    "declarations": "exact saved declaration inference ID;report would/would-not declare on old wrong and success cases,not new driving outcomes",
+    "outside_window": "previous MAP outside,prediction MAP outside,zero-reachable forced reset,posterior outside(0 by construction)",
+    "replay_limit": "logged candidate windows fixed,none synthesized,not an online counterfactual"
+  },
+  "source_sha256": {
+    "research/nomad_hmm_replay/test_replay.py": "eb40c1ce47d183babb192e9ea3f147860a973f8872459bac504919ecac2d4390",
+    "research/nomad_hmm_replay/replay.py": "5e30bd6606e300dcb2e2cd9b470e5c6dc32656abe5b1135852434966879c051f",
+    "research/nomad_hmm_replay/__init__.py": "d1d3612f8ec304f0450f5361c9f71d7d7c85da9b334f920f0c956c4ed919215f",
+    "research/nomad_hmm_replay/filter.py": "cc8293a41951d5e74d4a9e085ee9043a68065b9e018df756a487a74fcbf67928",
+    "research/nomad_hmm_replay/report.py": "7e41734f0eef344137e3d237a54f6c0ba4db34467222f6bf10d768a513204aa4",
+    "research/nomad_hmm_replay/prepare.py": "14b5fdcf622ce9a80fa2d23593d15cb296a8bf6acb2405580dbd72802abb09a2",
+    "research/nomad_hmm_replay/data.py": "f35bc8d21ca90f5298294b8cb1bfaa0d05ec74e6b79de2ee6f6f2d368cc720f2"
+  },
+  "frozen_sources": {
+    "research/nomad_phase42l/filter.py": "eb3ea66a6f5bb1573174ac47669e2c7b229a91a570a579d6bc9c256cb1307a91",
+    "research/nomad_phase42l/analyze.py": "4b3d0e86c84728a2e2ccc6aa3e2a8130c3fcce0335a7f32f63564de95608243d",
+    "research/nomad_phase43p/localization.py": "37d374238329fda1909929179f5f64dd7ed46a41a38afee688e18f9c2af7a6bd"
+  },
+  "reference_hashes": {
+    "research/nomad_phase53p/protocol.json": "1cc31fda1f431072cb8687d9ea7b1c1e70e628b05f0346067a6199fdd558f6eb",
+    "research/nomad_night20261111/protocol_E1.json": "46eb5be0e6a0ee2c2ef39d76b2fa779f6e55b36d2c14e3410da763ba969dde12",
+    "research/nomad_phase57p/protocol.json": "8a7c1e827306abda407d386a9c934bccee400a261700b3d6963f9f284886dca0",
+    "research/nomad_phase58p/protocol.json": "617d7de3b84686e2c10b20c57e3c1eeade14699f61ddf60825cd09dd7df05921"
+  }
+}
