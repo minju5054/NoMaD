@@ -31,3 +31,11 @@ LC/OURS/seed95/30s smoke1회만결과제외. 첫main RUN_DONE을1회확인하며
 실행/재개 명령:
 
 `cd /home/gpuadmin/Workspace/NoMaD/visualnav-transformer && setsid nohup env -u LD_LIBRARY_PATH -u LD_PRELOAD -u PYTHONHOME -u VIRTUAL_ENV PYTHONPATH=research OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/python3 -u -m nomad_j1.campaign > ../artifacts/isaac6/j1_01.log 2>&1 < /dev/null &`
+
+## 실행 전 smoke 기록
+
+GPU 미노출 샌드박스의 smoke_01은 NoMaD worker 시작 단계에서 종료되어 Isaac·주행은0회였다. 로그와 실패 기록은 보존했다. GPU 접근 환경의 smoke_02(LC/OURS/seed95/30s)는 기술 audit PASS이며 본 결과에서 제외한다. 실제 smoke 주행1회, main0회. protocol hash는 변경하지 않았다.
+
+| audit | Graph 시도 | Graph 적용 | EC 검사 | protocol SHA256 |
+|---|---:|---:|---:|---|
+| PASS | 28 | 21 | 83 | 2dbe6817a6751d04971453222baeccb971a4a0f24db6fc40ed1e4a71ec701586 |

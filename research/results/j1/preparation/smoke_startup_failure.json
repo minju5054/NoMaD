@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-u",
+    "-m",
+    "nomad_j1.launch",
+    "--scene",
+    "LC",
+    "--method",
+    "OURS",
+    "--index",
+    "95",
+    "--delay",
+    ".75",
+    "--smoke",
+    "--output",
+    "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/j1_smoke_01"
+  ],
+  "smoke_excluded": true,
+  "protocol_sha256": "2dbe6817a6751d04971453222baeccb971a4a0f24db6fc40ed1e4a71ec701586",
+  "exit_code": 1,
+  "wall_s": 4.032937654003035,
+  "technical_validation": "FAIL",
+  "error": "AssertionError('Smoke launcher failed')"
+}
