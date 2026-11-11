@@ -34,14 +34,15 @@ def cleanup(output):
         p=Path(output)/part
         if p.exists():shutil.rmtree(p)
 
-def execute(root):
+def execute(root,plan=None,report_argv=None):
     from nomad_phase0.s0_batch import exclusive_batch
     from .metrics import audit
     p=verify();root.mkdir(parents=True,exist_ok=True)
+    plan=jobs(root) if plan is None else plan
     for name in ('metrics','launcher_logs'):(root/name).mkdir(exist_ok=True)
     digest=sha256_file(HERE/'protocol.json');old=status(root)
     assert old.get('protocol_sha256',digest)==digest,'Cannot resume a different frozen protocol'
-    state=dict(status='RUNNING',planned=20,protocol_sha256=digest,started_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),pid=os.getpid())
+    state=dict(status='RUNNING',planned=len(plan),protocol_sha256=digest,started_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),pid=os.getpid())
     start=time.monotonic();proc=None
     def save():
         state['completed']=len(list((root/'metrics').glob('*.json')))
@@ -54,7 +55,7 @@ def execute(root):
         with exclusive_batch():
             save()
             try:
-                for j in jobs(root):
+                for j in plan:
                     metric=root/'metrics'/(j['key']+'.json')
                     if metric.exists():continue
                     if time.monotonic()-start>=p['session_budget_s']:
@@ -87,7 +88,7 @@ def execute(root):
             finally:
                 state['current']=None;save()
             state['stage']='REPORT';save()
-            subprocess.run(['/usr/bin/python3','-m','nomad_j0.report','--run-root',str(root),'--publish'],cwd=ROOT,check=True)
+            subprocess.run(report_argv or ['/usr/bin/python3','-m','nomad_j0.report','--run-root',str(root),'--publish'],cwd=ROOT,check=True)
             state['stage']='DONE';save()
 
 def main():

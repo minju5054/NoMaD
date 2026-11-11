@@ -12,8 +12,11 @@ from nomad_phase26.storage import atomic_json
 from nomad_j1.common import scene_config,checkpoint_spec
 from .config import ROOT,HERE,OUT,RUN_ROOT,SCENES,METHOD,INDICES,order,verify,protocol
 
-def freeze():
-    assert not RUN_ROOT.exists(),'Do not change registration after any run starts'
+def freeze(sdf_fix=False):
+    assert not RUN_ROOT.exists() or sdf_fix,'Do not change registration after any run starts'
+    if sdf_fix:
+        assert ROOT.name=='visualnav-transformer-j0-sdf-fix','Revision must remain in the separate worktree'
+        assert (HERE/'protocol_before_sdf_fix.json').exists()
     from nomad_phase18.config import verify_sources
     old=verify_sources();sources={};assets={}
     for path in list(old['protected_sha256'])+list(old['reused_sha256']):
@@ -45,6 +48,8 @@ def freeze():
         scenes[scene]=dict(topomap=str(f),topomap_sha256=assets[str(f)],checkpoint=checkpoint_spec(scene),
             start_pose=c['start_pose'],goal_pose=c['goal_pose'],geometry={k:c[k] for k in ('corridor','obstacles','agent_radius_m')},
             dynamic_obstacle=c.get('dynamic_obstacle'),spawn=c.get('phase26_spawn'),h1v2_spec=c.get('h1v2'))
+        from nomad_j1.depth import registration
+        scenes[scene]['sdf_registration']=registration(c)
     checkpoint=ROOT.parent/'artifacts/checkpoints/nomad.pth';assets[str(checkpoint)]=sha256_file(checkpoint)
     p=dict(phase='J0',status='FROZEN',frozen_at_utc=datetime.now(timezone.utc).isoformat(),method=METHOD,indices=list(INDICES),
         delays_s=[0.,.75],planned=20,main_order=order(),scenes=scenes,source_sha256=sources,asset_sha256=assets,
@@ -61,6 +66,15 @@ def freeze():
         session_budget_s=3600,time_goal='20runs within about1hour; no new run at budget, finish current then partial report; resume allowed',
         technical_retries=0,technical_rule='Phase18 one attempt; record failure and continue. Preserve interrupted attempt, never overwrite',
         disk_reserve_bytes=30_000_000_000,simulation_started_during_prep=False)
+    if sdf_fix:
+        p['sdf_fix']=dict(original_protocol_sha256=sha256_file(HERE/'protocol_before_sdf_fix.json'),
+            publish_branch='fix/j0-scene-sdf-bounds',rerun_scenes=['H2'],rerun_planned=4,reuse_non_H2=16,
+            change='Only scene-derived SDF allocation, retaining origin/resolution/empty sentinel; frozen query unchanged')
+        before=json.loads((HERE/'protocol_before_sdf_fix.json').read_text())
+        for key in ('main_order','screening','execution','indices','delays_s'):
+            assert p[key]==before[key],key
+        for scene in SCENES:
+            assert {k:v for k,v in p['scenes'][scene].items() if k!='sdf_registration'}==before['scenes'][scene]
     atomic_json(HERE/'protocol.json',p);verify()
 
 def estimate():

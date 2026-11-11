@@ -111,6 +111,9 @@ class Execution(AccelExecution):
 def install(c):
     from nomad_phase16.execution import install_runtime_adapters
     install_runtime_adapters()
+    from .depth import thread_type
+    import nomad_phase15b.depth as depth_factory
+    depth_factory.DepthMapThread = thread_type(c['sdf_registration'])
     import nomad_phase15b.execution as factory
     def make(config, out):
         assert config['j_common'] and config['j_method'] == METHOD
