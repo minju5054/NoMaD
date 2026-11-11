@@ -1,0 +1,159 @@
+{
+  "phase": "H1-v3 J0 screen",
+  "status": "FROZEN",
+  "frozen_at_utc": "2026-11-11T16:20:44.704039+00:00",
+  "planned": 4,
+  "publish_branch": "feat/h1-v3-screening",
+  "method": "OURS-noEC",
+  "indices": [
+    221,
+    222
+  ],
+  "delays_s": [
+    0.0,
+    0.75
+  ],
+  "main_order": [
+    {
+      "scene": "H1-v3",
+      "index": 221,
+      "method": "OURS-noEC",
+      "delay": 0.0
+    },
+    {
+      "scene": "H1-v3",
+      "index": 222,
+      "method": "OURS-noEC",
+      "delay": 0.0
+    },
+    {
+      "scene": "H1-v3",
+      "index": 221,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    },
+    {
+      "scene": "H1-v3",
+      "index": 222,
+      "method": "OURS-noEC",
+      "delay": 0.75
+    }
+  ],
+  "parent_j0_protocol_sha256": "5269b6386e91a3f66e8b8eacef1188705c2b85e5c2df468eea813385e2f13309",
+  "source_sha256": {
+    "research/nomad_h1v3/scene.json": "dc7e6905012f4268453313af2d5f0ff9b4305c78e2baf6e66557fc03aa4a4268",
+    "research/nomad_h1v3/launch.py": "47b9d88df0f605d3f0338cc91b8cf1a5c618b4dbd81ea73b9898c79ccf959c87",
+    "research/nomad_h1v3/scene.py": "41e45bb65db2bfc7789d6d646abc315c0ab0f342a90d1d0fda1f5ebf3f108832",
+    "research/nomad_h1v3/__init__.py": "556ac7807c13d627b457489d9350390e976ac09f51d79b8a55877c4452a9e7a5",
+    "research/nomad_h1v3/campaign.py": "24f0293be2b9ab242cea2e549c28d431a2a782777228653fa0589f4230d983b9",
+    "research/nomad_h1v3/metrics.py": "4e58370f1f0e6ebadf0b88f0a1fe7f49cf702f3d39739e304e7c2709a2ff4c55",
+    "research/nomad_h1v3/test_scene.py": "eaf1dcd980571651e86e05eb02f797178bbb722560379a32d1b1315510fa43e9",
+    "research/nomad_h1v3/report.py": "a61d7a84968cbf6533ae306c15a609a14c1913960a0af651100151a132bfb293",
+    "research/nomad_h1v3/simulator.py": "9ac619ef26e54aa061de5f288cb92c77373c6fdef96ed09f2fca0f6e84c6e6d0",
+    "research/nomad_h1v3/prepare.py": "c6a9fcca9a21b27845479b6255a8602255688612ca3c12ed3d7b6a6196c63921",
+    "research/nomad_h1v3/config.py": "c4ace89fc90e832c506b5e1fe02f33b090caa2f0e5095ea2508257b742d5c998"
+  },
+  "execution": {
+    "base": "Phase18",
+    "controller": "protected PP geometry + Phase18 CURV, lookahead .25, vmax .3, |omega|<=.4",
+    "timing_hz": [
+      4,
+      9,
+      72
+    ],
+    "expiry_s": 1.0,
+    "goal": "true pose distance <=.3m; no closest_node stop",
+    "localization": "official argmin closest_node/subgoal",
+    "latency": "world-anchor at observed pose, choose by suffix at actual application B; unchanged uniform result-delivery delay",
+    "graph": "frozen Phase17/18 ClearanceGraph factors/solver/initialization/async scheduler; SUPERSEDED/STALE/expiry preserved",
+    "depth": "Phase18 V1, unknown free, sigma=.01*d^2; original map publication/storage",
+    "no_safe": "retain current path/progress, without refreshing its one-second receipt clock; no recovery/STOP_WAIT special rule",
+    "endpoint": "latch protected PP endpoint_stop until a new SAFE or accepted Graph path is installed; zero command",
+    "EC": false,
+    "HMM": false,
+    "NET": false,
+    "recovery": false,
+    "stop_wait_special": false,
+    "oracle_for_control": false
+  },
+  "screening": {
+    "zero_success_required": 2,
+    "checkpoint_mean_increase_strict": true,
+    "maximum_selected": 3,
+    "rank": "zero-delay checkpoint mean ascending; ties frozen scene order",
+    "missing": "both seeds must be valid and have checkpoints in both conditions; no imputation"
+  },
+  "session_budget_s": 3600,
+  "technical_retries": 0,
+  "disk_reserve_bytes": 30000000000,
+  "scenes": {
+    "H1-v3": {
+      "topomap": "/home/gpuadmin/Workspace/NoMaD/artifacts/isaac6/phase16_multiscene_01/topomap/LC/topomap/manifest.json",
+      "topomap_sha256": "f1c4f080632b69f1e6e39eddbe9f8f0284f9a4ba44ff8f51be9c300db1a3045f",
+      "checkpoint": {
+        "axis": 1,
+        "direction": 1,
+        "box_id": "DynamicObstacle",
+        "dynamic": false,
+        "threshold_m": 1.2,
+        "formula": "box center along +y + projected half extent + 0.30"
+      },
+      "sdf_registration": {
+        "legacy_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "scene_bbox_with_walls_m": [
+          -1.1,
+          -1.1,
+          4.3,
+          4.3
+        ],
+        "padded_bbox_m": [
+          -1.6,
+          -1.6,
+          4.8,
+          4.8
+        ],
+        "registered_bounds_m": [
+          -4.0,
+          -3.5,
+          8.0,
+          6.2
+        ],
+        "origin_m": [
+          -4.0,
+          -3.5
+        ],
+        "resolution_m": 0.01,
+        "radius_m": 0.09,
+        "padding_m": 0.5,
+        "wall_thickness_m": 0.1,
+        "allocation": "union of legacy rectangle and geometry+0.5m; upper edge snapped outward on legacy grid",
+        "query": "frozen strict ValueError outside registered field; no clipping or fallback",
+        "unknown": "unchanged V1 unknown=free",
+        "empty_distance": "legacy sentinel retained bit-for-bit"
+      },
+      "scene_sha256": "dc7e6905012f4268453313af2d5f0ff9b4305c78e2baf6e66557fc03aa4a4268"
+    }
+  },
+  "simulations_started_during_prep": 0,
+  "scene_change": "Only sudden-box center on same node polyline; y=.70, single .65 adjustment only for corner overlap",
+  "adjustment": {
+    "requested_y_m": 0.7,
+    "requested_center_xy_m": [
+      2.7420996020815553,
+      0.7
+    ],
+    "corner_xy_m": [
+      2.4,
+      0.9
+    ],
+    "corner_overlap": false,
+    "adjustments": 0,
+    "selected_y_m": 0.7,
+    "reason": "NO_ADJUSTMENT"
+  }
+}

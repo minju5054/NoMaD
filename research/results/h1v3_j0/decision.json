@@ -1,0 +1,23 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "selected_scenes": [],
+  "eligible_scenes": 0,
+  "rows": [
+    {
+      "scene": "H1-v3",
+      "zero_success": 0,
+      "required_success": 2,
+      "complete": false,
+      "all_checkpoints_observed": false,
+      "zero_checkpoint_mean_s": null,
+      "delayed_checkpoint_mean_s": null,
+      "difference_s": null,
+      "passed": false,
+      "reason": "INCOMPLETE_OR_MISSING_CHECKPOINT"
+    }
+  ],
+  "missing_policy": "Require both checkpoint observations in both conditions; no censoring or imputation",
+  "tie_rule": "Frozen SCENES order",
+  "criteria": "zero-delay success 2/2 AND delayed checkpoint mean strictly greater; rank zero-delay mean ascending",
+  "protocol_sha256": "60280e37fae59be42f8930dc00914be2fcd666110574e992736392405bb16846"
+}
