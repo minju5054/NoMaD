@@ -110,7 +110,17 @@ def execute(root,retry_first=False):
                 raise
             finally:state['current']=None;save()
             state['stage']='REPORT';save()
-            subprocess.run(['/usr/bin/python3','-m','nomad_j1.report','--run-root',str(root),'--publish'],cwd=ROOT,check=True)
+            # Reporting-only plumbing: persist the failure instead of leaving
+            # a stale REPORT state without the exit/error cause. Scheduling,
+            # block budget, methods and audit call site remain unchanged.
+            try:
+                with (root/'report.log').open('a') as log:
+                    result=subprocess.run(['/usr/bin/python3','-m','nomad_j1.report','--run-root',str(root),'--publish'],cwd=ROOT,
+                                          stdout=log,stderr=subprocess.STDOUT)
+                if result.returncode:raise RuntimeError(f'Report exit {result.returncode}; see report.log')
+            except BaseException as exc:
+                state.update(stage='REPORT_FAILED',report_status='FAILED',report_error=repr(exc));save();raise
+            state['report_status']='PUBLISHED';state.pop('report_error',None)
             state['stage']='DONE';save()
 
 def main():

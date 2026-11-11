@@ -45,7 +45,8 @@ def checkpoint_spec(name):
 
 def verify():
     p=protocol();assert p['status']=='FROZEN' and p['main_order']==order()
-    for path,digest in p['source_sha256'].items():assert sha256_file(ROOT/path)==digest,path
+    from .validation_revision import validated_sources
+    for path,digest in validated_sources(p).items():assert sha256_file(ROOT/path)==digest,path
     for path,digest in p['asset_sha256'].items():assert sha256_file(path)==digest,path
     return p
 
