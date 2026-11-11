@@ -2,7 +2,7 @@
 
 | status | planned | completed | comparison | raw_goal_rule | protocol_sha256 | phase18_results_sha256 |
 | --- | --- | --- | --- | --- | --- | --- |
-| PREPARED_NOT_RUN | 24 | 0 | EXPLORATORY | PHASE18_GEOMETRIC | ba70b619885c4c5e66c560d4dcc29925c30974f18e2782ee644bad6df31bf056 | 5d6c8b8dba62e399a86c81cc808f89a37ac7e457c8b4b7443652fe41183c9c5d |
+| PREPARED_NOT_RUN | 24 | 0 | EXPLORATORY | PHASE18_GEOMETRIC | 0b32140138b40ced900ea0ce470631c48c73e8d26ec07b452c5041cd38b43a6c | 5d6c8b8dba62e399a86c81cc808f89a37ac7e457c8b4b7443652fe41183c9c5d |
 
 기존 Phase18 실행·결과·raw는 수정하지 않는다. 새24개 RAW와 보존된 Phase18 GRAPH-depth-CLR(OURS)·RTC-hard를 같은(scene,seed)로만 연결한다. 실행일이 다르고 사후 추가한 기준선이므로 확인 실험 판정 라벨은 부여하지 않는다.
 

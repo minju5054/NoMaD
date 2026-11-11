@@ -2,7 +2,7 @@
 
 | status | runs | method | scenes | seeds | delay_s | goal_rule | protocol_sha256 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| FROZEN; NOT_RUN | 24 | NOMAD_RAW | SLW / LC / CL | 66–73 | 0.75 | PHASE18_GEOMETRIC | ba70b619885c4c5e66c560d4dcc29925c30974f18e2782ee644bad6df31bf056 |
+| FROZEN; NOT_RUN | 24 | NOMAD_RAW | SLW / LC / CL | 66–73 | 0.75 | PHASE18_GEOMETRIC | 0b32140138b40ced900ea0ce470631c48c73e8d26ec07b452c5041cd38b43a6c |
 
 Phase18 동결 scene·reference·Topomap·게이트 결과·checkpoint 정의와 PP+CURV 실행기를 재사용한다. SP·출발 정렬·HMM·ENDPOINT latch·EC는 적용하지 않는다. depth 렌더/지도는 동일하게 켜지만 경로 선택에 쓰지 않으며,관측 pose에 고정된 sample0의 원8점을 그대로 PP가 따라간다.
 
@@ -14,7 +14,7 @@ Phase18과 동일하게 기술 실패는 재시도하지 않고 계속한다. �
 
 | passed | tests | dry_run | simulations_started | real_replays | protocol_sha256 | disk_free_bytes |
 | --- | --- | --- | --- | --- | --- | --- |
-| True | 7 | 24 | 0 | 0 | ba70b619885c4c5e66c560d4dcc29925c30974f18e2782ee644bad6df31bf056 | 1109599281152 |
+| True | 7 | 24 | 0 | 0 | 0b32140138b40ced900ea0ce470631c48c73e8d26ec07b452c5041cd38b43a6c | 1109595398144 |
 
 시뮬레이션·추론·실제 로그 재생은 실행하지 않았다. 종료 후 docs/PHASE18_RAW_RESULTS.md 및 research/results/phase18raw/를 자동 생성·commit·push한다. 기존 Phase18 코드·결과·raw는 수정하지 않는다.
 

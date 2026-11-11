@@ -1,12 +1,17 @@
 """Exploratory same-seed checkpoint bootstrap; existing Phase18 results untouched."""
 import argparse,json,subprocess
 from pathlib import Path
-from nomad_phase18.report import stat,csv_write,table
+from nomad_phase18.report import stat,csv_write as frozen_csv_write,table
 from nomad_isaac.common import sha256_file
 from nomad_phase26.storage import atomic_json
 from .config import ROOT,HERE,OUT,RUN_ROOT,SCENES,METHOD,BASELINES,protocol,verify_sources
 from .statistics import paired
 BASELINE_FILE=ROOT/'research/results/phase18/runs.json'
+
+def csv_write(path,rows):
+    """Keep frozen serialization, with repository-friendly LF line endings."""
+    frozen_csv_write(path,rows)
+    path=Path(path);path.write_bytes(path.read_bytes().replace(b'\r\n',b'\n'))
 
 def generate(root=RUN_ROOT,output=OUT,document=None):
     verify_sources();p=protocol();root=Path(root);output=Path(output);output.mkdir(parents=True,exist_ok=True)
