@@ -17,11 +17,15 @@
     {
       "comparison": "OURS \u2212 RTC-hard",
       "metric": "checkpoint_time_s",
-      "pairs": 0,
-      "mean_difference_s": null,
-      "ci95_s": null,
-      "p_raw": null,
-      "p_holm": null,
+      "pairs": 11,
+      "mean_difference_s": -9.136363636363638,
+      "ci95_s": [
+        -16.886574074074073,
+        -2.583333333333335
+      ],
+      "p_raw": 0.010099495025248737,
+      "seed_clusters": 7,
+      "p_holm": 0.020198990050497474,
       "decision": "\ud310\uc815 \ubcf4\ub958"
     },
     {
@@ -31,12 +35,70 @@
       "OURS_only_failure": 0,
       "noEC_only_failure": 3,
       "p_raw": 0.25,
-      "p_holm": 0.5,
+      "p_holm": 0.25,
       "decision": "\ud310\uc815 \ubcf4\ub958"
     }
   ],
-  "checkpoint_pairs": [],
+  "checkpoint_pairs": [
+    {
+      "scene": "SLW-v2",
+      "index": 231,
+      "difference_s": -16.09722222222222
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 232,
+      "difference_s": 0.09722222222222143
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 234,
+      "difference_s": -21.680555555555557
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 237,
+      "difference_s": 0.5416666666666643
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 238,
+      "difference_s": -6.888888888888893
+    },
+    {
+      "scene": "LC",
+      "index": 231,
+      "difference_s": -37.95833333333333
+    },
+    {
+      "scene": "LC",
+      "index": 232,
+      "difference_s": -2.5972222222222214
+    },
+    {
+      "scene": "LC",
+      "index": 234,
+      "difference_s": -2.5
+    },
+    {
+      "scene": "LC",
+      "index": 235,
+      "difference_s": -2.541666666666668
+    },
+    {
+      "scene": "LC",
+      "index": 236,
+      "difference_s": -6.555555555555554
+    },
+    {
+      "scene": "LC",
+      "index": 238,
+      "difference_s": -4.319444444444443
+    }
+  ],
   "protocol_sha256": "2dbe6817a6751d04971453222baeccb971a4a0f24db6fc40ed1e4a71ec701586",
   "completed_runs": 135,
-  "planned_runs": 195
+  "planned_runs": 195,
+  "artifact_run_records": 135,
+  "incomplete_block_records_excluded": 0
 }
