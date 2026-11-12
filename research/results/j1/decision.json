@@ -8,35 +8,39 @@
     236,
     237,
     238,
-    239
+    239,
+    240,
+    241,
+    242,
+    243
   ],
-  "completed_seed_count": 9,
-  "final": false,
-  "label": "\uc911\uac04 \uacb0\uacfc, \ud310\uc815 \ubcf4\ub958",
+  "completed_seed_count": 13,
+  "final": true,
+  "label": "\ucd5c\uc885 \uacb0\uacfc",
   "primary": [
     {
       "comparison": "OURS \u2212 RTC-hard",
       "metric": "checkpoint_time_s",
-      "pairs": 11,
-      "mean_difference_s": -9.136363636363638,
+      "pairs": 17,
+      "mean_difference_s": -9.86519607843137,
       "ci95_s": [
-        -16.886574074074073,
-        -2.583333333333335
+        -15.01157711988304,
+        -5.216112557870374
       ],
-      "p_raw": 0.010099495025248737,
-      "seed_clusters": 7,
-      "p_holm": 0.020198990050497474,
-      "decision": "\ud310\uc815 \ubcf4\ub958"
+      "p_raw": 9.99950002499875e-05,
+      "seed_clusters": 10,
+      "p_holm": 0.000199990000499975,
+      "decision": "REJECT_H0"
     },
     {
       "comparison": "OURS vs OURS-noEC",
       "metric": "collision OR wall intrusion",
-      "pairs": 27,
+      "pairs": 39,
       "OURS_only_failure": 0,
-      "noEC_only_failure": 3,
-      "p_raw": 0.25,
-      "p_holm": 0.25,
-      "decision": "\ud310\uc815 \ubcf4\ub958"
+      "noEC_only_failure": 4,
+      "p_raw": 0.125,
+      "p_holm": 0.125,
+      "decision": "NOT_REJECTED"
     }
   ],
   "checkpoint_pairs": [
@@ -64,6 +68,21 @@
       "scene": "SLW-v2",
       "index": 238,
       "difference_s": -6.888888888888893
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 240,
+      "difference_s": -8.916666666666671
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 242,
+      "difference_s": -7.833333333333336
+    },
+    {
+      "scene": "SLW-v2",
+      "index": 243,
+      "difference_s": 5.097222222222221
     },
     {
       "scene": "LC",
@@ -94,11 +113,26 @@
       "scene": "LC",
       "index": 238,
       "difference_s": -4.319444444444443
+    },
+    {
+      "scene": "LC",
+      "index": 240,
+      "difference_s": -21.26388888888889
+    },
+    {
+      "scene": "LC",
+      "index": 242,
+      "difference_s": -10.944444444444446
+    },
+    {
+      "scene": "LC",
+      "index": 243,
+      "difference_s": -23.347222222222218
     }
   ],
   "protocol_sha256": "2dbe6817a6751d04971453222baeccb971a4a0f24db6fc40ed1e4a71ec701586",
-  "completed_runs": 135,
+  "completed_runs": 195,
   "planned_runs": 195,
-  "artifact_run_records": 135,
+  "artifact_run_records": 195,
   "incomplete_block_records_excluded": 0
 }
